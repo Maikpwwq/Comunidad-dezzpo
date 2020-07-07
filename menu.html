@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Menu Principal Comunidad Dezzpo </title>
+    <Style>
+        body{}
+        #menuFijo{ 
+            position: absolute;  
+            height: 139px; 
+            margin: 0 0; 
+            padding: 0 0; 
+            width: 100%; 
+            right: 0px;
+            left: 0px;
+            top: 0px;
+            }
+        #barraMenu{ display: inline-flex; position: fixed; font-family: "lato Regular", Helvetica, sans-serif; color: #333333; background-color: #e9ebe6;}
+        #menuContenedor{display: flex; flex-direction: row; }
+        .menuSecciones{ display: flex; flex-direction: row; overflow: visible; 
+            list-style-type: none;
+            padding: 0 0;
+            margin: 0 0;
+        }
+        .botonSeccion:hover{ color: white; background-color: #009999;}
+        .botonSeccion{
+            margin: auto 0;
+            border-left: solid;
+            border-width: 3px;
+            border-left-color: black;
+        }
+        #bannerComunidad{ background: #e9ebe6 url(./Buscador-DEZZPO-01.png) no-repeat center; 
+            background-size: 100% auto;
+            display: flex;
+            background-attachment: scroll;    
+            top: 139px;             
+            position: relative;   
+        }
+        #contenedorBanner{}
+
+    </Style>
+</head>
+<body>
+    <!-- Menu fijo -->
+    <header id="menuFijo">
+        <nav id="barraMenu">
+            <img src="./Comunidad-Dezzpo.jpg" alt="Logo Comunidad Dezzpo" height="110px" width="290px">
+            <div id="menuContenedor">                
+                <ul class="menuSecciones">
+                    <li class="botonSeccion"><a href="#" class="activo"> Home </a></li>
+                    <li class="botonSeccion"><a href="#" > Asi trabajamos </a></li>
+                    <li class="botonSeccion"><a href="#" > Nosotros </a></li>
+                    <li class="botonSeccion"><a href="#" > Comunidad de comerciantes </a></li>
+                    <li class="botonSeccion"><a href="#" > Comunidad de propietarios </a></li>
+                    <li class="botonSeccion"><a href="#" > Presupuestos </a></li>
+                    <li class="botonSeccion"><a href="#" > Profesionales y servicios </a></li>
+                    <li class="botonSeccion"><a href="#" > Asesorias </a></li>
+                    <li class="botonSeccion"><a href="#" > Apendice de costos </a></li>
+                    <li class="botonSeccion"><a href="#" > Ingresar </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- imagen fondo -->
+    <section id="bannerComunidad">
+        <div id="contenedorBanner">
+            
+        </div>
+    </section>
+</body>
+</html>
