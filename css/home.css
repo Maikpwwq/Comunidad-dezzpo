@@ -41,11 +41,72 @@ body{
     color: black;
     text-decoration: none;
 }
-#bannerComunidad{ background: #e9ebe6 url(../img/Buscador-DEZZPO-01.png) no-repeat center; 
+#bannerComunidad{ 
+    background: #e9ebe6 url(../img/Buscador-DEZZPO-01.png) no-repeat center; 
     background-size: 100% auto;
     height: 690px;
     width: auto;
     display: flex;
+    flex-direction: column;
+    background-attachment: scroll;    
+    align-items: center;
+    align-content: center;
+    font-family: "lato Regular", Helvetica, sans-serif;  
+    font-size: 21px;
+}
+#contenedorBanner{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 570px;    
+}
+.slogan{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    padding: 348px 33px 80px 30px;
+    color: white;
+}
+.slogan h1{
+    color: #009999;
+}
+.contenerdorFormulario{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 148px;
+}
+.formularioBusqueda1{
+    display: flex;
+    flex-direction: column;
+    height: 390px;
+    align-items: flex-end;
+    align-content: space-around;
+    justify-content: space-evenly;
+    padding-right: 48px;
+}
+.mensajeBanner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    text-align: center;
+    height: 110px;
+    padding: 30px;
+    background-color: #006699;
+    color: white;
+    font-size: 30px;
+}
+#footer{
+    bottom: 0px;
+    height: 290px;
+    width: 100%;
+    margin: 0 auto;
+    background: #e9ebe6 url(../img/Footer.png) no-repeat center; 
+    background-size: 100% auto;
+    width: auto;
+    display: flex;
     background-attachment: scroll;    
 }
-#contenedorBanner{}
+#footerContainer{}
