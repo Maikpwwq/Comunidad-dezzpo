@@ -1,0 +1,51 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+#menuFijo{ 
+    position: absolute;  
+    height: 139px; 
+    margin: 0 0; 
+    padding: 0 0; 
+    width: 100%; 
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    }
+#barraMenu{ display: inline-flex; position: fixed; font-family: "lato Regular", Helvetica, sans-serif; color: #333333; background-color: #e9ebe6;}
+#menuContenedor{display: flex; flex-direction: row; }
+.menuSecciones{ display: flex; flex-direction: row; overflow: visible; 
+    list-style-type: none;
+    padding: 0 0;
+    margin: 0 0;
+}
+.botonSeccion:hover a{ color: white; background-color: #009999; text-decoration: underline;}
+.botonSeccion{
+    margin: auto 0;
+    border-left: solid;
+    border-width: 3px;
+    border-left-color: black;
+    height: 100%;
+    display: flex;
+    align-content: center;                        
+}
+.activo{
+    padding: 56px 5px 0 5px;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+}
+.botonLink{
+    padding: 56px 5px 0 5px;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+}
+#bannerComunidad{ background: #e9ebe6 url(../img/Buscador-DEZZPO-01.png) no-repeat center; 
+    background-size: 100% auto;
+    height: 690px;
+    width: auto;
+    display: flex;
+    background-attachment: scroll;    
+}
+#contenedorBanner{}
