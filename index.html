@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="./css/home.css">
-    <link rel="icon" type="image/png" href="./img/Comunidad-Dezzpo.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="./img/Comunidad-Dezzpo.png" sizes="32x32">
     <title> Comunidad Dezzpo </title>
     <Style>
         
@@ -19,6 +19,7 @@
             <div id="menuContenedor">                
                 <ul class="menuSecciones">
                     <li class="botonSeccion"><a href="#Home" class="activo"> Home </a></li>
+                    <!-- seleccion asi trabajamos-->
                     <div class="dropdown"><li class="botonSeccion">
                         <a href="#Asi trabajamos" class="botonLink"> Asi trabajamos </a></li>
                         <div class="dropdownContenidos">
@@ -30,10 +31,10 @@
                            <a href="#Calificaciones">Calificaciones</a>
                         </div>                    
                     </div>
+                    <!-- seleccion nosotros -->
                     <div class="dropdown"><li class="botonSeccion">
                         <a href="#Nosotros" class="botonLink"> Nosotros </a></li>
-                        <div class="dropdownContenidos">
-                            <!--Acerca de nosotros, Equipo dezzpo, Programa de afiliados, Prensa, Patrocinadores, Legal -->
+                        <div class="dropdownContenidos">                            
                            <a href="#Acerca de nosotros">Acerca de nosotros</a> 
                            <a href="#Equipo dezzpo">Equipo dezzpo</a>
                            <a href="#Programa de afiliados">Programa de afiliados</a> 
@@ -42,6 +43,7 @@
                            <a href="#Legal">Legal</a>
                         </div>                    
                     </div>
+                    <!-- seleccion Comunidad de Comerciantes-->
                     <div class="dropdown"><li class="botonSeccion">
                         <a href="#Comunidad de comerciantes" class="botonLink"> Comunidad de comerciantes </a></li>
                         <div class="dropdownContenidos">
@@ -52,7 +54,8 @@
                            <a href="#Ayuda & Pqrs">Ayuda & Pqrs</a>
                            <a href="#Terminos y condiciones">Terminos y condiciones</a>
                         </div>                    
-                    </div>                    
+                    </div>        
+                    <!-- seleccion Comunidad de Propietarios-->            
                     <div class="dropdown"><li class="botonSeccion">
                         <a href="#Comunidad de propietarios" class="botonLink"> Comunidad de propietarios </a></li>
                         <div class="dropdownContenidos">
@@ -76,12 +79,14 @@
     <!-- imagen fondo -->
     <section id="bannerComunidad">
         <div id="contenedorBanner">
+            <!-- Mensaje del Banner izquierda -->
             <div class="slogan">
-                <p> Hemos facilitado el servicio, <br>
+                <span class="opacidadNegro"> <p> Hemos facilitado el servicio, <br>
                     haciendolo más rapido y <br>
-                    simple que nunca </p> 
-                <h1> Unete a la Comunidad </h1> 
+                    simple que nunca </p> <br>
+                <h1> Unete a la Comunidad </h1> </span>
             </div>
+            <!-- Formulario nuevo proyecto -->
             <div class="contenerdorFormulario">
                 <form action="">
                     <div class="formularioBusqueda1">
@@ -94,45 +99,120 @@
                 </form>
             </div>
         </div>
+        <!-- Mensaje del Banner inferior-->
         <div class="mensajeBanner">
             <p> Encuentra aqui un profesional Seguro y Confiable para cada trabajo. Desde iluminación <br>
                 y pequeños arreglos, hasta diseños de ingeniería y remodelaciones completas. </p> 
         </div>
     </section>
+    <!-- Seccion de Registro -->
     <section id="registrate">
 
     </section>
+    <!-- Seccion de como funciona la comunidad -->
     <section id="comoFunciona">
-
+        <h1>¿Como funciona nuestra comunidad?</h1>
+        <!-- Propietarios -->
+        <div class="comoPropietarios">
+            <div><h2>PROPIETARIOS</h2></div>
+            <div class="nuevoProyecto">
+                1 <br>
+                Crea una nueva oferta gratis <br>
+                Describe tu proyecto <br>
+            </div>
+            <div class="seleccionaPerfiles">
+                2 <br>
+                Selecciona el perfil adecuado y <br>
+                consigue algunas cotizaciones. <br>
+                El servicio profesional se pondrá en <br>
+                contacto con tigo. <br>
+            </div>
+            <div class="calificaServicio">
+                3 <br>
+                Califica y comenta. <br>
+                Finalizo el proyecto, <br>
+                Dejanos conocer tu experiencia. <br>
+            </div>
+        </div>
+        <!-- Comerciantes Calificados -->
+        <div class="comoComerciantes">
+            <div><h2>COMERCIANTES CALIFICADOS</h2></div>
+            <div class="buscarOfertas">
+                1 <br>
+                Busca la oferta indicada para ti. <br>
+                Filtra los proyectos de los <br>
+                propietarios y postulate. <br> 
+            </div>
+            <div class="cargaPresupuesto">
+                2 <br>
+                Diligencia el presupuesto <br>
+                <p> Haz una cotizacion detallada con los datos suministrados, <br>
+                    en caso de ser escogido por el propietario para desarrollar el <br> 
+                    servicio, nos pagaras una comisión por el servicio prestado </p> <br>              
+            </div>
+            <div class="calificaPropietario">
+                3 <br>
+                Califica y comenta. <br>
+                Finalizo el proyecto, <br>
+                Dejanos conocer tu experiencia. <br>
+            </div>
+        </div>
     </section>
-    <section id="categoriasServicios">
-
+    <!-- seccion de categorias y servicios -->
+    <section id="popularCategorias">
+        <div class="">
+            <h1> NUESTRA COMUNIDAD </h1>
+            <p>Tenemos una gran cantidad de profesionales que quieren trabajar en su proyecto.</p>
+            <h2>o encuentralos dentro de las categorías populares:</h2>
+            <ul>
+                <li>Pintor y decorador, Pintura y decoracion de interiores </li>
+                <li>Electricista, Instalación y validación de acometidas electricas </li>
+                <li>Instaladores de techos y cubiertas, mantenimiento de cubiertas </li>
+                <li>Maestro, Construcciones y ampliaciones </li>
+                <li>Plomero, reparacion de fugas </li>
+                <li>Carpinteria, instalacion de closets, más </li>
+            </ul>
+        </div>
     </section>
+    <!-- seccion de categorias y servicios -->
+    <section id="categoriasServicios">        
+        <div class="">
+            <h1>Nuestro comerciantes y servicios</h1>
+        </div>        
+    </section>
+    <!-- seccion de comerciantes Locales-->
     <section id="comerciantesLocales">
-
+        <div class="">
+            <h1>Busca en tu ciudad comerciantes calificados</h1>
+        </div>          
     </section>
+    <!-- Empieza la seccion del footer -->
     <footer id="footer">
         <div id="footerContainer">
+            <!-- parte superior -->
             <div class="footerSuperior">
+                <!-- Mas links -->
                 <div class="masLinks">
                     <ul>
-                        <li><a href="#Legal" title="legal"> Legal</a></li>
-                        <li><a href="#Ayuda" title="Ayuda"> Ayuda</a></li>
-                        <li><a href="#Patrocinadores" title="Patrocinadores"> Patrocinadores</a></li>
-                        <li><a href="#Blog" title="Blog"> Blog</a></li>
-                        <li><a href="#Contactenos" title="Contactenos"> Contactenos</a></li>
-                        <li><a href="#Mapa del Sitio" title="Mapa del Sitio"> Mapa del Sitio</a></li>
+                        <li> &#10095; <a href="#Legal" title="legal"> Legal</a></li>
+                        <li> &#10095; <a href="#Ayuda" title="Ayuda"> Ayuda</a></li>
+                        <li> &#10095; <a href="#Patrocinadores" title="Patrocinadores"> Patrocinadores</a></li>
+                        <li> &#10095; <a href="#Blog" title="Blog"> Blog</a></li>
+                        <li> &#10095; <a href="#Contactenos" title="Contactenos"> Contactenos</a></li>
+                        <li> &#10095; <a href="#Mapa del Sitio" title="Mapa del Sitio"> Mapa del Sitio</a></li>
                     </ul>
                 </div>
+                <!-- siguenos en redes -->
                 <div class="siguenosRedes">
                     <h1> SIGUENOS </h1>
                     <ul class="listaFooter">
-                        <li><a href="https://www.instagram.com/comunidad_dezzpo/" title="Instagram"> Instagram </a></li>
-                        <li><a href="https://www.twitter.com/" title="Twitter"> Twitter </a></li>
-                        <li><a href="https://www.facebook.com/comunidad.dezzpo" title="Facebook"> Facebook </a></li>
-                        <li><a href="https://www.linkedin.com/company/dezzpo-inc/" title="LinkedIn"> LinkedIn </a></li>
+                        <li> &#10095; <a href="https://www.instagram.com/comunidad_dezzpo/" title="Instagram"> Instagram </a></li>
+                        <li> &#10095; <a href="https://www.twitter.com/" title="Twitter"> Twitter </a></li>
+                        <li> &#10095; <a href="https://www.facebook.com/comunidad.dezzpo" title="Facebook"> Facebook </a></li>
+                        <li> &#10095; <a href="https://www.linkedin.com/company/dezzpo-inc/" title="LinkedIn"> LinkedIn </a></li>
                     </ul>
                 </div>        
+                <!-- Datos de contacto comunidad dezzpo -->
                 <div class="datosContacto">
                     <h1> Ponte en Contacto </h1>
                     <ul class="listaFooter">
@@ -146,8 +226,9 @@
                     </ul>
                 </div>
             </div>
+            <!-- parte inferior-->
             <div class="footerInferior">
-                <p> © 2019 - Todos los derechos reservados DEZZPO </p>
+                <p> © 2019 - Todos los derechos reservados - COMUNIDAD DEZZPO INC. </p>
             </div>
         </div>
     </footer>

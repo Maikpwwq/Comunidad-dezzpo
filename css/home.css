@@ -41,6 +41,8 @@ body{
     min-width: 110px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    margin: 3px 5px;
+    padding: 5px 3px;
 }
 .dropdownContenidos a{
     font-size: 21px; 
@@ -61,7 +63,11 @@ body{
     display: flex;
     flex-direction: column;
 }
-.botonSeccion:hover a{ color: white; background-color: #009999; text-decoration: underline;}
+.botonSeccion:hover a{ 
+    color: white; 
+    background-color: #009999; 
+    text-decoration: underline;
+}
 .botonSeccion{
     margin: auto 0;
     border-left: solid;
@@ -84,7 +90,7 @@ body{
     text-decoration: none;
 }
 #bannerComunidad{ 
-    background: #e9ebe6 url(../img/Buscador-DEZZPO-01.png) no-repeat center; 
+    background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; 
     background-size: 100% auto;
     height: 690px;
     width: auto;
@@ -106,11 +112,17 @@ body{
     width: 60%;
     display: flex;
     flex-direction: column;
-    padding: 348px 33px 80px 30px;
+    padding: 348px 33px 80px 0px;
     color: white;
 }
 .slogan h1{
     color: #009999;
+}
+.opacidadNegro{
+    background-color: rgba(0,0,0,0.8);
+    height: 210px;
+    width: 480px;
+    padding-left: 50px;
 }
 .contenerdorFormulario{
     width: 40%;
@@ -169,10 +181,10 @@ body{
 #footer{    
     width: 100%;
     margin: 0 auto;
-    background: #e9ebe6 url(../img/Footer.png) no-repeat center; 
+    background: #313332; 
     background-size: 100% auto;
     display: flex;
-    background-attachment: scroll;         
+    background-attachment: scroll;             
 }
 #footerContainer{
     display: flex;
@@ -190,8 +202,14 @@ body{
     justify-content: space-evenly;
     width: 100%;
 }
-.footerSuperior li { list-style-type: none;}
-.footerSuperior a {font-size: 21px; text-decoration: none;}
+.footerSuperior li { 
+    list-style-type: none; 
+    color: #deaf06;
+}
+.footerSuperior a {
+    font-size: 21px; 
+    text-decoration: none;
+}
 .footerSuperior a:link{
     color: white;    
 }
@@ -228,8 +246,14 @@ body{
     margin-top: -21px;
     text-align: justify;
 }
+.siguenosRedes .listaFooter li{
+    border-bottom: #e9ebe6;
+    border-bottom-style: solid;
+}
 .footerInferior{
     width: 100%;
     text-align: center;
     font-size: 21px;
+    border-top: blanchedalmond;
+    border-top-style: solid;
 }
