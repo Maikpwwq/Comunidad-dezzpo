@@ -175,17 +175,68 @@ body{
     font-size: 30px;    
 }
 #registrate{
-    background: #e9ebe6 url(../img/Ingresar_registro.png) no-repeat center; 
-    width: 100%;
-    background-size: 100% auto;
     display: flex;
+    flex-direction: row;
+    height: 480px;
+    width: 100%;
+}
+.registrateImagen{
+    display: flex;
+    flex-direction: column;
+    height: 480px;
+    width: 50%;
+    margin-top: 20px;
+    background: #e9ebe6 url(../img/Ingresar_registro.png) no-repeat center; 
     background-attachment: scroll;         
-    height: 600px;
+    background-size: 100% auto;
+}
+.registrateformulario{
+    display: flex;
+    flex-direction: column;
+    height: 480px;
+    width: 50%;
+    background: #13495e; 
+    margin-top: 20px;
 }
 #comoFunciona{
     background: #13495e; 
     width: 100%;
-    height: 600px;
+    height: 330px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-top: #1ec7e6;
+    border-top-style: solid;
+    color: white;
+}
+.comoPropietarios{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: left;
+}
+.nuevoProyecto{}
+.seleccionaPerfiles{}
+.calificaServicio{}
+.comoComerciantes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: left;
+    border-top: #1ec7e6;
+    border-top-style: solid;
+}
+.buscarOfertas{}
+.cargaPresupuesto{}
+.calificaPropietario{}
+#popularCategorias{
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+    height: 500px;
+    width: 100%;
 }
 #categoriasServicios{
     background: #333333 url(../img/Profesionales_servicios2.png) no-repeat center; 
@@ -193,12 +244,30 @@ body{
     background-size: 100% auto;
     display: flex;
     background-attachment: scroll;         
-    height: 600px;
+    height: 500px;
+    display: flex;    
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-around;
+}
+.contratistasReformas {
+    display: flex;    
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-around;
+    width: 100%;    
+}
+.contratistasReformas li {
+    list-style-type: none;
 }
 #comerciantesLocales{
     background: #21969b; 
     width: 100%;
-    height: 600px;
+    height: 300px;
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
 }
 #footer{    
     width: 100%;
