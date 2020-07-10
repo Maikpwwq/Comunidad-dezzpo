@@ -32,7 +32,10 @@ body{
     margin: 0 0;
 }
 .dropdown{
-    
+    transition: background-color 0.3s;
+}
+.dropdown:hover {
+    background-color: rgba(0,0,0,0.8);
 }
 .dropdownContenidos{
     display: none;
@@ -138,6 +141,25 @@ body{
     align-content: space-around;
     justify-content: space-evenly;
     padding-right: 48px;
+}
+.animacionBoton{
+    animation-name: botonAnimado;
+    animation-duration: 3s;
+    animation-delay: 3s;
+    height: 49px;
+    width: 100px;
+    position: absolute;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 3px 6px;
+    margin: 6px 3px;
+    background-color: #92B901; 
+    left:1210px; 
+    top:480px;
+}
+@keyframes botonAnimado{
+    0%   {background-color:#1ec7e6; left:900px; top:480px;}
+    100% {background-color:#92B901; left:1210px; top:480px;}
 }
 .mensajeBanner{
     display: flex;
