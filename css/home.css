@@ -287,12 +287,15 @@ body{
     flex-direction: column;
     text-align: center;
     justify-content: space-around;
-    height: 390px;
+    height: 460px;
     width: 100%;
 }
 .categoriasPopulares {
     background-color: #313332; 
-    color: white;
+    color: white;    
+}
+.categoriasPopulares li {
+    list-style-type: none;
 }
 #categoriasServicios{
     background: #333333 url(../img/Profesionales_servicios2.png) no-repeat center;     
@@ -330,6 +333,17 @@ body{
     flex-direction: column;
     text-align: center;
     justify-content: space-around;
+}
+.localCiudades{
+    font-family: "lato Regular", Helvetica, sans-serif;  
+    font-size: 17px;
+    color: white;
+}
+.ciudades {
+    display: flex;    
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-evenly;
 }
 #footer{    
     width: 100%;
