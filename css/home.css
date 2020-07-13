@@ -142,10 +142,15 @@ body{
     justify-content: space-evenly;
     padding-right: 48px;
 }
+.formularioBusqueda1 input {
+    width: 333px;
+    height: 33px;
+}
 .animacionBoton{
     animation-name: botonAnimado;
     animation-duration: 3s;
     animation-delay: 3s;
+    animation-timing-function: ease-out;
     height: 49px;
     width: 100px;
     position: absolute;
@@ -216,9 +221,15 @@ body{
     justify-content: space-evenly;
     text-align: left;
 }
-.nuevoProyecto{}
-.seleccionaPerfiles{}
-.calificaServicio{}
+.nuevoProyecto{
+
+}
+.seleccionaPerfiles{
+
+}
+.calificaServicio{
+
+}
 .comoComerciantes{
     display: flex;
     flex-direction: row;
@@ -227,9 +238,15 @@ body{
     border-top: #1ec7e6;
     border-top-style: solid;
 }
-.buscarOfertas{}
-.cargaPresupuesto{}
-.calificaPropietario{}
+.buscarOfertas{
+
+}
+.cargaPresupuesto{
+
+}
+.calificaPropietario{
+    
+}
 #popularCategorias{
     display: flex;    
     flex-direction: column;
@@ -237,6 +254,10 @@ body{
     justify-content: space-around;
     height: 500px;
     width: 100%;
+}
+.categoriasPopulares {
+    background-color: #313332; 
+    color: white;
 }
 #categoriasServicios{
     background: #333333 url(../img/Profesionales_servicios2.png) no-repeat center; 
