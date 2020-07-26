@@ -1,15 +1,48 @@
 body {
+    font-family: "lato Regular", Helvetica, sans-serif; 
+    font-size: 21px;
     display: flex;
     flex-direction: column;
     height: 1500px;
     width: 100%;
     margin: 0 0;
     padding: 0 0;
-    background: #e9ebe6 url(../img/Presupuestos-Pagina.png) no-repeat center; 
-    background-attachment: scroll;         
-    background-size: 100% auto;
+}
+main{
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
 }
 div {
+
+}
+.presupuestosMensaje{
+    background: #e9ebe6 url(../img/Presupuestos1.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 510px;
+    width: 100%;
+    color: #e9ebe6; 
+}
+.presupuestosMensajeBuscador{
+    background: #e9ebe6 url(../img/Presupuestos2.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 510px;
+    width: 100%;
+    color: #e9ebe6; 
+}
+/*
     padding: 3px 6px;
     margin: 6px 3px;
-}
+    background-color: #333333;
+    background-color: #e9ebe6;
+    background-color: rgba(0,0,0,0.8);
+    background-color: #009999; 
+    background-color:#1ec7e6;
+    background-color: #13495e; 
+    background-color:#92B901;
+    background-color: #006699;
+    background-color: #deaf06;
+*/

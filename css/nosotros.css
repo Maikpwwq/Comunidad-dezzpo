@@ -1,15 +1,77 @@
 body {
+    font-family: "lato Regular", Helvetica, sans-serif; 
+    font-size: 21px;
     display: flex;
     flex-direction: column;
     height: 1500px;
     width: 100%;
     margin: 0 0;
     padding: 0 0;
-    background: #e9ebe6 url(../img/Nosotros-Pagina.png) no-repeat center; 
-    background-attachment: scroll;         
-    background-size: 100% auto;
+}
+main{
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
 }
 div {
-    padding: 3px 6px;
-    margin: 6px 3px;
+
 }
+.nosotrosHistoria{
+    background: #e9ebe6 url(../img/Nosotros1.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 780px;
+    width: 100%;
+    color: #e9ebe6;
+}
+.nosotrosMisionVision{
+    background: #e9ebe6 url(../img/Nosotros2.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 590px;
+    width: 100%;
+    color: #e9ebe6;
+}
+.nosotrosPoliticas{
+    background: #e9ebe6 url(../img/Asesorias1.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 570px;
+    width: 100%;
+}
+.nosotrosEtica{
+    background: #e9ebe6 url(../img/Nosotros3.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 480px;
+    width: 100%;
+    color: #e9ebe6;
+}
+.nosotrosEquipo{
+    background: #e9ebe6 url(../img/Nosotros4.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 426px;
+    width: 100%;
+}
+.nosotrosHitos{
+    background: #e9ebe6 url(../img/Asesorias1.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 570px;
+    width: 100%;
+}
+/*
+    padding: 3px 6px;
+    margin: 6px 3px;    
+    background-color: #333333;
+    background-color: #e9ebe6;
+    background-color: rgba(0,0,0,0.8);
+    background-color: #009999; 
+    background-color:#1ec7e6;
+    background-color: #13495e; 
+    background-color:#92B901;
+    background-color: #006699;
+    background-color: #deaf06;
+*/

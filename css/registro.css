@@ -1,15 +1,63 @@
 body {
+    font-family: "lato Regular", Helvetica, sans-serif; 
+    font-size: 21px;
     display: flex;
     flex-direction: column;
-    height: 1500px;
+    height: 700px;
     width: 100%;
     margin: 0 0;
     padding: 0 0;
-    background: #e9ebe6 url(../img/Registro-Pagina.png) no-repeat center; 
+}
+main{
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+div {
+
+}
+#registrate{
+    display: flex;
+    flex-direction: row;
+    height: 480px;
+    width: 100%;
+}
+.registrateImagen{
+    display: flex;
+    flex-direction: column;
+    height: 480px;
+    width: 50%;
+    margin-top: 20px;
+    background: #e9ebe6 url(../img/Ingresar_registro.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
 }
-div {
-    padding: 3px 6px;
-    margin: 6px 3px;
+.registrateformulario{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    height: 480px;
+    width: 50%;
+    background: #13495e; 
+    margin-top: 20px;
+    color: white;
 }
+#formularioRegistro input{
+    border: none;
+    width: 333px;
+    height: 27px;
+}
+/*
+    background-color: #333333;
+    background-color: #e9ebe6;
+    background-color: rgba(0,0,0,0.8);
+    background-color: #009999; 
+    background-color:#1ec7e6;
+    background-color: #13495e; 
+    background-color:#92B901;
+    background-color: #006699;
+    background-color: #deaf06;    
+*/

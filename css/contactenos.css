@@ -1,15 +1,43 @@
 body {
+    font-family: "lato Regular", Helvetica, sans-serif; 
+    font-size: 21px;
     display: flex;
     flex-direction: column;
-    height: 1500px;
+    height: 840px;
     width: 100%;
     margin: 0 0;
-    padding: 0 0;
-    background: #e9ebe6 url(../img/Contactenos-Pagina.png) no-repeat center; 
-    background-attachment: scroll;         
-    background-size: 100% auto;
+    padding: 0 0;    
+}
+main{
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
 }
 div {
-    padding: 3px 6px;
-    margin: 6px 3px;
+    
 }
+.contactenosTitulo{
+    background-color: #e9ebe6;
+    color: #009999; 
+    height: 300px;
+    width: 100%;
+}
+.contactenosMensaje{
+    background-color: #e9ebe6;
+    height: 690px;
+    width: 100%;
+}
+/*
+    padding: 3px 6px;
+    margin: 6px 3px;    
+    background-color: #333333;
+    background-color: #e9ebe6;
+    background-color: rgba(0,0,0,0.8);
+    background-color: #009999; 
+    background-color:#1ec7e6;
+    background-color: #13495e; 
+    background-color:#92B901;
+    background-color: #006699;
+    background-color: #deaf06;
+*/

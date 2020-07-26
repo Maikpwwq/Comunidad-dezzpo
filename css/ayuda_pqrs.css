@@ -1,15 +1,46 @@
 body {
+    font-family: "lato Regular", Helvetica, sans-serif; 
+    font-size: 21px;
     display: flex;
     flex-direction: column;
-    height: 1500px;
+    height: 1700px;
     width: 100%;
     margin: 0 0;
     padding: 0 0;
-    background: #e9ebe6 url(../img/Ayuda&PQRS-Pagina.png) no-repeat center; 
+}
+main{
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+div {       
+    
+}
+.ayudaPqrsTitulo{
+    background: #e9ebe6 url(../img/Ayuda&PQRS1.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
+    height: 570px;
+    width: 100%;
 }
-div {
+.ayudaPqrsPreguntas{
+    background: #e9ebe6 url(../img/Ayuda&PQRS2.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 1050px;
+    width: 100%;
+}
+/*
     padding: 3px 6px;
     margin: 6px 3px;
-}
+    background-color: #333333;
+    background-color: #e9ebe6;
+    background-color: rgba(0,0,0,0.8);
+    background-color: #009999; 
+    background-color:#1ec7e6;
+    background-color: #13495e; 
+    background-color:#92B901;
+    background-color: #006699;
+    background-color: #deaf06;
+*/

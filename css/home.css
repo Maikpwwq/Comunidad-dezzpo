@@ -1,426 +1,1303 @@
-body{
-    margin: 0;
-    padding: 0;
-}
-#menuFijo{ 
-    position: absolute;  
-    height: 101px; 
-    margin: 0 0; 
-    padding: 0 0; 
-    width: 100%; 
-    right: 0px;
-    left: 0px;
-    top: 0px;
+/* Pantallas de Moviles */
+@media screen and (max-width: 600px) {
+    body{
+        margin: 0;
+        padding: 0;
     }
-#barraMenu{ 
-    display: inline-flex; 
-    position: fixed; 
-    font-family: "lato Regular", Helvetica, sans-serif; 
-    color: #333333; 
-    background-color: #e9ebe6;
-}
-#menuContenedor{
-    display: flex; 
-    flex-direction: row; 
-}
-.menuSecciones{ 
-    display: flex; 
-    flex-direction: row; 
-    overflow: visible; 
-    list-style-type: none;
-    padding: 0 0;
-    margin: 0 0;
-}
-.dropdown{
-    transition: background-color 0.3s;
-}
-.dropdown:hover {
-    background-color: rgba(0,0,0,0.8);
-}
-.dropdownContenidos{
-    display: none;
-    position: absolute;
-    background-color: #009999;
-    min-width: 110px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    margin: 3px 5px;
-    padding: 5px 3px;
-}
-.dropdownContenidos a{
-    font-size: 21px; 
-    text-decoration: none;
-}
-.dropdownContenidos a:link{
-    color: white;    
-}
-.dropdownContenidos a:visited{
-    color: white;    
-}
-.dropdownContenidos a:hover{
-    background-color: #e9ebe6;
-    color: black;    
-    text-decoration: underline;
-}
-.dropdown:hover .dropdownContenidos {
-    display: flex;
-    flex-direction: column;
-}
-.botonSeccion:hover a{ 
-    color: white; 
-    background-color: #009999; 
-    text-decoration: underline;
-}
-.botonSeccion{
-    margin: auto 0;
-    border-left: solid;
-    border-width: 3px;
-    border-left-color: black;
-    height: 100%;
-    display: flex;
-    align-content: center;                        
-}
-.activo{
-    padding: 56px 5px 0 5px;
-    text-align: center;
-    color: black;
-    text-decoration: none;
-}
-.botonLink{
-    padding: 48px 5px 0 5px;
-    text-align: center;
-    color: black;
-    text-decoration: none;
-}
-#bannerComunidad{ 
-    background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; 
-    background-size: 100% auto;
-    height: 690px;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    background-attachment: scroll;    
-    align-items: center;
-    align-content: center;
-    font-family: "lato Regular", Helvetica, sans-serif;  
-    font-size: 21px;
-}
-#contenedorBanner{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 570px;    
-}
-.slogan{
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    padding: 348px 33px 80px 0px;
-    color: white;
-}
-.slogan h1{
-    color: #009999;
-}
-.opacidadNegro{
-    background-color: rgba(0,0,0,0.8);
-    height: 210px;
-    width: 480px;
-    padding-left: 50px;
-}
-.contenerdorFormulario{
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    padding-top: 148px;
-}
-.formularioBusqueda1{
-    display: flex;
-    flex-direction: column;
-    height: 390px;
-    align-items: flex-end;
-    align-content: space-around;
-    justify-content: space-evenly;
-    padding-right: 48px;
-}
-.formularioBusqueda1 select {
-    width: 333px;
-    height: 33px;
-    border: none;
-}
-.casillaSeleccion {
-    background-color: white;
-}
-#seleccionarProfesional{
-
-}
-#seleccionarServicio {
-
-}
-.animacionBoton{
-    animation-name: botonAnimado;
-    animation-duration: 3s;
-    animation-delay: 3s;
-    animation-timing-function: ease-out;
-    height: 49px;
-    width: 100px;
-    position: absolute;
-    color: #ffffff;
-    font-weight: bold;
-    padding: 3px 6px;
-    margin: 6px 3px;
-    background-color: #92B901; 
-    left:1210px; 
-    top:480px;
-}
-@keyframes botonAnimado{
-    0%   {background-color:#1ec7e6; left:900px; top:480px;}
-    100% {background-color:#92B901; left:1210px; top:480px;}
-}
-.mensajeBanner{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
-    width: 100%;
-    text-align: center;
-    height: 110px;
-    padding-top: 30px;
-    background-color: #006699;
-    color: white;
-    font-size: 30px;    
-}
-#registrate{
-    display: flex;
-    flex-direction: row;
-    height: 480px;
-    width: 100%;
-}
-.registrateImagen{
-    display: flex;
-    flex-direction: column;
-    height: 480px;
-    width: 50%;
-    margin-top: 20px;
-    background: #e9ebe6 url(../img/Ingresar_registro.png) no-repeat center; 
-    background-attachment: scroll;         
-    background-size: 100% auto;
-}
-.registrateformulario{
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    text-align: center;
-    height: 480px;
-    width: 50%;
-    background: #13495e; 
-    margin-top: 20px;
-    color: white;
-}
-#formularioRegistro input{
-    border: none;
-    width: 333px;
-    height: 27px;
-}
-#comoFunciona{
-    background: #13495e; 
-    width: 100%;
-    height: 330px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    border-top: #1ec7e6;
-    border-top-style: solid;
-    color: white;
-}
-#comoFunciona .comunidadTitulo{
-    color: #1ec7e6;
-    width: 33%;
-    text-align: center;
-}
-#comoFunciona p {
-    align-items: center;
-    display: flex;
-}
-.comoPropietarios{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    text-align: left;
-    width: 100%;
-    align-items: center;
-    align-content: center;
-}
-.nuevoProyecto{
-    width: 19%;
-
-}
-.seleccionaPerfiles{
-    width: 29%;
-}
-.calificaServicio{
-    width: 19%;
-}
-.comoComerciantes{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    text-align: left;
-    border-top: #1ec7e6;
-    border-top-style: solid;
-    width: 100%;
-    align-items: center;
-    align-content: center;
-}
-.buscarOfertas{
-    width: 19%;
-}
-.cargaPresupuesto{
-    width: 29%;
-}
-.calificaPropietario{
-    width: 19%;
-}
-#popularCategorias{
-    display: flex;    
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-around;
-    height: 460px;
-    width: 100%;
-}
-.categoriasPopulares {
-    background-color: #313332; 
-    color: white;    
-}
-.categoriasPopulares li {
-    list-style-type: none;
-}
-#categoriasServicios{
-    background: #333333 url(../img/Profesionales_servicios2.png) no-repeat center;     
-    background-size: 100% auto;
-    background-attachment: scroll;         
-    height: 460px;
-    width: 100%;
-    display: flex;    
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-around;
-}
-.tituloServicios {
-    width: 100%;
-}
-.contratistasReformas {
-    display: flex;    
-    flex-direction: row;
-    text-align: left;
-    justify-content: space-around;
-    width: 100%;    
-
-}
-.contratistasReformas ul {
-
-}
-.contratistasReformas li {
-    list-style-type: none;
-}
-#comerciantesLocales{
-    background: #21969b; 
-    width: 100%;
-    height: 300px;
-    display: flex;    
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-around;
-}
-.localCiudades{
-    font-family: "lato Regular", Helvetica, sans-serif;  
-    font-size: 17px;
-    color: white;
-}
-.ciudades {
-    display: flex;    
-    flex-direction: row;
-    text-align: center;
-    justify-content: space-evenly;
-}
-#footer{    
-    width: 100%;
-    margin: 0 auto;
-    background: #313332; 
-    background-size: 100% auto;
-    display: flex;
-    background-attachment: scroll;             
-}
-#footerContainer{
-    display: flex;
-    flex-direction: column;    
-    justify-content: center;
-    width: 100%;
-    font-family: "lato Regular", Helvetica, sans-serif;  
-    font-size: 17px;
-    color: white;
-    padding-top: 21px;    
-}
-.footerSuperior{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 100%;
-}
-.footerSuperior li { 
-    list-style-type: none; 
-    color: #deaf06;
-}
-.footerSuperior a {
-    font-size: 21px; 
-    text-decoration: none;
-}
-.footerSuperior a:link{
-    color: white;    
-}
-.footerSuperior a:visited{
-    color: white;    
-}
-.footerSuperior a:hover{
-    background-color: #006699;    
-    text-decoration: underline;
-}
-.masLinks{
-    display: flex;
-    flex-direction: column;
-    width: 33%;
-    padding: 15px 0px 35px 121px;    
-    justify-content: space-between;
-    justify-items: center;
-}
-.siguenosRedes{
-    display: flex;
-    flex-direction: column;
-    width: 25%;
-    padding-right: 48px;
-    padding-left: 48px;
-    margin-top: -15px;
-}
-.datosContacto{
-    display: flex;
-    flex-direction: column;
-    width: 42%;
-    margin-top: -15px;
-}
-.listaFooter{
-    margin-top: -21px;
-    text-align: justify;
-}
-.siguenosRedes .listaFooter li{
-    border-bottom: #e9ebe6;
-    border-bottom-style: solid;
-}
-.footerInferior{
-    width: 100%;
-    text-align: center;
-    font-size: 21px;
-    border-top: blanchedalmond;
-    border-top-style: solid;
+    #menuFijo{ 
+        position: absolute;  
+        height: 101px; 
+        margin: 0 0; 
+        padding: 0 0; 
+        width: 100%; 
+        right: 0px;
+        left: 0px;
+        top: 0px;
+        }
+    #barraMenu{ 
+        display: inline-flex; 
+        position: fixed; 
+        font-family: "lato Regular", Helvetica, sans-serif; 
+        color: #333333; 
+        background-color: #e9ebe6;
+        flex-wrap: nowrap;
+    }
+    #barraMenu img:hover #menuContenedor{
+        display: flex;
+    }
+    #menuContenedor{
+        display: none; 
+        flex-direction: column; 
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        width: 100%;
+        overflow: visible;
+    }
+    .menuSecciones{ 
+        display: flex; 
+        flex-direction: row; 
+        overflow: visible; 
+        list-style-type: none;
+        padding: 0 0;
+        margin: 0 0;
+    }
+    .dropdown{
+        transition: background-color 0.3s;
+    }
+    .dropdown:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+    .dropdownContenidos{
+        display: none;
+        position: absolute;
+        background-color: #009999;
+        min-width: 110px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        margin: 3px 5px;
+        padding: 5px 3px;
+    }
+    .dropdownContenidos a{
+        font-size: 21px; 
+        text-decoration: none;
+    }
+    .dropdownContenidos a:link{
+        color: white;    
+    }
+    .dropdownContenidos a:visited{
+        color: white;    
+    }
+    .dropdownContenidos a:hover{
+        background-color: #e9ebe6;
+        color: black;    
+        text-decoration: underline;
+    }
+    .dropdown:hover .dropdownContenidos {
+        display: flex;
+        flex-direction: column;
+    }
+    .botonSeccion:hover a{ 
+        color: white; 
+        background-color: #009999; 
+        text-decoration: underline;
+    }
+    .botonSeccion{
+        margin: auto 0;
+        border-left: solid;
+        border-width: 3px;
+        border-left-color: black;
+        height: 100%;
+        display: flex;
+        align-content: center;                        
+    }
+    .activo{
+        padding: 56px 5px 0 5px;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+    }
+    .botonLink{
+        padding: 48px 5px 0 5px;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+    }
+    #bannerComunidad{ 
+        background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; 
+        background-size: 100% auto;
+        height: 690px;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        background-attachment: scroll;    
+        align-items: center;
+        align-content: center;
+        font-family: "lato Regular", Helvetica, sans-serif;  
+        font-size: 21px;
+    }
+    #contenedorBanner{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 570px;    
+    }
+    .slogan{
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        padding: 348px 33px 80px 0px;
+        color: white;
+    }
+    .slogan h1{
+        color: #009999;
+    }
+    .opacidadNegro{
+        background-color: rgba(0,0,0,0.8);
+        height: 210px;
+        width: 480px;
+        padding-left: 50px;
+    }
+    .contenerdorFormulario{
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        padding-top: 148px;
+    }
+    .formularioBusqueda1{
+        display: flex;
+        flex-direction: column;
+        height: 390px;
+        align-items: flex-end;
+        align-content: space-around;
+        justify-content: space-evenly;
+        padding-right: 48px;
+    }
+    .formularioBusqueda1 select {
+        width: 333px;
+        height: 33px;
+        border: none;
+    }
+    .casillaSeleccion {
+        background-color: white;
+    }
+    #seleccionarProfesional{
+    
+    }
+    #seleccionarServicio {
+    
+    }
+    .animacionBoton{
+        animation-name: botonAnimado;
+        animation-duration: 3s;
+        animation-delay: 3s;
+        animation-timing-function: ease-out;
+        height: 49px;
+        width: 100px;
+        position: absolute;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 3px 6px;
+        margin: 6px 3px;
+        background-color: #92B901; 
+        left:1210px; 
+        top:480px;
+    }
+    @keyframes botonAnimado{
+        0%   {background-color:#1ec7e6; left:900px; top:480px;}
+        100% {background-color:#92B901; left:1210px; top:480px;}
+    }
+    .mensajeBanner{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        text-align: center;
+        height: 110px;
+        padding-top: 30px;
+        background-color: #006699;
+        color: white;
+        font-size: 30px;    
+    }
+    #registrate{
+        display: flex;
+        flex-direction: row;
+        height: 480px;
+        width: 100%;
+    }
+    .registrateImagen{
+        display: flex;
+        flex-direction: column;
+        height: 480px;
+        width: 50%;
+        margin-top: 20px;
+        background: #e9ebe6 url(../img/Ingresar_registro.png) no-repeat center; 
+        background-attachment: scroll;         
+        background-size: 100% auto;
+    }
+    .registrateformulario{
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        text-align: center;
+        height: 480px;
+        width: 50%;
+        background: #13495e; 
+        margin-top: 20px;
+        color: white;
+    }
+    #formularioRegistro input{
+        border: none;
+        width: 333px;
+        height: 27px;
+    }
+    #comoFunciona{
+        background: #13495e; 
+        width: 100%;
+        height: 330px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        border-top: #1ec7e6;
+        border-top-style: solid;
+        color: white;
+    }
+    #comoFunciona .comunidadTitulo{
+        color: #1ec7e6;
+        width: 33%;
+        text-align: center;
+    }
+    #comoFunciona p {
+        align-items: center;
+        display: flex;
+    }
+    .comoPropietarios{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        text-align: left;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+    }
+    .nuevoProyecto{
+        width: 19%;
+    
+    }
+    .seleccionaPerfiles{
+        width: 29%;
+    }
+    .calificaServicio{
+        width: 19%;
+    }
+    .comoComerciantes{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        text-align: left;
+        border-top: #1ec7e6;
+        border-top-style: solid;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+    }
+    .buscarOfertas{
+        width: 19%;
+    }
+    .cargaPresupuesto{
+        width: 29%;
+    }
+    .calificaPropietario{
+        width: 19%;
+    }
+    #popularCategorias{
+        display: flex;    
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+        height: 460px;
+        width: 100%;
+    }
+    .categoriasPopulares {
+        background-color: #313332; 
+        color: white;    
+    }
+    .categoriasPopulares li {
+        list-style-type: none;
+    }
+    #categoriasServicios{
+        background: #333333 url(../img/Profesionales_servicios2.png) no-repeat center;     
+        background-size: 100% auto;
+        background-attachment: scroll;         
+        height: 460px;
+        width: 100%;
+        display: flex;    
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+    }
+    .tituloServicios {
+        width: 100%;
+    }
+    .contratistasReformas {
+        display: flex;    
+        flex-direction: column;
+        text-align: left;
+        justify-content: space-around;
+        width: 100%;    
+    
+    }
+    .contratistasReformas ul {
+    
+    }
+    .contratistasReformas li {
+        list-style-type: none;
+    }
+    #comerciantesLocales{
+        background: #21969b; 
+        width: 100%;
+        height: 300px;
+        display: flex;    
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+    }
+    .localCiudades{
+        font-family: "lato Regular", Helvetica, sans-serif;  
+        font-size: 17px;
+        color: white;
+    }
+    .ciudades {
+        display: flex;    
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-evenly;
+    }
+    #footer{    
+        width: 100%;
+        margin: 0 auto;
+        background: #313332; 
+        background-size: 100% auto;
+        display: flex;
+        background-attachment: scroll;             
+    }
+    #footerContainer{
+        display: flex;
+        flex-direction: column;    
+        justify-content: center;
+        width: 100%;
+        font-family: "lato Regular", Helvetica, sans-serif;  
+        font-size: 17px;
+        color: white;
+        padding-top: 21px;    
+    }
+    .footerSuperior{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 100%;
+    }
+    .footerSuperior li { 
+        list-style-type: none; 
+        color: #deaf06;
+    }
+    .footerSuperior a {
+        font-size: 21px; 
+        text-decoration: none;
+    }
+    .footerSuperior a:link{
+        color: white;    
+    }
+    .footerSuperior a:visited{
+        color: white;    
+    }
+    .footerSuperior a:hover{
+        background-color: #006699;    
+        text-decoration: underline;
+    }
+    .masLinks{
+        display: flex;
+        flex-direction: column;
+        width: 33%;
+        padding: 15px 0px 35px 121px;    
+        justify-content: space-between;
+        justify-items: center;
+    }
+    .siguenosRedes{
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+        padding-right: 48px;
+        padding-left: 48px;
+        margin-top: -15px;
+    }
+    .datosContacto{
+        display: flex;
+        flex-direction: column;
+        width: 42%;
+        margin-top: -15px;
+    }
+    .listaFooter{
+        margin-top: -21px;
+        text-align: justify;
+    }
+    .siguenosRedes .listaFooter li{
+        border-bottom: #e9ebe6;
+        border-bottom-style: solid;
+    }
+    .footerInferior{
+        width: 100%;
+        text-align: center;
+        font-size: 21px;
+        border-top: blanchedalmond;
+        border-top-style: solid;
+    }   
+}
+/* Pantallas en tabletas */
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    #menuFijo{ 
+        position: absolute;  
+        height: 101px; 
+        margin: 0 0; 
+        padding: 0 0; 
+        width: 100%; 
+        right: 0px;
+        left: 0px;
+        top: 0px;
+        }
+    #barraMenu{ 
+        display: inline-flex; 
+        position: fixed; 
+        font-family: "lato Regular", Helvetica, sans-serif; 
+        color: #333333; 
+        background-color: #e9ebe6;
+        flex-wrap: nowrap;
+    }
+    #menuContenedor{
+        display: flex; 
+        flex-direction: row; 
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .menuSecciones{ 
+        display: flex; 
+        flex-direction: row; 
+        overflow: visible; 
+        list-style-type: none;
+        padding: 0 0;
+        margin: 0 0;
+    }
+    .dropdown{
+        transition: background-color 0.3s;
+    }
+    .dropdown:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+    .dropdownContenidos{
+        display: none;
+        position: absolute;
+        background-color: #009999;
+        min-width: 110px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        margin: 3px 5px;
+        padding: 5px 3px;
+    }
+    .dropdownContenidos a{
+        font-size: 21px; 
+        text-decoration: none;
+    }
+    .dropdownContenidos a:link{
+        color: white;    
+    }
+    .dropdownContenidos a:visited{
+        color: white;    
+    }
+    .dropdownContenidos a:hover{
+        background-color: #e9ebe6;
+        color: black;    
+        text-decoration: underline;
+    }
+    .dropdown:hover .dropdownContenidos {
+        display: flex;
+        flex-direction: column;
+    }
+    .botonSeccion:hover a{ 
+        color: white; 
+        background-color: #009999; 
+        text-decoration: underline;
+    }
+    .botonSeccion{
+        margin: auto 0;
+        border-left: solid;
+        border-width: 3px;
+        border-left-color: black;
+        height: 100%;
+        display: flex;
+        align-content: center;                        
+    }
+    .activo{
+        padding: 56px 5px 0 5px;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+    }
+    .botonLink{
+        padding: 48px 5px 0 5px;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+    }
+    #bannerComunidad{ 
+        background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; 
+        background-size: 100% auto;
+        height: 690px;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        background-attachment: scroll;    
+        align-items: center;
+        align-content: center;
+        font-family: "lato Regular", Helvetica, sans-serif;  
+        font-size: 21px;
+    }
+    #contenedorBanner{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 570px;    
+    }
+    .slogan{
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        padding: 348px 33px 80px 0px;
+        color: white;
+    }
+    .slogan h1{
+        color: #009999;
+    }
+    .opacidadNegro{
+        background-color: rgba(0,0,0,0.8);
+        height: 210px;
+        width: 480px;
+        padding-left: 50px;
+    }
+    .contenerdorFormulario{
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        padding-top: 148px;
+    }
+    .formularioBusqueda1{
+        display: flex;
+        flex-direction: column;
+        height: 390px;
+        align-items: flex-end;
+        align-content: space-around;
+        justify-content: space-evenly;
+        padding-right: 48px;
+    }
+    .formularioBusqueda1 select {
+        width: 333px;
+        height: 33px;
+        border: none;
+    }
+    .casillaSeleccion {
+        background-color: white;
+    }
+    #seleccionarProfesional{
+    
+    }
+    #seleccionarServicio {
+    
+    }
+    .animacionBoton{
+        animation-name: botonAnimado;
+        animation-duration: 3s;
+        animation-delay: 3s;
+        animation-timing-function: ease-out;
+        height: 49px;
+        width: 100px;
+        position: absolute;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 3px 6px;
+        margin: 6px 3px;
+        background-color: #92B901; 
+        left:1210px; 
+        top:480px;
+    }
+    @keyframes botonAnimado{
+        0%   {background-color:#1ec7e6; left:900px; top:480px;}
+        100% {background-color:#92B901; left:1210px; top:480px;}
+    }
+    .mensajeBanner{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        text-align: center;
+        height: 110px;
+        padding-top: 30px;
+        background-color: #006699;
+        color: white;
+        font-size: 30px;    
+    }
+    #registrate{
+        display: flex;
+        flex-direction: row;
+        height: 480px;
+        width: 100%;
+    }
+    .registrateImagen{
+        display: flex;
+        flex-direction: column;
+        height: 480px;
+        width: 50%;
+        margin-top: 20px;
+        background: #e9ebe6 url(../img/Ingresar_registro.png) no-repeat center; 
+        background-attachment: scroll;         
+        background-size: 100% auto;
+    }
+    .registrateformulario{
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        text-align: center;
+        height: 480px;
+        width: 50%;
+        background: #13495e; 
+        margin-top: 20px;
+        color: white;
+    }
+    #formularioRegistro input{
+        border: none;
+        width: 333px;
+        height: 27px;
+    }
+    #comoFunciona{
+        background: #13495e; 
+        width: 100%;
+        height: 330px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        border-top: #1ec7e6;
+        border-top-style: solid;
+        color: white;
+    }
+    #comoFunciona .comunidadTitulo{
+        color: #1ec7e6;
+        width: 33%;
+        text-align: center;
+    }
+    #comoFunciona p {
+        align-items: center;
+        display: flex;
+    }
+    .comoPropietarios{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        text-align: left;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+    }
+    .nuevoProyecto{
+        width: 19%;
+    
+    }
+    .seleccionaPerfiles{
+        width: 29%;
+    }
+    .calificaServicio{
+        width: 19%;
+    }
+    .comoComerciantes{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        text-align: left;
+        border-top: #1ec7e6;
+        border-top-style: solid;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+    }
+    .buscarOfertas{
+        width: 19%;
+    }
+    .cargaPresupuesto{
+        width: 29%;
+    }
+    .calificaPropietario{
+        width: 19%;
+    }
+    #popularCategorias{
+        display: flex;    
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+        height: 460px;
+        width: 100%;
+    }
+    .categoriasPopulares {
+        background-color: #313332; 
+        color: white;    
+    }
+    .categoriasPopulares li {
+        list-style-type: none;
+    }
+    #categoriasServicios{
+        background: #333333 url(../img/Profesionales_servicios2.png) no-repeat center;     
+        background-size: 100% auto;
+        background-attachment: scroll;         
+        height: 460px;
+        width: 100%;
+        display: flex;    
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+    }
+    .tituloServicios {
+        width: 100%;
+    }
+    .contratistasReformas {
+        display: flex;    
+        flex-direction: row;
+        text-align: left;
+        justify-content: space-around;
+        width: 100%;    
+    
+    }
+    .contratistasReformas ul {
+    
+    }
+    .contratistasReformas li {
+        list-style-type: none;
+    }
+    #comerciantesLocales{
+        background: #21969b; 
+        width: 100%;
+        height: 300px;
+        display: flex;    
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+    }
+    .localCiudades{
+        font-family: "lato Regular", Helvetica, sans-serif;  
+        font-size: 17px;
+        color: white;
+    }
+    .ciudades {
+        display: flex;    
+        flex-direction: row;
+        text-align: center;
+        justify-content: space-evenly;
+    }
+    #footer{    
+        width: 100%;
+        margin: 0 auto;
+        background: #313332; 
+        background-size: 100% auto;
+        display: flex;
+        background-attachment: scroll;             
+    }
+    #footerContainer{
+        display: flex;
+        flex-direction: column;    
+        justify-content: center;
+        width: 100%;
+        font-family: "lato Regular", Helvetica, sans-serif;  
+        font-size: 17px;
+        color: white;
+        padding-top: 21px;    
+    }
+    .footerSuperior{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+    }
+    .footerSuperior li { 
+        list-style-type: none; 
+        color: #deaf06;
+    }
+    .footerSuperior a {
+        font-size: 21px; 
+        text-decoration: none;
+    }
+    .footerSuperior a:link{
+        color: white;    
+    }
+    .footerSuperior a:visited{
+        color: white;    
+    }
+    .footerSuperior a:hover{
+        background-color: #006699;    
+        text-decoration: underline;
+    }
+    .masLinks{
+        display: flex;
+        flex-direction: column;
+        width: 33%;
+        padding: 15px 0px 35px 121px;    
+        justify-content: space-between;
+        justify-items: center;
+    }
+    .siguenosRedes{
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+        padding-right: 48px;
+        padding-left: 48px;
+        margin-top: -15px;
+    }
+    .datosContacto{
+        display: flex;
+        flex-direction: column;
+        width: 42%;
+        margin-top: -15px;
+    }
+    .listaFooter{
+        margin-top: -21px;
+        text-align: justify;
+    }
+    .siguenosRedes .listaFooter li{
+        border-bottom: #e9ebe6;
+        border-bottom-style: solid;
+    }
+    .footerInferior{
+        width: 100%;
+        text-align: center;
+        font-size: 21px;
+        border-top: blanchedalmond;
+        border-top-style: solid;
+    }   
+}
+/* Pantallas de Ordenador */
+@media screen and (min-width: 900px) {
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    #menuFijo{ 
+        position: absolute;  
+        height: 101px; 
+        margin: 0 0; 
+        padding: 0 0; 
+        width: 100%; 
+        right: 0px;
+        left: 0px;
+        top: 0px;
+        }
+    #barraMenu{ 
+        display: inline-flex; 
+        position: fixed; 
+        font-family: "lato Regular", Helvetica, sans-serif; 
+        color: #333333; 
+        background-color: #e9ebe6;
+        flex-wrap: nowrap;
+    }
+    #menuContenedor{
+        display: flex; 
+        flex-direction: row; 
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .menuSecciones{ 
+        display: flex; 
+        flex-direction: row; 
+        overflow: visible; 
+        list-style-type: none;
+        padding: 0 0;
+        margin: 0 0;
+    }
+    .dropdown{
+        transition: background-color 0.3s;
+    }
+    .dropdown:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+    .dropdownContenidos{
+        display: none;
+        position: absolute;
+        background-color: #009999;
+        min-width: 110px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        margin: 3px 5px;
+        padding: 5px 3px;
+    }
+    .dropdownContenidos a{
+        font-size: 21px; 
+        text-decoration: none;
+    }
+    .dropdownContenidos a:link{
+        color: white;    
+    }
+    .dropdownContenidos a:visited{
+        color: white;    
+    }
+    .dropdownContenidos a:hover{
+        background-color: #e9ebe6;
+        color: black;    
+        text-decoration: underline;
+    }
+    .dropdown:hover .dropdownContenidos {
+        display: flex;
+        flex-direction: column;
+    }
+    .botonSeccion:hover a{ 
+        color: white; 
+        background-color: #009999; 
+        text-decoration: underline;
+    }
+    .botonSeccion{
+        margin: auto 0;
+        border-left: solid;
+        border-width: 3px;
+        border-left-color: black;
+        height: 100%;
+        display: flex;
+        align-content: center;                        
+    }
+    .activo{
+        padding: 56px 5px 0 5px;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+    }
+    .botonLink{
+        padding: 48px 5px 0 5px;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+    }
+    #bannerComunidad{ 
+        background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; 
+        background-size: 100% auto;
+        height: 690px;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        background-attachment: scroll;    
+        align-items: center;
+        align-content: center;
+        font-family: "lato Regular", Helvetica, sans-serif;  
+        font-size: 21px;
+    }
+    #contenedorBanner{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 570px;    
+    }
+    .slogan{
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        padding: 348px 33px 80px 0px;
+        color: white;
+    }
+    .slogan h1{
+        color: #009999;
+    }
+    .opacidadNegro{
+        background-color: rgba(0,0,0,0.8);
+        height: 210px;
+        width: 480px;
+        padding-left: 50px;
+    }
+    .contenerdorFormulario{
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        padding-top: 148px;
+    }
+    .formularioBusqueda1{
+        display: flex;
+        flex-direction: column;
+        height: 390px;
+        align-items: flex-end;
+        align-content: space-around;
+        justify-content: space-evenly;
+        padding-right: 48px;
+    }
+    .formularioBusqueda1 select {
+        width: 333px;
+        height: 33px;
+        border: none;
+    }
+    .casillaSeleccion {
+        background-color: white;
+    }
+    #seleccionarProfesional{
+    
+    }
+    #seleccionarServicio {
+    
+    }
+    .animacionBoton{
+        animation-name: botonAnimado;
+        animation-duration: 3s;
+        animation-delay: 3s;
+        animation-timing-function: ease-out;
+        height: 49px;
+        width: 100px;
+        position: absolute;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 3px 6px;
+        margin: 6px 3px;
+        background-color: #92B901; 
+        left:1210px; 
+        top:480px;
+    }
+    @keyframes botonAnimado{
+        0%   {background-color:#1ec7e6; left:900px; top:480px;}
+        100% {background-color:#92B901; left:1210px; top:480px;}
+    }
+    .mensajeBanner{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        text-align: center;
+        height: 110px;
+        padding-top: 30px;
+        background-color: #006699;
+        color: white;
+        font-size: 30px;    
+    }
+    #registrate{
+        display: flex;
+        flex-direction: row;
+        height: 480px;
+        width: 100%;
+    }
+    .registrateImagen{
+        display: flex;
+        flex-direction: column;
+        height: 480px;
+        width: 50%;
+        margin-top: 20px;
+        background: #e9ebe6 url(../img/Ingresar_registro.png) no-repeat center; 
+        background-attachment: scroll;         
+        background-size: 100% auto;
+    }
+    .registrateformulario{
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        text-align: center;
+        height: 480px;
+        width: 50%;
+        background: #13495e; 
+        margin-top: 20px;
+        color: white;
+    }
+    #formularioRegistro input{
+        border: none;
+        width: 333px;
+        height: 27px;
+    }
+    #comoFunciona{
+        background: #13495e; 
+        width: 100%;
+        height: 330px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        border-top: #1ec7e6;
+        border-top-style: solid;
+        color: white;
+    }
+    #comoFunciona .comunidadTitulo{
+        color: #1ec7e6;
+        width: 33%;
+        text-align: center;
+    }
+    #comoFunciona p {
+        align-items: center;
+        display: flex;
+    }
+    .comoPropietarios{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        text-align: left;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+    }
+    .nuevoProyecto{
+        width: 19%;
+    
+    }
+    .seleccionaPerfiles{
+        width: 29%;
+    }
+    .calificaServicio{
+        width: 19%;
+    }
+    .comoComerciantes{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        text-align: left;
+        border-top: #1ec7e6;
+        border-top-style: solid;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+    }
+    .buscarOfertas{
+        width: 19%;
+    }
+    .cargaPresupuesto{
+        width: 29%;
+    }
+    .calificaPropietario{
+        width: 19%;
+    }
+    #popularCategorias{
+        display: flex;    
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+        height: 460px;
+        width: 100%;
+    }
+    .categoriasPopulares {
+        background-color: #313332; 
+        color: white;    
+    }
+    .categoriasPopulares li {
+        list-style-type: none;
+    }
+    #categoriasServicios{
+        background: #333333 url(../img/Profesionales_servicios2.png) no-repeat center;     
+        background-size: 100% auto;
+        background-attachment: scroll;         
+        height: 460px;
+        width: 100%;
+        display: flex;    
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+    }
+    .tituloServicios {
+        width: 100%;
+    }
+    .contratistasReformas {
+        display: flex;    
+        flex-direction: row;
+        text-align: left;
+        justify-content: space-around;
+        width: 100%;    
+    
+    }
+    .contratistasReformas ul {
+    
+    }
+    .contratistasReformas li {
+        list-style-type: none;
+    }
+    #comerciantesLocales{
+        background: #21969b; 
+        width: 100%;
+        height: 300px;
+        display: flex;    
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+    }
+    .localCiudades{
+        font-family: "lato Regular", Helvetica, sans-serif;  
+        font-size: 17px;
+        color: white;
+    }
+    .ciudades {
+        display: flex;    
+        flex-direction: row;
+        text-align: center;
+        justify-content: space-evenly;
+    }
+    #footer{    
+        width: 100%;
+        margin: 0 auto;
+        background: #313332; 
+        background-size: 100% auto;
+        display: flex;
+        background-attachment: scroll;             
+    }
+    #footerContainer{
+        display: flex;
+        flex-direction: column;    
+        justify-content: center;
+        width: 100%;
+        font-family: "lato Regular", Helvetica, sans-serif;  
+        font-size: 17px;
+        color: white;
+        padding-top: 21px;    
+    }
+    .footerSuperior{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+    }
+    .footerSuperior li { 
+        list-style-type: none; 
+        color: #deaf06;
+    }
+    .footerSuperior a {
+        font-size: 21px; 
+        text-decoration: none;
+    }
+    .footerSuperior a:link{
+        color: white;    
+    }
+    .footerSuperior a:visited{
+        color: white;    
+    }
+    .footerSuperior a:hover{
+        background-color: #006699;    
+        text-decoration: underline;
+    }
+    .masLinks{
+        display: flex;
+        flex-direction: column;
+        width: 33%;
+        padding: 15px 0px 35px 121px;    
+        justify-content: space-between;
+        justify-items: center;
+    }
+    .siguenosRedes{
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+        padding-right: 48px;
+        padding-left: 48px;
+        margin-top: -15px;
+    }
+    .datosContacto{
+        display: flex;
+        flex-direction: column;
+        width: 42%;
+        margin-top: -15px;
+    }
+    .listaFooter{
+        margin-top: -21px;
+        text-align: justify;
+    }
+    .siguenosRedes .listaFooter li{
+        border-bottom: #e9ebe6;
+        border-bottom-style: solid;
+    }
+    .footerInferior{
+        width: 100%;
+        text-align: center;
+        font-size: 21px;
+        border-top: blanchedalmond;
+        border-top-style: solid;
+    }   
 }

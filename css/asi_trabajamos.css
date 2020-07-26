@@ -1,15 +1,79 @@
 body {
+    font-family: "lato Regular", Helvetica, sans-serif; 
+    font-size: 21px;
     display: flex;
     flex-direction: column;
-    height: 1500px;
+    height: 2700px;
     width: 100%;
     margin: 0 0;
-    padding: 0 0;
-    background: #e9ebe6 url(../img/Asi-trabajamos-Pagina.png) no-repeat center; 
+    padding: 0 0;    
+}
+main{
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+div {
+
+}
+.asiTrabajamosRegistro{
+    background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
 }
-div {
+.asiTrabajamosChat{
+    background: #e9ebe6 url(../img/AsiTrabajamos2.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 570px;
+    width: 100%;
+}
+.asiTrabajamosVinculate{
+    background: #e9ebe6 url(../img/AsiTrabajamos3.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 379px;
+    width: 100%;
+}
+.asiTrabajamosPropietario{
+    background: #e9ebe6 url(../img/AsiTrabajamos4.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 379px;
+    width: 100%;
+    color: #e9ebe6;
+}
+.asiTrabajamosCertificaciones{
+    background: #e9ebe6 url(../img/AsiTrabajamos5.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 570px;
+    width: 100%;
+}
+.asiTrabajamosCalificaciones{
+    background: #e9ebe6 url(../img/AsiTrabajamos6.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 570px;
+    width: 100%;
+    color: #e9ebe6;
+}
+.asiTrabajamosEstadisticas{
+    background: #e9ebe6;
+    height: 220px;
+    width: 100%;
+}
+/*    
     padding: 3px 6px;
     margin: 6px 3px;
-}
+    background-color: #333333;
+    background-color: #e9ebe6;
+    background-color: rgba(0,0,0,0.8);
+    background-color: #009999; 
+    background-color:#1ec7e6;
+    background-color: #13495e; 
+    background-color:#92B901;
+    background-color: #006699;
+    background-color: #deaf06;
+*/
