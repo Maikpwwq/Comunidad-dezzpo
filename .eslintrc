@@ -1,0 +1,32 @@
+{
+
+  "extends": [
+    "fbjs"
+  ],
+
+  "plugins": [
+    "prettier",
+    "react",
+    "react-hooks",
+    "html",
+    "promise",
+    "node",
+    "babel",
+    "import",
+    "jsx-a11y",
+    "better-styled-components"
+  ],
+
+  "parser": "babel-eslint",
+
+  "rules": {
+    "relay/graphql-naming": 0,
+    "max-len": 0
+  },
+
+  "env": {
+    "node": true,
+    "browser": true
+  }
+
+}
