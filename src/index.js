@@ -5,13 +5,13 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
 
 import todoApp from './reducers/todoApp'
-import Rutas from './routes/rutas';
+import App from './App';
 
 let store = createStore(todoApp)
 
 ReactDOM.render(
   <React.StrictMode>
-    <Rutas store={store}/>    
+    <App store={store}/>    
   </React.StrictMode>,
   document.getElementById('root')
 );

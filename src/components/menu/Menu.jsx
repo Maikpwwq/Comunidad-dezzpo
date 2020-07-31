@@ -1,23 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../../css/menu.css">
-    <link rel="stylesheet" type="text/css" href="../../../css/iconmoon/style.css">
-    <link rel="icon" type="image/png" href="../../../img/Comunidad-Dezzpo.png" sizes="32x32">
-    <title>menu</title>
-</head>
-<body>
-    <!-- Menu fijo -->
-    <header id="menuFijo">
+import React from 'react';
+import '../../../css/footer.css';
+import "../../../css/iconmoon/style.css";
+
+const menuComunidad = document.querySelector('#menuDezzpo');
+
+ReactDOM.render ( 
+    /* Menu fijo */
+    <Header id="menuFijo">
         <nav id="barraMenu">
             <img src="./img/Comunidad-Dezzpo.jpg" alt="Logo Comunidad Dezzpo" height="110px" width="210px">
             <div id="menuContenedor">                
                 <ul class="menuSecciones">
                     <li class="botonSeccion"><a href="index.html" class="activo"> Home </a></li>
-                    <!-- seleccion asi trabajamos-->
+                    /* seleccion asi trabajamos*/
                     <div class="dropdown"><li class="botonSeccion">
                         <a href="./src/components/asi-trabajamos/asi_trabajamos.html" class="botonLink"> Asi trabajamos </a></li>
                         <div class="dropdownContenidos">
@@ -29,7 +24,7 @@
                            <a href="./src/components/ingreso/ingreso.html">Calificaciones</a>
                         </div>                    
                     </div>
-                    <!-- seleccion nosotros -->
+                    /* seleccion nosotros */
                     <div class="dropdown"><li class="botonSeccion">
                         <a href="./src/components/nosotros/nosotros.html" class="botonLink"> Nosotros </a></li>
                         <div class="dropdownContenidos">                            
@@ -41,7 +36,7 @@
                            <a href="./src/components/legal/legal.html">Legal</a>
                         </div>                    
                     </div>
-                    <!-- seleccion Comunidad de Comerciantes-->
+                    /* seleccion Comunidad de Comerciantes*/
                     <div class="dropdown"><li class="botonSeccion">
                         <a href="./src/components/comunidad-comerciantes/comunidad_comerciantes.html" class="botonLink"> Comunidad de comerciantes </a></li>
                         <div class="dropdownContenidos">
@@ -53,7 +48,7 @@
                            <a href="./src/components/legal/legal.html y condiciones">Terminos y condiciones</a>
                         </div>                    
                     </div>        
-                    <!-- seleccion Comunidad de Propietarios-->            
+                    /* seleccion Comunidad de Propietarios*/            
                     <div class="dropdown"><li class="botonSeccion">
                         <a href="#Comunidad de propietarios" class="botonLink"> Comunidad de propietarios </a></li>
                         <div class="dropdownContenidos">
@@ -73,6 +68,7 @@
                 </ul>
             </div>
         </nav>
-    </header>
-</body>
-</html>
+    </Header>
+  , menuComunidad);
+
+export default menuComunidad

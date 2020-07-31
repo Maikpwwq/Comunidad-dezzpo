@@ -5,11 +5,8 @@
   "description": "![Comunidad Dezzpo](/img/Comunidad-Dezzpo.jpg)",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build",
-    "start1": "webpack-dev-server",
-    "build1": "webpack --mode production",
-    "build": "webpack -d && cp src/index.html dist/index.html && webpack-dev-server --content-base src/ --inline --hot",
-    "build:prod": "webpack -p && cp src/index.html dist/index.html"
+    "start": "webpack-dev-server --content-base src/ --inline --hot",
+    "build": "webpack --mode production"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,6 +35,15 @@
   },
   "homepage": "https://github.com/Maikpwwq/Comunidad-dezzpo#readme",
   "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
+    "react-router": "^5.2.0",
+    "redux": "^4.0.5",
+    "styled-components": "^5.1.1"
+  },
+  "devDependencies": {
+    "path": "^0.12.7",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -45,15 +51,6 @@
     "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^3.1.2",
     "chokidar": "^3.4.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-redux": "^7.2.1",
-    "react-router": "^5.2.0",
-    "react-scripts": "3.4.1",
-    "redux": "^4.0.5",
-    "webpack-dev-server": "^3.11.0"
-  },
-  "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
@@ -62,10 +59,15 @@
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.5",
-    "path": "^0.12.7",
     "prettier": "^2.0.5",
     "webpack": "^4.44.0",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-flow": "^7.10.4",
+    "babel-plugin-macros": "^2.8.0",
+    "polished": "^3.6.5"
   },
   "peerDependencies": {}
 }

@@ -42,7 +42,6 @@
         "regenerator": true
       }
     ],
-    "transform-class-properties",
     "styled-components"
   ]
 }

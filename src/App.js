@@ -1,13 +1,20 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+
+//Importar componentes
 import Footer from './components/footer/footer'
 import Menu from './components/menu/menu'
+import Rutas from './routes/rutas'
 
-function App() {
-  return (
-    <div className="App">
-        <Menu></Menu>
-        <Footer></Footer>
-    </div>
+const App = ({}) => {
+    return (
+      <Provider store={store}>
+          <div className="App">
+            <Menu></Menu>
+            <Rutas></Rutas>
+            <Footer></Footer>
+          </div>
+      </Provider>
   );
 }
 

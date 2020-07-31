@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../../css/footer.css">
-    <link rel="stylesheet" type="text/css" href="../../../css/iconmoon/style.css">
-    <link rel="icon" type="image/png" href="../../../img/Comunidad-Dezzpo.png" sizes="32x32">
-    <title>Footer</title>
-</head>
-<body>
-    <!-- Empieza la seccion del footer -->
-    <footer id="footer">
+import React from 'react';
+import '../../../css/footer.css';
+import "../../../css/iconmoon/style.css";
+
+const footerComunidad = document.querySelector('#footerDezzpo');
+
+ReactDOM.render (
+    /* Empieza la seccion del footer */
+    <Footer id="footer">
         <div id="footerContainer">
-            <!-- parte superior -->
+            /* parte superior */
             <div class="footerSuperior">
-                <!-- Mas links -->
+                /* Mas links */
                 <div class="masLinks">
                     <ul>
                         <li> &#10095; <a href="#Legal" title="legal"> Legal</a></li>
@@ -26,29 +21,29 @@
                         <li> &#10095; <a href="#Mapa del Sitio" title="Mapa del Sitio"> Mapa del Sitio</a></li>
                     </ul>
                 </div>
-                <!-- siguenos en redes -->
+                /* siguenos en redes */
                 <div class="siguenosRedes">
                     <h1> SIGUENOS </h1>
                     <ul class="listaFooter">
-                        <!-- siguenos Instagram -->
+                        /* siguenos Instagram */
                         <li> &#10095;                             
                             <span class="icon-IntagramSocialIcono"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>
                             <a href="https://www.instagram.com/comunidad_dezzpo/" title="Instagram"> Instagram </a></li>
-                        <!-- siguenos Twitter -->
+                        /* siguenos Twitter */
                         <li> &#10095; 
                             <span class="icon-TwitterSocialIcono"><span class="path1"></span><span class="path2"></span></span>
                             <a href="https://www.twitter.com/" title="Twitter"> Twitter </a></li>
-                        <!-- siguenos Facebook -->
+                        /* siguenos Facebook */
                         <li> &#10095; 
                             <span class="icon-FacebookSocialIcono"><span class="path1"></span><span class="path2"></span></span>
                             <a href="https://www.facebook.com/comunidad.dezzpo" title="Facebook"> Facebook </a></li>
-                        <!-- siguenos Linkedin -->
+                        /* siguenos Linkedin */
                         <li> &#10095; 
                             <span class="icon-LinkedinSocialIcono"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
                             <a href="https://www.linkedin.com/company/dezzpo-inc/" title="LinkedIn"> LinkedIn </a></li>
                     </ul>
                 </div>        
-                <!-- Datos de contacto comunidad dezzpo -->
+                /* Datos de contacto comunidad dezzpo */
                 <div class="datosContacto">
                     <h1> Ponte en Contacto </h1>
                     <ul class="listaFooter">
@@ -65,11 +60,12 @@
                     </ul>
                 </div>
             </div>
-            <!-- parte inferior-->
+            /* parte inferior*/
             <div class="footerInferior">
                 <p> © 2019 - Todos los derechos reservados - COMUNIDAD DEZZPO INC. </p>
             </div>
         </div>
-    </footer>    
-</body>
-</html>
+    </Footer>    
+  , footerComunidad);
+
+export default footerComunidad
