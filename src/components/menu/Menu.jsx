@@ -8,7 +8,8 @@ import "../../../css/iconmoon/style.css";
 const MenuComunidad = props => {
     render ( 
         /* Menu fijo */
-        <Header id="menuFijo">
+        <React.Fragment>
+        <header id="menuFijo">
             <nav id="barraMenu">
                 <img src="../../../img/Comunidad-Dezzpo.jpg" alt="Logo Comunidad Dezzpo" height="110px" width="210px"/>
                 <div id="menuContenedor">                
@@ -70,7 +71,9 @@ const MenuComunidad = props => {
                     </ul>
                 </div>
             </nav>
-        </Header>
+            {false && <Redirect to="inicio" ></Redirect>}
+        </header>
+        </React.Fragment>
 )};
 
 export default MenuComunidad

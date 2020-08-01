@@ -8,7 +8,8 @@ import {Link, Redirect} from 'react-router-dom';
 const FooterComunidad = props => {
     render ( 
     /* Empieza la seccion del footer */
-    <Footer id="footer">
+    <React.Fragment>
+    <footer id="footer">
         <div id="footerContainer">
             /* parte superior */
             <div className="footerSuperior">
@@ -67,7 +68,8 @@ const FooterComunidad = props => {
                 <p> © 2019 - Todos los derechos reservados - COMUNIDAD DEZZPO INC. </p>
             </div>
         </div>
-    </Footer>    
+    </footer>    
+    </React.Fragment>
 )
 };
 
