@@ -1,18 +1,19 @@
+/* - Componente plantilla carga el contenido del Menu, Rutas y Footer -  */
 import React from 'react';
 import { Provider } from 'react-redux';
 
 //Importar componentes
-import Footer from './components/footer/footer'
-import Menu from './components/menu/menu'
-import Rutas from './routes/rutas'
+import FooterComunidad from './components/footer/footer';
+import MenuComunidad from './components/menu/menu';
+import Rutas from './routes/rutas';
 
 const App = ({}) => {
     return (
       <Provider store={store}>
           <div className="App">
-            <Menu></Menu>
+            <MenuComunidad></MenuComunidad>
             <Rutas></Rutas>
-            <Footer></Footer>
+            <FooterComunidad></FooterComunidad>
           </div>
       </Provider>
   );

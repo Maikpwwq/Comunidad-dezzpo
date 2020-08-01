@@ -1,17 +1,19 @@
+/* Footer de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react';
 import '../../../css/footer.css';
 import "../../../css/iconmoon/style.css";
 
-const footerComunidad = document.querySelector('#footerDezzpo');
+import {Link, Redirect} from 'react-router-dom';
 
-ReactDOM.render (
+const FooterComunidad = props => {
+    render ( 
     /* Empieza la seccion del footer */
     <Footer id="footer">
         <div id="footerContainer">
             /* parte superior */
-            <div class="footerSuperior">
+            <div className="footerSuperior">
                 /* Mas links */
-                <div class="masLinks">
+                <div className="masLinks">
                     <ul>
                         <li> &#10095; <a href="#Legal" title="legal"> Legal</a></li>
                         <li> &#10095; <a href="#Ayuda" title="Ayuda"> Ayuda</a></li>
@@ -22,50 +24,51 @@ ReactDOM.render (
                     </ul>
                 </div>
                 /* siguenos en redes */
-                <div class="siguenosRedes">
+                <div className="siguenosRedes">
                     <h1> SIGUENOS </h1>
-                    <ul class="listaFooter">
+                    <ul className="listaFooter">
                         /* siguenos Instagram */
                         <li> &#10095;                             
-                            <span class="icon-IntagramSocialIcono"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>
+                            <span className="icon-IntagramSocialIcono"><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span></span>
                             <a href="https://www.instagram.com/comunidad_dezzpo/" title="Instagram"> Instagram </a></li>
                         /* siguenos Twitter */
                         <li> &#10095; 
-                            <span class="icon-TwitterSocialIcono"><span class="path1"></span><span class="path2"></span></span>
+                            <span className="icon-TwitterSocialIcono"><span className="path1"></span><span className="path2"></span></span>
                             <a href="https://www.twitter.com/" title="Twitter"> Twitter </a></li>
                         /* siguenos Facebook */
                         <li> &#10095; 
-                            <span class="icon-FacebookSocialIcono"><span class="path1"></span><span class="path2"></span></span>
+                            <span className="icon-FacebookSocialIcono"><span className="path1"></span><span className="path2"></span></span>
                             <a href="https://www.facebook.com/comunidad.dezzpo" title="Facebook"> Facebook </a></li>
                         /* siguenos Linkedin */
                         <li> &#10095; 
-                            <span class="icon-LinkedinSocialIcono"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+                            <span className="icon-LinkedinSocialIcono"><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span></span>
                             <a href="https://www.linkedin.com/company/dezzpo-inc/" title="LinkedIn"> LinkedIn </a></li>
                     </ul>
                 </div>        
                 /* Datos de contacto comunidad dezzpo */
-                <div class="datosContacto">
+                <div className="datosContacto">
                     <h1> Ponte en Contacto </h1>
-                    <ul class="listaFooter">
-                        <span class="icon-DireccionDomicilioIcono"></span>
+                    <ul className="listaFooter">
+                        <span className="icon-DireccionDomicilioIcono"></span>
                         <li> Dirección  Cll 159 No. 8c-45 </li>
                         <li> Piso 5 </li>
-                        <br>
-                        <span class="icon-TelefonoContactoIcono"></span>
+                        <br/>
+                        <span className="icon-TelefonoContactoIcono"></span>
                         <li> +57 3196138057 - Office </li>
                         <li> +57 3196138057 - PBX </li>
-                        <br>
-                        <span class="icon-EmailIcono"></span>
+                        <br/>
+                        <span className="icon-EmailIcono"></span>
                         <li><a href="mailto:comunidad.dezzpo@gmail.com" title="Correo Comunidad Dezzpo"> comunidad.dezzpo@gmail.com </a></li>
                     </ul>
                 </div>
             </div>
             /* parte inferior*/
-            <div class="footerInferior">
+            <div className="footerInferior">
                 <p> © 2019 - Todos los derechos reservados - COMUNIDAD DEZZPO INC. </p>
             </div>
         </div>
     </Footer>    
-  , footerComunidad);
+)
+};
 
-export default footerComunidad
+export default FooterComunidad;

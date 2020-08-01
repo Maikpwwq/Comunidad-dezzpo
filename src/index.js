@@ -1,3 +1,4 @@
+/* - Componente principal que renderiza el contenido en el Dom-  */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';

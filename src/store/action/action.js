@@ -1,3 +1,4 @@
+/* - Componente que contiene Promesas -  */
 // Productos y servicios
 export const setListadoProductos = payload => ({
     type: 'SET_LISTADO_PRODUCTOS',
