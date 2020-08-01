@@ -5,6 +5,7 @@ const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 const { DuplicatesPlugin } = require("inspectpack/plugin");
 const DashboardPlugin = require("webpack-dashboard/plugin");
 const Dotenv = require("dotenv-webpack");
+var DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
 
 module.exports = {
     mode: 'development',  // 'production'
@@ -18,7 +19,7 @@ module.exports = {
     },
     // PATH RESOLVE
     resolve: {
-        extensions: ['web.js', 'js', 'web.ts', 'ts', 'web.tsx', 'tsx', 'json', 'web.jsx', 'jsx', 'node'],
+        extensions: ['web.js', '.js', 'web.ts', '.ts', 'web.tsx', '.tsx', 'json', 'web.jsx', '.jsx', '.node'],
         publicPath: "/build/",
         filename: 'bundle.js'
     },
@@ -28,53 +29,62 @@ module.exports = {
             'react': path.resolve('./node_modules/react'),
             'react-dom': path.resolve('./node_modules/react-dom'),
             'lodash': path.resolve(__dirname, 'node_modules/lodash'),
-            'react-scripts': path.resolve('./node_modules/react-scripts'),
-
         }
     },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: ['babel-loader', 'astroturf/loader'],                          
-
-                test: /\.html$/,
-                exclude: /node_modules/,
-                use: [{
-                    loader: "html-loader",
-                }],
-
+              test: /\.(js|jsx)$/,
+              exclude: /node_modules/,
+              use: {
+                loader: "babel-loader",
+              }
+            },
+            {
+              test: /\.html$/,
+              use: [
+                {
+                  loader: "html-loader",
+                }
+              ]
+            },
+            {
                 test: /\.(css|scss)$/,
-                exclude: /node_modules/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader', 'style-loader', 'postcss-loader'],
-                options: {
-                    importLoaders: 1,
-                },
-
+                use: [                    
+                  {
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                        esModule: true,
+                    },
+                  },
+                  'css-loader',
+                ],
+            },
+            {                
                 test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
                 use: [{
                         loader: "file-loader",
                         options: {
-                            name: "[path][name]-[hash:8].[ext]"
+                            name: "[path][name]-[hash:8].[ext]",
                         }
                 }],
-
+            },
+            {
                 test: /\.m?js$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env']
+                        presets: ['@babel/preset-env'],
                     } 
                 },
-
-
+            },
+            {
                 test: /\.tsx?$/,
                 use: [{
-                    loader: "ts-loader"
+                    loader: "ts-loader",
                 }]
-            }
+            },
         ]
     },
     // DEV SERVER ENTRY POINT
@@ -84,7 +94,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebPackPlugin({
-            template: "./build/index.html/",
+            template: "./public/index.html/",
             filename: "./index.html"
         }),
         new MiniCssExtractPlugin({
