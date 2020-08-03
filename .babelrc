@@ -34,7 +34,6 @@
     "@babel/plugin-syntax-dynamic-import",
     "babel-plugin-macros",
     "polished",
-
     [
       "@babel/plugin-transform-runtime",
       {

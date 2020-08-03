@@ -37,8 +37,8 @@ const data = {data: "Hola Mundo"};
 const Rutas = props => {
 
     return (
-        <BrowserRouter>                
-            <React.Fragment>
+        <React.Fragment>
+            <BrowserRouter>                            
                 <Switch>
                     <Route exact path="/" component={App} data={data.data} />                
                     <Route exact path="/apendice-costos" component={ApendiceCostos} data={data.data} />
@@ -61,9 +61,9 @@ const Rutas = props => {
                     <Route exact path="/presupuestos" component={Presupuestos} data={data.data} />
                     <Route exact path="/profesionales-servicios" component={ProfesionalesServicios} data={data.data} />
                     <Route exact path="/registro" component={Registro} data={data.data} />
-                </Switch>
-            </React.Fragment>
-        </BrowserRouter>                
+                </Switch>            
+            </BrowserRouter>                
+        </React.Fragment>
     )
 };
 

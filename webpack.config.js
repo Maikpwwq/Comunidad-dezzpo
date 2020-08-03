@@ -102,7 +102,7 @@ module.exports = {
             chunkFilename: "[id].css"
         }),
         new FaviconsWebpackPlugin({
-            logo: 'LogoPNG.png',
+            logo: './img/LogoPNG.png',
             prefix: './img/',
         }),
         new DuplicatePackageCheckerPlugin(),
