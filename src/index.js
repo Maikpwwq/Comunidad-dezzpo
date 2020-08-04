@@ -8,6 +8,7 @@ import { createStore, applyMiddleware } from 'redux'
 import reduxThunk from 'redux-thunk';
 import reducers from './reducers/todoApp';
 import App from './App';
+//import Inicio from '../components/inicio/inicio.html';
 
 //
 import Message from './js/Message';
@@ -15,13 +16,12 @@ import Message from './js/Message';
 let store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 //var async = require('neo-async');
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
         <Message />
         <App />
-    </Provider>,   
+    </Provider>   
   </React.StrictMode>,
   document.getElementById('root')
 );

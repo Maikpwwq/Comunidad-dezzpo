@@ -8,7 +8,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "buildDev": "rm -rf dist && webpack --mode development --config webpack.server.config.js && webpack --mode development --config webpack.dev.config.js",
-    "buildProd": "rm -rf dist && webpack --mode production --config webpack.server.config.js && webpack --mode production --config webpack.prod.config.js",    
+    "buildProd": "rm -rf dist && webpack --mode production --config webpack.server.config.js && webpack --mode production --config webpack.prod.config.js",
     "start": "webpack-dev-server --open --mode development"
   },
   "eslintConfig": {
@@ -85,7 +85,10 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-macros": "^2.8.0",
     "babel-plugin-polished": "^1.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-react-app": "^3.1.2",
+    "babel-preset-stage-0": "^6.24.1",
     "chokidar": "^3.4.1",
     "css-loader": "^4.2.0",
     "duplicate-package-checker-webpack-plugin": "^3.0.0",

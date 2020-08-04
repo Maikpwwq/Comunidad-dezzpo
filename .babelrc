@@ -23,7 +23,10 @@
         "pragma": "React.createElement"
       }
     ],
-    "@babel/flow"
+    "@babel/flow",
+    "es2015", 
+    "stage-0", 
+    "react"
   ],
   "plugins": [
     [
