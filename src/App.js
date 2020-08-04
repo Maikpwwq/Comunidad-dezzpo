@@ -4,15 +4,14 @@ import React from 'react';
 import FooterComunidad from './components/footer/footer';
 import MenuComunidad from './components/menu/menu';
 import Rutas from './routes/rutas';
-import List from './components/List';
+//import List from './components/List'; <List/>
 
 const App = ({}) => {
     return (      
       <React.Fragment className="App">
             <MenuComunidad></MenuComunidad>
             <Rutas></Rutas>
-            <FooterComunidad></FooterComunidad>
-            <List/>
+            <FooterComunidad></FooterComunidad>            
       </React.Fragment>
   );
 }

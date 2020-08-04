@@ -1,4 +1,4 @@
-import {FETCH_TODOS} from '../actions/types';
+import {FETCH_TODOS} from '../action/action';
 import {todosRef} from '../firebase'
 
 const FETCH_TODOS = 'FETCH_TODOS';
