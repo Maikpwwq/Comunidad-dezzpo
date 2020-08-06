@@ -49,6 +49,7 @@
     }
   },
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
     "braces": "^3.0.2",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^2.0.0",
