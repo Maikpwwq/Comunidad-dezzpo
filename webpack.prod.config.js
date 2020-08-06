@@ -51,10 +51,15 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: ["babel-loader","eslint-loader"]
         },
         query: {
           presets: ['es2015']
+        },
+        options: {
+          emitWarning: true,
+          failOnError: false,
+          failOnWarning: false
         }
       },
       {

@@ -37,23 +37,18 @@ module.exports = {
     rules: [
       {
         enforce: "pre",
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: "eslint-loader",
+        use: {
+            loader: ["babel-loader","eslint-loader"]
+        },
+        query: {
+          presets: ['es2015']
+        },
         options: {
           emitWarning: true,
           failOnError: false,
           failOnWarning: false
-        }
-      },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-            loader: "babel-loader",
-        },
-        query: {
-          presets: ['es2015']
         }
       },
       {

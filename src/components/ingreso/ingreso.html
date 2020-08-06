@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../../../css/ingreso.css">
     <link rel="icon" type="image/png" href="../../../img/Comunidad-Dezzpo.png" sizes="32x32">
     <title> Ingreso </title>
-</head>
+</head> 
 <body>
     <header class="section">
         <nav class="container nav-bar">
@@ -14,49 +14,65 @@
         </nav>
     </header>
     <main class="section">
-        <div class="container">
-            <div class="ingresoFormulario row">
-                <div class="col s12 l7"></div>
-                <div class="col s12 l5">
-                    <form action="">
-                        <span>Bienvenido!</span>                        
-                        <p>Eres nuevo, crea facil una cuenta,<a href="">Registrate</a></p>
-                        <ul>
-                            <li><a href="">Ingresar con Facebook </a></li>
-                            <li><a href="">Ingresar con Gmail </a></li>                            
-                        </ul>
-                        <hr>
-                        <input type="text" name="" id="" placeholder="correo o número celular">
-                        <input type="password" name="" id="" placeholder="contraseña">
-                        <span><a href="">OLVIDASTE LA CONTRASEÑA</a></span>
-                        <span> Recuérdame </span>
-                        <span>NO SOY UN ROBOT </span>
-                        <button>INICIAR SESIÓN</button>
-                        <span>BIENVENIDO</span>
-                    </form>
-                </div>
-            </div>
-            <div class="ingresoUbicacion row">
-                <div class="col">
-                    <span>Ingresa tu ubicación</span>
-                    <form action="">
+        <div class="container">            
+            <div class="ingresoFormulario">
+                <div class=" row">
+                    <div class="imagenIngreso">
+                            
+                    </div>
+                    <div class="colRight">
+                        <div class="ingresarFormulario">
+                            <span class="tituloformulario"><h1>Bienvenido!</h1></span>                        
+                            <p>ERES NUEVO, <br/>
+                                CREA FÁCIL UNA CUENTA!<a href="">, Registrate</a></p>
+                            <br/>
+                            <ul>
+                                <li><a href="">INGRESAR CON FACEBOOK </a></li>
+                                <li><a href="">INGRESAR CON GMAIL </a></li>                            
+                            </ul>                        
+                            <br/>
+                            <form id="formularioIngreso" action="">                                                    
+                                <hr>
+                                <input type="text" name="" id="" placeholder="correo o número celular"><br/>
+                                <br/>
+                                <input type="password" name="password" id="password" placeholder="contraseña"><br/>
+                                <span><a href="">OLVIDASTE LA CONTRASEÑA</a></span><br/>
+                                <input type="checkbox" name="" id="" style="width: 30px;"><span> Recuérdame </span><br/>
+                                <input type="checkbox" name="" id="" style="width: 30px;" required><span> NO SOY UN ROBOT </span> <br/>
+                                <br/>
+                                <button>INICIAR SESIÓN</button>
+                                <br/>
+                                <hr/>
+                            </form>
+                            <span class="tituloformulario"><h1>BIENVENIDO</h1></span>
+                        </div>                        
+                    </div>                    
+                </div>  
+            </div>        
+            <div class="ingresoUbicacion">
+                <div class="row">
+                    <div class="colLeft">
+                        <span class="tituloformulario"> <h1>Ingresa tu ubicación</h1> </span>
                         <p>
-                            Podras consultar con mejor 
-                            precision los costos y 
-                            tiempos de entrega 
+                            Podras consultar con mejor <br/>
+                            precision los costos y <br/>
+                            tiempos de entrega <br/>
                         </p>
-                        <label for="">Ciudad </label>
-                        <select name="" id=""> seleccionar uno
-                            <option value="">Bogota</option>
-                        </select>
-                        <label for="">Dirección </label>
-                        <input type="text">
-                        <button class="btn">Consultar</button>
-                    </form>
-                </div>
-                <div class="col">
-
-                </div>
+                        <form action="busquedaCiudad">                            
+                            <label for=""> Ciudad </label><br/>
+                            <select name="city" id="city">
+                                <option>seleccionar uno</option>
+                                <option value="Bogota">Bogota</option>
+                            </select><br/>
+                            <label for="">Dirección</label><br/>
+                            <input type="text"><br/>
+                            <button class="btn">Consultar</button>
+                        </form>
+                    </div>
+                    <div class="imagenUbicacion">
+                            
+                    </div>
+                </div>                
             </div>
         </div>
     </main>
