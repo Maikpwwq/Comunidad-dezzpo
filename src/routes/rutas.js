@@ -2,29 +2,31 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-// 
-import App from '../App';
-import ApendiceCostos from '../components/apendice-costos/apendice_costos.html';
-import Aplicar from '../components/aplicar/aplicar.html';
-import Asesorias from '../components/asesorias/asesorias.html';
-import AsiTrabajamos from '../components/asi-trabajamos/asi_trabajamos.html';
-import AyudaPQRS from '../components/ayuda-pqrs/ayuda_pqrs.html';
-import Blog from '../components/blog/blog.html';
-import Calificaciones from '../components/calificaciones/calificaciones.html';
-import ComunidadComerciantes from '../components/comunidad-comerciantes/comunidad_comerciantes.html';
-import ComunidadPropietarios from '../components/comunidad-propietarios/comunidad_propietarios.html';
-import Contactenos from '../components/contactenos/contactenos.html';
-import Ingreso from '../components/inicio/inicio.html';
-import Inicio from '../components/inicio/inicio.html';
-import Legal from '../components/legal/legal.html';
-import Nosotros from '../components/nosotros/nosotros.html';
-import NuevoProyecto from '../components/nuevo-proyecto/nuevo_proyecto.html';
-import Patrocinadores from '../components/patrocinadores/patrocinadores.html';
-import Prensa from '../components/prensa/prensa.html';
-import Presupuestos from '../components/presupuestos/presupuestos.html';
-import ProfesionalesServicios from '../components/profesionales-servicios/profesionales_servicios.html';
-import Registro from '../components/registro/registro.html';
+//  
+import ApendiceCostos from '../pages/apendice-costos/Apendice_Costos';
+import Aplicar from '../pages/aplicar/Aplicar'; //crear
+import Asesorias from '../pages/asesorias/Asesorias';
+import AsiTrabajamos from '../pages/asi-trabajamos/Asi_Trabajamos';
+import AyudaPQRS from '../pages/ayuda-pqrs/Ayuda_PQRS';
+import Blog from '../pages/blog/Blog';
+import Calificaciones from '../pages/calificaciones/Calificaciones'; //crear
+import ComunidadComerciantes from '../pages/comunidad-comerciantes/Comunidad_Comercientes';
+import ComunidadPropietarios from '../pages/comunidad-propietarios/Comunidad_Propietarios';
+import Contactenos from '../pages/contactenos/Contactenos';
+import Ingreso from '../pages/ingreso/Ingreso';
+import Inicio from '../pages/inicio/Inicio';
+import Legal from '../pages/legal/Legal';
+import Nosotros from '../pages/nosotros/Nosotros';
+import NuevoProyecto from '../pages/nuevo-proyecto/Nuevo_Proyecto';
+import Patrocinadores from '../pages/patrocinadores/Patrocinadores';
+import Prensa from '../pages/prensa/Prensa';
+import Presupuestos from '../pages/presupuestos/Presupuestos';
+import ProfesionalesServicios from '../pages/profesionales-servicios/Profesionales_Servicios';
+import Registro from '../pages/registro/Registro';
 
+//
+import FooterComunidad from '../components/footer/Footer';
+import MenuComunidad from '../components/menu/Menu';
 /* uso en Reactnative
 import { Router, Route, browserHistory } from 'react-router';
 <Router history={browserHistory}>
@@ -38,30 +40,33 @@ const Rutas = props => {
 
     return (
         <React.Fragment>
-            <BrowserRouter>                            
+            <BrowserRouter>      
+                <MenuComunidad/>                      
                 <Switch>
-                    <Route exact path="/" component={App} data={data.data} />                
-                    <Route exact path="/apendice-costos" component={ApendiceCostos} data={data.data} />
-                    <Route exact path="/aplicar" component={Aplicar} data={data.data} />
-                    <Route exact path="/asesorias" component={Asesorias} data={data.data} />
-                    <Route exact path="/asi-trabajamos" component={AsiTrabajamos} data={data.data} />
-                    <Route exact path="/ayuda-pqrs" component={AyudaPQRS} data={data.data} />
-                    <Route exact path="/blog" component={Blog} data={data.data} />
-                    <Route exact path="/calificaciones" component={Calificaciones} data={data.data} />
-                    <Route exact path="/comunidad-comerciantes" component={ComunidadComerciantes} data={data.data} />
-                    <Route exact path="/comunidad-porpietarios" component={ComunidadPropietarios} data={data.data} />
-                    <Route exact path="/contactenos" component={Contactenos} data={data.data} />
-                    <Route exact path="/ingresar" component={Ingreso} data={data.data} />
-                    <Route exact path="/inicio" component={Inicio} data={data.data} />
-                    <Route exact path="/legal" component={Legal} data={data.data} />
-                    <Route exact path="/nosotros" component={Nosotros} data={data.data} />
-                    <Route exact path="/nuevo-proyecto" component={NuevoProyecto} data={data.data} />
-                    <Route exact path="/patrocinadores" component={Patrocinadores} data={data.data} />
-                    <Route exact path="/prensa" component={Prensa} data={data.data} />
-                    <Route exact path="/presupuestos" component={Presupuestos} data={data.data} />
-                    <Route exact path="/profesionales-servicios" component={ProfesionalesServicios} data={data.data} />
-                    <Route exact path="/registro" component={Registro} data={data.data} />
+                    <Route exact path="/" component={Inicio} data={data.data}>                
+                        <IndexRoute component={Inicio} data={data.data}/>
+                        <Route path="/apendice-costos" component={ApendiceCostos} data={data.data} />
+                        <Route path="/aplicar" component={Aplicar} data={data.data} />
+                        <Route path="/asesorias" component={Asesorias} data={data.data} />
+                        <Route path="/asi-trabajamos" component={AsiTrabajamos} data={data.data} />
+                        <Route path="/ayuda-pqrs" component={AyudaPQRS} data={data.data} />
+                        <Route path="/blog" component={Blog} data={data.data} />
+                        <Route path="/calificaciones" component={Calificaciones} data={data.data} />
+                        <Route path="/comunidad-comerciantes" component={ComunidadComerciantes} data={data.data} />
+                        <Route path="/comunidad-porpietarios" component={ComunidadPropietarios} data={data.data} />
+                        <Route path="/contactenos" component={Contactenos} data={data.data} />
+                        <Route path="/ingresar" component={Ingreso} data={data.data} />
+                        <Route path="/legal" component={Legal} data={data.data} />
+                        <Route path="/nosotros" component={Nosotros} data={data.data} />
+                        <Route path="/nuevo-proyecto" component={NuevoProyecto} data={data.data} />
+                        <Route path="/patrocinadores" component={Patrocinadores} data={data.data} />
+                        <Route path="/prensa" component={Prensa} data={data.data} />
+                        <Route path="/presupuestos" component={Presupuestos} data={data.data} />
+                        <Route path="/profesionales-servicios" component={ProfesionalesServicios} data={data.data} />
+                        <Route path="/registro" component={Registro} data={data.data} />
+                    </Route>
                 </Switch>            
+                <FooterComunidad/>
             </BrowserRouter>                
         </React.Fragment>
     )

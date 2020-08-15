@@ -2,76 +2,73 @@
 import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
 
-import '../../../css/menu.css';
-import "../../../css/iconmoon/style.css";
-
 const MenuComunidad = props => {
     render ( 
-        /* Menu fijo */
         <React.Fragment>
         <header id="menuFijo">
+            {/* Menu fijo */}
             <nav id="barraMenu">
-                <img src="../../../img/Comunidad-Dezzpo.jpg" alt="Logo Comunidad Dezzpo" height="110px" width="210px"/>
+                <img src="assets/img/Comunidad-Dezzpo.jpg" alt="Logo Comunidad Dezzpo" height="110px" width="210px"/>
                 <div id="menuContenedor">                
                     <ul class="menuSecciones">
-                        <li class="botonSeccion"><Link to="index.html" class="activo"> Home </Link></li>
-                        /* seleccion asi trabajamos*/
+                        <li class="botonSeccion"><Link to="/" class="activo"> Home </Link></li>
+                        {/* seleccion asi trabajamos*/}
                         <div class="dropdown"><li class="botonSeccion">
-                            <Link to="./src/components/asi-trabajamos/asi_trabajamos.html" class="botonLink"> Asi trabajamos </Link></li>
+                            <Link to="/asi_trabajamos" class="botonLink"> Asi trabajamos </Link></li>
                             <div class="dropdownContenidos">
-                            <Link to="./src/components/ingreso/ingreso.html">Ingresar</Link> 
-                            <Link to="./src/components/asesorias/asesorias.html">Asesores en vivo</Link>
-                            <Link to="./src/components/comunidad-comerciantes/comunidad_comerciantes.html">Perfil Comerciante</Link> 
-                            <Link to="./src/components/comunidad-propietarios/comunidad_propietarios.html">Perfil Propietario</Link>
-                            <Link to="./src/components/registro/registro.html">Registrarse</Link>
-                            <Link to="./src/components/ingreso/ingreso.html">Calificaciones</Link>
+                            <Link to="/ingreso">Ingresar</Link> 
+                            <Link to="/asesorias">Asesores en vivo</Link>
+                            <Link to="/comunidad-comerciantes">Perfil Comerciante</Link> 
+                            <Link to="/comunidad-propietarios">Perfil Propietario</Link>
+                            <Link to="/registro">Registrarse</Link>
+                            <Link to="/ingreso">Calificaciones</Link>
                             </div>                    
                         </div>
-                        /* seleccion nosotros */
+                        {/* seleccion nosotros */}
                         <div class="dropdown"><li class="botonSeccion">
-                            <Link to="./src/components/nosotros/nosotros.html" class="botonLink"> Nosotros </Link></li>
+                            <Link to="/nosotros" class="botonLink"> Nosotros </Link></li>
                             <div class="dropdownContenidos">                            
-                            <Link to="./src/components/nosotros/nosotros.html">Acerca de nosotros</Link> 
-                            <Link to="./src/components/nosotros/nosotros.html">Equipo dezzpo</Link>
-                            <Link to="./src/components/blog/blog.html">Programa de afiliados</Link> 
-                            <Link to="./src/components/">Prensa</Link>
-                            <Link to="./src/components/patrocinadores/patrocinadores.html">Patrocinadores</Link>
-                            <Link to="./src/components/legal/legal.html">Legal</Link>
+                            <Link to="/nosotros/#Acerca-de-nosotros">Acerca de nosotros</Link> 
+                            <Link to="/nosotros/#equipo-dezzpo">Equipo dezzpo</Link>
+                            <Link to="/blog">Programa de afiliados</Link> 
+                            <Link to="/prensa">Prensa</Link>
+                            <Link to="/patrocinadores">Patrocinadores</Link>
+                            <Link to="/legal">Legal</Link>
                             </div>                    
                         </div>
-                        /* seleccion Comunidad de Comerciantes*/
+                        {/* seleccion Comunidad de Comerciantes*/}
                         <div class="dropdown"><li class="botonSeccion">
-                            <Link to="./src/components/comunidad-comerciantes/comunidad_comerciantes.html" class="botonLink"> Comunidad de comerciantes </Link></li>
+                            <Link to="/comunidad-comerciantes" class="botonLink"> Comunidad de comerciantes </Link></li>
                             <div class="dropdownContenidos">
-                            <Link to="./src/components/ingreso/ingreso.html">Tu cuenta</Link> 
-                            <Link to="./src/components/asesorias/asesorias.html">Asesores en vivo</Link>
-                            <Link to="./src/components/asi-trabajamos/asi_trabajamos.html">Asi funciona</Link> 
-                            <Link to="./src/components/contactenos/contactenos.html">contactanos</Link>
-                            <Link to="./src/components/ayuda-pqrs/ayuda_pqrs.html">Ayuda & Pqrs</Link>
-                            <Link to="./src/components/legal/legal.html y condiciones">Terminos y condiciones</Link>
+                            <Link to="/ingreso">Tu cuenta</Link> 
+                            <Link to="/asesorias">Asesores en vivo</Link>
+                            <Link to="/asi-trabajamos">Asi funciona</Link> 
+                            <Link to="/contactenos">contactanos</Link>
+                            <Link to="/ayuda-pqrs">Ayuda & Pqrs</Link>
+                            <Link to="/legal">Terminos y condiciones</Link>
                             </div>                    
                         </div>        
-                        /* seleccion Comunidad de Propietarios*/            
+                        {/* seleccion Comunidad de Propietarios*/}
                         <div class="dropdown"><li class="botonSeccion">
                             <Link to="#Comunidad de propietarios" class="botonLink"> Comunidad de propietarios </Link></li>
                             <div class="dropdownContenidos">
-                                <Link to="./src/components/nuevo-proyecto/nuevo_proyecto.html">Crea un nuevo proyecto</Link> 
-                                <Link to="./src/components/blog/blog.html">Testimonio de propietarios</Link>
-                                <Link to="./src/components/asi-trabajamos/asi_trabajamos.html">Asi funciona</Link> 
-                                <Link to="./src/components/contactenos/contactenos.html">contactanos</Link>
-                                <Link to="./src/components/ayuda-pqrs/ayuda_pqrs.html">Ayuda & Pqrs</Link>
-                                <Link to="./src/components/legal/legal.html">Terminos y condiciones</Link>
+                                <Link to="/nuevo-proyecto">Crea un nuevo proyecto</Link> 
+                                <Link to="/blog">Testimonio de propietarios</Link>
+                                <Link to="/asi-trabajamos">Asi funciona</Link> 
+                                <Link to="/contactenos">contactanos</Link>
+                                <Link to="/ayuda-pqrs">Ayuda & Pqrs</Link>
+                                <Link to="/legal">Terminos y condiciones</Link>
                             </div>                    
                         </div>
-                        <li class="botonSeccion"><Link to="./src/components/presupuestos/presupuestos.html" class="botonLink"> Presupuestos </Link></li>
-                        <li class="botonSeccion"><Link to="./src/components/profesionales-servicios/profesionales_servicios.html" class="botonLink"> Profesionales y servicios </Link></li>
-                        <li class="botonSeccion"><Link to="./src/components/asesorias/asesorias.html" class="botonLink"> Asesorias </Link></li>
-                        <li class="botonSeccion"><Link to="./src/components/apendice-costos/apendice_costos.html" class="botonLink"> Apendice de costos </Link></li>
-                        <li class="botonSeccion"><Link to="./src/components/ingreso/ingreso.html" class="botonLink"> Ingresar </Link></li>
+                        <li class="botonSeccion"><Link to="/presupuestos" class="botonLink"> Presupuestos </Link></li>
+                        <li class="botonSeccion"><Link to="/profesionales-servicios" class="botonLink"> Profesionales y servicios </Link></li>
+                        <li class="botonSeccion"><Link to="/asesorias" class="botonLink"> Asesorias </Link></li>
+                        <li class="botonSeccion"><Link to="/apendice-costos" class="botonLink"> Apendice de costos </Link></li>
+                        <li class="botonSeccion"><Link to="/ingreso" class="botonLink"> Ingresar </Link></li>
                     </ul>
                 </div>
             </nav>
-            {false && <Redirect to="inicio" ></Redirect>}
+            {false && <Redirect to="/" ></Redirect>}
         </header>
         </React.Fragment>
 )};

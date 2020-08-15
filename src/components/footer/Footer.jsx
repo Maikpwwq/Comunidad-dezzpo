@@ -1,52 +1,50 @@
 /* Footer de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react';
-import '../../../css/footer.css';
-import "../../../css/iconmoon/style.css";
 
 import {Link, Redirect} from 'react-router-dom';
 
 const FooterComunidad = props => {
     render ( 
-    /* Empieza la seccion del footer */
-    <React.Fragment>
+    <React.Fragment>    
     <footer id="footer">
+        {/* Empieza la seccion del footer */}
         <div id="footerContainer">
-            /* parte superior */
+            {/* parte superior */}
             <div className="footerSuperior">
-                /* Mas links */
+                {/* Mas links */}
                 <div className="masLinks">
                     <ul>
-                        <li> &#10095; <a href="#Legal" title="legal"> Legal</a></li>
-                        <li> &#10095; <a href="#Ayuda" title="Ayuda"> Ayuda</a></li>
-                        <li> &#10095; <a href="#Patrocinadores" title="Patrocinadores"> Patrocinadores</a></li>
-                        <li> &#10095; <a href="#Blog" title="Blog"> Blog</a></li>
-                        <li> &#10095; <a href="#Contactenos" title="Contactenos"> Contactenos</a></li>
-                        <li> &#10095; <a href="#Mapa del Sitio" title="Mapa del Sitio"> Mapa del Sitio</a></li>
+                        <li> &#10095; <Link to="/legal" title="legal"> Legal</Link></li>
+                        <li> &#10095; <Link to="/ayuda-pqrs" title="Ayuda"> Ayuda</Link></li>
+                        <li> &#10095; <Link to="/patrocinadores" title="Patrocinadores"> Patrocinadores</Link></li>
+                        <li> &#10095; <Link to="/blog" title="Blog"> Blog</Link></li>
+                        <li> &#10095; <Link to="/contactenos" title="Contactenos"> Contactenos</Link></li>
+                        <li> &#10095; <Link to="/mapa-del-sitio" title="Mapa del Sitio"> Mapa del Sitio</Link></li>
                     </ul>
                 </div>
-                /* siguenos en redes */
+                {/* siguenos en redes */}
                 <div className="siguenosRedes">
                     <h1> SIGUENOS </h1>
                     <ul className="listaFooter">
-                        /* siguenos Instagram */
+                        {/* siguenos Instagram */}
                         <li> &#10095;                             
                             <span className="icon-IntagramSocialIcono"><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span></span>
                             <a href="https://www.instagram.com/comunidad_dezzpo/" title="Instagram"> Instagram </a></li>
-                        /* siguenos Twitter */
+                        {/* siguenos Twitter */}
                         <li> &#10095; 
                             <span className="icon-TwitterSocialIcono"><span className="path1"></span><span className="path2"></span></span>
                             <a href="https://www.twitter.com/" title="Twitter"> Twitter </a></li>
-                        /* siguenos Facebook */
+                        {/* siguenos Facebook */}
                         <li> &#10095; 
                             <span className="icon-FacebookSocialIcono"><span className="path1"></span><span className="path2"></span></span>
                             <a href="https://www.facebook.com/comunidad.dezzpo" title="Facebook"> Facebook </a></li>
-                        /* siguenos Linkedin */
+                        {/* siguenos Linkedin */}
                         <li> &#10095; 
                             <span className="icon-LinkedinSocialIcono"><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span></span>
                             <a href="https://www.linkedin.com/company/dezzpo-inc/" title="LinkedIn"> LinkedIn </a></li>
                     </ul>
                 </div>        
-                /* Datos de contacto comunidad dezzpo */
+                {/* Datos de contacto comunidad dezzpo */}
                 <div className="datosContacto">
                     <h1> Ponte en Contacto </h1>
                     <ul className="listaFooter">
@@ -63,7 +61,7 @@ const FooterComunidad = props => {
                     </ul>
                 </div>
             </div>
-            /* parte inferior*/
+            {/* parte inferior*/}
             <div className="footerInferior">
                 <p> © 2019 - Todos los derechos reservados - COMUNIDAD DEZZPO INC. </p>
             </div>

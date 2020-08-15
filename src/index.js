@@ -1,33 +1,26 @@
 /* - Componente principal que renderiza el contenido en el Dom-  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import "core-js";
 import {Provider} from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux'
 import reduxThunk from 'redux-thunk';
 import reducers from './reducers/todoApp';
 import App from './App';
-//import Inicio from '../components/inicio/inicio.html';
+// import Message from './js/Message'; <Message />
 
-//
-import Message from './js/Message';
+const initialState = window.__INITIAL_STATE__;
+let store = createStore(reducers, initialState, applyMiddleware(reduxThunk));
 
-let store = createStore(reducers, {}, applyMiddleware(reduxThunk));
-
-//var async = require('neo-async');
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-        <Message />
+    <Provider store={store}>        
         <App />
     </Provider>   
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-if(module.hot) // eslint-disable-line no-undef  
-  module.hot.accept() // eslint-disable-line no-undef  
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

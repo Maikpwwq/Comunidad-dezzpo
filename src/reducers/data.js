@@ -1,8 +1,6 @@
 import {FETCH_TODOS} from '../action/action';
 import {todosRef} from '../firebase'
 
-const FETCH_TODOS = 'FETCH_TODOS';
-
 export default (state = {}, action) => {
     switch(action.type) {
       case FETCH_TODOS:
