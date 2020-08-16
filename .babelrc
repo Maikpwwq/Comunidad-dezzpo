@@ -18,17 +18,19 @@
         {        
           "pragma": "React.createElement"
         }
-      ],
+      ]
     ],
     "plugins": [
-      "transform-class-properties",
       "styled-components",
+      [
+        "transform-class-properties", { "spec": true }
+      ],
       [
         "@babel/plugin-proposal-class-properties",
         {
           "loose": true
         }
-      ],     
+      ],           
       [
         "@babel/plugin-transform-runtime",
         {

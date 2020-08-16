@@ -9,6 +9,7 @@ import reduxThunk from 'redux-thunk';
 import reducers from './reducers/todoApp';
 import App from './App';
 // import Message from './js/Message'; <Message />
+//import _ from 'lodash';
 
 const initialState = window.__INITIAL_STATE__;
 let store = createStore(reducers, initialState, applyMiddleware(reduxThunk));

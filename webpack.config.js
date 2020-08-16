@@ -1,26 +1,37 @@
 var nodeExternals = require('webpack-node-externals');
 const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = [
     {
         entry: './src/index.js',
+        mode: 'development',
         output: {
             path: path.resolve(__dirname, 'build'),
-            filename: 'bundle.js'
+            filename: 'bundle.js',            
         }, 
         resolve: {
-            extensions: ['.js', '.jsx']
+            modules: [
+              "node_modules",
+            ],
+            extensions: [".js", ".jsx", ".json", ".css"]
         },
+        devtool: 'inline-source-map',
+        devServer: {
+          contentBase: './build',
+        },
+        target: 'node',
+        externals: [nodeExternals()],      
         module: {
             rules: [
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
-                loader: "babel-loader"
-                }
+                  loader: "babel-loader",
+                }                
             },          
             {
                 // Loads the javacript into html template provided.
@@ -34,8 +45,16 @@ module.exports = [
                 ]
             },
             { 
-                test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
+                test: /\.css$/i,
+                use: [
+                    {
+                      loader: 'file-loader',
+                      options: {
+                        emitFile: false,
+                      },
+                    },
+                    'css-loader',
+                  ],
             },
             {                
                 test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
@@ -59,20 +78,19 @@ module.exports = [
                 ]
             }
             ]
-        },
-        target: 'node',
-        externals: [nodeExternals()],      
+        },        
         plugins: [
+            new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
             new HtmlWebPackPlugin({
-            template: "./public/index.html",
-            filename: "./index.html"
+              template: "./public/index.html",
+              filename: "./index.html"
             }),
             new FaviconsWebpackPlugin({
             logo: './public/assets/img/Comunidad-Dezzpo.png',
             prefix: 'assets/',
             inject: true,
             background: '#fff',
-            title: 'React CV',
+            title: 'Comunidad dezzpo',
             icons: {
                 android: true,
                 appleIcon: true,

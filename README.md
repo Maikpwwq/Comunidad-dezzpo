@@ -1,6 +1,8 @@
-# Comunidad-dezzpo
+# Comunidad-dezzpo Colombia
 
-![Comunidad Dezzpo](/img/Comunidad-Dezzpo.jpg)
+Únase en comunidad para liderar el desarrollo social y sostenible de la expansión inmobiliaria.
+
+![Comunidad Dezzpo](/public/assets/img/Comunidad-Dezzpo.jpg)
 
 > Propietario contrata comerciantes calificados en mantenimiento general. 
   Consulta perfiles y estadísticas de prestadores. 
@@ -8,6 +10,7 @@
 
 ## Web site
 
+_GithubPage:_ 
 > https://maikpwwq.github.io/Comunidad-dezzpo/
 
 _Instagram:_ 
@@ -19,12 +22,13 @@ _Facebook:_
 _LinkedIn:_ 
 > https://www.linkedin.com/company/dezzpo-inc/
 
-## Integrantes grupo
+## Desarrollado por
 
 1. Michael Arias @Maikpwwq
-2. Juan
-3. Maria
+2. Comunidad.dezzpo@gmail.com
+3. WhatsApp: +57 319 6138057
 
-![Mockup site](/img/paginas/Home-WIREFRAMES.png)
+![Mockup site](/public/assets/img/Home-WIREFRAMES.png)
+![Error](/public/assets/img/error.png)
 
 **Agradecimientos a Bictia ❤️**

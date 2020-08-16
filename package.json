@@ -5,8 +5,11 @@
   "description": "Marketplace de la agremiación sin animo de lucro, que apoya instaladores de acabados y obra residencial",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js webpack-dev-server --open --mode development",
-    "build": "webpack --mode production"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production --presets=@babel/env",
+    "server": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -50,6 +53,7 @@
     "styled-components": "^5.1.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
+    "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.11.0",
     "webpack-node-externals": "^2.5.0"
   },
@@ -65,8 +69,10 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "clean-webpack-plugin": "^3.0.0",
     "core-js": "^3.6.5",
     "css-loader": "^4.2.1",
+    "csv-loader": "^3.0.3",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "favicons-webpack-plugin": "^4.2.0",
@@ -75,6 +81,6 @@
     "html-webpack-plugin": "^4.3.0",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.7",
-    "style-loader": "^1.2.1"
+    "xml-loader": "^1.2.1"
   }
 }
