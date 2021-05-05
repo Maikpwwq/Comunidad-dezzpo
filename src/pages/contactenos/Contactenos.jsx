@@ -1,21 +1,23 @@
 // Pagina de Contactenos
 import React from 'react';
+import '../../../public/assets/css/iconmoon/style.css';
+import '../../../public/assets/css/contactenos.css';
 
 const Contactenos = props => {
-    render ( 
-        <React.Fragment>
-            <main class="section">
-                <div class="container">
-                    <div class="contactenosTitulo">
-                        <span class="mainTitulo"> <h1> CONTÁCTENOS </h1></span>
+    return ( 
+        <>
+            <main className="section">
+                <div className="container">
+                    <div className="contactenosTitulo">
+                        <span className="mainTitulo"> <h1> CONTÁCTENOS </h1></span>
                     </div>
-                    <div class="contactenosMensaje row">
-                        <div class="col">
+                    <div className="contactenosMensaje row">
+                        <div className="col">
                             <img src="assets/img/ContactenosFranja.png" alt="fondo comunidad dezzpo"/>
                             <img src="assets/img/LogoPNG.png" alt="Logo Comunidad Dezzpo"/>
                         </div>
-                        <div class="col">
-                            <div class="formContacto">
+                        <div className="col">
+                            <div className="formContacto">
                                 <form action="">
                                     <input type="text" name="name" id="name" placeholder="nombre:" required/><br/>
                                     <input type="text" name="email" id="email" placeholder="Email:" required/><br/>
@@ -25,22 +27,22 @@ const Contactenos = props => {
                                 </form>
                             </div>                    
                         </div>
-                        <div class="col">
-                            <div class="borderBlue">
+                        <div className="col">
+                            <div className="borderBlue">
                                 <img src="assets/img/SelectorContactenos.png" alt="datos de contacto"/>
                                 {/*Datos de contacto comunidad dezzpo*/} 
-                                <div class="datosContacto">
+                                <div className="datosContacto">
                                     <h1> Consultenos </h1>
-                                    <ul class="listaContacto">
-                                        <span class="icon-DireccionDomicilioIcono"></span>
+                                    <ul className="listaContacto">
+                                        <span className="icon-DireccionDomicilioIcono"></span>
                                         <li> Dirección  Cll 159 No. 8c-45 </li>
                                         <li> Piso 5 </li>
                                         <br/>
-                                        <span class="icon-TelefonoContactoIcono"></span>
+                                        <span className="icon-TelefonoContactoIcono"></span>
                                         <li> +57 3196138057 - Office </li>
                                         <li> +57 3196138057 - PBX </li>
                                         <br/>
-                                        <span class="icon-EmailIcono"></span>
+                                        <span className="icon-EmailIcono"></span>
                                         <li><a href="mailto:comunidad.dezzpo@gmail.com" title="Correo Comunidad Dezzpo"> comunidad.dezzpo@gmail.com </a></li>
                                     </ul>
                                 </div>
@@ -49,7 +51,7 @@ const Contactenos = props => {
                     </div>
                 </div>
             </main>
-        </React.Fragment>
+        </>
     )
 };
 

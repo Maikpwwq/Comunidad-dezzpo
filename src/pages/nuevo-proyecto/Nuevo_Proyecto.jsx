@@ -1,24 +1,25 @@
 // Pagina de NuevoProyecto
 import React from 'react';
+import '../../../public/assets/css/nuevo_proyecto.css';
 
 const NuevoProyecto = props => {
-    render ( 
-        <React.Fragment>
-            <main class="section">
-                <div class="container">
-                    <div class="nuevoProyectoBuscador row">
-                        <div class="col">
+    return ( 
+        <>
+            <main className="section">
+                <div className="container">
+                    <div className="nuevoProyectoBuscador row">
+                        <div className="col">
                             <span> Con ayuda de la comunidad haz realidad la casa que deseas. <br/>
 
                                 Encuentra un profesional Seguro y Confiable, para cada trabajo. <br/>
                                 Desde iluminación y pequeños arreglos, hasta diseños de <br/>
                                 ingeniería y remodelaciones completas.</span>
                         </div>
-                        <div class="col">
+                        <div className="col">
                             {/*se importa buscador del home */}
                         </div>                
                     </div>
-                    <div class="nuevoProyectoBuscador2">
+                    <div className="nuevoProyectoBuscador2">
                         <p>compara precios de los mejores profesionales calificados </p>                
                         <form action="">
                             2. Crea una oferta <br/>
@@ -47,7 +48,7 @@ const NuevoProyecto = props => {
                             * Campos requeridos
                         </form>
                     </div>
-                    <div class="nuevoProyectoBuscador3">
+                    <div className="nuevoProyectoBuscador3">
                         <form action="">
                             3. Información Adicional <br/>
                             Detalles Adicionales                     
@@ -73,7 +74,7 @@ const NuevoProyecto = props => {
                             <span>* Campos requeridos</span>
                         </form>
                     </div>
-                    <div class="nuevoProyectoMensaje">
+                    <div className="nuevoProyectoMensaje">
                         <span>INGRESAR DATOS DE CONTACTO</span>
                         <p>Hasta cuatro Comerciantes calificados te contactaran para aplicar con una cotización a tu proyecto. <br/>
                             Para garantizar la mejor respuesta asegúrate que tus datos son exactos, solo compartiremos tu numero <br/>
@@ -81,7 +82,7 @@ const NuevoProyecto = props => {
                     </div>
                 </div>
             </main>
-        </React.Fragment>
+        </>
     )
 };
 

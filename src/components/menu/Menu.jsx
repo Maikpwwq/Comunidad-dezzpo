@@ -1,76 +1,85 @@
 /* Menu de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom'; // withRouter,
+import '../../../public/assets/css/menu.css';
 
-const MenuComunidad = props => {
-    render ( 
-        <React.Fragment>
+const MenuComunidad = (props) => {
+
+    /* getNavLinkClass = (path) => {
+        return this.props.location.pathname === path ? 'active' : '';
+    }  className= {this.getNavLinkClass("/")}
+    */
+
+    return ( 
+        <>
         <header id="menuFijo">
             {/* Menu fijo */}
             <nav id="barraMenu">
-                <img src="assets/img/Comunidad-Dezzpo.jpg" alt="Logo Comunidad Dezzpo" height="110px" width="210px"/>
+                <img src="public/assets/img/Comunidad-Dezzpo.jpg" alt="Logo Comunidad Dezzpo" height="110px" width="210px"/>
                 <div id="menuContenedor">                
-                    <ul class="menuSecciones">
-                        <li class="botonSeccion"><Link to="/" class="activo"> Home </Link></li>
+                    <ul className="menuSecciones">
+                        <li className="botonSeccion"><NavLink exact to="/" className="activo"> Home </NavLink></li>
                         {/* seleccion asi trabajamos*/}
-                        <div class="dropdown"><li class="botonSeccion">
-                            <Link to="/asi_trabajamos" class="botonLink"> Asi trabajamos </Link></li>
-                            <div class="dropdownContenidos">
-                            <Link to="/ingreso">Ingresar</Link> 
-                            <Link to="/asesorias">Asesores en vivo</Link>
-                            <Link to="/comunidad-comerciantes">Perfil Comerciante</Link> 
-                            <Link to="/comunidad-propietarios">Perfil Propietario</Link>
-                            <Link to="/registro">Registrarse</Link>
-                            <Link to="/ingreso">Calificaciones</Link>
+                        <div className="dropdown"><li className="botonSeccion">
+                            <NavLink to="/asi-trabajamos" className="botonNavLink"> Asi trabajamos </NavLink></li>
+                            <div className="dropdownContenidos">
+                            <NavLink to="/ingreso">Ingresar</NavLink> 
+                            <NavLink to="/asesorias">Asesores en vivo</NavLink>
+                            <NavLink to="/comunidad-comerciantes">Perfil Comerciante</NavLink> 
+                            <NavLink to="/comunidad-propietarios">Perfil Propietario</NavLink>
+                            <NavLink to="/registro">Registrarse</NavLink>
+                            <NavLink to="/ingreso">Calificaciones</NavLink>
                             </div>                    
                         </div>
                         {/* seleccion nosotros */}
-                        <div class="dropdown"><li class="botonSeccion">
-                            <Link to="/nosotros" class="botonLink"> Nosotros </Link></li>
-                            <div class="dropdownContenidos">                            
-                            <Link to="/nosotros/#Acerca-de-nosotros">Acerca de nosotros</Link> 
-                            <Link to="/nosotros/#equipo-dezzpo">Equipo dezzpo</Link>
-                            <Link to="/blog">Programa de afiliados</Link> 
-                            <Link to="/prensa">Prensa</Link>
-                            <Link to="/patrocinadores">Patrocinadores</Link>
-                            <Link to="/legal">Legal</Link>
+                        <div className="dropdown"><li className="botonSeccion">
+                            <NavLink to="/nosotros" className="botonNavLink"> Nosotros </NavLink></li>
+                            <div className="dropdownContenidos">                            
+                            <NavLink to="/nosotros/#Acerca-de-nosotros">Acerca de nosotros</NavLink> 
+                            <NavLink to="/nosotros/#equipo-dezzpo">Equipo dezzpo</NavLink>
+                            <NavLink to="/blog">Programa de afiliados</NavLink> 
+                            <NavLink to="/prensa">Prensa</NavLink>
+                            <NavLink to="/patrocinadores">Patrocinadores</NavLink>
+                            <NavLink to="/legal">Legal</NavLink>
                             </div>                    
                         </div>
                         {/* seleccion Comunidad de Comerciantes*/}
-                        <div class="dropdown"><li class="botonSeccion">
-                            <Link to="/comunidad-comerciantes" class="botonLink"> Comunidad de comerciantes </Link></li>
-                            <div class="dropdownContenidos">
-                            <Link to="/ingreso">Tu cuenta</Link> 
-                            <Link to="/asesorias">Asesores en vivo</Link>
-                            <Link to="/asi-trabajamos">Asi funciona</Link> 
-                            <Link to="/contactenos">contactanos</Link>
-                            <Link to="/ayuda-pqrs">Ayuda & Pqrs</Link>
-                            <Link to="/legal">Terminos y condiciones</Link>
+                        <div className="dropdown"><li className="botonSeccion">
+                            <NavLink to="/comunidad-comerciantes" className="botonNavLink">Comunidad de comerciantes </NavLink></li>
+                            <div className="dropdownContenidos">
+                            <NavLink to="/ingreso">Tu cuenta</NavLink> 
+                            <NavLink to="/asesorias">Asesores en vivo</NavLink>
+                            <NavLink to="/asi-trabajamos">Asi funciona</NavLink> 
+                            <NavLink to="/contactenos">contactanos</NavLink>
+                            <NavLink to="/ayuda-pqrs">Ayuda & Pqrs</NavLink>
+                            <NavLink to="/legal">Terminos y condiciones</NavLink>
                             </div>                    
                         </div>        
                         {/* seleccion Comunidad de Propietarios*/}
-                        <div class="dropdown"><li class="botonSeccion">
-                            <Link to="#Comunidad de propietarios" class="botonLink"> Comunidad de propietarios </Link></li>
-                            <div class="dropdownContenidos">
-                                <Link to="/nuevo-proyecto">Crea un nuevo proyecto</Link> 
-                                <Link to="/blog">Testimonio de propietarios</Link>
-                                <Link to="/asi-trabajamos">Asi funciona</Link> 
-                                <Link to="/contactenos">contactanos</Link>
-                                <Link to="/ayuda-pqrs">Ayuda & Pqrs</Link>
-                                <Link to="/legal">Terminos y condiciones</Link>
+                        <div className="dropdown"><li className="botonSeccion">
+                            <NavLink to="/comunidad-propietarios" className="botonNavLink">Comunidad de propietarios </NavLink></li>
+                            <div className="dropdownContenidos">
+                                <NavLink to="/nuevo-proyecto">Crea un nuevo proyecto</NavLink> 
+                                <NavLink to="/blog">Testimonio de propietarios</NavLink>
+                                <NavLink to="/asi-trabajamos">Asi funciona</NavLink> 
+                                <NavLink to="/contactenos">contactanos</NavLink>
+                                <NavLink to="/ayuda-pqrs">Ayuda & Pqrs</NavLink>
+                                <NavLink to="/legal">Terminos y condiciones</NavLink>
                             </div>                    
                         </div>
-                        <li class="botonSeccion"><Link to="/presupuestos" class="botonLink"> Presupuestos </Link></li>
-                        <li class="botonSeccion"><Link to="/profesionales-servicios" class="botonLink"> Profesionales y servicios </Link></li>
-                        <li class="botonSeccion"><Link to="/asesorias" class="botonLink"> Asesorias </Link></li>
-                        <li class="botonSeccion"><Link to="/apendice-costos" class="botonLink"> Apendice de costos </Link></li>
-                        <li class="botonSeccion"><Link to="/ingreso" class="botonLink"> Ingresar </Link></li>
+                        <li className="botonSeccion"><NavLink to="/presupuestos" className="botonNavLink"> Presupuestos </NavLink></li>
+                        <li className="botonSeccion"><NavLink to="/profesionales-servicios" className="botonNavLink"> Profesionales y servicios </NavLink></li>
+                        <li className="botonSeccion"><NavLink to="/asesorias" className="botonNavLink"> Asesorias </NavLink></li>
+                        <li className="botonSeccion"><NavLink to="/apendice-costos" className="botonNavLink"> Apendice de costos </NavLink></li>
+                        <li className="botonSeccion"><NavLink to="/ingreso" className="botonNavLink"> Ingresar </NavLink></li>
                     </ul>
                 </div>
             </nav>
             {false && <Redirect to="/" ></Redirect>}
         </header>
-        </React.Fragment>
+        </>
 )};
+
+// MenuComunidad = withRouter(MenuComunidad);
 
 export default MenuComunidad

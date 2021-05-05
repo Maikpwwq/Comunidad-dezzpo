@@ -29,6 +29,5 @@ _LinkedIn:_
 3. WhatsApp: +57 319 6138057
 
 ![Mockup site](/public/assets/img/Home-WIREFRAMES.png)
-![Error](/public/assets/img/error.png)
 
 **Agradecimientos a Bictia ❤️**

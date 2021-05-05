@@ -1,13 +1,14 @@
 // Pagina de Prensa
 import React from 'react';
+import '../../../public/assets/css/prensa.css';
 
 const Prensa = props => {
-    render ( 
-        <React.Fragment>
-            <main class="section">
-                <div class="container">
-                    <div class="prensaMensaje">
-                        <span class="tituloDocumento"> <h1>Consulta por titulo de documento</h1> </span>
+    return ( 
+        <>
+            <main className="section">
+                <div className="container">
+                    <div className="prensaMensaje">
+                        <span className="tituloDocumento"> <h1>Consulta por titulo de documento</h1> </span>
                         <ul>
                             <li>Estudios</li>
                             <li>Estudios</li>
@@ -17,7 +18,7 @@ const Prensa = props => {
                     </div>
                 </div>
             </main>
-        </React.Fragment>
+        </>
     )
 };
 

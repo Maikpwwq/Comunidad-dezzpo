@@ -1,11 +1,12 @@
 /* Footer de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react';
-
+import '../../../public/assets/css/footer.css';
+//import '../../../public/assets/css/iconmoon/style.css';
 import {Link, Redirect} from 'react-router-dom';
 
 const FooterComunidad = props => {
-    render ( 
-    <React.Fragment>    
+    return ( 
+    <>    
     <footer id="footer">
         {/* Empieza la seccion del footer */}
         <div id="footerContainer">
@@ -67,7 +68,7 @@ const FooterComunidad = props => {
             </div>
         </div>
     </footer>    
-    </React.Fragment>
+    </>
 )
 };
 

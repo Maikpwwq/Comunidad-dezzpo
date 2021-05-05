@@ -1,20 +1,21 @@
 // Pagina de nuestros patrocinadores
 import React from 'react';
+import '../../../public/assets/css/patrocinadores.css';
 
 const Patrocinadores = props => {
-    render ( 
-        <React.Fragment>
-            <main class="section">
-                <div class="container">
-                    <div class="patrocinadoresMensaje">
-                        <span class="tituloDocumento"> <h1>Estos son algunos de nuestros patrocinadores</h1> </span>
+    return ( 
+        <>
+            <main className="section">
+                <div className="container">
+                    <div className="patrocinadoresMensaje">
+                        <span className="tituloDocumento"> <h1>Estos son algunos de nuestros patrocinadores</h1> </span>
                         <ul>
                             <li>Bictia</li>
                         </ul>                
                     </div>
                 </div>
             </main>
-        </React.Fragment>
+        </>
     )
 };
 

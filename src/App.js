@@ -1,15 +1,15 @@
-/* - Componente plantilla carga el contenido del Menu, Rutas y Footer -  */
-import React from 'react';
-//Importar componentes
+import React from "react";
 import Rutas from './routes/rutas';
-//import List from './components/List'; <List/>
 
-const App = ({}) => {
-    return (      
-      <React.Fragment>            
-            <Rutas></Rutas>            
-      </React.Fragment>
-  );
+class App extends React.Component {
+  render() {
+    const { name } = this.props;
+    return (
+      <>        
+        <Rutas name = {name} ></Rutas>
+      </>
+    );
+  }
 }
 
 export default App;

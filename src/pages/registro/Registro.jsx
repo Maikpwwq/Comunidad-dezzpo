@@ -1,17 +1,18 @@
 // Pagina de registro
 import React from 'react';
+import '../../../public/assets/css/registro.css';
 
 const Registro = props => {
-    render ( 
-        <React.Fragment>
-            <main class="section">
-                <div class="container">
-                        {/*Seccion de Registro*/} 
+    return ( 
+        <>
+            <main className="section">
+                <div className="container">
+                        {/* Seccion de Registro*/} 
                 <section id="registrate">
-                    <div class="registrateImagen">
+                    <div className="registrateImagen">
                         
                     </div>
-                    <div class="registrateformulario">
+                    <div className="registrateformulario">
                         <form id="formularioRegistro" action="">
                             <div>
                                 <h1>REGISTRATE</h1> 
@@ -37,7 +38,7 @@ const Registro = props => {
                 </section>
                 </div>
             </main>
-        </React.Fragment>
+        </>
     )
 };
 

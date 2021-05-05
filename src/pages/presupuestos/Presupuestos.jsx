@@ -1,12 +1,13 @@
 // Pagina de Presupuestos
 import React from 'react';
+import '../../../public/assets/css/presupuestos.css';
 
 const Presupuestos = props => {
-    render ( 
-        <React.Fragment>
-            <main class="section">
-                <div class="container">
-                    <div class="presupuestosMensaje">
+    return ( 
+        <>
+            <main className="section">
+                <div className="container">
+                    <div className="presupuestosMensaje">
                         <span> Solicitalo online, en menos tiempo, totalmente <br/>
                             gratuito y sin compromiso.  </span>
                         <span> 
@@ -15,8 +16,8 @@ const Presupuestos = props => {
                             más confianza, mayor calidad, y el mejor costo   <br/>
                         </span>
                     </div>
-                    <div class="presupuestosMensajeBuscador row">
-                        <div class="col">
+                    <div className="presupuestosMensajeBuscador row">
+                        <div className="col">
                             <span>Publica tu proyecto gratis, los profesionales disponibles te <br/>
                                 contactaran para ofrecer su presupuesto</span>
                             <p>
@@ -24,13 +25,13 @@ const Presupuestos = props => {
                                 Lee comentarios, recibe cotizaciones y sigue las recomendaciones para contratar.
                             </p>
                         </div>
-                        <div class="col">
+                        <div className="col">
                             se importa buscador del home 
                         </div>
                     </div>
                 </div>
             </main>
-        </React.Fragment>
+        </>
     )
 };
 

@@ -1,13 +1,14 @@
 // Pagina de Profesionales Servicios
 import React from 'react';
+import '../../../public/assets/css/profesionales_servicios.css';
 import {Link} from 'react-router-dom';
 
 const ProfesionalesServicios = props => {
-    render ( 
-        <React.Fragment>
-            <main class="section">
-                <div class="container">
-                    <div class="profesionalesServiciosMensaje">
+    return ( 
+        <>
+            <main className="section">
+                <div className="container">
+                    <div className="profesionalesServiciosMensaje">
                         Profesionales y Servicios <br/>
                         Recuerda
                         <p>
@@ -20,11 +21,11 @@ const ProfesionalesServicios = props => {
                     </div>
                     {/* seccion de categorias y servicios */}
                         <section id="popularCategorias">
-                            <div class="">
+                            <div className="">
                                 <h1> NUESTRA COMUNIDAD </h1>
                                 <p>Tenemos una gran cantidad de profesionales que quieren trabajar en su proyecto.</p>
                                 <img src="assets/img/CategoriasPopulares.png" alt="Categorias Populares entre la Comunidad" height="170" width="900"/>
-                                <div class="categoriasPopulares">
+                                <div className="categoriasPopulares">
                                     <h2> o encuentralos dentro de las categorías populares:</h2>
                                     <ul>
                                         <li>Pintor y decorador, Pintura y decoracion de interiores </li>
@@ -39,10 +40,10 @@ const ProfesionalesServicios = props => {
                         </section>
                         {/* seccion de categorias y servicios */}
                         <section id="categoriasServicios">        
-                            <div class="tituloServicios">
+                            <div className="tituloServicios">
                                 <h1>Nuestro comerciantes y servicios</h1>
                             </div> <br/>
-                            <div class="contratistasReformas">            
+                            <div className="contratistasReformas">            
                                 <div>
                                     <ul>
                                         <li> Administraciones PH `{'>'}` administradores PH </li> 
@@ -111,9 +112,9 @@ const ProfesionalesServicios = props => {
                         </section>
                         {/* seccion de comerciantes Locales*/}
                         <section id="comerciantesLocales">
-                            <div class="localCiudades">
+                            <div className="localCiudades">
                                 <h1>Busca en tu ciudad comerciantes calificados</h1>
-                                <div class="ciudades">
+                                <div className="ciudades">
                                     <ul>
                                         <li>Bogota</li>
                                         <li>Medellin</li>
@@ -135,7 +136,7 @@ const ProfesionalesServicios = props => {
                         </section>   
                 </div>
             </main>
-        </React.Fragment>
+        </>
     )
 };
 

@@ -1,21 +1,22 @@
 // Pagina de Blog
 import React from 'react';
+import '../../../public/assets/css/blog.css';
 import {Link} from 'react-router-dom';
 
 const Blog = props => {
-    render ( 
-        <React.Fragment>
-            <main class="section">
-                <div class="mainContainer">
-                    <div class="blogTitulo">
-                        <span class="mainTitulo"> <h1>BLOG</h1> </span>
+    return ( 
+        <>
+            <main className="section">
+                <div className="mainContainer">
+                    <div className="blogTitulo">
+                        <span className="mainTitulo"> <h1>BLOG</h1> </span>
                     </div>
-                    <div class="testimonioPropietarios">
-                        <span class="testimoniosTitulo"><p>Testimonios de Propietarios</p></span>                
-                        <div class="mainCol">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col">
+                    <div className="testimonioPropietarios">
+                        <span className="testimoniosTitulo"><p>Testimonios de Propietarios</p></span>                
+                        <div className="mainCol">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col">
                                         <span> usuario: </span>
                                         <div>
                                             <img src="assets/img/iconos/User1.svg" alt="ImagenPerfil" height="130px" width="130px"/>
@@ -30,9 +31,9 @@ const Blog = props => {
                                     </div>
                                 </div>                        
                             </div>                
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col">
                                         <span> usuario: </span>
                                         <div>
                                             <img src="assets/img/iconos/User2.svg" alt="ImagenPerfil" height="130px" width="130px"/>
@@ -47,9 +48,9 @@ const Blog = props => {
                                     </div>
                                 </div>                                                
                             </div>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col">
                                         <span> usuario: </span>
                                         <div>
                                             <img src="assets/img/iconos/User3.svg" alt="ImagenPerfil" height="130px" width="130px"/>
@@ -68,7 +69,7 @@ const Blog = props => {
                     </div>
                 </div>
             </main> 
-        </React.Fragment>
+        </>
     )
 };
 

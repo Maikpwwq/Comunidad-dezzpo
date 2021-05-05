@@ -1,27 +1,28 @@
 // Pagina de Inicio
 import React from 'react';
-
-const Inicio = props => {
-    render ( 
-        <React.Fragment>
+import '../../../public/assets/css/home.css';
+  
+const Inicio = () => {
+    return ( 
+        <>
             <main>
                 {/* imagen fondo */}
                 <section id="bannerComunidad">
                     <div id="contenedorBanner">
                         {/* Mensaje del Banner izquierda */}
-                        <div class="slogan">
-                            <span class="opacidadNegro"> <p> Hemos facilitado el servicio, <br/>
+                        <div className="slogan">
+                            <span className="opacidadNegro"> <p> Hemos facilitado el servicio, <br/>
                                 haciendolo más rapido y <br/>
                                 simple que nunca </p> <br/>
                             <h1> Unete a la Comunidad </h1> </span>
                             <p><strong><em>Contenido legendario</em></strong></p>
                         </div>
                         {/* Formulario nuevo proyecto */}
-                        <div class="contenerdorFormulario">
+                        <div className="contenerdorFormulario">
                             <form action="" id="formularioServicios">
-                                <div class="formularioBusqueda1">
+                                <div className="formularioBusqueda1">
                                     <label for="">¿Qué tipo de profesional necesitas?</label>
-                                    <div class="casillaSeleccion">
+                                    <div className="casillaSeleccion">
                                         <select name="seleccionarProfesional" id="seleccionarProfesional"> {/* type="text" value="Selecciona un profesional listado #1" */}
                                             <option value="administradores PH"> administradores PH </option>
                                             <option value="Afinadores de muros y acabados"> Afinadores de muros y acabados </option>
@@ -72,10 +73,10 @@ const Inicio = props => {
                                             <option value=" Tapicería "> Tapiceros </option>
                                             <option value=" Trabajadores de piedras "> Trabajadores de piedras </option>                
                                         </select>
-                                        <span class="icon-LupaFomularioIcono"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>
+                                        <span className="icon-LupaFomularioIcono"><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span></span>
                                     </div>                        
                                     <label for="">¿Qué tipo de proyecto es?</label>
-                                    <div class="casillaSeleccion">                            
+                                    <div className="casillaSeleccion">                            
                                         <select name="seleccionarServicio" id="seleccionarServicio" >  {/* type="text" value="Selecciona el trabajo listado #2" */}
                                             <option value="Administraciones PH"> Administraciones PH </option>
                                             <option value="Acabados en muros"> Acabados en muros </option>
@@ -126,25 +127,25 @@ const Inicio = props => {
                                             <option value=" Tapicería "> Tapicería </option>
                                             <option value=" Trabajos en piedra "> Trabajos en piedra </option>
                                         </select>
-                                        <span class="icon-LupaFomularioIcono"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span>
+                                        <span className="icon-LupaFomularioIcono"><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span></span>
                                     </div>                        
-                                    <button class="animacionBoton" type="submit"> Siguiente </button>
+                                    <button className="animacionBoton" type="submit"> Siguiente </button>
                                 </div>                
                             </form>
                         </div>
                     </div>
                     {/* Mensaje del Banner inferior*/}
-                    <div class="mensajeBanner">
+                    <div className="mensajeBanner">
                         <p> Encuentra aqui un profesional Seguro y Confiable para cada trabajo. Desde iluminación <br/>
                             y pequeños arreglos, hasta diseños de ingeniería y remodelaciones completas. </p> 
                     </div>
                 </section>
                 {/* Seccion de Registro */}
                 <section id="registrate">
-                    <div class="registrateImagen">
+                    <div className="registrateImagen">
                         
                     </div>
-                    <div class="registrateformulario">
+                    <div className="registrateformulario">
                         <form id="formularioRegistro" action="">
                             <div>
                                 <h1>REGISTRATE</h1> 
@@ -172,18 +173,18 @@ const Inicio = props => {
                 <section id="comoFunciona">
                     <h1>¿Como funciona nuestra comunidad?</h1>
                     {/* Propietarios */}
-                    <div class="comoPropietarios">
-                        <div class="comunidadTitulo">
+                    <div className="comoPropietarios">
+                        <div className="comunidadTitulo">
                             <h2>PROPIETARIOS</h2>
                         </div>
-                        <div class="nuevoProyecto">
+                        <div className="nuevoProyecto">
                             <p>
                                 1 <br/>
                                 Crea una nueva oferta gratis <br/>
                                 Describe tu proyecto <br/>
                             </p>            
                         </div>
-                        <div class="seleccionaPerfiles">
+                        <div className="seleccionaPerfiles">
                             <p>
                                 2 <br/>
                                 Selecciona el perfil adecuado y <br/>
@@ -192,7 +193,7 @@ const Inicio = props => {
                                 contacto con tigo. <br/>
                             </p>
                         </div>
-                        <div class="calificaServicio">
+                        <div className="calificaServicio">
                             <p>
                                 3 <br/>
                                 Califica y comenta. <br/>
@@ -202,11 +203,11 @@ const Inicio = props => {
                         </div>
                     </div>
                     {/* Comerciantes Calificados */}
-                    <div class="comoComerciantes">
-                        <div class="comunidadTitulo">
+                    <div className="comoComerciantes">
+                        <div className="comunidadTitulo">
                             <h2>COMERCIANTES CALIFICADOS</h2>
                         </div>
-                        <div class="buscarOfertas">
+                        <div className="buscarOfertas">
                             <p>
                                 1 <br/>
                                 Busca la oferta indicada para ti. <br/>
@@ -214,7 +215,7 @@ const Inicio = props => {
                                 propietarios y postulate. <br/> 
                             </p> 
                         </div>
-                        <div class="cargaPresupuesto">                
+                        <div className="cargaPresupuesto">                
                             <p> 
                                 2 <br/>
                                 Diligencia el presupuesto <br/>
@@ -223,7 +224,7 @@ const Inicio = props => {
                                 servicio, nos pagaras una comisión por el servicio prestado <br/>
                             </p> 
                         </div>
-                        <div class="calificaPropietario">
+                        <div className="calificaPropietario">
                             <p>
                                 3 <br/>
                                 Califica y comenta. <br/>
@@ -236,11 +237,11 @@ const Inicio = props => {
                 {/* Afuturo importar del contenedor de categorias y servicios */}
                 {/* seccion de categorias y servicios */}
                 <section id="popularCategorias">
-                    <div class="">
+                    <div className="">
                         <h1> NUESTRA COMUNIDAD </h1>
                         <p>Tenemos una gran cantidad de profesionales que quieren trabajar en su proyecto.</p>
-                        <img src="assets/img/CategoriasPopulares.png" alt="Categorias Populares entre la Comunidad" height="170" width="900"/>
-                        <div class="categoriasPopulares">
+                        <img src="../../../public/assets/img/CategoriasPopulares.png" alt="Categorias Populares entre la Comunidad" height="170" width="900"/>
+                        <div className="categoriasPopulares">
                             <h2> o encuentralos dentro de las categorías populares:</h2>
                             <ul>
                                 <li>Pintor y decorador, Pintura y decoracion de interiores </li>
@@ -255,10 +256,10 @@ const Inicio = props => {
                 </section>
                 {/* seccion de categorias y servicios */}
                 <section id="categoriasServicios">        
-                    <div class="tituloServicios">
+                    <div className="tituloServicios">
                         <h1>Nuestro comerciantes y servicios</h1>
                     </div> <br/>
-                    <div class="contratistasReformas">            
+                    <div className="contratistasReformas">            
                         <div>
                             <ul>
                                 <li> Administraciones PH `{'>'}` administradores PH </li> 
@@ -327,9 +328,9 @@ const Inicio = props => {
                 </section>
                 {/* seccion de comerciantes Locales*/}
                 <section id="comerciantesLocales">
-                    <div class="localCiudades">
+                    <div className="localCiudades">
                         <h1>Busca en tu ciudad comerciantes calificados</h1>
-                        <div class="ciudades">
+                        <div className="ciudades">
                             <ul>
                                 <li>Bogota</li>
                                 <li>Medellin</li>
@@ -346,11 +347,11 @@ const Inicio = props => {
                                 <li>Zipaquira</li>
                             </ul>
                         </div>    
-                        <img src="assets/img/LocalCiudades.png" alt="Busca Comerciantes Locales" height="121px" width="500px"/>
+                        <img src="../../../public/assets/img/LocalCiudades.png" alt="Busca Comerciantes Locales" height="121px" width="500px"/>
                     </div>          
                 </section>   
             </main>
-        </React.Fragment>
+        </>
     )
 };
 

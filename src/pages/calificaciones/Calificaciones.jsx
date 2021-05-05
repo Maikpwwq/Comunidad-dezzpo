@@ -1,13 +1,14 @@
 // Pagina de Calificaciones
 import React from 'react';
+import '../../../public/assets/css/calificaciones.css';
 
-const Calificaciones = props => {
-    render ( 
-        <React.Fragment>
+const Calificaciones = (props) => {
+    return ( 
+        <>
             <div>
                 Calificaciones
             </div> 
-        </React.Fragment>
+        </>
     )
 };
 
