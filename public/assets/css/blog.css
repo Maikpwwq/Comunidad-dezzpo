@@ -1,22 +1,4 @@
-body {
-    font-family: "lato Regular", Helvetica, sans-serif; 
-    font-size: 21px;
-    display: flex;
-    flex-direction: column;
-    height: 700px;
-    width: 100%;
-    margin: 0 0;
-    padding: 0 0;
-}
-main{
-    display: flex;    
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-around;
-}
-div {
-
-}
+/* height: 700px; */
 .blogTitulo{
     background-color: #009999; 
     height: 220px;
@@ -47,11 +29,11 @@ div {
     height: 748px;
     padding-top: 3em;
 }
-.container{
+.experienciasContainer{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
+    width: 90%; 
 }
 .col{
     display: flex;
@@ -67,7 +49,7 @@ div {
     justify-content: space-around;
     align-items: center;
     width: 84%;
-    height: 160px;
+    /* height: 160px; */
     padding: 2em;
 }
 /*

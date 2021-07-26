@@ -1,0 +1,168 @@
+body {
+    font-family: "lato Regular", Helvetica, sans-serif; 
+    font-size: 21px;
+    display: flex;
+    flex-direction: column;
+    height: 2690px;
+    width: 100%;
+    margin: 0 0;
+    padding: 0 0;    
+}
+main{
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+div {
+    
+}
+.asiTrabajamosRegistro{
+    background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+}
+.asiTrabajamosChat{ 
+    background: #e9ebe6 url(../img/AsiTrabajamos2.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 570px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    float: right;
+}
+.colRight{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    float: right;
+    align-items: center;
+    padding-bottom: 7em;
+    padding-left: 29em;    
+    width: 50%;
+}
+.chatAsesor{      
+    font-size: 27px; 
+    height: 210px;
+    width: 100%;
+    color: #333333;
+}
+.asiTrabajamosVinculate{
+    background: #e9ebe6 url(../img/AsiTrabajamos3.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 379px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.colRight2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    float: right;
+    align-items: center;
+    padding-top: 150px;
+    padding-left: 900px;
+    width: 30%;
+}
+.asiTrabajamosPropietario{
+    background: #e9ebe6 url(../img/AsiTrabajamos4.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 379px;
+    width: 100%;
+    color: #e9ebe6;
+}
+.colRight3{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    float: right;
+    align-items: center;
+    padding: 2em 20px 2em 21em;
+    width: 60%;
+}
+.asiTrabajamosCertificaciones{
+    background: #e9ebe6 url(../img/AsiTrabajamos5.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 570px;
+    width: 100%;
+}
+.colCenter{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 20px 1em 7em;
+    width: 60%;
+    font-size: 55px;
+    height: 170px;
+    color: #e9ebe6;
+}
+.colLeft{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    padding-left: 90px;
+    padding-top: 30px;    
+}
+.whiteP{
+    color: #e9ebe6;
+}
+.asiTrabajamosCalificaciones{
+    background: #e9ebe6 url(../img/AsiTrabajamos6.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: 100% auto;
+    height: 570px;
+    width: 100%;
+    color: #e9ebe6;
+}
+.LeftP{
+    font-size: 19px;
+    text-align: left;
+}
+.colRight3 ul{
+    list-style: none;
+    text-align: left;
+}
+.asiTrabajamosEstadisticas{
+    background: #e9ebe6;
+    height: 220px;
+    width: 100%;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+.row ul{
+    list-style: none;
+    width: 50%;
+    display: inline-flex;
+    font-size: 19px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #1ec7e6;
+    padding: 3px 6px;
+    margin: 6px 3px;
+}
+/*    
+    background-color: #333333;
+    background-color: #e9ebe6;
+    background-color: rgba(0,0,0,0.8);
+    background-color: #009999; 
+    background-color:#1ec7e6;
+    background-color: #13495e; 
+    background-color:#92B901;
+    background-color: #006699;
+    background-color: #deaf06;
+*/

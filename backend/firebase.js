@@ -1,5 +1,5 @@
-const dotenv = require('dotenv').config();
-import * as firebase from 'firebase';
+const dotenv = require('dotenv').config()
+import * as firebase from 'firebase'
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -9,11 +9,11 @@ var firebaseConfig = {
     projectId: process.env.FIREBASE_PROJECTID,
     storageBucket: process.env.FIREBASE_STORAGE,
     messagingSenderId: process.env.FIREBASE_MESSAGEID,
-    appId: process.env.FIREBASE_APPID
-  };
+    appId: process.env.FIREBASE_APPID,
+}
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig)
 
-const databaseRef = firebase.database().ref();
-export const todosRef = databaseRef.child("todos")
+const databaseRef = firebase.database().ref()
+export const todosRef = databaseRef.child('todos')

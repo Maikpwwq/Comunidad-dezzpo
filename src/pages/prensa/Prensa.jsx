@@ -1,25 +1,28 @@
 // Pagina de Prensa
-import React from 'react';
-import '../../../public/assets/css/prensa.css';
+import React from 'react'
+import '../../../public/assets/css/prensa.css'
 
-const Prensa = props => {
-    return ( 
+const Prensa = (props) => {
+    return (
         <>
             <main className="section">
-                <div className="container">
+                <div className="pageContainer">
                     <div className="prensaMensaje">
-                        <span className="tituloDocumento"> <h1>Consulta por titulo de documento</h1> </span>
+                        <span className="tituloDocumento">
+                            {' '}
+                            <h1>Consulta por titulo de documento</h1>{' '}
+                        </span>
                         <ul>
                             <li>Estudios</li>
                             <li>Estudios</li>
                             <li>Estudios</li>
                             <li>Estudios</li>
-                        </ul>                
+                        </ul>
                     </div>
                 </div>
             </main>
         </>
     )
-};
+}
 
-export default Prensa;
+export default Prensa
