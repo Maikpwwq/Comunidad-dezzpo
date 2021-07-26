@@ -16,12 +16,11 @@
   ],
   "env": {
     "development": {
-      "presets": [],
-      "plugins": []
+      "presets": [["@babel/preset-react", { "development": true }]]
     }
   },
   "plugins": [
     "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-proposal-class-properties"  
+    "@babel/plugin-proposal-class-properties"    
   ]
 }

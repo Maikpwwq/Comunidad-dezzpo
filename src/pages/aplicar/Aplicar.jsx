@@ -1,13 +1,13 @@
 // Pagina de Aplicar
-import React from 'react';
-import '../../../public/assets/css/aplicar.css';
+import React from 'react'
+import '../../../public/assets/css/aplicar.css'
 
 const Aplicar = (props) => {
-  return (
-    <>
-      <div>Aplicar</div>
-    </>
-  );
-};
+    return (
+        <>
+            <div>Aplicar</div>
+        </>
+    )
+}
 
-export default Aplicar;
+export default Aplicar

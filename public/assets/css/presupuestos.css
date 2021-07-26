@@ -1,22 +1,4 @@
-body {
-    font-family: "lato Regular", Helvetica, sans-serif; 
-    font-size: 21px;
-    display: flex;
-    flex-direction: column;
-    height: 1500px;
-    width: 100%;
-    margin: 0 0;
-    padding: 0 0;
-}
-main{
-    display: flex;    
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-around;
-}
-div {
-
-}
+/* height: 1500px; */
 .presupuestosMensaje{
     background: #e9ebe6 url(../img/Presupuestos1.png) no-repeat center; 
     background-attachment: scroll;         

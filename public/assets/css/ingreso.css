@@ -1,44 +1,30 @@
-body {
-    font-family: "lato Regular", Helvetica, sans-serif; 
-    font-size: 21px;
-    display: flex;
-    flex-direction: column;
+/* .pageContainer{
     height: 920px;
-    width: 100%;
-    margin: 0 0;
-    padding: 0 0;    
-}
-main{
-    display: flex;    
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-around;
-}
-div {
-    
-}
+} */
 .ingresoFormulario{
     background: #13495e;     
     height: 590px;
     width: 100%;
-    color: #e9ebe6;
+    color: #e9ebe6;    
+    position: relative;
 }
 .row{ 
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: flex-start;
+    height: 500px;    
 }
 .colRight{
     height: 100%;
     width: 80%;
     padding-left: 30px;
-    padding-right: 30px;
+    padding-bottom: 0px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    font-size: 18px;
+    font-size: 18px;    
 }
 .colLeft{
     height: 100%;
@@ -50,6 +36,7 @@ div {
     align-items: center;
     padding-top: 10px;
     padding-left: 130px;
+    margin-right: 100px;
 }
 .ingresarFormulario{
     display: flex;
@@ -80,7 +67,7 @@ div {
 .ingresoUbicacion{    
     color: #e9ebe6;
     background: #13495e;
-    height: 330px;
+    /* height: 330px; */
     width: 100%;
 }
 .imagenUbicacion{

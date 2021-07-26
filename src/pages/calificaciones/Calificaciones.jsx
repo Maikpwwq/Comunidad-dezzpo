@@ -1,15 +1,13 @@
 // Pagina de Calificaciones
-import React from 'react';
-import '../../../public/assets/css/calificaciones.css';
+import React from 'react'
+import '../../../public/assets/css/calificaciones.css'
 
 const Calificaciones = (props) => {
-    return ( 
+    return (
         <>
-            <div>
-                Calificaciones
-            </div> 
+            <div>Calificaciones</div>
         </>
     )
-};
+}
 
-export default Calificaciones;
+export default Calificaciones

@@ -1,0 +1,113 @@
+body { 
+    font-family: "lato Regular", Helvetica, sans-serif; 
+    font-size: 21px;
+    display: flex;
+    flex-direction: column;
+    height: 840px;
+    width: 100%;
+    margin: 0 0;
+    padding: 0 0;    
+}
+main{
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+div {
+    
+}
+.contactenosTitulo{
+    background-color: #e9ebe6;
+    color: #009999; 
+    height: 220px;
+    width: 100%;
+}
+.mainTitulo{
+    font-size: 40px;
+    margin: auto 30px;
+}
+.mainTitulo h1{
+    margin: auto 0%;
+}
+.contactenosMensaje{
+    background-color: #e9ebe6;
+    height: 690px;
+    width: 100%;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+.col{
+    height: 100%;
+    width: 33%;
+    padding-left: 30px;
+    padding-right: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 18px;
+}
+.formContacto{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;    
+    padding: 30px 30px;
+}
+.formContacto form{
+    width: 100%;
+    height: 330px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.formContacto input{
+    width: 100%;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #009999;
+}
+.formContacto textarea{
+    width: 100%;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #009999;
+}
+.borderBlue{
+    border-style: solid;
+    border-width: 3px;
+    border-color: #009999;
+}
+.datosContacto{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-top: -15px;
+}
+.listaContacto{
+    margin-top: -21px;
+    text-align: left;
+}
+.listaContacto li{
+    color: #009999;
+    list-style-type: none;
+}
+/*
+    background-color: #333333;
+    background-color: #e9ebe6;
+    background-color: rgba(0,0,0,0.8);
+    background-color: #009999; 
+    background-color:#1ec7e6;
+    background-color: #13495e; 
+    background-color:#92B901;
+    background-color: #006699;
+    background-color: #deaf06;
+*/
