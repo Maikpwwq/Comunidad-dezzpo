@@ -53,7 +53,7 @@ const AsiTrabajamos = (props) => {
                                 REMODELACIONES MÁS RÁPIDO Y SIMPLE QUE NUNCA
                                 <br />
                             </p>
-                        </div>
+                        </div> 
                     </div>
                     <div className="asiTrabajamosCertificaciones">
                         <div className="colCenter">

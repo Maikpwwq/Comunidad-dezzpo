@@ -18,7 +18,7 @@ const MenuComunidad = (props) => {
                     <img
                         src={ComunidadDezzpo}
                         alt="Logo Comunidad Dezzpo"
-                        height="110px"
+                        height="80px"
                         width="210px"
                     />
                     <div id="menuContenedor">

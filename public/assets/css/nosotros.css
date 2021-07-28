@@ -6,7 +6,7 @@
     background: #e9ebe6 url(../img/Nosotros1.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
-    height: 780px;
+    height: 430px;
     width: 100%;
     color: #e9ebe6;
     display: flex;
@@ -42,7 +42,7 @@
 .nosotrosMisionVision{
     background: #e9ebe6 url(../img/Nosotros2.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
+    background-size: 100% 100%;
     height: 590px;
     width: 100%;
     color: #e9ebe6;
@@ -50,18 +50,26 @@
 .left{
     float: left;
     font-size: 18px;
-    padding-left: 80px;
+    /* padding-left: 80px; */
+    width: 60%;
 }
 .left p{
     padding: 1em;
+    padding-top: 0px;
 }
 .right{
     float: right;
     font-size: 18px;
     padding-left: 80px;
+    width: 60%;
+    padding-right: 21px;
+    height: 300px;
 }
 .right p{
     padding: 1em;
+}
+.right ul {
+    margin-top: 0px;
 }
 .nosotrosPoliticas{
     background: #e9ebe6 url(../img/Asesorias1.png) no-repeat center; 
@@ -91,7 +99,7 @@
     background: #e9ebe6 url(../img/Nosotros4.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
-    height: 426px;
+    height: 300px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -113,9 +121,10 @@
 .nosotrosHitos{
     background: #e9ebe6 url(../img/Asesorias1.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
-    height: 570px;
+    background-size: 100% 100%;
+    height: 490px;
     width: 100%;
+    padding-top: 50px;
 }
 /*    
     background-color: #333333;
