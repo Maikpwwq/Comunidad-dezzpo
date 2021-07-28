@@ -55,7 +55,6 @@ const Nosotros = (props) => {
                         </div>
                         <br />
                         <div className="left">
-                            <br />
                             <p>
                                 Dezzpo será en 2020 una marca colombiana
                                 posicionada, referente de consulta para la

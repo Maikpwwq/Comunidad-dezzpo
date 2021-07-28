@@ -1,5 +1,5 @@
 /* height: 2690px; */
-.asiTrabajamosRegistro{
+.asiTrabajamosRegistro{ 
     background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
@@ -8,22 +8,21 @@
     background: #e9ebe6 url(../img/AsiTrabajamos2.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
-    height: 570px;
+    height: 455px;    
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    float: right;
 }
 .colRight{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    float: right;
     align-items: center;
     padding-bottom: 7em;
-    padding-left: 29em;    
+    padding-right: 3em;    
     width: 50%;
+    float: right !important;
 }
 .chatAsesor{      
     font-size: 27px; 
@@ -35,7 +34,7 @@
     background: #e9ebe6 url(../img/AsiTrabajamos3.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
-    height: 379px;
+    height: 300px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -46,15 +45,16 @@
     justify-content: center;
     float: right;
     align-items: center;
-    padding-top: 150px;
-    padding-left: 900px;
+    padding-top: 100px;
+    padding-left: 800px;
     width: 30%;
 }
 .asiTrabajamosPropietario{
     background: #e9ebe6 url(../img/AsiTrabajamos4.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
-    height: 379px;
+    height: 300px;
+    height: 100%;
     width: 100%;
     color: #e9ebe6;
 }
@@ -64,14 +64,15 @@
     justify-content: center;
     float: right;
     align-items: center;
-    padding: 2em 20px 2em 21em;
+    padding: 1em 20px 2em 21em;
     width: 60%;
 }
 .asiTrabajamosCertificaciones{
     background: #e9ebe6 url(../img/AsiTrabajamos5.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
-    height: 570px;
+    height: 450px;
+    height: 100%;
     width: 100%;
 }
 .colCenter{
@@ -101,7 +102,8 @@
     background: #e9ebe6 url(../img/AsiTrabajamos6.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
-    height: 570px;
+    /* height: 450px; */
+    height: 100%;
     width: 100%;
     color: #e9ebe6;
 }
@@ -124,6 +126,7 @@
     justify-content: space-around;
     align-items: center;
     width: 100%;
+    height: 100% !important;
 }
 .row ul{
     list-style: none;

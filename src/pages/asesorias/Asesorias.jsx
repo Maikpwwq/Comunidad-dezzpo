@@ -92,7 +92,7 @@ const Asesorias = (props) => {
                                     <br />
                                     accediento
                                     <br />a aceptar nuestra
-                                    <Link to="/legal">
+                                 <Link to="/legal">
                                         politica de privacidad
                                     </Link>{' '}
                                     y los

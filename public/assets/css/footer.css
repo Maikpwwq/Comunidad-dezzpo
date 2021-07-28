@@ -10,7 +10,9 @@
     background: #313332; 
     background-size: 100% auto;
     display: flex;
-    background-attachment: scroll;             
+    background-attachment: scroll;    
+    border-top: #deaf06;
+    border-style: solid;
 }
 #footerContainer{
     display: flex;
