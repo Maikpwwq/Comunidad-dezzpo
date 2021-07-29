@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 require('dotenv').config()
 
+// para uso en local dejar vacio " ", para postear en Github pages usar "/"
 const ASSET_PATH = process.env.ASSET_PATH || '/'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -22,6 +23,7 @@ module.exports = {
     resolve: {
         modules: ['node_modules'],
         extensions: ['.js', '.jsx', '.css', '.json'],
+        alias: {},
     },
     module: {
         rules: [
@@ -66,10 +68,6 @@ module.exports = {
                 ],
             },
         ],
-    },
-    resolve: {
-        extensions: ['.js', '.jsx'],
-        alias: {},
     },
     plugins: [
         // Esto nos permite utilizar de forma segura env vars en nuestro código

@@ -1,0 +1,77 @@
+/* npm install --save node-sass */
+/* make the customizations */
+$theme-colors: (
+    
+);
+
+/* then import bootstrap to set changes */
+@import "~bootstrap/scss/bootstrap";
+
+/*
+background-color: #333333;
+background-color: #e9ebe6;
+background-color: rgba(0,0,0,0.8);
+background-color: #009999; 
+background-color:#1ec7e6;
+background-color: #13495e; 
+background-color:#92B901;
+background-color: #006699;
+background-color: #deaf06;
+*/
+
+main{
+    display: flex;    
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+
+body {
+    font-family: "lato Regular", Helvetica, sans-serif; 
+    font-size: 21px;
+    display: flex;
+    flex-direction: column;    
+    width: 100%;
+    margin: 0 0;
+    padding: 0 0;    
+}
+
+.router-output{
+    position: relative;    
+    z-index: -1;
+    top: 0px;
+}
+
+.pageContainer{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    top: 80px;
+    position: relative;
+    margin-bottom: 84px;
+    display: flex;
+    flex-direction: column;
+}
+
+.col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.opacidadNegro{
+    background-color: rgba(0,0,0,0.8);    
+    font-size: 29px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+}
