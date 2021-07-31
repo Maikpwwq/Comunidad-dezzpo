@@ -15,11 +15,7 @@ const Inicio = () => {
     return (
         <>
             <Container fluid className="p-0">
-                <Row
-                    style={{ width: '100%' }}
-                    className="m-0"
-                    id="bannerComunidad"
-                >
+                <Row className="m-0 w-100" id="bannerComunidad">
                     {/* imagen fondo */}
                     <Col id="contenedorBanner" className="m-0 p-0">
                         {/* Mensaje del Banner izquierda */}
@@ -470,7 +466,7 @@ const Inicio = () => {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="m-0" style={{ width: '100%' }}>
+                <Row className="m-0 w-100">
                     {/* Mensaje del Banner inferior*/}
                     <Col className="mensajeBanner" md={12}>
                         <p>
@@ -492,7 +488,7 @@ const Inicio = () => {
                             <div>
                                 <h1>REGISTRATE</h1>
                                 <p>
-                                    bienvenido a todos los beneficios de dezzpo
+                                    Bienvenido a todos los beneficios de dezzpo.
                                 </p>
                                 <label htmlFor="">Nombre</label>
                                 <br />
@@ -521,7 +517,7 @@ const Inicio = () => {
                                 </label>{' '}
                                 <br />
                                 <button type="submit">Crear Cuenta</button>
-                                <p>Bienvenido</p>
+                                {/* <p>Bienvenido</p> */}
                             </div>
                         </form>
                     </Col>

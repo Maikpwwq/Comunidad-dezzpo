@@ -48,7 +48,10 @@ class Rutas extends React.Component {
                 {/* <Button variant="contained"> {name} </Button> */}
                 <Router>
                     <MenuComunidad />
-                    <div className="router-output">                        
+                    <div
+                        className="router-output"
+                        style={{ 'padding-top': '80px' }}
+                    >
                         <Switch>
                             <Route exact path="/" component={Inicio} />
                             <Route
