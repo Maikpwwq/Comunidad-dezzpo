@@ -3,7 +3,7 @@
     background: #e9ebe6 url(../img/Ayuda&PQRS1.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
-    height: 570px;
+    height: 550px;
     width: 100%;
 }
 .tituloPregunta{
@@ -28,7 +28,7 @@
     background: #e9ebe6 url(../img/Ayuda&PQRS2.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
-    height: 721px;
+    height: 640px;
     width: 100%;    
 }
 .col{

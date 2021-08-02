@@ -3,34 +3,37 @@ import React from 'react'
 import '../../../public/assets/css/home.css'
 
 // imagenes
-import LocalCiudades from "../../../public/assets/img/LocalCiudades.png"
-import CategoriasPopulares from "../../../public/assets/img/CategoriasPopulares.png"
+import LocalCiudades from '../../../public/assets/img/LocalCiudades.png'
+import CategoriasPopulares from '../../../public/assets/img/CategoriasPopulares.png'
+
+// react-bootrstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 
 const Inicio = () => {
     return (
         <>
-            <main>
-                {/* imagen fondo */}
-                <section id="bannerComunidad">
-                    <div id="contenedorBanner">
+            <Container fluid className="p-0">
+                <Row className="m-0 w-100" id="bannerComunidad">
+                    {/* imagen fondo */}
+                    <Col id="contenedorBanner" className="m-0 p-0">
                         {/* Mensaje del Banner izquierda */}
                         <div className="slogan">
                             <span className="opacidadNegro">
                                 {' '}
                                 <p>
-                                    {' '}
-                                    Hemos facilitado el servicio, <br />
-                                    haciendolo más rapido y <br />
-                                    simple que nunca{' '}
+                                    <strong>
+                                        <em>
+                                            {' '}
+                                            Hemos facilitado el servicio, <br />
+                                            haciendolo más rapido y <br />
+                                            simple que nunca{' '}
+                                        </em>
+                                    </strong>
                                 </p>{' '}
-                                <br />
                                 <h1> Unete a la Comunidad </h1>{' '}
                             </span>
-                            <p>
-                                <strong>
-                                    <em>Contenido legendario</em>
-                                </strong>
-                            </p>
                         </div>
                         {/* Formulario nuevo proyecto */}
                         <div className="contenerdorFormulario">
@@ -459,27 +462,33 @@ const Inicio = () => {
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className="p-0">
+                <Row className="m-0 w-100">
                     {/* Mensaje del Banner inferior*/}
-                    <div className="mensajeBanner">
+                    <Col className="mensajeBanner" md={12}>
                         <p>
                             {' '}
-                            Encuentra aqui un profesional Seguro y Confiable
-                            para cada trabajo. Desde iluminación <br />y
+                            Encuentra aqui un profesional Seguro y<br />
+                            Confiable para cada trabajo. Desde iluminación y
                             pequeños arreglos, hasta diseños de ingeniería y
-                            remodelaciones completas.{' '}
+                            remodelaciones remodelaciones completas.{' '}
                         </p>
-                    </div>
-                </section>
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className="p-0">
                 {/* Seccion de Registro */}
-                <section id="registrate">
-                    <div className="registrateImagen"></div>
-                    <div className="registrateformulario">
+                <Row id="registrate" className="m-0">
+                    <Col className="registrateImagen m-0"></Col>
+                    <Col className="registrateformulario m-0">
                         <form id="formularioRegistro" action="">
                             <div>
                                 <h1>REGISTRATE</h1>
                                 <p>
-                                    bienvenido a todos los beneficios de dezzpo
+                                    Bienvenido a todos los beneficios de dezzpo.
                                 </p>
                                 <label htmlFor="">Nombre</label>
                                 <br />
@@ -508,83 +517,89 @@ const Inicio = () => {
                                 </label>{' '}
                                 <br />
                                 <button type="submit">Crear Cuenta</button>
-                                <p>Bienvenido</p>
+                                {/* <p>Bienvenido</p> */}
                             </div>
                         </form>
-                    </div>
-                </section>
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className="p-0">
                 {/* Seccion de como funciona la comunidad */}
-                <section id="comoFunciona">
-                    <h1>¿Como funciona nuestra comunidad?</h1>
-                    {/* Propietarios */}
-                    <div className="comoPropietarios">
-                        <div className="comunidadTitulo">
-                            <h2>PROPIETARIOS</h2>
+                <Row id="comoFunciona" className="m-0">
+                    <Col className="">
+                        <h1>¿Como funciona nuestra comunidad?</h1>
+                        {/* Propietarios */}
+                        <div className="comoPropietarios">
+                            <div className="comunidadTitulo">
+                                <h2>PROPIETARIOS</h2>
+                            </div>
+                            <div className="nuevoProyecto">
+                                <p>
+                                    1 <br />
+                                    Crea una nueva oferta gratis <br />
+                                    Describe tu proyecto <br />
+                                </p>
+                            </div>
+                            <div className="seleccionaPerfiles">
+                                <p>
+                                    2 <br />
+                                    Selecciona el perfil adecuado y <br />
+                                    consigue algunas cotizaciones. <br />
+                                    El servicio profesional se pondrá en <br />
+                                    contacto con tigo. <br />
+                                </p>
+                            </div>
+                            <div className="calificaServicio">
+                                <p>
+                                    3 <br />
+                                    Califica y comenta. <br />
+                                    Finalizo el proyecto, <br />
+                                    Dejanos conocer tu experiencia. <br />
+                                </p>
+                            </div>
                         </div>
-                        <div className="nuevoProyecto">
-                            <p>
-                                1 <br />
-                                Crea una nueva oferta gratis <br />
-                                Describe tu proyecto <br />
-                            </p>
+                        {/* Comerciantes Calificados */}
+                        <div className="comoComerciantes">
+                            <div className="comunidadTitulo">
+                                <h2>COMERCIANTES CALIFICADOS</h2>
+                            </div>
+                            <div className="buscarOfertas">
+                                <p>
+                                    1 <br />
+                                    Busca la oferta indicada para ti. <br />
+                                    Filtra los proyectos de los <br />
+                                    propietarios y postulate. <br />
+                                </p>
+                            </div>
+                            <div className="cargaPresupuesto">
+                                <p>
+                                    2 <br />
+                                    Diligencia el presupuesto <br />
+                                    Haz una cotizacion detallada con los datos
+                                    suministrados, <br />
+                                    en caso de ser escogido por el propietario
+                                    para desarrollar el <br />
+                                    servicio, nos pagaras una comisión por el
+                                    servicio prestado <br />
+                                </p>
+                            </div>
+                            <div className="calificaPropietario">
+                                <p>
+                                    3 <br />
+                                    Califica y comenta. <br />
+                                    Finalizo el proyecto, <br />
+                                    Dejanos conocer tu experiencia. <br />
+                                </p>
+                            </div>
                         </div>
-                        <div className="seleccionaPerfiles">
-                            <p>
-                                2 <br />
-                                Selecciona el perfil adecuado y <br />
-                                consigue algunas cotizaciones. <br />
-                                El servicio profesional se pondrá en <br />
-                                contacto con tigo. <br />
-                            </p>
-                        </div>
-                        <div className="calificaServicio">
-                            <p>
-                                3 <br />
-                                Califica y comenta. <br />
-                                Finalizo el proyecto, <br />
-                                Dejanos conocer tu experiencia. <br />
-                            </p>
-                        </div>
-                    </div>
-                    {/* Comerciantes Calificados */}
-                    <div className="comoComerciantes">
-                        <div className="comunidadTitulo">
-                            <h2>COMERCIANTES CALIFICADOS</h2>
-                        </div>
-                        <div className="buscarOfertas">
-                            <p>
-                                1 <br />
-                                Busca la oferta indicada para ti. <br />
-                                Filtra los proyectos de los <br />
-                                propietarios y postulate. <br />
-                            </p>
-                        </div>
-                        <div className="cargaPresupuesto">
-                            <p>
-                                2 <br />
-                                Diligencia el presupuesto <br />
-                                Haz una cotizacion detallada con los datos
-                                suministrados, <br />
-                                en caso de ser escogido por el propietario para
-                                desarrollar el <br />
-                                servicio, nos pagaras una comisión por el
-                                servicio prestado <br />
-                            </p>
-                        </div>
-                        <div className="calificaPropietario">
-                            <p>
-                                3 <br />
-                                Califica y comenta. <br />
-                                Finalizo el proyecto, <br />
-                                Dejanos conocer tu experiencia. <br />
-                            </p>
-                        </div>
-                    </div>
-                </section>
-                {/* Afuturo importar del contenedor de categorias y servicios */}
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className="p-0">
+                {/* Afuturo importar como contenedor de categorias y servicios */}
                 {/* seccion de categorias y servicios */}
-                <section id="popularCategorias">
-                    <div className="">
+                <Row id="popularCategorias" className="m-0">
+                    <Col className="">
                         <h1> NUESTRA COMUNIDAD </h1>
                         <p>
                             Tenemos una gran cantidad de profesionales que
@@ -596,256 +611,281 @@ const Inicio = () => {
                             height="170"
                             width="900"
                         />
-                        <div className="categoriasPopulares">
-                            <h2>
-                                {' '}
-                                o encuentralos dentro de las categorías
-                                populares:
-                            </h2>
-                            <ul>
-                                <li>
-                                    Pintor y decorador, Pintura y decoracion de
-                                    interiores{' '}
-                                </li>
-                                <li>
-                                    Electricista, Instalación y validación de
-                                    acometidas electricas{' '}
-                                </li>
-                                <li>
-                                    Instaladores de techos y cubiertas,
-                                    mantenimiento de cubiertas{' '}
-                                </li>
-                                <li>Maestro, Construcciones y ampliaciones </li>
-                                <li>Plomero, reparacion de fugas </li>
-                                <li>
-                                    Carpinteria, instalacion de closets, más{' '}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
+                    </Col>
+                    <Col className="categoriasPopulares">
+                        <h2>
+                            {' '}
+                            o encuentralos dentro de las categorías populares:
+                        </h2>
+                        <ul>
+                            <li>
+                                Pintor y decorador, Pintura y decoracion de
+                                interiores{' '}
+                            </li>
+                            <li>
+                                Electricista, Instalación y validación de
+                                acometidas electricas{' '}
+                            </li>
+                            <li>
+                                Instaladores de techos y cubiertas,
+                                mantenimiento de cubiertas{' '}
+                            </li>
+                            <li>Maestro, Construcciones y ampliaciones </li>
+                            <li>Plomero, reparacion de fugas </li>
+                            <li>Carpinteria, instalacion de closets, más </li>
+                        </ul>
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className="p-0">
                 {/* seccion de categorias y servicios */}
-                <section id="categoriasServicios">
-                    <div className="tituloServicios">
-                        <h1>Nuestro comerciantes y servicios</h1>
-                    </div>{' '}
-                    <br />
-                    <div className="contratistasReformas">
-                        <div>
-                            <ul>
-                                <li>
-                                    {' '}
-                                    Administraciones PH `{'>'}` administradores
-                                    PH{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Acabados en muros`{'>'}` Afinadores de muros
-                                    y acabados{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Aislamiento acústico`{'>'}` Aisladores
-                                    acústicos{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Control de acceso `{'>'}` Integradores
-                                    Control de acceso{' '}
-                                </li>
-                                <li> Albañilería `{'>'}` Albañiles </li>
-                                <li>
-                                    {' '}
-                                    Artesanías y manualidades `{'>'}` Artesanos{' '}
-                                </li>
-                                <li> Arquitectura `{'>'}` Arquitectos </li>
-                                <li> Asistencia toderos `{'>'}` Toderos </li>
-                                <li>
-                                    {' '}
-                                    Automatización `{'>'}` Técnico en
-                                    automatización{' '}
-                                </li>
-                                <li> Domótica `{'>'}` Técnico en domótica </li>
-                                <li> Carpintería `{'>'}` Carpinteros </li>
-                                <li>
-                                    {' '}
-                                    Carpintería en aluminio `{'>'}` Carpinteros
-                                    de aluminio{' '}
-                                </li>
-                            </ul>
+                <Row id="categoriasServicios" className="m-0">
+                    <Col>
+                        <div className="tituloServicios">
+                            <h1>Nuestro comerciantes y servicios</h1>
+                        </div>{' '}
+                        <br />
+                        <div className="contratistasReformas">
+                            <div>
+                                <ul>
+                                    <li>
+                                        {' '}
+                                        Administraciones PH `{'>'}`
+                                        administradores PH{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Acabados en muros`{'>'}` Afinadores de
+                                        muros y acabados{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Aislamiento acústico`{'>'}` Aisladores
+                                        acústicos{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Control de acceso `{'>'}` Integradores
+                                        Control de acceso{' '}
+                                    </li>
+                                    <li> Albañilería `{'>'}` Albañiles </li>
+                                    <li>
+                                        {' '}
+                                        Artesanías y manualidades `{'>'}`
+                                        Artesanos{' '}
+                                    </li>
+                                    <li> Arquitectura `{'>'}` Arquitectos </li>
+                                    <li>
+                                        {' '}
+                                        Asistencia toderos `{'>'}` Toderos{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Automatización `{'>'}` Técnico en
+                                        automatización{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Domótica `{'>'}` Técnico en domótica{' '}
+                                    </li>
+                                    <li> Carpintería `{'>'}` Carpinteros </li>
+                                    <li>
+                                        {' '}
+                                        Carpintería en aluminio `{'>'}`
+                                        Carpinteros de aluminio{' '}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>
+                                        {' '}
+                                        Carpintería metálica `{'>'}` Carpinteros
+                                        de metales{' '}
+                                    </li>
+                                    <li> Cerrajería `{'>'}` Cerrajeros </li>
+                                    <li>
+                                        {' '}
+                                        Construcción obra `{'>'}` Constructoras{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Reformas Cocinas `{'>'}` Instaladores
+                                        Cocina{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Reformas Baños `{'>'}` Instaladores
+                                        Baños{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Control de plagas `{'>'}` Controladores
+                                        de plagas{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Diseño e impresión `{'>'}` Centros de
+                                        diseño grafico{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Drenajes e inundaciones `{'>'}` Técnico
+                                        en drenajes e inundaciones{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Electricidad `{'>'}` Electricistas{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Estudios de suelos `{'>'}` Geólogos{' '}
+                                    </li>
+                                    <li> Ferreterías `{'>'}` Ferreteros </li>
+                                    <li>
+                                        {' '}
+                                        Gasodomésticos y refrigeración `{'>'}`
+                                        Técnico en gasodomésticos y
+                                        refrigeración{' '}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>
+                                        {' '}
+                                        Impermeabilización `{'>'}`
+                                        Impermeabilizadores{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Instalación de adoquín `{'>'}`
+                                        Instaladores de Adoquín{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Instalación de cableado estructurado `
+                                        {'>'}` Instaladores de cableado
+                                        estructurado{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Instalación de cerámica `{'>'}`
+                                        Instaladores de cerámica{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Instalación de cubiertas `{'>'}`
+                                        Instaladores de cubiertas{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Instalación de parques `{'>'}`
+                                        Instaladores de parques{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Instalación de ventanas `{'>'}`
+                                        Instaladores de ventanas{' '}
+                                    </li>
+                                    <li> Jardinería `{'>'}` Jardineros </li>
+                                    <li> Lavandería `{'>'}` Lavanderías </li>
+                                    <li>
+                                        {' '}
+                                        Tanques de agua `{'>'}` Técnicos de
+                                        tanques de aguas{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Limpiezas técnicas `{'>'}` Técnicos de
+                                        limpiezas técnicas{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Maestro Obra `{'>'}` Maestros de obra{' '}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>
+                                        {' '}
+                                        Mudanzas `{'>'}` Ayudantes de mudanzas{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Movilizar pesos `{'>'}` Ayudantes de
+                                        movilizaciones{' '}
+                                    </li>
+                                    <li> Mecánica `{'>'}` Mecánicos </li>
+                                    <li> Paisajismo `{'>'}` Paisajistas </li>
+                                    <li> Pintura `{'>'}` Pintores </li>
+                                    <li> Plomería `{'>'}` Plomeros </li>
+                                    <li>
+                                        {' '}
+                                        Redes cableado estructurado `{'>'}`
+                                        Tecnicos en redes{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Reformas Piscinas `{'>'}` Reparadores de
+                                        piscinas{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Servicio doméstico `{'>'}` Asistentes de
+                                        servicio domestico{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        Sistemas de Seguridad y alarmas `{'>'}`
+                                        Técnico en seguridad electrónica{' '}
+                                    </li>
+                                    <li> Tapicería `{'>'}` Tapiceros </li>
+                                    <li>
+                                        {' '}
+                                        Trabajos en piedra `{'>'}` Trabajadores
+                                        de piedras{' '}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div>
-                            <ul>
-                                <li>
-                                    {' '}
-                                    Carpintería metálica `{'>'}` Carpinteros de
-                                    metales{' '}
-                                </li>
-                                <li> Cerrajería `{'>'}` Cerrajeros </li>
-                                <li>
-                                    {' '}
-                                    Construcción obra `{'>'}` Constructoras{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Reformas Cocinas `{'>'}` Instaladores Cocina{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Reformas Baños `{'>'}` Instaladores Baños{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Control de plagas `{'>'}` Controladores de
-                                    plagas{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Diseño e impresión `{'>'}` Centros de diseño
-                                    grafico{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Drenajes e inundaciones `{'>'}` Técnico en
-                                    drenajes e inundaciones{' '}
-                                </li>
-                                <li> Electricidad `{'>'}` Electricistas </li>
-                                <li> Estudios de suelos `{'>'}` Geólogos </li>
-                                <li> Ferreterías `{'>'}` Ferreteros </li>
-                                <li>
-                                    {' '}
-                                    Gasodomésticos y refrigeración `{'>'}`
-                                    Técnico en gasodomésticos y refrigeración{' '}
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <ul>
-                                <li>
-                                    {' '}
-                                    Impermeabilización `{'>'}`
-                                    Impermeabilizadores{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Instalación de adoquín `{'>'}` Instaladores
-                                    de Adoquín{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Instalación de cableado estructurado `{'>'}`
-                                    Instaladores de cableado estructurado{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Instalación de cerámica `{'>'}` Instaladores
-                                    de cerámica{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Instalación de cubiertas `{'>'}`
-                                    Instaladores de cubiertas{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Instalación de parques `{'>'}` Instaladores
-                                    de parques{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Instalación de ventanas `{'>'}` Instaladores
-                                    de ventanas{' '}
-                                </li>
-                                <li> Jardinería `{'>'}` Jardineros </li>
-                                <li> Lavandería `{'>'}` Lavanderías </li>
-                                <li>
-                                    {' '}
-                                    Tanques de agua `{'>'}` Técnicos de tanques
-                                    de aguas{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Limpiezas técnicas `{'>'}` Técnicos de
-                                    limpiezas técnicas{' '}
-                                </li>
-                                <li> Maestro Obra `{'>'}` Maestros de obra </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <ul>
-                                <li>
-                                    {' '}
-                                    Mudanzas `{'>'}` Ayudantes de mudanzas{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Movilizar pesos `{'>'}` Ayudantes de
-                                    movilizaciones{' '}
-                                </li>
-                                <li> Mecánica `{'>'}` Mecánicos </li>
-                                <li> Paisajismo `{'>'}` Paisajistas </li>
-                                <li> Pintura `{'>'}` Pintores </li>
-                                <li> Plomería `{'>'}` Plomeros </li>
-                                <li>
-                                    {' '}
-                                    Redes cableado estructurado `{'>'}` Tecnicos
-                                    en redes{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Reformas Piscinas `{'>'}` Reparadores de
-                                    piscinas{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Servicio doméstico `{'>'}` Asistentes de
-                                    servicio domestico{' '}
-                                </li>
-                                <li>
-                                    {' '}
-                                    Sistemas de Seguridad y alarmas `{'>'}`
-                                    Técnico en seguridad electrónica{' '}
-                                </li>
-                                <li> Tapicería `{'>'}` Tapiceros </li>
-                                <li>
-                                    {' '}
-                                    Trabajos en piedra `{'>'}` Trabajadores de
-                                    piedras{' '}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className="p-0">
                 {/* seccion de comerciantes Locales*/}
-                <section id="comerciantesLocales">
-                    <div className="localCiudades">
-                        <h1>Busca en tu ciudad comerciantes calificados</h1>
-                        <div className="ciudades">
-                            <ul>
-                                <li>Bogota</li>
-                                <li>Medellin</li>
-                                <li>Cali</li>
-                            </ul>
-                            <ul>
-                                <li>Villavicencio</li>
-                                <li>Chia</li>
-                                <li>Cota</li>
-                            </ul>
-                            <ul>
-                                <li>Funza</li>
-                                <li>Mosquera</li>
-                                <li>Zipaquira</li>
-                            </ul>
+                <Row id="comerciantesLocales" className="m-0">
+                    <Col>
+                        <div className="localCiudades">
+                            <h1>Busca en tu ciudad comerciantes calificados</h1>
+                            <div className="ciudades">
+                                <ul>
+                                    <li>Bogota</li>
+                                    <li>Medellin</li>
+                                    <li>Cali</li>
+                                </ul>
+                                <ul>
+                                    <li>Villavicencio</li>
+                                    <li>Chia</li>
+                                    <li>Cota</li>
+                                </ul>
+                                <ul>
+                                    <li>Funza</li>
+                                    <li>Mosquera</li>
+                                    <li>Zipaquira</li>
+                                </ul>
+                            </div>
+                            <img
+                                src={LocalCiudades}
+                                alt="Busca Comerciantes Locales"
+                                height="121px"
+                                width="500px"
+                            />
                         </div>
-                        <img
-                            src={LocalCiudades}
-                            alt="Busca Comerciantes Locales"
-                            height="121px"
-                            width="500px"
-                        />
-                    </div>
-                </section>
-            </main>
+                    </Col>
+                </Row>
+            </Container>
         </>
     )
 }

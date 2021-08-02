@@ -38,7 +38,7 @@ import MenuComunidad from '../components/menu/Menu'
 
 import Button from '@material-ui/core/Button'
 
-import "./main.css";
+// import "./main.css";
 
 class Rutas extends React.Component {
     render() {
@@ -48,7 +48,10 @@ class Rutas extends React.Component {
                 {/* <Button variant="contained"> {name} </Button> */}
                 <Router>
                     <MenuComunidad />
-                    <div className="router-output">                        
+                    <div
+                        className="router-output"
+                        style={{ 'padding-top': '80px' }}
+                    >
                         <Switch>
                             <Route exact path="/" component={Inicio} />
                             <Route

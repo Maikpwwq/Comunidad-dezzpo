@@ -3,19 +3,26 @@ import React from 'react'
 import '../../../public/assets/css/profesionales_servicios.css'
 
 // imagenes
-import LocalCiudades from "../../../public/assets/img/LocalCiudades.png"
-import CategoriasPopulares from "../../../public/assets/img/CategoriasPopulares.png"
+import LocalCiudades from '../../../public/assets/img/LocalCiudades.png'
+import CategoriasPopulares from '../../../public/assets/img/CategoriasPopulares.png'
+
+// react-bootrstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 
 import { Link } from 'react-router-dom'
 
 const ProfesionalesServicios = (props) => {
     return (
         <>
-            <main className="section">
-                <div className="pageContainer">
-                    <div className="profesionalesServiciosMensaje">
-                        Profesionales y Servicios <br />
-                        Recuerda
+            <Container fluid className="p-0">
+                <Row className="profesionalesServiciosMensaje m-0 d-flex flex-row justify-content-end">
+                    <Col md={4}>
+                        <h3>
+                            Profesionales y Servicios <br />
+                            Recuerda
+                        </h3>
                         <p>
                             Los Certificados describen las acreditaciones que ha
                             recibido cada comerciante <br />
@@ -26,53 +33,54 @@ const ProfesionalesServicios = (props) => {
                             Propietarios
                         </p>
                         <span> Busca Profesionales en tu zona </span>
-                    </div>
-                    {/* seccion de categorias y servicios */}
-                    <section id="popularCategorias">
-                        <div className="">
-                            <h1> NUESTRA COMUNIDAD </h1>
-                            <p>
-                                Tenemos una gran cantidad de profesionales que
-                                quieren trabajar en su proyecto.
-                            </p>
-                            <img
-                                src= {CategoriasPopulares}
-                                alt="Categorias Populares entre la Comunidad"
-                                height="170"
-                                width="900"
-                            />
-                            <div className="categoriasPopulares">
-                                <h2>
-                                    {' '}
-                                    o encuentralos dentro de las categorías
-                                    populares:
-                                </h2>
-                                <ul>
-                                    <li>
-                                        Pintor y decorador, Pintura y decoracion
-                                        de interiores{' '}
-                                    </li>
-                                    <li>
-                                        Electricista, Instalación y validación
-                                        de acometidas electricas{' '}
-                                    </li>
-                                    <li>
-                                        Instaladores de techos y cubiertas,
-                                        mantenimiento de cubiertas{' '}
-                                    </li>
-                                    <li>
-                                        Maestro, Construcciones y ampliaciones{' '}
-                                    </li>
-                                    <li>Plomero, reparacion de fugas </li>
-                                    <li>
-                                        Carpinteria, instalacion de closets, más{' '}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                    {/* seccion de categorias y servicios */}
-                    <section id="categoriasServicios">
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className="p-0">
+                {/* seccion de categorias y servicios */}
+                <Row id="popularCategorias" className="m-0">
+                    <Col className="">
+                        <h1> NUESTRA COMUNIDAD </h1>
+                        <p>
+                            Tenemos una gran cantidad de profesionales que
+                            quieren trabajar en su proyecto.
+                        </p>
+                        <img
+                            src={CategoriasPopulares}
+                            alt="Categorias Populares entre la Comunidad"
+                            height="170"
+                            width="900"
+                        />
+                    </Col>
+                    <Col className="categoriasPopulares">
+                        <h2>
+                            {' '}
+                            o encuentralos dentro de las categorías populares:
+                        </h2>
+                        <ul>
+                            <li>
+                                Pintor y decorador, Pintura y decoracion de
+                                interiores{' '}
+                            </li>
+                            <li>
+                                Electricista, Instalación y validación de
+                                acometidas electricas{' '}
+                            </li>
+                            <li>
+                                Instaladores de techos y cubiertas,
+                                mantenimiento de cubiertas{' '}
+                            </li>
+                            <li>Maestro, Construcciones y ampliaciones </li>
+                            <li>Plomero, reparacion de fugas </li>
+                            <li>Carpinteria, instalacion de closets, más </li>
+                        </ul>
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className="p-0">
+                {/* seccion de categorias y servicios */}
+                <Row id="categoriasServicios" className="m-0">
+                    <Col>
                         <div className="tituloServicios">
                             <h1>Nuestro comerciantes y servicios</h1>
                         </div>{' '}
@@ -282,9 +290,13 @@ const ProfesionalesServicios = (props) => {
                                 </ul>
                             </div>
                         </div>
-                    </section>
-                    {/* seccion de comerciantes Locales*/}
-                    <section id="comerciantesLocales">
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className="p-0">
+                {/* seccion de comerciantes Locales*/}
+                <Row id="comerciantesLocales" className="m-0">
+                    <Col>
                         <div className="localCiudades">
                             <h1>Busca en tu ciudad comerciantes calificados</h1>
                             <div className="ciudades">
@@ -305,15 +317,15 @@ const ProfesionalesServicios = (props) => {
                                 </ul>
                             </div>
                             <img
-                                src= {LocalCiudades}
+                                src={LocalCiudades}
                                 alt="Busca Comerciantes Locales"
                                 height="121px"
                                 width="500px"
                             />
                         </div>
-                    </section>
-                </div>
-            </main>
+                    </Col>
+                </Row>
+            </Container>
         </>
     )
 }
