@@ -3,19 +3,28 @@ import React from 'react'
 import '../../../public/assets/css/apendice_costos.css'
 import { Link } from 'react-router-dom'
 
+// react-bootrstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+
 const ApendiceCostos = () => {
     return (
-        <>            
-            <main className="section">
-                <div className="pageContainer">
-                    <div className="apendiceCostosTitulo">
+        <>
+            <Container fluid className="p-0">
+                <Row className="apendiceCostosTitulo m-0 w-100 d-flex justify-content-end">
+                    <Col md={4}>
                         <span className="titulo">
                             Costeo de Servicios
                             <br />
                             Comunes
                         </span>
-                    </div>
-                    <div className="apendiceCostosPreguntas">
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className="p-0">
+                <Row className="apendiceCostosPreguntas m-0 w-100">
+                    <Col>
                         <ul>
                             <li>
                                 <Link to="/apendice-costos">
@@ -46,9 +55,9 @@ const ApendiceCostos = () => {
                                 </Link>
                             </li>
                         </ul>
-                    </div>
-                </div>
-            </main>
+                    </Col>
+                </Row>
+            </Container>
         </>
     )
 }

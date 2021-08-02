@@ -17,8 +17,8 @@ const ProfesionalesServicios = (props) => {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="profesionalesServiciosMensaje">
-                    <Col>
+                <Row className="profesionalesServiciosMensaje m-0 d-flex flex-row justify-content-end">
+                    <Col md={4}>
                         <h3>
                             Profesionales y Servicios <br />
                             Recuerda

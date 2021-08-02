@@ -3,6 +3,11 @@
 import React from "react";
 import "../../../public/assets/css/ingreso.css";
 
+// react-bootrstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+
 const Ingreso = (props) => {
   let checkStyle = {
     width: "30px",
@@ -10,13 +15,13 @@ const Ingreso = (props) => {
 
   return (
     <>
-      <main className="section">
-        <div className="pageContainer">
-          <div className="ingresoFormulario">
-            <div className=" row">
-              <div className="imagenIngreso"></div>
-              <div className="colRight">
-                <div className="ingresarFormulario">
+      <Container fluid className="p-0">
+          <Row className="ingresoFormulario  m-0 w-100">
+              <Col className="imagenIngreso">
+
+              </Col>
+              <Col className="colRight">
+              <div className="ingresarFormulario">
                   <span className="tituloformulario">
                     <h1>Bienvenido!</h1>
                   </span>
@@ -75,13 +80,14 @@ const Ingreso = (props) => {
                     <h1>BIENVENIDO</h1>
                   </span>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="ingresoUbicacion">
-            <div className="row" style={{"width": "100%"}}>
-              <div className="colLeft">
-                <span className="tituloformulario">
+              
+              </Col>
+          </Row>
+      </Container>
+      <Container fluid className="p-0">
+          <Row className="ingresoUbicacion m-0 w-100"> 
+              <Col className="colLeft">
+              <span className="tituloformulario">
                   {" "}
                   <h1>Ingresa tu ubicación</h1>{" "}
                 </span>
@@ -104,12 +110,11 @@ const Ingreso = (props) => {
                   <br />
                   <button className="btn">Consultar</button>
                 </form>
-              </div>
-              <div className="imagenUbicacion"></div>
-            </div>
-          </div>
-        </div>
-      </main>
+              </Col>
+              <Col className="imagenUbicacion">
+              </Col>
+          </Row>
+      </Container>         
     </>
   );
 };
