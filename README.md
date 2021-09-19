@@ -10,6 +10,12 @@
 
 ## Web site
 
+_Project Console:_ 
+> https://console.firebase.google.com/project/app-comunidad-dezzpo/overview
+
+_Hosting URL:_ 
+>https://app-comunidad-dezzpo.web.app
+
 _GithubPage:_ 
 > https://maikpwwq.github.io/Comunidad-dezzpo/
 
