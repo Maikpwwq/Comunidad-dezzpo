@@ -120,30 +120,37 @@ function Header(props) {
                 sx={{ zIndex: 0 }}
             >
                 <Tabs value={0} textColor="inherit">
-                    <Tab label="Ver tu perfil">
-                        <NavLink to="/perfil" className=""></NavLink>
-                    </Tab>
-                    <Tab label="Mensajes">
-                        <NavLink to="/mensajes" className=""></NavLink>
-                    </Tab>
-                    <Tab label="Notificaciones">
-                        <NavLink to="/notificaciones" className=""></NavLink>
-                    </Tab>
-                    <Tab label="Portal de servicios">
-                        <NavLink to="/portal-servicios" className=""></NavLink>
-                    </Tab>
-                    <Tab label="Historial de servicio">
-                        <NavLink
-                            to="/historial-servicios"
-                            className=""
-                        ></NavLink>
-                    </Tab>
-                    <Tab label="Certificación">
-                        <NavLink to="/certificacion" className=""></NavLink>
-                    </Tab>
-                    <Tab label="Suscripciones">
-                        <NavLink to="/suscripciones" className=""></NavLink>
-                    </Tab>
+                    <Tab
+                        label="Ver tu perfil"
+                        component={NavLink}
+                        to="/perfil"
+                    />
+                    <Tab label="Mensajes" component={NavLink} to="/mensajes" />
+                    <Tab
+                        label="Notificaciones"
+                        component={NavLink}
+                        to="/notificaciones"
+                    />
+                    <Tab
+                        label="Portal de servicios"
+                        component={NavLink}
+                        to="/portal-servicios"
+                    />
+                    <Tab
+                        label="Historial de servicio"
+                        component={NavLink}
+                        to="/historial-servicios"
+                    />
+                    <Tab
+                        label="Certificación"
+                        component={NavLink}
+                        to="/certificacion"
+                    />
+                    <Tab
+                        label="Suscripciones"
+                        component={NavLink}
+                        to="/suscripciones"
+                    />
                 </Tabs>
             </AppBar>
         </React.Fragment>

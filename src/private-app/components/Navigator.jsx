@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
@@ -26,33 +26,33 @@ const categories = [
             {
                 id: 'Inicio',
                 icon: <PeopleIcon />,
-                route: 'perfil',
+                route: '/perfil',
                 active: true,
             },
             {
                 id: 'Calificaciones',
                 icon: <DnsRoundedIcon />,
-                route: 'calificaciones',
+                route: '/calificaciones',
             },
             {
                 id: 'Biblioteca',
                 icon: <PermMediaOutlinedIcon />,
-                route: 'biblioteca',
+                route: '/biblioteca',
             },
             {
                 id: 'Invitar a un Amigo',
                 icon: <PublicIcon />,
-                route: 'invitar-amigos',
+                route: '/invitar-amigos',
             },
             {
                 id: 'Ajustes',
                 icon: <SettingsEthernetIcon />,
-                route: 'ajsutes',
+                route: '/ajsutes',
             },
             {
                 id: 'Formas de Pago',
                 icon: <SettingsInputComponentIcon />,
-                route: 'formas-pago',
+                route: '/formas-pago',
             },
         ],
     },
@@ -62,18 +62,18 @@ const categories = [
             {
                 id: 'Configuracion',
                 icon: <SettingsIcon />,
-                route: 'configuracion',
+                route: '/configuracion',
             },
             { id: 'Privacidad', icon: <TimerIcon />, route: 'privacidad' },
             {
                 id: 'Cambiar Clave',
                 icon: <PhonelinkSetupIcon />,
-                route: 'cambiar-clave',
+                route: '/cambiar-clave',
             },
             {
                 id: 'Cerrar Sesion',
                 icon: <PhonelinkSetupIcon />,
-                route: 'cerrar-sesion',
+                route: '/cerrar-sesion',
             },
         ],
     },
@@ -108,13 +108,13 @@ export default function Navigator(props) {
                         color: '#fff',
                     }}
                 >
-                    Paperbase
+                    Comunidad Dezzpo
                 </ListItem>
                 <ListItem sx={{ ...item, ...itemCategory }}>
                     <ListItemIcon>
                         <HomeIcon />
                     </ListItemIcon>
-                    <ListItemText>Project Overview</ListItemText>
+                    <ListItemText>Bienvenido!</ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (
                     <Box key={id} sx={{ bgcolor: '#101F33' }}>
@@ -125,12 +125,16 @@ export default function Navigator(props) {
                         </ListItem>
                         {children.map(
                             ({ id: childId, icon, route, active }) => (
-                                <ListItem disablePadding key={childId}>
+                                <ListItem
+                                    disablePadding
+                                    button
+                                    activeClassName="Mui-selected"
+                                    key={childId}
+                                    component={NavLink}
+                                    to={route}
+                                    exact
+                                >
                                     <ListItemButton selected={active} sx={item}>
-                                        <NavLink
-                                            to={route}
-                                            className=""
-                                        ></NavLink>
                                         <ListItemIcon>{icon}</ListItemIcon>
                                         <ListItemText>{childId}</ListItemText>
                                     </ListItemButton>

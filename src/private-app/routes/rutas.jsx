@@ -24,14 +24,12 @@ import Portal_Servicios from '../pages/portal-servicios/Portal_Servicios'
 import Suscripciones from '../pages/suscripciones/Suscripciones'
 
 // Componentes
-import Paperbase from '../components/Paperbase'
 
 class Rutas extends React.Component {
     render() {
         return (
             <>
                 <Router>
-                    <Paperbase />
                     <Switch>
                         <Route exact path="/perfil" component={Perfil} />
                         <Route path="/ajustes" component={Ajustes} />
@@ -67,7 +65,7 @@ class Rutas extends React.Component {
                             <Suscripciones></Suscripciones>
                         </Route>
                         {/* <Route component={NoMatch} /> */}
-                        <Redirect to="/" />
+                        <Redirect to="/perfil" />
                     </Switch>
                 </Router>
             </>

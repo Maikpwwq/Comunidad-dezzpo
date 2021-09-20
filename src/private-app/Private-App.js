@@ -1,11 +1,11 @@
 import React from 'react'
-import Rutas from './routes/rutas'
+import Paperbase from './components/Paperbase'
 
 class PrivateApp extends React.Component {
     render() {
         return (
             <>
-                <Rutas></Rutas>
+                <Paperbase />
             </>
         )
     }

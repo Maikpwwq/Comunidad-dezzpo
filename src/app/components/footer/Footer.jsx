@@ -175,7 +175,7 @@ const FooterComunidad = (props) => {
                     <div className="footerInferior">
                         <p>
                             {' '}
-                            © 2019 - Todos los derechos reservados - COMUNIDAD
+                            © 2021 - Todos los derechos reservados - COMUNIDAD
                             DEZZPO INC.{' '}
                         </p>
                     </div>
