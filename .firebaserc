@@ -1,6 +1,6 @@
 {
   "projects": {
-    "comunidadDezzpo": "comunidadDezzpo-28538",
-    "default": "comunidadDezzpo-28538"
+    "comunidadDezzpo": "app-comunidad-dezzpo",
+    "default": "app-comunidad-dezzpo"
   }
 }

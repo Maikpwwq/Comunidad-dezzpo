@@ -12,7 +12,8 @@
     "koa": "nodemon ./koa-server.js",
     "test": "jest",
     "lint": "eslint --fix --ext .js,.jsx .",
-    "prettier": "prettier --write"
+    "prettier": "prettier --write",
+    "firebase": "firebase deploy --only hosting:app-comunidad-dezzpo"
   },
   "engines": {
     "node": ">=14.0.0",
@@ -92,14 +93,19 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
   },
-  "peerDependencies": {},
   "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "@fontsource/roboto": "^4.2.3",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@mui/icons-material": "^5.0.0",
+    "@mui/material": "^5.0.0",
     "bootstrap": "^5.0.2",
     "core-js": "^3.11.2",
     "dotenv": "^8.2.0",
+    "firebase": "^9.0.0-beta.7",
+    "firebase-admin": "^9.11.0",
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
     "koa-bodyparser": "^4.3.0",
