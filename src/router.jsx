@@ -16,7 +16,7 @@ class Rutas extends React.Component {
             <>
                 <Router>
                     <Switch>
-                        <Route exact path="/" component={PrivateApp} />
+                        <Route exact path="/" component={App} />
                         <Route path="/app" component={PrivateApp} />
                         <Redirect to="/" />
                     </Switch>

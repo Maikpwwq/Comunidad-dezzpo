@@ -1,57 +1,64 @@
 // Pagina de Usuario - Portal_Servicios
 import React from 'react'
 
+// react-bootrstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+
 const Portal_Servicios = (props) => {
     return (
-        <React.Fragment>
-            <main>
-                <div className="section">
-                    <div className="container">
-                        <span>
-                            <h2>Obtener o Aplicar con Cotizaciones</h2> Publica
-                            un proyecto gratis{' '}
-                        </span>
+        <>
+            <Container fluid className="p-0 h-100">
+                <Row className="m-0 w-100 d-flex">
+                    <h2>Obtener o Aplicar con Cotizaciones</h2>
+                    <Col>
+                        Publica un proyecto gratis{' '}
                         <p>
                             Busqueda Local Servicios: Buscar comerciantes
                             Calificados
                         </p>
-                        <div>
-                            <ul>
-                                <li>Miembro</li>
-                                <li>Oferta de Servicios</li>
-                                <li>Certificaciones</li>
-                                <li>Calificaciones</li>
-                                <li>Se unio el</li>
-                                <li>Ubicación</li>
-                                <li>Contactar</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="section">
-                        <div className="container">
-                            <span>
-                                <h2>Aplica a un Proyecto Gratis</h2>
-                            </span>
-                            <p>Buscar Requerimientos</p>
-                            <span>
-                                <h2>Proyectos activos</h2>
-                            </span>
-                            <div>
-                                <ul>
-                                    <li>Imagenes</li>
-                                    <li>Descripción</li>
-                                    <li>Fecha de Publicación</li>
-                                    <li>Valor Aproximado</li>
-                                    <li>Se unio el</li>
-                                    <li>Ubicación</li>
-                                    <li>Postular</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </React.Fragment>
+                        <table>
+                            <tr>
+                                <th>Miembro</th>
+                                <th>Oferta de Servicios</th>
+                                <th>Certificaciones</th>
+                                <th>Calificaciones</th>
+                                <th>Se unio el</th>
+                                <th>Ubicación</th>
+                                <th>Contactar</th>
+                            </tr>
+                            <tr>
+                                <td>DATA...</td>
+                            </tr>
+                        </table>
+                    </Col>
+                </Row>
+                <Row className="m-0 w-100 d-flex">
+                    <Col>
+                        Aplica a un Proyecto Gratis
+                        <p>Buscar Requerimientos</p>
+                        <span>
+                            <h2>Proyectos activos</h2>
+                        </span>
+                        <table>
+                            <tr>
+                                <th>Imagenes</th>
+                                <th>Descripción</th>
+                                <th>Fecha de Publicación</th>
+                                <th>Valor Aproximado</th>
+                                <th>Se unio el</th>
+                                <th>Ubicación</th>
+                                <th>Postular</th>
+                            </tr>
+                            <tr>
+                                <td>DATA...</td>
+                            </tr>
+                        </table>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     )
 }
 

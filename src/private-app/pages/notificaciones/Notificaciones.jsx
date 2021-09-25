@@ -1,18 +1,25 @@
 // Pagina de Usuario - Notificaciones
 import React from 'react'
 
+// react-bootrstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+
 const Notificaciones = (props) => {
     return (
-        <React.Fragment>
-            <main>
-                <div className="section">
-                    <div className="container">
-                        <label for="">Notificaciones</label>
-                        <textarea rows="10" cols="5"></textarea>
-                    </div>
-                </div>
-            </main>
-        </React.Fragment>
+        <>
+            <Container fluid className="p-0 h-100">
+                <Row className="m-0 w-100 d-flex">
+                    <Col>
+                        <h2>Notificaciones</h2>
+                        <div>
+                            <textarea rows="10" cols="30"></textarea>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     )
 }
 

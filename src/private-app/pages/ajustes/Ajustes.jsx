@@ -1,70 +1,88 @@
 // Pagina de Usuario - Ajustes
 import React from 'react'
 
+// react-bootrstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+
 const Ajustes = (props) => {
     return (
         <>
-            <main>
-                <div className="section">
-                    <div className="container">
+            <Container fluid className="p-0 h-100">
+                <Col className="m-0 w-100 d-flex align-items-start justify-content-start">
+                    <Row md={10}>
                         <div>
-                            <form action="">
+                            <form 
+                                action=""
+                                style={{
+                                    display: 'flex',
+                                    'flex-direction': 'column',
+                                    'align-items': 'center',
+                                }}
+                            >
                                 <div>
                                     <span>Datos de contacto</span>
                                 </div>
                                 <input
                                     type="text"
+                                    name="user"
+                                    id="user"
                                     placeholder="@NOMBRE USUARIO"
                                 />
                                 <input
                                     type="text"
-                                    name=""
-                                    id=""
+                                    name="razonSocial"
+                                    id="razonSocial"
                                     placeholder="Razon social"
                                 />
                                 <input
                                     type="text"
-                                    name=""
-                                    id=""
+                                    name="identification"
+                                    id="identification"
                                     placeholder="Identificación"
                                 />
                                 <input
                                     type="text"
-                                    name=""
-                                    id=""
+                                    name="email"
+                                    id="email"
                                     placeholder="Correo"
                                 />
                                 <input
                                     type="text"
-                                    name=""
-                                    id=""
+                                    name="phone"
+                                    id="phone"
                                     placeholder="Celular"
                                 />
                                 <input
                                     type="text"
-                                    name=""
-                                    id=""
+                                    name="place"
+                                    id="place"
                                     placeholder="ubicación"
                                 />
-                                <input type="text" placeholder="Profesión" />
-                                <input type="text" placeholder="experiencia" />
+                                <input type="text" name="profesion"
+                                    id="profesion"placeholder="Profesión" />
+                                <input type="text" name="experience"
+                                    id="experience"placeholder="experiencia" />
                                 <input
                                     type="text"
+                                    name="certifications"
+                                    id="certifications"
                                     placeholder="certificaciones"
                                 />
-                                <label for="">Servicios ofrecidos</label>
+                                <label for="ofertaServicios">Servicios ofrecidos</label>
                                 <textarea
-                                    name=""
-                                    id=""
+                                    name="ofertaServicios"
+                                    id="ofertaServicios"
                                     cols="30"
                                     rows="10"
-                                ></textarea>
-                                <label for="">Confirmacion de identidad</label>
+                                ></textarea>                                
                             </form>
+                            <p>Confirma tu identidad</p>
                         </div>
-                    </div>
-                </div>
-            </main>
+                    </Row>
+                </Col>
+            </Container>
         </>
     )
 }

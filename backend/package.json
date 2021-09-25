@@ -1,0 +1,33 @@
+{
+  "name": "backendComunidadDezzpo",
+  "version": "1.0.0",
+  "description": "Enrutador de navegacion en el explorador para el sitio web",
+  "main": "koa-server-dev.js",
+  "scripts": {
+    "run": "node koa-server-dev.js",
+    "start": "nodemon koa-server-dev.js"
+  },
+  "keywords": [],
+  "author": "Michael Arias Fajardo",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "koa": "^2.13.1",
+    "koa-body": "^4.2.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-cors": "0.0.16",
+    "koa-ejs": "^4.3.0",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.1",
+    "koa-mount": "^4.0.0",
+    "koa-session2": "^2.2.10",
+    "koa-static": "^5.0.0",
+    "koa-views": "^7.0.1",
+    "koa-webpack-server": "^0.2.4",
+    "webpack": "^5.53.0"
+  },
+  "devDependencies": {
+    "koa-webpack": "^6.0.0",
+    "nodemon": "^2.0.12"
+  }
+}

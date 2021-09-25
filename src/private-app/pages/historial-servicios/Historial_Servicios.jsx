@@ -1,36 +1,82 @@
 // Pagina de Usuario - HistorialServicios
 import React from 'react'
 
+// react-bootrstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+
 const HistorialServicios = (props) => {
     return (
-        <React.Fragment>
-            <main>
-                <section className="section">
-                    <div className="container">
+        <>
+            <Container fluid className="p-0 h-100">
+                <Row className="m-0 w-100 d-flex align-items-start">
+                    <Col md={10}>
+                        <h2> Proyectos Publicados</h2>
                         <div>
-                            <span>Proyectos Publicados</span>
-                            <ul>
-                                <li>imagenes</li>
-                                <li>Descripción</li>
-                                <li>fecha de publicación</li>
-                                <li>valor aproximado</li>
-                                <li>ubicación</li>
-                                <li>Postular</li>
-                            </ul>
+                            <table>
+                                <tr>
+                                    <th>imagenes</th>
+                                    <th>Descripción</th>
+                                    <th>fecha de publicación</th>
+                                    <th>valor aproximado</th>
+                                    <th>Ubicación</th>
+                                </tr>
+                                <tr>
+                                    <td>DATA...</td>
+                                </tr>
+                            </table>
                         </div>
+                        <h2>Proyectos cerrados</h2>
                         <div>
-                            <span>Proyectos cerrados</span>
+                            <table>
+                                <tr>
+                                    <th>imagenes</th>
+                                    <th>Descripción</th>
+                                    <th>fecha de publicación</th>
+                                    <th>valor aproximado</th>
+                                    <th>Ubicación</th>
+                                    <th>Postular</th>
+                                </tr>
+                                <tr>
+                                    <td>DATA...</td>
+                                </tr>
+                            </table>
                         </div>
+                        <h2>Requerimientos guardados</h2>
                         <div>
-                            <span>Requerimientos guardados</span>
+                            <table>
+                                <tr>
+                                    <th>imagenes</th>
+                                    <th>Descripción</th>
+                                    <th>fecha de publicación</th>
+                                    <th>valor aproximado</th>
+                                    <th>Ubicación</th>
+                                </tr>
+                                <tr>
+                                    <td>DATA...</td>
+                                </tr>
+                            </table>
                         </div>
+                        <h2>Requerimientos solicitados</h2>
                         <div>
-                            <span>Requerimientos solicitados</span>
+                            <table>
+                                <tr>
+                                    <th>imagenes</th>
+                                    <th>Descripción</th>
+                                    <th>fecha de publicación</th>
+                                    <th>valor aproximado</th>
+                                    <th>Ubicación</th>
+                                </tr>
+                                <tr>
+                                    <td>DATA...</td>
+                                </tr>
+                            </table>
                         </div>
-                    </div>
-                </section>
-            </main>
-        </React.Fragment>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     )
 }
 
