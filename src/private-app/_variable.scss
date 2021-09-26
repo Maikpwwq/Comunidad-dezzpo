@@ -1,0 +1,177 @@
+/* **************************************************** */
+/* Declaracion de variables globales */
+/* **************************************************** */
+
+/* **************************************************** */
+/* Colores Oficiales COMUNIDAD DEZZPO */
+/* **************************************************** */
+
+// Remplazar fuentes de marca por Coolvetica RG regular
+:root{
+   // var(--content-text-light-gray-color)
+   --logo-comunidad-dezzpo-color: #209da1; 
+   /* Colores de titulos y textos */
+   --primary-green-text-color:#3eb288
+   --primary-dark-blue-text-color: #004884;
+   --secondary-blue-text-color: #3d8ab5;
+   --secondary-red-text-color:#c24a75
+   --content-text-color: #4b4b4b; 
+   --content-text-blue-color: #122038;
+   --content-text-light-gray-color: #bababa;
+   --content-text-white-color: #ffffff;
+   /* Colores de fondo */
+   --background-dark-purple-color:#662382
+   --background-dark-blue-color: #004884;
+   --background-blue-color: #3d8ab5;
+   --background-blue-light-color: #08ceff;
+   --background-blue-clear-color: #80bdff;
+   --background-nav-bar-sigmi-color: #F6F8F9;
+   --background-nav-bar-active-color: #f2f2f2;
+   --background-gray-color: #bababa;
+   --background-white-color: #ffffff;
+   --background-smoke-color: #000000; // opacidad 20%
+   --background-tooltip-color: #f2f2f2;
+   /* Colores de bordes */
+   --selected-border-gray-color: #bababa;
+   --selected-border-light-gray-color: #cccccc;
+   --selected-border-blue-color: #3d8ab5;
+   --selected-border-dark-blue-color: #004884;
+   --selected-border-blue-light-color: #ced4da;
+   --selected-etiqueta-border-blue-light-color: #f2f2f2;
+   /* Color de hover y sombras */
+   --selected-shadow-border-blue-light-color: #e6effd;
+   --selected-hover-color: #e6effd;
+   --selected-hover-dark-blue-color: #004884;
+   /* Alertas y notificaciones */
+   --success-alert-color: #069169;
+   --error-alert-color: #a80521;
+   --error-alert-color2: #d11f3e;
+   --warning-alert-color: #ffab00;
+   /* Modulo Notificaciones */
+   --notificaciones-identificado-color: #656565;
+   --notificaciones-identificado-background-color: #f2f2f2;
+   --notificaciones-estandarizado-color: #976b23;
+   --notificaciones-estandarizado-background-color: #ffefca;
+   --notificaciones-evaluado-color: #635c9a;
+   --notificaciones-evaluado-background-color: #e0dcff;
+   --notificaciones-publicado-color: #1e7559;
+   --notificaciones-publicado-background-color: #c5e4dc;
+}
+/*
+    background-color: #333333;
+    background-color: #e9ebe6;
+    background-color: rgba(0,0,0,0.8);
+    background-color: #009999; 
+    background-color:#1ec7e6;
+    background-color: #13495e; 
+    background-color:#92B901;
+    background-color: #006699;
+    background-color: #deaf06;
+*/
+
+// No usar estan fuera de la paleta de colores
+$more: #f6f8f9; // Background
+$more2: #ebebeb; // Background 2
+$more3: #2778c4; // Swal2 Cancel
+$more4: #00000029; // Box Shadow
+$more5: #d11f3e; // Notification Error background
+$more6: #333; // Dropdown color
+$more7: #cecece; // Input and Select placeholder
+$more8: #80bdff; // .p Input text boder color
+$more9: #06916933; // State background
+$more10: #e8e8e8; // Tabs border
+$more11: #ced4da; // border form items
+$more11: #212529; // Text form items 
+// #Search gray red
+
+/* **************************************************** */
+/* Declaracion de fuentes de texto */
+/* **************************************************** */
+
+@font-face {
+   font-family: Helvetiva-Regular;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/Helvetiva/Helvetiva-Regular.ttf');
+}
+@font-face {
+   font-family: Helvetiva-Medium;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/Helvetiva/Helvetiva-Medium.ttf');
+}
+@font-face {
+   font-family: Helvetiva-Bold;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/Helvetiva/Helvetiva-Bold.ttf');
+}
+@font-face {
+   font-family: Helvetiva-SemiBold;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/Helvetiva/Helvetiva-SemiBold.ttf');
+}
+@font-face {
+   font-family: WorkSans-Regular;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/work-sans/WorkSans-Regular.ttf');
+}
+@font-face {
+   font-family: WorkSans-Medium;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/work-sans/WorkSans-Medium.ttf');
+}
+@font-face {
+   font-family: WorkSans-Bold;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/work-sans/WorkSans-Bold.ttf');
+}
+@font-face {
+   font-family: WorkSans-SemiBold;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/work-sans/WorkSans-SemiBold.ttf');
+}
+@font-face {
+   font-family: Coolvetica-Regular;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/Coolvetica/Coolvetica-Regular.ttf');
+}
+@font-face {
+   font-family: Coolvetica-Medium;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/Coolvetica/Coolvetica-Medium.ttf');
+}
+@font-face {
+   font-family: Coolvetica-Bold;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/Coolvetica/Coolvetica-Bold.ttf');
+}
+@font-face {
+   font-family: Coolvetica-SemiBold;
+   font-weight: 600;
+   font-style: normal;
+   src: url('./fonts/Coolvetica/Coolvetica-SemiBold.ttf');
+}
+
+:root{
+    --font-helvetiva-regular: Helvetiva-Regular, sans-serif;
+    --font-helvetiva-medium: Helvetiva-Medium, sans-serif;
+    --font-helvetiva-bold: Helvetiva-Bold, sans-serif;
+    --font-helvetiva-semibold: Helvetiva-SemiBold, sans-serif;
+    --font-worksans-regular: WorkSans-Regular, sans-serif;
+    --font-worksans-medium: WorkSans-Medium, sans-serif;
+    --font-worksans-bold: WorkSans-Bold, sans-serif;
+    --font-worksans-semibold: WorkSans-SemiBold, sans-serif;
+    --font-coolvetica-regular: Coolvetica-Regular, sans-serif;
+    --font-coolvetica-medium: Coolvetica-Medium, sans-serif;
+    --font-coolvetica-bold: Coolvetica-Bold, sans-serif;
+    --font-coolvetica-semibold: Coolvetica-Small, sans-serif;
+}

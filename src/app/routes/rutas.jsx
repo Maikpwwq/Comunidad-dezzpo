@@ -38,8 +38,6 @@ import MenuComunidad from '../components/menu/Menu'
 
 import Button from '@material-ui/core/Button'
 
-// import "./main.css";
-
 class Rutas extends React.Component {
     render() {
         //   const { name } = this.props;
