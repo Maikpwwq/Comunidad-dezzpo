@@ -63,6 +63,7 @@
     padding-right: 48px;
     padding-left: 48px;
     margin-top: -15px;
+    justify-content: space-evenly;
 }
 .datosContacto{
     display: flex;

@@ -13,7 +13,7 @@
  
  .headline-xxl {
     // Oculta uso en posicionamiento SEO.
-    font-family: var(--font-helvetiva-semibold);
+    font-family: var(--font-helvetica-semibold);
     font-size: 40px/48px;
     font-weight: 600;
     color: var(--primary-dark-blue-text-color);
@@ -21,7 +21,7 @@
  
  .headline-xl {
     // Título secciones principales y Modal
-    font-family: var(--font-helvetiva-semibold);
+    font-family: var(--font-helvetica-semibold);
     font-size: 2rem; // 32px/46px
     font-weight: 600;
     color: var(--primary-dark-blue-text-color);
@@ -30,7 +30,7 @@
  
  .headline-l {
     // Nombre del trámite
-    font-family: var(--font-helvetiva-semibold);
+    font-family: var(--font-helvetica-semibold);
     font-size: 1.5rem; // 24px/26px
     font-weight: 600;
     color: var(--primary-dark-blue-text-color);
@@ -39,7 +39,7 @@
  
  .headline-m {
     // Titulo de la Seccion
-    font-family: var(--font-helvetiva-semibold);
+    font-family: var(--font-helvetica-semibold);
     font-size: 20px; // 20px/30px
     font-weight: 600;
     color: var(--primary-dark-blue-text-color);
@@ -48,7 +48,7 @@
  
  .headline-s {
     // Titulo subsección y Titulo Tablas
-    font-family: var(--font-helvetiva-medium);
+    font-family: var(--font-helvetica-medium);
     font-size: 1.125rem; // 18px/27px
     font-weight: 600;
     color: var(--primary-dark-blue-text-color);
@@ -57,7 +57,7 @@
  
  .headline-xs {
     // Jerarquía para trámites
-    font-family: var(--font-helvetiva-semibold);
+    font-family: var(--font-helvetica-semibold);
     font-size: 1.125rem; // 16px/24px
     font-weight: 600;
     color: var(--primary-dark-blue-text-color);
@@ -66,7 +66,7 @@
  
  .subtitle {
     // Subtitulo Principal
-    font-family: var(--font-helvetiva-semibold);
+    font-family: var(--font-helvetica-semibold);
     font-size: 1.125rem; // 18px/27px
     font-weight: 600;
     color: var(--primary-dark-blue-text-color);
@@ -86,7 +86,7 @@
  .tituloTabla {
     // Titulo Tabla
     text-align: left;
-    font: normal normal normal 24px/36px var(--font-helvetiva-semibold);
+    font: normal normal normal 24px/36px var(--font-helvetica-semibold);
     letter-spacing: 0px;
     color: var(--primary-dark-blue-text-color);
     opacity: 1;
@@ -100,7 +100,7 @@
  
  .table-head-s {
     // Encabezados de tablas Secundarias
-    font-family: var(--font-helvetiva-semibold);
+    font-family: var(--font-helvetica-semibold);
     font-size: 14px/21px;
  }
  
@@ -121,7 +121,7 @@
  
  .tituloSticker {
     text-align: center;
-    font: normal normal 600 16px/9px var(--font-helvetiva-semibold);
+    font: normal normal 600 16px/9px var(--font-helvetica-semibold);
     letter-spacing: 0px;
     color: var(--primary-dark-blue-text-color);
     opacity: 1;
@@ -132,7 +132,7 @@
  /* **************************************************** */
  .p-description {
     // Texto descriptivo de la sección hasta 150 caracteres.
-    font-family: var(--font-helvetiva-semibold);
+    font-family: var(--font-helvetica-semibold);
     color: var(--content-text-color);
     font-size: 20px/30px;
  }

@@ -1,9 +1,9 @@
 import React from 'react'
 import {
     BrowserRouter as Router,
-    Switch,
+    Routes,
     Route,
-    Redirect,
+    Navigate,
 } from 'react-router-dom'
 
 //Paginas
@@ -14,13 +14,13 @@ class Rutas extends React.Component {
     render() {
         return (
             <>
-                <Router>
-                    <Switch>
-                        <Route exact path="/" component={App} />
-                        <Route path="/app" component={PrivateApp} />
-                        <Redirect to="/" />
-                    </Switch>
-                </Router>
+                {/* <Router> */}
+                <Routes>
+                    <Route exact path="/" element={<App />} />
+                    <Route exact path="/app" element={<PrivateApp />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+                {/* </Router> */}
             </>
         )
     }

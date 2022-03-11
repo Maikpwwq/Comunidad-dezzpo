@@ -1,12 +1,9 @@
 /* **************************************************** */
 /* Declaracion de variables globales */
 /* **************************************************** */
-
 /* **************************************************** */
 /* Colores Oficiales COMUNIDAD DEZZPO */
 /* **************************************************** */
-
-// Remplazar fuentes de marca por Coolvetica RG regular
 :root{
    // var(--content-text-light-gray-color)
    --logo-comunidad-dezzpo-color: #209da1; 
@@ -89,28 +86,28 @@ $more11: #212529; // Text form items
 /* **************************************************** */
 
 @font-face {
-   font-family: Helvetiva-Regular;
+   font-family: Helvetica-Regular;
    font-weight: 600;
    font-style: normal;
-   src: url('./fonts/Helvetiva/Helvetiva-Regular.ttf');
+   src: url('./fonts/Helvetica/Helvetica-Regular.ttf');
 }
 @font-face {
-   font-family: Helvetiva-Medium;
+   font-family: Helvetica-Medium;
    font-weight: 600;
    font-style: normal;
-   src: url('./fonts/Helvetiva/Helvetiva-Medium.ttf');
+   src: url('./fonts/Helvetica/Helvetica-Medium.ttf');
 }
 @font-face {
-   font-family: Helvetiva-Bold;
+   font-family: Helvetica-Bold;
    font-weight: 600;
    font-style: normal;
-   src: url('./fonts/Helvetiva/Helvetiva-Bold.ttf');
+   src: url('./fonts/Helvetica/Helvetica-Bold.ttf');
 }
 @font-face {
-   font-family: Helvetiva-SemiBold;
+   font-family: Helvetica-SemiBold;
    font-weight: 600;
    font-style: normal;
-   src: url('./fonts/Helvetiva/Helvetiva-SemiBold.ttf');
+   src: url('./fonts/Helvetica/Helvetica-SemiBold.ttf');
 }
 @font-face {
    font-family: WorkSans-Regular;
@@ -162,10 +159,10 @@ $more11: #212529; // Text form items
 }
 
 :root{
-    --font-helvetiva-regular: Helvetiva-Regular, sans-serif;
-    --font-helvetiva-medium: Helvetiva-Medium, sans-serif;
-    --font-helvetiva-bold: Helvetiva-Bold, sans-serif;
-    --font-helvetiva-semibold: Helvetiva-SemiBold, sans-serif;
+    --font-helvetica-regular: Helvetica-Regular, sans-serif;
+    --font-helvetica-medium: Helvetica-Medium, sans-serif;
+    --font-helvetica-bold: Helvetica-Bold, sans-serif;
+    --font-helvetica-semibold: Helvetica-SemiBold, sans-serif;
     --font-worksans-regular: WorkSans-Regular, sans-serif;
     --font-worksans-medium: WorkSans-Medium, sans-serif;
     --font-worksans-bold: WorkSans-Bold, sans-serif;

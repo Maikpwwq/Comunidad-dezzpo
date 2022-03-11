@@ -16,9 +16,9 @@ module.exports = {
     target: isDevelopment ? 'web' : 'browserslist',
     entry: ['./src/index.js'],
     output: {
-        path: path.resolve(__dirname, '../dist'),
+        path: path.resolve(__dirname, '/dist'),
         filename: '[name].[contenthash].js',
-        publicPath: '',
+        publicPath: '/',
     },
     resolve: {
         modules: ['node_modules'],
@@ -77,7 +77,7 @@ module.exports = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             appMountId: 'app',
-            template: path.resolve(__dirname, '../public/index.html'),
+            template: path.resolve(__dirname, '/public/index.html'),
             filename: 'index.html',
             hash: true,
             templateParameters: {

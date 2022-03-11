@@ -1,21 +1,133 @@
 @media screen and (max-width: 600px) {
+    #menuFijo{ 
+        position: absolute;  
+        height: 80px;
+        margin: 0 0; 
+        padding: 0 0; 
+        width: 100%; 
+        right: 0px;
+        left: 0px;
+        top: 0px;
+    }
+    #barraMenu{ 
+        display: inline-flex; 
+        position: fixed; 
+        font-family: "lato Regular", Helvetica, sans-serif; 
+        color: #333333; 
+        background-color: #e9ebe6;
+        flex-wrap: nowrap;
+        height: 80px;
+        width: 100%; 
+        justify-content: center;
+    }
+    #menuContenedor{
+        display: flex; 
+        flex-direction: row; 
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .menuSecciones{ 
+        display: none; 
+        flex-direction: column; 
+        overflow: visible; 
+        list-style-type: none;
+        padding: 0 0;
+        margin: 0 0;
+        width: 100%;
+        background-color: #009999;
+        color: white;  
+    }
+    .menuContenedor:hover .menuSecciones{
+        display: flex;
+        flex-direction: column;
+    }
+    .dropdown{
+        transition: background-color 0.3s;
+    }
+    .dropdown:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+    .dropdownContenidos{
+        display: none;
+        position: absolute;
+        background-color: #009999;
+        min-width: 110px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        padding: 5px 3px;
+    }
+    .dropdownContenidos a{
+        font-size: 21px; 
+        text-decoration: none;
+    }
+    .menuContenedor ul a:visited {
+        color: white;
+    }
+    .menuContenedor a:visited{
+        color: white;    
+    }
+    .dropdownContenidos a:hover{
+        background-color: #e9ebe6;
+        color: black;    
+        text-decoration: underline;
+    }
+    .dropdown:hover .dropdownContenidos {
+        display: flex;
+        flex-direction: column;
+    }
+    .botonSeccion:hover a{ 
+        color: white; 
+        background-color: #009999; 
+        text-decoration: underline;
+    }
+    .botonSeccion{
+        margin: auto 0;
+        border-left: solid;
+        border-width: 3px;
+        border-left-color: black;
+        height: 100%;
+        display: flex;
+        align-content: center;                        
+    }
+    .activo{
+        padding: 5px 20px;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+        justify-content: center;
+        align-content: center;
+        display: flex;
+        flex-direction: column;
+        font-size: medium;
+    }
+    .botonNavLink{
+        padding: 5px 20px;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+        justify-content: center;
+        align-content: center;
+        display: flex;
+        flex-direction: column;
+        font-size: medium;
+    }
 }
 @media screen and (min-width: 600px) and (max-width: 900px) {
 
 }
 @media screen and (min-width: 900px) {
 
-#menuFijo{ 
+.menuFijo{ 
     position: absolute;  
     height: 80px;
-    margin: 0 0; 
-    padding: 0 0; 
-    width: 100%; 
-    right: 0px;
-    left: 0px;
-    top: 0px;
-    }
-#barraMenu{ 
+}
+.barraComunidad{
+    display: inline-flex; 
+    position: fixed; 
+    height: 80px;
+    justify-content: center;
+}
+.barraMenu{ 
     display: inline-flex; 
     position: fixed; 
     font-family: "lato Regular", Helvetica, sans-serif; 
@@ -23,13 +135,16 @@
     background-color: #e9ebe6;
     flex-wrap: nowrap;
     height: 80px;
+    width: 100%; 
+    justify-content: center;
 }
-#menuContenedor{
+.menuContenedor{
     display: flex; 
     flex-direction: row; 
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 100%;
+    background-color: #009999;
+    color: white;  
 }
 .menuSecciones{ 
     display: flex; 
@@ -53,18 +168,18 @@
     min-width: 110px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    margin: 3px 5px;
-    padding: 5px 3px;
+    padding: 3px 10px;
+}
+.menuContenedor ul a:visited {
+    color: white;
+}
+.menuContenedor a:visited{
+    color: white;    
 }
 .dropdownContenidos a{
     font-size: 21px; 
     text-decoration: none;
-}
-.dropdownContenidos a:link{
-    color: white;    
-}
-.dropdownContenidos a:visited{
-    color: white;    
+    width: 100%;
 }
 .dropdownContenidos a:hover{
     background-color: #e9ebe6;
@@ -74,6 +189,7 @@
 .dropdown:hover .dropdownContenidos {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
 }
 .botonSeccion:hover a{ 
     color: white; 
@@ -90,7 +206,7 @@
     align-content: center;                        
 }
 .activo{
-    padding: 5px 5px;
+    padding: 5px 10px;
     text-align: center;
     color: black;
     text-decoration: none;
@@ -102,9 +218,9 @@
     font-size: medium;
 }
 .botonNavLink{
-    padding: 5px 5px;
+    padding: 5px 10px;
     text-align: center;
-    color: black;
+    color: white;
     text-decoration: none;
     height: 80px;
     justify-content: center;
@@ -113,4 +229,5 @@
     flex-direction: column;
     font-size: medium;
 }
+
 }

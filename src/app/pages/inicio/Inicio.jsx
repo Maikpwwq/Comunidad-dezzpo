@@ -598,8 +598,8 @@ const Inicio = () => {
             <Container fluid className="p-0">
                 {/* Afuturo importar como contenedor de categorias y servicios */}
                 {/* seccion de categorias y servicios */}
-                <Row id="popularCategorias" className="m-0">
-                    <Col className="">
+                <Col id="popularCategorias" className="m-0 p-0">
+                    <Col className="p-0">
                         <h1> NUESTRA COMUNIDAD </h1>
                         <p>
                             Tenemos una gran cantidad de profesionales que
@@ -609,10 +609,11 @@ const Inicio = () => {
                             src={CategoriasPopulares}
                             alt="Categorias Populares entre la Comunidad"
                             height="170"
-                            width="900"
+                            width="100%"
+                            maxWidth="900"
                         />
                     </Col>
-                    <Col className="categoriasPopulares">
+                    <Col className="categoriasPopulares p-0">
                         <h2>
                             {' '}
                             o encuentralos dentro de las categorías populares:
@@ -635,7 +636,7 @@ const Inicio = () => {
                             <li>Carpinteria, instalacion de closets, más </li>
                         </ul>
                     </Col>
-                </Row>
+                </Col>
             </Container>
             <Container fluid className="p-0">
                 {/* seccion de categorias y servicios */}
