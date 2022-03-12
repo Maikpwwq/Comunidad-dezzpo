@@ -10,8 +10,8 @@ class Rutas extends React.Component {
         return (
             <>
                 <Routes>
-                    <Route path="*" element={<App />} />
                     <Route path="/app" element={<PrivateApp />} />
+                    <Route path="*" element={<App />} />
                 </Routes>
             </>
         )

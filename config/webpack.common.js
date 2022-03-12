@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 require('dotenv').config()
 
-// para uso en local dejar vacio " ", para postear en Github pages usar "/"
+// para uso en local dejar vacio "/", para postear en Github pages usar "/Comunidad-dezzpo/"
 const ASSET_PATH = process.env.ASSET_PATH || '/'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -16,9 +16,9 @@ module.exports = {
     target: isDevelopment ? 'web' : 'browserslist',
     entry: ['./src/index.js'],
     output: {
-        path: path.resolve(__dirname, '/dist'),
+        path: path.resolve(__dirname, '../dist'),
         filename: '[name].[contenthash].js',
-        publicPath: '/',
+        publicPath: '/', // '/Comunidad-dezzpo/'
     },
     resolve: {
         modules: ['node_modules'],

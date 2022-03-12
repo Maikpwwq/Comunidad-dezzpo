@@ -46,55 +46,6 @@
         width: 480px;
         padding-left: 50px;
     }
-    .contenerdorFormulario{
-        width: 40%;
-        display: flex;
-        flex-direction: column;    
-        padding-bottom: 100px;    
-    }
-    .formularioBusqueda1{
-        display: flex;
-        flex-direction: column;
-        height: 250px !important;
-        align-items: flex-end;
-        align-content: space-around;
-        justify-content: space-evenly;
-        padding-right: 48px;
-    }
-    .formularioBusqueda1 select {
-        width: 333px;
-        height: 33px;
-        border: none;
-    }
-    .casillaSeleccion {
-        background-color: white;
-    }
-    #seleccionarProfesional{
-
-    }
-    #seleccionarServicio {
-
-    }
-    .animacionBoton{
-        animation-name: botonAnimado;
-        animation-duration: 3s;
-        animation-delay: 1s;
-        animation-timing-function: ease-out;
-        height: 49px;
-        width: 100px;
-        position: absolute;
-        color: #ffffff;
-        font-weight: bold;
-        padding: 3px 6px;
-        margin: 6px 3px;
-        background-color: #92B901;
-        left:1110px;
-        top:420px;
-    }
-    @keyframes botonAnimado{
-        0%   {background-color:#1ec7e6; left:960px; top:420px;}
-        100% {background-color:#92B901; left:1110px; top:420px;}
-    }
     .mensajeBanner{
         display: flex;
         flex-direction: column;
@@ -201,68 +152,5 @@
     }
     .calificaPropietario{
         width: 19%;
-    }
-    #popularCategorias{
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        justify-content: space-around;
-        height: 100%;
-        width: 100%;
-    }
-    .categoriasPopulares {
-        background-color: #313332;
-        color: white;
-    }
-    .categoriasPopulares li {
-        list-style-type: none;
-    }
-    #categoriasServicios{
-        background: #333333 url(../img/Profesionales_servicios2.png) no-repeat center;
-        background-size: 100% auto;
-        background-attachment: scroll;
-        height: 460px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        justify-content: space-around;
-    }
-    .tituloServicios {
-        width: 100%;
-    }
-    .contratistasReformas {
-        display: flex;
-        flex-direction: row;
-        text-align: left;
-        justify-content: space-around;
-        width: 100%;
-
-    }
-    .contratistasReformas ul {
-
-    }
-    .contratistasReformas li {
-        list-style-type: none;
-    }
-    #comerciantesLocales{
-        background: #21969b;
-        width: 100%;
-        height: 300px;
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        justify-content: space-around;
-    }
-    .localCiudades{
-        font-family: "lato Regular", Helvetica, sans-serif;
-        font-size: 17px;
-        color: white;
-    }
-    .ciudades {
-        display: flex;
-        flex-direction: row;
-        text-align: center;
-        justify-content: space-evenly;
     }
 }

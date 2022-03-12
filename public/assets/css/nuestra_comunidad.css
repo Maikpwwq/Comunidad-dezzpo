@@ -1,0 +1,34 @@
+#popularCategorias{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+    width: 100%;
+}
+.categoriasPopulares {
+    background-color: #313332;
+    color: white;
+}
+.categoriasPopulares li {
+    list-style-type: none;
+}
+#comerciantesLocales{
+    background: #21969b;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+.localCiudades{
+    font-family: "lato Regular", Helvetica, sans-serif;
+    font-size: 17px;
+    color: white;
+}
+.ciudades {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-evenly;
+}
