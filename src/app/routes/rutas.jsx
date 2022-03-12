@@ -2,10 +2,9 @@
 import React from 'react'
 import {
     BrowserRouter as Router,
-    Switch,
+    Routes,
     Route,
-    Redirect,
-    Link,
+    Navigate,
 } from 'react-router-dom'
 
 //Paginas
@@ -38,90 +37,70 @@ import MenuComunidad from '../components/menu/Menu'
 
 import Button from '@material-ui/core/Button'
 
-// import "./main.css";
-
 class Rutas extends React.Component {
     render() {
         //   const { name } = this.props;
         return (
             <div>
                 {/* <Button variant="contained"> {name} </Button> */}
-                <Router>
-                    <MenuComunidad />
-                    <div
-                        className="router-output"
-                        style={{ 'padding-top': '80px' }}
-                    >
-                        <Switch>
-                            <Route exact path="/" component={Inicio} />
-                            <Route
-                                path="/asi-trabajamos"
-                                component={AsiTrabajamos}
-                            />
-                            <Route
-                                path="/apendice-costos"
-                                component={ApendiceCostos}
-                            />
-                            <Route path="/aplicar">
-                                <Aplicar></Aplicar>
-                            </Route>
-                            <Route path="/asesorias">
-                                <Asesorias></Asesorias>
-                            </Route>
-                            <Route path="/asi-trabajamos">
-                                <AsiTrabajamos></AsiTrabajamos>
-                            </Route>
-                            <Route path="/ayuda-pqrs">
-                                <AyudaPQRS></AyudaPQRS>
-                            </Route>
-                            <Route path="/blog">
-                                <Blog></Blog>
-                            </Route>
-                            <Route path="/calificaciones">
-                                <Calificaciones></Calificaciones>
-                            </Route>
-                            <Route path="/comunidad-comerciantes">
-                                <ComunidadComerciantes></ComunidadComerciantes>
-                            </Route>
-                            <Route path="/comunidad-propietarios">
-                                <ComunidadPropietarios></ComunidadPropietarios>
-                            </Route>
-                            <Route path="/contactenos">
-                                <Contactenos></Contactenos>
-                            </Route>
-                            <Route path="/ingreso">
-                                <Ingreso></Ingreso>
-                            </Route>
-                            <Route path="/legal">
-                                <Legal></Legal>
-                            </Route>
-                            <Route path="/nosotros">
-                                <Nosotros></Nosotros>
-                            </Route>
-                            <Route path="/nuevo-proyecto">
-                                <NuevoProyecto></NuevoProyecto>
-                            </Route>
-                            <Route path="/patrocinadores">
-                                <Patrocinadores></Patrocinadores>
-                            </Route>
-                            <Route path="/prensa">
-                                <Prensa></Prensa>
-                            </Route>
-                            <Route path="/presupuestos">
-                                <Presupuestos></Presupuestos>
-                            </Route>
-                            <Route path="/profesionales-servicios">
-                                <ProfesionalesServicios></ProfesionalesServicios>
-                            </Route>
-                            <Route path="/registro">
-                                <Registro></Registro>
-                            </Route>
-                            {/* <Route component={NoMatch} /> */}
-                            <Redirect to="/" />
-                        </Switch>
-                    </div>
-                    <FooterComunidad />
-                </Router>
+                <MenuComunidad />
+                <div
+                    className="router-output"
+                    style={{ 'padding-top': '80px' }}
+                >
+                    <Routes>
+                        <Route index element={<Inicio />}></Route>
+                        <Route
+                            path="/asi-trabajamos"
+                            element={<AsiTrabajamos />}
+                        />
+                        <Route
+                            path="apendice-costos"
+                            element={<ApendiceCostos />}
+                        />
+                        <Route path="aplicar" element={<Aplicar />} />
+                        <Route path="asesorias" element={<Asesorias />} />
+                        <Route
+                            path="asi-trabajamos"
+                            element={<AsiTrabajamos />}
+                        />
+                        <Route path="ayuda-pqrs" element={<AyudaPQRS />} />
+                        <Route path="blog" element={<Blog />} />
+                        <Route
+                            path="calificaciones"
+                            element={<Calificaciones />}
+                        />
+                        <Route
+                            path="comunidad-comerciantes"
+                            element={<ComunidadComerciantes />}
+                        />
+                        <Route
+                            path="comunidad-propietarios"
+                            element={<ComunidadPropietarios />}
+                        />
+                        <Route path="contactenos" element={<Contactenos />} />
+                        <Route path="ingreso" element={<Ingreso />} />
+                        <Route path="legal" element={<Legal />} />
+                        <Route path="/nosotros" element={<Nosotros />} />
+                        <Route
+                            path="nuevo-proyecto"
+                            element={<NuevoProyecto />}
+                        />
+                        <Route
+                            path="patrocinadores"
+                            element={<Patrocinadores />}
+                        />
+                        <Route path="prensa" element={<Prensa />} />
+                        <Route path="presupuestos" element={<Presupuestos />} />
+                        <Route
+                            path="profesionales-servicios"
+                            element={<ProfesionalesServicios />}
+                        />
+                        <Route path="registro" element={<Registro />} />
+                        <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
+                </div>
+                <FooterComunidad />
             </div>
         )
     }
