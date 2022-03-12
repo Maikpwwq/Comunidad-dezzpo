@@ -13,8 +13,10 @@ const devConfig = {
     devtool: 'eval-source-map',
     devServer: {
         port: 3000,
-        contentBase: path.resolve(__dirname, '../dist'),
-        // open: "chrome",
+        static: {
+            directory: path.join(__dirname, 'dist'),
+        },
+        historyApiFallback: true,
         hot: true,
     },
     module: {
