@@ -38,7 +38,7 @@ const MenuComunidad = (props) => {
                                 <div className="dropdown">
                                     <li className="botonSeccion">
                                         <NavLink
-                                            to="/asi-trabajamos"
+                                            to="asi-trabajamos"
                                             className="botonNavLink"
                                         >
                                             {' '}

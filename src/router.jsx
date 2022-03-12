@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Navigate,
-} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 //Paginas
 import App from './app/App'
@@ -14,13 +9,10 @@ class Rutas extends React.Component {
     render() {
         return (
             <>
-                {/* <Router> */}
                 <Routes>
-                    <Route exact path="/" element={<App />} />
-                    <Route exact path="/app" element={<PrivateApp />} />
-                    <Route path="*" element={<Navigate to="/" />} />
+                    <Route path="*" element={<App />} />
+                    <Route path="/app" element={<PrivateApp />} />
                 </Routes>
-                {/* </Router> */}
             </>
         )
     }

@@ -43,21 +43,15 @@ class Rutas extends React.Component {
         return (
             <div>
                 {/* <Button variant="contained"> {name} </Button> */}
-                {/* <Router> */}
                 <MenuComunidad />
                 <div
                     className="router-output"
                     style={{ 'padding-top': '80px' }}
                 >
                     <Routes>
-                        <Route exact path="/" element={<Inicio />}>
-                            {/* <Route
-                                path="asi-trabajamos"
-                                element={<AsiTrabajamos />}
-                            /> */}
-                        </Route>
+                        <Route index element={<Inicio />}></Route>
                         <Route
-                            path="asi-trabajamos"
+                            path="/asi-trabajamos"
                             element={<AsiTrabajamos />}
                         />
                         <Route
@@ -107,7 +101,6 @@ class Rutas extends React.Component {
                     </Routes>
                 </div>
                 <FooterComunidad />
-                {/* </Router> */}
             </div>
         )
     }

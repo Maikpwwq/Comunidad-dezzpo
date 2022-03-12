@@ -12,11 +12,11 @@ const FooterComunidad = (props) => {
     return (
         <>
             <Container fluid className="p-0">
-                <footer id="footer">
+                <footer className="footer">
                     {/* Empieza la seccion del footer */}
-                    <div id="footerContainer">
+                    <Col className="footerContainer pb-0">
                         {/* parte superior */}
-                        <div className="footerSuperior">
+                        <Row className="footerSuperior">
                             {/* Mas links */}
                             <Col className="masLinks">
                                 <ul>
@@ -80,14 +80,14 @@ const FooterComunidad = (props) => {
                                 </ul>
                             </Col>
                             {/* siguenos en redes */}
-                            <Col className="siguenosRedes">
+                            <Col className="siguenosRedes pt-0">
                                 <h1> SIGUENOS </h1>
-                                <ul className="listaFooter pt-3  w-100">
+                                <ul className="listaFooter  w-100">
                                     {/* siguenos Instagram */}
-                                    <li>
+                                    <li className="w-50">
                                         {' '}
                                         &#10095;
-                                        <span className="icon-IntagramSocialIcono">
+                                        <span className="icon-IntagramSocialIcono p-1">
                                             <span className="path1"></span>
                                             <span className="path2"></span>
                                             <span className="path3"></span>
@@ -103,10 +103,10 @@ const FooterComunidad = (props) => {
                                         </a>
                                     </li>
                                     {/* siguenos Twitter */}
-                                    <li>
+                                    <li className="w-50">
                                         {' '}
                                         &#10095;
-                                        <span className="icon-TwitterSocialIcono">
+                                        <span className="icon-TwitterSocialIcono p-1">
                                             <span className="path1"></span>
                                             <span className="path2"></span>
                                         </span>
@@ -119,10 +119,10 @@ const FooterComunidad = (props) => {
                                         </a>
                                     </li>
                                     {/* siguenos Facebook */}
-                                    <li>
+                                    <li className="w-50">
                                         {' '}
                                         &#10095;
-                                        <span className="icon-FacebookSocialIcono">
+                                        <span className="icon-FacebookSocialIcono p-1">
                                             <span className="path1"></span>
                                             <span className="path2"></span>
                                         </span>
@@ -135,10 +135,10 @@ const FooterComunidad = (props) => {
                                         </a>
                                     </li>
                                     {/* siguenos Linkedin */}
-                                    <li>
+                                    <li className="w-50">
                                         {' '}
                                         &#10095;
-                                        <span className="icon-LinkedinSocialIcono">
+                                        <span className="icon-LinkedinSocialIcono p-1">
                                             <span className="path1"></span>
                                             <span className="path2"></span>
                                             <span className="path3"></span>
@@ -155,7 +155,7 @@ const FooterComunidad = (props) => {
                                 </ul>
                             </Col>
                             {/* Datos de contacto comunidad dezzpo */}
-                            <Col className="datosContacto">
+                            <Col className="datosContacto pt-0">
                                 <h1> Ponte en Contacto </h1>
                                 <ul className="listaFooter pt-3 w-100">
                                     <Row className="m-0 w-100 d-flex">
@@ -200,7 +200,7 @@ const FooterComunidad = (props) => {
                                     </Row>
                                 </ul>
                             </Col>
-                        </div>
+                        </Row>
                         {/* parte inferior*/}
                         <Row className="footerInferior pt-3 w-100">
                             <p>
@@ -209,7 +209,7 @@ const FooterComunidad = (props) => {
                                 COMUNIDAD DEZZPO INC.{' '}
                             </p>
                         </Row>
-                    </div>
+                    </Col>
                 </footer>
             </Container>
         </>
