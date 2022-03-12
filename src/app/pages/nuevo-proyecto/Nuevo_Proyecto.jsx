@@ -106,7 +106,7 @@ const NuevoProyecto = (props) => {
                             </label>
                             <textarea>
                                 provee información adicional aquí, como
-                                especificaciones de tecnica y materiales <br />
+                                especificaciones de tecnica y materiales
                                 requeridos que el comerciante calificado deba
                                 conocer.
                             </textarea>

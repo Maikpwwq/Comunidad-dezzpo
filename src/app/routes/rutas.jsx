@@ -1,11 +1,6 @@
 /* - Componente importancion de las paginas y distribucion de las rutas -  */
 import React from 'react'
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Navigate,
-} from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 //Paginas
 import ApendiceCostos from '../pages/apendice-costos/Apendice_Costos'
@@ -51,10 +46,6 @@ class Rutas extends React.Component {
                     <Routes>
                         <Route index element={<Inicio />}></Route>
                         <Route
-                            path="/asi-trabajamos"
-                            element={<AsiTrabajamos />}
-                        />
-                        <Route
                             path="apendice-costos"
                             element={<ApendiceCostos />}
                         />
@@ -97,7 +88,7 @@ class Rutas extends React.Component {
                             element={<ProfesionalesServicios />}
                         />
                         <Route path="registro" element={<Registro />} />
-                        <Route path="*" element={<Navigate to="/" />} />
+                        {/* <Route path="*" element={<Navigate to={<NoMatch/>} />} /> */}
                     </Routes>
                 </div>
                 <FooterComunidad />

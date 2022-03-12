@@ -1,0 +1,27 @@
+#categoriasServicios{
+    background: #333333 url(../img/Profesionales_servicios2.png) no-repeat center;
+    background-size: 100% auto;
+    background-attachment: scroll;
+    width: 100%;
+    max-height: 700px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+.tituloServicios {
+    width: 100%;
+}
+.contratistasReformas {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-around;
+    width: 100%;
+}
+.contratistasReformas ul {
+
+}
+.contratistasReformas li {
+    list-style-type: none;
+}

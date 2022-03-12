@@ -1,11 +1,6 @@
 /* - Componente importancion de las paginas y distribucion de las rutas -  */
 import React from 'react'
-import {
-    BrowserRouter as Router,
-    Routes,
-    Navigate,
-    Route,
-} from 'react-router-dom'
+import { Routes, Navigate, Route } from 'react-router-dom'
 
 //Paginas
 import Ajustes from '../pages/ajustes/Ajustes'
@@ -28,45 +23,57 @@ class Rutas extends React.Component {
     render() {
         return (
             <>
-                {/* <Router> */}
                 <Routes>
-                    <Route path="/perfil" component={Perfil} />
-                    <Route path="/ajustes" component={Ajustes} />
-                    <Route path="/biblioteca" component={Biblioteca} />
-                    <Route path="/cambiar-clave">
-                        <Cambiar_Clave></Cambiar_Clave>
-                    </Route>
-                    <Route path="/certificaciones">
-                        <Certificaciones></Certificaciones>
-                    </Route>
-                    <Route path="/configuracion-privacidad">
-                        <Configuracion_Privacidad></Configuracion_Privacidad>
-                    </Route>
-                    <Route path="/formas-pago">
-                        <Formas_Pago></Formas_Pago>
-                    </Route>
-                    <Route path="/historial-servicios">
-                        <Historial_Servicios></Historial_Servicios>
-                    </Route>
-                    <Route path="/invitar-amigos">
-                        <Invitar_Amigos></Invitar_Amigos>
-                    </Route>
-                    <Route path="/mensajes">
-                        <Mensajes></Mensajes>
-                    </Route>
-                    <Route path="/notificaciones">
-                        <Notificaciones></Notificaciones>
-                    </Route>
-                    <Route path="/portal-servicios">
-                        <Portal_Servicios></Portal_Servicios>
-                    </Route>
-                    <Route path="/suscripciones">
-                        <Suscripciones></Suscripciones>
-                    </Route>
-                    {/* <Route component={NoMatch} /> */}
-                    <Route path="*" element={<Navigate to="/" />} />
+                    <Route path="/perfil" element={<Perfil></Perfil>} />
+                    <Route path="/ajustes" element={<Ajustes></Ajustes>} />
+                    <Route
+                        path="/biblioteca"
+                        element={<Biblioteca></Biblioteca>}
+                    />
+                    <Route
+                        path="/cambiar-clave"
+                        element={<Cambiar_Clave></Cambiar_Clave>}
+                    ></Route>
+                    <Route
+                        path="/certificaciones"
+                        element={<Certificaciones></Certificaciones>}
+                    ></Route>
+                    <Route
+                        path="/configuracion-privacidad"
+                        element={
+                            <Configuracion_Privacidad></Configuracion_Privacidad>
+                        }
+                    ></Route>
+                    <Route
+                        path="/formas-pago"
+                        element={<Formas_Pago></Formas_Pago>}
+                    ></Route>
+                    <Route
+                        path="/historial-servicios"
+                        element={<Historial_Servicios></Historial_Servicios>}
+                    ></Route>
+                    <Route
+                        path="/invitar-amigos"
+                        element={<Invitar_Amigos></Invitar_Amigos>}
+                    ></Route>
+                    <Route
+                        path="/mensajes"
+                        element={<Mensajes></Mensajes>}
+                    ></Route>
+                    <Route
+                        path="/notificaciones"
+                        element={<Notificaciones></Notificaciones>}
+                    ></Route>
+                    <Route
+                        path="/portal-servicios"
+                        element={<Portal_Servicios></Portal_Servicios>}
+                    ></Route>
+                    <Route
+                        path="/suscripciones"
+                        element={<Suscripciones></Suscripciones>}
+                    ></Route>
+                    {/* <Route path="*" element={<Navigate to={<NoMatch/>} />} /> */}
                 </Routes>
-                {/* </Router> */}
             </>
         )
     }
