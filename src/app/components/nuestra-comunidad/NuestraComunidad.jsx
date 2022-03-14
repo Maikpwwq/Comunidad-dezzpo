@@ -16,8 +16,8 @@ const NuestraComunidad = (props) => {
             <Container fluid className="p-0">
                 <Col id="popularCategorias" className="m-0 p-0">
                     <Col className="w-80">
-                        <h1> NUESTRA COMUNIDAD </h1>
-                        <p>
+                        <h2 className="headline-xl"> NUESTRA COMUNIDAD </h2>
+                        <p className="body-1">
                             Tenemos una gran cantidad de profesionales que
                             quieren trabajar en su proyecto.
                         </p>
@@ -30,11 +30,11 @@ const NuestraComunidad = (props) => {
                         />
                     </Col>
                     <Col className="categoriasPopulares">
-                        <h2>
+                        <h3 className=".headline-l">
                             {' '}
                             o encuentralos dentro de las categorías populares:
-                        </h2>
-                        <ul>
+                        </h3>
+                        <ul className="body-2">
                             <li>
                                 Pintor y decorador, Pintura y decoracion de
                                 interiores{' '}
@@ -61,19 +61,21 @@ const NuestraComunidad = (props) => {
                 <Row id="comerciantesLocales" className="m-0">
                     <Col>
                         <div className="localCiudades">
-                            <h1>Busca en tu ciudad comerciantes calificados</h1>
+                            <h2 className="headline-xl">
+                                Busca en tu ciudad comerciantes calificados
+                            </h2>
                             <div className="ciudades">
-                                <ul>
+                                <ul className="body-2">
                                     <li>Bogota</li>
                                     <li>Medellin</li>
                                     <li>Cali</li>
                                 </ul>
-                                <ul>
+                                <ul className="body-2">
                                     <li>Villavicencio</li>
                                     <li>Chia</li>
                                     <li>Cota</li>
                                 </ul>
-                                <ul>
+                                <ul className="body-2">
                                     <li>Funza</li>
                                     <li>Mosquera</li>
                                     <li>Zipaquira</li>

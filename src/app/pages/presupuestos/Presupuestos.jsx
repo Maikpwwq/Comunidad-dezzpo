@@ -12,33 +12,35 @@ const Presupuestos = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="presupuestosMensaje">
-                    <Col>
-                        <span>
-                            {' '}
-                            Solicitalo online, en menos tiempo, totalmente{' '}
-                            <br />
-                            gratuito y sin compromiso.{' '}
-                        </span>
-                        <span>
-                            Contamos con los mejores precios del mercado de
-                            reformas, conocer el costo <br />
-                            que tiene desarrollar tu proyecto ahora, y procede a
-                            elegir el que te brinde <br />
-                            más confianza, mayor calidad, y el mejor costo{' '}
-                            <br />
-                        </span>
+                    <Col className="col-md-4 align-items-end">
+                        <Col className="opacidadNegro">
+                            <span className="p-description">
+                                {' '}
+                                Solicitalo online, en menos tiempo, totalmente{' '}
+                                <br />
+                                gratuito y sin compromiso.{' '}
+                            </span>
+                            <span className="body-1">
+                                Contamos con los mejores precios del mercado de
+                                reformas, conocer el costo <br />
+                                que tiene desarrollar tu proyecto ahora, y
+                                procede a elegir el que te brinde <br />
+                                más confianza, mayor calidad, y el mejor costo{' '}
+                                <br />
+                            </span>
+                        </Col>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
                 <Row className="presupuestosMensajeBuscador row">
                     <Col className="col">
-                        <span>
+                        <span className="p-description">
                             Publica tu proyecto gratis, los profesionales
                             disponibles te <br />
                             contactaran para ofrecer su presupuesto
                         </span>
-                        <p>
+                        <p className="body-2">
                             Anuncia gratuitamente un trabajo. <br />
                             Lee comentarios, recibe cotizaciones y sigue las
                             recomendaciones para contratar.

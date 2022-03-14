@@ -16,7 +16,7 @@ const AsiTrabajamos = (props) => {
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosChat m-0 w-100 d-flex justify-content-end">
                     <Col className="d-flex colRight" md={6}>
-                        <span className="chatAsesor">
+                        <span className="chatAsesor headline-xl">
                             Contacta Con Un Asesor
                             <br />
                             en Tiempo Real En Nuestro Chat
@@ -31,7 +31,10 @@ const AsiTrabajamos = (props) => {
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosVinculate m-0 w-100 d-flex justify-content-end">
                     <Col className="d-flex colRight2" md={4}>
-                        <span> PERFIL COMERCIANTE </span>
+                        <span className="headline-xl">
+                            {' '}
+                            PERFIL COMERCIANTE{' '}
+                        </span>
                         <div>
                             <button className="btn">Vinculate</button>
                         </div>
@@ -39,12 +42,12 @@ const AsiTrabajamos = (props) => {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="asiTrabajamosPropietario  m-0 w-100 d-flex justify-content-end">
+                <Row className="asiTrabajamosPropietario m-0 w-100 d-flex justify-content-end">
                     <Col className="d-flex colRight3" md={6}>
                         <span>
-                            <h1>PROPIETARIO</h1>
+                            <h2 className="headline-xl">PROPIETARIO</h2>
                         </span>
-                        <p>
+                        <p className="p-description">
                             SOMOS UNA COMUNIDAD DE COMERCIANTES PROFESIONALES,
                             <br />
                             CONTRATA PERSONAL CALIFICADO MANTENIMIENTO GENERAL
@@ -68,13 +71,13 @@ const AsiTrabajamos = (props) => {
                         md={12}
                     >
                         <Col className="colCenter m-0 w-75 d-flex flex-column align-items-end justify-content-end">
-                            <span className="certificacion-titulo">
+                            <span className="certificacion-titulo headline-xl">
                                 {' '}
                                 CERTIFICACIÓN{' '}
                             </span>
                         </Col>
                         <Col className="m-0 w-100 d-flex flex-column align-items-start">
-                            <p className="whiteP mb-4">
+                            <p className="whiteP mb-4 body-1">
                                 Aumente sus posibilidades laborales, pregunta a
                                 nuestro equipo por nuestra insignia
                                 <br />
@@ -85,7 +88,7 @@ const AsiTrabajamos = (props) => {
                                 de mayor complejidad
                                 <br />
                             </p>
-                            <p className="pb-4">
+                            <p className="pb-4 body-1">
                                 Juntos programamos una visita de inspección para
                                 validarentre otras cosas,
                                 <br />
@@ -104,9 +107,9 @@ const AsiTrabajamos = (props) => {
                 <Row className="asiTrabajamosCalificaciones m-0 w-100 d-flex flex-column align-items-end justify-content-end">
                     <Col className="colRight3 w-50">
                         <span>
-                            <h2>CALIFICACIONES</h2>
+                            <h2 className="headline-xl">CALIFICACIONES</h2>
                         </span>
-                        <p className="LeftP">
+                        <p className="LeftP body-1">
                             La valoración debe darse con base en los
                             <br />
                             siguientes tres aspectos:
@@ -155,7 +158,7 @@ const AsiTrabajamos = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosEstadisticas  m-0 w-100">
-                    <Row className="">
+                    <Row className="headline-l">
                         <ul style={{ 'flex-direction': 'row' }}>
                             <li>USUARIOS</li>
                             <li>ACTIVO DESDE</li>

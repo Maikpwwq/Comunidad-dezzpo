@@ -1,5 +1,9 @@
 import * as React from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
+
+//imagenes
+import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
+
 import PropTypes from 'prop-types'
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
@@ -66,10 +70,7 @@ function Header(props) {
                         </Grid>
                         <Grid item>
                             <IconButton color="inherit" sx={{ p: 0.5 }}>
-                                <Avatar
-                                    src="/static/images/avatar/1.jpg"
-                                    alt="My Avatar"
-                                />
+                                <Avatar src={Avatar1} alt="My Avatar" />
                             </IconButton>
                         </Grid>
                     </Grid>
@@ -123,33 +124,33 @@ function Header(props) {
                     <Tab
                         label="Ver tu perfil"
                         component={NavLink}
-                        to="/perfil"
+                        to="perfil"
                     />
-                    <Tab label="Mensajes" component={NavLink} to="/mensajes" />
+                    <Tab label="Mensajes" component={NavLink} to="mensajes" />
                     <Tab
                         label="Notificaciones"
                         component={NavLink}
-                        to="/notificaciones"
+                        to="notificaciones"
                     />
                     <Tab
                         label="Portal de servicios"
                         component={NavLink}
-                        to="/portal-servicios"
+                        to="portal-servicios"
                     />
                     <Tab
                         label="Historial de servicio"
                         component={NavLink}
-                        to="/historial-servicios"
+                        to="historial-servicios"
                     />
                     <Tab
                         label="Certificación"
                         component={NavLink}
-                        to="/certificacion"
+                        to="certificacion"
                     />
                     <Tab
                         label="Suscripciones"
                         component={NavLink}
-                        to="/suscripciones"
+                        to="suscripciones"
                     />
                 </Tabs>
             </AppBar>

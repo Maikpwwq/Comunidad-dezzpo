@@ -2,18 +2,23 @@
 import React from 'react'
 import '../../../../public/assets/css/legal.css'
 
+// react-bootrstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+
 const Legal = (props) => {
     return (
         <>
-            <main className="section">
-                <div className="legalContainer">
+            <Container fluid className="p-0">
+                <Row className="legalContainer">
                     <div className="legalDocumentos row">
                         <div className="col">
                             <span className="tituloDocumento">
-                                <h1>
+                                <h3 className="headline-l">
                                     Terminos y condiciones
                                     <br /> Propietarios
-                                </h1>
+                                </h3>
                             </span>
                             <br />
                             <a
@@ -26,10 +31,10 @@ const Legal = (props) => {
                         </div>
                         <div className="col">
                             <span className="tituloDocumento">
-                                <h1>
+                                <h3 className="headline-l">
                                     Terminos y condiciones
                                     <br /> Comercientes Calificados{' '}
-                                </h1>
+                                </h3>
                             </span>
                             <br />
                             <a
@@ -42,7 +47,7 @@ const Legal = (props) => {
                         </div>
                         <div className="col">
                             <span className="tituloDocumento">
-                                <h1>Terminos de uso</h1>
+                                <h3 className="headline-l">Terminos de uso</h3>
                             </span>
                             <br />
                             <a
@@ -55,7 +60,9 @@ const Legal = (props) => {
                         </div>
                         <div className="col">
                             <span className="tituloDocumento">
-                                <h1>Politica de privacidad</h1>
+                                <h3 className="headline-l">
+                                    Politica de privacidad
+                                </h3>
                             </span>
                             <br />
                             <a
@@ -68,7 +75,7 @@ const Legal = (props) => {
                         </div>
                         <div className="col">
                             <span className="tituloDocumento">
-                                <h1>Cookies</h1>
+                                <h3 className="headline-l">Cookies</h3>
                             </span>
                             <br />
                             <a
@@ -80,8 +87,8 @@ const Legal = (props) => {
                             </a>
                         </div>
                     </div>
-                </div>
-            </main>
+                </Row>
+            </Container>
         </>
     )
 }

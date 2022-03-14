@@ -14,12 +14,14 @@ const CategoriasServicios = (props) => {
                     <Row id="categoriasServicios" className="m-0">
                         <Col>
                             <div className="tituloServicios">
-                                <h1>Nuestro comerciantes y servicios</h1>
+                                <h2 className="headline-xl">
+                                    Nuestro comerciantes y servicios
+                                </h2>
                             </div>{' '}
                             <br />
                             <div className="contratistasReformas">
-                                <Col className="col-md-3 p-0">
-                                    <ul>
+                                <Col className="col-md-3 p-0" sm="12">
+                                    <ul className="body-1">
                                         <li>
                                             {' '}
                                             Administraciones PH `{'>'}`
@@ -74,8 +76,8 @@ const CategoriasServicios = (props) => {
                                         </li>
                                     </ul>
                                 </Col>
-                                <Col className="col-md-3 p-0">
-                                    <ul>
+                                <Col className="col-md-3 p-0" sm="12">
+                                    <ul className="body-1">
                                         <li>
                                             {' '}
                                             Carpintería metálica `{'>'}`
@@ -132,8 +134,8 @@ const CategoriasServicios = (props) => {
                                         </li>
                                     </ul>
                                 </Col>
-                                <Col className="col-md-3 p-0">
-                                    <ul>
+                                <Col className="col-md-3 p-0" sm="12">
+                                    <ul className="body-1">
                                         <li>
                                             {' '}
                                             Impermeabilización `{'>'}`
@@ -192,8 +194,8 @@ const CategoriasServicios = (props) => {
                                         </li>
                                     </ul>
                                 </Col>
-                                <Col className="col-md-3 p-0">
-                                    <ul>
+                                <Col className="col-md-3 p-0" sm="12">
+                                    <ul className="body-1">
                                         <li>
                                             {' '}
                                             Mudanzas `{'>'}` Ayudantes de

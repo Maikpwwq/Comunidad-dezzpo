@@ -16,28 +16,30 @@ const ComunidadPropietarios = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosTitulo m-0 d-flex flex-row justify-content-start align-content-start">
-                    <Col className="opacidadNegro mt-4 mb-4" md={6}>
-                        <span className="pitchPropietarios">
-                            {' '}
-                            <h3>
-                                SOMOS UNA COMUNIDAD DE COMERCIANTES
-                                PROFESIONALES, <br />
-                                CONTRATA PERSONAL CALIFICADO MANTENIMIENTO
-                                GENERAL <br />
-                                RESIDENCIAL Y DE PROPIEDAD HORIZONTAL, CONSULTA{' '}
-                                <br />
-                                PÚBLICAMENTE LOS PERFILES Y LA REPUTACIÓN DE LOS{' '}
-                                <br />
-                                PRESTADORES DE SERVICIOS. AHORA TUS PROYECTOS Y{' '}
-                                <br />
-                                REMODELACIONES MÁS RÁPIDO Y SIMPLE QUE NUNCA{' '}
-                                <br />
+                    <Col className="col-md-6 align-items-start">
+                        <Col className="opacidadNegro mt-4 mb-4" md={6}>
+                            <span className="pitchPropietarios">
+                                {' '}
+                                <p className="p-description">
+                                    SOMOS UNA COMUNIDAD DE COMERCIANTES
+                                    PROFESIONALES, <br />
+                                    CONTRATA PERSONAL CALIFICADO MANTENIMIENTO
+                                    GENERAL <br />
+                                    RESIDENCIAL Y DE PROPIEDAD HORIZONTAL,
+                                    CONSULTA <br />
+                                    PÚBLICAMENTE LOS PERFILES Y LA REPUTACIÓN DE
+                                    LOS <br />
+                                    PRESTADORES DE SERVICIOS. AHORA TUS
+                                    PROYECTOS Y <br />
+                                    REMODELACIONES MÁS RÁPIDO Y SIMPLE QUE NUNCA{' '}
+                                    <br />
+                                </p>
+                            </span>
+                            <h3 className=".headline-l titulosVerde">
+                                Contrata seguro con <br />
+                                nuestra comunidad
                             </h3>
-                        </span>
-                        <span className="blueAlert">
-                            Contrata seguro con <br />
-                            nuestra comunidad
-                        </span>
+                        </Col>
                     </Col>
                 </Row>
             </Container>
@@ -51,7 +53,7 @@ const ComunidadPropietarios = (props) => {
                         <div className="registrateformulario m-0">
                             <form id="formularioRegistro" action="">
                                 <span className="pitchPropietarios">
-                                    <h2>
+                                    <h2 className="headline-xl">
                                         {' '}
                                         COMUNIDAD <br />
                                         PROPIETARIOS
@@ -95,7 +97,7 @@ const ComunidadPropietarios = (props) => {
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosBuscador m-0 row">
                     <Col className="colLeft">
-                        <p>
+                        <p className="body-2">
                             Con ayuda de la comunidad haz realidad la casa que
                             deseas. <br />
                             Encuentra un profesional Seguro y Confiable, para
@@ -118,19 +120,19 @@ const ComunidadPropietarios = (props) => {
                         md={4}
                         style={{ 'justify-content': 'space-evenly' }}
                     >
-                        <p>
+                        <p className="body-2">
                             Nuestra recomendación esencial al contratar un
                             comerciante calificado, nunca cancelar la totalidad
                             por adelantado, revisar siempre las referencias,
                             calificaciones y afiliaciones del perfil.
                         </p>
                         <span className="pitchPropietarios">
-                            <h2>Propietario revisa la</h2>
+                            <p className=".headline-l">Propietario revisa la</p>
                         </span>
                         <button className="btn" onClick="listaChequeo">
                             lista de chequeo
                         </button>
-                        <span>
+                        <span className="body-2">
                             3196138057
                             <br />
                             Lunes a viernes, 8am - 5pm
@@ -145,27 +147,33 @@ const ComunidadPropietarios = (props) => {
                         style={{ 'justify-content': 'space-evenly' }}
                     >
                         <span className="pitchPropietarios">
-                            <h3>Planea con nosotros el proyecto</h3>
+                            <h3 className=".headline-l">
+                                Planea con nosotros el proyecto
+                            </h3>
                         </span>
-                        <p>
+                        <p className="body-1">
                             El espacio de tus sueños comienza con una gran idea
                             y tenemos miles de ellas.
                         </p>
                         <span className="pitchPropietarios">
-                            <h3>Observa cambios</h3>
+                            <h3 className=".headline-l">Observa cambios</h3>
                         </span>
-                        <p>Inspirate, tenemos muchos trabajos realizados.</p>
+                        <p className="body-1">
+                            Inspirate, tenemos muchos trabajos realizados.
+                        </p>
                         <span className="pitchPropietarios">
-                            <h3>¿Requieres de asesoria?</h3>
+                            <h3 className=".headline-l">
+                                ¿Requieres de asesoria?
+                            </h3>
                         </span>
-                        <p>
+                        <p className="body-1">
                             Nuestra comunidad de comerciantes calificados te
                             ayudaran con tus inquietudes.
                         </p>
                         <span className="pitchPropietarios">
-                            <h3>Presupuestos</h3>
+                            <h3 className=".headline-l">Presupuestos</h3>
                         </span>
-                        <p>
+                        <p className="body-1">
                             Saber cuanto te puede costar es importante para
                             iniciar el proyecto.
                         </p>
@@ -195,9 +203,11 @@ const ComunidadPropietarios = (props) => {
                 <Row className="comunidadPropietariosListaVerificacion m-0">
                     <Col className="verificarLista" id="listaChequeo">
                         <span className="pitchPropietarios">
-                            <h2>LISTA DE VERIFICACION</h2>
+                            <h2 className=".headline-xl titulosBlanco">
+                                LISTA DE VERIFICACION
+                            </h2>
                         </span>
-                        <ul>
+                        <ul className="body-1">
                             <li> Verifica Adecuadamente La Identidad. </li>
                             <li>
                                 {' '}
@@ -261,7 +271,7 @@ const ComunidadPropietarios = (props) => {
                                 instituto para la, ofrece ayudas y subvenciones
                                 institucionales
                             </li>
-                            <span className="blueAlert">
+                            <span className=".headline-l titulosVerde">
                                 {' '}
                                 Se resuelve la encuesta de satisfacción del
                                 servicio

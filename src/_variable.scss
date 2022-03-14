@@ -8,8 +8,11 @@
    // var(--content-text-light-gray-color)
    --logo-comunidad-dezzpo-color: #209da1; 
    /* Colores de titulos y textos */
-   --primary-green-text-color:#3eb288
+   --primary-green-text-color: #009999; 
+   --primary-blue-light-color:#1ec7e6;
+   --primary-light-green-text-color:#3eb288
    --primary-dark-blue-text-color: #004884;
+   --primary-light-gray-text-color: #e9ebe6;
    --secondary-blue-text-color: #3d8ab5;
    --secondary-red-text-color:#c24a75
    --content-text-color: #4b4b4b; 
@@ -17,11 +20,17 @@
    --content-text-light-gray-color: #bababa;
    --content-text-white-color: #ffffff;
    /* Colores de fondo */
+   --background-dark-gray-color: #333333;
+   --background-lemon-green-color:#92B901;
+   --background-color: rgba(0,0,0,0.8);
+   --background-color: #deaf06;
    --background-dark-purple-color:#662382
-   --background-dark-blue-color: #004884;
    --background-blue-color: #3d8ab5;
+   --background-blu-color2: #006699;
    --background-blue-light-color: #08ceff;
    --background-blue-clear-color: #80bdff;
+   --background-dark-blue-color: #004884;
+   --background-dark-blue-color2: #13495e; 
    --background-nav-bar-sigmi-color: #F6F8F9;
    --background-nav-bar-active-color: #f2f2f2;
    --background-gray-color: #bababa;
@@ -54,17 +63,6 @@
    --notificaciones-publicado-color: #1e7559;
    --notificaciones-publicado-background-color: #c5e4dc;
 }
-/*
-    background-color: #333333;
-    background-color: #e9ebe6;
-    background-color: rgba(0,0,0,0.8);
-    background-color: #009999; 
-    background-color:#1ec7e6;
-    background-color: #13495e; 
-    background-color:#92B901;
-    background-color: #006699;
-    background-color: #deaf06;
-*/
 
 // No usar estan fuera de la paleta de colores
 $more: #f6f8f9; // Background

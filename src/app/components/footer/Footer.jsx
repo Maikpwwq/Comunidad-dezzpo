@@ -19,7 +19,7 @@ const FooterComunidad = (props) => {
                         <Row className="footerSuperior">
                             {/* Mas links */}
                             <Col className="masLinks">
-                                <ul>
+                                <ul className="body-1">
                                     <li>
                                         {' '}
                                         &#10095;{' '}
@@ -81,8 +81,8 @@ const FooterComunidad = (props) => {
                             </Col>
                             {/* siguenos en redes */}
                             <Col className="siguenosRedes pt-0">
-                                <h1> SIGUENOS </h1>
-                                <ul className="listaFooter  w-100">
+                                <h2 className="headline-xl"> SIGUENOS </h2>
+                                <ul className="listaFooter w-100 body-1">
                                     {/* siguenos Instagram */}
                                     <li className="w-50">
                                         {' '}
@@ -156,14 +156,17 @@ const FooterComunidad = (props) => {
                             </Col>
                             {/* Datos de contacto comunidad dezzpo */}
                             <Col className="datosContacto pt-0">
-                                <h1> Ponte en Contacto </h1>
+                                <h2 className="headline-xl">
+                                    {' '}
+                                    Ponte en Contacto{' '}
+                                </h2>
                                 <ul className="listaFooter pt-3 w-100">
                                     <Row className="m-0 w-100 d-flex">
                                         <span
                                             className="icon-DireccionDomicilioIcono"
                                             style={{ width: 'auto' }}
                                         ></span>
-                                        <Col className="m-0 p-0">
+                                        <Col className="m-0 p-0 body-1">
                                             <li>
                                                 {' '}
                                                 Dirección Cll 159 No. 8c-45{' '}
@@ -176,7 +179,7 @@ const FooterComunidad = (props) => {
                                             className="icon-TelefonoContactoIcono"
                                             style={{ width: 'auto' }}
                                         ></span>
-                                        <Col className="m-0 p-0">
+                                        <Col className="m-0 p-0 body-1">
                                             <li> +57 3196138057 - Office </li>
                                             <li> +57 3196138057 - PBX </li>
                                         </Col>
@@ -186,7 +189,7 @@ const FooterComunidad = (props) => {
                                             className="icon-EmailIcono"
                                             style={{ width: 'auto' }}
                                         ></span>
-                                        <Col className="m-0 p-0">
+                                        <Col className="m-0 p-0 body-1">
                                             <li>
                                                 <a
                                                     href="mailto:comunidad.dezzpo@gmail.com"
@@ -203,7 +206,7 @@ const FooterComunidad = (props) => {
                         </Row>
                         {/* parte inferior*/}
                         <Row className="footerInferior pt-3 w-100">
-                            <p>
+                            <p className="p-description">
                                 {' '}
                                 © 2021 - Todos los derechos reservados -
                                 COMUNIDAD DEZZPO INC.{' '}

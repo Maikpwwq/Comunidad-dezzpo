@@ -14,16 +14,19 @@ const Nosotros = (props) => {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="pageContainer m-0">
-                    <Col className="nosotrosHistoria align-items-end">
+                <Row className="nosotrosHistoria pageContainer m-0 justify-content-end">
+                    <Col className="col-md-4 align-items-end">
                         <div className="opacidadNegro">
                             <span className="pitchPropietarios">
                                 {' '}
-                                <h2 style={{ color: '#e9ebe6' }}>
+                                <h2
+                                    className="headline-xl"
+                                    style={{ color: '#e9ebe6' }}
+                                >
                                     HISTORIA
                                 </h2>{' '}
                             </span>
-                            <p>
+                            <p className="body-2">
                                 La Comunidad Dezzpo Inc, un Marketplace de{' '}
                                 <br />
                                 servicios publicitarios, para contratistas de{' '}
@@ -34,7 +37,7 @@ const Nosotros = (props) => {
                                 locales de reformas, maestros de construcción e
                                 <br />
                                 instaladores independientes de acabados. <br />
-                                Consulta públicamente los perfiles y la
+                                Consulta públicamente los perfiles y la <br />
                                 reputación de los prestadores de servicios, tus
                                 proyectos <br /> y adecuaciones nunca han sido
                                 mejor asistidos. <br />
@@ -55,11 +58,11 @@ const Nosotros = (props) => {
                                 className="d-flex flex-row justify-content-start"
                             >
                                 <span className="pitchPropietarios">
-                                    <h2>MISIÓN</h2>
+                                    <h2 className="headline-xl">MISIÓN</h2>
                                 </span>
                             </Col>
                             <Col md={6}>
-                                <p>
+                                <p className="body-2">
                                     Trabajamos para las personas, destacándonos
                                     por la calidad del servicio al cliente, el
                                     crecimiento continuo del ser y la gestión
@@ -75,7 +78,7 @@ const Nosotros = (props) => {
                         </Row>
                         <Row className="left w-100 m-0 d-flex flex-row justify-content-start">
                             <Col md={6}>
-                                <p>
+                                <p className="body-2">
                                     Dezzpo será en 2020 una marca colombiana
                                     posicionada, referente de consulta para la
                                     gestión en proyectos de mantenimiento,
@@ -93,7 +96,7 @@ const Nosotros = (props) => {
                                 style={{ 'padding-right': '80px' }}
                             >
                                 <span className="pitchPropietarios">
-                                    <h2>VISIÓN</h2>
+                                    <h2 className="headline-xl">VISIÓN</h2>
                                 </span>
                             </Col>
                         </Row>
@@ -104,9 +107,11 @@ const Nosotros = (props) => {
                 <Row className="nosotrosPoliticas m-0">
                     <Col>
                         <span className="pitchPropietarios">
-                            <h2>POLÍTICA INTEGRAL HSEQ</h2>
+                            <h2 className="headline-xl">
+                                POLÍTICA INTEGRAL HSEQ
+                            </h2>
                         </span>
-                        <p>
+                        <p className="body-2">
                             Propendemos por mitigar el impacto ambiental.
                             Nuestro proposito es asegurar la creacion de valor y{' '}
                             <br />
@@ -130,7 +135,10 @@ const Nosotros = (props) => {
                     >
                         <div className="left w-100 ps-4">
                             <span className="pitchPropietarios">
-                                <h2 style={{ color: '#e9ebe6' }}>
+                                <h2
+                                    className="headline-xl"
+                                    style={{ color: '#e9ebe6' }}
+                                >
                                     VALORES Y PRINCIPIOS
                                 </h2>
                             </span>
@@ -138,7 +146,7 @@ const Nosotros = (props) => {
                     </Col>
                     <Col md={6} className="w-50">
                         <div className="right w-100">
-                            <ul>
+                            <ul className="p-description">
                                 <li>Disiplina </li>
                                 <li>Eficiencia </li>
                                 <li>Empatia y humanismo </li>
@@ -157,9 +165,13 @@ const Nosotros = (props) => {
                         <Col>
                             <div className="opacidadBlaco">
                                 <span className="pitchPropietarios">
-                                    <h2>Equipo Dezzpo</h2>
+                                    <h2 className="headline-xl">
+                                        Equipo Dezzpo
+                                    </h2>
                                     <br />
-                                    Conoce a nuestro equipo
+                                    <p className="p-description">
+                                        Conoce a nuestro equipo
+                                    </p>
                                 </span>
                             </div>
                         </Col>
@@ -178,7 +190,7 @@ const Nosotros = (props) => {
                             <div className="left">
                                 <span className="pitchPropietarios">
                                     {' '}
-                                    <h2>
+                                    <h2 className="headline-xl">
                                         ROAD MAP <br /> HITOS
                                     </h2>
                                 </span>
@@ -186,7 +198,7 @@ const Nosotros = (props) => {
                             <img src={RoadMap} alt="ROAD MAP" />
                         </Col>
                         <Col>
-                            <p>
+                            <p className="p-description">
                                 Pronto estaremos disponibles en <br />
                                 <li>
                                     <a href="#">Apple App Store </a>

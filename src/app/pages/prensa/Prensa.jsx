@@ -2,25 +2,32 @@
 import React from 'react'
 import '../../../../public/assets/css/prensa.css'
 
+// react-bootrstrap
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+
 const Prensa = (props) => {
     return (
         <>
-            <main className="section">
-                <div className="pageContainer">
-                    <div className="prensaMensaje">
+            <Container fluid className="p-0">
+                <Row className="pageContainer">
+                    <Col className="prensaMensaje">
                         <span className="tituloDocumento">
                             {' '}
-                            <h1>Consulta por titulo de documento</h1>{' '}
+                            <h3 className="headline-l">
+                                Consulta por titulo de documento
+                            </h3>{' '}
                         </span>
-                        <ul>
+                        <ul className="body-2">
                             <li>Estudios</li>
                             <li>Estudios</li>
                             <li>Estudios</li>
                             <li>Estudios</li>
                         </ul>
-                    </div>
-                </div>
-            </main>
+                    </Col>
+                </Row>
+            </Container>
         </>
     )
 }

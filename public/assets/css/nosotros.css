@@ -1,7 +1,6 @@
 .nosotrosContainer {     
     /* height: 1500px;  */
 }
-
 .nosotrosHistoria{
     background: #e9ebe6 url(../img/Nosotros1.png) no-repeat center; 
     background-attachment: scroll;         
@@ -13,21 +12,6 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-end;
-}
-.opacidadNegro{
-    height: 500px;
-    width: 480px;
-    padding-bottom: 0px;
-    text-align: center;
-    padding-right: 0px !important;
-    padding-left: 0px !important;
-    align-items: center;
-    color: #e9ebe6;
-}
-.opacidadNegro p{
-    padding-left: 33px;
-    padding-right: 33px;
-    font-size: 18px;
 }
 .pitchPropietarios h2 {
     font-size: 33px;
@@ -125,14 +109,3 @@
     height: 600px;
     width: 100%;
 }
-/*    
-    background-color: #333333;
-    background-color: #e9ebe6;
-    background-color: rgba(0,0,0,0.8);
-    background-color: #009999; 
-    background-color:#1ec7e6;
-    background-color: #13495e; 
-    background-color:#92B901;
-    background-color: #006699;
-    background-color: #deaf06;
-*/

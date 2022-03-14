@@ -21,12 +21,12 @@ const Ingreso = (props) => {
                     <Col className="colRight">
                         <div className="ingresarFormulario">
                             <span className="tituloformulario">
-                                <h1>Bienvenido!</h1>
+                                <h2 className="headline-l">Bienvenido!</h2>
                             </span>
-                            <p>
+                            <p className="p-description">
                                 ERES NUEVO, <br />
                                 CREA FÁCIL UNA CUENTA!
-                                <a href="">, Registrate</a>
+                                <a className="body-2" href="">, Registrate</a>
                             </p>
                             <br />
                             <ul>
@@ -80,9 +80,6 @@ const Ingreso = (props) => {
                                 <br />
                                 <hr />
                             </form>
-                            <span className="tituloformulario">
-                                <h1>BIENVENIDO</h1>
-                            </span>
                         </div>
                     </Col>
                 </Row>
@@ -92,9 +89,9 @@ const Ingreso = (props) => {
                     <Col className="colLeft">
                         <span className="tituloformulario">
                             {' '}
-                            <h1>Ingresa tu ubicación</h1>{' '}
+                            <h3 className="headline-l">Ingresa tu ubicación</h3>{' '}
                         </span>
-                        <p>
+                        <p className="body-1">
                             Podras consultar con mejor <br />
                             precision los costos y <br />
                             tiempos de entrega <br />

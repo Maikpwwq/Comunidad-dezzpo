@@ -14,7 +14,7 @@ const ApendiceCostos = () => {
             <Container fluid className="p-0">
                 <Row className="apendiceCostosTitulo m-0 w-100 d-flex justify-content-end">
                     <Col md={4}>
-                        <span className="titulo">
+                        <span className="titulo headline-xl">
                             Costeo de Servicios
                             <br />
                             Comunes
@@ -25,7 +25,7 @@ const ApendiceCostos = () => {
             <Container fluid className="p-0">
                 <Row className="apendiceCostosPreguntas m-0 w-100">
                     <Col>
-                        <ul>
+                        <ul className="body-2">
                             <li>
                                 <Link to="/apendice-costos">
                                     ¿Cuánto cuesta instalar nuevas

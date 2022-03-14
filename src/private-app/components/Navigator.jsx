@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
@@ -19,66 +20,6 @@ import TimerIcon from '@mui/icons-material/Timer'
 import SettingsIcon from '@mui/icons-material/Settings'
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup'
 
-const categories = [
-    {
-        id: 'Build',
-        children: [
-            {
-                id: 'Inicio',
-                icon: <PeopleIcon />,
-                route: '/perfil',
-                active: true,
-            },
-            {
-                id: 'Calificaciones',
-                icon: <DnsRoundedIcon />,
-                route: '/calificaciones',
-            },
-            {
-                id: 'Biblioteca',
-                icon: <PermMediaOutlinedIcon />,
-                route: '/biblioteca',
-            },
-            {
-                id: 'Invitar a un Amigo',
-                icon: <PublicIcon />,
-                route: '/invitar-amigos',
-            },
-            {
-                id: 'Ajustes',
-                icon: <SettingsEthernetIcon />,
-                route: '/ajsutes',
-            },
-            {
-                id: 'Formas de Pago',
-                icon: <SettingsInputComponentIcon />,
-                route: '/formas-pago',
-            },
-        ],
-    },
-    {
-        id: 'Quality',
-        children: [
-            {
-                id: 'Configuracion',
-                icon: <SettingsIcon />,
-                route: '/configuracion',
-            },
-            { id: 'Privacidad', icon: <TimerIcon />, route: 'privacidad' },
-            {
-                id: 'Cambiar Clave',
-                icon: <PhonelinkSetupIcon />,
-                route: '/cambiar-clave',
-            },
-            {
-                id: 'Cerrar Sesion',
-                icon: <PhonelinkSetupIcon />,
-                route: '/cerrar-sesion',
-            },
-        ],
-    },
-]
-
 const item = {
     py: '2px',
     px: 3,
@@ -96,6 +37,10 @@ const itemCategory = {
 
 export default function Navigator(props) {
     const { ...other } = props
+
+    const match = useNavigate()
+
+    console.log(match)
 
     return (
         <Drawer variant="permanent" {...other}>
@@ -149,3 +94,63 @@ export default function Navigator(props) {
         </Drawer>
     )
 }
+
+const categories = [
+    {
+        id: 'Build',
+        children: [
+            {
+                id: 'Inicio',
+                icon: <PeopleIcon />,
+                route: 'perfil',
+                active: true,
+            },
+            {
+                id: 'Calificaciones',
+                icon: <DnsRoundedIcon />,
+                route: 'calificaciones', // `${match.url}/calificaciones`
+            },
+            {
+                id: 'Biblioteca',
+                icon: <PermMediaOutlinedIcon />,
+                route: 'biblioteca',
+            },
+            {
+                id: 'Invitar a un Amigo',
+                icon: <PublicIcon />,
+                route: 'invitar-amigos',
+            },
+            {
+                id: 'Ajustes',
+                icon: <SettingsEthernetIcon />,
+                route: 'ajsutes',
+            },
+            {
+                id: 'Formas de Pago',
+                icon: <SettingsInputComponentIcon />,
+                route: 'formas-pago',
+            },
+        ],
+    },
+    {
+        id: 'Quality',
+        children: [
+            {
+                id: 'Configuracion',
+                icon: <SettingsIcon />,
+                route: 'configuracion',
+            },
+            { id: 'Privacidad', icon: <TimerIcon />, route: 'privacidad' },
+            {
+                id: 'Cambiar Clave',
+                icon: <PhonelinkSetupIcon />,
+                route: 'cambiar-clave',
+            },
+            {
+                id: 'Cerrar Sesion',
+                icon: <PhonelinkSetupIcon />,
+                route: 'cerrar-sesion',
+            },
+        ],
+    },
+]

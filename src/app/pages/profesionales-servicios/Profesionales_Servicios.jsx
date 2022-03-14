@@ -16,11 +16,11 @@ const ProfesionalesServicios = (props) => {
             <Container fluid className="p-0">
                 <Row className="profesionalesServiciosMensaje m-0 d-flex flex-row justify-content-end">
                     <Col md={4}>
-                        <h3>
+                        <h2 className="headline-xl">
                             Profesionales y Servicios <br />
                             Recuerda
-                        </h3>
-                        <p>
+                        </h2>
+                        <p className="body-1">
                             Los Certificados describen las acreditaciones que ha
                             recibido cada comerciante <br />
                             calificado, estos se pueden consultar junto al
@@ -29,7 +29,10 @@ const ProfesionalesServicios = (props) => {
                             calificaciones y comentarios de otros <br />
                             Propietarios
                         </p>
-                        <span> Busca Profesionales en tu zona </span>
+                        <span className="p-description">
+                            {' '}
+                            Busca Profesionales en tu zona{' '}
+                        </span>
                     </Col>
                 </Row>
             </Container>
