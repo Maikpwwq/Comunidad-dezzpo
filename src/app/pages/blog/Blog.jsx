@@ -24,7 +24,7 @@ const Blog = (props) => {
                     <Col>
                         <span className="mainTitulo">
                             {' '}
-                            <h1>BLOG</h1>{' '}
+                            <h2 className="headline-xl">BLOG</h2>{' '}
                         </span>
                     </Col>
                 </Row>
@@ -52,11 +52,10 @@ const Blog = (props) => {
                                     <span> ACREDITADO </span>
                                 </Col>
                                 <Col>
-                                    <p>
+                                    <p className="body-1">
                                         No encontraba en quien depositar mi
-                                        confianza, la restauracion <br />
-                                        de mis muebles es una realidad y estoy
-                                        feliz
+                                        confianza, la restauracion de mis
+                                        muebles es una realidad y estoy feliz
                                     </p>
                                 </Col>
                                 <Col>
@@ -84,11 +83,11 @@ const Blog = (props) => {
                                     <span> ACREDITADO </span>
                                 </Col>
                                 <Col>
-                                    <p>
+                                    <p className="body-1">
                                         La familia se crecio y la casa esta
-                                        nuevamente llena de vida, <br />
-                                        contratar la ampliación de los espacios
-                                        fue algo muy sencillo
+                                        nuevamente llena de vida, contratar la
+                                        ampliación de los espacios fue algo muy
+                                        sencillo
                                     </p>
                                 </Col>
                                 <Col>
@@ -117,10 +116,10 @@ const Blog = (props) => {
                                 </Col>
                                 <Col>
                                     {' '}
-                                    <p>
+                                    <p className="body-1">
                                         Pasaron años antes de que me decidiera,
-                                        ahora los problemas <br />
-                                        de humedad ya son cosas del pasado{' '}
+                                        ahora los problemas de humedad ya son
+                                        cosas del pasado{' '}
                                     </p>
                                 </Col>
                                 <Col>

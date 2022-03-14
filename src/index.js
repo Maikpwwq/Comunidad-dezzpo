@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router } from 'react-router-dom' // , useRouterHistory
+import { BrowserRouter as Router } from 'react-router-dom'
 // Create browser history, for navigation a la single page apps
 import { createBrowserHistory } from 'history'
 
 import Rutas from './router'
 import 'firebase/auth'
+import './index.scss'
+
 // import "./styles.styl";
 // import * as serviceWorker from './serviceWorker';
 

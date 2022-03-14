@@ -1,0 +1,338 @@
+@import "./variable";
+/* npm install --save node-sass */
+/* make the customizations */
+$theme-colors: ();
+
+/* then import bootstrap to set changes */
+@import "~bootstrap/scss/bootstrap";
+
+.titulosVerde{
+   color: var(--primary-green-text-color);
+}
+.titulosAzul{
+   color: var(--primary-blue-light-color);
+}
+.titulosBlanco{
+   color: var(--primary-light-gray-text-color);
+}
+/* **************************************************** */
+/* Declaracion de typografias Titulos - Subtitulos - Encabezados */
+/* **************************************************** */
+.dezzpo-svg {
+   // Isotipo COMUNIDAD DEZZPO
+   font-family: var(--font-coolvetica-bold);
+   font-size: 1.6rem;
+   font-weight: 600;
+   color: var(--logo-comunidad-dezzpo-color);
+   margin-left: 10px;
+}
+// h1
+.headline-xxl {
+   // Oculta uso en posicionamiento SEO.
+   font-family: var(--font-helvetica-semibold);
+   font-size: 40px/48px;
+   font-weight: 600;
+   color: var(--primary-dark-blue-text-color);
+}
+//h2
+.headline-xl {
+   // Título secciones principales y Modal
+   font-family: var(--font-helvetica-semibold);
+   font-size: 2rem; // 32px/46px
+   font-weight: 600;
+   color: var(--primary-dark-blue-text-color);
+   line-height: 1.5em !important;
+}
+//h3
+.headline-l {
+   // Nombre del trámite
+   font-family: var(--font-helvetica-semibold);
+   font-size: 1.5rem; // 24px/26px
+   font-weight: 600;
+   color: var(--primary-dark-blue-text-color);
+   line-height: 1.25em !important;
+}
+
+.headline-m {
+   // Titulo de la Seccion
+   font-family: var(--font-helvetica-semibold);
+   font-size: 20px; // 20px/30px
+   font-weight: 600;
+   color: var(--primary-dark-blue-text-color);
+   line-height: 30px !important;
+}
+
+.headline-s {
+   // Titulo subsección y Titulo Tablas
+   font-family: var(--font-helvetica-medium);
+   font-size: 1.125rem; // 18px/27px
+   font-weight: 600;
+   color: var(--primary-dark-blue-text-color);
+   line-height: 1.25em !important;
+}
+
+.headline-xs {
+   // Jerarquía para trámites
+   font-family: var(--font-helvetica-semibold);
+   font-size: 1.125rem; // 16px/24px
+   font-weight: 600;
+   color: var(--primary-dark-blue-text-color);
+   line-height: 1.25em !important;
+}
+
+.subtitle {
+   // Subtitulo Principal
+   font-family: var(--font-helvetica-semibold);
+   font-size: 1.125rem; // 18px/27px
+   font-weight: 600;
+   color: var(--primary-dark-blue-text-color);
+   line-height: 1.25em !important;
+}
+
+.field {
+   font-family: var(--font-worksans-semibold);
+   font-size: 16px/22px;
+}
+
+.caption {
+   font-family: var(--font-worksans-semibold);
+   font-size: 14px/18px;
+}
+
+.tituloTabla {
+   // Titulo Tabla
+   text-align: left;
+   font: normal normal normal 24px/36px var(--font-helvetica-semibold);
+   letter-spacing: 0px;
+   color: var(--primary-dark-blue-text-color); 
+   opacity: 1;
+}
+
+.table-head {
+   // Encabezados de tablas
+   font-family: var(--font-worksans-semibold);
+   font-size: 16px/21px;
+}
+
+.table-head-s {
+   // Encabezados de tablas Secundarias
+   font-family: var(--font-helvetica-semibold);
+   font-size: 14px/21px;
+}
+
+.headerTitle {
+   text-align: left;
+   padding-left: 15px;
+   padding-top: 22px;
+   padding-bottom: 22px;
+   font: normal normal bold 16px/23px var(--font-worksans-medium);
+   letter-spacing: 0px;
+   color: var(--primary-dark-blue-text-color);
+   opacity: 1;
+
+   &:hover {
+      color: var(--primary-dark-blue-text-color);
+   }
+}
+
+.tituloSticker {
+   text-align: center;
+   font: normal normal 600 16px/9px var(--font-helvetica-semibold);
+   letter-spacing: 0px;
+   color: var(--primary-dark-blue-text-color);
+   opacity: 1;
+}
+
+/* **************************************************** */
+/* Declaracion de typografias Textos descriptivos - Cuerpo de documentos */
+/* **************************************************** */
+.p-description {
+   // Texto descriptivo de la sección hasta 150 caracteres.
+   font-family: var(--font-helvetica-semibold);
+   color: var(--content-text-color);
+   font-size: x-large;
+}
+
+.body-1 {
+   // Descripción del tramite
+   font: normal normal normal 16px/24px var(--font-worksans-regular);
+   font-size: 1rem;
+   color: var(--content-text-color);
+   line-height: 1.5em !important;
+   opacity: 1;
+}
+
+.body-2 {
+   // Cuerpo del documento
+   font: normal normal normal 14px/21px var(--font-worksans-semibold);
+   font-size: 1rem;
+   color: var(--content-text-color);
+   line-height: 1.5em !important;
+   opacity: 1;
+}
+
+.descripcionSticker {
+   text-align: center;
+   font: normal normal normal 16px/24px var(--font-worksans-regular);
+   letter-spacing: 0px;
+   color: var(--primary-dark-blue-text-color);
+   opacity: 1;
+}
+
+/* **************************************************** */
+/* Declaracion de typografias Botones */
+/* **************************************************** */
+.BOTON-TEXT {
+   // Botón action – MAYUSCULA
+   font-family: var(--font-worksans-medium);
+   font-size: 0.938rem;
+   font-weight: 500; // 16px/22px
+   color: var(--secondary-blue-text-color) !important;
+   line-height: 1.375em !important;
+   text-transform: uppercase;
+   text-decoration: underline !important;
+   cursor: pointer;
+
+   &:hover {
+      color: var(--selected-hover-dark-blue-color) !important;
+   }
+}
+.btn {
+   position: relative !important;
+
+   &.btn-round {
+      border-radius: 30px !important;
+      margin: 0 !important;
+      min-width: 162px;
+      padding: 0.535em 1rem;
+      white-space: pre-line;
+      border: 1.5px solid;
+
+      &.btn-high {
+         // Botón Contenido Activo
+         &:disabled {
+            color: var(--content-text-white-color);
+            pointer-events: none;
+            background-color: var(--background-gray-color) !important;
+            border-color: var(--selected-border-gray-color) !important;
+         }
+         color: var(--content-text-white-color);
+         background-color: var(--background-blue-color);
+
+         &:hover {
+            color: var(--selected-hover-dark-blue-color);
+         }
+
+         &.inactive {
+            color: var(--content-text-white-color);
+            background-color: var(--background-gray-color) !important;
+            border-color: var(--selected-border-gray-color) !important;
+            cursor: default !important;
+         }
+      }
+
+      &.btn-middle {
+         // Botón Border Activo
+         border: 2px solid var(--selected-border-blue-color);
+
+         &:hover {
+            color: var(--selected-hover-dark-blue-color);
+         }
+
+         &.espaced {
+            margin-left: 36px !important;
+         }
+      }
+
+      // &-high {
+
+      // }
+   }
+
+   &.btn-low {
+      // Botón de Texto Activo
+      color: var(--secondary-blue-text-color);
+      vertical-align: baseline;
+
+      &:hover {
+         color: var(--selected-hover-dark-blue-color);
+      }
+
+      &.limpiar {
+         margin-left: 36px !important;
+      }
+   }
+}
+
+/* **************************************************** */
+/* Declaracion de Contenedores */
+/* **************************************************** */
+
+main {
+   display: flex;
+   flex-direction: column;
+   text-align: center;
+   justify-content: space-around;
+}
+
+body {
+   font-family: "lato Regular", Helvetica, sans-serif;
+   font-size: 21px;
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   margin: 0 0;
+   padding: 0 0;
+}
+
+.router-output {
+   position: relative;
+   z-index: -1;
+   top: 0px;
+}
+
+.pageContainer {
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+   // top: 80px;
+   // position: relative;
+   margin-bottom: 84px;
+   display: flex;
+   flex-direction: column;
+}
+
+.col {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+.row {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+   align-items: center;
+}
+.opacidadNegro {
+   background-color: rgba(0, 0, 0, 0.8);
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;
+   padding-right: 0px !important;
+   padding-left: 0px !important;
+   width: 100%;
+   padding-top: 1.5em;
+   padding-bottom: 1.5em;
+   margin-top: 0;
+   align-items: center;
+   color: #e9ebe6;
+   // text-align: left;
+}
+.opacidadNegro p{
+   text-align: center;
+   margin-top: 0px;
+   color: #e9ebe6;
+   padding-left: 2.5em;
+   padding-right: 2.5em;
+}

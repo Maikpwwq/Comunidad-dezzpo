@@ -72,7 +72,7 @@ class Rutas extends React.Component {
                         <Route path="contactenos" element={<Contactenos />} />
                         <Route path="ingreso" element={<Ingreso />} />
                         <Route path="legal" element={<Legal />} />
-                        <Route path="/nosotros" element={<Nosotros />} />
+                        <Route path="nosotros" element={<Nosotros />} />
                         <Route
                             path="nuevo-proyecto"
                             element={<NuevoProyecto />}

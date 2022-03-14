@@ -7,14 +7,6 @@
     width: 100%;
     color: #e9ebe6;
 }
-.opacidadNegro{
-    height: 460px;
-    width: 680px;    
-    padding-top: 0px;
-    text-align: left;
-    padding-left: 0px;
-    align-items: center;
-}
 .pitchPropietarios h1 {
     font-size: 33px;
     margin-top: 0px;
@@ -118,16 +110,3 @@
     padding-top: 400px;
     padding-left: 148px !important;
 }
-/*
-    padding: 3px 6px;
-    margin: 6px 3px;    
-    background-color: #333333;
-    background-color: #e9ebe6;
-    background-color: rgba(0,0,0,0.8);
-    background-color: #009999; 
-    background-color:#1ec7e6;
-    background-color: #13495e; 
-    background-color:#92B901;
-    background-color: #006699;
-    background-color: #deaf06;  
-*/

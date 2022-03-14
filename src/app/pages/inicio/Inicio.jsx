@@ -24,7 +24,7 @@ const Inicio = () => {
                         <div className="slogan">
                             <span className="opacidadNegro">
                                 {' '}
-                                <p>
+                                <p className="p-description">
                                     <strong>
                                         <em>
                                             {' '}
@@ -34,7 +34,10 @@ const Inicio = () => {
                                         </em>
                                     </strong>
                                 </p>{' '}
-                                <h1> Unete a la Comunidad </h1>{' '}
+                                <h3 className=".headline-l titulosVerde">
+                                    {' '}
+                                    Unete a la Comunidad{' '}
+                                </h3>{' '}
                             </span>
                         </div>
                         {/* Formulario nuevo proyecto */}
@@ -46,12 +49,14 @@ const Inicio = () => {
                 <Row className="m-0 w-100">
                     {/* Mensaje del Banner inferior*/}
                     <Col className="mensajeBanner" md={12}>
-                        <p>
+                        <p className="p-description">
                             {' '}
-                            Encuentra aqui un profesional Seguro y<br />
-                            Confiable para cada trabajo. Desde iluminación y
-                            pequeños arreglos, hasta diseños de ingeniería y
-                            remodelaciones remodelaciones completas.{' '}
+                            Encuentra aqui un profesional Seguro y Confiable
+                            para cada trabajo.
+                            <br />
+                            Desde iluminación y pequeños arreglos, hasta diseños
+                            de ingeniería y remodelaciones remodelaciones
+                            completas.{' '}
                         </p>
                     </Col>
                 </Row>
@@ -62,52 +67,58 @@ const Inicio = () => {
                 {/* Seccion de como funciona la comunidad */}
                 <Row id="comoFunciona" className="m-0">
                     <Col className="">
-                        <h1>¿Como funciona nuestra comunidad?</h1>
+                        <h2 className="headline-xl">
+                            ¿Como funciona nuestra comunidad?
+                        </h2>
                         {/* Propietarios */}
                         <div className="comoPropietarios">
-                            <div className="comunidadTitulo">
-                                <h2>PROPIETARIOS</h2>
-                            </div>
-                            <div className="nuevoProyecto">
-                                <p>
+                            <Col className="comunidadTitulo" md={4}>
+                                <h3 className=".headline-l titulosAzul">
+                                    PROPIETARIOS
+                                </h3>
+                            </Col>
+                            <Col className="nuevoProyecto">
+                                <p className="body-1">
                                     1 <br />
                                     Crea una nueva oferta gratis <br />
                                     Describe tu proyecto <br />
                                 </p>
-                            </div>
-                            <div className="seleccionaPerfiles">
-                                <p>
+                            </Col>
+                            <Col className="seleccionaPerfiles">
+                                <p className="body-1">
                                     2 <br />
                                     Selecciona el perfil adecuado y <br />
                                     consigue algunas cotizaciones. <br />
                                     El servicio profesional se pondrá en <br />
                                     contacto con tigo. <br />
                                 </p>
-                            </div>
-                            <div className="calificaServicio">
-                                <p>
+                            </Col>
+                            <Col className="calificaServicio">
+                                <p className="body-1">
                                     3 <br />
                                     Califica y comenta. <br />
                                     Finalizo el proyecto, <br />
                                     Dejanos conocer tu experiencia. <br />
                                 </p>
-                            </div>
+                            </Col>
                         </div>
                         {/* Comerciantes Calificados */}
                         <div className="comoComerciantes">
-                            <div className="comunidadTitulo">
-                                <h2>COMERCIANTES CALIFICADOS</h2>
-                            </div>
-                            <div className="buscarOfertas">
-                                <p>
+                            <Col className="comunidadTitulo" md={4}>
+                                <h3 className=".headline-l titulosAzul">
+                                    COMERCIANTES CALIFICADOS
+                                </h3>
+                            </Col>
+                            <Col className="buscarOfertas">
+                                <p className="body-1">
                                     1 <br />
                                     Busca la oferta indicada para ti. <br />
                                     Filtra los proyectos de los <br />
                                     propietarios y postulate. <br />
                                 </p>
-                            </div>
-                            <div className="cargaPresupuesto">
-                                <p>
+                            </Col>
+                            <Col className="cargaPresupuesto">
+                                <p className="body-1">
                                     2 <br />
                                     Diligencia el presupuesto <br />
                                     Haz una cotizacion detallada con los datos
@@ -117,15 +128,15 @@ const Inicio = () => {
                                     servicio, nos pagaras una comisión por el
                                     servicio prestado <br />
                                 </p>
-                            </div>
-                            <div className="calificaPropietario">
-                                <p>
+                            </Col>
+                            <Col className="calificaPropietario">
+                                <p className="body-1">
                                     3 <br />
                                     Califica y comenta. <br />
                                     Finalizo el proyecto, <br />
                                     Dejanos conocer tu experiencia. <br />
                                 </p>
-                            </div>
+                            </Col>
                         </div>
                     </Col>
                 </Row>

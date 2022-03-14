@@ -11,19 +11,6 @@
     text-align: left;
     padding: 1em;
 }
-.opacidadNegro{    
-    height: 210px;
-    width: 100%;
-    padding-left: 0px;
-    padding-right: 0px;
-    bottom: 0px;
-    font-size: 70px;
-    margin-top: 240px;
-}
-.opacidadNegro p{
-    margin-top: 0px;
-    color: #e9ebe6;
-}
 .ayudaPqrsPreguntas{
     background: #e9ebe6 url(../img/Ayuda&PQRS2.png) no-repeat center; 
     background-attachment: scroll;         

@@ -16,30 +16,33 @@ const ComunidadComerciantes = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="comunidadComerciantesTitulo  m-0 d-flex flex-row justify-content-start">
-                    <Col className="opacidadNegro" md={6}>
-                        <span className="pitchComerciantes">
-                            {' '}
-                            <h2>
-                                ¿TE FALTA GESTIÓN?, DÉJANOS REPRESENTAR <br />
-                                TU TRABAJO GARANTIZAMOS UNA NOTABLE <br />
-                                MEJORA EN INGRESOS Y OPORTUNIDADES DE
-                                CRECIMIENTO{' '}
-                            </h2>
-                        </span>
-                        <p>
-                            {' '}
-                            Propietarios y proyectos listos para contactar,
-                            trabajo cuando lo <br />
-                            necesitas, con cada plan de afiliacion, obtendras al
-                            menos la <br />
-                            misma cantidad de beneficios. Haz que tus clientes{' '}
-                            <br />
-                            potenciales conozcan lo que tienes para ofrecer.
-                        </p>
-                        <span className="blueAlert">
-                            {' '}
-                            Solicita Tu Membresia Ahora{' '}
-                        </span>
+                    <Col className="col-md-4 align-items-start">
+                        <Col className="opacidadNegro">
+                            <span className="pitchComerciantes">
+                                {' '}
+                                <h2 className="headline-xl">
+                                    ¿TE FALTA GESTIÓN?, DÉJANOS REPRESENTAR TU
+                                    <br />
+                                    TRABAJO GARANTIZAMOS UNA NOTABLE MEJORA EN
+                                    <br />
+                                    INGRESOS Y OPORTUNIDADES DE CRECIMIENTO{' '}
+                                </h2>
+                            </span>
+                            <p className="body-2">
+                                {' '}
+                                Propietarios y proyectos listos para contactar,
+                                trabajo cuando lo <br />
+                                necesitas, con cada plan de afiliacion,
+                                obtendras al menos la <br />
+                                misma cantidad de beneficios. Haz que tus
+                                clientes <br />
+                                potenciales conozcan lo que tienes para ofrecer.
+                            </p>
+                            <h3 className=".headline-l titulosVerde">
+                                {' '}
+                                Solicita Tu Membresia Ahora{' '}
+                            </h3>
+                        </Col>
                     </Col>
                 </Row>
             </Container>
@@ -53,7 +56,7 @@ const ComunidadComerciantes = (props) => {
                         <div className="registrateformulario">
                             <form id="formularioRegistro" action="">
                                 <span className="pitchComerciantes">
-                                    <h2>
+                                    <h2 className="headline-xl">
                                         {' '}
                                         COMUNIDAD <br />
                                         COMERCIANTES
@@ -103,7 +106,7 @@ const ComunidadComerciantes = (props) => {
                     >
                         <div className="containerGreen">
                             <span className="pitchComerciantes subrayar">
-                                <h2>Para tu negocio</h2>
+                                <h3 className="headline-l">Para tu negocio</h3>
                             </span>
                             <p>
                                 Encuentra nuevos clientes facilmente y mantente
@@ -113,7 +116,7 @@ const ComunidadComerciantes = (props) => {
                                 diseñado y construido segun tus requerimientos.
                             </p>
                             <span className="pitchComerciantes subrayar">
-                                <h2>Para ti</h2>
+                                <h3 className="headline-l">Para ti</h3>
                             </span>
                             <p>
                                 Aumenta tu influencia con el respaldo de la
@@ -133,7 +136,9 @@ const ComunidadComerciantes = (props) => {
                                 <br />
                             </p>
                             <span className="pitchComerciantes subrayar">
-                                <h2>Invita A Un Amigo</h2>
+                                <h3 className="headline-l">
+                                    Invita A Un Amigo
+                                </h3>
                             </span>
                             <p>
                                 Con el programa de referidos te premiamos por
@@ -155,11 +160,11 @@ const ComunidadComerciantes = (props) => {
                 <Row className="comunidadComerciantesBeneficios2  m-0">
                     <Col md={8}>
                         <span className="pitchComerciantes">
-                            <h1>
+                            <h2 className="headline-xl">
                                 El plan de beneficios con la membresía incluye
-                            </h1>
+                            </h2>
                         </span>
-                        <p>
+                        <p className="body-2">
                             Nosotros creamos los anuncios de contenido así que
                             no tendras que preocuparte de hacerlo.
                             <br />
@@ -174,18 +179,18 @@ const ComunidadComerciantes = (props) => {
                             <br />
                         </p>
                         <span className="pitchComerciantes">
-                            <h1>
+                            <h3 className="headline-l">
                                 ¿Cuáles son las grandes ventajas de hacer
                                 publicidad en Internet?
-                            </h1>
+                            </h3>
                         </span>
                         <ul>
                             <span className="pitchComerciantes">
-                                <h2>
+                                <p className="body-2">
                                     Alcance y visibilidad. <br />
-                                </h2>
+                                </p>
                             </span>
-                            <li>
+                            <li className="body-1">
                                 Hay personas que te estan buscando y aún no
                                 saben que existes. <br />
                                 Promociona las 24 horas del día y los 365 días
@@ -195,12 +200,12 @@ const ComunidadComerciantes = (props) => {
                             </li>
                             <br />
                             <span className="pitchComerciantes">
-                                <h2>
+                                <p className="body-2">
                                     Audiencia calificada y segmentada.
                                     <br />
-                                </h2>
+                                </p>
                             </span>
-                            <li>
+                            <li className="body-1">
                                 Alcance sus objetivos de crecimiento, nuestro
                                 público cautivo
                                 <br />
@@ -211,11 +216,11 @@ const ComunidadComerciantes = (props) => {
                             </li>
                             <br />
                             <span className="pitchComerciantes">
-                                <h2>
+                                <p className="body-2">
                                     Mejora la penetración de tu marca. <br />
-                                </h2>
+                                </p>
                             </span>
-                            <li>
+                            <li className="body-1">
                                 Posiciónese en el mercado digital, fideliza
                                 clientes y captura ventas, <br />
                                 Publica generando reconociendo de marca por
@@ -223,12 +228,12 @@ const ComunidadComerciantes = (props) => {
                             </li>
                             <br />
                             <span className="pitchComerciantes">
-                                <h2>
+                                <p className="body-2">
                                     Mide el rendimiento de tus anuncios.
                                     <br />
-                                </h2>
+                                </p>
                             </span>
-                            <li>
+                            <li className="body-1">
                                 Adopta herramientas de gestión estratégica CEO,
                                 tendrás un Informe de <br />
                                 resultados en tiempo real, con el cual

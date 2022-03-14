@@ -38,14 +38,6 @@
         padding: 0px 33px 0px 33px;
         color: white;
     }
-    .slogan h1{
-        color: #009999;
-    }
-    .opacidadNegro{
-        height: 330px !important;
-        width: 480px;
-        padding-left: 50px;
-    }
     .mensajeBanner{
         display: flex;
         flex-direction: column;
@@ -106,7 +98,6 @@
         color: white;
     }
     #comoFunciona .comunidadTitulo{
-        color: #1ec7e6;
         width: 33%;
         text-align: center;
     }

@@ -13,17 +13,20 @@ const AyudaPQRS = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="ayudaPqrsTitulo m-0 w-100 d-flex flex-row justify-content-start">
-                    <Col md={6}>
-                        <span className="tituloPregunta">
-                            <h1>¿Qué tipo de profesional necesitas?</h1>
-                        </span>
-                        <div className="opacidadNegro">
-                            <p>
+                    <Col className="col-md-4 align-items-start">
+                        <Col className="opacidadNegro">
+                            <span className="tituloPregunta">
+                                <h2 className="headline-xl">
+                                    ¿Qué tipo de profesional necesitas?
+                                </h2>
+                            </span>
+
+                            <p className="p-description">
                                 ¿De qué manera podemos ayudarte?
                                 <br />
                                 Preguntas frecuentes
                             </p>
-                        </div>
+                        </Col>
                     </Col>
                 </Row>
             </Container>
@@ -31,9 +34,9 @@ const AyudaPQRS = (props) => {
                 <Row className="ayudaPqrsPreguntas m-0 w-100">
                     <Col className="col">
                         <span className="tituloSinMargen">
-                            <h3>Propietarios FAQ’s</h3>
+                            <h3 className="headline-l">Propietarios FAQ’s</h3>
                         </span>
-                        <ul>
+                        <ul className="body-1">
                             <li>
                                 <a href="#">Adquirir servicios</a>
                             </li>
@@ -45,9 +48,11 @@ const AyudaPQRS = (props) => {
                             </li>
                         </ul>
                         <span className="tituloSinMargen">
-                            <h3>Comerciantes calificados FAQ’s</h3>
+                            <h3 className="headline-l">
+                                Comerciantes calificados FAQ’s
+                            </h3>
                         </span>
-                        <ul>
+                        <ul className="body-1">
                             <li>
                                 <a href="#">Ofrecer servicios </a>
                             </li>
@@ -78,9 +83,11 @@ const AyudaPQRS = (props) => {
                             </li>
                         </ul>
                         <span className="tituloSinMargen">
-                            <h3>Y aquí, más todas las preguntas frecuentes</h3>
+                            <h3 className="headline-l">
+                                Y aquí, más todas las preguntas frecuentes
+                            </h3>
                         </span>
-                        <ul>
+                        <ul className="body-1">
                             <li>
                                 <a href="#">
                                     ¿Cómo actualizo mi perfil en dezzpo?
@@ -122,9 +129,9 @@ const AyudaPQRS = (props) => {
                     </Col>
                     <Col className="col2 justify-content-start">
                         <span className="tituloSinMargen">
-                            <h3>Servicio al Cliente</h3>
+                            <h3 className="headline-l">Servicio al Cliente</h3>
                         </span>
-                        <p>
+                        <p className="body-1">
                             Si no estas seguro como la comunidad funciona,
                             <br />
                             o tienes una pregunta que no halla sido resuelta
