@@ -14,7 +14,7 @@ const NuestraComunidad = (props) => {
     return (
         <>
             <Container fluid className="p-0">
-                <Col id="popularCategorias" className="m-0 p-0">
+                <Col id="popularCategorias" className="m-4 p-4">
                     <Col className="w-80">
                         <h2 className="headline-xl"> NUESTRA COMUNIDAD </h2>
                         <p className="body-1">
@@ -29,12 +29,12 @@ const NuestraComunidad = (props) => {
                             maxWidth="900"
                         />
                     </Col>
-                    <Col className="categoriasPopulares">
+                    <Col className="categoriasPopulares mt-4 p-4">
                         <h3 className=".headline-l">
                             {' '}
                             o encuentralos dentro de las categorías populares:
                         </h3>
-                        <ul className="body-2">
+                        <ul className="body-2 textBlanco pt-4">
                             <li>
                                 Pintor y decorador, Pintura y decoracion de
                                 interiores{' '}
@@ -59,35 +59,41 @@ const NuestraComunidad = (props) => {
             <Container fluid className="p-0">
                 {/* seccion de comerciantes Locales*/}
                 <Row id="comerciantesLocales" className="m-0">
-                    <Col>
-                        <div className="localCiudades">
-                            <h2 className="headline-xl">
-                                Busca en tu ciudad comerciantes calificados
-                            </h2>
-                            <div className="ciudades">
-                                <ul className="body-2">
+                    <Col className="col-12">
+                        <h2 className="headline-xl textBlanco">
+                            Busca en tu ciudad comerciantes calificados
+                        </h2>
+                        <Row className="ciudades p-0 col-12">
+                            <Col className="" md={3} sm={12}>
+                                <ul className="body-2 align-items-center">
                                     <li>Bogota</li>
                                     <li>Medellin</li>
                                     <li>Cali</li>
                                 </ul>
-                                <ul className="body-2">
+                            </Col>
+                            <Col className="" md={3} sm={12}>
+                                <ul className="body-2 align-items-center">
                                     <li>Villavicencio</li>
                                     <li>Chia</li>
                                     <li>Cota</li>
                                 </ul>
-                                <ul className="body-2">
+                            </Col>
+                            <Col className="" md={3} sm={12}>
+                                <ul className="body-2 align-items-center">
                                     <li>Funza</li>
                                     <li>Mosquera</li>
                                     <li>Zipaquira</li>
                                 </ul>
-                            </div>
-                            <img
-                                src={LocalCiudades}
-                                alt="Busca Comerciantes Locales"
-                                height="121px"
-                                width="500px"
-                            />
-                        </div>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col className="" lg={6} md={6} sm={12}>
+                        <img
+                            src={LocalCiudades}
+                            alt="Busca Comerciantes Locales"
+                            height="auto"
+                            width="100%"
+                        />
                     </Col>
                 </Row>
             </Container>

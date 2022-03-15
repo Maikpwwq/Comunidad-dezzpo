@@ -6,14 +6,20 @@ $theme-colors: ();
 /* then import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
 
-.titulosVerde{
-   color: var(--primary-green-text-color);
+.textVerde {
+   color: var(--primary-green-text-color) !important;
 }
-.titulosAzul{
-   color: var(--primary-blue-light-color);
+.textAzul {
+   color: var(--primary-blue-light-color) !important;
 }
-.titulosBlanco{
-   color: var(--primary-light-gray-text-color);
+.textBlanco {
+   color: var(--primary-light-gray-text-color) !important;
+}
+.textBlack{
+   color: var(--primary-black-text-color) !important;
+}
+.fondoCafe {
+   background-color: var(--background-light-gray-color) !important;
 }
 /* **************************************************** */
 /* Declaracion de typografias Titulos - Subtitulos - Encabezados */
@@ -32,7 +38,7 @@ $theme-colors: ();
    font-family: var(--font-helvetica-semibold);
    font-size: 40px/48px;
    font-weight: 600;
-   color: var(--primary-dark-blue-text-color);
+   color: var(---primary-black-text-color);
 }
 //h2
 .headline-xl {
@@ -40,7 +46,7 @@ $theme-colors: ();
    font-family: var(--font-helvetica-semibold);
    font-size: 2rem; // 32px/46px
    font-weight: 600;
-   color: var(--primary-dark-blue-text-color);
+   color: var(--primary-black-text-color);
    line-height: 1.5em !important;
 }
 //h3
@@ -49,7 +55,7 @@ $theme-colors: ();
    font-family: var(--font-helvetica-semibold);
    font-size: 1.5rem; // 24px/26px
    font-weight: 600;
-   color: var(--primary-dark-blue-text-color);
+   color: var(--primary-black-text-color);
    line-height: 1.25em !important;
 }
 
@@ -58,7 +64,7 @@ $theme-colors: ();
    font-family: var(--font-helvetica-semibold);
    font-size: 20px; // 20px/30px
    font-weight: 600;
-   color: var(--primary-dark-blue-text-color);
+   color: var(--primary-black-text-color);
    line-height: 30px !important;
 }
 
@@ -67,7 +73,7 @@ $theme-colors: ();
    font-family: var(--font-helvetica-medium);
    font-size: 1.125rem; // 18px/27px
    font-weight: 600;
-   color: var(--primary-dark-blue-text-color);
+   color: var(--primary-black-text-color);
    line-height: 1.25em !important;
 }
 
@@ -76,7 +82,7 @@ $theme-colors: ();
    font-family: var(--font-helvetica-semibold);
    font-size: 1.125rem; // 16px/24px
    font-weight: 600;
-   color: var(--primary-dark-blue-text-color);
+   color: var(--primary-black-text-color);
    line-height: 1.25em !important;
 }
 
@@ -85,7 +91,7 @@ $theme-colors: ();
    font-family: var(--font-helvetica-semibold);
    font-size: 1.125rem; // 18px/27px
    font-weight: 600;
-   color: var(--primary-dark-blue-text-color);
+   color: var(--primary-black-text-color);
    line-height: 1.25em !important;
 }
 
@@ -104,7 +110,7 @@ $theme-colors: ();
    text-align: left;
    font: normal normal normal 24px/36px var(--font-helvetica-semibold);
    letter-spacing: 0px;
-   color: var(--primary-dark-blue-text-color); 
+   color: var(--primary-black-text-color);
    opacity: 1;
 }
 
@@ -127,11 +133,11 @@ $theme-colors: ();
    padding-bottom: 22px;
    font: normal normal bold 16px/23px var(--font-worksans-medium);
    letter-spacing: 0px;
-   color: var(--primary-dark-blue-text-color);
+   color: var(--primary-black-text-color);
    opacity: 1;
 
    &:hover {
-      color: var(--primary-dark-blue-text-color);
+      color: var(--primary-black-text-color);
    }
 }
 
@@ -139,7 +145,7 @@ $theme-colors: ();
    text-align: center;
    font: normal normal 600 16px/9px var(--font-helvetica-semibold);
    letter-spacing: 0px;
-   color: var(--primary-dark-blue-text-color);
+   color: var(--primary-black-text-color);
    opacity: 1;
 }
 
@@ -274,7 +280,6 @@ main {
    text-align: center;
    justify-content: space-around;
 }
-
 body {
    font-family: "lato Regular", Helvetica, sans-serif;
    font-size: 21px;
@@ -285,13 +290,11 @@ body {
    padding: 0 0;
    position: relative;
 }
-
 .router-output {
    position: relative;
    z-index: -1;
    top: 0px;
 }
-
 .pageContainer {
    width: 100%;
    margin-left: auto;
@@ -302,12 +305,37 @@ body {
    display: flex;
    flex-direction: column;
 }
-
+.left {
+   float: left;
+   align-items: flex-start;
+}
+.right {
+   float: right;
+   align-items: flex-end;
+}
+.center{
+   text-align: center;
+   align-items: center;
+}
 .col {
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
+}
+.col ul a{
+   color:  var(--primary-light-gray-text-color);  
+   text-decoration: none;
+}
+.col ul a:link{
+   color:  var(--primary-light-gray-text-color);  
+}
+.col ul a:visited{
+   color:  var(--primary-light-gray-text-color);  
+}
+.col ul a:hover{    
+   text-decoration: underline;   
+   color:  var(--primary-light-gray-text-color);   
 }
 .row {
    display: flex;
@@ -315,11 +343,32 @@ body {
    justify-content: space-around;
    align-items: center;
 }
-.left{
-   float: left;
+.row ul{
+   list-style: none;
+   width: 90%;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: flex-start;
+   padding-left: 60px;
+   text-align: left;
+   color: #1ec7e6;
+   padding: 3px 6px;
+   margin: 6px 3px;
 }
-.right{
-   float: right;
+.row a{
+   color:  var(--primary-light-gray-text-color);  
+   text-decoration: none;
+}
+.row a:link{
+   color:  var(--primary-light-gray-text-color);  
+}
+.row a:visited{
+   color:  var(--primary-light-gray-text-color);  
+}
+.row a:hover{    
+   text-decoration: underline;   
+   color:  var(--primary-light-gray-text-color);  
 }
 .opacidadNegro {
    background-color: rgba(0, 0, 0, 0.8);
@@ -336,10 +385,22 @@ body {
    color: #e9ebe6;
    // text-align: left;
 }
-.opacidadNegro p{
+.opacidadNegro p {
    text-align: center;
    margin-top: 0px;
    color: #e9ebe6;
    padding-left: 2.5em;
    padding-right: 2.5em;
+}
+.opacidadBlaco{
+   background-color: rgba(233, 235, 230, 0.8);
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;  
+   height: 300px;
+   width: 480px;
+   font-size: 21px;
+   text-align: center;
+   padding-left: 0px;
+   align-items: center;
 }

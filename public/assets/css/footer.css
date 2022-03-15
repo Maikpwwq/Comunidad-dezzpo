@@ -63,12 +63,6 @@
     margin-top: -15px;
     justify-content: space-evenly;
 }
-.datosContacto{
-    display: flex;
-    flex-direction: column;
-    width: 42%;
-    margin-top: -15px;
-}
 .listaFooter{
     margin-top: -21px;
     text-align: justify;

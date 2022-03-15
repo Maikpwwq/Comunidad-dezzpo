@@ -4,6 +4,8 @@ import '../../../../public/assets/css/footer.css'
 //import '../../../../public/assets/css/iconmoon/style.css';
 import { Link, Redirect } from 'react-router-dom'
 
+import DatosContacto from '../datos_contacto/DatosContacto'
+
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -81,7 +83,10 @@ const FooterComunidad = (props) => {
                             </Col>
                             {/* siguenos en redes */}
                             <Col className="siguenosRedes pt-0">
-                                <h2 className="headline-xl"> SIGUENOS </h2>
+                                <h2 className="headline-xl textBlanco">
+                                    {' '}
+                                    SIGUENOS{' '}
+                                </h2>
                                 <ul className="listaFooter w-100 body-1">
                                     {/* siguenos Instagram */}
                                     <li className="w-50 d-flex align-items-center">
@@ -175,60 +180,11 @@ const FooterComunidad = (props) => {
                                 </ul>
                             </Col>
                             {/* Datos de contacto comunidad dezzpo */}
-                            <Col className="datosContacto pt-0">
-                                <h2 className="headline-xl">
-                                    {' '}
-                                    Ponte en Contacto{' '}
-                                </h2>
-                                <ul className="listaFooter pt-3 w-100">
-                                    <Row className="m-0 w-100 d-flex">
-                                        <span
-                                            className="icon-DireccionDomicilioIcono"
-                                            style={{ width: 'auto' }}
-                                        ></span>
-                                        <Col className="m-0 p-0 body-1">
-                                            <li>
-                                                {' '}
-                                                Dirección Cll 159 No. 8c-45{' '}
-                                            </li>
-                                            <li> Piso 5 </li>
-                                        </Col>
-                                    </Row>
-                                    <Row className="m-0 w-100 d-flex">
-                                        <span
-                                            className="icon-TelefonoContactoIcono"
-                                            style={{ width: 'auto' }}
-                                        ></span>
-                                        <Col className="m-0 p-0 body-1">
-                                            <li> +57 3196138057 - Office </li>
-                                            <li> +57 3196138057 - PBX </li>
-                                        </Col>
-                                    </Row>
-                                    <Row className="m-0 w-100 d-flex">
-                                        <span
-                                            className="icon-EmailIcono"
-                                            style={{
-                                                width: 'auto',
-                                            }}
-                                        ></span>
-                                        <Col className="m-0 p-0 body-1">
-                                            <li>
-                                                <a
-                                                    href="mailto:comunidad.dezzpo@gmail.com"
-                                                    title="Correo Comunidad Dezzpo"
-                                                >
-                                                    {' '}
-                                                    comunidad.dezzpo@gmail.com{' '}
-                                                </a>
-                                            </li>
-                                        </Col>
-                                    </Row>
-                                </ul>
-                            </Col>
+                            <DatosContacto></DatosContacto>
                         </Row>
                         {/* parte inferior*/}
                         <Row className="footerInferior pt-3 w-100">
-                            <p className="p-description">
+                            <p className="p-description textBlanco">
                                 {' '}
                                 © 2021 - Todos los derechos reservados -
                                 COMUNIDAD DEZZPO INC.{' '}

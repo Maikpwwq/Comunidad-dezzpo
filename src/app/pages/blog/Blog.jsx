@@ -22,23 +22,21 @@ const Blog = (props) => {
             <Container fluid className="p-0">
                 <Row className="blogTitulo m-0 w-100">
                     <Col>
-                        <span className="mainTitulo">
-                            {' '}
-                            <h2 className="headline-xl">BLOG</h2>{' '}
-                        </span>
+                        {' '}
+                        <h2 className="headline-xl textBlanco">BLOG</h2>{' '}
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
                 <Row className="testimonioPropietarios m-0 w-100">
-                    <Col className="mainCol">
-                        <Col>
-                            <span className="testimoniosTitulo">
-                                <p>Testimonios de Propietarios</p>
-                            </span>
+                    <Col className="mt-4 mb-4">
+                        <Col className="">
+                            <h3 className="headline-l">
+                                Testimonios de Propietarios
+                            </h3>
                         </Col>
                         <Container fluid className="p-0">
-                            <Row className="experienciasContainer">
+                            <Row className="">
                                 <Col>
                                     <span> usuario: </span>
                                     <div>
@@ -69,7 +67,7 @@ const Blog = (props) => {
                             </Row>
                         </Container>
                         <Container fluid className="p-0">
-                            <Row>
+                            <Row className="">
                                 <Col>
                                     <span> usuario: </span>
                                     <div>
@@ -101,7 +99,7 @@ const Blog = (props) => {
                             </Row>
                         </Container>
                         <Container fluid className="p-0">
-                            <Row>
+                            <Row className="">
                                 <Col>
                                     <span> usuario: </span>
                                     <div>

@@ -22,7 +22,7 @@ const ComunidadComerciantes = (props) => {
                         <Col className="opacidadNegro">
                             <span className="pitchComerciantes">
                                 {' '}
-                                <h2 className="headline-xl">
+                                <h2 className="headline-xl textBlanco">
                                     ¿TE FALTA GESTIÓN?, DÉJANOS REPRESENTAR TU
                                     TRABAJO GARANTIZAMOS UNA NOTABLE MEJORA EN
                                     INGRESOS Y OPORTUNIDADES DE CRECIMIENTO{' '}
@@ -36,7 +36,7 @@ const ComunidadComerciantes = (props) => {
                                 de beneficios. Haz que tus clientes potenciales
                                 conozcan lo que tienes para ofrecer.
                             </p>
-                            <h3 className=".headline-l titulosVerde">
+                            <h3 className=".headline-l textVerde">
                                 {' '}
                                 Solicita Tu Membresia Ahora{' '}
                             </h3>
@@ -52,7 +52,7 @@ const ComunidadComerciantes = (props) => {
                             className="pitchComerciantes"
                             style={{ 'padding-left': '0px' }}
                         >
-                            <h2 className="headline-xl titulosBlanco">
+                            <h2 className="headline-xl textBlanco">
                                 {' '}
                                 COMUNIDAD COMERCIANTES
                             </h2>
@@ -73,7 +73,9 @@ const ComunidadComerciantes = (props) => {
                     >
                         <div className="containerGreen">
                             <span className="pitchComerciantes subrayar">
-                                <h3 className="headline-l">Para tu negocio</h3>
+                                <h3 className="headline-l textBlanco">
+                                    Para tu negocio
+                                </h3>
                             </span>
                             <p>
                                 Encuentra nuevos clientes facilmente y mantente
@@ -83,7 +85,9 @@ const ComunidadComerciantes = (props) => {
                                 diseñado y construido segun tus requerimientos.
                             </p>
                             <span className="pitchComerciantes subrayar">
-                                <h3 className="headline-l">Para ti</h3>
+                                <h3 className="headline-l textBlanco">
+                                    Para ti
+                                </h3>
                             </span>
                             <p>
                                 Aumenta tu influencia con el respaldo de la
@@ -103,7 +107,7 @@ const ComunidadComerciantes = (props) => {
                                 <br />
                             </p>
                             <span className="pitchComerciantes subrayar">
-                                <h3 className="headline-l">
+                                <h3 className="headline-l textBlanco">
                                     Invita A Un Amigo
                                 </h3>
                             </span>
@@ -113,7 +117,6 @@ const ComunidadComerciantes = (props) => {
                                 Transformación digital inmobiliaria.
                                 <br />
                                 Invita tus amigos a que se registren al programa{' '}
-                                <br />
                                 compartiendo tu código único, envía el{' '}
                                 <strong>Link</strong> a tus contactos, acumula
                                 puntos, obtén descuentos y llévate premios.

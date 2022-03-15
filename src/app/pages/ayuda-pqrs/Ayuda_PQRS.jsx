@@ -13,26 +13,28 @@ const AyudaPQRS = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="ayudaPqrsTitulo m-0 w-100 d-flex flex-row justify-content-start">
-                    <Col className="col-md-4 align-items-start">
-                        <Col className="opacidadNegro">
-                            <span className="tituloPregunta">
-                                <h2 className="headline-xl">
-                                    ¿Qué tipo de profesional necesitas?
-                                </h2>
-                            </span>
-
+                    <Col
+                        className="align-items-start m-4"
+                        lg={4}
+                        md={6}
+                        sm={10}
+                    >
+                        <Col className="opacidadNegro center">
+                            <h2 className="headline-xl textBlanco">
+                                ¿Qué tipo de profesional necesitas?
+                            </h2>
                             <p className="p-description">
                                 ¿De qué manera podemos ayudarte?
                                 <br />
-                                Preguntas frecuentes
+                                Preguntas frecuentes.
                             </p>
                         </Col>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="ayudaPqrsPreguntas m-0 w-100">
-                    <Col className="col">
+                <Row className="ayudaPqrsPreguntas m-0 w-100 align-items-baseline">
+                    <Col className="col" lg={6} sm={12}>
                         <span className="tituloSinMargen">
                             <h3 className="headline-l">Propietarios FAQ’s</h3>
                         </span>
@@ -127,7 +129,12 @@ const AyudaPQRS = (props) => {
                             </li>
                         </ul>
                     </Col>
-                    <Col className="col2 justify-content-start">
+                    <Col
+                        className="col justify-content-start"
+                        lg={6}
+                        sm={12}
+                        xs={12}
+                    >
                         <span className="tituloSinMargen">
                             <h3 className="headline-l">Servicio al Cliente</h3>
                         </span>
@@ -143,13 +150,13 @@ const AyudaPQRS = (props) => {
                             respondiendo a tus mensajes de lunes a viernes
                             <br />
                         </p>
-                        <span>
+                        <p className="p-description">
                             RESUELVE TUS DUDAS
                             <br />
                             COMUNÍCATE CON
                             <br />
                             UN ASESOR
-                        </span>
+                        </p>
                         <br />
                         <button className="">CHAT EN VIVO</button>
                     </Col>

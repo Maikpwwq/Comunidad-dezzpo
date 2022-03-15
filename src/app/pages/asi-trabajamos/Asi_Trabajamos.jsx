@@ -15,7 +15,7 @@ const AsiTrabajamos = (props) => {
             </div>
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosChat m-0 w-100 d-flex justify-content-end">
-                    <Col className="d-flex colRight" md={6}>
+                    <Col className="col d-flex" md={6} sm={12}>
                         <span className="chatAsesor headline-xl">
                             Contacta Con Un Asesor
                             <br />
@@ -30,7 +30,7 @@ const AsiTrabajamos = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosVinculate m-0 w-100 d-flex justify-content-end">
-                    <Col className="d-flex colRight2" md={4}>
+                    <Col className="col d-flex" lg={4} md={8} sm={12}>
                         <span className="headline-xl">
                             {' '}
                             PERFIL COMERCIANTE{' '}
@@ -43,23 +43,15 @@ const AsiTrabajamos = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosPropietario m-0 w-100 d-flex justify-content-end">
-                    <Col className="d-flex colRight3" md={6}>
-                        <span>
-                            <h2 className="headline-xl">PROPIETARIO</h2>
-                        </span>
-                        <p className="p-description">
+                    <Col className="col d-flex" md={6} sm={12}>
+                        <h2 className="headline-xl textBlanco">PROPIETARIO</h2>
+                        <p className="body-2 m-4 textBlanco">
                             SOMOS UNA COMUNIDAD DE COMERCIANTES PROFESIONALES,
-                            <br />
                             CONTRATA PERSONAL CALIFICADO MANTENIMIENTO GENERAL
-                            <br />
                             RESIDENCIAL Y DE PROPIEDAD HORIZONTAL, CONSULTA
-                            <br />
                             PÚBLICAMENTE LOS PERFILES Y LA REPUTACIÓN DE LOS
-                            <br />
                             PRESTADORES DE SERVICIOS. AHORA TUS PROYECTOS Y
-                            <br />
                             REMODELACIONES MÁS RÁPIDO Y SIMPLE QUE NUNCA
-                            <br />
                         </p>
                     </Col>
                 </Row>
@@ -70,14 +62,17 @@ const AsiTrabajamos = (props) => {
                         className="d-flex flex-column align-items-center"
                         md={12}
                     >
-                        <Col className="colCenter m-0 w-75 d-flex flex-column align-items-end justify-content-end">
-                            <span className="certificacion-titulo headline-xl">
+                        <Col className="pt-4 p-0 pb-4 w-75 d-flex flex-column align-items-end justify-content-end">
+                            <span
+                                className="pt-4 p-0 pb-4 textBlanco certificacion-titulo headline-xl"
+                                style={{ 'min-height': '6em' }}
+                            >
                                 {' '}
                                 CERTIFICACIÓN{' '}
                             </span>
                         </Col>
-                        <Col className="m-0 w-100 d-flex flex-column align-items-start">
-                            <p className="whiteP mb-4 body-1">
+                        <Col className="p-0 w-100 d-flex flex-column align-items-start">
+                            <p className="textBlanco m-4 p-4 body-1">
                                 Aumente sus posibilidades laborales, pregunta a
                                 nuestro equipo por nuestra insignia
                                 <br />
@@ -88,7 +83,7 @@ const AsiTrabajamos = (props) => {
                                 de mayor complejidad
                                 <br />
                             </p>
-                            <p className="pb-4 body-1">
+                            <p className="m-4 p-4 body-1">
                                 Juntos programamos una visita de inspección para
                                 validarentre otras cosas,
                                 <br />
@@ -105,11 +100,13 @@ const AsiTrabajamos = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosCalificaciones m-0 w-100 d-flex flex-column align-items-end justify-content-end">
-                    <Col className="colRight3 w-50">
+                    <Col className="fondoCafe" lg={6} md={6} sm={12}>
                         <span>
-                            <h2 className="headline-xl">CALIFICACIONES</h2>
+                            <h2 className="headline-xl textBlanco">
+                                CALIFICACIONES
+                            </h2>
                         </span>
-                        <p className="LeftP body-1">
+                        <p className="body-1 textBlanco">
                             La valoración debe darse con base en los
                             <br />
                             siguientes tres aspectos:
@@ -117,7 +114,7 @@ const AsiTrabajamos = (props) => {
                             Oportunidad
                             <br />
                             <br />
-                            <ul>
+                            <ul className="ps-0">
                                 <li>
                                     Estado de observaciones generales y
                                     evaluacion del desempeño:

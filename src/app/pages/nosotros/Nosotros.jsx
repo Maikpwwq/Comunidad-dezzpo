@@ -17,42 +17,39 @@ const Nosotros = (props) => {
                 <Row className="nosotrosHistoria pageContainer m-0 justify-content-end">
                     <Col className="col-md-4 align-items-end">
                         <div className="opacidadNegro">
-                            <span className="pitchPropietarios">
-                                {' '}
-                                <h2
-                                    className="headline-xl"
-                                    style={{ color: '#e9ebe6' }}
-                                >
-                                    HISTORIA
-                                </h2>{' '}
-                            </span>
+                            <h2
+                                className="headline-xl"
+                                style={{ color: '#e9ebe6' }}
+                            >
+                                HISTORIA
+                            </h2>
                             <p className="body-2">
                                 La Comunidad Dezzpo Inc, un Marketplace de{' '}
-                                <br />
                                 servicios publicitarios, para contratistas de{' '}
-                                <br />
-                                mantenimiento inmobiliario. Aquí estamos <br />
-                                cambiando la forma de contratar, comerciantes{' '}
-                                <br />
-                                locales de reformas, maestros de construcción e
-                                <br />
-                                instaladores independientes de acabados. <br />
-                                Consulta públicamente los perfiles y la <br />
+                                mantenimiento inmobiliario.
+                                <br /> Aquí estamos cambiando la forma de
+                                contratar, comerciantes locales de reformas,
+                                maestros de construcción e instaladores
+                                independientes de acabados. <br />
+                                Consulta públicamente los perfiles y la
                                 reputación de los prestadores de servicios, tus
-                                proyectos <br /> y adecuaciones nunca han sido
-                                mejor asistidos. <br />
+                                proyectos y adecuaciones nunca han sido mejor
+                                asistidos. <br />
                             </p>
                         </div>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="nosotrosMisionVision m-0">
+                <Row
+                    className="nosotrosMisionVision m-0"
+                    id="Acerca-de-nosotros"
+                >
                     <Col
                         className="d-flex flex-column align-items-center"
-                        md={12}
+                        md={10}
                     >
-                        <Row className="right w-100 m-0 d-flex flex-row justify-content-end align-content-start">
+                        <Row className="right w-100 m-4 d-flex flex-row justify-content-end align-content-start">
                             <Col
                                 md={6}
                                 className="d-flex flex-row justify-content-start"
@@ -62,7 +59,7 @@ const Nosotros = (props) => {
                                 </span>
                             </Col>
                             <Col md={6}>
-                                <p className="body-2">
+                                <p className="body-2 textBlanco">
                                     Trabajamos para las personas, destacándonos
                                     por la calidad del servicio al cliente, el
                                     crecimiento continuo del ser y la gestión
@@ -76,9 +73,9 @@ const Nosotros = (props) => {
                                 </p>
                             </Col>
                         </Row>
-                        <Row className="left w-100 m-0 d-flex flex-row justify-content-start">
+                        <Row className="left w-100 m-4 d-flex flex-row justify-content-start">
                             <Col md={6}>
-                                <p className="body-2">
+                                <p className="body-2 textBlanco">
                                     Dezzpo será en 2020 una marca colombiana
                                     posicionada, referente de consulta para la
                                     gestión en proyectos de mantenimiento,
@@ -130,23 +127,20 @@ const Nosotros = (props) => {
             <Container fluid className="p-0">
                 <Row className="nosotrosEtica m-0">
                     <Col
+                        lg={6}
                         md={6}
-                        className="w-50 ps-4 d-flex justify-content-center"
+                        sm={12}
+                        className="m-4 ps-4 d-flex justify-content-center"
                     >
                         <div className="left w-100 ps-4">
-                            <span className="pitchPropietarios">
-                                <h2
-                                    className="headline-xl"
-                                    style={{ color: '#e9ebe6' }}
-                                >
-                                    VALORES Y PRINCIPIOS
-                                </h2>
-                            </span>
+                            <h2 className="headline-xl textBlanco">
+                                VALORES Y PRINCIPIOS
+                            </h2>
                         </div>
                     </Col>
-                    <Col md={6} className="w-50">
+                    <Col lg={6} md={6} sm={12} className="m-4 ps-4">
                         <div className="right w-100">
-                            <ul className="p-description">
+                            <ul className="p-description textBlanco">
                                 <li>Disiplina </li>
                                 <li>Eficiencia </li>
                                 <li>Empatia y humanismo </li>
@@ -159,7 +153,7 @@ const Nosotros = (props) => {
                     </Col>
                 </Row>
             </Container>
-            <Container fluid className="p-0">
+            <Container fluid className="p-0" id="eqipo-dezzpo">
                 <Row className="nosotrosEquipo m-0">
                     <Col className="md-12 m-0">
                         <Col>
@@ -185,19 +179,16 @@ const Nosotros = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="nosotrosHitos m-0">
-                    <Col>
-                        <Col>
-                            <div className="left">
-                                <span className="pitchPropietarios">
-                                    {' '}
-                                    <h2 className="headline-xl">
-                                        ROAD MAP <br /> HITOS
-                                    </h2>
-                                </span>
-                            </div>
-                            <img src={RoadMap} alt="ROAD MAP" />
+                    <Col className="p-0">
+                        <Col className="p-0 w-100">
+                            <h2 className="headline-xl">
+                                ROAD MAP <br /> HITOS
+                            </h2>
+                            <Row className="w-100">
+                                <img src={RoadMap} alt="ROAD MAP" />
+                            </Row>
                         </Col>
-                        <Col>
+                        <Col className="">
                             <p className="p-description">
                                 Pronto estaremos disponibles en <br />
                                 <li>

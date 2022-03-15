@@ -11,7 +11,7 @@ const CategoriasServicios = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row id="categoriasServicios" className="m-0">
-                    <Col className="col-12 w-80">
+                    <Col className="col-12 w-80 m-4 p-4">
                         <div className="tituloServicios">
                             <h2 className="headline-xl">
                                 Nuestro comerciantes y servicios

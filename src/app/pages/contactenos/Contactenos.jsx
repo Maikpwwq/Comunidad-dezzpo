@@ -6,6 +6,10 @@ import '../../../../public/assets/css/contactenos.css'
 // Imagenes
 import ContactenosFranja from '../../../../public/assets/img/ContactenosFranja.png'
 import LogoPNG from '../../../../public/assets/img/LogoPNG.png'
+import SelectorContactenos from '../../../../public/assets/img/SelectorContactenos.png'
+
+//
+import DatosContacto from '../../components/datos_contacto/DatosContacto'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -17,24 +21,24 @@ const Contactenos = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="m-0 w-100">
-                    <Col className="contactenosTitulo">
-                        <span className="mainTitulo">
+                    <Col className="m-4">
+                        <h2 className="mainTitulo headline-xl textVerde">
                             {' '}
-                            <h1> CONTÁCTENOS </h1>
-                        </span>
+                            CONTÁCTENOS{' '}
+                        </h2>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
                 <Row className="contactenosMensaje row m-0 w-100">
-                    <Col className="col">
+                    <Col className="" lg={4} md={6} sm={10}>
                         <img
                             src={ContactenosFranja}
                             alt="fondo comunidad dezzpo"
                         />
                         <img src={LogoPNG} alt="Logo Comunidad Dezzpo" />
                     </Col>
-                    <Col className="col">
+                    <Col className="" lg={4} md={6} sm={10}>
                         <div className="formContacto">
                             <form action="">
                                 <input
@@ -75,36 +79,14 @@ const Contactenos = (props) => {
                             </form>
                         </div>
                     </Col>
-                    <Col className="col">
+                    <Col className="" lg={4} md={6} sm={10}>
                         <div className="borderBlue">
                             <img
-                                src="assets/img/SelectorContactenos.png"
+                                src={SelectorContactenos}
                                 alt="datos de contacto"
                             />
-                            {/*Datos de contacto comunidad dezzpo*/}
-                            <div className="datosContacto">
-                                <h1> Consultenos </h1>
-                                <ul className="listaContacto">
-                                    <span className="icon-DireccionDomicilioIcono"></span>
-                                    <li> Dirección Cll 159 No. 8c-45 </li>
-                                    <li> Piso 5 </li>
-                                    <br />
-                                    <span className="icon-TelefonoContactoIcono"></span>
-                                    <li> +57 3196138057 - Office </li>
-                                    <li> +57 3196138057 - PBX </li>
-                                    <br />
-                                    <span className="icon-EmailIcono"></span>
-                                    <li>
-                                        <a
-                                            href="mailto:comunidad.dezzpo@gmail.com"
-                                            title="Correo Comunidad Dezzpo"
-                                        >
-                                            {' '}
-                                            comunidad.dezzpo@gmail.com{' '}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            {/* Datos de contacto comunidad dezzpo */}
+                            <DatosContacto></DatosContacto>
                         </div>
                     </Col>
                 </Row>

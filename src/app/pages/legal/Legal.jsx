@@ -12,81 +12,71 @@ const Legal = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="legalContainer">
-                    <div className="legalDocumentos row">
-                        <div className="col">
-                            <span className="tituloDocumento">
-                                <h3 className="headline-l">
-                                    Terminos y condiciones
-                                    <br /> Propietarios
-                                </h3>
-                            </span>
-                            <br />
-                            <a
-                                href="http://www.google.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                .PDF
-                            </a>
-                        </div>
-                        <div className="col">
-                            <span className="tituloDocumento">
-                                <h3 className="headline-l">
-                                    Terminos y condiciones
-                                    <br /> Comercientes Calificados{' '}
-                                </h3>
-                            </span>
-                            <br />
-                            <a
-                                href="http://www.google.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                .PDF
-                            </a>
-                        </div>
-                        <div className="col">
-                            <span className="tituloDocumento">
-                                <h3 className="headline-l">Terminos de uso</h3>
-                            </span>
-                            <br />
-                            <a
-                                href="http://www.google.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                .PDF
-                            </a>
-                        </div>
-                        <div className="col">
-                            <span className="tituloDocumento">
-                                <h3 className="headline-l">
-                                    Politica de privacidad
-                                </h3>
-                            </span>
-                            <br />
-                            <a
-                                href="http://www.google.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                .PDF
-                            </a>
-                        </div>
-                        <div className="col">
-                            <span className="tituloDocumento">
-                                <h3 className="headline-l">Cookies</h3>
-                            </span>
-                            <br />
-                            <a
-                                href="http://www.google.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                .PDF
-                            </a>
-                        </div>
-                    </div>
+                    <Col className="m-4">
+                        <h3 className="headline-l textBlanco">
+                            Terminos y condiciones
+                            <br /> Propietarios
+                        </h3>
+                        <br />
+                        <a
+                            href="http://www.google.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            .PDF
+                        </a>
+                    </Col>
+                    <Col className="m-4">
+                        <h3 className="headline-l textBlanco">
+                            Terminos y condiciones
+                            <br /> Comercientes Calificados{' '}
+                        </h3>
+                        <br />
+                        <a
+                            href="http://www.google.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            .PDF
+                        </a>
+                    </Col>
+                    <Col className="m-4">
+                        <h3 className="headline-l textBlanco">
+                            Terminos de uso
+                        </h3>
+                        <br />
+                        <a
+                            href="http://www.google.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            .PDF
+                        </a>
+                    </Col>
+                    <Col className="m-4">
+                        <h3 className="headline-l textBlanco">
+                            Politica de privacidad
+                        </h3>
+                        <br />
+                        <a
+                            href="http://www.google.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            .PDF
+                        </a>
+                    </Col>
+                    <Col className="m-4">
+                        <h3 className="headline-l textBlanco">Cookies</h3>
+                        <br />
+                        <a
+                            href="http://www.google.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            .PDF
+                        </a>
+                    </Col>
                 </Row>
             </Container>
         </>

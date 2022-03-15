@@ -15,7 +15,9 @@ const Asesorias = (props) => {
                 <Row className="asesoriasTitulo m-0 w-100">
                     <Col className="col-md-4 align-items-end">
                         <Col className="opacidadNegro">
-                            <h2 className="headline-xl">ASESORÍAS EN VIVO</h2>
+                            <h2 className="headline-xl textBlanco">
+                                ASESORÍAS EN VIVO
+                            </h2>
                             <br />
                             <p className="asesoriaMessage p-description">
                                 Consulta a un profesional de la comunidad, y
@@ -95,25 +97,31 @@ const Asesorias = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="asesoriasBlog m-0 w-100">
-                    <Col className="col3">
-                        <p className="body-2">
-                            Postulando una pregunta, estas creando una cuenta
-                            gratuita y accediento a aceptar nuestra <br />
-                            <Link to="/legal">politica de privacidad</Link> y
-                            los
-                            <Link to="/legal">terminos de uso</Link>
-                        </p>
-                        <h3 className=".headline-l">
-                            Historial de preguntas de la comunidad
-                        </h3>
-                        <p className="body-1">
-                            Revisa las ultimas preguntas y respuestas de la
-                            comunidad, y participa.
-                        </p>
-                    </Col>
-                    <Col className="col2">
-                        <button className="btn">BLOG DE LA COMUNIDAD</button>
-                    </Col>
+                    <Row className="col">
+                        <Col className="m-4" md={6} sm={10}>
+                            <p className="body-2 textBlanco">
+                                Postulando una pregunta, estas creando una
+                                cuenta gratuita y accediento a aceptar nuestra{' '}
+                                <br />
+                                <Link to="/legal">
+                                    politica de privacidad
+                                </Link>{' '}
+                                y los <Link to="/legal">terminos de uso</Link>
+                            </p>
+                            <h3 className=".headline-l">
+                                Historial de preguntas de la comunidad
+                            </h3>
+                            <p className="body-1 textBlanco">
+                                Revisa las ultimas preguntas y respuestas de la
+                                comunidad, y participa.
+                            </p>
+                        </Col>
+                        <Col className="" md={4} sm={10}>
+                            <button className="btn">
+                                BLOG DE LA COMUNIDAD
+                            </button>
+                        </Col>
+                    </Row>
                 </Row>
             </Container>
         </>

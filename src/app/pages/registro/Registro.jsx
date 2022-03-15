@@ -38,8 +38,10 @@ const Registro = (props) => {
                             // preventDefault="true"
                         >
                             <div>
-                                <h2 className="headline-xl">REGISTRATE</h2>
-                                <p className="body-1">
+                                <h2 className="headline-xl textBlanco">
+                                    REGISTRATE
+                                </h2>
+                                <p className="body-1 textBlanco">
                                     Bienvenido a todos los beneficios de dezzpo.
                                 </p>
                                 <label htmlFor="">Nombre</label>

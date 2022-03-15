@@ -15,20 +15,14 @@
 #comerciantesLocales{
     background: #21969b;
     width: 100%;
-    height: 300px;
+    min-height: 300px;
+    height: auto;
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: space-around;
 }
-.localCiudades{
-    font-family: "lato Regular", Helvetica, sans-serif;
-    font-size: 17px;
-    color: white;
-}
-.ciudades {
-    display: flex;
-    flex-direction: row;
+.ciudades {    
     text-align: center;
-    justify-content: space-evenly;
+    justify-content: center !important;
 }

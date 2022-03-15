@@ -1,4 +1,17 @@
-/* height: 2690px; */
+/* Pantallas de Moviles */
+@media screen and (max-width: 600px) {
+
+}
+/* Pantallas en tabletas */
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    
+}
+/* Pantallas de Ordenador */
+@media screen and (min-width: 900px) {
+   
+}
+
+
 .asiTrabajamosRegistro{ 
     background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; 
     background-attachment: scroll;         
@@ -7,22 +20,10 @@
 .asiTrabajamosChat{ 
     background: #e9ebe6 url(../img/AsiTrabajamos2.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: auto 100%;
-    height: 550px;    
+    background-size: cover;
+    height: auto;
+    min-height: 570px;    
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-.colRight{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 7em;
-    padding-right: 3em;    
-    width: 50%;
-    float: right !important;
 }
 .chatAsesor{      
     font-size: 27px; 
@@ -34,110 +35,44 @@
 .asiTrabajamosVinculate{
     background: #e9ebe6 url(../img/AsiTrabajamos3.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
-    height: 360px;
+    background-size: cover;
+    min-height: 360px;
+    height: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
-}
-.colRight2{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    float: right;
-    align-items: center;
-    padding-top: 100px;
-    padding-left: 800px;
-    width: 30%;
 }
 .asiTrabajamosPropietario{
     background: #e9ebe6 url(../img/AsiTrabajamos4.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
-    height: 360px;
+    background-size: 100% 100%;
+    min-height: 500px;
+    height: auto;
     width: 100%;
     color: #e9ebe6;
-}
-.colRight3{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    float: right;
-    align-items: center;
-    padding: 1em 20px 2em 21em;
-    width: 60%;
 }
 .asiTrabajamosCertificaciones{
     background: #e9ebe6 url(../img/AsiTrabajamos5.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
-    height: 480px;
+    background-size: 100% 100%;
+    min-height: 480px;
+    height: auto;
     width: 100%;
 }
 .certificacion-titulo {
-    font-size: 55px;
-    height: 170px;
-    color: #e9ebe6;
-}
 
-.colCenter{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1em 20px 1em 7em;
-    width: 60%;
-}
-
-.colLeft{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    padding-left: 90px;
-    padding-top: 30px;    
-}
-.whiteP{
-    color: #e9ebe6;
 }
 .asiTrabajamosCalificaciones{
     background: #e9ebe6 url(../img/AsiTrabajamos6.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
-    height: 550px;
+    background-size: 100% 100%;
+    min-height: 550px;
+    height: auto;
     width: 100%;
     color: #e9ebe6;
-}
-.LeftP{
-    font-size: 19px;
-    text-align: left;
-}
-.colRight3 ul{
-    list-style: none;
-    text-align: left;
 }
 .asiTrabajamosEstadisticas{
     background: #e9ebe6;
     height: 220px;
     width: 100%;
-}
-.row{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-}
-.row ul{
-    list-style: none;
-    width: 50%;
-    display: inline-flex;
-    font-size: 19px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #1ec7e6;
-    padding: 3px 6px;
-    margin: 6px 3px;
 }

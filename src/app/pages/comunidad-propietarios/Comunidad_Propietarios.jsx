@@ -3,6 +3,7 @@ import React from 'react'
 import '../../../../public/assets/css/comunidad_propietarios.css'
 
 import Registro from '../../pages/registro/Registro'
+import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -38,7 +39,7 @@ const ComunidadPropietarios = (props) => {
                                     SIMPLE QUE NUNCA <br />
                                 </p>
                             </span>
-                            <h3 className=".headline-l titulosVerde">
+                            <h3 className=".headline-l textVerde">
                                 Contrata seguro con <br />
                                 nuestra comunidad
                             </h3>
@@ -50,7 +51,7 @@ const ComunidadPropietarios = (props) => {
                 <Row className="comunidadPropietariosRegistro m-0 d-flex flex-column">
                     <Col className="m-0" style={{ 'padding-left': '0px' }}>
                         <span className="pitchPropietarios">
-                            <h2 className="titulosBlanco headline-xl">
+                            <h2 className="textBlanco headline-xl">
                                 {' '}
                                 COMUNIDAD PROPIETARIOS
                             </h2>
@@ -64,25 +65,38 @@ const ComunidadPropietarios = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosBuscador m-0 row">
-                    <Col className="colLeft justify-content-center align-items-center">
-                        <p className="body-2">
-                            Con ayuda de la comunidad haz realidad la casa que
-                            deseas. <br />
-                            Encuentra un profesional Seguro y Confiable, para
-                            cada trabajo. <br />
-                            Desde iluminación y pequeños arreglos, hasta diseños
-                            de ingeniería y remodelaciones completas.
-                        </p>
+                    <Col
+                        className="justify-content-center align-items-center"
+                        lg={4}
+                        md={6}
+                        sm={10}
+                    >
+                        <Col className="opacidadNegro">
+                            <p className="body-2">
+                                Con ayuda de la comunidad haz realidad la casa
+                                que deseas. Encuentra un profesional Seguro y
+                                Confiable, para cada trabajo. Desde iluminación
+                                y pequeños arreglos, hasta diseños de ingeniería
+                                y remodelaciones completas.
+                            </p>
+                        </Col>
                     </Col>
-                    <Col className="col">
-                        <form action="">
-                            {/*se importa buscador del home */}
-                        </form>
+                    <Col className="" md={6} sm={12}>
+                        <BuscadorNuevoProyecto></BuscadorNuevoProyecto>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosConsultar m-0 row ps-4 pe-4">
+                    <Col className="col-12 m-4">
+                        <h3 className=".headline-l">
+                            Planea con nosotros el proyecto
+                        </h3>
+                        <p className="body-1">
+                            El espacio de tus sueños comienza con una gran idea
+                            y tenemos miles de ellas.
+                        </p>
+                    </Col>
                     <Col
                         className="col d-flex flex-column align-items-baseline"
                         md={4}
@@ -114,15 +128,6 @@ const ComunidadPropietarios = (props) => {
                         md={4}
                         style={{ 'justify-content': 'space-evenly' }}
                     >
-                        <span className="pitchPropietarios">
-                            <h3 className=".headline-l">
-                                Planea con nosotros el proyecto
-                            </h3>
-                        </span>
-                        <p className="body-1">
-                            El espacio de tus sueños comienza con una gran idea
-                            y tenemos miles de ellas.
-                        </p>
                         <span className="pitchPropietarios">
                             <h3 className=".headline-l">Observa cambios</h3>
                         </span>
@@ -169,12 +174,10 @@ const ComunidadPropietarios = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosListaVerificacion m-0">
-                    <Col className="verificarLista" id="listaChequeo">
-                        <span className="pitchPropietarios">
-                            <h2 className=".headline-xl titulosBlanco ps-4 ms-4">
-                                LISTA DE VERIFICACION
-                            </h2>
-                        </span>
+                    <Col className="p-4" id="listaChequeo">
+                        <h2 className=".headline-xl textBlanco ps-4 ms-4">
+                            LISTA DE VERIFICACION
+                        </h2>
                         <ul className="body-1">
                             <li> Verifica Adecuadamente La Identidad. </li>
                             <li>
@@ -239,7 +242,7 @@ const ComunidadPropietarios = (props) => {
                                 instituto para la, ofrece ayudas y subvenciones
                                 institucionales
                             </li>
-                            <span className=".headline-l titulosVerde">
+                            <span className=".headline-l textVerde">
                                 {' '}
                                 Se resuelve la encuesta de satisfacción del
                                 servicio
