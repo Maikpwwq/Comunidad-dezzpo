@@ -1,8 +1,7 @@
 .contenerdorFormulario{
-    width: 40%;
     display: flex;
     flex-direction: column;    
-    padding-bottom: 100px;    
+    padding: 100px 0;    
 }
 .formularioBusqueda1{
     display: flex;
@@ -33,17 +32,15 @@
     animation-delay: 1s;
     animation-timing-function: ease-out;
     height: 49px;
-    width: 100px;
-    position: absolute;
+    position: relative;
     color: #ffffff;
     font-weight: bold;
     padding: 3px 6px;
     margin: 6px 3px;
     background-color: #92B901;
-    left:1110px;
-    top:420px;
 }
+
 @keyframes botonAnimado{
-    0%   {background-color:#1ec7e6; left:960px; top:420px;}
-    100% {background-color:#92B901; left:1110px; top:420px;}
+    0%   {background-color:#1ec7e6; left:-50px;}
+    100% {background-color:#92B901; left:0px; }
 }

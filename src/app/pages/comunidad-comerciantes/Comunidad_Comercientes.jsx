@@ -2,6 +2,8 @@
 import React from 'react'
 import '../../../../public/assets/css/comunidad_comerciantes.css'
 
+import Registro from '../../pages/registro/Registro'
+
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -15,30 +17,26 @@ const ComunidadComerciantes = (props) => {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="comunidadComerciantesTitulo  m-0 d-flex flex-row justify-content-start">
-                    <Col className="col-md-4 align-items-start">
+                <Row className="comunidadComerciantesTitulo m-0 d-flex flex-row justify-content-start">
+                    <Col className="col-md-8 col-lg-6 align-items-start">
                         <Col className="opacidadNegro">
                             <span className="pitchComerciantes">
                                 {' '}
-                                <h2 className="headline-xl">
+                                <h2 className="headline-xl textBlanco">
                                     ¿TE FALTA GESTIÓN?, DÉJANOS REPRESENTAR TU
-                                    <br />
                                     TRABAJO GARANTIZAMOS UNA NOTABLE MEJORA EN
-                                    <br />
                                     INGRESOS Y OPORTUNIDADES DE CRECIMIENTO{' '}
                                 </h2>
                             </span>
                             <p className="body-2">
                                 {' '}
                                 Propietarios y proyectos listos para contactar,
-                                trabajo cuando lo <br />
-                                necesitas, con cada plan de afiliacion,
-                                obtendras al menos la <br />
-                                misma cantidad de beneficios. Haz que tus
-                                clientes <br />
-                                potenciales conozcan lo que tienes para ofrecer.
+                                trabajo cuando lo necesitas, con cada plan de
+                                afiliacion, obtendras al menos la misma cantidad
+                                de beneficios. Haz que tus clientes potenciales
+                                conozcan lo que tienes para ofrecer.
                             </p>
-                            <h3 className=".headline-l titulosVerde">
+                            <h3 className=".headline-l textVerde">
                                 {' '}
                                 Solicita Tu Membresia Ahora{' '}
                             </h3>
@@ -46,51 +44,20 @@ const ComunidadComerciantes = (props) => {
                     </Col>
                 </Row>
             </Container>
+
             <Container fluid className="p-0">
                 <Row className="comunidadComerciantesRegistro  m-0">
-                    <Col
-                        className="colLeft"
-                        md={4}
-                        style={{ 'padding-left': '0px' }}
-                    >
-                        <div className="registrateformulario">
-                            <form id="formularioRegistro" action="">
-                                <span className="pitchComerciantes">
-                                    <h2 className="headline-xl">
-                                        {' '}
-                                        COMUNIDAD <br />
-                                        COMERCIANTES
-                                    </h2>
-                                </span>
-                                <label htmlFor=""> NOMBRE </label>
-                                <br />
-                                <input type="text" id="" name="" required />
-                                <br />
-                                <label htmlFor=""> CONTRASEÑA </label>
-                                <br />
-                                <input type="password" id="" name="" required />
-                                <br />
-                                <label htmlFor="">
-                                    {' '}
-                                    CONFIRME LA CONTRASEÑA{' '}
-                                </label>
-                                <br />
-                                <input type="password" id="" name="" required />
-                                <br />
-                                <input
-                                    type="checkbox"
-                                    name=""
-                                    id=""
-                                    style={checkStyle}
-                                    required
-                                />{' '}
-                                NO SOY UN ROBOT <br />
-                                <button> CREAR CUENTA</button>
-                                <hr />
-                                <span>BIENVENIDO</span>
-                                <br />
-                            </form>
-                        </div>
+                    <Col className="colLeft" md={6} lg={4}>
+                        <span
+                            className="pitchComerciantes"
+                            style={{ 'padding-left': '0px' }}
+                        >
+                            <h2 className="headline-xl textBlanco">
+                                {' '}
+                                COMUNIDAD COMERCIANTES
+                            </h2>
+                        </span>
+                        <Registro showLogo={false}></Registro>
                     </Col>
                 </Row>
             </Container>
@@ -106,7 +73,9 @@ const ComunidadComerciantes = (props) => {
                     >
                         <div className="containerGreen">
                             <span className="pitchComerciantes subrayar">
-                                <h3 className="headline-l">Para tu negocio</h3>
+                                <h3 className="headline-l textBlanco">
+                                    Para tu negocio
+                                </h3>
                             </span>
                             <p>
                                 Encuentra nuevos clientes facilmente y mantente
@@ -116,7 +85,9 @@ const ComunidadComerciantes = (props) => {
                                 diseñado y construido segun tus requerimientos.
                             </p>
                             <span className="pitchComerciantes subrayar">
-                                <h3 className="headline-l">Para ti</h3>
+                                <h3 className="headline-l textBlanco">
+                                    Para ti
+                                </h3>
                             </span>
                             <p>
                                 Aumenta tu influencia con el respaldo de la
@@ -136,7 +107,7 @@ const ComunidadComerciantes = (props) => {
                                 <br />
                             </p>
                             <span className="pitchComerciantes subrayar">
-                                <h3 className="headline-l">
+                                <h3 className="headline-l textBlanco">
                                     Invita A Un Amigo
                                 </h3>
                             </span>
@@ -146,7 +117,6 @@ const ComunidadComerciantes = (props) => {
                                 Transformación digital inmobiliaria.
                                 <br />
                                 Invita tus amigos a que se registren al programa{' '}
-                                <br />
                                 compartiendo tu código único, envía el{' '}
                                 <strong>Link</strong> a tus contactos, acumula
                                 puntos, obtén descuentos y llévate premios.

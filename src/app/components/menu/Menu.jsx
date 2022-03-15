@@ -20,16 +20,23 @@ const MenuComunidad = (props) => {
                 <Col className="menuFijo w-100 p-0 m-0">
                     {/* Menu fijo */}
                     <Col className="p-0 barraMenu">
-                        <nav className="menuContenedor">
+                        <div className="containerLogo container d-flex justify-content-center">
                             <img
                                 src={ComunidadDezzpo}
                                 alt="Logo Comunidad Dezzpo"
+                                style={{ 'border-radius': '50%' }}
                                 height="80px"
                                 width="210px"
                             />
+                        </div>
+                        <nav className="menuContenedor">
                             <ul className="menuSecciones" sm="collapseContents">
                                 <li className="botonSeccion">
-                                    <NavLink exact to="/" className="activo">
+                                    <NavLink
+                                        exact
+                                        to="/"
+                                        className="activo body-2"
+                                    >
                                         {' '}
                                         Home{' '}
                                     </NavLink>
@@ -39,13 +46,13 @@ const MenuComunidad = (props) => {
                                     <li className="botonSeccion">
                                         <NavLink
                                             to="asi-trabajamos"
-                                            className="botonNavLink"
+                                            className="botonNavLink body-2"
                                         >
                                             {' '}
                                             Asi trabajamos{' '}
                                         </NavLink>
                                     </li>
-                                    <div className="dropdownContenidos">
+                                    <div className="dropdownContenidos body-1">
                                         <NavLink to="/ingreso">
                                             Ingresar
                                         </NavLink>
@@ -71,13 +78,13 @@ const MenuComunidad = (props) => {
                                     <li className="botonSeccion">
                                         <NavLink
                                             to="/nosotros"
-                                            className="botonNavLink"
+                                            className="botonNavLink body-2"
                                         >
                                             {' '}
                                             Nosotros{' '}
                                         </NavLink>
                                     </li>
-                                    <div className="dropdownContenidos">
+                                    <div className="dropdownContenidos body-1">
                                         <NavLink to="/nosotros/#Acerca-de-nosotros">
                                             Acerca de nosotros
                                         </NavLink>
@@ -99,12 +106,12 @@ const MenuComunidad = (props) => {
                                     <li className="botonSeccion">
                                         <NavLink
                                             to="/comunidad-comerciantes"
-                                            className="botonNavLink"
+                                            className="botonNavLink body-2"
                                         >
                                             Comunidad de comerciantes{' '}
                                         </NavLink>
                                     </li>
-                                    <div className="dropdownContenidos">
+                                    <div className="dropdownContenidos body-1">
                                         <NavLink to="/ingreso">
                                             Tu cuenta
                                         </NavLink>
@@ -130,12 +137,12 @@ const MenuComunidad = (props) => {
                                     <li className="botonSeccion">
                                         <NavLink
                                             to="/comunidad-propietarios"
-                                            className="botonNavLink"
+                                            className="botonNavLink body-2"
                                         >
                                             Comunidad de propietarios{' '}
                                         </NavLink>
                                     </li>
-                                    <div className="dropdownContenidos">
+                                    <div className="dropdownContenidos body-1">
                                         <NavLink to="/nuevo-proyecto">
                                             Crea un nuevo proyecto
                                         </NavLink>
@@ -159,7 +166,7 @@ const MenuComunidad = (props) => {
                                 <li className="botonSeccion">
                                     <NavLink
                                         to="/presupuestos"
-                                        className="botonNavLink"
+                                        className="botonNavLink body-2"
                                     >
                                         {' '}
                                         Presupuestos{' '}
@@ -168,7 +175,7 @@ const MenuComunidad = (props) => {
                                 <li className="botonSeccion">
                                     <NavLink
                                         to="/profesionales-servicios"
-                                        className="botonNavLink"
+                                        className="botonNavLink body-2"
                                     >
                                         {' '}
                                         Profesionales y servicios{' '}
@@ -177,7 +184,7 @@ const MenuComunidad = (props) => {
                                 <li className="botonSeccion">
                                     <NavLink
                                         to="/asesorias"
-                                        className="botonNavLink"
+                                        className="botonNavLink body-2"
                                     >
                                         {' '}
                                         Asesorias{' '}
@@ -186,7 +193,7 @@ const MenuComunidad = (props) => {
                                 <li className="botonSeccion">
                                     <NavLink
                                         to="/apendice-costos"
-                                        className="botonNavLink"
+                                        className="botonNavLink body-2"
                                     >
                                         {' '}
                                         Apendice de costos{' '}
@@ -195,7 +202,7 @@ const MenuComunidad = (props) => {
                                 <li className="botonSeccion">
                                     <NavLink
                                         to="/ingreso"
-                                        className="botonNavLink"
+                                        className="botonNavLink body-2"
                                     >
                                         {' '}
                                         Ingresar{' '}

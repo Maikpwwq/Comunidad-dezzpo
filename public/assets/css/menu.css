@@ -1,7 +1,7 @@
 @media screen and (max-width: 600px) {
-    #menuFijo{ 
+    .menuFijo{ 
         position: absolute;  
-        height: 80px;
+        min-height: 80px;
         margin: 0 0; 
         padding: 0 0; 
         width: 100%; 
@@ -9,25 +9,19 @@
         left: 0px;
         top: 0px;
     }
-    #barraMenu{ 
+    .barraMenu{ 
         display: inline-flex; 
         position: fixed; 
-        font-family: "lato Regular", Helvetica, sans-serif; 
-        color: #333333; 
-        background-color: #e9ebe6;
-        flex-wrap: nowrap;
-        height: 80px;
+        height: auto;
         width: 100%; 
         justify-content: center;
     }
-    #menuContenedor{
-        display: flex; 
-        flex-direction: row; 
-        flex-wrap: wrap;
-        justify-content: space-between;
+    .menuFijo:hover .menuSecciones{
+        display: flex!important;
+        flex-direction: column;
     }
     .menuSecciones{ 
-        display: none; 
+        display: none!important; 
         flex-direction: column; 
         overflow: visible; 
         list-style-type: none;
@@ -37,89 +31,32 @@
         background-color: #009999;
         color: white;  
     }
-    .menuContenedor:hover .menuSecciones{
-        display: flex;
-        flex-direction: column;
-    }
-    .dropdown{
-        transition: background-color 0.3s;
-    }
-    .dropdown:hover {
-        background-color: rgba(0,0,0,0.8);
-    }
     .dropdownContenidos{
-        display: none;
-        position: absolute;
-        background-color: #009999;
-        min-width: 110px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
         padding: 5px 3px;
-    }
-    .dropdownContenidos a{
-        font-size: 21px; 
-        text-decoration: none;
-    }
-    .menuContenedor ul a:visited {
-        color: white;
-    }
-    .menuContenedor a:visited{
-        color: white;    
-    }
-    .dropdownContenidos a:hover{
-        background-color: #e9ebe6;
-        color: black;    
-        text-decoration: underline;
     }
     .dropdown:hover .dropdownContenidos {
         display: flex;
         flex-direction: column;
-    }
-    .botonSeccion:hover a{ 
-        color: white; 
-        background-color: #009999; 
-        text-decoration: underline;
-    }
-    .botonSeccion{
-        margin: auto 0;
-        border-left: solid;
-        border-width: 3px;
-        border-left-color: black;
-        height: 100%;
-        display: flex;
-        align-content: center;                        
+        flex-wrap: wrap;
     }
     .activo{
-        padding: 5px 20px;
-        text-align: center;
-        color: black;
-        text-decoration: none;
-        justify-content: center;
-        align-content: center;
-        display: flex;
-        flex-direction: column;
-        font-size: medium;
+        height: auto !important;
     }
     .botonNavLink{
-        padding: 5px 20px;
-        text-align: center;
-        color: black;
-        text-decoration: none;
-        justify-content: center;
-        align-content: center;
-        display: flex;
-        flex-direction: column;
-        font-size: medium;
-    }
+        height: auto !important;
+    }    
 }
 @media screen and (min-width: 600px) and (max-width: 900px) {
 
 }
 @media screen and (min-width: 900px) {
 
-.menuFijo{ 
-    position: absolute;  
-    height: 80px;
+
+}
+
+.menuFijo{  
+    position: relative;  
+    height: auto;
 }
 .barraComunidad{
     display: inline-flex; 
@@ -129,14 +66,15 @@
 }
 .barraMenu{ 
     display: inline-flex; 
-    position: fixed; 
+    position: relative; 
     font-family: "lato Regular", Helvetica, sans-serif; 
     color: #333333; 
     background-color: #e9ebe6;
     flex-wrap: nowrap;
-    height: 80px;
+    height: auto;
     width: 100%; 
     justify-content: center;
+    top: 0;
 }
 .menuContenedor{
     display: flex; 
@@ -153,7 +91,7 @@
     list-style-type: none;
     padding: 0 0;
     margin: 0 0;
-    height: 80px;
+    height: auto;
 }
 .dropdown{
     transition: background-color 0.3s;
@@ -182,7 +120,7 @@
     width: 100%;
 }
 .dropdownContenidos a:hover{
-    background-color: #e9ebe6;
+    background-color: rgba(0,0,0,0.8);
     color: black;    
     text-decoration: underline;
 }
@@ -228,6 +166,4 @@
     display: flex;
     flex-direction: column;
     font-size: medium;
-}
-
 }

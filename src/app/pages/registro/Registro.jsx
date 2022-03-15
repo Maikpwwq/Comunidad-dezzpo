@@ -10,6 +10,8 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
 const Registro = (props) => {
+    const { showLogo } = props
+
     const navigate = useNavigate()
 
     const handleClick = () => {
@@ -20,16 +22,26 @@ const Registro = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row id="registrate" className="m-0">
-                    <Col className="registrateImagen m-0"></Col>
-                    <Col className="registrateformulario m-0">
+                    {showLogo == false ? (
+                        <></>
+                    ) : (
+                        <Col
+                            className="registrateImagen m-0"
+                            md={6}
+                            sm={12}
+                        ></Col>
+                    )}
+                    <Col className="registrateformulario m-0" md={6} sm={12}>
                         <form
                             id="formularioRegistro"
                             action=""
                             // preventDefault="true"
                         >
                             <div>
-                                <h2 className="headline-xl">REGISTRATE</h2>
-                                <p className="body-1">
+                                <h2 className="headline-xl textBlanco">
+                                    REGISTRATE
+                                </h2>
+                                <p className="body-1 textBlanco">
                                     Bienvenido a todos los beneficios de dezzpo.
                                 </p>
                                 <label htmlFor="">Nombre</label>

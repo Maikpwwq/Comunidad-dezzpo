@@ -2,6 +2,8 @@
 import React from 'react'
 import '../../../../public/assets/css/presupuestos.css'
 
+import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
+
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -12,41 +14,41 @@ const Presupuestos = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="presupuestosMensaje">
-                    <Col className="col-md-4 align-items-end">
-                        <Col className="opacidadNegro">
-                            <span className="p-description">
+                    <Col className="align-items-end" lg={4} md={6} sm={10}>
+                        <Col className="opacidadNegro textBlanco">
+                            <p className="p-description">
                                 {' '}
                                 Solicitalo online, en menos tiempo, totalmente{' '}
-                                <br />
                                 gratuito y sin compromiso.{' '}
-                            </span>
-                            <span className="body-1">
+                            </p>
+                            <p className="body-1">
                                 Contamos con los mejores precios del mercado de
-                                reformas, conocer el costo <br />
-                                que tiene desarrollar tu proyecto ahora, y
-                                procede a elegir el que te brinde <br />
-                                más confianza, mayor calidad, y el mejor costo{' '}
-                                <br />
-                            </span>
+                                reformas, conocer el costo que tiene desarrollar
+                                tu proyecto ahora, y procede a elegir el que te
+                                brinde más confianza, mayor calidad, y el mejor
+                                costo <br />
+                            </p>
                         </Col>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="presupuestosMensajeBuscador row">
-                    <Col className="col">
-                        <span className="p-description">
+                <Row className="presupuestosMensajeBuscador align-items-start justify-content-end">
+                    <Col className="p-4 m-4" lg={4} md={6} sm={12}>
+                        <p className="p-description textBlanco">
                             Publica tu proyecto gratis, los profesionales
-                            disponibles te <br />
-                            contactaran para ofrecer su presupuesto
-                        </span>
-                        <p className="body-2">
+                            disponibles te contactaran para ofrecer su
+                            presupuesto
+                        </p>
+                        <p className="body-2 textBlanco">
                             Anuncia gratuitamente un trabajo. <br />
                             Lee comentarios, recibe cotizaciones y sigue las
                             recomendaciones para contratar.
                         </p>
                     </Col>
-                    <Col className="col">se importa buscador del home</Col>
+                    <Col className="" md={6} sm={12}>
+                        <BuscadorNuevoProyecto></BuscadorNuevoProyecto>
+                    </Col>
                 </Row>
             </Container>
         </>

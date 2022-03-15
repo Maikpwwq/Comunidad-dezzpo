@@ -5,56 +5,14 @@
     align-items: center;
     width: 100%;
     background-color: #333333;
-    height: 480px;
+    min-height: 480px;
 }
 .legalDocumentos{
-    height: 480px;
+    min-height: 480px;
+    height: auto;
     width: 80%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: flex-start;
 }
-.tituloDocumento h1 {
-    font-size: 21px;
-    margin-top: 0px;
-    padding-top: 21px;
-}
-.col{
-    height: 100%;
-    width: 80%;
-    padding-left: 30px;
-    padding-right: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    font-size: 18px;
-}
-.legalDocumentos a{
-    color: #e9ebe6;
-    text-decoration: none;
-}
-.legalDocumentos a:link{
-    color: #e9ebe6;
-}
-.legalDocumentos a:visited{
-    color: #e9ebe6;
-}
-.legalDocumentos a:hover{    
-    text-decoration: underline;   
-    color:  #009999;      
-}
-/*
-    padding: 3px 6px;
-    margin: 6px 3px;
-    background-color: #333333;
-    background-color: #e9ebe6;
-    background-color: rgba(0,0,0,0.8);
-    background-color: #009999; 
-    background-color:#1ec7e6;
-    background-color: #13495e; 
-    background-color:#92B901;
-    background-color: #006699;
-    background-color: #deaf06;
-*/

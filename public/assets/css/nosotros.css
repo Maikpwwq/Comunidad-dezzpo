@@ -4,8 +4,9 @@
 .nosotrosHistoria{
     background: #e9ebe6 url(../img/Nosotros1.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
-    height: 430px;
+    background-size: cover;
+    height: auto;
+    min-height: 700px;
     width: 100%;
     color: #e9ebe6;
     display: flex;
@@ -13,60 +14,29 @@
     justify-content: space-around;
     align-items: flex-end;
 }
-.pitchPropietarios h2 {
-    font-size: 33px;
-    margin-top: 0px;
-    padding-top: 48px;
-    color: black;
-}
-.pitchPropietarios h3 {
-    font-size: 19px;
-}
-.blueAlert{
-    color: #009999; 
-    font-size: 33px;
-}
 .nosotrosMisionVision{
     background: #e9ebe6 url(../img/Nosotros2.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% 100%;
-    height: 590px;
+    height: auto;
+    min-height: 400px;
     width: 100%;
     color: #e9ebe6;
-}
-.left{
-    float: left;
-    font-size: 18px;
-    /* padding-left: 80px; */
-    width: 60%;
-}
-.left p{
-    padding: 1em;
-    padding-top: 0px;
-}
-.right{
-    float: right;
-    font-size: 18px;
-    padding-left: 80px;
-    width: 60%;
-    padding-right: 21px;
-    height: 300px;
-}
-.right p{
-    padding: 1em;
 }
 .nosotrosPoliticas{
     background: #e9ebe6 url(../img/Asesorias1.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
-    height: 300px;
+    background-size: 100% 100%;
+    height: auto;
+    min-height: 330px;
     width: 100%;
 }
 .nosotrosEtica{
     background: #e9ebe6 url(../img/Nosotros3.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
-    height: 300px;
+    background-size: 100% 100%;
+    height: auto;
+    min-height: 330px;
     width: 100%;
     color: #e9ebe6;
 }
@@ -82,30 +52,20 @@
 .nosotrosEquipo{
     background: #e9ebe6 url(../img/Nosotros4.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
-    height: 300px;
+    background-size: 100% 100%;
+    min-height: 330px;
+    height: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-start;
 }
-.opacidadBlaco{
-    background-color: rgba(233, 235, 230, 0.8);
-    height: 300px;
-    width: 480px;
-    font-size: 21px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;    
-    text-align: center;
-    padding-left: 0px;
-    align-items: center;
-}
 .nosotrosHitos{
     background: #e9ebe6 url(../img/Asesorias1.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% 100%;
-    height: 600px;
+    min-height: 550px;
+    height: auto;
     width: 100%;
 }

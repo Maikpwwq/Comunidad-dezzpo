@@ -9,7 +9,7 @@ const BuscadorNuevoProyecto = (props) => {
     return (
         <>
             <Container fluid className="p-0">
-                <Col className="col-md-4">
+                <Col className="col-6" sm={12}>
                     <div className="contenerdorFormulario">
                         <form action="" id="formularioServicios">
                             <div className="formularioBusqueda1">

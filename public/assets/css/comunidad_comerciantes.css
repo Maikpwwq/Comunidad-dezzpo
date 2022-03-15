@@ -1,68 +1,31 @@
-/* height: 2700px; */
 .comunidadComerciantesTitulo{
     background: #e9ebe6 url(../img/ComunidadComerciantes1.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% 100%;
     color: #e9ebe6;
-    height: 570px;
+    height: auto;
+    min-height: 480px;
     width: 100%;
-}
-.pitchComerciantes h1 {
-    font-size: 33px;
-    margin-top: 0px;
-    padding-top: 48px;
 }
 .pitchComerciantes h2 {
     font-size: 21px;
-}
-.blueAlert{
-    color: #009999; ;
+    text-align: center;
 }
 .comunidadComerciantesRegistro{
     background: #e9ebe6 url(../img/ComunidadComerciantes2.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% 100%;
-    height: 600px;
+    background-size: cover;
+    height: auto;
     width: 100%;
     display: flex;
     flex-direction: column;    
 }
-.colLeft{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 0px !important;
-    margin-left: -30px;
-    margin-right: 2.5em;
-    justify-content: space-evenly;
-    padding: 0 0 !important;
-}
-.registrateformulario{
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    text-align: center;
-    height: 480px;
-    width: 100% !important;
-    background: rgba(19, 73, 94, 0.9);     
-    color: white;
-    margin-right: 5em;
-    margin-top: 0px;
-    margin-left: 0px;
-}
-#formularioRegistro input{
-    border: none;
-    width: 333px;
-    height: 27px;
-}
 .comunidadComerciantesBeneficios{
     background: #009999  url(../img/ComunidadComerciantes3.png) no-repeat right; 
     background-attachment: scroll;         
-    background-size: auto 100%;
+    background-size: 100;
     color: #e9ebe6;
-    height: 840px;
+    height: auto;
     width: 100%;
     text-align: left;
 }
@@ -86,20 +49,7 @@
 .comunidadComerciantesBeneficios2{
     background: #e9ebe6 url(../img/Profesionales_servicios2.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% 100%;
-    /* height: 770px; */
+    background-size: cover;
+    height: auto;
     width: 100%;
 }
-/*
-    padding: 3px 6px;
-    margin: 6px 3px;
-    background-color: #333333;
-    background-color: #e9ebe6;
-    background-color: rgba(0,0,0,0.8);
-    background-color: #009999; 
-    background-color:#1ec7e6;
-    background-color: #13495e; 
-    background-color:#92B901;
-    background-color: #006699;
-    background-color: #deaf06;  
-*/

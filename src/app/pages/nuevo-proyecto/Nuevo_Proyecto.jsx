@@ -11,31 +11,28 @@ const NuevoProyecto = (props) => {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="pageContainer">
-                    <div className="nuevoProyectoBuscador row">
-                        <Col className="col-md-4 align-items-start">
-                            <Col className="opacidadNegro">
-                                <span className="headline-l">
-                                    {' '}
-                                    Con ayuda de la comunidad haz realidad la
-                                    casa que deseas. Encuentra un profesional
-                                    Seguro y Confiable, para cada trabajo. Desde
-                                    iluminación y pequeños arreglos, hasta
-                                    diseños de ingeniería y remodelaciones
-                                    completas.
-                                </span>
-                            </Col>
+                <Row className="nuevoProyectoBuscador">
+                    <Col className="align-items-start p-4 m-4" md={5} sm={8}>
+                        <Col className="opacidadNegro p-0">
+                            <p className="headline-l textBlanco m-4 p-0">
+                                {' '}
+                                Con ayuda de la comunidad haz realidad la casa
+                                que deseas. Encuentra un profesional Seguro y
+                                Confiable, para cada trabajo. Desde iluminación
+                                y pequeños arreglos, hasta diseños de ingeniería
+                                y remodelaciones completas.
+                            </p>
                         </Col>
-                        <div className="col">
-                            {/*se importa buscador del home */}
-                        </div>
+                    </Col>
+                    <div className="col">
+                        {/*se importa buscador del home */}
                     </div>
-                </Row>{' '}
-                <Col className="nuevoProyectoBuscador2">
+                </Row>
+                <Col className="nuevoProyectoBuscador2 align-items-baseline">
                     <Col className="col-md-6 align-items-start">
                         {' '}
                         <p className="p-description">
-                            compara precios de los mejores profesionales
+                            Compara precios de los mejores profesionales
                             calificados{' '}
                         </p>
                         <form action="" className="body-1">
@@ -82,7 +79,7 @@ const NuevoProyecto = (props) => {
                         </form>
                     </Col>
                 </Col>
-                <Col className="nuevoProyectoBuscador3">
+                <Col className="nuevoProyectoBuscador3  align-items-baseline">
                     <Col className="col-md-6 align-items-start">
                         <form action="">
                             3. Información Adicional <br />
@@ -137,17 +134,19 @@ const NuevoProyecto = (props) => {
                         </form>
                     </Col>
                 </Col>
-                <Col className="nuevoProyectoMensaje">
-                    <span className="headline-xl">
+                <Col className="nuevoProyectoMensaje w-100">
+                    <span className="headline-xl textBlanco">
                         INGRESAR DATOS DE CONTACTO
                     </span>
-                    <p className="body-1">
+                    <p className="body-1 textBlanco">
                         Hasta cuatro Comerciantes calificados te contactaran
                         para aplicar con una cotización a tu proyecto. <br />
                         Para garantizar la mejor respuesta asegúrate que tus
-                        datos son exactos, solo compartiremos tu numero <br />
-                        con los comerciantes calificados interesados, por favor
-                        responde a su llamada. Detalles de contacto
+                        datos son exactos, <br />
+                        solo compartiremos tu numero con los comerciantes
+                        calificados interesados, <br />
+                        por favor responde a su llamada. <br />
+                        Detalles de contacto
                     </p>
                 </Col>
             </Container>

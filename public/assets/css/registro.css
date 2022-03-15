@@ -3,18 +3,18 @@
 #registrate{
     display: flex;
     flex-direction: row;
-    height: 480px;
     width: 100%;
 }
 .registrateImagen{
     display: flex;
     flex-direction: column;
-    height: 480px;
+    min-height: 515px!important;
+    height: auto!important;
     width: 50%;
     margin-top: 20px;
     background: #e9ebe6 url(../img/Ingresar_registro.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: 100% auto;
+    background-size: cover;
 }
 .registrateformulario{
     display: flex;
@@ -22,7 +22,7 @@
     align-content: center;
     justify-content: center;
     text-align: center;
-    height: 480px;
+    height: auto;
     width: 50%;
     background: #13495e; 
     margin-top: 20px;
