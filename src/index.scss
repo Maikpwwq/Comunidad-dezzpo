@@ -283,6 +283,7 @@ body {
    width: 100%;
    margin: 0 0;
    padding: 0 0;
+   position: relative;
 }
 
 .router-output {
@@ -313,6 +314,12 @@ body {
    flex-direction: row;
    justify-content: space-around;
    align-items: center;
+}
+.left{
+   float: left;
+}
+.right{
+   float: right;
 }
 .opacidadNegro {
    background-color: rgba(0, 0, 0, 0.8);

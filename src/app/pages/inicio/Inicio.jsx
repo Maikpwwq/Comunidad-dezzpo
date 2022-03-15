@@ -17,9 +17,9 @@ const Inicio = () => {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="m-0 w-100" id="bannerComunidad">
+                <Row className="m-0 w-100 bannerComunidad">
                     {/* imagen fondo */}
-                    <Col id="contenedorBanner" className="m-0 p-0">
+                    <Col id="contenedorBanner" className="col-6 m-0 p-0">
                         {/* Mensaje del Banner izquierda */}
                         <div className="slogan">
                             <span className="opacidadNegro">
@@ -40,7 +40,9 @@ const Inicio = () => {
                                 </h3>{' '}
                             </span>
                         </div>
-                        {/* Formulario nuevo proyecto */}
+                    </Col>
+                    {/* Formulario nuevo proyecto */}
+                    <Col className="col-md-6 p-0">
                         <BuscadorNuevoProyecto></BuscadorNuevoProyecto>
                     </Col>
                 </Row>

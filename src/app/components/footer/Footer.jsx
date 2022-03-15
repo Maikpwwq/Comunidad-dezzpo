@@ -84,10 +84,15 @@ const FooterComunidad = (props) => {
                                 <h2 className="headline-xl"> SIGUENOS </h2>
                                 <ul className="listaFooter w-100 body-1">
                                     {/* siguenos Instagram */}
-                                    <li className="w-50">
+                                    <li className="w-50 d-flex align-items-center">
                                         {' '}
                                         &#10095;
-                                        <span className="icon-IntagramSocialIcono p-1">
+                                        <span
+                                            className="icon-IntagramSocialIcono p-1"
+                                            style={{
+                                                'font-size': '1.5em',
+                                            }}
+                                        >
                                             <span className="path1"></span>
                                             <span className="path2"></span>
                                             <span className="path3"></span>
@@ -103,10 +108,15 @@ const FooterComunidad = (props) => {
                                         </a>
                                     </li>
                                     {/* siguenos Twitter */}
-                                    <li className="w-50">
+                                    <li className="w-50 d-flex align-items-center">
                                         {' '}
                                         &#10095;
-                                        <span className="icon-TwitterSocialIcono p-1">
+                                        <span
+                                            className="icon-TwitterSocialIcono p-1"
+                                            style={{
+                                                'font-size': '1.5em',
+                                            }}
+                                        >
                                             <span className="path1"></span>
                                             <span className="path2"></span>
                                         </span>
@@ -119,10 +129,15 @@ const FooterComunidad = (props) => {
                                         </a>
                                     </li>
                                     {/* siguenos Facebook */}
-                                    <li className="w-50">
+                                    <li className="w-50 d-flex align-items-center">
                                         {' '}
                                         &#10095;
-                                        <span className="icon-FacebookSocialIcono p-1">
+                                        <span
+                                            className="icon-FacebookSocialIcono p-1"
+                                            style={{
+                                                'font-size': '1.5em',
+                                            }}
+                                        >
                                             <span className="path1"></span>
                                             <span className="path2"></span>
                                         </span>
@@ -135,10 +150,15 @@ const FooterComunidad = (props) => {
                                         </a>
                                     </li>
                                     {/* siguenos Linkedin */}
-                                    <li className="w-50">
+                                    <li className="w-50 d-flex align-items-center">
                                         {' '}
                                         &#10095;
-                                        <span className="icon-LinkedinSocialIcono p-1">
+                                        <span
+                                            className="icon-LinkedinSocialIcono p-1"
+                                            style={{
+                                                'font-size': '1.5em',
+                                            }}
+                                        >
                                             <span className="path1"></span>
                                             <span className="path2"></span>
                                             <span className="path3"></span>
@@ -187,7 +207,9 @@ const FooterComunidad = (props) => {
                                     <Row className="m-0 w-100 d-flex">
                                         <span
                                             className="icon-EmailIcono"
-                                            style={{ width: 'auto' }}
+                                            style={{
+                                                width: 'auto',
+                                            }}
                                         ></span>
                                         <Col className="m-0 p-0 body-1">
                                             <li>

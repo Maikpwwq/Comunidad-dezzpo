@@ -2,6 +2,8 @@
 import React from 'react'
 import '../../../../public/assets/css/comunidad_propietarios.css'
 
+import Registro from '../../pages/registro/Registro'
+
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -14,25 +16,26 @@ const ComunidadPropietarios = (props) => {
 
     return (
         <>
-            <Container fluid className="p-0">
+            <Container fluid className="p-0" style={{ 'overflow-y': 'scroll' }}>
                 <Row className="comunidadPropietariosTitulo m-0 d-flex flex-row justify-content-start align-content-start">
                     <Col className="col-md-6 align-items-start">
-                        <Col className="opacidadNegro mt-4 mb-4" md={6}>
+                        <Col
+                            className="opacidadNegro mt-4 mb-4"
+                            md={6}
+                            sm={12}
+                            lg={4}
+                        >
                             <span className="pitchPropietarios">
                                 {' '}
                                 <p className="p-description">
                                     SOMOS UNA COMUNIDAD DE COMERCIANTES
-                                    PROFESIONALES, <br />
-                                    CONTRATA PERSONAL CALIFICADO MANTENIMIENTO
-                                    GENERAL <br />
-                                    RESIDENCIAL Y DE PROPIEDAD HORIZONTAL,
-                                    CONSULTA <br />
-                                    PÚBLICAMENTE LOS PERFILES Y LA REPUTACIÓN DE
-                                    LOS <br />
+                                    PROFESIONALES, CONTRATA PERSONAL CALIFICADO
+                                    MANTENIMIENTO GENERAL RESIDENCIAL Y DE
+                                    PROPIEDAD HORIZONTAL, CONSULTA PÚBLICAMENTE
+                                    LOS PERFILES Y LA REPUTACIÓN DE LOS
                                     PRESTADORES DE SERVICIOS. AHORA TUS
-                                    PROYECTOS Y <br />
-                                    REMODELACIONES MÁS RÁPIDO Y SIMPLE QUE NUNCA{' '}
-                                    <br />
+                                    PROYECTOS Y REMODELACIONES MÁS RÁPIDO Y
+                                    SIMPLE QUE NUNCA <br />
                                 </p>
                             </span>
                             <h3 className=".headline-l titulosVerde">
@@ -45,49 +48,14 @@ const ComunidadPropietarios = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosRegistro m-0 d-flex flex-column">
-                    <Col
-                        className="colLeft m-0"
-                        md={4}
-                        style={{ 'padding-left': '0px' }}
-                    >
-                        <div className="registrateformulario m-0">
-                            <form id="formularioRegistro" action="">
-                                <span className="pitchPropietarios">
-                                    <h2 className="headline-xl">
-                                        {' '}
-                                        COMUNIDAD <br />
-                                        PROPIETARIOS
-                                    </h2>
-                                </span>
-                                <label htmlFor=""> NOMBRE </label>
-                                <br />
-                                <input type="text" id="" name="" required />
-                                <br />
-                                <label htmlFor=""> CONTRASEÑA </label>
-                                <br />
-                                <input type="password" id="" name="" required />
-                                <br />
-                                <label htmlFor="">
-                                    {' '}
-                                    CONFIRME LA CONTRASEÑA{' '}
-                                </label>
-                                <br />
-                                <input type="password" id="" name="" required />
-                                <br />
-                                <input
-                                    type="checkbox"
-                                    name=""
-                                    id=""
-                                    style={checkStyle}
-                                    required
-                                />{' '}
-                                NO SOY UN ROBOT <br />
-                                <button> CREAR CUENTA</button>
-                                <hr />
-                                <span>BIENVENIDO</span>
-                                <br />
-                            </form>
-                        </div>
+                    <Col className="m-0" style={{ 'padding-left': '0px' }}>
+                        <span className="pitchPropietarios">
+                            <h2 className="titulosBlanco headline-xl">
+                                {' '}
+                                COMUNIDAD PROPIETARIOS
+                            </h2>
+                        </span>
+                        <Registro></Registro>
                     </Col>
                     <Col md={8}>
                         <div className="imagenRegistro"></div>
@@ -96,7 +64,7 @@ const ComunidadPropietarios = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosBuscador m-0 row">
-                    <Col className="colLeft">
+                    <Col className="colLeft justify-content-center align-items-center">
                         <p className="body-2">
                             Con ayuda de la comunidad haz realidad la casa que
                             deseas. <br />
@@ -203,7 +171,7 @@ const ComunidadPropietarios = (props) => {
                 <Row className="comunidadPropietariosListaVerificacion m-0">
                     <Col className="verificarLista" id="listaChequeo">
                         <span className="pitchPropietarios">
-                            <h2 className=".headline-xl titulosBlanco">
+                            <h2 className=".headline-xl titulosBlanco ps-4 ms-4">
                                 LISTA DE VERIFICACION
                             </h2>
                         </span>
