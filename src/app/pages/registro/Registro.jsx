@@ -8,6 +8,8 @@ import '../../../../public/assets/css/registro.css'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 const Registro = (props) => {
     const { showLogo } = props
@@ -15,7 +17,7 @@ const Registro = (props) => {
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate('/app/*')
+        navigate('/app/perfil')
     }
 
     return (
@@ -31,77 +33,105 @@ const Registro = (props) => {
                             sm={12}
                         ></Col>
                     )}
-                    <Col className="registrateformulario m-0" md={6} sm={12}>
-                        <form
+                    <Col
+                        className="registrateformulario m-0 p-0"
+                        md={6}
+                        sm={12}
+                    >
+                        <Form
                             id="formularioRegistro"
                             action=""
+                            className="p-4"
                             // preventDefault="true"
                         >
-                            <div>
-                                <h2 className="headline-xl textBlanco">
-                                    REGISTRATE
-                                </h2>
-                                <p className="body-1 textBlanco">
-                                    Bienvenido a todos los beneficios de dezzpo.
-                                </p>
-                                <label htmlFor="">Nombre</label>
-                                <br />
-                                <input
+                            <h2 className="headline-xl textBlanco">
+                                REGISTRATE
+                            </h2>
+                            <p className="body-1 textBlanco">
+                                Bienvenido a todos los beneficios de dezzpo.
+                            </p>
+                            <Form.Group
+                                className="mb-2"
+                                controlId="formBasicName"
+                            >
+                                <Form.Label className="mb-0">Nombre</Form.Label>
+                                <Form.Control
                                     type="text"
-                                    placeholder=""
-                                    id="name"
+                                    placeholder="Registre su nombre"
                                     name="name"
                                 />
-                                <br />
-                                <label htmlFor="">Nombre de usuario</label>
-                                <br />
-                                <input
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-2"
+                                controlId="formBasicName"
+                            >
+                                <Form.Label className="mb-0">
+                                    Nombre de usuario
+                                </Form.Label>
+                                <Form.Control
                                     type="text"
-                                    value=""
-                                    id="username"
+                                    placeholder="Elija su usuario"
                                     name="username"
                                 />
-                                <br />
-                                <label htmlFor="">Email</label>
-                                <br />
-                                <input
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-2"
+                                controlId="formBasicEmail"
+                            >
+                                <Form.Label className="mb-0">Email</Form.Label>
+                                <Form.Control
                                     type="email"
-                                    value=""
-                                    id="email"
+                                    placeholder="Registre una cuenta de email valida"
                                     name="email"
                                 />
-                                <br />
-                                <label htmlFor="">Contraseña</label>
-                                <br />
-                                <input
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-2"
+                                controlId="formBasicPassword"
+                            >
+                                <Form.Label className="mb-0">
+                                    Contraseña
+                                </Form.Label>
+                                <Form.Control
                                     type="password"
-                                    value=""
+                                    placeholder="Registre una clave"
                                     name="password"
-                                    id="password"
                                 />
-                                <br />
-                                <label htmlFor="">Confirme la Contraseña</label>
-                                <br />
-                                <input
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-2"
+                                controlId="formBasicPassword"
+                            >
+                                <Form.Label className="mb-0">
+                                    Confirme la Contraseña
+                                </Form.Label>
+                                <Form.Control
                                     type="password"
-                                    value=""
+                                    placeholder="De nuevo la clave"
                                     name="confirmPassword"
-                                    id="confirmPassword"
                                 />
-                                <br />
-                                <label htmlFor="">
-                                    {' '}
-                                    No soy un robot
-                                    <input type="checkbox" checked="checkbox" />
-                                </label>{' '}
-                                <br />
-                                <button onClick={handleClick}>
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-2"
+                                controlId="formBasicCheckboxRobot"
+                            >
+                                <Form.Check
+                                    className=""
+                                    type="checkbox"
+                                    label="No soy un robot"
+                                />
+                            </Form.Group>
+                            <Col>
+                                <Button
+                                    className="btn-round btn-high"
+                                    variant="primary"
+                                    type="submit"
+                                    onClick={handleClick}
+                                >
                                     Crear Cuenta
-                                </button>
-                                {/* <p>Bienvenido</p> */}
-                            </div>
-                        </form>
-                        <NavLink to="/app/">click here</NavLink>
+                                </Button>
+                            </Col>
+                        </Form>
                     </Col>
                 </Row>
             </Container>

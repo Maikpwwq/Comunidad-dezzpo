@@ -47,18 +47,10 @@ const ComunidadComerciantes = (props) => {
 
             <Container fluid className="p-0">
                 <Row className="comunidadComerciantesRegistro  m-0">
-                    <Col className="colLeft" md={6} lg={4}>
-                        <span
-                            className="pitchComerciantes"
-                            style={{ 'padding-left': '0px' }}
-                        >
-                            <h2 className="headline-xl textBlanco">
-                                {' '}
-                                COMUNIDAD COMERCIANTES
-                            </h2>
-                        </span>
-                        <Registro showLogo={false}></Registro>
+                    <Col className="" md={6} lg={6}>
+                        <h2 className="headline-xl"> COMUNIDAD COMERCIANTES</h2>
                     </Col>
+                    <Registro showLogo={false}></Registro>
                 </Row>
             </Container>
             <Container fluid className="p-0">
@@ -128,7 +120,7 @@ const ComunidadComerciantes = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="comunidadComerciantesBeneficios2  m-0">
-                    <Col md={8}>
+                    <Col className="p-4" md={8}>
                         <span className="pitchComerciantes">
                             <h2 className="headline-xl">
                                 El plan de beneficios con la membresía incluye

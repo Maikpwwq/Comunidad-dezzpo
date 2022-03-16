@@ -9,11 +9,9 @@
 }
 
 .footer{    
-    width: 100%;
     margin: 0 auto;
     background: #313332; 
     background-size: 100% auto;
-    display: flex;
     background-attachment: scroll;    
     border-top: #deaf06;
     border-style: solid;
@@ -46,14 +44,6 @@
     background-color: #006699;    
     text-decoration: underline;
 }
-.masLinks{
-    display: flex;
-    flex-direction: column;
-    width: 33%;
-    padding: 15px 0px 35px 121px;    
-    justify-content: space-between;
-    justify-items: center;
-}
 .siguenosRedes{
     display: flex;
     flex-direction: column;
@@ -66,10 +56,7 @@
 .listaFooter{
     margin-top: -21px;
     text-align: justify;
-}
-.siguenosRedes .listaFooter li{
-    border-bottom: #e9ebe6;
-    border-bottom-style: solid;
+    flex-direction: row!important;
 }
 .footerInferior{
     width: 100%;

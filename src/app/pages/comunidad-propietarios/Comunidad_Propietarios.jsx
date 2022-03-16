@@ -87,7 +87,7 @@ const ComunidadPropietarios = (props) => {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="comunidadPropietariosConsultar m-0 row ps-4 pe-4">
+                <Row className="comunidadPropietariosConsultar m-0 row p-4">
                     <Col className="col-12 m-4">
                         <h3 className=".headline-l">
                             Planea con nosotros el proyecto
