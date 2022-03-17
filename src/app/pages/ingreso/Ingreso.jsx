@@ -2,7 +2,9 @@
 // Pagina de Ingreso
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+// import { auth } from '../../../firebase/firebaseConfig' // src/firebase/firebaseConfig
 import { EmailAuthProvider, signInWithCredential } from 'firebase/auth'
+
 import '../../../../public/assets/css/ingreso.css'
 
 // react-bootrstrap
@@ -13,34 +15,35 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 const Ingreso = (props) => {
+    let emailText = React.createRef()
+    let passwordText = React.createRef()
+
     const navigate = useNavigate()
 
-    const [send, setSend] = React.useState(false)
-    const [userEmail, setEmail] = React.useState('')
-    const [userPassword, setPassword] = React.useState('')
-
     const handleClick = () => {
-        setSend(true)
-        setEmail(document.getElementById('formLoginCredential').value)
-        setPassword(document.getElementById('formLoginPassword').value)
-        console.log(userEmail, userPassword, send)
-        let credential = EmailAuthProvider.credential(userEmail, userPassword)
-        signInWithCredential(credential)
-            .then((usercred) => {
-                var user = usercred.user
-                console.log('Anonymous account successfully upgraded', user)
-                navigate('/app/perfil')
-            })
-            .catch((err) => {
-                console.log('Error upgrading anonymous account', err)
-                var errorCode = err.code
-                var errorMessage = err.message
-                if (errorCode === 'auth/wrong-password') {
-                    alert('Clave incorrecta.')
-                } else {
-                    alert(errorMessage)
-                }
-            })
+        let email = emailText.current.value
+        let clave = passwordText.current.value
+        console.log(email, clave)
+        let credential = EmailAuthProvider.credential(email, clave)
+        const logIn = async (cred) => {
+            await signInWithCredential(cred)
+                .then((usercred) => {
+                    var user = usercred.user
+                    console.log('Anonymous account successfully upgraded', user)
+                    navigate('/app/perfil')
+                })
+                .catch((err) => {
+                    console.log('Error upgrading anonymous account', err)
+                    var errorCode = err.code
+                    var errorMessage = err.message
+                    if (errorCode === 'auth/wrong-password') {
+                        alert('Clave incorrecta.')
+                    } else {
+                        alert(errorMessage)
+                    }
+                })
+        }
+        logIn(credential)
     }
 
     let checkStyle = {
@@ -86,6 +89,8 @@ const Ingreso = (props) => {
                                         type="text"
                                         placeholder="correo o número celular"
                                         name="credential"
+                                        inputRef={emailText}
+                                        //ref={emailText}
                                     />
                                 </Form.Group>
                                 <Form.Group
@@ -96,6 +101,8 @@ const Ingreso = (props) => {
                                         type="password"
                                         placeholder="contraseña"
                                         name="password"
+                                        //inputRef={passwordText}
+                                        ref={passwordText}
                                     />
                                 </Form.Group>
                                 <Button
