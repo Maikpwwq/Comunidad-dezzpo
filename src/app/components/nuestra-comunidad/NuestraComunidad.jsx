@@ -58,7 +58,7 @@ const NuestraComunidad = (props) => {
             <CategoriasServicios />
             <Container fluid className="p-0">
                 {/* seccion de comerciantes Locales*/}
-                <Row id="comerciantesLocales" className="m-0">
+                <Row id="comerciantesLocales" className="p-4 m-0">
                     <Col className="col-12">
                         <h2 className="headline-xl textBlanco">
                             Busca en tu ciudad comerciantes calificados

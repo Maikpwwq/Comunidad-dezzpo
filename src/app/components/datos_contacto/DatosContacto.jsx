@@ -16,36 +16,36 @@ const DatosContacto = (props) => {
                         {' '}
                         Ponte en Contacto{' '}
                     </h2>
-                    <ul className="listaFooter pt-3 w-100">
-                        <Row className="m-0 w-100 d-flex">
-                            <span
-                                className="icon-DireccionDomicilioIcono"
-                                style={{ width: 'auto' }}
-                            ></span>
-                            <Col className="m-0 p-0 body-1">
-                                <li> Dirección Cll 159 No. 8c-45 </li>
-                                <li> Piso 5 </li>
-                            </Col>
-                        </Row>
-                        <Row className="m-0 w-100 d-flex">
+                    <ul className="listaContacto pt-3 w-100 align-items-end">
+                        <Row className="border-top m-0 w-100 d-flex">
                             <span
                                 className="icon-TelefonoContactoIcono"
                                 style={{ width: 'auto' }}
                             ></span>
-                            <Col className="m-0 p-0 body-1">
+                            <Col className="m-0 p-0 body-1 align-items-end">
                                 <li> +57 3196138057 - Office </li>
                                 <li> +57 3196138057 - PBX </li>
                             </Col>
                         </Row>
-                        <Row className="m-0 w-100 d-flex">
+                        <Row className="border-top m-0 w-100 d-flex">
                             <span
-                                className="icon-EmailIcono"
-                                style={{
-                                    width: 'auto',
-                                }}
+                                className="icon-DireccionDomicilioIcono"
+                                style={{ width: 'auto' }}
                             ></span>
-                            <Col className="m-0 p-0 body-1">
+                            <Col className="m-0 p-0 body-1 align-items-end">
+                                <li> Dirección Cll 159 No. 8c-45 </li>
+                                <li> Piso 5 </li>
+                            </Col>
+                        </Row>
+                        <Row className="border-top m-0 w-100 d-flex">
+                            <Col className="m-0 p-0 pt-2 pb-2 body-1 align-items-end">
                                 <li>
+                                    <span
+                                        className="icon-EmailIcono"
+                                        style={{
+                                            width: 'auto',
+                                        }}
+                                    ></span>
                                     <a
                                         href="mailto:comunidad.dezzpo@gmail.com"
                                         title="Correo Comunidad Dezzpo"

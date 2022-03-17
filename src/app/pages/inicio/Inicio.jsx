@@ -50,7 +50,7 @@ const Inicio = () => {
             <Container fluid className="p-0">
                 <Row className="m-0 w-100">
                     {/* Mensaje del Banner inferior*/}
-                    <Col className="mensajeBanner" md={12}>
+                    <Col className="mensajeBanner p-4" md={12}>
                         <p className="p-description textBlanco">
                             {' '}
                             Encuentra aqui un profesional Seguro y Confiable
@@ -69,7 +69,7 @@ const Inicio = () => {
             <Container fluid className="p-0">
                 {/* Seccion de como funciona la comunidad */}
                 <Row id="comoFunciona" className="m-0">
-                    <Col className="">
+                    <Col className="p-4">
                         <h2 className="headline-xl textBlanco">
                             ¿Como funciona nuestra comunidad?
                         </h2>

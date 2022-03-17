@@ -19,20 +19,3 @@
     min-height: 360px;
     width: 100%;
 }
-#popularCategorias{
-    display: flex;    
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-around;
-    width: 100%;
-}
-.categoriasPopulares {
-    background-color: #313332; 
-    color: white;    
-}
-.categoriasPopulares li {
-    list-style-type: none;
-}
-.tituloServicios {
-    width: 100%;
-}

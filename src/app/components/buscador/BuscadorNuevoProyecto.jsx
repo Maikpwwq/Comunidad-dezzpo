@@ -1,28 +1,57 @@
 import React from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import '../../../../public/assets/css/buscador_nuevos_proyectos.css'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import InputGroup from 'react-bootstrap/InputGroup'
 
 const BuscadorNuevoProyecto = (props) => {
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        navigate('/app/perfil')
+    }
+
     return (
         <>
             <Container fluid className="p-0">
                 <Col className="col-6" sm={12}>
-                    <div className="contenerdorFormulario">
-                        <form action="" id="formularioServicios">
-                            <div className="formularioBusqueda1">
-                                <label htmlFor="">
-                                    ¿Qué tipo de profesional necesitas?
-                                </label>
-                                <div className="casillaSeleccion">
-                                    <select
+                    <div className="contenerdorFormulario center">
+                        <Form action="" id="formularioServicios">
+                            {/* type="text" value="Selecciona un profesional listado #1" */}
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text
+                                    id="basic-addon1"
+                                    style={{
+                                        border: 'none',
+                                        background: 'none',
+                                    }}
+                                >
+                                    <span className="icon-LupaFomularioIcono">
+                                        <span className="path1"></span>
+                                        <span className="path2"></span>
+                                        <span className="path3"></span>
+                                        <span className="path4"></span>
+                                        <span className="path5"></span>
+                                    </span>
+                                </InputGroup.Text>
+                                <Form.Group
+                                    className="mb-2"
+                                    controlId="formBasicProfesional"
+                                >
+                                    <Form.Label className="mb-0">
+                                        ¿Qué tipo de profesional necesitas?
+                                    </Form.Label>
+                                    <Form.Select
+                                        className="casillaSeleccion"
                                         name="seleccionarProfesional"
                                         id="seleccionarProfesional"
                                     >
-                                        {' '}
-                                        {/* type="text" value="Selecciona un profesional listado #1" */}
+                                        <option>seleccionar uno</option>{' '}
                                         <option value="administradores PH">
                                             {' '}
                                             administradores PH{' '}
@@ -212,7 +241,18 @@ const BuscadorNuevoProyecto = (props) => {
                                             {' '}
                                             Trabajadores de piedras{' '}
                                         </option>
-                                    </select>
+                                    </Form.Select>
+                                </Form.Group>
+                            </InputGroup>
+
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text
+                                    id="basic-addon1"
+                                    style={{
+                                        border: 'none',
+                                        background: 'none',
+                                    }}
+                                >
                                     <span className="icon-LupaFomularioIcono">
                                         <span className="path1"></span>
                                         <span className="path2"></span>
@@ -220,16 +260,20 @@ const BuscadorNuevoProyecto = (props) => {
                                         <span className="path4"></span>
                                         <span className="path5"></span>
                                     </span>
-                                </div>
-                                <label htmlFor="">
-                                    ¿Qué tipo de proyecto es?
-                                </label>
-                                <div className="casillaSeleccion">
-                                    <select
+                                </InputGroup.Text>
+                                <Form.Group
+                                    className="mb-2"
+                                    controlId="formBasicProject"
+                                >
+                                    <Form.Label className="mb-0">
+                                        ¿Qué tipo de proyecto es?
+                                    </Form.Label>
+                                    <Form.Select
+                                        className="casillaSeleccion"
                                         name="seleccionarServicio"
                                         id="seleccionarServicio"
                                     >
-                                        {' '}
+                                        <option>seleccionar uno</option>{' '}
                                         {/* type="text" value="Selecciona el trabajo listado #2" */}
                                         <option value="Administraciones PH">
                                             {' '}
@@ -415,23 +459,24 @@ const BuscadorNuevoProyecto = (props) => {
                                             {' '}
                                             Trabajos en piedra{' '}
                                         </option>
-                                    </select>
-                                    <span className="icon-LupaFomularioIcono">
-                                        <span className="path1"></span>
-                                        <span className="path2"></span>
-                                        <span className="path3"></span>
-                                        <span className="path4"></span>
-                                        <span className="path5"></span>
-                                    </span>
-                                </div>
-                                <button
-                                    className="animacionBoton"
-                                    type="submit"
-                                >
-                                    Siguiente{' '}
-                                </button>
-                            </div>
-                        </form>
+                                    </Form.Select>
+                                </Form.Group>
+                            </InputGroup>
+
+                            <Form.Group>
+                                <Col>
+                                    <hr />
+                                    <Button
+                                        className="animacionBoton btn-round btn-high"
+                                        variant="primary"
+                                        type="submit"
+                                        onClick={handleClick}
+                                    >
+                                        Siguiente{' '}
+                                    </Button>
+                                </Col>
+                            </Form.Group>
+                        </Form>
                     </div>
                 </Col>
             </Container>

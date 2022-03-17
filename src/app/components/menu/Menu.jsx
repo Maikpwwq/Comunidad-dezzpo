@@ -2,6 +2,8 @@
 import React from 'react'
 import { NavLink, Redirect } from 'react-router-dom' // withRouter,
 import '../../../../public/assets/css/menu.css'
+
+// images
 import ComunidadDezzpo from '../../../../public/assets/img/Comunidad-Dezzpo.jpg'
 
 import Container from 'react-bootstrap/Container'

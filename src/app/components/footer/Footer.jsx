@@ -4,6 +4,9 @@ import '../../../../public/assets/css/footer.css'
 //import '../../../../public/assets/css/iconmoon/style.css';
 import { Link, Redirect } from 'react-router-dom'
 
+// images
+import ComunidadDezzpo from '../../../../public/assets/img/Comunidad-Dezzpo.jpg'
+
 import DatosContacto from '../datos_contacto/DatosContacto'
 
 import Container from 'react-bootstrap/Container'
@@ -16,171 +19,184 @@ const FooterComunidad = (props) => {
             <Container fluid className="p-0">
                 <footer className="footer">
                     {/* Empieza la seccion del footer */}
-                    <Col className="footerContainer pb-0">
+                    <Col className="footerContainer p-0">
                         {/* parte superior */}
                         <Row className="footerSuperior">
-                            {/* Mas links */}
-                            <Col className="masLinks">
-                                <ul className="body-1">
-                                    <li>
-                                        {' '}
-                                        &#10095;{' '}
-                                        <Link to="/legal" title="legal">
+                            <Row className="mt-2">
+                                {/* Mas links */}
+                                <Col className="ps-4 ms-4 align-items-end">
+                                    <ul className="body-1">
+                                        <li>
                                             {' '}
-                                            Legal
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        {' '}
-                                        &#10095;{' '}
-                                        <Link to="/ayuda-pqrs" title="Ayuda">
+                                            &#10095;{' '}
+                                            <Link to="/legal" title="legal">
+                                                {' '}
+                                                Legal
+                                            </Link>
+                                        </li>
+                                        <li>
                                             {' '}
-                                            Ayuda
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        {' '}
-                                        &#10095;{' '}
-                                        <Link
-                                            to="/patrocinadores"
-                                            title="Patrocinadores"
-                                        >
+                                            &#10095;{' '}
+                                            <Link
+                                                to="/ayuda-pqrs"
+                                                title="Ayuda"
+                                            >
+                                                {' '}
+                                                Ayuda
+                                            </Link>
+                                        </li>
+                                        <li>
                                             {' '}
-                                            Patrocinadores
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        {' '}
-                                        &#10095;{' '}
-                                        <Link to="/blog" title="Blog">
+                                            &#10095;{' '}
+                                            <Link
+                                                to="/patrocinadores"
+                                                title="Patrocinadores"
+                                            >
+                                                {' '}
+                                                Patrocinadores
+                                            </Link>
+                                        </li>
+                                        <li>
                                             {' '}
-                                            Blog
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        {' '}
-                                        &#10095;{' '}
-                                        <Link
-                                            to="/contactenos"
-                                            title="Contactenos"
-                                        >
+                                            &#10095;{' '}
+                                            <Link to="/blog" title="Blog">
+                                                {' '}
+                                                Blog
+                                            </Link>
+                                        </li>
+                                        <li>
                                             {' '}
-                                            Contactenos
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        {' '}
-                                        &#10095;{' '}
-                                        <Link
-                                            to="/mapa-del-sitio"
-                                            title="Mapa del Sitio"
-                                        >
+                                            &#10095;{' '}
+                                            <Link
+                                                to="/contactenos"
+                                                title="Contactenos"
+                                            >
+                                                {' '}
+                                                Contactenos
+                                            </Link>
+                                        </li>
+                                        <li>
                                             {' '}
-                                            Mapa del Sitio
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </Col>
-                            {/* siguenos en redes */}
-                            <Col className="siguenosRedes pt-0">
-                                <h2 className="headline-xl textBlanco">
-                                    {' '}
-                                    SIGUENOS{' '}
-                                </h2>
-                                <ul className="listaFooter w-100 body-1">
-                                    {/* siguenos Instagram */}
-                                    <li className="w-50 d-flex align-items-center">
+                                            &#10095;{' '}
+                                            <Link
+                                                to="/mapa-del-sitio"
+                                                title="Mapa del Sitio"
+                                            >
+                                                {' '}
+                                                Mapa del Sitio
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </Col>
+                                {/* siguenos en redes */}
+                                <Col className="siguenosRedes p-0 align-items-start">
+                                    <Container className="containerLogo p-0 m-0 mt-4 mb-4 d-flex justify-content-center">
+                                        <img
+                                            src={ComunidadDezzpo}
+                                            alt="Logo Comunidad Dezzpo"
+                                            style={{ 'border-radius': '50%' }}
+                                            height="80px"
+                                            width="210px"
+                                        />
+                                    </Container>
+                                    <h2 className="headline-xl textBlanco ps-4">
                                         {' '}
-                                        &#10095;
-                                        <span
-                                            className="icon-IntagramSocialIcono p-1"
-                                            style={{
-                                                'font-size': '1.5em',
-                                            }}
-                                        >
-                                            <span className="path1"></span>
-                                            <span className="path2"></span>
-                                            <span className="path3"></span>
-                                            <span className="path4"></span>
-                                            <span className="path5"></span>
-                                        </span>
-                                        <a
-                                            href="https://www.instagram.com/comunidad_dezzpo/"
-                                            title="Instagram"
-                                        >
+                                        SIGUENOS{' '}
+                                    </h2>
+                                    <Container className="p-0 ps-4">
+                                        <ul className="listaFooter w-100 body-1 row justify-content-start">
                                             {' '}
-                                            Instagram{' '}
-                                        </a>
-                                    </li>
-                                    {/* siguenos Twitter */}
-                                    <li className="w-50 d-flex align-items-center">
-                                        {' '}
-                                        &#10095;
-                                        <span
-                                            className="icon-TwitterSocialIcono p-1"
-                                            style={{
-                                                'font-size': '1.5em',
-                                            }}
-                                        >
-                                            <span className="path1"></span>
-                                            <span className="path2"></span>
-                                        </span>
-                                        <a
-                                            href="https://www.twitter.com/"
-                                            title="Twitter"
-                                        >
-                                            {' '}
-                                            Twitter{' '}
-                                        </a>
-                                    </li>
-                                    {/* siguenos Facebook */}
-                                    <li className="w-50 d-flex align-items-center">
-                                        {' '}
-                                        &#10095;
-                                        <span
-                                            className="icon-FacebookSocialIcono p-1"
-                                            style={{
-                                                'font-size': '1.5em',
-                                            }}
-                                        >
-                                            <span className="path1"></span>
-                                            <span className="path2"></span>
-                                        </span>
-                                        <a
-                                            href="https://www.facebook.com/comunidad.dezzpo"
-                                            title="Facebook"
-                                        >
-                                            {' '}
-                                            Facebook{' '}
-                                        </a>
-                                    </li>
-                                    {/* siguenos Linkedin */}
-                                    <li className="w-50 d-flex align-items-center">
-                                        {' '}
-                                        &#10095;
-                                        <span
-                                            className="icon-LinkedinSocialIcono p-1"
-                                            style={{
-                                                'font-size': '1.5em',
-                                            }}
-                                        >
-                                            <span className="path1"></span>
-                                            <span className="path2"></span>
-                                            <span className="path3"></span>
-                                            <span className="path4"></span>
-                                        </span>
-                                        <a
-                                            href="https://www.linkedin.com/company/dezzpo-inc/"
-                                            title="LinkedIn"
-                                        >
-                                            {' '}
-                                            LinkedIn{' '}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </Col>
-                            {/* Datos de contacto comunidad dezzpo */}
-                            <DatosContacto></DatosContacto>
+                                            &#10095;
+                                            {/* siguenos Instagram */}
+                                            <li className="w-auto d-flex align-items-center">
+                                                <a
+                                                    href="https://www.instagram.com/comunidad_dezzpo/"
+                                                    title="Instagram"
+                                                >
+                                                    <span
+                                                        className="icon-IntagramSocialIcono p-1"
+                                                        style={{
+                                                            'font-size':
+                                                                '1.5em',
+                                                        }}
+                                                    >
+                                                        <span className="path1"></span>
+                                                        <span className="path2"></span>
+                                                        <span className="path3"></span>
+                                                        <span className="path4"></span>
+                                                        <span className="path5"></span>
+                                                    </span>{' '}
+                                                    {/* Instagram{' '} */}
+                                                </a>
+                                            </li>
+                                            {/* siguenos Twitter */}
+                                            <li className="w-auto d-flex align-items-center">
+                                                <a
+                                                    href="https://www.twitter.com/"
+                                                    title="Twitter"
+                                                >
+                                                    <span
+                                                        className="icon-TwitterSocialIcono p-1"
+                                                        style={{
+                                                            'font-size':
+                                                                '1.5em',
+                                                        }}
+                                                    >
+                                                        <span className="path1"></span>
+                                                        <span className="path2"></span>
+                                                    </span>
+                                                    {/* {' '}
+                                            Twitter{' '} */}
+                                                </a>
+                                            </li>
+                                            {/* siguenos Facebook */}
+                                            <li className="w-auto d-flex align-items-center">
+                                                <a
+                                                    href="https://www.facebook.com/comunidad.dezzpo"
+                                                    title="Facebook"
+                                                >
+                                                    <span
+                                                        className="icon-FacebookSocialIcono p-1"
+                                                        style={{
+                                                            'font-size':
+                                                                '1.5em',
+                                                        }}
+                                                    >
+                                                        <span className="path1"></span>
+                                                        <span className="path2"></span>
+                                                    </span>
+                                                    {/* {' '}
+                                            Facebook{' '} */}
+                                                </a>
+                                            </li>
+                                            {/* siguenos Linkedin */}
+                                            <li className="w-auto d-flex align-items-center">
+                                                <a
+                                                    href="https://www.linkedin.com/company/dezzpo-inc/"
+                                                    title="LinkedIn"
+                                                >
+                                                    <span
+                                                        className="icon-LinkedinSocialIcono p-1"
+                                                        style={{
+                                                            'font-size':
+                                                                '1.5em',
+                                                        }}
+                                                    >
+                                                        <span className="path1"></span>
+                                                        <span className="path2"></span>
+                                                        <span className="path3"></span>
+                                                        <span className="path4"></span>
+                                                    </span>
+                                                    {/* {' '}
+                                            LinkedIn{' '} */}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </Container>
+                                </Col>
+                                {/* Datos de contacto comunidad dezzpo */}
+                                <DatosContacto></DatosContacto>
+                            </Row>
                         </Row>
                         {/* parte inferior*/}
                         <Row className="footerInferior pt-3 w-100">

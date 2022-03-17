@@ -1,17 +1,56 @@
 /* eslint-disable prettier/prettier */
 // Pagina de Ingreso
 import React from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+// import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
+import { EmailAuthProvider, signInWithCredential } from 'firebase/auth'
+
 import '../../../../public/assets/css/ingreso.css'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 const Ingreso = (props) => {
+    let emailText = React.createRef()
+    let passwordText = React.createRef()
+
+    const navigate = useNavigate()
+
+    const handleClick = (e) => {
+        e.preventDefault()
+        let email = emailText.current.value
+        let clave = passwordText.current.value
+        console.log(email, clave)
+        let credential = EmailAuthProvider.credential(email, clave)
+        const logIn = async (usercredential) => {
+            await signInWithCredential(usercredential)
+                .then((userCredential) => {
+                    var user = userCredential.user
+                    console.log('Anonymous account successfully upgraded', user)
+                    navigate('/app/perfil')
+                })
+                .catch((err) => {
+                    console.log('Error upgrading anonymous account', err)
+                    var errorCode = err.code
+                    var errorMessage = err.message
+                    if (errorCode === 'auth/wrong-password') {
+                        alert('Clave incorrecta.')
+                    } else {
+                        alert(errorMessage)
+                    }
+                })
+        }
+        logIn(credential)
+    }
+
     let checkStyle = {
         width: '30px',
     }
+    //
 
     return (
         <>
@@ -27,9 +66,9 @@ const Ingreso = (props) => {
                             <p className="body-1 textBlanco">
                                 ERES NUEVO, <br />
                                 CREA FÁCIL UNA CUENTA!
-                                <a className="body-2" href="">
-                                    , Registrate
-                                </a>
+                                <NavLink className="body-2" to="/registro/">
+                                    {', Registrate'}
+                                </NavLink>
                             </p>
                             <br />
                             <ul>
@@ -41,80 +80,130 @@ const Ingreso = (props) => {
                                 </li>
                             </ul>
                             <br />
-                            <form id="formularioIngreso" action="">
-                                <hr />
-                                <input
-                                    type="text"
-                                    name=""
-                                    id=""
-                                    placeholder="correo o número celular"
-                                />
-                                <br />
-                                <br />
-                                <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    placeholder="contraseña"
-                                />
-                                <br />
-                                <span>
-                                    <a href="">OLVIDASTE LA CONTRASEÑA</a>
-                                </span>
-                                <br />
-                                <input
-                                    type="checkbox"
-                                    name=""
-                                    id=""
-                                    style={checkStyle}
-                                />
-                                <span> Recuérdame </span>
-                                <br />
-                                <input
-                                    type="checkbox"
-                                    name=""
-                                    id=""
-                                    style={checkStyle}
-                                    required
-                                />
-                                <span> NO SOY UN ROBOT </span> <br />
-                                <br />
-                                <button>INICIAR SESIÓN</button>
-                                <br />
-                                <hr />
-                            </form>
+                            <hr />
+                            <Form id="formularioIngreso" action="">
+                                <Form.Group
+                                    className="mb-2"
+                                    controlId="formLoginCredential"
+                                >
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="correo o número celular"
+                                        name="credential"
+                                        inputRef={emailText}
+                                        //ref={emailText}
+                                    />
+                                </Form.Group>
+                                <Form.Group
+                                    className="mb-2"
+                                    controlId="formLoginPassword"
+                                >
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="contraseña"
+                                        name="password"
+                                        //inputRef={passwordText}
+                                        ref={passwordText}
+                                    />
+                                </Form.Group>
+                                <Button
+                                    className="BOTON-TEXT"
+                                    variant="primary"
+                                    type="submit"
+                                >
+                                    <NavLink to="/sign-in/">
+                                        {'OLVIDASTE LA CONTRASEÑA'}
+                                    </NavLink>
+                                </Button>
+                                <Form.Group
+                                    className="mb-2"
+                                    controlId="formBasicCheckboxRecordar"
+                                >
+                                    <Form.Check
+                                        className=""
+                                        type="checkbox"
+                                        label="Recuérdame"
+                                    />
+                                </Form.Group>
+                                <Form.Group
+                                    className="mb-2"
+                                    controlId="formBasicCheckboxRobot"
+                                >
+                                    <Form.Check
+                                        className=""
+                                        type="checkbox"
+                                        label="No soy un robot"
+                                    />
+                                </Form.Group>
+                                <Form.Group>
+                                    <Col>
+                                        <hr />
+                                        <Button
+                                            className="btn-round btn-high"
+                                            variant="primary"
+                                            type="submit"
+                                            onClick={handleClick}
+                                        >
+                                            INICIAR SESIÓN
+                                        </Button>
+                                    </Col>
+                                </Form.Group>
+                            </Form>
                         </div>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
                 <Row className="ingresoUbicacion m-0 w-100">
-                    <Col className="colLeft">
-                        <span className="tituloformulario">
-                            {' '}
+                    <Col className="left m-4 p-0 pt-4 pb-4">
+                        <Form action="busquedaCiudad">
                             <h3 className="headline-l textBlanco">
                                 Ingresa tu ubicación
                             </h3>{' '}
-                        </span>
-                        <p className="body-1 textBlanco">
-                            Podras consultar con mejor <br />
-                            precision los costos y <br />
-                            tiempos de entrega <br />
-                        </p>
-                        <form action="busquedaCiudad">
-                            <label htmlFor=""> Ciudad </label>
-                            <br />
-                            <select name="city" id="city">
-                                <option>seleccionar uno</option>
-                                <option value="Bogota">Bogota</option>
-                            </select>
-                            <br />
-                            <label htmlFor="">Dirección</label>
-                            <br />
-                            <input type="text" />
-                            <br />
-                            <button className="btn">Consultar</button>
-                        </form>
+                            <p className="body-1 textBlanco">
+                                Podras consultar con mejor <br />
+                                precision los costos y <br />
+                                tiempos de entrega <br />
+                            </p>
+                            <Form.Group
+                                className="mb-2"
+                                controlId="formBasicCity"
+                            >
+                                <Form.Label className="mb-0">
+                                    Elija su ciudad
+                                </Form.Label>
+                                <Form.Select name="city" id="city">
+                                    <option>seleccionar uno</option>
+                                    <option value="Bogota">Bogota</option>
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-2"
+                                controlId="formBasicStreet"
+                            >
+                                <Form.Label className="mb-0">
+                                    Dirección
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Registre la dirección"
+                                    name="street"
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Col>
+                                    <hr />
+                                    <Button
+                                        className="btn-round btn-high"
+                                        variant="primary"
+                                        type="submit"
+                                        onClick={handleClick}
+                                    >
+                                        Consultar
+                                    </Button>
+                                </Col>
+                            </Form.Group>
+                        </Form>
                     </Col>
                     <Col className="imagenUbicacion"></Col>
                 </Row>
