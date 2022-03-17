@@ -2,7 +2,7 @@
 // Pagina de Ingreso
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-// import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
+import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import { EmailAuthProvider, signInWithCredential } from 'firebase/auth'
 
 import '../../../../public/assets/css/ingreso.css'
@@ -27,7 +27,7 @@ const Ingreso = (props) => {
         console.log(email, clave)
         let credential = EmailAuthProvider.credential(email, clave)
         const logIn = async (usercredential) => {
-            await signInWithCredential(usercredential)
+            await signInWithCredential(auth, usercredential)
                 .then((userCredential) => {
                     var user = userCredential.user
                     console.log('Anonymous account successfully upgraded', user)
@@ -90,8 +90,8 @@ const Ingreso = (props) => {
                                         type="text"
                                         placeholder="correo o número celular"
                                         name="credential"
-                                        inputRef={emailText}
-                                        //ref={emailText}
+                                        // inputRef={emailText}
+                                        ref={emailText}
                                     />
                                 </Form.Group>
                                 <Form.Group
