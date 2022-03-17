@@ -2,7 +2,7 @@
 // Pagina de Ingreso
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-// import { auth } from '../../../firebase/firebaseConfig' // src/firebase/firebaseConfig
+// import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import { EmailAuthProvider, signInWithCredential } from 'firebase/auth'
 
 import '../../../../public/assets/css/ingreso.css'
@@ -20,15 +20,16 @@ const Ingreso = (props) => {
 
     const navigate = useNavigate()
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.preventDefault()
         let email = emailText.current.value
         let clave = passwordText.current.value
         console.log(email, clave)
         let credential = EmailAuthProvider.credential(email, clave)
-        const logIn = async (cred) => {
-            await signInWithCredential(cred)
-                .then((usercred) => {
-                    var user = usercred.user
+        const logIn = async (usercredential) => {
+            await signInWithCredential(usercredential)
+                .then((userCredential) => {
+                    var user = userCredential.user
                     console.log('Anonymous account successfully upgraded', user)
                     navigate('/app/perfil')
                 })

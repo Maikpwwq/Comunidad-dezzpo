@@ -1,7 +1,7 @@
 // Pagina de registro
 import * as React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-// import { auth } from '../../../firebase/firebaseConfig' // src/firebase/firebaseConfig
+import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 import '../../../../public/assets/css/registro.css'
@@ -22,11 +22,10 @@ const Registro = (props) => {
 
     const navigate = useNavigate()
 
-    const handleClick = () => {
-        console.log(userEmail, userPassword, send)
-        const signUp = async (email, password) => {
-            // console.log(auth) auth,
-            await createUserWithEmailAndPassword(email, password)
+    const handleClick = (e) => {
+        e.preventDefault()
+        const signUp = (email, password) => {
+            createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     var user = userCredential.user
                     console.log('Anonymous account successfully upgraded', user)
@@ -34,6 +33,7 @@ const Registro = (props) => {
                 })
                 .catch((err) => {
                     console.log('Error upgrading anonymous account', err)
+                    console.log(err.code)
                     var errorCode = err.code
                     var errorMessage = err.message
                     if (errorCode === 'auth/wrong-password') {

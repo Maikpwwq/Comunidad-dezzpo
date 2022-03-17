@@ -2,7 +2,6 @@ import { firebaseClientConfig } from './firebaseConfig'
 import { getApps, initializeApp } from 'firebase/app'
 // import * as fb from 'firebase/compat/app'
 
-require('dotenv').config()
 // Productos de Firebase
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 // import { getFirestore } from 'firebase/firestore'
@@ -25,7 +24,6 @@ if (getApps().length < 1) {
 //     ? fb.initializeApp(firebaseClientConfig)
 //     : fb.app()
 export { firebaseApp }
-console.log(firebaseApp)
 
 export const auth = getAuth(firebaseApp)
 export const currentUser = auth.currentUser

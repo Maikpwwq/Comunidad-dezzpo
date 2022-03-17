@@ -3,7 +3,11 @@ const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
-require('dotenv').config()
+require('dotenv').config().parsed
+const envKeys = Object.keys(process.env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(process.env[next])
+    return prev
+}, {})
 
 // para uso en local dejar vacio "/", para postear en Github pages usar "/Comunidad-dezzpo/"
 const ASSET_PATH = process.env.ASSET_PATH || '/'
@@ -107,6 +111,7 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
         }),
+        new webpack.DefinePlugin(envKeys),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             appMountId: 'app',
