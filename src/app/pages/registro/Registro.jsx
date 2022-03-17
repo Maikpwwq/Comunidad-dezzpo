@@ -1,5 +1,7 @@
 // Pagina de registro
 import * as React from 'react'
+// import { auth } from '../../../firebase/firebaseConfig' // src/firebase/firebaseConfig
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import '../../../../public/assets/css/registro.css'
@@ -12,12 +14,50 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 const Registro = (props) => {
+    // let emailText = React.createRef()
+    let passwordText = React.createRef()
+
     const { showLogo } = props
+
+    const [send, setSend] = React.useState(false)
+    const [userEmail, setEmail] = React.useState(null)
+    const [userPassword, setPassword] = React.useState('')
 
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate('/app/perfil')
+        console.log(userEmail, userPassword, send)
+        // setEmail(document.getElementById('textSignupEmail').value)
+        // setPassword(document.getElementById('textSignupPassword').value)
+        let correo = document.getElementById('formSignupEmail').value
+        let clave = document.getElementById('formSignupPassword').value
+        let clave2 = passwordText.current.value
+        console.log(correo, clave, clave2)
+        setSend(true)
+        // setEmail(correo)
+        setPassword(clave2)
+        console.log(userEmail, userPassword, send)
+
+        const userCreated = async (email, password) => {
+            // console.log(auth) auth,
+            await createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    var user = userCredential.user
+                    console.log('Anonymous account successfully upgraded', user)
+                    navigate('/app/perfil')
+                })
+                .catch((err) => {
+                    console.log('Error upgrading anonymous account', err)
+                    var errorCode = err.code
+                    var errorMessage = err.message
+                    if (errorCode === 'auth/wrong-password') {
+                        alert('Clave incorrecta.')
+                    } else {
+                        alert(errorMessage)
+                    }
+                })
+        }
+        userCreated(userEmail, userPassword)
     }
 
     return (
@@ -50,6 +90,9 @@ const Registro = (props) => {
                             <p className="body-1 textBlanco">
                                 Bienvenido a todos los beneficios de dezzpo.
                             </p>
+                            <NavLink className="body-2" to="/ingreso/">
+                                {'¿Ya tienes una cuenta?'}
+                            </NavLink>
                             <Form.Group
                                 className="mb-2"
                                 controlId="formBasicName"
@@ -76,18 +119,22 @@ const Registro = (props) => {
                             </Form.Group>
                             <Form.Group
                                 className="mb-2"
-                                controlId="formBasicEmail"
+                                controlId="formSignupEmail"
                             >
                                 <Form.Label className="mb-0">Email</Form.Label>
                                 <Form.Control
                                     type="email"
                                     placeholder="Registre una cuenta de email valida"
                                     name="email"
+                                    // inputRef={(node) => setEmail(node)}
+                                    // ref={(node) => setEmail(node)}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    // id="textSignupEmail"
                                 />
                             </Form.Group>
                             <Form.Group
                                 className="mb-2"
-                                controlId="formBasicPassword"
+                                controlId="formSignupPassword"
                             >
                                 <Form.Label className="mb-0">
                                     Contraseña
@@ -96,6 +143,12 @@ const Registro = (props) => {
                                     type="password"
                                     placeholder="Registre una clave"
                                     name="password"
+                                    // onChange={(e) =>
+                                    //     setPassword(e.target.value)
+                                    // }
+                                    inputRef={passwordText}
+                                    ref={passwordText}
+                                    // id="textSignupPassword"
                                 />
                             </Form.Group>
                             <Form.Group

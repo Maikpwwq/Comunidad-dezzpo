@@ -5,7 +5,6 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 
 import Rutas from './router'
-import 'firebase/auth'
 import './index.scss'
 
 // import "./styles.styl";

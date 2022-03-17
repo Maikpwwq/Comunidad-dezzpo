@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 require('dotenv').config()
 
 // para uso en local dejar vacio "/", para postear en Github pages usar "/Comunidad-dezzpo/"
@@ -24,6 +25,37 @@ module.exports = {
         modules: ['node_modules'],
         extensions: ['.js', '.jsx', '.css', '.json'],
         alias: {},
+        // Node.js polyfill for webpack v5+ : NodePolyfillPlugin
+        // fallback: {
+        //     url: require.resolve('url/'),
+        //     buffer: require.resolve('buffer/'),
+        //     util: require.resolve('util/'),
+        //     https: require.resolve('https-browserify'),
+        //     http: require.resolve('stream-http'),
+        //     stream: require.resolve('stream-browserify'),
+        //     crypto: require.resolve('crypto-browserify'),
+        //     os: require.resolve('os-browserify/browser'),
+        //     assert: require.resolve('assert/'),
+        //     zlib: require.resolve('browserify-zlib'),
+        // },
+        fallback: {
+            fs: false,
+            tls: false,
+            net: false,
+            dns: false,
+            http2: false,
+            worker_threads: false,
+            child_process: false,
+            request: false,
+            fast_crc32c: false,
+            // path: false,
+            // os: false,
+            // crypto: false,
+            // stream: false,
+            // http: false,
+            // zlib: false,
+            // https: false,
+        },
     },
     module: {
         rules: [
@@ -70,6 +102,7 @@ module.exports = {
         ],
     },
     plugins: [
+        new NodePolyfillPlugin(),
         // Esto nos permite utilizar de forma segura env vars en nuestro código
         new webpack.DefinePlugin({
             'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),

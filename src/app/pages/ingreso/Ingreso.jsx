@@ -2,6 +2,7 @@
 // Pagina de Ingreso
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { EmailAuthProvider, signInWithCredential } from 'firebase/auth'
 import '../../../../public/assets/css/ingreso.css'
 
 // react-bootrstrap
@@ -14,8 +15,32 @@ import Form from 'react-bootstrap/Form'
 const Ingreso = (props) => {
     const navigate = useNavigate()
 
+    const [send, setSend] = React.useState(false)
+    const [userEmail, setEmail] = React.useState('')
+    const [userPassword, setPassword] = React.useState('')
+
     const handleClick = () => {
-        navigate('/app/perfil')
+        setSend(true)
+        setEmail(document.getElementById('formLoginCredential').value)
+        setPassword(document.getElementById('formLoginPassword').value)
+        console.log(userEmail, userPassword, send)
+        let credential = EmailAuthProvider.credential(userEmail, userPassword)
+        signInWithCredential(credential)
+            .then((usercred) => {
+                var user = usercred.user
+                console.log('Anonymous account successfully upgraded', user)
+                navigate('/app/perfil')
+            })
+            .catch((err) => {
+                console.log('Error upgrading anonymous account', err)
+                var errorCode = err.code
+                var errorMessage = err.message
+                if (errorCode === 'auth/wrong-password') {
+                    alert('Clave incorrecta.')
+                } else {
+                    alert(errorMessage)
+                }
+            })
     }
 
     let checkStyle = {
@@ -37,9 +62,9 @@ const Ingreso = (props) => {
                             <p className="body-1 textBlanco">
                                 ERES NUEVO, <br />
                                 CREA FÁCIL UNA CUENTA!
-                                <a className="body-2" href="">
-                                    , Registrate
-                                </a>
+                                <NavLink className="body-2" to="/registro/">
+                                    {', Registrate'}
+                                </NavLink>
                             </p>
                             <br />
                             <ul>
@@ -55,23 +80,21 @@ const Ingreso = (props) => {
                             <Form id="formularioIngreso" action="">
                                 <Form.Group
                                     className="mb-2"
-                                    controlId="formBasicCredential"
+                                    controlId="formLoginCredential"
                                 >
                                     <Form.Control
                                         type="text"
                                         placeholder="correo o número celular"
-                                        value=""
                                         name="credential"
                                     />
                                 </Form.Group>
                                 <Form.Group
                                     className="mb-2"
-                                    controlId="formBasicPassword"
+                                    controlId="formLoginPassword"
                                 >
                                     <Form.Control
                                         type="password"
                                         placeholder="contraseña"
-                                        value=""
                                         name="password"
                                     />
                                 </Form.Group>
@@ -79,9 +102,10 @@ const Ingreso = (props) => {
                                     className="BOTON-TEXT"
                                     variant="primary"
                                     type="submit"
-                                    onClick={handleClick}
                                 >
-                                    OLVIDASTE LA CONTRASEÑA
+                                    <NavLink to="/sign-in/">
+                                        {'OLVIDASTE LA CONTRASEÑA'}
+                                    </NavLink>
                                 </Button>
                                 <Form.Group
                                     className="mb-2"
