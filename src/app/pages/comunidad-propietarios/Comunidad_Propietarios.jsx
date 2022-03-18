@@ -81,7 +81,15 @@ const ComunidadPropietarios = (props) => {
                             </p>
                         </Col>
                     </Col>
-                    <Col className="" md={6} sm={12}>
+                    <Col
+                        className="col m-4 p-0"
+                        xl={4}
+                        lg={6}
+                        xm={6}
+                        md={8}
+                        sm={12}
+                        xs={12}
+                    >
                         <BuscadorNuevoProyecto></BuscadorNuevoProyecto>
                     </Col>
                 </Row>
@@ -174,77 +182,75 @@ const ComunidadPropietarios = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosListaVerificacion m-0">
-                    <Col className="p-4" id="listaChequeo">
+                    <Col
+                        className="col-8 p-0 m-0 pt-4 mt-4 pb-4 mb-4"
+                        id="listaChequeo"
+                    >
                         <h2 className=".headline-xl textBlanco ps-4 ms-4">
                             LISTA DE VERIFICACION
                         </h2>
                         <ul className="body-1">
-                            <li> Verifica Adecuadamente La Identidad. </li>
+                            <li> - Verifica Adecuadamente La Identidad. </li>
                             <li>
                                 {' '}
-                                Que el personal cuente con los elementos de
+                                - Que el personal cuente con los elementos de
                                 protección personal requeridos.{' '}
                             </li>
                             <li>
                                 {' '}
-                                Recuerda verificar los certificados tecnicos y
+                                - Recuerda verificar los certificados tecnicos y
                                 de afiliación propios de cada labor. <br />
                                 <strong>
-                                    - Trabajo seguro en alturas, arl, eps,
-                                    instalaciones gasodomesticas, polizas -
+                                    -- Trabajo seguro en alturas, arl, eps,
+                                    instalaciones gasodomesticas, polizas --
                                 </strong>
                             </li>
                             <li>
                                 {' '}
-                                Diligenciar y firmar debidamente el contrato de
-                                prestación de servicios.{' '}
+                                - Diligenciar y firmar debidamente el contrato
+                                de prestación de servicios.{' '}
                             </li>
                             <li>
-                                Las obras que afectan a terceros de la
+                                - Las obras que afectan a terceros de la
                                 comunidad, como muros de carga o de fachada, han
-                                de <br />
-                                hacerse saber para conseguir su aprobación. Sin
-                                embargo ten en cuenta que además es necesario un{' '}
-                                <br />
-                                permiso de obra que concede la curaduria urbana,
-                                al presentar el proyecto firmado por un
-                                arquitecto.{' '}
+                                de hacerse saber para conseguir su aprobación.
+                                Sin embargo ten en cuenta que además es
+                                necesario un permiso de obra que concede la
+                                curaduria urbana, al presentar el proyecto
+                                firmado por un arquitecto.{' '}
                             </li>
                             <li>
                                 {' '}
-                                Cuando hallas elegido el profesional comerciante
-                                calificado para tu proyecto, descarga y utiliza
-                                el <br />
-                                contrato de adquicisión, esto para resolver
-                                discrepancias concretas durante el desarrollo
-                                del servicio.{' '}
+                                - Cuando hallas elegido el profesional
+                                comerciante calificado para tu proyecto,
+                                descarga y utiliza el contrato de adquicisión,
+                                esto para resolver discrepancias concretas
+                                durante el desarrollo del servicio.{' '}
                             </li>
                             <li>
-                                Comun mente en el desarrolllo del servicio
-                                surgen imprevistos, estos no son posibles de{' '}
-                                <br />
+                                - Comun mente en el desarrolllo del servicio
+                                surgen imprevistos, estos no son posibles de
                                 planear al diseñar, reserva un 5% del
                                 presupuesto en caso de que alguna eventualidad
                                 se presente.{' '}
                             </li>
                             <li>
-                                Expon claramente cualquier aspecto de la
+                                - Expon claramente cualquier aspecto de la
                                 ejecucción que pueda influir con el resultado
                                 final <br />
                                 <strong>
-                                    - tiempos de permanencia, color, marca,
-                                    tiempos de secado, etc -
+                                    -- tiempos de permanencia, color, marca,
+                                    tiempos de secado, etc --
                                 </strong>{' '}
                             </li>
                             <li>
-                                Si el proyecto tiene un inpacto energetico y/o
-                                ecologico, Concretamente el <br />
-                                instituto para la, ofrece ayudas y subvenciones
-                                institucionales
+                                - Si el proyecto tiene un inpacto energetico y/o
+                                ecologico, Concretamente el instituto para la,
+                                ofrece ayudas y subvenciones institucionales
                             </li>
                             <span className=".headline-l textVerde">
                                 {' '}
-                                Se resuelve la encuesta de satisfacción del
+                                - Se resuelve la encuesta de satisfacción del
                                 servicio
                             </span>
                         </ul>

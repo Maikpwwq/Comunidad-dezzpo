@@ -42,7 +42,15 @@ const Inicio = () => {
                         </div>
                     </Col>
                     {/* Formulario nuevo proyecto */}
-                    <Col className="col-md-6 p-0">
+                    <Col
+                        className="col m-4 p-0"
+                        xl={4}
+                        lg={6}
+                        xm={6}
+                        md={8}
+                        sm={12}
+                        xs={12}
+                    >
                         <BuscadorNuevoProyecto></BuscadorNuevoProyecto>
                     </Col>
                 </Row>

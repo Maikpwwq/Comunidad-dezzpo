@@ -33,8 +33,8 @@ const Presupuestos = (props) => {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="presupuestosMensajeBuscador align-items-start justify-content-end">
-                    <Col className="p-4 m-4" lg={4} md={6} sm={12}>
+                <Row className="presupuestosMensajeBuscador align-items-start p-4">
+                    <Col className="m-0" lg={4} md={8} sm={8} xs={10}>
                         <p className="p-description textBlanco">
                             Publica tu proyecto gratis, los profesionales
                             disponibles te contactaran para ofrecer su
@@ -46,7 +46,15 @@ const Presupuestos = (props) => {
                             recomendaciones para contratar.
                         </p>
                     </Col>
-                    <Col className="" md={6} sm={12}>
+                    <Col
+                        className="col m-4 p-0"
+                        xl={4}
+                        lg={6}
+                        xm={6}
+                        md={8}
+                        sm={12}
+                        xs={12}
+                    >
                         <BuscadorNuevoProyecto></BuscadorNuevoProyecto>
                     </Col>
                 </Row>

@@ -30,8 +30,8 @@ const AsiTrabajamos = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosVinculate m-0 w-100 d-flex justify-content-end">
-                    <Col className="col d-flex" lg={4} md={8} sm={12}>
-                        <span className="headline-xl">
+                    <Col className="col d-flex center" lg={4} md={8} sm={12}>
+                        <span className="headline-xl opacidadNegro">
                             {' '}
                             PERFIL COMERCIANTE{' '}
                         </span>
@@ -43,9 +43,14 @@ const AsiTrabajamos = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosPropietario m-0 w-100 d-flex justify-content-end">
-                    <Col className="col d-flex" md={6} sm={12}>
+                    <Col
+                        className="col d-flex m-0 p-0 ps-4 pe-4"
+                        lg={6}
+                        md={12}
+                        sm={12}
+                    >
                         <h2 className="headline-xl textBlanco">PROPIETARIO</h2>
-                        <p className="body-2 m-4 textBlanco">
+                        <p className="body-2 m-0 p-0 ps-4 pe-4 ms-4 me-4 textBlanco">
                             SOMOS UNA COMUNIDAD DE COMERCIANTES PROFESIONALES,
                             CONTRATA PERSONAL CALIFICADO MANTENIMIENTO GENERAL
                             RESIDENCIAL Y DE PROPIEDAD HORIZONTAL, CONSULTA
@@ -62,11 +67,15 @@ const AsiTrabajamos = (props) => {
                         className="d-flex flex-column align-items-center"
                         md={12}
                     >
-                        <Col className="pt-4 p-0 pb-4 w-75 d-flex flex-column align-items-end justify-content-end">
-                            <span
-                                className="pt-4 p-0 pb-4 textBlanco certificacion-titulo headline-xl"
-                                style={{ 'min-height': '6em' }}
-                            >
+                        <Col
+                            className="certificaciones-titulo d-flex mb-4 mt-4 p-0 align-items-center"
+                            style={{ 'min-height': '8em' }}
+                            lg={4}
+                            md={6}
+                            sm={10}
+                            xs={12}
+                        >
+                            <span className="pt-4 p-0 mt-4 textBlanco certificacion-titulo headline-xl">
                                 {' '}
                                 CERTIFICACIÓN{' '}
                             </span>
@@ -99,8 +108,8 @@ const AsiTrabajamos = (props) => {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="asiTrabajamosCalificaciones m-0 w-100 d-flex flex-column align-items-end justify-content-end">
-                    <Col className="fondoCafe" lg={6} md={6} sm={12}>
+                <Row className="asiTrabajamosCalificaciones m-0 p-4 w-100 d-flex flex-column align-items-end">
+                    <Col className="mt-4" lg={6} md={6} sm={12}>
                         <span>
                             <h2 className="headline-xl textBlanco">
                                 CALIFICACIONES
@@ -119,48 +128,68 @@ const AsiTrabajamos = (props) => {
                                     Estado de observaciones generales y
                                     evaluacion del desempeño:
                                 </li>
+                                <br />
                                 <li>
-                                    Cumple con los tiempos de entrega de las
-                                    certificaciones,
-                                    <br />
-                                    polizas, actas y contratos.
+                                    - Cumple con los tiempos de entrega de las
+                                    certificaciones, polizas, actas y contratos.
                                 </li>
+
+                                <br />
                                 <li>
-                                    El servicio fue prestado en las fechas y
+                                    - El servicio fue prestado en las fechas y
                                     horario programados.
                                 </li>
                                 <li>
-                                    El servicio cumplio con las especificaciones
-                                    y
-                                    <br />
-                                    normas tecnicas establecidas.
+                                    - El servicio cumplio con las
+                                    especificaciones y normas tecnicas
+                                    establecidas.
                                 </li>
                                 <li>
-                                    Fue suficiente el presonal y tenia todas las
-                                    competencias
-                                    <br />
-                                    necesarias para ejecutar las actividades del
-                                    contrato.
+                                    - Fue suficiente el presonal y tenia todas
+                                    las competencias necesarias para ejecutar
+                                    las actividades del contrato.
                                 </li>
                                 <li>
-                                    Las facturas, soportes y documentos
-                                    contractuales fueren
-                                    <br />
-                                    entregados oportunamente.
+                                    - Las facturas, soportes y documentos
+                                    contractuales fueren entregados
+                                    oportunamente.
                                 </li>
                             </ul>
                         </p>
                     </Col>
+                    <Col
+                        className="col-12"
+                        style={{ 'min-height': '200px' }}
+                    ></Col>
+                    <Col
+                        className="col-12"
+                        style={{ 'min-height': '200px' }}
+                    ></Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="asiTrabajamosEstadisticas  m-0 w-100">
+                <Row className="asiTrabajamosEstadisticas m-0">
                     <Row className="headline-l">
-                        <ul style={{ 'flex-direction': 'row' }}>
-                            <li>USUARIOS</li>
-                            <li>ACTIVO DESDE</li>
-                            <li>CLIENTES FELICES</li>
-                            <li>PROYECTOS</li>
+                        <ul>
+                            <li>
+                                <span className="text-black">484</span>
+                                <br />
+                                USUARIOS
+                            </li>
+                            <li>
+                                <span className="text-black">2018</span>
+                                <br /> ACTIVO DESDE
+                            </li>
+                            <li>
+                                <span className="text-black">84</span>
+                                <br />
+                                CLIENTES FELICES
+                            </li>
+                            <li>
+                                <span className="text-black">206</span>
+                                <br />
+                                PROYECTOS
+                            </li>
                         </ul>
                     </Row>
                 </Row>

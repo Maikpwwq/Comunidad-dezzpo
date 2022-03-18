@@ -2,7 +2,7 @@
 // Pagina de Ingreso
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-// import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
+import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import { EmailAuthProvider, signInWithCredential } from 'firebase/auth'
 
 import '../../../../public/assets/css/ingreso.css'
@@ -15,19 +15,18 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 const Ingreso = (props) => {
-    let emailText = React.createRef()
-    let passwordText = React.createRef()
+    const [send, setSend] = React.useState(false)
+    const [userLoginEmail, setEmail] = React.useState(null)
+    const [userLoginPassword, setPassword] = React.useState('')
 
     const navigate = useNavigate()
 
     const handleClick = (e) => {
         e.preventDefault()
-        let email = emailText.current.value
-        let clave = passwordText.current.value
-        console.log(email, clave)
-        let credential = EmailAuthProvider.credential(email, clave)
-        const logIn = async (usercredential) => {
-            await signInWithCredential(usercredential)
+        console.log(userLoginEmail, userLoginPassword)
+        let credential = EmailAuthProvider.credential(userLoginEmail, userLoginPassword)
+        const logIn = (usercredential) => {
+            signInWithCredential(auth, usercredential)
                 .then((userCredential) => {
                     var user = userCredential.user
                     console.log('Anonymous account successfully upgraded', user)
@@ -44,7 +43,12 @@ const Ingreso = (props) => {
                     }
                 })
         }
+        setSend(true)
         logIn(credential)
+    }
+
+    const handleConsult = () => {
+        navigate('/app/perfil')
     }
 
     let checkStyle = {
@@ -90,8 +94,9 @@ const Ingreso = (props) => {
                                         type="text"
                                         placeholder="correo o número celular"
                                         name="credential"
-                                        inputRef={emailText}
-                                        //ref={emailText}
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
                                     />
                                 </Form.Group>
                                 <Form.Group
@@ -102,8 +107,9 @@ const Ingreso = (props) => {
                                         type="password"
                                         placeholder="contraseña"
                                         name="password"
-                                        //inputRef={passwordText}
-                                        ref={passwordText}
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
                                     />
                                 </Form.Group>
                                 <Button
@@ -111,7 +117,7 @@ const Ingreso = (props) => {
                                     variant="primary"
                                     type="submit"
                                 >
-                                    <NavLink to="/sign-in/">
+                                    <NavLink to="/ingreso/">
                                         {'OLVIDASTE LA CONTRASEÑA'}
                                     </NavLink>
                                 </Button>
@@ -197,7 +203,7 @@ const Ingreso = (props) => {
                                         className="btn-round btn-high"
                                         variant="primary"
                                         type="submit"
-                                        onClick={handleClick}
+                                        onClick={handleConsult}
                                     >
                                         Consultar
                                     </Button>

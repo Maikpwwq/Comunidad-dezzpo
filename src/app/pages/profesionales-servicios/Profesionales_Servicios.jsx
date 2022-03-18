@@ -15,24 +15,31 @@ const ProfesionalesServicios = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="profesionalesServiciosMensaje m-0 d-flex flex-row justify-content-end">
-                    <Col md={4}>
-                        <h2 className="headline-xl">
-                            Profesionales y Servicios <br />
-                            Recuerda
-                        </h2>
-                        <p className="body-1">
-                            Los Certificados describen las acreditaciones que ha
-                            recibido cada comerciante <br />
-                            calificado, estos se pueden consultar junto al
-                            perfil, además podras consultar <br />
-                            las fotos de sus anteriores trabajos, las
-                            calificaciones y comentarios de otros <br />
-                            Propietarios
-                        </p>
-                        <span className="p-description">
-                            {' '}
-                            Busca Profesionales en tu zona{' '}
-                        </span>
+                    <Col
+                        className="d-flex flex-col justify-content-end align-items-end"
+                        xl={4}
+                        lg={6}
+                        md={8}
+                        sm={10}
+                        xs={12}
+                    >
+                        <Col className="opacidadNegro p-4 m-0 center">
+                            <h2 className="headline-xl textBlanco">
+                                Profesionales y Servicios Recuerda
+                            </h2>
+                            <p className="body-1">
+                                Los Certificados describen las acreditaciones
+                                que ha recibido cada comerciante calificado,
+                                estos se pueden consultar junto al perfil,
+                                además podras consultar las fotos de sus
+                                anteriores trabajos, las calificaciones y
+                                comentarios de otros Propietarios
+                            </p>
+                            <span className="p-description textBlanco">
+                                {' '}
+                                Busca Profesionales en tu zona{' '}
+                            </span>
+                        </Col>
                     </Col>
                 </Row>
             </Container>
