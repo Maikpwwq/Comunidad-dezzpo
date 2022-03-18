@@ -17,8 +17,8 @@ const Registro = (props) => {
     const { showLogo } = props
 
     const [send, setSend] = React.useState(false)
-    const [userEmail, setEmail] = React.useState(null)
-    const [userPassword, setPassword] = React.useState('')
+    const [userSignupEmail, setEmail] = React.useState(null)
+    const [userSignupPassword, setPassword] = React.useState('')
 
     const navigate = useNavigate()
 
@@ -44,7 +44,7 @@ const Registro = (props) => {
                 })
         }
         setSend(true)
-        signUp(userEmail, userPassword)
+        signUp(userSignupEmail, userSignupPassword)
     }
 
     return (

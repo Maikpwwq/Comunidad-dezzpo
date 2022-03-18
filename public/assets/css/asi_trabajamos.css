@@ -1,16 +1,57 @@
 /* Pantallas de Moviles */
 @media screen and (max-width: 600px) {
-
+    .asiTrabajamosVinculate{
+        background: #e9ebe6 url(../img/AsiTrabajamos3Mobile.png) no-repeat center !important;       
+        background-size: cover !important;
+    }
+    .asiTrabajamosPropietario{
+        background: #e9ebe6 url(../img/BackgoundHexagonal.png) no-repeat center !important; 
+        background-size: 100% 100% !important;
+    }
+    .asiTrabajamosCertificaciones{
+        background: #e9ebe6 url(../img/AsiTrabajamos5Mobile.png) no-repeat center !important;           
+        background-size: 100% 100% !important;
+    }
+    .asiTrabajamosCalificaciones{
+        background: #e9ebe6 url(../img/AsiTrabajamos6Mobile.png) no-repeat center !important;     
+        background-size: 100% 100% !important;
+    }
+    .asiTrabajamosEstadisticas ul{
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+    .certificaciones-titulo{
+        justify-content: start !important;
+    }    
 }
 /* Pantallas en tabletas */
 @media screen and (min-width: 600px) and (max-width: 900px) {
-    
+    .asiTrabajamosCertificaciones{
+        background: #e9ebe6 url(../img/AsiTrabajamos5Mobile.png) no-repeat center !important;           
+        background-size: 100% 100% !important;
+    }
+    .asiTrabajamosPropietario{
+        background: #e9ebe6 url(../img/BackgoundHexagonal.png) no-repeat center !important; 
+        background-size: 100% 100% !important;
+    }
+    .asiTrabajamosCalificaciones{
+        background: #e9ebe6 url(../img/AsiTrabajamos6Mobile.png) no-repeat center !important;       
+        background-size: 100% 100% !important;
+    }
+    .certificaciones-titulo {
+        justify-content: start !important;
+    } 
 }
 /* Pantallas de Ordenador */
 @media screen and (min-width: 900px) {
-   
+    .asiTrabajamosEstadisticas ul{
+        flex-direction: row !important;
+    }
+    .certificaciones-titulo {
+        justify-content: end !important;
+    } 
 }
-
 
 .asiTrabajamosRegistro{ 
     background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; 
@@ -31,7 +72,7 @@
     width: 100%;
     color: #333333;
     text-align: center;
-}
+} 
 .asiTrabajamosVinculate{
     background: #e9ebe6 url(../img/AsiTrabajamos3.png) no-repeat center; 
     background-attachment: scroll;         
@@ -59,9 +100,6 @@
     height: auto;
     width: 100%;
 }
-.certificacion-titulo {
-
-}
 .asiTrabajamosCalificaciones{
     background: #e9ebe6 url(../img/AsiTrabajamos6.png) no-repeat center; 
     background-attachment: scroll;         
@@ -73,6 +111,6 @@
 }
 .asiTrabajamosEstadisticas{
     background: #e9ebe6;
-    height: 220px;
-    width: 100%;
+    min-height: 220px;
+    height: auto;
 }

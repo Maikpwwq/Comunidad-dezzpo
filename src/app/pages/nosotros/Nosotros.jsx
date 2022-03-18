@@ -46,10 +46,10 @@ const Nosotros = (props) => {
                     id="Acerca-de-nosotros"
                 >
                     <Col
-                        className="d-flex flex-column align-items-center"
+                        className="d-flex flex-column align-items-center p-4"
                         md={10}
                     >
-                        <Row className="right w-100 m-4 d-flex flex-row justify-content-end align-content-start">
+                        <Row className="right w-100 p-4 d-flex flex-row justify-content-end align-content-start">
                             <Col
                                 md={6}
                                 className="d-flex flex-row justify-content-start"
@@ -58,8 +58,8 @@ const Nosotros = (props) => {
                                     <h2 className="headline-xl">MISIÓN</h2>
                                 </span>
                             </Col>
-                            <Col md={6}>
-                                <p className="body-2 textBlanco">
+                            <Col md={6} className="ps-4 pe-4">
+                                <p className="body-2 textBlanco ps-4 pe-4">
                                     Trabajamos para las personas, destacándonos
                                     por la calidad del servicio al cliente, el
                                     crecimiento continuo del ser y la gestión
@@ -73,9 +73,9 @@ const Nosotros = (props) => {
                                 </p>
                             </Col>
                         </Row>
-                        <Row className="left w-100 m-4 d-flex flex-row justify-content-start">
-                            <Col md={6}>
-                                <p className="body-2 textBlanco">
+                        <Row className="left w-100 p-4 d-flex flex-row justify-content-start">
+                            <Col md={6} className="ps-4 pe-4">
+                                <p className="body-2 textBlanco ps-4 pe-4">
                                     Dezzpo será en 2020 una marca colombiana
                                     posicionada, referente de consulta para la
                                     gestión en proyectos de mantenimiento,

@@ -19,8 +19,8 @@ const BuscadorNuevoProyecto = (props) => {
     return (
         <>
             <Container fluid className="p-0">
-                <Col className="col-6" sm={12}>
-                    <div className="contenerdorFormulario center">
+                <Col className="col-12">
+                    <div className="contenerdorFormulario center opacidadNegro">
                         <Form action="" id="formularioServicios">
                             {/* type="text" value="Selecciona un profesional listado #1" */}
                             <InputGroup className="mb-3">

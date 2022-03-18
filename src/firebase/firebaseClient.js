@@ -14,15 +14,17 @@ let firebaseApp
 if (getApps().length < 1) {
     firebaseApp = initializeApp(firebaseClientConfig)
 }
-// if (typeof window !== 'undefined' && !fb.apps.length) {
-//     fb.initializeApp(firebaseClientConfig)
-//     fb.auth().setPersistence(fb.auth.Auth.Persistence.SESSION)
-//     // window.firebase = fb
-// }
-// const firebaseApp = fb.app()
-// const firebaseApp = !fb.apps.length
-//     ? fb.initializeApp(firebaseClientConfig)
-//     : fb.app()
+/*
+if (typeof window !== 'undefined' && !fb.apps.length) {
+    fb.initializeApp(firebaseClientConfig)
+    fb.auth().setPersistence(fb.auth.Auth.Persistence.SESSION)
+    // window.firebase = fb
+}
+const firebaseApp = fb.app()
+const firebaseApp = !fb.apps.length
+    ? fb.initializeApp(firebaseClientConfig)
+    : fb.app()
+*/
 export { firebaseApp }
 
 export const auth = getAuth(firebaseApp)
