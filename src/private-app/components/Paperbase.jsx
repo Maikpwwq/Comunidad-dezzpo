@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
+
 import Navigator from './Navigator'
 import Content from './Content'
 import Header from './Header'
@@ -26,7 +27,7 @@ let theme = createTheme({
     palette: {
         primary: {
             light: '#63ccff',
-            main: '#009be5',
+            main: '#009999', //#009be5
             dark: '#006db3',
         },
     },
@@ -129,7 +130,7 @@ theme = {
             styleOverrides: {
                 root: {
                     '&.Mui-selected': {
-                        color: '#4fc3f7',
+                        color: '#4fc3f7', // 
                     },
                 },
             },

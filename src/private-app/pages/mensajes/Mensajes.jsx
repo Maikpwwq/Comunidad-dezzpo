@@ -12,6 +12,9 @@ const Mensajes = (props) => {
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex align-items-start">
                     <Col md={6}>
+                        <span>
+                            <h2 className="headline-xl">Mensajes</h2>
+                        </span>
                         <form
                             style={{
                                 display: 'flex',
@@ -56,7 +59,7 @@ const Mensajes = (props) => {
                         HILO DE CONVERSACIÓN
                         <div className="">
                             {/*Desplegar hilo conversaciones*/}
-                            <p>
+                            <p className="body-1">
                                 Publicado el 23/05/2019 a las10:30 am, por
                                 @Nombre usuario{' '}
                             </p>

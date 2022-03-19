@@ -12,7 +12,7 @@ const Notificaciones = (props) => {
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex">
                     <Col>
-                        <h2>Notificaciones</h2>
+                        <h2 className="headline-xl">Notificaciones</h2>
                         <div>
                             <textarea rows="10" cols="30"></textarea>
                         </div>

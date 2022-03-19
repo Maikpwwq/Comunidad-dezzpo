@@ -11,50 +11,68 @@ const Portal_Servicios = (props) => {
         <>
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex">
-                    <h2>Obtener o Aplicar con Cotizaciones</h2>
-                    <Col>
-                        Publica un proyecto gratis{' '}
-                        <p>
+                    <Col className="col-10 p-4">
+                        <h2 className="headline-xl">
+                            Obtener o Aplicar con Cotizaciones
+                        </h2>
+                        <p className="body-2">Publica un proyecto gratis </p>
+                        <p className="body-1">
                             Busqueda Local Servicios: Buscar comerciantes
                             Calificados
                         </p>
-                        <table>
-                            <tr>
-                                <th>Miembro</th>
-                                <th>Oferta de Servicios</th>
-                                <th>Certificaciones</th>
-                                <th>Calificaciones</th>
-                                <th>Se unio el</th>
-                                <th>Ubicación</th>
-                                <th>Contactar</th>
-                            </tr>
-                            <tr>
-                                <td>DATA...</td>
-                            </tr>
-                        </table>
+                        <Col className="col-10 p-4">
+                            <table>
+                                <tr>
+                                    <th>Miembro</th>
+                                    <th>Oferta de Servicios</th>
+                                    <th>Certificaciones</th>
+                                    <th>Calificaciones</th>
+                                    <th>Se unio el</th>
+                                    <th>Ubicación</th>
+                                    <th>Contactar</th>
+                                </tr>
+                                <tr>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                </tr>
+                            </table>
+                        </Col>
                     </Col>
                 </Row>
                 <Row className="m-0 w-100 d-flex">
-                    <Col>
-                        Aplica a un Proyecto Gratis
-                        <p>Buscar Requerimientos</p>
+                    <Col className="p-4">
                         <span>
-                            <h2>Proyectos activos</h2>
+                            <h2 className="headline-xl">Proyectos activos</h2>
                         </span>
-                        <table>
-                            <tr>
-                                <th>Imagenes</th>
-                                <th>Descripción</th>
-                                <th>Fecha de Publicación</th>
-                                <th>Valor Aproximado</th>
-                                <th>Se unio el</th>
-                                <th>Ubicación</th>
-                                <th>Postular</th>
-                            </tr>
-                            <tr>
-                                <td>DATA...</td>
-                            </tr>
-                        </table>
+                        <p className="body-2">Aplica a un Proyecto Gratis </p>
+                        <p className="body-1">Buscar Requerimientos</p>
+                        <Col className="col-10 p-4">
+                            <table>
+                                <tr>
+                                    <th>Imagenes</th>
+                                    <th>Descripción</th>
+                                    <th>Fecha de Publicación</th>
+                                    <th>Valor Aproximado</th>
+                                    <th>Se unio el</th>
+                                    <th>Ubicación</th>
+                                    <th>Postular</th>
+                                </tr>
+                                <tr>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                    <td>DATA...</td>
+                                </tr>
+                            </table>
+                        </Col>
                     </Col>
                 </Row>
             </Container>

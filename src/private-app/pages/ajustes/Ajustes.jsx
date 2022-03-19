@@ -22,7 +22,7 @@ const Ajustes = (props) => {
                                 }}
                             >
                                 <div>
-                                    <span>Datos de contacto</span>
+                                    <span className="body-1">Datos de contacto</span>
                                 </div>
                                 <input
                                     type="text"

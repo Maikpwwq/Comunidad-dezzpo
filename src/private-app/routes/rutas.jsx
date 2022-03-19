@@ -7,6 +7,7 @@ import Ajustes from '../pages/ajustes/Ajustes'
 import Biblioteca from '../pages/biblioteca/Biblioteca'
 import Cambiar_Clave from '../pages/cambiar-clave/Cambiar_Clave'
 import Certificaciones from '../pages/certificaciones/Certificaciones'
+import Calificaciones from '../pages/calificaciones/Calificaciones'
 import Configuracion_Privacidad from '../pages/configuracion-privacidad/Configuracion_Privacidad'
 import Formas_Pago from '../pages/formas-pago/Formas_Pago'
 import Historial_Servicios from '../pages/historial-servicios/Historial_Servicios'
@@ -33,6 +34,10 @@ class Rutas extends React.Component {
                     <Route
                         path="/cambiar-clave"
                         element={<Cambiar_Clave></Cambiar_Clave>}
+                    ></Route>
+                    <Route
+                        path="/calificaciones"
+                        element={<Calificaciones></Calificaciones>}
                     ></Route>
                     <Route
                         path="/certificaciones"

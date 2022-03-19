@@ -12,8 +12,8 @@ const HistorialServicios = (props) => {
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex align-items-start">
                     <Col md={10}>
-                        <h2> Proyectos Publicados</h2>
-                        <div>
+                        <h2 className="headline-xl"> Proyectos Publicados</h2>
+                        <div className="p-4">
                             <table>
                                 <tr>
                                     <th>imagenes</th>
@@ -27,8 +27,8 @@ const HistorialServicios = (props) => {
                                 </tr>
                             </table>
                         </div>
-                        <h2>Proyectos cerrados</h2>
-                        <div>
+                        <h2 className="headline-xl">Proyectos cerrados</h2>
+                        <div className="p-4">
                             <table>
                                 <tr>
                                     <th>imagenes</th>
@@ -43,8 +43,8 @@ const HistorialServicios = (props) => {
                                 </tr>
                             </table>
                         </div>
-                        <h2>Requerimientos guardados</h2>
-                        <div>
+                        <h2 className="headline-xl">Requerimientos guardados</h2>
+                        <div className="p-4">
                             <table>
                                 <tr>
                                     <th>imagenes</th>
@@ -58,8 +58,8 @@ const HistorialServicios = (props) => {
                                 </tr>
                             </table>
                         </div>
-                        <h2>Requerimientos solicitados</h2>
-                        <div>
+                        <h2 className="headline-xl">Requerimientos solicitados</h2>
+                        <div className="p-4">
                             <table>
                                 <tr>
                                     <th>imagenes</th>

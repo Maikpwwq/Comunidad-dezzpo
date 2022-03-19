@@ -1,10 +1,15 @@
 import * as React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
+//imagenes
+import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
+
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
 import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import Avatar from '@mui/material/Avatar'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -12,7 +17,7 @@ import ListItemText from '@mui/material/ListItemText'
 import HomeIcon from '@mui/icons-material/Home'
 import PeopleIcon from '@mui/icons-material/People'
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded'
-import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
+import NotificationsIcon from '@mui/icons-material/Notifications'
 import PublicIcon from '@mui/icons-material/Public'
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet'
 import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent'
@@ -57,9 +62,11 @@ export default function Navigator(props) {
                 </ListItem>
                 <ListItem sx={{ ...item, ...itemCategory }}>
                     <ListItemIcon>
-                        <HomeIcon />
+                        <IconButton color="inherit" sx={{ p: 0.5 }}>
+                            <Avatar src={Avatar1} alt="My Avatar" />
+                        </IconButton>
                     </ListItemIcon>
-                    <ListItemText>Bienvenido!</ListItemText>
+                    <ListItemText>Bienvenido _nombre!</ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (
                     <Box key={id} sx={{ bgcolor: '#101F33' }}>
@@ -97,22 +104,32 @@ export default function Navigator(props) {
 
 const categories = [
     {
-        id: 'Build',
+        id: 'Inicio',
         children: [
             {
-                id: 'Inicio',
+                id: 'Mi cuenta',
                 icon: <PeopleIcon />,
                 route: 'perfil',
                 active: true,
             },
             {
-                id: 'Calificaciones',
-                icon: <DnsRoundedIcon />,
-                route: 'calificaciones', // `${match.url}/calificaciones`
+                id: 'Portal de servicios',
+                icon: <HomeIcon />,
+                route: 'portal-servicios', // `${match.url}/calificaciones`
+            },
+            {
+                id: 'Notificaciones',
+                icon: <NotificationsIcon />,
+                route: 'notificaciones', // `${match.url}/calificaciones`
+            },
+            {
+                id: 'Suscripciones',
+                icon: <TimerIcon />,
+                route: 'suscripciones',
             },
             {
                 id: 'Biblioteca',
-                icon: <PermMediaOutlinedIcon />,
+                icon: <DnsRoundedIcon />,
                 route: 'biblioteca',
             },
             {
@@ -123,24 +140,23 @@ const categories = [
             {
                 id: 'Ajustes',
                 icon: <SettingsEthernetIcon />,
-                route: 'ajsutes',
+                route: 'ajustes',
+            },
+        ],
+    },
+    {
+        id: 'Configuracion',
+        children: [
+            {
+                id: 'Privacidad',
+                icon: <SettingsIcon />,
+                route: 'configuracion-privacidad',
             },
             {
                 id: 'Formas de Pago',
                 icon: <SettingsInputComponentIcon />,
                 route: 'formas-pago',
             },
-        ],
-    },
-    {
-        id: 'Quality',
-        children: [
-            {
-                id: 'Configuracion',
-                icon: <SettingsIcon />,
-                route: 'configuracion',
-            },
-            { id: 'Privacidad', icon: <TimerIcon />, route: 'privacidad' },
             {
                 id: 'Cambiar Clave',
                 icon: <PhonelinkSetupIcon />,
