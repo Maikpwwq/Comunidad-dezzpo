@@ -5,6 +5,7 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from '@mui/material/Button'
 
 const InvitarAmigos = (props) => {
     return (
@@ -13,20 +14,24 @@ const InvitarAmigos = (props) => {
                 <Row className="m-0 w-100 d-flex align-items-start">
                     <Col md={10}>
                         <span>
-                            <h2>Programa de referidos</h2>
+                            <h2 className="headline-xl">
+                                Programa de referidos
+                            </h2>
                         </span>
-                        <p>
-                            Con el programa de referidos te premiamos por
-                            recomendar la comunidad y, ayuda así la
-                            Transformación digital inmobiliaria.
-                        </p>
-                        <p>
-                            Invita tus amigos a que se registren al programa
-                            compartiendo tu código único, envía el Link a tus
-                            contactos, acumula puntos, obtén descuentos y
-                            llévate premios.
-                        </p>
-                        <button>Copiar tu Link</button>
+                        <Col className="p-4">
+                            <p className="body-1">
+                                Con el programa de referidos te premiamos por
+                                recomendar la comunidad y, ayuda así la
+                                Transformación digital inmobiliaria.
+                                <br /> <br />
+                                Invita tus amigos a que se registren al programa
+                                compartiendo tu código único, envía el Link a
+                                tus contactos, acumula puntos, obtén descuentos
+                                y llévate premios.
+                            </p>
+                        </Col>
+
+                        <Button>Copiar tu Link</Button>
                     </Col>
                 </Row>
             </Container>

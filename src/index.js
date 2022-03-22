@@ -16,7 +16,8 @@ let history = createBrowserHistory()
 history.listen((location, action) => {
     // this is called whenever new locations come in
     // the action is POP, PUSH, or REPLACE
-    print(action)
+    // print(action)
+    console.log(action)
 })
 
 ReactDOM.render(

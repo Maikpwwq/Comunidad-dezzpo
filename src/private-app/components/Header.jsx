@@ -126,31 +126,21 @@ function Header(props) {
                         component={NavLink}
                         to="perfil"
                     />
+                    <Tab
+                        label="Calificaciones"
+                        component={NavLink}
+                        to="calificaciones"
+                    />
                     <Tab label="Mensajes" component={NavLink} to="mensajes" />
-                    <Tab
-                        label="Notificaciones"
-                        component={NavLink}
-                        to="notificaciones"
-                    />
-                    <Tab
-                        label="Portal de servicios"
-                        component={NavLink}
-                        to="portal-servicios"
-                    />
                     <Tab
                         label="Historial de servicio"
                         component={NavLink}
                         to="historial-servicios"
                     />
                     <Tab
-                        label="Certificación"
+                        label="Certificaciones"
                         component={NavLink}
-                        to="certificacion"
-                    />
-                    <Tab
-                        label="Suscripciones"
-                        component={NavLink}
-                        to="suscripciones"
+                        to="certificaciones"
                     />
                 </Tabs>
             </AppBar>

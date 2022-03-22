@@ -5,6 +5,11 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 const Mensajes = (props) => {
     return (
@@ -12,41 +17,64 @@ const Mensajes = (props) => {
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex align-items-start">
                     <Col md={6}>
-                        <form
+                        <h2 className="headline-xl">Mensajes</h2>
+
+                        <FormControl
+                            fullWidth
                             style={{
                                 display: 'flex',
                                 'flex-direction': 'column',
                                 'align-items': 'center',
                             }}
-                            action=""
                         >
-                            <select name="bandejaMensajes" id="bandejaMensajes">
-                                {' '}
-                                Categoría
-                                <option value="nuevosMensajes">
+                            <InputLabel forHtml="bandejaMensajes">
+                                Adicionar metodo
+                            </InputLabel>
+                            <Select
+                                name="bandejaMensajes"
+                                id="bandejaMensajes"
+                                autoWidth
+                                label="Bandeja Mensajes"
+                            >
+                                <MenuItem value="">
+                                    <em>Categoría</em>
+                                </MenuItem>
+                                <MenuItem value="nuevosMensajes">
                                     Nuevos Mensajes
-                                </option>
-                                <option value="inquietudesPropietarios ">
+                                </MenuItem>
+                                <MenuItem value="inquietudesPropietarios">
                                     Consultar inquietudes de los propietarios{' '}
-                                </option>
-                                <option value="AsesoriaProfesional">
+                                </MenuItem>
+                                <MenuItem value="AsesoriaProfesional">
                                     Asesorias con un profesional
-                                </option>
-                            </select>
+                                </MenuItem>
+                            </Select>
                             {/*Desplegar consuta bandeja de entrada*/}
-                        </form>
+                        </FormControl>
                         <div>
                             <label for="nuevosMensajes">Nuevos Mensajes </label>
                             <br />
-                            <textarea rows="3" cols="30"></textarea>
+                            <TextareaAutosize
+                                minRows={3}
+                                cols="30"
+                                placeholder="Nuevos Mensajes"
+                            ></TextareaAutosize>
                             <label for="inquietudesPropietarios ">
                                 Consultar inquietudes de los propietarios{' '}
                             </label>
-                            <textarea rows="3" cols="30"></textarea>
+                            <TextareaAutosize
+                                maxRows={3}
+                                cols="30"
+                                placeholder="Consultar inquietudes de los propietarios"
+                            ></TextareaAutosize>
                             <label for="AsesoriaProfesional">
                                 Asesorias con un profesional
                             </label>
-                            <textarea rows="3" cols="30"></textarea>
+                            <TextareaAutosize
+                                maxRows={3}
+                                cols="30"
+                                placeholder="Asesorias con un profesional"
+                            ></TextareaAutosize>
                         </div>
                     </Col>
                 </Row>
@@ -56,7 +84,7 @@ const Mensajes = (props) => {
                         HILO DE CONVERSACIÓN
                         <div className="">
                             {/*Desplegar hilo conversaciones*/}
-                            <p>
+                            <p className="body-1">
                                 Publicado el 23/05/2019 a las10:30 am, por
                                 @Nombre usuario{' '}
                             </p>

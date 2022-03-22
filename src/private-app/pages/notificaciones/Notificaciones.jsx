@@ -5,6 +5,7 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 const Notificaciones = (props) => {
     return (
@@ -12,9 +13,10 @@ const Notificaciones = (props) => {
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex">
                     <Col>
-                        <h2>Notificaciones</h2>
+                        <h2 className="headline-xl">Notificaciones</h2>
                         <div>
-                            <textarea rows="10" cols="30"></textarea>
+                            <TextareaAutosize
+                                minRows={10} cols="30" placeholder="Notificaciones"></TextareaAutosize>
                         </div>
                     </Col>
                 </Row>

@@ -5,56 +5,91 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
 
 const Portal_Servicios = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex">
-                    <h2>Obtener o Aplicar con Cotizaciones</h2>
-                    <Col>
-                        Publica un proyecto gratis{' '}
-                        <p>
+                    <Col className="col-10 p-4">
+                        <h2 className="headline-xl">
+                            Obtener o Aplicar con Cotizaciones
+                        </h2>
+                        <p className="body-2">Publica un proyecto gratis </p>
+                        <p className="body-1">
                             Busqueda Local Servicios: Buscar comerciantes
                             Calificados
                         </p>
-                        <table>
-                            <tr>
-                                <th>Miembro</th>
-                                <th>Oferta de Servicios</th>
-                                <th>Certificaciones</th>
-                                <th>Calificaciones</th>
-                                <th>Se unio el</th>
-                                <th>Ubicación</th>
-                                <th>Contactar</th>
-                            </tr>
-                            <tr>
-                                <td>DATA...</td>
-                            </tr>
-                        </table>
+                        <Col className="col-10 p-4">
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Miembro</TableCell>
+                                        <TableCell>
+                                            Oferta de Servicios
+                                        </TableCell>
+                                        <TableCell>Certificaciones</TableCell>
+                                        <TableCell>Calificaciones</TableCell>
+                                        <TableCell>Se unio el</TableCell>
+                                        <TableCell>Ubicación</TableCell>
+                                        <TableCell>Contactar</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </Col>
                     </Col>
                 </Row>
                 <Row className="m-0 w-100 d-flex">
-                    <Col>
-                        Aplica a un Proyecto Gratis
-                        <p>Buscar Requerimientos</p>
+                    <Col className="p-4">
                         <span>
-                            <h2>Proyectos activos</h2>
+                            <h2 className="headline-xl">Proyectos activos</h2>
                         </span>
-                        <table>
-                            <tr>
-                                <th>Imagenes</th>
-                                <th>Descripción</th>
-                                <th>Fecha de Publicación</th>
-                                <th>Valor Aproximado</th>
-                                <th>Se unio el</th>
-                                <th>Ubicación</th>
-                                <th>Postular</th>
-                            </tr>
-                            <tr>
-                                <td>DATA...</td>
-                            </tr>
-                        </table>
+                        <p className="body-2">Aplica a un Proyecto Gratis </p>
+                        <p className="body-1">Buscar Requerimientos</p>
+                        <Col className="col-10 p-4">
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Imagenes</TableCell>
+                                        <TableCell>Descripción</TableCell>
+                                        <TableCell>
+                                            Fecha de Publicación
+                                        </TableCell>
+                                        <TableCell>Valor Aproximado</TableCell>
+                                        <TableCell>Se unio el</TableCell>
+                                        <TableCell>Ubicación</TableCell>
+                                        <TableCell>Postular</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </Col>
                     </Col>
                 </Row>
             </Container>
