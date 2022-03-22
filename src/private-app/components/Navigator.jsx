@@ -30,7 +30,7 @@ const item = {
     px: 3,
     color: 'rgba(255, 255, 255, 0.7)',
     '&:hover, &:focus': {
-        bgcolor: 'rgba(255, 255, 255, 0.08)',
+        bgcolor: '#bababa', // rgba(255, 255, 255, 0.08)
     },
 }
 
@@ -69,7 +69,8 @@ export default function Navigator(props) {
                     <ListItemText>Bienvenido _nombre!</ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (
-                    <Box key={id} sx={{ bgcolor: '#101F33' }}>
+                    <Box key={id} sx={{ bgcolor: '#575856' }}>
+                        {/* #101F33 */}
                         <ListItem sx={{ py: 2, px: 3 }}>
                             <ListItemText sx={{ color: '#fff' }}>
                                 {id}

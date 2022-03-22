@@ -1,5 +1,6 @@
 const path = require('path')
 const { resolve } = require('path')
+const webpack = require('webpack')
 // const HttpStatus = require('http-status')
 // Koa
 const Koa = require('koa')
@@ -19,11 +20,15 @@ const KoaBody = require('koa-body')
 const config = require('../config/webpack.dev.js')
 // const KoaWebpack = require('koa-webpack')
 
-// Koa Webpack middleware
-// const middleware = KoaWebpack({ config })
-// app.use(middleware)
+// Implementation Koa
+const app = new Koa()
+const router = new KoaRouter()
+// Variables
+const PORT = process.env.PORT || 8080
 
-const webpack = require('webpack')
+// Koa Webpack middleware
+// const webpackMiddleware = KoaWebpack({ config })
+// app.use(webpackMiddleware)
 const { webpackServer } = require('koa-webpack-server')
 const options = {
     compilers: webpack(config),
@@ -34,15 +39,8 @@ const options = {
     },
 }
 
-// Variables
-const PORT = process.env.PORT || 8080
 // const DIST_DIR = __dirname
 // const HTML_FILE = path.join(DIST_DIR, 'index.html')
-
-// Implementation Koa
-const app = new Koa()
-const router = new KoaRouter()
-
 // Servir juntos servicios en el mismo puerto - Serve the build directory
 // Este koa-static debe usarse, de lo contrario, al importar el archivo js en la vista,
 // usar una importación de ruta relativa causará problemas

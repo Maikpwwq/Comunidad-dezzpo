@@ -5,6 +5,11 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
 
 const Portal_Servicios = (props) => {
     return (
@@ -21,26 +26,32 @@ const Portal_Servicios = (props) => {
                             Calificados
                         </p>
                         <Col className="col-10 p-4">
-                            <table>
-                                <tr>
-                                    <th>Miembro</th>
-                                    <th>Oferta de Servicios</th>
-                                    <th>Certificaciones</th>
-                                    <th>Calificaciones</th>
-                                    <th>Se unio el</th>
-                                    <th>Ubicación</th>
-                                    <th>Contactar</th>
-                                </tr>
-                                <tr>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                </tr>
-                            </table>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Miembro</TableCell>
+                                        <TableCell>
+                                            Oferta de Servicios
+                                        </TableCell>
+                                        <TableCell>Certificaciones</TableCell>
+                                        <TableCell>Calificaciones</TableCell>
+                                        <TableCell>Se unio el</TableCell>
+                                        <TableCell>Ubicación</TableCell>
+                                        <TableCell>Contactar</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
                         </Col>
                     </Col>
                 </Row>
@@ -52,26 +63,32 @@ const Portal_Servicios = (props) => {
                         <p className="body-2">Aplica a un Proyecto Gratis </p>
                         <p className="body-1">Buscar Requerimientos</p>
                         <Col className="col-10 p-4">
-                            <table>
-                                <tr>
-                                    <th>Imagenes</th>
-                                    <th>Descripción</th>
-                                    <th>Fecha de Publicación</th>
-                                    <th>Valor Aproximado</th>
-                                    <th>Se unio el</th>
-                                    <th>Ubicación</th>
-                                    <th>Postular</th>
-                                </tr>
-                                <tr>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                    <td>DATA...</td>
-                                </tr>
-                            </table>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Imagenes</TableCell>
+                                        <TableCell>Descripción</TableCell>
+                                        <TableCell>
+                                            Fecha de Publicación
+                                        </TableCell>
+                                        <TableCell>Valor Aproximado</TableCell>
+                                        <TableCell>Se unio el</TableCell>
+                                        <TableCell>Ubicación</TableCell>
+                                        <TableCell>Postular</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                        <TableCell>DATA...</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
                         </Col>
                     </Col>
                 </Row>

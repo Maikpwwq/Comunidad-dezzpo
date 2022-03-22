@@ -5,6 +5,11 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
 
 const Biblioteca = (props) => {
     return (
@@ -31,31 +36,37 @@ const Biblioteca = (props) => {
                         </Row>
                         <Row className="w-100">
                             <Col className="col-10 p-4">
-                                <table>
-                                    <tr>
-                                        <th>Titulo</th>
-                                        <th>Descargar</th>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            CONTRATO DE ADQUISICION DE SERVICIO
-                                        </td>
-                                        <td>Pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            FORMATO DE REQUERIMIENTOS DEL
-                                            CLIENTE{' '}
-                                        </td>
-                                        <td>Pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            FORMATO DE COTIZACIÓN DE SERVICIOS{' '}
-                                        </td>
-                                        <td>Pdf</td>
-                                    </tr>
-                                </table>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Titulo</TableCell>
+                                            <TableCell>Descargar</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell>
+                                                CONTRATO DE ADQUISICION DE
+                                                SERVICIO
+                                            </TableCell>
+                                            <TableCell>Pdf</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>
+                                                FORMATO DE REQUERIMIENTOS DEL
+                                                CLIENTE{' '}
+                                            </TableCell>
+                                            <TableCell>Pdf</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>
+                                                FORMATO DE COTIZACIÓN DE
+                                                SERVICIOS{' '}
+                                            </TableCell>
+                                            <TableCell>Pdf</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
                             </Col>
                         </Row>
                         <Row className="p-4" md={10}>
@@ -65,34 +76,38 @@ const Biblioteca = (props) => {
                                 </h2>
                             </span>
                             <Col className="col-10 p-4">
-                                <table>
-                                    <tr>
-                                        <th>Titulo</th>
-                                        <th>Descargar</th>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Patologías y sistemas de
-                                            mantenimiento en los inmuebles
-                                        </td>
-                                        <td>Pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            MANUAL DE PROCEDIMIENTOS DE
-                                            MANTENIMIENTO CORRECTIVO Y
-                                            PREVENTIVO{' '}
-                                        </td>
-                                        <td>Pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Reglamentaciones del Sistema de
-                                            salud y seguridad en el trabajo{' '}
-                                        </td>
-                                        <td>Pdf</td>
-                                    </tr>
-                                </table>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Titulo</TableCell>
+                                            <TableCell>Descargar</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell>
+                                                Patologías y sistemas de
+                                                mantenimiento en los inmuebles
+                                            </TableCell>
+                                            <TableCell>Pdf</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>
+                                                MANUAL DE PROCEDIMIENTOS DE
+                                                MANTENIMIENTO CORRECTIVO Y
+                                                PREVENTIVO{' '}
+                                            </TableCell>
+                                            <TableCell>Pdf</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>
+                                                Reglamentaciones del Sistema de
+                                                salud y seguridad en el trabajo{' '}
+                                            </TableCell>
+                                            <TableCell>Pdf</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
                             </Col>
                         </Row>
                         <Row className="p-4" md={10}>
