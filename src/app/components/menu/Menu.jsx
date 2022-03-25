@@ -4,7 +4,7 @@ import { NavLink, Redirect } from 'react-router-dom' // withRouter,
 import '../../../../public/assets/css/menu.css'
 
 // images
-import ComunidadDezzpo from '../../../../public/assets/img/Comunidad-Dezzpo.jpg'
+import LogoMenuComunidadDezzpo from '../../../../public/assets/img/IsologoHeader.png'
 
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
@@ -24,9 +24,9 @@ const MenuComunidad = (props) => {
                     <Col className="p-0 barraMenu">
                         <div className="containerLogo container d-flex justify-content-center">
                             <img
-                                src={ComunidadDezzpo}
+                                src={LogoMenuComunidadDezzpo}
                                 alt="Logo Comunidad Dezzpo"
-                                style={{ 'border-radius': '50%' }}
+                                style={{ padding: '5px 10px' }}
                                 height="80px"
                                 width="210px"
                             />

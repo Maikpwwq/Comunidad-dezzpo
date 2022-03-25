@@ -42,6 +42,7 @@ class Rutas extends React.Component {
                 <Routes>
                     <Route index element={<Inicio />}></Route>
                     <Route path="/" element={<Inicio />} />
+                    <Route path="Comunidad-dezzpo/" element={<Inicio />} />
                     <Route
                         path="apendice-costos"
                         element={<ApendiceCostos />}

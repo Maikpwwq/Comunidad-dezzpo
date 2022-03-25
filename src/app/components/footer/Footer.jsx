@@ -5,7 +5,7 @@ import '../../../../public/assets/css/footer.css'
 import { Link, Redirect } from 'react-router-dom'
 
 // images
-import ComunidadDezzpo from '../../../../public/assets/img/Comunidad-Dezzpo.jpg'
+import LogoFooterComunidadDezzpo from '../../../../public/assets/img/IsologoFooter.png'
 
 import DatosContacto from '../datos_contacto/DatosContacto'
 
@@ -24,7 +24,13 @@ const FooterComunidad = (props) => {
                         <Row className="footerSuperior">
                             <Row className="mt-2">
                                 {/* Mas links */}
-                                <Col className="ps-4 ms-4 align-items-end">
+                                <Col
+                                    className="ps-4 ms-4 align-items-end"
+                                    lg={4}
+                                    md={4}
+                                    sm={6}
+                                    xs={12}
+                                >
                                     <ul className="body-1">
                                         <li>
                                             {' '}
@@ -89,12 +95,18 @@ const FooterComunidad = (props) => {
                                     </ul>
                                 </Col>
                                 {/* siguenos en redes */}
-                                <Col className="siguenosRedes p-0 align-items-start">
-                                    <Container className="containerLogo p-0 m-0 mt-4 mb-4 d-flex justify-content-center">
+                                <Col
+                                    className="siguenosRedes p-0 align-items-start"
+                                    lg={4}
+                                    md={8}
+                                    sm={8}
+                                    xs={12}
+                                >
+                                    <Container className="containerLogo p-0 m-0 mt-4 mb-4 d-flex justify-content-start">
                                         <img
-                                            src={ComunidadDezzpo}
+                                            src={LogoFooterComunidadDezzpo}
                                             alt="Logo Comunidad Dezzpo"
-                                            style={{ 'border-radius': '50%' }}
+                                            // style={{ 'border-radius': '50%' }}
                                             height="80px"
                                             width="210px"
                                         />
@@ -202,8 +214,10 @@ const FooterComunidad = (props) => {
                         <Row className="footerInferior pt-3 w-100">
                             <p className="p-description textBlanco">
                                 {' '}
-                                © 2021 - Todos los derechos reservados -
-                                COMUNIDAD DEZZPO INC.{' '}
+                                © 2021 - Todos los derechos reservados -{' '}
+                                <span className="dezzpo-svg textBlanco">
+                                    COMUNIDAD DEZZPO INC.
+                                </span>
                             </p>
                         </Row>
                     </Col>

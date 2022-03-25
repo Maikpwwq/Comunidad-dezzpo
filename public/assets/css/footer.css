@@ -1,5 +1,7 @@
 @media screen and (max-width: 600px) {
-  
+    .footerSuperior{      
+        background-size: 100% 100%;
+    }
 }
 @media screen and (min-width: 600px) and (max-width: 900px) {
 
@@ -21,6 +23,9 @@
     padding-top: 21px;    
 }
 .footerSuperior{
+    background: url(../img/OndaDegrade@2x.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: cover;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;

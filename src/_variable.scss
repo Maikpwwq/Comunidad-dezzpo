@@ -85,7 +85,12 @@ $more11: #212529; // Text form items
 /* **************************************************** */
 /* Declaracion de fuentes de texto */
 /* **************************************************** */
-
+@font-face {
+   font-family: Marquisette-Bold;
+   font-weight: 800;
+   font-style: normal;
+   src: url('./fonts/Marquisette/Marquisette_BTN_Bold.ttf');
+}
 @font-face {
    font-family: Helvetica-Regular;
    font-weight: 600;
@@ -160,6 +165,7 @@ $more11: #212529; // Text form items
 }
 
 :root{
+    --font-marquisette-bold: Marquisette-Bold, sans-serif;
     --font-helvetica-regular: Helvetica-Regular, sans-serif;
     --font-helvetica-medium: Helvetica-Medium, sans-serif;
     --font-helvetica-bold: Helvetica-Bold, sans-serif;
