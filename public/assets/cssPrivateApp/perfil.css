@@ -1,0 +1,12 @@
+.info-user_backgound{
+    background: url(../img/FondoAgua@2x.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: cover;
+    height: auto;
+    min-height: 350px;
+}
+.border-green_buttom{
+    border-bottom: solid;
+    border-width: 3px;
+    border-left-color: var(--primary-green-text-color);
+}

@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 
+import SearchBar from './SearchBar'
+
 //imagenes
 import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
 
@@ -13,6 +15,7 @@ import HelpIcon from '@mui/icons-material/Help'
 import IconButton from '@mui/material/IconButton'
 import Link from '@mui/material/Link'
 import MenuIcon from '@mui/icons-material/Menu'
+import Badge from '@mui/material/Badge'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
@@ -64,7 +67,9 @@ function Header(props) {
                         <Grid item>
                             <Tooltip title="Alerts • No alerts">
                                 <IconButton color="inherit">
-                                    <NotificationsIcon />
+                                    <Badge badgeContent={17} color="error">
+                                        <NotificationsIcon />
+                                    </Badge>
                                 </IconButton>
                             </Tooltip>
                         </Grid>
@@ -91,7 +96,7 @@ function Header(props) {
                                 variant="h5"
                                 component="h1"
                             >
-                                Authentication
+                                <SearchBar></SearchBar>
                             </Typography>
                         </Grid>
                         <Grid item>

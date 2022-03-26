@@ -1,11 +1,15 @@
 // Pagina de Usuario - Perfil
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { auth } from '../../../firebase/firebaseClient'
+import { updateProfile } from 'firebase/auth'
+
+import '../../../../public/assets/cssPrivateApp/perfil.css'
+import ProfilePhoto from '../../../../public/assets/img/Profile.png'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import Form from 'react-bootstrap/Form'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -13,35 +17,66 @@ import TextField from '@mui/material/TextField'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
 const Perfil = (props) => {
-    const [userName, setUserName] = React.useState('nombre persona')
-    const [userMail, setUserMail] = React.useState('prueba@gmail.com')
-    const [userProfession, setUserProfession] = React.useState('soldador')
-    const [userJoin, setUserJoin] = React.useState('se unio en 2020')
-    const [userExperience, setUserExperience] = React.useState('experiencia 3')
-    const [contactoUbication, setContactoUbication] =
-        React.useState('experiencia 3')
-    const [contactoRazonSocial, setContactoRazonSocial] =
-        React.useState('experiencia 3')
-    const [contactoIdentification, setContactoIdentification] =
-        React.useState('experiencia 3')
-    const [contactoMail, setContactoMail] = React.useState('experiencia 3')
-    const [contactoPhone, setContactoPhone] = React.useState('experiencia 3')
+    const user = auth.currentUser
 
-    const handleChange = () => {}
+    const [userInfo, setUserInfo] = useState({
+        userName: 'Michael Arias Fajardo',
+        userMail: '',
+        userPhone: '3196138057',
+        userPhotoUrl: '',
+        userId: '',
+        userJoined: 'se unio en 2020',
+        userProfession: 'soldador',
+        userExperience: '4 años',
+        userUbication: 'Soacha, cundinamarca',
+        userRazonSocial: 'Comunidad Dezzpo',
+        userIdentification: 'private',
+    })
+
+    useEffect(() => {
+        if (user !== null) {
+            console.log(user)
+            const {
+                uid,
+                email,
+                displayName,
+                phoneNumber,
+                photoURL,
+                emailVerified,
+                metadata,
+            } = user
+            setUserInfo({
+                ...userInfo,
+                userPhone: phoneNumber,
+                userPhotoUrl: photoURL,
+                userId: uid,
+                userMail: email,
+                userName: displayName,
+                userJoined: metadata.creationTime,
+            })
+        }
+    }, [user])
 
     return (
         <>
             <Container fluid className="p-0">
                 <Row className="h-100">
                     <Col className="col-10">
-                        <Row className="m-0 w-100 d-flex">
+                        <Row className="border-green_buttom m-0 w-100 d-flex">
                             <Row className="pt-4 pb-4">
                                 <Col md={4}>
                                     <div>
-                                        <img src="" alt="imagen de perfil" />
+                                        <img
+                                            src={ProfilePhoto}
+                                            alt="imagen de perfil"
+                                            height="150px"
+                                            width="150px"
+                                        />
                                     </div>
-                                    <PermMediaOutlinedIcon />
-                                    <Button>+ Agregar foto de perfil</Button>
+
+                                    <Button>
+                                        <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
+                                    </Button>
                                 </Col>
                                 <Col md={3}>
                                     <Box
@@ -54,38 +89,34 @@ const Perfil = (props) => {
                                     >
                                         <TextField
                                             id="userName"
+                                            name="userName"
                                             label="Nombre de usuario"
-                                            value={userName}
-                                            onChange={handleChange}
+                                            value={userInfo.userName}
                                             defaultValue="@NOMBRE USUARIO"
-                                        />
-                                        <TextField
-                                            id="userMail"
-                                            label="Correo de usuario"
-                                            value={userMail}
-                                            onChange={handleChange}
-                                            defaultValue="@CORREO USUARIO"
+                                            variant="filled"
                                         />
                                         <TextField
                                             id="userProfession"
                                             label="Profesión"
-                                            value={userProfession}
-                                            onChange={handleChange}
+                                            value={userInfo.userProfession}
                                             defaultValue="@PROFESIÓN"
+                                            variant="filled"
                                         />
                                         <TextField
-                                            id="userJoin"
-                                            label="Correo de usuario"
-                                            value={userJoin}
-                                            onChange={handleChange}
+                                            id="userJoined"
+                                            name="userJoined"
+                                            label="Activo desde"
+                                            value={userInfo.userJoined}
                                             defaultValue="@SeUnioDesdeHace"
+                                            variant="filled"
                                         />
                                         <TextField
                                             id="userExperience"
+                                            name="userExperience"
                                             label="Experiencia"
-                                            value={userExperience}
-                                            onChange={handleChange}
+                                            value={userInfo.userExperience}
                                             defaultValue="@TiempoExperiencia"
+                                            variant="filled"
                                         />
                                         <br />
                                         certificaciones
@@ -99,9 +130,9 @@ const Perfil = (props) => {
                         <Row className="m-0 w-100 d-flex justify-content-start">
                             <Col className="col-4 pt-4 pb-4">
                                 <span className="p-4 p-description textBlanco fondoVerde">
-                                    Mauricio Morales <br />
-                                    +57 312855 55 65 <br />
-                                    carpinteriamorales@gmail.com <br />
+                                    {userInfo.userName} <br />
+                                    {userInfo.userPhone} <br />
+                                    {userInfo.userMail} <br />
                                 </span>
                                 <img src="" alt="Mapa Ubicacion" />
                             </Col>
@@ -117,9 +148,9 @@ const Perfil = (props) => {
                                             <p className="body-1">
                                                 Proyectos de carpintería y
                                                 acabados en madera para su casa
-                                                o negocio <br />
-                                                nos dedicamos a la realización
-                                                de muebles y decoración{' '}
+                                                o negocio nos dedicamos a la
+                                                realización de muebles y
+                                                decoración{' '}
                                             </p>
                                         </div>
                                     </Col>
@@ -145,7 +176,7 @@ const Perfil = (props) => {
                                     Educacion
                                 </Row>
                             </Col>
-                            <Col md={5}>
+                            <Col md={5} className="info-user_backgound">
                                 <Box
                                     style={{
                                         display: 'flex',
@@ -160,42 +191,42 @@ const Perfil = (props) => {
                                         </span>
                                     </div>
                                     <TextField
-                                        id="contactoUbication"
-                                        label="Ubicación"
-                                        value={contactoUbication}
-                                        onChange={handleChange}
-                                        defaultValue="ubicación"
-                                        variant="filled"
-                                    />
-                                    <TextField
-                                        id="contactoRazonSocial"
+                                        id="userRazonSocial"
+                                        name="userRazonSocial"
                                         label="Razón Social"
-                                        value={contactoRazonSocial}
-                                        onChange={handleChange}
+                                        value={userInfo.userRazonSocial}
                                         defaultValue="Razón Social"
                                         variant="filled"
                                     />
                                     <TextField
-                                        id="contactoIdentification"
+                                        id="userUbication"
+                                        name="userUbication"
+                                        label="Ubicación"
+                                        value={userInfo.userUbication}
+                                        defaultValue="ubicación"
+                                        variant="filled"
+                                    />
+                                    <TextField
+                                        id="userIdentification"
+                                        name="userIdentification"
                                         label="Identificación"
-                                        value={contactoIdentification}
-                                        onChange={handleChange}
+                                        value={userInfo.userIdentification}
                                         defaultValue="Identificación"
                                         variant="filled"
                                     />
                                     <TextField
-                                        id="contactoMail"
-                                        label="Correo"
-                                        value={contactoMail}
-                                        onChange={handleChange}
-                                        defaultValue="Correo"
+                                        id="userMail"
+                                        name="userMail"
+                                        label="Correo de usuario"
+                                        value={userInfo.userMail}
+                                        defaultValue="@CORREO USUARIO"
                                         variant="filled"
                                     />
                                     <TextField
-                                        id="contactoPhone"
+                                        id="userPhone"
                                         label="Celular"
-                                        value={contactoPhone}
-                                        onChange={handleChange}
+                                        name="userPhone"
+                                        value={userInfo.userPhone}
                                         defaultValue="Celular"
                                         variant="filled"
                                     />

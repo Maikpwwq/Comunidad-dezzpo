@@ -1,6 +1,8 @@
 // Pagina de Usuario - Portal_Servicios
 import React from 'react'
 
+import ServiceCard from '../../components/ServiceCard'
+
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -15,6 +17,9 @@ const Portal_Servicios = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">
+                <Row className="m-0 w-100 d-flex">
+                    <ServiceCard />
+                </Row>
                 <Row className="m-0 w-100 d-flex">
                     <Col className="col-10 p-4">
                         <h2 className="headline-xl">

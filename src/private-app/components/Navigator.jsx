@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 
 //imagenes
 import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
+import LogoMenuComunidadDezzpo from '../../../public/assets/img/IsologoUserApp.png'
 
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
@@ -58,7 +59,13 @@ export default function Navigator(props) {
                         color: '#fff',
                     }}
                 >
-                    Comunidad Dezzpo
+                    <img
+                        src={LogoMenuComunidadDezzpo}
+                        alt="Logo Comunidad Dezzpo"
+                        style={{ padding: '3px 10px' }}
+                        height="55px"
+                        width="200px"
+                    />
                 </ListItem>
                 <ListItem sx={{ ...item, ...itemCategory }}>
                     <ListItemIcon>
