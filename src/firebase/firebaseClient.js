@@ -4,9 +4,9 @@ import { getApps, initializeApp } from 'firebase/app'
 
 // Productos de Firebase
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-// import { getFirestore } from 'firebase/firestore'
+import { getFirestore } from 'firebase/firestore'
 // import { getDatabase } from 'firebase/database'
-// import { getStorage } from 'firebase/storage'
+import { getStorage } from 'firebase/storage'
 // import { getAnalytics } from 'firebase/analytics'
 
 let firebaseApp
@@ -29,11 +29,12 @@ export { firebaseApp }
 
 export const auth = getAuth(firebaseApp)
 export const currentUser = auth.currentUser
+// console.log(currentUser)
 
-// export const firestore = getFirestore(firebaseApp)
+export const firestore = getFirestore(firebaseApp)
 // firestore.settings({ timestampsInSnapshots: true })
 
-// export const storage = getStorage(firebaseApp)
+export const storage = getStorage(firebaseApp)
 
 // export const analytics = getAnalytics(firebaseApp)
 
@@ -41,16 +42,16 @@ export const currentUser = auth.currentUser
 
 // console.log(db.ref().child('tienda'));
 
-onAuthStateChanged(auth, (user) => {
-    // Check for user status
-    if (user) {
-        console.log(user)
-        // let displayName = user.displayName
-        // let email = user.email
-        // var emailVerified = user.emailVerified
-        // var uid = user.uid
-    } else {
-        // El Usuario no ha iniciado su sesion
-        console.log('no hay un usuario registrado')
-    }
-})
+// onAuthStateChanged(auth, (user) => {
+//     // Check for user status
+//     if (user) {
+//         console.log(user)
+//         // let displayName = user.displayName
+//         // let email = user.email
+//         // var emailVerified = user.emailVerified
+//         // var uid = user.uid
+//     } else {
+//         // El Usuario no ha iniciado su sesion
+//         console.log('no hay un usuario registrado')
+//     }
+// })

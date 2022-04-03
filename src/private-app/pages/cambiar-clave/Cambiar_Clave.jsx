@@ -1,5 +1,7 @@
 // Pagina de Usuario - CambiarClave
-import React from 'react'
+import React, { useState } from 'react'
+import { auth } from '../../../firebase/firebaseClient'
+import { updatePassword } from 'firebase/auth'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -10,10 +12,27 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 
 const CambiarClave = (props) => {
-    const againNewPassword = 'againNewPassword'
-    const newPassword = 'newPassword'
+    const [newPassword, setNewPassword] = useState({
+        newPassword: 'againNewPassword',
+        againNewPassword: 'newPassword',
+    })
 
-    const handleChange = () => {}
+    const handleChange = (event) => {
+        setNewPassword({
+            ...newPassword,
+            [event.target.name]: event.target.value,
+        })
+    }
+
+    updatePassword(auth.currentUser, newPassword.newPassword)
+        .then((result) => {
+            console.log(`Se actulizo la contraseña ${result}`)
+        })
+        .catch((error) => {
+            console.log(
+                `Se produjo un error al actulizar la contraseña ${error}`
+            )
+        })
 
     return (
         <>
@@ -35,8 +54,9 @@ const CambiarClave = (props) => {
                         >
                             <TextField
                                 id="newPassword"
+                                name="newPassword"
                                 label="Ingresa tu nueva clave"
-                                value={newPassword}
+                                value={newPassword.newPassword}
                                 onChange={handleChange}
                                 defaultValue="Ingresa tu nueva clave"
                                 variant="standard"
@@ -45,13 +65,16 @@ const CambiarClave = (props) => {
                             <br />
                             <TextField
                                 id="againNewPassword"
+                                name="againNewPassword"
                                 label="Repite la nueva clave"
-                                value={againNewPassword}
+                                value={newPassword.againNewPassword}
                                 onChange={handleChange}
                                 defaultValue="Repite la nueva clave"
                                 variant="standard"
                             />
-                            <Button>Establecer</Button>
+                            <Button type="submit" onClick={updatePassword}>
+                                Establecer
+                            </Button>
                         </Box>
                     </Row>
                 </Col>

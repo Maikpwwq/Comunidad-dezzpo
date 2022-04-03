@@ -3,7 +3,11 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
-import { EmailAuthProvider, signInWithCredential } from 'firebase/auth'
+import {
+    EmailAuthProvider,
+    signInWithCredential,
+    sendPasswordResetEmail,
+} from 'firebase/auth'
 
 import '../../../../public/assets/css/ingreso.css'
 
@@ -24,7 +28,10 @@ const Ingreso = (props) => {
     const handleClick = (e) => {
         e.preventDefault()
         console.log(userLoginEmail, userLoginPassword)
-        let credential = EmailAuthProvider.credential(userLoginEmail, userLoginPassword)
+        let credential = EmailAuthProvider.credential(
+            userLoginEmail,
+            userLoginPassword
+        )
         const logIn = (usercredential) => {
             signInWithCredential(auth, usercredential)
                 .then((userCredential) => {
@@ -46,6 +53,16 @@ const Ingreso = (props) => {
         setSend(true)
         logIn(credential)
     }
+
+    sendPasswordResetEmail(auth, userLoginEmail)
+        .then((result) => {
+            console.log(`Se envio correo de restauración ${result}`)
+        })
+        .catch((error) => {
+            console.log(
+                `Se produjo un error al enviar correo de restauración ${error}`
+            )
+        })
 
     const handleConsult = () => {
         navigate('/app/perfil')
@@ -116,10 +133,9 @@ const Ingreso = (props) => {
                                     className="BOTON-TEXT"
                                     variant="primary"
                                     type="submit"
+                                    onClick={sendPasswordResetEmail}
                                 >
-                                    <NavLink to="/ingreso/">
-                                        {'OLVIDASTE LA CONTRASEÑA'}
-                                    </NavLink>
+                                    OLVIDASTE LA CONTRASEÑA
                                 </Button>
                                 <Form.Group
                                     className="mb-2"

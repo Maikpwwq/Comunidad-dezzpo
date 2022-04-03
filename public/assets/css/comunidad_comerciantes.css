@@ -1,3 +1,21 @@
+/* Pantallas de Moviles */
+@media screen and (max-width: 600px) {
+    .comunidadComerciantesBeneficios{
+        min-height: 480px !important;
+        background-size: 100% 100% !important;
+    }
+}
+/* Pantallas en tabletas */
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    .comunidadComerciantesBeneficios{
+        background-size: auto !important;
+    }
+}
+/* Pantallas de Ordenador */
+@media screen and (min-width: 900px) {
+   
+}
+
 .comunidadComerciantesTitulo{
     background: #e9ebe6 url(../img/ComunidadComerciantes1.png) no-repeat center; 
     background-attachment: scroll;         
@@ -23,23 +41,10 @@
 .comunidadComerciantesBeneficios{
     background: #009999  url(../img/ComunidadComerciantes3.png) no-repeat right; 
     background-attachment: scroll;         
-    background-size: 100;
+    background-size: cover;
     color: #e9ebe6;
-    height: auto;
-    width: 100%;
-    text-align: left;
-}
-.containerGreen{
-    background: #009999;
-    z-index: 2;
-    height: 840px;
-    width: 580px;
-    padding-top: 60px;
-    padding-left: 60px;
-}
-.containerGreen p{
-    font-size: 18px;
-    width: 84%;
+    min-height: 840px;
+    text-align: left;    
 }
 .subrayar h2{
     border-bottom-width: 3px;

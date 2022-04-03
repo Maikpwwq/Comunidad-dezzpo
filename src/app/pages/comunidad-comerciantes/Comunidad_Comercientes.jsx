@@ -46,24 +46,25 @@ const ComunidadComerciantes = (props) => {
             </Container>
 
             <Container fluid className="p-0">
-                <Row className="comunidadComerciantesRegistro  m-0">
+                <Row className="comunidadComerciantesRegistro p-4 m-0">
                     <Col className="" md={6} lg={6}>
-                        <h2 className="headline-xl"> COMUNIDAD COMERCIANTES</h2>
+                        <h2 className="headline-xl center">
+                            {' '}
+                            COMUNIDAD COMERCIANTES
+                        </h2>
                     </Col>
                     <Registro showLogo={false}></Registro>
                 </Row>
             </Container>
-            <Container fluid className="p-0">
-                <Row className="comunidadComerciantesBeneficios m-0 justify-content-start">
+            <Container fluid className="p-0 fondoVerde">
+                <Row className="p-0" style={{ 'align-items': 'inherit' }}>
                     <Col
-                        className="colLeft"
-                        md={6}
-                        style={{
-                            'padding-left': '30px',
-                            'padding-top': '0px',
-                        }}
+                        className="colLeft p-0 ps-4 m-0"
+                        lg={6}
+                        md={12}
+                        sm={12}
                     >
-                        <div className="containerGreen">
+                        <div className="p-4 m-4">
                             <span className="pitchComerciantes subrayar">
                                 <h3 className="headline-l textBlanco">
                                     Para tu negocio
@@ -116,6 +117,12 @@ const ComunidadComerciantes = (props) => {
                             </p>
                         </div>
                     </Col>
+                    <Col
+                        className="comunidadComerciantesBeneficios p-0 justify-content-start"
+                        lg={6}
+                        md={12}
+                        sm={12}
+                    ></Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">

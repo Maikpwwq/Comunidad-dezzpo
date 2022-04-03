@@ -25,6 +25,7 @@ class Rutas extends React.Component {
         return (
             <>
                 <Routes>
+                    <Route index element={<Perfil />}></Route>
                     <Route path="/perfil" element={<Perfil></Perfil>} />
                     <Route path="/ajustes" element={<Ajustes></Ajustes>} />
                     <Route
