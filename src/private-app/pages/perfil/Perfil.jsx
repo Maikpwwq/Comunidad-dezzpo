@@ -20,7 +20,7 @@ const Perfil = (props) => {
     const user = auth.currentUser
     const userID = user.uid
     const _firestore = firestore
-    const _snapStorage = storage
+    const _Storage = storage 
     const usersRef = collection(_firestore, 'users')
 
     const userFromFirestore = async (firestoreUserID) => {

@@ -19,7 +19,10 @@
 }
 
 .nosotrosHistoria{
-    background: #e9ebe6 url(../img/Nosotros1.png) no-repeat center; 
+    /* background: #e9ebe6 url(../img/Nosotros1.png) no-repeat center;  */
+    background: #e9ebe6 url(
+        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Nosotros1.png?alt=media&token=c5dedadd-653b-4541-9dff-420933ad4684
+    ) no-repeat center; 
     background-attachment: scroll;         
     background-size: cover;
     height: auto;
@@ -67,7 +70,10 @@
     margin-top: 30px;
 }
 .nosotrosEquipo{
-    background: #e9ebe6 url(../img/Nosotros4.png) no-repeat center; 
+    /* background: #e9ebe6 url(../img/Nosotros4.png) no-repeat center;  */
+    background: #e9ebe6 url(
+        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Nosotros4.png?alt=media&token=ca2eefa6-0865-4301-80c9-6b3e588259d4    
+    ) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% 100%;
     min-height: 330px;

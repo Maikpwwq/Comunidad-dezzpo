@@ -1,5 +1,7 @@
 // Pagina de Usuario - Portal_Servicios
 import React from 'react'
+import { storage } from '../../../firebase/firebaseClient'
+import { ref, getDownloadURL } from 'firebase/storage'
 
 import ServiceCard from '../../components/ServiceCard'
 
@@ -14,6 +16,36 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
 const Portal_Servicios = (props) => {
+    const _Storage = storage
+    // const pathReference = ref(_snapStorage, 'Asesorias2.png')
+    // const gsReference = ref(
+    //     storage,
+    //     'gs://app-comunidad-dezzpo.appspot.com/Asesorias2.png'
+    // )
+
+    getDownloadURL(
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Asesorias2.png')
+        ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/AsiTrabajamos2.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/AsiTrabajamos3Mobile.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Ayuda&PQRS1.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Buscador-Dezzpo.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadComerciantes1.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadComerciantes2.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadPropietarios1.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadPropietarios2.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadPropietarios3.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadPropietarios4.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Nosotros1.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Nosotros4.png')
+        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Presupuestos1.png')
+    )
+        .then((url) => {
+            console.log(url)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+
     return (
         <>
             <Container fluid className="p-0 h-100">
@@ -23,13 +55,11 @@ const Portal_Servicios = (props) => {
                 <Row className="m-0 w-100 d-flex">
                     <Col className="col-10 p-4">
                         <h2 className="headline-xl">
-                            Obtener o Aplicar con Cotizaciones
-                        </h2>
-                        <p className="body-2">Publica un proyecto gratis </p>
-                        <p className="body-1">
                             Busqueda Local Servicios: Buscar comerciantes
                             Calificados
-                        </p>
+                        </h2>
+                        <p className="body-2"> Comerciantes profesionales </p>
+                        <p className="body-1">Publica un proyecto gratis</p>
                         <Col className="col-10 p-4">
                             <Table>
                                 <TableHead>
@@ -63,10 +93,13 @@ const Portal_Servicios = (props) => {
                 <Row className="m-0 w-100 d-flex">
                     <Col className="p-4">
                         <span>
-                            <h2 className="headline-xl">Proyectos activos</h2>
+                            <h2 className="headline-xl">
+                                Buscar Requerimientos: Obtener o Aplicar con
+                                Cotizaciones
+                            </h2>
                         </span>
-                        <p className="body-2">Aplica a un Proyecto Gratis </p>
-                        <p className="body-1">Buscar Requerimientos</p>
+                        <p className="body-2">Proyectos activos </p>
+                        <p className="body-1">Aplica a un Proyecto Gratis</p>
                         <Col className="col-10 p-4">
                             <Table>
                                 <TableHead>

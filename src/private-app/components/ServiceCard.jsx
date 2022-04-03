@@ -12,9 +12,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
-import { styled } from '@mui/material/styles'
-import Collapse from '@mui/material/Collapse'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+// import { styled } from '@mui/material/styles'
+// import Collapse from '@mui/material/Collapse'
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 // const ExpandMore = styled((props) => {
 //     const { expand, ...other } = props
@@ -36,6 +36,14 @@ export default function ServiceCard() {
 
     return (
         <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+                component="img"
+                height="194"
+                image="http://placeimg.com/260/194/arch"
+                // src="http://placeimg.com/260/194/arch"
+                alt="Paella dish"
+            />
+            {/* TODO: Categorias e Ubicación */}
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -50,13 +58,6 @@ export default function ServiceCard() {
                 title="Comunidad Dezzpo"
                 subheader="cinco estrellas"
             />
-            <CardMedia
-                component="img"
-                height="194"
-                image="http://placeimg.com/260/194/arch"
-                // src="http://placeimg.com/260/194/arch"
-                alt="Paella dish"
-            />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
                     Somos una comunidad de comerciantes profesionales, contrata
@@ -69,6 +70,7 @@ export default function ServiceCard() {
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
+                    {/* TODO: Contactar */}
                 </IconButton>
                 <IconButton aria-label="share">
                     <ShareIcon />

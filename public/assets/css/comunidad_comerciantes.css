@@ -17,7 +17,10 @@
 }
 
 .comunidadComerciantesTitulo{
-    background: #e9ebe6 url(../img/ComunidadComerciantes1.png) no-repeat center; 
+    /* background: #e9ebe6 url(../img/ComunidadComerciantes1.png) no-repeat center;  */
+    background: #e9ebe6 url(
+        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadComerciantes1.png?alt=media&token=65f7be0f-d611-4193-8e12-cc90873cfb08
+    ) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% 100%;
     color: #e9ebe6;
@@ -30,7 +33,10 @@
     text-align: center;
 }
 .comunidadComerciantesRegistro{
-    background: #e9ebe6 url(../img/ComunidadComerciantes2.png) no-repeat center; 
+    /* background: #e9ebe6 url(../img/ComunidadComerciantes2.png) no-repeat center;  */
+    background: #e9ebe6 url(
+        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadComerciantes2.png?alt=media&token=b6e76927-7f34-4f4d-9c9b-e9cf3cf6bba7
+    ) no-repeat center; 
     background-attachment: scroll;         
     background-size: cover;
     height: auto;

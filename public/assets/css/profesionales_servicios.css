@@ -1,7 +1,11 @@
 /* Pantallas de Moviles */
 @media screen and (max-width: 600px) {
     .profesionalesServiciosMensaje{
-        background: #e9ebe6 url(../img/AsiTrabajamos3Mobile.png) no-repeat center !important;       
+        /* background: #e9ebe6 url(../img/AsiTrabajamos3Mobile.png) no-repeat center !important;      
+          */
+        background: #e9ebe6 url(
+            https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/AsiTrabajamos3Mobile.png?alt=media&token=80bb050e-0d4d-4b9f-bf36-8d14fed36830
+        ) no-repeat center !important;
         background-size: cover !important;
     }
 }

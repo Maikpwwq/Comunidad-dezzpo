@@ -1,11 +1,12 @@
 import { auth, firestore, storage } from '../../../firebase/firebaseClient'
 import { collection, doc, setDoc, getDoc, getDocs, addDoc, query } from 'firebase/firestore'
+import { ref, getDownloadURL } from 'firebase/storage'
 import { updateProfile } from 'firebase/auth'
 
 const FirebaseMethods = () => {
     const user = auth.currentUser
     const _firestore = firestore
-    const _snapStorage = storage
+    const _Storage = storage
     const usersRef = collection(_firestore, 'users')
 
     const addFirestore = async (updateInfo, userID) => {
