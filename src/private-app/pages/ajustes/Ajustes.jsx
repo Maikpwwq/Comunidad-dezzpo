@@ -154,7 +154,6 @@ const Ajustes = (props) => {
                                     onChange={handleChange}
                                     defaultValue="@NOMBRE USUARIO"
                                     className="pb-4 pe-4"
-                                    xs={12}
                                 />
                                 <TextField
                                     id="userProfession"
@@ -164,7 +163,6 @@ const Ajustes = (props) => {
                                     onChange={handleChange}
                                     defaultValue="@PROFESIÓN"
                                     className="pb-4 pe-4"
-                                    xs={12}
                                 />
                                 <TextField
                                     id="userJoined"
@@ -175,7 +173,6 @@ const Ajustes = (props) => {
                                     defaultValue="@SeUnioDesdeHace"
                                     variant="filled"
                                     className="pb-4 pe-4"
-                                    xs={12}
                                 />
                                 <TextField
                                     id="userExperience"
@@ -185,7 +182,6 @@ const Ajustes = (props) => {
                                     onChange={handleChange}
                                     defaultValue="@TiempoExperiencia"
                                     className="pb-4 pe-4"
-                                    xs={12}
                                 />
                                 <TextField
                                     id="userRazonSocial"
@@ -195,7 +191,6 @@ const Ajustes = (props) => {
                                     onChange={handleChange}
                                     defaultValue="Razón Social"
                                     className="pb-4 pe-4"
-                                    xs={12}
                                 />
                                 <TextField
                                     id="userUbication"
@@ -205,7 +200,6 @@ const Ajustes = (props) => {
                                     onChange={handleChange}
                                     defaultValue="ubicación"
                                     className="pb-4 pe-4"
-                                    xs={12}
                                 />
                                 <TextField
                                     id="userIdentification"
@@ -215,7 +209,6 @@ const Ajustes = (props) => {
                                     onChange={handleChange}
                                     defaultValue="Identificación"
                                     className="pb-4 pe-4"
-                                    xs={12}
                                 />
                                 <TextField
                                     id="userMail"
@@ -226,7 +219,6 @@ const Ajustes = (props) => {
                                     defaultValue="@CORREO USUARIO"
                                     variant="filled"
                                     className="pb-4 pe-4"
-                                    xs={12}
                                 />
                                 <TextField
                                     id="userPhone"
@@ -236,7 +228,6 @@ const Ajustes = (props) => {
                                     onChange={handleChange}
                                     defaultValue="Celular"
                                     className="pb-4 pe-4"
-                                    xs={12}
                                 />
 
                                 <Row className="pb-4 w-100">
