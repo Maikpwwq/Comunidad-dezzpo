@@ -4,9 +4,9 @@ import { getApps, initializeApp } from 'firebase/app'
 
 // Productos de Firebase
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-// import { getFirestore } from 'firebase/firestore'
+import { getFirestore } from 'firebase/firestore'
 // import { getDatabase } from 'firebase/database'
-// import { getStorage } from 'firebase/storage'
+import { getStorage } from 'firebase/storage'
 // import { getAnalytics } from 'firebase/analytics'
 
 let firebaseApp
@@ -31,10 +31,10 @@ export const auth = getAuth(firebaseApp)
 export const currentUser = auth.currentUser
 // console.log(currentUser)
 
-// export const firestore = getFirestore(firebaseApp)
+export const firestore = getFirestore(firebaseApp)
 // firestore.settings({ timestampsInSnapshots: true })
 
-// export const storage = getStorage(firebaseApp)
+export const storage = getStorage(firebaseApp)
 
 // export const analytics = getAnalytics(firebaseApp)
 

@@ -1,7 +1,7 @@
 // Pagina de Usuario - Perfil
 import React, { useState, useEffect } from 'react'
-import { auth } from '../../../firebase/firebaseClient'
-import { updateProfile } from 'firebase/auth'
+import { auth, firestore, storage } from '../../../firebase/firebaseClient'
+import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
 
 import '../../../../public/assets/cssPrivateApp/perfil.css'
 import ProfilePhoto from '../../../../public/assets/img/Profile.png'
@@ -18,19 +18,36 @@ import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
 const Perfil = (props) => {
     const user = auth.currentUser
+    const userID = user.uid
+    const _firestore = firestore
+    const _snapStorage = storage
+    const usersRef = collection(_firestore, 'users')
+
+    const userFromFirestore = async (firestoreUserID) => {
+        try {
+            const userData = await getDocFromServer(
+                doc(usersRef, firestoreUserID)
+            )
+            return userData
+        } catch (err) {
+            console.log('Error getting user: ', err)
+        }
+    }
+
+    const updateProfilePhoto = () => {}
 
     const [userInfo, setUserInfo] = useState({
-        userName: 'Michael Arias Fajardo',
+        userName: ' ',
         userMail: '',
-        userPhone: '3196138057',
-        userPhotoUrl: '',
+        userPhone: ' ',
+        userPhotoUrl: 'https://www.google.com',
         userId: '',
-        userJoined: 'se unio en 2020',
-        userProfession: 'soldador',
-        userExperience: '4 años',
-        userUbication: 'Soacha, cundinamarca',
-        userRazonSocial: 'Comunidad Dezzpo',
-        userIdentification: 'private',
+        userJoined: ' ',
+        userProfession: ' ',
+        userExperience: ' ',
+        userUbication: ' ',
+        userRazonSocial: ' ',
+        userIdentification: ' ',
     })
 
     useEffect(() => {
@@ -45,14 +62,39 @@ const Perfil = (props) => {
                 emailVerified,
                 metadata,
             } = user
-            setUserInfo({
-                ...userInfo,
-                userPhone: phoneNumber,
-                userPhotoUrl: photoURL,
-                userId: uid,
-                userMail: email,
-                userName: displayName,
-                userJoined: metadata.creationTime,
+            // setUserInfo({
+            //     ...userInfo,
+                
+            // })
+            // resolving promise data user
+            const userData = userFromFirestore(userID)
+            // userData.forEach((doc) => {
+            //     console.log(doc.id, " => ", doc.data())
+            // })
+            userData.then((docSnap) => {
+                if (docSnap.exists()) {
+                    // docSnap._document.data...
+                    const data = docSnap.data()
+                    // console.log(docSnap.data())
+                    setUserInfo({
+                        ...userInfo,
+                        userPhone: data.userPhone || phoneNumber,
+                        userPhotoUrl: photoURL,
+                        userId: uid,
+                        userMail: email,
+                        userName: displayName,
+                        userJoined: metadata.creationTime,
+                        userProfession: data.userProfession,
+                        userExperience: data.userExperience,
+                        userUbication: data.userUbication,
+                        userRazonSocial: data.userRazonSocial,
+                        userIdentification: data.userIdentification,
+                    })
+                } else {
+                    console.log(
+                        'No se encontro información relacionada con este usuario!'
+                    )
+                }
             })
         }
     }, [user])
@@ -74,7 +116,10 @@ const Perfil = (props) => {
                                         />
                                     </div>
 
-                                    <Button>
+                                    <Button
+                                        type="submit"
+                                        onClick={updateProfilePhoto()}
+                                    >
                                         <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
                                     </Button>
                                 </Col>
