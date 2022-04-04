@@ -6,9 +6,11 @@ import { updateProfile } from 'firebase/auth'
 const FirebaseMethods = () => {
     const user = auth.currentUser
     const _firestore = firestore
-    const _Storage = storage
+    const _storage = storage
     const usersRef = collection(_firestore, 'users')
-    const profilesRef = ref(_Storage, 'profiles')
+    const draftRef = collection(_firestore, 'drafts')
+    const profilesRef = ref(_storage, 'profiles')
+    const pathReference = ref(_storage, 'gs://app-comunidad-dezzpo.appspot.com/')
 
     const addFirestore = async (updateInfo, userID) => {
         await addDoc(doc(usersRef, userID), updateInfo)

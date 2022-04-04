@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardMedia from '@mui/material/CardMedia'
@@ -27,7 +28,18 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 //     }),
 // }))
 
-export default function ServiceCard() {
+export default function DraftCard({ props }) {
+    const {
+        draftName,
+        draftDescription,
+        draftRooms,
+        draftPlans,
+        draftPermissions,
+        draftAtachments,
+        draftBestSchedule,
+        draftProperty,
+        draftPostalCode,
+    } = props
     // const [expanded, setExpanded] = React.useState(false)
 
     // const handleExpandClick = () => {
@@ -35,47 +47,64 @@ export default function ServiceCard() {
     // }
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card
+            className="d-flex w-50"
+            // lg={6}
+            // md={6}
+            // sm={10}
+            sx={{ width: '100%', display: 'flex', flexDirection: 'row' }}
+        >
+            {/* maxWidth: 345, */}
             <CardMedia
                 component="img"
                 height="194"
                 image="http://placeimg.com/260/194/arch"
                 // src="http://placeimg.com/260/194/arch"
                 alt="Paella dish"
+                style={{ maxWidth: '345px' }}
             />
-            {/* TODO: Categorias e Ubicación */}
-            <CardHeader
-                avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        CD
-                    </Avatar>
-                }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                {/* TODO: Categorias*/}
+
+                <CardHeader
+                    avatar={
+                        <Avatar
+                            // src={userPhotoUrl}
+                            sx={{ bgcolor: red[500] }}
+                            aria-label="recipe"
+                        >
+                            CD
+                        </Avatar>
+                    }
+                    action={
+                        <IconButton aria-label="settings">
+                            <MoreVertIcon />
+                        </IconButton>
+                    }
+                    title={draftName}
+                    subheader={draftRooms}
+                ></CardHeader>
+                <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                        {draftDescription}
+                    </Typography>
+                    <Typography>
+                        {draftProperty} - {draftPostalCode}
+                        <br />
+                        {draftPlans} - {draftPermissions}
+                    </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                    <IconButton aria-label="add to favorites">
+                        <FavoriteIcon />
+                        {/* TODO: Contactar */}
                     </IconButton>
-                }
-                title="Comunidad Dezzpo"
-                subheader="cinco estrellas"
-            />
-            <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    Somos una comunidad de comerciantes profesionales, contrata
-                    personal calificado mantenimiento general residencial y de
-                    propiedad horizontal, consulta públicamente los perfiles y
-                    la reputación de los prestadores de servicios. Ahora tus
-                    proyectos y remodelaciones más rápido y simple que nunca.
-                </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                    {/* TODO: Contactar */}
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
-                {/* <ExpandMore
+                    <IconButton aria-label="share">
+                        <ShareIcon />
+                    </IconButton>
+                    {draftAtachments}
+                    {draftBestSchedule}
+                    {/* <ExpandMore
                     expand={expanded}
                     onClick={handleExpandClick}
                     aria-expanded={expanded}
@@ -83,7 +112,9 @@ export default function ServiceCard() {
                 >
                     <ExpandMoreIcon />
                 </ExpandMore> */}
-            </CardActions>
+                </CardActions>
+            </Box>
+
             {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <Typography paragraph>Method:</Typography>
@@ -121,4 +152,18 @@ export default function ServiceCard() {
             </Collapse> */}
         </Card>
     )
+}
+
+DraftCard.defaultProps = {
+    props: {
+        draftName: 'The App Name',
+        draftDescription: 'The App Name',
+        draftRooms: 'The App Name',
+        draftPlans: 'The App Name',
+        draftPermissions: 'The App Name',
+        draftAtachments: 'The App Name',
+        draftBestSchedule: 'The App Name',
+        draftProperty: 'The App Name',
+        draftPostalCode: 'The App Name',
+    },
 }

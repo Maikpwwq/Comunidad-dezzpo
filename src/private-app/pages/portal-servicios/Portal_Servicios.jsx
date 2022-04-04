@@ -1,9 +1,11 @@
 // Pagina de Usuario - Portal_Servicios
-import React from 'react'
-import { storage } from '../../../firebase/firebaseClient'
+import React, { useState, useEffect } from 'react'
+import { storage, firestore } from '../../../firebase/firebaseClient'
+import { collection, doc, getDocs } from 'firebase/firestore'
 import { ref, getDownloadURL } from 'firebase/storage'
 
-import ServiceCard from '../../components/ServiceCard'
+import DraftCard from '../../components/DraftCard'
+import UserCard from '../../components/UserCard'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -17,28 +19,81 @@ import TableCell from '@mui/material/TableCell'
 
 const Portal_Servicios = (props) => {
     const _storage = storage
-    // const pathReference = ref(_snapStorage, 'Asesorias2.png')
-    // const gsReference = ref(
-    //     storage,
-    //     'gs://app-comunidad-dezzpo.appspot.com/Asesorias2.png'
-    // )
+    const _firestore = firestore
+    const draftRef = collection(_firestore, 'drafts')
+    const usersRef = collection(_firestore, 'users')
 
-    getDownloadURL(
-        ref(_storage, 'gs://app-comunidad-dezzpo.appspot.com/AsiTrabajamos2.png')
-    )
-        .then((url) => {
-            console.log(url)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+    const [usersData, setUsersData] = useState({})
+    const [draftsData, setDraftsData] = useState({})
+
+    const usersFromFirestore = async () => {
+        try {
+            const userData = await getDocs(usersRef)
+            return userData
+        } catch (err) {
+            console.log(
+                'Error al obtener los datos de la colleccion users: ',
+                err
+            )
+        }
+    }
+
+    const draftsFromFirestore = async () => {
+        try {
+            const draftData = await getDocs(draftRef)
+            return draftData
+        } catch (err) {
+            console.log(
+                'Error al obtener los datos de la colleccion users: ',
+                err
+            )
+        }
+    }
+
+    useEffect(() => {
+        usersFromFirestore()
+            .then((docSnap) => {
+                if (docSnap) {
+                    const data = docSnap.docs.map((element) => ({
+                        ...element.data(),
+                    }))
+                    setUsersData({
+                        data,
+                    })
+                } else {
+                    console.log(
+                        'No se encontro información en la colleccion usuarios!'
+                    )
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        draftsFromFirestore()
+            .then((docSnap) => {
+                if (docSnap) {
+                    const data = docSnap.docs.map((element) => ({
+                        ...element.data(),
+                    }))
+                    setDraftsData({
+                        data,
+                    })
+                } else {
+                    console.log(
+                        'No se encontro información en la colleccion proyectos!'
+                    )
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])
+
+    console.log(draftsData)
 
     return (
         <>
             <Container fluid className="p-0 h-100">
-                <Row className="m-0 w-100 d-flex">
-                    <ServiceCard />
-                </Row>
                 <Row className="m-0 w-100 d-flex">
                     <Col className="col-10 p-4">
                         <h2 className="headline-xl">
@@ -47,7 +102,20 @@ const Portal_Servicios = (props) => {
                         </h2>
                         <p className="body-2"> Comerciantes profesionales </p>
                         <p className="body-1">Publica un proyecto gratis</p>
-                        <Col className="col-10 p-4">
+                        <Row className="m-0 w-100 d-flex">
+                            {usersData.data ? (
+                                usersData.data.map((user) => (
+                                    <UserCard
+                                        key={user.id}
+                                        props={user}
+                                        className=""
+                                    ></UserCard>
+                                ))
+                            ) : (
+                                <UserCard className=""></UserCard>
+                            )}
+                        </Row>
+                        {/* <Col className="col-10 p-4">
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -74,7 +142,7 @@ const Portal_Servicios = (props) => {
                                     </TableRow>
                                 </TableBody>
                             </Table>
-                        </Col>
+                        </Col> */}
                     </Col>
                 </Row>
                 <Row className="m-0 w-100 d-flex">
@@ -87,7 +155,20 @@ const Portal_Servicios = (props) => {
                         </span>
                         <p className="body-2">Proyectos activos </p>
                         <p className="body-1">Aplica a un Proyecto Gratis</p>
-                        <Col className="col-10 p-4">
+                        <Row className="m-0 w-100 d-flex">
+                            {draftsData.data ? (
+                                draftsData.data.map((draft) => (
+                                    <DraftCard
+                                        key={draft.id}
+                                        props={draft}
+                                        className=""
+                                    ></DraftCard>
+                                ))
+                            ) : (
+                                <DraftCard className=""></DraftCard>
+                            )}
+                        </Row>
+                        {/* <Col className="col-10 p-4">
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -114,7 +195,7 @@ const Portal_Servicios = (props) => {
                                     </TableRow>
                                 </TableBody>
                             </Table>
-                        </Col>
+                        </Col> */}
                     </Col>
                 </Row>
             </Container>

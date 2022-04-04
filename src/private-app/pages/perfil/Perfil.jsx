@@ -5,7 +5,7 @@ import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 import '../../../../public/assets/cssPrivateApp/perfil.css'
-import ProfilePhoto from '../../../../public/assets/img/Profile.png'
+// import ProfilePhoto from '../../../../public/assets/img/Profile.png'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -56,6 +56,7 @@ const Perfil = (props) => {
         userUbication: ' ',
         userRazonSocial: ' ',
         userIdentification: ' ',
+        userDescription: ' ',
     })
 
     const updateProfilePhoto = (event) => {
@@ -139,6 +140,7 @@ const Perfil = (props) => {
                         userUbication: data.userUbication,
                         userRazonSocial: data.userRazonSocial,
                         userIdentification: data.userIdentification,
+                        userDescription: data.userDescription,
                     })
                 } else {
                     console.log(
@@ -254,11 +256,7 @@ const Perfil = (props) => {
                                         </h3>
                                         <div>
                                             <p className="body-1">
-                                                Proyectos de carpintería y
-                                                acabados en madera para su casa
-                                                o negocio nos dedicamos a la
-                                                realización de muebles y
-                                                decoración{' '}
+                                                {userInfo.userDescription}
                                             </p>
                                         </div>
                                     </Col>

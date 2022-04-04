@@ -65,7 +65,7 @@ const Ingreso = (props) => {
         })
 
     const handleConsult = () => {
-        navigate('/nuevo-proyecto')
+        navigate('/app/perfil')
     }
 
     let checkStyle = {
