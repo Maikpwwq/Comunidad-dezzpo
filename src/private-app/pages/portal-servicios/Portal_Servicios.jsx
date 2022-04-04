@@ -16,7 +16,7 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
 const Portal_Servicios = (props) => {
-    const _Storage = storage
+    const _storage = storage
     // const pathReference = ref(_snapStorage, 'Asesorias2.png')
     // const gsReference = ref(
     //     storage,
@@ -24,20 +24,7 @@ const Portal_Servicios = (props) => {
     // )
 
     getDownloadURL(
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Asesorias2.png')
-        ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/AsiTrabajamos2.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/AsiTrabajamos3Mobile.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Ayuda&PQRS1.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Buscador-Dezzpo.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadComerciantes1.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadComerciantes2.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadPropietarios1.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadPropietarios2.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadPropietarios3.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/ComunidadPropietarios4.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Nosotros1.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Nosotros4.png')
-        // ref(_Storage, 'gs://app-comunidad-dezzpo.appspot.com/Presupuestos1.png')
+        ref(_storage, 'gs://app-comunidad-dezzpo.appspot.com/AsiTrabajamos2.png')
     )
         .then((url) => {
             console.log(url)

@@ -1,7 +1,8 @@
 // Pagina de Usuario - Perfil
 import React, { useState, useEffect } from 'react'
 import { auth, firestore, storage } from '../../../firebase/firebaseClient'
-import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
+import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 import '../../../../public/assets/cssPrivateApp/perfil.css'
 import ProfilePhoto from '../../../../public/assets/img/Profile.png'
@@ -10,18 +11,27 @@ import ProfilePhoto from '../../../../public/assets/img/Profile.png'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
+const Input = styled('input')({
+    display: 'none',
+})
+
 const Perfil = (props) => {
     const user = auth.currentUser
     const userID = user.uid
     const _firestore = firestore
-    const _Storage = storage 
+    const _storage = storage
     const usersRef = collection(_firestore, 'users')
+
+    const userToFirestore = async (updateInfo, userID) => {
+        await setDoc(doc(usersRef, userID), updateInfo, { merge: true })
+    }
 
     const userFromFirestore = async (firestoreUserID) => {
         try {
@@ -34,14 +44,12 @@ const Perfil = (props) => {
         }
     }
 
-    const updateProfilePhoto = () => {}
-
     const [userInfo, setUserInfo] = useState({
         userName: ' ',
         userMail: '',
         userPhone: ' ',
-        userPhotoUrl: 'https://www.google.com',
-        userId: '',
+        userPhotoUrl: ' ',
+        userId: ' ',
         userJoined: ' ',
         userProfession: ' ',
         userExperience: ' ',
@@ -49,6 +57,54 @@ const Perfil = (props) => {
         userRazonSocial: ' ',
         userIdentification: ' ',
     })
+
+    const updateProfilePhoto = (event) => {
+        const file = event.target.files
+        const profilesRef = ref(_storage, `profiles/${userID}`)
+        if (file[0] instanceof Blob) {
+            console.log(file[0])
+            try {
+                uploadBytes(profilesRef, file[0]).then((response) => {
+                    const { bucket, path_ } = response.ref._location
+                    const base = `gs://${bucket}/${path_}`
+                    console.log(
+                        'Se cargo una imagen de perfil al storage',
+                        base
+                    )
+                    const gsReference = ref(_storage, base)
+                    getDownloadURL(gsReference)
+                        .then((url) => {
+                            setUserInfo({
+                                ...userInfo,
+                                userPhotoUrl: url,
+                            })
+                            const photoInfo = { userPhotoUrl: url }
+                            userToFirestore(photoInfo, userID)
+                                .then((docSnap) => {
+                                    console.log(
+                                        'Se actualiza URL imagen de perfil a firestore',
+                                        docSnap
+                                    )
+                                })
+                                .catch((error) => {
+                                    console.log(error)
+                                })
+                        })
+                        // .then(() => {
+                        //     // update photoUrl to user collection
+                        //     console.log(userInfo)
+                        //     if (userInfo.userPhotoUrl) {
+                        //     }
+                        // })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                })
+            } catch (e) {
+                console.log('La imagen de perfil no se cargo al storage', e)
+            }
+        }
+    }
 
     useEffect(() => {
         if (user !== null) {
@@ -64,7 +120,7 @@ const Perfil = (props) => {
             } = user
             // setUserInfo({
             //     ...userInfo,
-                
+
             // })
             // resolving promise data user
             const userData = userFromFirestore(userID)
@@ -79,7 +135,7 @@ const Perfil = (props) => {
                     setUserInfo({
                         ...userInfo,
                         userPhone: data.userPhone || phoneNumber,
-                        userPhotoUrl: photoURL,
+                        userPhotoUrl: data.userPhotoUrl || photoURL,
                         userId: uid,
                         userMail: email,
                         userName: displayName,
@@ -109,19 +165,32 @@ const Perfil = (props) => {
                                 <Col md={4}>
                                     <div>
                                         <img
-                                            src={ProfilePhoto}
+                                            src={userInfo.userPhotoUrl}
                                             alt="imagen de perfil"
                                             height="150px"
                                             width="150px"
+                                            style={{
+                                                'border-radius': '50%',
+                                            }}
                                         />
                                     </div>
-
-                                    <Button
-                                        type="submit"
-                                        onClick={updateProfilePhoto()}
-                                    >
-                                        <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
-                                    </Button>
+                                    <label htmlFor="icon-button-file">
+                                        <Input
+                                            accept="image/*"
+                                            id="icon-button-file"
+                                            type="file"
+                                            onClick={updateProfilePhoto}
+                                        />
+                                        <Button
+                                            type="submit"
+                                            id="profilePhoto"
+                                            name="profilePhoto"
+                                            variant="contained"
+                                            component="span"
+                                        >
+                                            <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
+                                        </Button>
+                                    </label>
                                 </Col>
                                 <Col md={3}>
                                     <Box

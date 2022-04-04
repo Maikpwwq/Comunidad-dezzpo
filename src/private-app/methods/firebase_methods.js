@@ -8,6 +8,7 @@ const FirebaseMethods = () => {
     const _firestore = firestore
     const _Storage = storage
     const usersRef = collection(_firestore, 'users')
+    const profilesRef = ref(_Storage, 'profiles')
 
     const addFirestore = async (updateInfo, userID) => {
         await addDoc(doc(usersRef, userID), updateInfo)

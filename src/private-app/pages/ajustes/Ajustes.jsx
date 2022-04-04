@@ -38,7 +38,7 @@ const Ajustes = (props) => {
         userName: ' ',
         userMail: ' ',
         userPhone: ' ',
-        userPhotoUrl: 'https://www.google.com',
+        userPhotoUrl: ' ',
         userId: ' ',
         userJoined: ' ',
         userProfession: ' ',
@@ -59,10 +59,6 @@ const Ajustes = (props) => {
                 emailVerified,
                 metadata,
             } = user
-            // setUserEditInfo({
-            //     ...userEditInfo,
-
-            // })
             const userData = userFromFirestore(userID)
             userData.then((docSnap) => {
                 if (docSnap.exists()) {
@@ -70,7 +66,7 @@ const Ajustes = (props) => {
                     setUserEditInfo({
                         ...userEditInfo,
                         userPhone: data.userPhone || phoneNumber,
-                        userPhotoUrl: photoURL,
+                        userPhotoUrl: data.userPhotoUrl || photoURL,
                         userId: uid,
                         userMail: email,
                         userName: displayName,
@@ -111,6 +107,7 @@ const Ajustes = (props) => {
         const profile = {
             displayName: userEditInfo.userName,
             phoneNumber: userEditInfo.userPhone,
+            photoURL: userEditInfo.userPhotoUrl,
         }
         if (user !== null) {
             console.log(auth)
