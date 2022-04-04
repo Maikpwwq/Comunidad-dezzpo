@@ -13,7 +13,7 @@ const BuscadorNuevoProyecto = (props) => {
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate('/app/perfil')
+        navigate('/nuevo-proyecto')
     }
 
     return (
