@@ -1,5 +1,8 @@
 .asesoriasTitulo{
-    background: #e9ebe6 url(../img/Asesorias2.png) no-repeat center; 
+    /* background: #e9ebe6 url(../img/Asesorias2.png) no-repeat center;  */
+    background: #e9ebe6 url(
+        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Asesorias2.png?alt=media&token=847e6afb-0671-469f-9633-314d1441aa8c
+    ) no-repeat center;
     background-attachment: scroll;         
     background-size: cover;
     min-height: 550px;

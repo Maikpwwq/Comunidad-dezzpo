@@ -19,7 +19,10 @@
 }
 
 .ayudaPqrsTitulo{
-    background: #e9ebe6 url(../img/Ayuda&PQRS1.png) no-repeat center; 
+    /* background: #e9ebe6 url(../img/Ayuda&PQRS1.png) no-repeat center;  */
+    background: #e9ebe6 url(
+        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Ayuda%26PQRS1.png?alt=media&token=3e631abd-4538-4e17-ae1f-e341072c796b
+    ) no-repeat center; 
     background-attachment: scroll;         
     background-size: cover;
     min-height: 550px;
