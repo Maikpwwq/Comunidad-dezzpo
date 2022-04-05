@@ -1,7 +1,7 @@
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
 import { storage, firestore } from '../../../firebase/firebaseClient'
-import { collection, doc, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import { ref, getDownloadURL } from 'firebase/storage'
 
 import DraftCard from '../../components/DraftCard'
@@ -25,6 +25,9 @@ const Portal_Servicios = (props) => {
 
     const [usersData, setUsersData] = useState({})
     const [draftsData, setDraftsData] = useState({})
+
+    // const q = query(collection(db, "users"), where("capital", "==", true));
+    // const querySnapshot = await getDocs(q);
 
     const usersFromFirestore = async () => {
         try {
