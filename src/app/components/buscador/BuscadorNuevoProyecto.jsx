@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import '../../../../public/assets/css/buscador_nuevos_proyectos.css'
 
@@ -9,11 +9,24 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 
-const BuscadorNuevoProyecto = (props) => {
+const BuscadorNuevoProyecto = ({ data }) => {
     const navigate = useNavigate()
+    const { categoriaProfesional, tipoProyecto } = data
+
+    const [projectData, setProjectData] = useState({
+        categoriaProfesional: categoriaProfesional || ' ',
+        tipoProyecto: tipoProyecto || ' ',
+    })
+
+    const handleChange = (event) => {
+        setProjectData({
+            ...projectData,
+            [event.target.name]: event.target.value,
+        })
+    }
 
     const handleClick = () => {
-        navigate('/nuevo-proyecto')
+        navigate('/nuevo-proyecto', { state: projectData })
     }
 
     return (
@@ -22,6 +35,53 @@ const BuscadorNuevoProyecto = (props) => {
                 <Col className="col-12">
                     <div className="contenerdorFormulario center opacidadNegro">
                         <Form action="" id="formularioServicios">
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text
+                                    id="basic-addon1"
+                                    style={{
+                                        border: 'none',
+                                        background: 'none',
+                                    }}
+                                >
+                                    <span className="icon-LupaFomularioIcono">
+                                        <span className="path1"></span>
+                                        <span className="path2"></span>
+                                        <span className="path3"></span>
+                                        <span className="path4"></span>
+                                        <span className="path5"></span>
+                                    </span>
+                                </InputGroup.Text>
+                                <Form.Group
+                                    className="mb-2"
+                                    controlId="formTipoProyecto"
+                                >
+                                    <Form.Label className="mb-0">
+                                        ¿Qué tipo de proyecto es?
+                                    </Form.Label>
+                                    <Form.Select
+                                        className="casillaSeleccion"
+                                        name="tipoProyecto"
+                                        value={projectData.tipoProyecto}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">
+                                            seleccionar uno
+                                        </option>
+                                        {/* <option value="Persona">Persona</option> */}
+                                        <option value="Hogar">Hogar</option>
+                                        <option value="Negocio">Negocio</option>
+                                        <option value="PH">
+                                            Propiedad Horizontal
+                                        </option>
+                                        <option value="Inmobiliaria">
+                                            Inmobiliaria
+                                        </option>
+                                        <option value="Alianzas">
+                                            Alianzas
+                                        </option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </InputGroup>
                             {/* type="text" value="Selecciona un profesional listado #1" */}
                             <InputGroup className="mb-3">
                                 <InputGroup.Text
@@ -41,17 +101,18 @@ const BuscadorNuevoProyecto = (props) => {
                                 </InputGroup.Text>
                                 <Form.Group
                                     className="mb-2"
-                                    controlId="formBasicProfesional"
+                                    controlId="formCategoriaProfesional"
                                 >
                                     <Form.Label className="mb-0">
                                         ¿Qué tipo de profesional necesitas?
                                     </Form.Label>
                                     <Form.Select
                                         className="casillaSeleccion"
-                                        name="seleccionarProfesional"
-                                        id="seleccionarProfesional"
+                                        name="categoriaProfesional"
+                                        value={projectData.categoriaProfesional}
+                                        onChange={handleChange}
                                     >
-                                        <option>seleccionar uno</option>{' '}
+                                        <option>seleccionar categoria</option>{' '}
                                         <option value="administradores PH">
                                             {' '}
                                             administradores PH{' '}
@@ -245,7 +306,7 @@ const BuscadorNuevoProyecto = (props) => {
                                 </Form.Group>
                             </InputGroup>
 
-                            <InputGroup className="mb-3">
+                            {/* <InputGroup className="mb-3">
                                 <InputGroup.Text
                                     id="basic-addon1"
                                     style={{
@@ -273,8 +334,7 @@ const BuscadorNuevoProyecto = (props) => {
                                         name="seleccionarServicio"
                                         id="seleccionarServicio"
                                     >
-                                        <option>seleccionar uno</option>{' '}
-                                        {/* type="text" value="Selecciona el trabajo listado #2" */}
+                                        <option>seleccionar uno</option>{' '}                                        
                                         <option value="Administraciones PH">
                                             {' '}
                                             Administraciones PH{' '}
@@ -461,7 +521,7 @@ const BuscadorNuevoProyecto = (props) => {
                                         </option>
                                     </Form.Select>
                                 </Form.Group>
-                            </InputGroup>
+                            </InputGroup> */}
 
                             <Form.Group>
                                 <Col>
@@ -482,6 +542,13 @@ const BuscadorNuevoProyecto = (props) => {
             </Container>
         </>
     )
+}
+
+BuscadorNuevoProyecto.defaultProps = {
+    data: {
+        categoriaProfesional: ' ',
+        tipoProyecto: ' ',
+    },
 }
 
 export default BuscadorNuevoProyecto

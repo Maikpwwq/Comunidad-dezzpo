@@ -244,7 +244,7 @@ const Perfil = (props) => {
                             </Row>
                         </Row>
                         <Row className="m-0 w-100 d-flex justify-content-start">
-                            <Col className="col-4 pt-4 pb-4">
+                            <Col className="col-4 pt-4 pb-4 align-items-start">
                                 <span className="p-4 p-description textBlanco fondoVerde">
                                     {userInfo.userRazonSocial} <br />
                                     {userInfo.userPhone} <br />

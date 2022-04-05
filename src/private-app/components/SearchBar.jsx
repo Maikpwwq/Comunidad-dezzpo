@@ -1,8 +1,8 @@
-import * as React from 'react'
-
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { styled, alpha } from '@mui/material/styles'
 import SearchIcon from '@mui/icons-material/Search'
-import InputBase from '@mui/material/InputBase';
+import InputBase from '@mui/material/InputBase'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -45,6 +45,26 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }))
 
 const SearchBar = () => {
+    const navigate = useNavigate()
+    const [searchParams, setSearchParams] = useState({
+        searchInput: ' ',
+    })
+
+    const handleChange = (event) => {
+        setSearchParams({
+            ...searchParams,
+            [event.target.name]: event.target.value,
+        })
+    }
+
+    const handleSearch = (event) => {
+        // Detectar tecla 'Enter' if (event.key === 'Enter')
+        if (event.keyCode === 13) {
+            // console.log(event, searchParams)
+            navigate('/app/portal-servicios', { state: searchParams })
+        }
+    }
+
     return (
         <>
             <Search>
@@ -54,6 +74,11 @@ const SearchBar = () => {
                 <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
+                    name="searchInput"
+                    value={searchParams.searchInput}
+                    onChange={handleChange}
+                    onKeyDown={handleSearch}
+                    // onKeyPress={handleSearch} Deprecated 2021
                 />
             </Search>
         </>

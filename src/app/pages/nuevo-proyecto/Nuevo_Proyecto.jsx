@@ -1,5 +1,6 @@
 // Pagina de NuevoProyecto
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
 import { firestore } from '../../../firebase/firebaseClient'
 import '../../../../public/assets/css/nuevo_proyecto.css'
@@ -16,9 +17,13 @@ import Form from 'react-bootstrap/Form'
 const NuevoProyecto = (props) => {
     // TODO: SetProjectID
     const draftID = '0nBRalFhC3THfbGsbKHHfzpL81j2'
+    const { state } = useLocation()
+    const { categoriaProfesional, tipoProyecto } = state
     const _firestore = firestore
     const draftRef = collection(_firestore, 'drafts')
     const [draftInfo, setDraftInfo] = useState({
+        draftCategory: categoriaProfesional || ' ',
+        draftProject: tipoProyecto || ' ',
         draftName: 'Categoria',
         draftDescription: '',
         draftRooms: ' ',
@@ -77,7 +82,9 @@ const NuevoProyecto = (props) => {
                         sm={12}
                         xs={12}
                     >
-                        <BuscadorNuevoProyecto></BuscadorNuevoProyecto>
+                        <BuscadorNuevoProyecto
+                            data={state}
+                        ></BuscadorNuevoProyecto>
                     </Col>
                 </Row>
                 <Col className="nuevoProyectoBuscador2 align-items-baseline">
