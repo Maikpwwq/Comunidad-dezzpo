@@ -1,8 +1,9 @@
 // Pagina de registro
-import * as React from 'react'
+import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
+import { auth, firestore } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { collection, doc, setDoc } from 'firebase/firestore'
 
 import '../../../../public/assets/css/registro.css'
 
@@ -16,11 +17,18 @@ import Form from 'react-bootstrap/Form'
 const Registro = (props) => {
     const { showLogo } = props
 
+    const _firestore = firestore
+    const usersRef = collection(_firestore, 'users')
+
     const [send, setSend] = React.useState(false)
     const [userSignupEmail, setEmail] = React.useState(null)
     const [userSignupPassword, setPassword] = React.useState('')
 
     const navigate = useNavigate()
+
+    const userToFirestore = async (updateInfo, userID) => {
+        await setDoc(doc(usersRef, userID), updateInfo)
+    }
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -29,6 +37,13 @@ const Registro = (props) => {
                 .then((userCredential) => {
                     var user = userCredential.user
                     console.log('Anonymous account successfully upgraded', user)
+                    const data = {
+                        userMail: user.email,
+                        userJoined: user.metadata.creationTime,
+                        userId: user.uid,
+                        // userName: user.displayName,
+                    }
+                    userToFirestore(data, user.uid)
                     navigate('/app/perfil')
                 })
                 .catch((err) => {
@@ -61,7 +76,7 @@ const Registro = (props) => {
                         ></Col>
                     )}
                     <Col
-                        className="registrateformulario m-0 p-0"
+                        className="registrateformulario m-0 p-4"
                         md={6}
                         sm={12}
                     >
@@ -80,7 +95,7 @@ const Registro = (props) => {
                             <NavLink className="body-2" to="/ingreso/">
                                 {'¿Ya tienes una cuenta?'}
                             </NavLink>
-                            <Form.Group
+                            {/* <Form.Group
                                 className="mb-2"
                                 controlId="formBasicName"
                             >
@@ -90,7 +105,7 @@ const Registro = (props) => {
                                     placeholder="Registre su nombre"
                                     name="name"
                                 />
-                            </Form.Group>
+                            </Form.Group> */}
                             <Form.Group
                                 className="mb-2"
                                 controlId="formBasicName"

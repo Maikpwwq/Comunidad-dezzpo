@@ -5,7 +5,7 @@ import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 import '../../../../public/assets/cssPrivateApp/perfil.css'
-import ProfilePhoto from '../../../../public/assets/img/Profile.png'
+// import ProfilePhoto from '../../../../public/assets/img/Profile.png'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -56,6 +56,7 @@ const Perfil = (props) => {
         userUbication: ' ',
         userRazonSocial: ' ',
         userIdentification: ' ',
+        userDescription: ' ',
     })
 
     const updateProfilePhoto = (event) => {
@@ -87,11 +88,17 @@ const Perfil = (props) => {
                                     )
                                 })
                                 .catch((error) => {
-                                    console.log('No se pudo actualizar la imagen de perfil en firestore', error)
+                                    console.log(
+                                        'No se pudo actualizar la imagen de perfil en firestore',
+                                        error
+                                    )
                                 })
                         })
                         .catch((error) => {
-                            console.log('No se encontro una URL en el storage', error)
+                            console.log(
+                                'No se encontro una URL en el storage',
+                                error
+                            )
                         })
                 })
             } catch (e) {
@@ -139,6 +146,7 @@ const Perfil = (props) => {
                         userUbication: data.userUbication,
                         userRazonSocial: data.userRazonSocial,
                         userIdentification: data.userIdentification,
+                        userDescription: data.userDescription,
                     })
                 } else {
                     console.log(
@@ -196,11 +204,11 @@ const Perfil = (props) => {
                                         action=""
                                     >
                                         <TextField
-                                            id="userName"
-                                            name="userName"
-                                            label="Nombre de usuario"
-                                            value={userInfo.userName}
-                                            defaultValue="@NOMBRE USUARIO"
+                                            id="userRazonSocial"
+                                            name="userRazonSocial"
+                                            label="Razón Social"
+                                            value={userInfo.userRazonSocial}
+                                            defaultValue="Razón Social"
                                             variant="filled"
                                         />
                                         <TextField
@@ -236,9 +244,9 @@ const Perfil = (props) => {
                             </Row>
                         </Row>
                         <Row className="m-0 w-100 d-flex justify-content-start">
-                            <Col className="col-4 pt-4 pb-4">
+                            <Col className="col-4 pt-4 pb-4 align-items-start">
                                 <span className="p-4 p-description textBlanco fondoVerde">
-                                    {userInfo.userName} <br />
+                                    {userInfo.userRazonSocial} <br />
                                     {userInfo.userPhone} <br />
                                     {userInfo.userMail} <br />
                                 </span>
@@ -254,11 +262,7 @@ const Perfil = (props) => {
                                         </h3>
                                         <div>
                                             <p className="body-1">
-                                                Proyectos de carpintería y
-                                                acabados en madera para su casa
-                                                o negocio nos dedicamos a la
-                                                realización de muebles y
-                                                decoración{' '}
+                                                {userInfo.userDescription}
                                             </p>
                                         </div>
                                     </Col>
@@ -299,13 +303,14 @@ const Perfil = (props) => {
                                         </span>
                                     </div>
                                     <TextField
-                                        id="userRazonSocial"
-                                        name="userRazonSocial"
-                                        label="Razón Social"
-                                        value={userInfo.userRazonSocial}
-                                        defaultValue="Razón Social"
+                                        id="userName"
+                                        name="userName"
+                                        label="Nombre de usuario"
+                                        value={userInfo.userName}
+                                        defaultValue="@NOMBRE USUARIO"
                                         variant="filled"
                                     />
+
                                     <TextField
                                         id="userUbication"
                                         name="userUbication"

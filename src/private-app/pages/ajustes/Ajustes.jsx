@@ -46,6 +46,7 @@ const Ajustes = (props) => {
         userUbication: ' ',
         userRazonSocial: ' ',
         userIdentification: ' ',
+        userDescription: ' ',
     })
 
     useEffect(() => {
@@ -76,6 +77,7 @@ const Ajustes = (props) => {
                         userUbication: data.userUbication,
                         userRazonSocial: data.userRazonSocial,
                         userIdentification: data.userIdentification,
+                        userDescription: data.userDescription,
                     })
                 } else {
                     console.log(
@@ -247,7 +249,9 @@ const Ajustes = (props) => {
                                 </label>
                                 <hr />
                                 <TextareaAutosize
-                                    name="ofertaServicios"
+                                    value={userEditInfo.userDescription}
+                                    onChange={handleChange}
+                                    name="userDescription"
                                     id="ofertaServicios"
                                     placeholder="Registra los servicios que ofreces"
                                     cols="30"
