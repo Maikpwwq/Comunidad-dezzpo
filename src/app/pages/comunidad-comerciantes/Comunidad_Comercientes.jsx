@@ -128,38 +128,39 @@ const ComunidadComerciantes = (props) => {
             <Container fluid className="p-0">
                 <Row className="comunidadComerciantesBeneficios2  m-0">
                     <Col className="p-4" md={8}>
-                        <span className="pitchComerciantes">
+                        <span className="pt-4 pb-4 pitchComerciantes">
                             <h2 className="headline-xl">
                                 El plan de beneficios con la membresía incluye
                             </h2>
                         </span>
+                        <br />
                         <p className="body-2">
                             Nosotros creamos los anuncios de contenido así que
                             no tendras que preocuparte de hacerlo.
                             <br />
-                            <br />
-                            según tus necesidades, así el costo varia con la
-                            cantidad de contenidos (posts digitales), el lugar
-                            de aparicion dentro de nuestros productos, <br />
-                            <br />
-                            la etapa en que se encuentra su negocio, la duración
-                            de publicación del anuncio y el análisis de datos
+                            Esto según tus necesidades, así el costo varia con
+                            la cantidad de contenidos (posts digitales), el
+                            lugar de aparicion dentro de nuestros productos, la
+                            etapa en que se encuentra su negocio, la duración de
+                            publicación del anuncio y el análisis de datos
                             requerido.
                             <br />
                         </p>
+                        <br />
                         <span className="pitchComerciantes">
                             <h3 className="headline-l">
                                 ¿Cuáles son las grandes ventajas de hacer
                                 publicidad en Internet?
                             </h3>
                         </span>
+                        <br />
                         <ul>
                             <span className="pitchComerciantes">
                                 <p className="body-2">
                                     Alcance y visibilidad. <br />
                                 </p>
                             </span>
-                            <li className="body-1">
+                            <li className="body-1 pb-4">
                                 Hay personas que te estan buscando y aún no
                                 saben que existes. <br />
                                 Promociona las 24 horas del día y los 365 días
@@ -174,7 +175,7 @@ const ComunidadComerciantes = (props) => {
                                     <br />
                                 </p>
                             </span>
-                            <li className="body-1">
+                            <li className="body-1 pb-4">
                                 Alcance sus objetivos de crecimiento, nuestro
                                 público cautivo
                                 <br />
@@ -189,7 +190,7 @@ const ComunidadComerciantes = (props) => {
                                     Mejora la penetración de tu marca. <br />
                                 </p>
                             </span>
-                            <li className="body-1">
+                            <li className="body-1 pb-4">
                                 Posiciónese en el mercado digital, fideliza
                                 clientes y captura ventas, <br />
                                 Publica generando reconociendo de marca por
@@ -202,7 +203,7 @@ const ComunidadComerciantes = (props) => {
                                     <br />
                                 </p>
                             </span>
-                            <li className="body-1">
+                            <li className="body-1 pb-4">
                                 Adopta herramientas de gestión estratégica CEO,
                                 tendrás un Informe de <br />
                                 resultados en tiempo real, con el cual

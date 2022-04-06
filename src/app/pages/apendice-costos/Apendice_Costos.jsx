@@ -13,12 +13,12 @@ const ApendiceCostos = () => {
         <>
             <Container fluid className="p-0">
                 <Row className="apendiceCostosTitulo m-0 w-100 d-flex justify-content-end">
-                    <Col md={4}>
-                        <span className="titulo headline-xl">
+                    <Col lg={4} md={6} sm={10} xs={12}>
+                        <h3 className="titulo headline-xl">
                             Costeo de Servicios
                             <br />
                             Comunes
-                        </span>
+                        </h3>
                     </Col>
                 </Row>
             </Container>

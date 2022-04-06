@@ -40,3 +40,6 @@
 .ayudaPqrsPreguntas li a:link {
     color: black !important;
 }
+.ayudaPqrsPreguntas li a:visited {
+    color: black !important;
+}

@@ -30,21 +30,3 @@
     height: auto;
     width: 100%;
 }
-.ingresoUbicacion{    
-    color: #e9ebe6;
-    background: #13495e;
-    /* height: 330px; */
-    width: 100%;
-}
-.imagenUbicacion{
-    background: #13495e url(../img/Mapa.png) no-repeat center; 
-    background-attachment: scroll;         
-    background-size: auto 100% ;
-    min-height: 330px;
-    height: auto;
-    width: 100%;
-}
-#busquedaCiudad input{
-    height: 27px;
-    text-align: left;
-}
