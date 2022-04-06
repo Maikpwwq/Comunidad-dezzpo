@@ -1,4 +1,11 @@
-/* height: 700px; */
+@media screen and (max-width: 600px) {
+    #formularioRegistro .form-control{
+        width: 100% !important;
+    }
+    .form-check-input, #formBasicCheckboxRobot {
+        width: 10% !important;
+    }
+}
 
 #registrate{
     display: flex;
@@ -28,6 +35,14 @@
     margin-top: 20px;
     color: white;
 }
-#formularioRegistro input{
+#formularioRegistro .form-control{
     height: 27px;
+    width: 60%;
+}
+#formBasicCheckboxRobot {
+    width: 10% !important;
+    margin: 0 0;
+}
+.form-check-label{
+    padding-left: 8px !important; 
 }

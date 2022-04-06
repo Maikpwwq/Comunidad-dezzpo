@@ -1,4 +1,6 @@
 import * as React from 'react'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardMedia from '@mui/material/CardMedia'
@@ -43,8 +45,13 @@ export default function UserCard({ props }) {
     //     setExpanded(!expanded)
     // }
 
+    const handleVerSitio = () => {}
+    const handleCotizar = () => {}
+    const handleFavorite = () => {}
+    const handleShare = () => {}
+
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card className="mb-4" sx={{ maxWidth: 345 }}>
             <CardMedia
                 component="img"
                 height="194"
@@ -75,19 +82,28 @@ export default function UserCard({ props }) {
                 <Typography variant="body2" color="text.secondary">
                     {userDescription}
                 </Typography>
-                <Typography>
-                    {userExperience} - {userUbication}
-                </Typography>
+                <br />
+                <Typography>Experiencia: {userExperience}</Typography>
+                <Typography>Ubicacion: {userUbication}</Typography>
+                <Typography>Se unio el: {userJoined}</Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
+                <Button className="" onClick={handleVerSitio}>
+                    Ver sitio
+                </Button>
+                <Button className="" onClick={handleCotizar}>
+                    Cotizar
+                </Button>
+                <IconButton
+                    aria-label="add to favorites"
+                    onClick={handleFavorite}
+                >
                     <FavoriteIcon />
                     {/* TODO: Contactar */}
                 </IconButton>
-                <IconButton aria-label="share">
+                <IconButton aria-label="share" onClick={handleShare}>
                     <ShareIcon />
                 </IconButton>
-                {userJoined}
                 {/* <ExpandMore
                     expand={expanded}
                     onClick={handleExpandClick}

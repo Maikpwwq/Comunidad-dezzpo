@@ -1,9 +1,23 @@
-/* height: 750px; */
+@media screen and (max-width: 600px) {
+
+    .containerPatrocinadores {
+        background-size: cover !important;
+    }
+}
+/* Pantallas en tabletas */
+@media screen and (min-width: 600px) and (max-width: 900px) {
+
+}
+/* Pantallas de Ordenador */
+@media screen and (min-width: 900px) {
+   
+}
+
 .containerPatrocinadores {
     background: #e9ebe6 url(../img/Patrocinadores1.png) no-repeat center; 
     background-attachment: scroll;         
     background-size: 100% auto;
-    height: 510px;
+    min-height: 510px;
     width: 100%;
 }
 .patrocinadoresMensaje{   
@@ -15,16 +29,3 @@
     margin-top: 0px;
     padding-top: 21px;
 }
-/*    
-    padding: 3px 6px;
-    margin: 6px 3px;
-    background-color: #333333;
-    background-color: #e9ebe6;
-    background-color: rgba(0,0,0,0.8);
-    background-color: #009999; 
-    background-color:#1ec7e6;
-    background-color: #13495e; 
-    background-color:#92B901;
-    background-color: #006699;
-    background-color: #deaf06;
-*/

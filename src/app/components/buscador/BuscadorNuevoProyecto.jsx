@@ -508,7 +508,7 @@ const BuscadorNuevoProyecto = ({ data }) => {
                             </Form.Group> */}
 
                             <Form.Group>
-                                <Col>
+                                <Col className="pb-4">
                                     <hr />
                                     <Button
                                         className="animacionBoton btn-round btn-high"

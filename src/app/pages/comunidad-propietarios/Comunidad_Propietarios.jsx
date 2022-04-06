@@ -9,6 +9,7 @@ import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyec
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
 const ComunidadPropietarios = (props) => {
     let checkStyle = {
@@ -123,9 +124,9 @@ const ComunidadPropietarios = (props) => {
                                     Propietario revisa la
                                 </p>
                             </span>
-                            <button className="btn" onClick="listaChequeo">
+                            <Button className="btn" onClick="listaChequeo">
                                 lista de chequeo
-                            </button>
+                            </Button>
                             <span className="body-2">
                                 3196138057
                                 <br />
@@ -168,19 +169,21 @@ const ComunidadPropietarios = (props) => {
                             md={4}
                             style={{ 'justify-content': 'space-evenly' }}
                         >
-                            <button>Nuestro Blog</button>
-                            <button>
+                            <Button className="btn btn-primary btn-high">
+                                Nuestro Blog
+                            </Button>
+                            <Button className="btn btn-primary btn-high">
                                 Proyectos <br />
                                 Destacados
-                            </button>
-                            <button>
+                            </Button>
+                            <Button className="btn btn-primary btn-high">
                                 Pregunta a un <br />
                                 Profesional
-                            </button>
-                            <button>
+                            </Button>
+                            <Button className="btn btn-primary btn-high">
                                 Comenzar <br />
                                 Cotización
-                            </button>
+                            </Button>
                         </Col>
                     </Col>
                 </Row>

@@ -1,6 +1,7 @@
 // Pagina de NuevoProyecto
 import React, { useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
 import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
 import { firestore } from '../../../firebase/firebaseClient'
 import '../../../../public/assets/css/nuevo_proyecto.css'
@@ -15,8 +16,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 const NuevoProyecto = (props) => {
-    // TODO: SetProjectID
-    const draftID = '0nBRalFhC3THfbGsbKHHfzpL81j2'
+    const draftID = uuidv4()
     const { state } = useLocation() || {}
     const { categoriaProfesional, tipoProyecto } = state || ' '
     const _firestore = firestore
@@ -72,7 +72,7 @@ const NuevoProyecto = (props) => {
                             </p>
                         </Col>
                     </Col>
-                    {/* Formulario nuevo proyecto */}
+                    {/* Se importa formulario nuevo proyecto */}
                     <Col
                         className="col m-4 p-0"
                         xl={4}
@@ -103,9 +103,11 @@ const NuevoProyecto = (props) => {
                         </p>
                         <Form>
                             <p className="body-1">
-                                2. Crea una oferta <br />
+                                2. Crea una oferta. <br />
+                                <br />
                                 Dejanos conocer un poco más hacerca del proyecto
-                                que vas a postular
+                                que vas a postular.
+                                <br />
                                 <br />* Campos requeridos
                             </p>
                             <Form.Group
@@ -124,7 +126,7 @@ const NuevoProyecto = (props) => {
                                     onChange={handleChange}
                                 />
                                 <Form.Text className="text-muted">
-                                    provee información adicional aquí, como
+                                    Provee información adicional aquí, como
                                     especificaciones de tecnica y materiales
                                     requeridos que el comerciante calificado
                                     deba conocer.
@@ -166,7 +168,7 @@ const NuevoProyecto = (props) => {
                             >
                                 <Form.Label className="body-2">
                                     ¿Cuantas habitaciones y/o espacios seran
-                                    intervenidos?, ¿Cuantos m2?
+                                    intervenidos?, ejemplo ¿Cantidad de m2?
                                 </Form.Label>
                                 <Form.Control
                                     type="text"
@@ -233,14 +235,18 @@ const NuevoProyecto = (props) => {
                                     </option>
                                 </Form.Select>
                             </Form.Group>
-                            <Button
-                                onClick={handleSave}
-                                className="btn-round btn-high"
-                                variant="primary"
-                                // type="submit"
-                            >
-                                Guardar y continuar
-                            </Button>
+                            <Row>
+                                <Col className="pt-4 pb-4">
+                                    <Button
+                                        onClick={handleSave}
+                                        className="btn-round btn-high"
+                                        variant="primary"
+                                        // type="submit"
+                                    >
+                                        Guardar y continuar
+                                    </Button>
+                                </Col>
+                            </Row>
                         </Form>
                     </Col>
                 </Col>
@@ -253,10 +259,12 @@ const NuevoProyecto = (props) => {
                         sm={10}
                         xs={10}
                     >
+                        <p className="p-description">Cómo, dónde y cuándo </p>
                         <Form>
                             <p className="body-1">
-                                3. Información Adicional <br />
-                                Detalles Adicionales
+                                3. Información Adicional. <br />
+                                <br />
+                                Danos algunos detalles Adicionales.
                             </p>
                             <Form.Group
                                 className="mb-3"
@@ -309,7 +317,7 @@ const NuevoProyecto = (props) => {
                             >
                                 <Form.Label className="body-2">
                                     Cargar fotos imagenes y documentos
-                                    relacionados{' '}
+                                    relacionados.{' '}
                                 </Form.Label>
                                 <Form.Control
                                     name="draftAtachments"
@@ -318,14 +326,18 @@ const NuevoProyecto = (props) => {
                                     type="file"
                                 />
                             </Form.Group>
-                            <Button
-                                onClick={handleSave}
-                                className="btn-round btn-high"
-                                variant="primary"
-                                // type="submit"
-                            >
-                                Guardar y continuar
-                            </Button>
+                            <Row>
+                                <Col className="pt-4 pb-4">
+                                    <Button
+                                        onClick={handleSave}
+                                        className="btn-round btn-high"
+                                        variant="primary"
+                                        // type="submit"
+                                    >
+                                        Guardar y continuar
+                                    </Button>
+                                </Col>
+                            </Row>
                         </Form>
                     </Col>
                 </Col>

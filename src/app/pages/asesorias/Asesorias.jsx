@@ -1,5 +1,6 @@
 // Pagina de Asesorias
 import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import '../../../../public/assets/css/asesorias.css'
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { Link, useNavigate } from 'react-router-dom'
@@ -15,7 +16,7 @@ import Form from 'react-bootstrap/Form'
 const Asesorias = (props) => {
     const navigate = useNavigate()
     const _firestore = firestore
-    const draftID = '0nBRalFhC3THfbGsbKHHfzpL81j2'
+    const draftID = uuidv4()
     const asesoriaRef = collection(_firestore, 'asesorias')
     const [asesoriaInfo, setAsesoriaInfo] = useState({
         asesoriaTitulo: ' ',

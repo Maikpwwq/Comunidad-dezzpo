@@ -19,14 +19,12 @@ import Container from 'react-bootstrap/Container'
 // import TableCell from '@mui/material/TableCell'
 
 const Portal_Servicios = (props) => {
-    const { state } = useLocation()
+    const { state } = useLocation() || {}
+    const { searchInput } = state || ' '
     // console.log(state.searchInput)
     // const _storage = storage
     const _firestore = firestore
-    const queryRef = query(
-        collection(_firestore, 'users'),
-        where('userRazonSocial', '==', state.searchInput)
-    )
+
     const draftRef = collection(_firestore, 'drafts')
     const usersRef = collection(_firestore, 'users')
     const [searchData, setSearchData] = useState({})
@@ -35,6 +33,10 @@ const Portal_Servicios = (props) => {
 
     const searchFromFirestore = async () => {
         try {
+            const queryRef = query(
+                collection(_firestore, 'users'),
+                where('userRazonSocial', '==', searchInput)
+            )
             const searchUsers = await getDocs(queryRef)
             return searchUsers
         } catch (err) {
@@ -88,7 +90,7 @@ const Portal_Servicios = (props) => {
             .catch((error) => {
                 console.log(error)
             })
-    }, [state.searchInput])
+    }, [searchInput])
 
     useEffect(() => {
         usersFromFirestore()
@@ -136,7 +138,7 @@ const Portal_Servicios = (props) => {
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex">
                     <Row>
-                        {state.searchInput ? (
+                        {searchInput ? (
                             <Col>
                                 {searchData.data ? (
                                     searchData.data.map((user) => (
@@ -175,7 +177,7 @@ const Portal_Servicios = (props) => {
                                     ></UserCard>
                                 ))
                             ) : (
-                                <UserCard className=""></UserCard>
+                                <></>
                             )}
                         </Row>
                         {/* <Col className="col-10 p-4">
@@ -228,7 +230,7 @@ const Portal_Servicios = (props) => {
                                     ></DraftCard>
                                 ))
                             ) : (
-                                <DraftCard className=""></DraftCard>
+                                <></>
                             )}
                         </Row>
                         {/* <Col className="col-10 p-4">
