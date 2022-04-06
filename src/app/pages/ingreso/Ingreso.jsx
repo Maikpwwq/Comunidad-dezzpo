@@ -72,34 +72,41 @@ const Ingreso = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="ingresoFormulario  m-0 w-100">
-                    <Col className="imagenIngreso"></Col>
-                    <Col className="colRight">
-                        <div className="ingresarFormulario">
+                    <Col className="imagenIngreso" lg={6} md={6} sm={12}></Col>
+                    <Col
+                        className="ingresarFormulario m-0 p-4"
+                        lg={4}
+                        md={6}
+                        sm={12}
+                    >
+                        <Col className="ps-4 pe-4">
                             <h2 className="headline-l textBlanco">
                                 Bienvenido!
                             </h2>
-
                             <p className="body-1 textBlanco">
-                                ERES NUEVO, <br />
-                                CREA FÁCIL UNA CUENTA!
+                                Eres nuevo, crea fácil una cuenta
                                 <NavLink className="body-2" to="/registro/">
-                                    {', Registrate'}
+                                    {' Registrate.'}
                                 </NavLink>
                             </p>
                             <br />
-                            <ul>
-                                <li>
-                                    <a href="">INGRESAR CON FACEBOOK </a>
+                            <ul className="align-items-center">
+                                <li className="body-1">
+                                    <Button className="btn btn-round btn-middle">
+                                        INGRESAR CON FACEBOOK
+                                    </Button>
                                 </li>
-                                <li>
-                                    <a href="">INGRESAR CON GMAIL </a>
+                                <li className="body-1 pt-2">
+                                    <Button className="btn btn-round btn-middle">
+                                        INGRESAR CON GMAIL
+                                    </Button>
                                 </li>
                             </ul>
                             <br />
                             <hr />
                             <Form id="formularioIngreso" action="">
                                 <Form.Group
-                                    className="mb-2"
+                                    className="mb-2 d-flex flex-column align-items-center"
                                     controlId="formLoginCredential"
                                 >
                                     <Form.Control
@@ -112,7 +119,7 @@ const Ingreso = (props) => {
                                     />
                                 </Form.Group>
                                 <Form.Group
-                                    className="mb-2"
+                                    className="mb-2 d-flex flex-column align-items-center"
                                     controlId="formLoginPassword"
                                 >
                                     <Form.Control
@@ -125,7 +132,7 @@ const Ingreso = (props) => {
                                     />
                                 </Form.Group>
                                 <Button
-                                    className="BOTON-TEXT"
+                                    className="BOTON-TEXT textBlanco"
                                     variant="primary"
                                     type="submit"
                                     onClick={sendPasswordResetEmail}
@@ -133,11 +140,11 @@ const Ingreso = (props) => {
                                     OLVIDASTE LA CONTRASEÑA
                                 </Button>
                                 <Form.Group
-                                    className="mb-2"
+                                    className="mb-2 mt-4"
                                     controlId="formBasicCheckboxRecordar"
                                 >
                                     <Form.Check
-                                        className=""
+                                        className="d-flex flex-row align-items-center justify-content-start"
                                         type="checkbox"
                                         label="Recuérdame"
                                     />
@@ -147,14 +154,13 @@ const Ingreso = (props) => {
                                     controlId="formBasicCheckboxRobot"
                                 >
                                     <Form.Check
-                                        className=""
+                                        className="d-flex flex-row align-items-center justify-content-start"
                                         type="checkbox"
                                         label="No soy un robot"
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <Col>
-                                        <hr />
+                                    <Col className="pb-4 pt-4">
                                         <Button
                                             className="btn-round btn-high"
                                             variant="primary"
@@ -166,7 +172,7 @@ const Ingreso = (props) => {
                                     </Col>
                                 </Form.Group>
                             </Form>
-                        </div>
+                        </Col>
                     </Col>
                 </Row>
             </Container>

@@ -60,7 +60,7 @@ const Ubicacion = () => {
                                         type="submit"
                                         onClick={handleConsult}
                                     >
-                                        Consultar
+                                        Confirmar dirección
                                     </Button>
                                 </Col>
                             </Form.Group>

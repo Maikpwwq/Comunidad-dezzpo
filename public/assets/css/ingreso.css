@@ -1,3 +1,16 @@
+@media screen and (max-width: 600px) {
+    .form-check-input, #formBasicCheckboxRecordar {
+        width: 10% !important;
+    }
+}
+.imagenIngreso{
+    background: #13495e url(../img/Ingresar_registro.png) no-repeat center; 
+    background-attachment: scroll;         
+    background-size: auto 100% ;
+    min-height: 590px;
+    height: auto;
+    width: 100%;
+}
 .ingresoFormulario{
     background: #13495e;     
     min-height: 590px;
@@ -18,15 +31,12 @@
     color: white;
     margin-right: 1em;
 }
-#formularioIngreso input{
+#formularioIngreso .form-control{
     height: 27px;
     text-align: center;
-}
-.imagenIngreso{
-    background: #13495e url(../img/Ingresar_registro.png) no-repeat center; 
-    background-attachment: scroll;         
-    background-size: auto 100% ;
-    min-height: 590px;
-    height: auto;
     width: 100%;
+}
+#formBasicCheckboxRecordar {
+    width: 10% !important;
+    margin: 0 0;
 }

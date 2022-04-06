@@ -107,7 +107,7 @@ const Registro = (props) => {
                                 />
                             </Form.Group> */}
                             <Form.Group
-                                className="mb-2"
+                                className="mb-2 d-flex flex-column align-items-center"
                                 controlId="formBasicName"
                             >
                                 <Form.Label className="mb-0">
@@ -120,7 +120,7 @@ const Registro = (props) => {
                                 />
                             </Form.Group>
                             <Form.Group
-                                className="mb-2"
+                                className="mb-2 d-flex flex-column align-items-center"
                                 controlId="formSignupEmail"
                             >
                                 <Form.Label className="mb-0">Email</Form.Label>
@@ -132,7 +132,7 @@ const Registro = (props) => {
                                 />
                             </Form.Group>
                             <Form.Group
-                                className="mb-2"
+                                className="mb-2 d-flex flex-column align-items-center"
                                 controlId="formSignupPassword"
                             >
                                 <Form.Label className="mb-0">
@@ -148,7 +148,7 @@ const Registro = (props) => {
                                 />
                             </Form.Group>
                             <Form.Group
-                                className="mb-2"
+                                className="mb-2 d-flex flex-column align-items-center"
                                 controlId="formBasicPassword"
                             >
                                 <Form.Label className="mb-0">
@@ -161,16 +161,16 @@ const Registro = (props) => {
                                 />
                             </Form.Group>
                             <Form.Group
-                                className="mb-2"
+                                className="mb-2 mt-4"
                                 controlId="formBasicCheckboxRobot"
                             >
                                 <Form.Check
-                                    className=""
+                                    className="d-flex flex-row align-items-center justify-content-center"
                                     type="checkbox"
                                     label="No soy un robot"
                                 />
                             </Form.Group>
-                            <Col>
+                            <Col className="pt-4">
                                 <Button
                                     className="btn-round btn-high"
                                     variant="primary"

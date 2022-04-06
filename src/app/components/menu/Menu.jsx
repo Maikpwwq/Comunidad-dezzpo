@@ -70,7 +70,7 @@ const MenuComunidad = (props) => {
                                         <NavLink to="/registro">
                                             Registrarse
                                         </NavLink>
-                                        <NavLink to="/ingreso">
+                                        <NavLink to="/asi-trabajamos">
                                             Calificaciones
                                         </NavLink>
                                     </div>

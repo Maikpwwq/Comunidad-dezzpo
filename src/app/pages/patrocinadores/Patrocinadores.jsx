@@ -12,17 +12,20 @@ const Patrocinadores = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="containerPatrocinadores">
-                    <div className="patrocinadoresMensaje">
-                        <span className="tituloDocumento">
-                            {' '}
-                            <h2 className="headline-xl">
-                                Estos son algunos de nuestros patrocinadores
-                            </h2>{' '}
-                        </span>
-                        <ul className="p-description">
-                            <li>Bictia</li>
-                        </ul>
-                    </div>
+                    <Col className="col-10">
+                        <div className="patrocinadoresMensaje">
+                            <span className="tituloDocumento">
+                                {' '}
+                                <h2 className="headline-xl">
+                                    Estos son algunos de nuestros patrocinadores
+                                </h2>{' '}
+                            </span>
+                            <ul className="p-description">
+                                <li>Bictia</li>
+                                <li>Mintic / MisionTic2022</li>
+                            </ul>
+                        </div>
+                    </Col>
                 </Row>
             </Container>
         </>

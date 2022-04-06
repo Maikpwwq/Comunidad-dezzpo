@@ -215,7 +215,7 @@ $theme-colors: ();
    cursor: pointer;
 
    &:hover {
-      color: var(--selected-hover-dark-blue-color) !important;
+      color: var(--primary-light-gray-text-color) !important;
    }
 }
 .btn {
@@ -257,7 +257,7 @@ $theme-colors: ();
          border: 2px solid var(--selected-border-blue-color);
 
          &:hover {
-            color: var(--selected-hover-dark-blue-color);
+            color: var(--primary-light-gray-text-color);
          }
 
          &.espaced {

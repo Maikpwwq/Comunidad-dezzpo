@@ -230,7 +230,7 @@ const Portal_Servicios = (props) => {
                                     ></DraftCard>
                                 ))
                             ) : (
-                                <DraftCard className=""></DraftCard>
+                                <></>
                             )}
                         </Row>
                         {/* <Col className="col-10 p-4">
