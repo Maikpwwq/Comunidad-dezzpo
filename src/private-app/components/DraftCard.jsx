@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardMedia from '@mui/material/CardMedia'
@@ -13,20 +14,20 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
-// import { styled } from '@mui/material/styles'
-// import Collapse from '@mui/material/Collapse'
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { styled } from '@mui/material/styles'
+import Collapse from '@mui/material/Collapse'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
-// const ExpandMore = styled((props) => {
-//     const { expand, ...other } = props
-//     return <IconButton {...other} />
-// })(({ theme, expand }) => ({
-//     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-//     marginLeft: 'auto',
-//     transition: theme.transitions.create('transform', {
-//         duration: theme.transitions.duration.shortest,
-//     }),
-// }))
+const ExpandMore = styled((props) => {
+    const { expand, ...other } = props
+    return <IconButton {...other} />
+})(({ theme, expand }) => ({
+    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+    }),
+}))
 
 export default function DraftCard({ props }) {
     const {
@@ -40,117 +41,118 @@ export default function DraftCard({ props }) {
         draftProperty,
         draftPostalCode,
     } = props
-    // const [expanded, setExpanded] = React.useState(false)
+    const [expanded, setExpanded] = React.useState(false)
 
-    // const handleExpandClick = () => {
-    //     setExpanded(!expanded)
-    // }
+    const handleExpandClick = () => {
+        setExpanded(!expanded)
+    }
+    const handleVerSitio = () => {}
+    const handleCotizar = () => {}
+    const handleFavorite = () => {}
+    const handleShare = () => {}
 
     return (
-        <Card
-            className="d-flex w-50"
-            // lg={6}
-            // md={6}
-            // sm={10}
-            sx={{ width: '100%', display: 'flex', flexDirection: 'row' }}
-        >
-            {/* maxWidth: 345, */}
-            <CardMedia
-                component="img"
-                height="194"
-                image="http://placeimg.com/260/194/arch"
-                // src="http://placeimg.com/260/194/arch"
-                alt="Paella dish"
-                style={{ maxWidth: '345px' }}
-            />
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                {/* TODO: Categorias*/}
+        <>
+            <Card
+                className="d-flex w-50"
+                // lg={6}
+                // md={6}
+                // sm={10}
+                sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+            >
+                {/* maxWidth: 345, */}
+                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                    <CardMedia
+                        component="img"
+                        height="194"
+                        image="http://placeimg.com/260/194/arch"
+                        // src="http://placeimg.com/260/194/arch"
+                        alt="Paella dish"
+                        style={{ maxWidth: '345px' }}
+                    />
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                        {/* TODO: Categorias*/}
 
-                <CardHeader
-                    avatar={
-                        <Avatar
-                            // src={userPhotoUrl}
-                            sx={{ bgcolor: red[500] }}
-                            aria-label="recipe"
+                        <CardHeader
+                            avatar={
+                                <Avatar
+                                    // src={userPhotoUrl}
+                                    sx={{ bgcolor: red[500] }}
+                                    aria-label="recipe"
+                                >
+                                    CD
+                                </Avatar>
+                            }
+                            action={
+                                <IconButton aria-label="settings">
+                                    <MoreVertIcon />
+                                </IconButton>
+                            }
+                            title={draftName}
+                            subheader={draftRooms}
+                        ></CardHeader>
+                        <CardContent>
+                            <Typography variant="body2" color="text.secondary">
+                                {draftDescription}
+                            </Typography>
+                            <br />
+                        </CardContent>
+                    </Box>
+                    <CardActions className="d-flex flex-column" disableSpacing>
+                        <Button className="" onClick={handleVerSitio}>
+                            Ver sitio
+                        </Button>
+                        <Button className="" onClick={handleCotizar}>
+                            Cotizar
+                        </Button>
+                        <IconButton
+                            aria-label="add to favorites"
+                            onClick={handleFavorite}
                         >
-                            CD
-                        </Avatar>
-                    }
-                    action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
+                            <FavoriteIcon />
+                            {/* TODO: Contactar */}
                         </IconButton>
-                    }
-                    title={draftName}
-                    subheader={draftRooms}
-                ></CardHeader>
-                <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                        {draftDescription}
-                    </Typography>
-                    <Typography>
-                        {draftProperty} - {draftPostalCode}
-                        <br />
-                        {draftPlans} - {draftPermissions}
-                    </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                        {/* TODO: Contactar */}
-                    </IconButton>
-                    <IconButton aria-label="share">
-                        <ShareIcon />
-                    </IconButton>
-                    {draftAtachments}
-                    {draftBestSchedule}
-                    {/* <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </ExpandMore> */}
-                </CardActions>
-            </Box>
+                        <IconButton aria-label="share" onClick={handleShare}>
+                            <ShareIcon />
+                        </IconButton>
 
-            {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                    <Typography paragraph>Method:</Typography>
-                    <Typography paragraph>
-                        Heat 1/2 cup of the broth in a pot until simmering, add
-                        saffron and set aside for 10 minutes.
-                    </Typography>
-                    <Typography paragraph>
-                        Heat oil in a (14- to 16-inch) paella pan or a large,
-                        deep skillet over medium-high heat. Add chicken, shrimp
-                        and chorizo, and cook, stirring occasionally until
-                        lightly browned, 6 to 8 minutes. Transfer shrimp to a
-                        large plate and set aside, leaving chicken and chorizo
-                        in the pan. Add pimentón, bay leaves, garlic, tomatoes,
-                        onion, salt and pepper, and cook, stirring often until
-                        thickened and fragrant, about 10 minutes. Add saffron
-                        broth and remaining 4 1/2 cups chicken broth; bring to a
-                        boil.
-                    </Typography>
-                    <Typography paragraph>
-                        Add rice and stir very gently to distribute. Top with
-                        artichokes and peppers, and cook without stirring, until
-                        most of the liquid is absorbed, 15 to 18 minutes. Reduce
-                        heat to medium-low, add reserved shrimp and mussels,
-                        tucking them down into the rice, and cook again without
-                        stirring, until mussels have opened and rice is just
-                        tender, 5 to 7 minutes more. (Discard any mussels that
-                        don’t open.)
-                    </Typography>
-                    <Typography>
-                        Set aside off of the heat to let rest for 10 minutes,
-                        and then serve.
-                    </Typography>
-                </CardContent>
-            </Collapse> */}
-        </Card>
+                        <ExpandMore
+                            expand={expanded}
+                            onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more"
+                        >
+                            <ExpandMoreIcon />
+                        </ExpandMore>
+                    </CardActions>
+                </Box>
+
+                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <Typography paragraph>
+                                Tipo propiedad: {draftProperty}
+                            </Typography>
+                            <Typography paragraph>
+                                CodigoPostal: {draftPostalCode}
+                            </Typography>
+                            <Typography paragraph>
+                                Programar mejor: {draftBestSchedule}
+                            </Typography>
+                            <Typography paragraph>
+                                Planos: {draftPlans}
+                            </Typography>
+                            <Typography paragraph>
+                                Permisos: {draftPermissions}
+                            </Typography>
+                            <Typography paragraph>
+                                Adjuntos: {draftAtachments}
+                            </Typography>
+                        </CardContent>
+                    </Collapse>
+                </Box>
+            </Card>
+        </>
     )
 }
 
