@@ -7,8 +7,10 @@ import { Link } from 'react-router-dom'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
 const AyudaPQRS = (props) => {
+    const handleClickChat = () => {}
     return (
         <>
             <Container fluid className="p-0">
@@ -167,7 +169,9 @@ const AyudaPQRS = (props) => {
                                 UN ASESOR
                             </p>
                             <br />
-                            <button className="">CHAT EN VIVO</button>
+                            <Button className="btn btn-round btn-high" onClick={handleClickChat}>
+                                CHAT EN VIVO
+                            </Button>
                         </Col>
                     </Row>
                 </Row>

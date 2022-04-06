@@ -1,6 +1,6 @@
 // Pagina de NuevoProyecto
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
 import { firestore } from '../../../firebase/firebaseClient'
 import '../../../../public/assets/css/nuevo_proyecto.css'
@@ -17,8 +17,8 @@ import Form from 'react-bootstrap/Form'
 const NuevoProyecto = (props) => {
     // TODO: SetProjectID
     const draftID = '0nBRalFhC3THfbGsbKHHfzpL81j2'
-    const { state } = useLocation()
-    const { categoriaProfesional, tipoProyecto } = state
+    const { state } = useLocation() || {}
+    const { categoriaProfesional, tipoProyecto } = state || ' '
     const _firestore = firestore
     const draftRef = collection(_firestore, 'drafts')
     const [draftInfo, setDraftInfo] = useState({
@@ -132,6 +132,36 @@ const NuevoProyecto = (props) => {
                             </Form.Group>
                             <Form.Group
                                 className="mb-3"
+                                controlId="formNewProjectProperty"
+                            >
+                                <Form.Label className="body-2">
+                                    ¿Qué tipo de propiedad es?
+                                </Form.Label>
+                                <Form.Select
+                                    name="draftProperty"
+                                    value={draftInfo.draftProperty}
+                                    onChange={handleChange}
+                                >
+                                    <option>
+                                        Selecciona el tipo de propiedad
+                                    </option>
+                                    <option value="Colonial">
+                                        Propiedad Colonial (1800 - 1920){' '}
+                                    </option>
+                                    <option value="SubUrbana">
+                                        Propiedad suburbana (1920-1960){' '}
+                                    </option>
+                                    <option value="Moderna">
+                                        Propiedad moderna (1960-presente){' '}
+                                    </option>
+                                    <option value="Otra">Otra </option>
+                                    <option value="NotKnow">
+                                        Lo desconozco
+                                    </option>
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-3"
                                 controlId="formNewProjectRooms"
                             >
                                 <Form.Label className="body-2">
@@ -203,21 +233,6 @@ const NuevoProyecto = (props) => {
                                     </option>
                                 </Form.Select>
                             </Form.Group>
-                            <Form.Group
-                                className="mb-3"
-                                controlId="formNewProjectAtachments"
-                            >
-                                <Form.Label className="body-2">
-                                    Cargar fotos imagenes y documentos
-                                    relacionados{' '}
-                                </Form.Label>
-                                <Form.Control
-                                    name="draftAtachments"
-                                    // value={draftInfo.draftAtachments}
-                                    // onChange={handleChange}
-                                    type="file"
-                                />
-                            </Form.Group>
                             <Button
                                 onClick={handleSave}
                                 className="btn-round btn-high"
@@ -266,36 +281,6 @@ const NuevoProyecto = (props) => {
                             </Form.Group>
                             <Form.Group
                                 className="mb-3"
-                                controlId="formNewProjectProperty"
-                            >
-                                <Form.Label className="body-2">
-                                    ¿Qué tipo de propiedad es?
-                                </Form.Label>
-                                <Form.Select
-                                    name="draftProperty"
-                                    value={draftInfo.draftProperty}
-                                    onChange={handleChange}
-                                >
-                                    <option>
-                                        Selecciona el tipo de propiedad
-                                    </option>
-                                    <option value="Colonial">
-                                        Propiedad Colonial (1800 - 1920){' '}
-                                    </option>
-                                    <option value="SubUrbana">
-                                        Propiedad suburbana (1920-1960){' '}
-                                    </option>
-                                    <option value="Moderna">
-                                        Propiedad moderna (1960-presente){' '}
-                                    </option>
-                                    <option value="Otra">Otra </option>
-                                    <option value="NotKnow">
-                                        Lo desconozco
-                                    </option>
-                                </Form.Select>
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-3"
                                 controlId="formNewProjectPostalCode"
                             >
                                 <Form.Label className="body-2">
@@ -310,8 +295,28 @@ const NuevoProyecto = (props) => {
                                 />
                                 <Form.Text className="text-muted">
                                     Nos permitira validar comerciantes
-                                    profesionales activos en la zona.
+                                    profesionales activos en la zona o bien
+                                    registra tu dirección{' '}
+                                    <NavLink className="body-2" to="/ubicacion">
+                                        {', aquí'}
+                                    </NavLink>
+                                    .
                                 </Form.Text>
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-3"
+                                controlId="formNewProjectAtachments"
+                            >
+                                <Form.Label className="body-2">
+                                    Cargar fotos imagenes y documentos
+                                    relacionados{' '}
+                                </Form.Label>
+                                <Form.Control
+                                    name="draftAtachments"
+                                    // value={draftInfo.draftAtachments}
+                                    // onChange={handleChange}
+                                    type="file"
+                                />
                             </Form.Group>
                             <Button
                                 onClick={handleSave}
@@ -326,9 +331,9 @@ const NuevoProyecto = (props) => {
                 </Col>
                 <Row className="nuevoProyectoMensaje w-100">
                     <Col className="p-4 col-10">
-                        <span className="headline-xl textBlanco">
-                            INGRESAR DATOS DE CONTACTO
-                        </span>
+                        <h3 className="headline-xl textBlanco">
+                            Por ultimo ingresa tus datos de contacto
+                        </h3>
                         <p className="body-1 textBlanco">
                             Hasta cuatro Comerciantes calificados te contactaran
                             para aplicar con una cotización a tu proyecto.{' '}

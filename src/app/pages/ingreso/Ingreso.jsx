@@ -19,11 +19,10 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 const Ingreso = (props) => {
+    const navigate = useNavigate()
     const [send, setSend] = React.useState(false)
     const [userLoginEmail, setEmail] = React.useState(null)
     const [userLoginPassword, setPassword] = React.useState('')
-
-    const navigate = useNavigate()
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -63,10 +62,6 @@ const Ingreso = (props) => {
                 `Se produjo un error al enviar correo de restauración ${error}`
             )
         })
-
-    const handleConsult = () => {
-        navigate('/app/perfil')
-    }
 
     let checkStyle = {
         width: '30px',
@@ -173,61 +168,6 @@ const Ingreso = (props) => {
                             </Form>
                         </div>
                     </Col>
-                </Row>
-            </Container>
-            <Container fluid className="p-0">
-                <Row className="ingresoUbicacion m-0 w-100">
-                    <Col className="left m-4 p-0 pt-4 pb-4">
-                        <Form action="busquedaCiudad">
-                            <h3 className="headline-l textBlanco">
-                                Ingresa tu ubicación
-                            </h3>{' '}
-                            <p className="body-1 textBlanco">
-                                Podras consultar con mejor <br />
-                                precision los costos y <br />
-                                tiempos de entrega <br />
-                            </p>
-                            <Form.Group
-                                className="mb-2"
-                                controlId="formBasicCity"
-                            >
-                                <Form.Label className="mb-0">
-                                    Elija su ciudad
-                                </Form.Label>
-                                <Form.Select name="city" id="city">
-                                    <option>seleccionar uno</option>
-                                    <option value="Bogota">Bogota</option>
-                                </Form.Select>
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-2"
-                                controlId="formBasicStreet"
-                            >
-                                <Form.Label className="mb-0">
-                                    Dirección
-                                </Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Registre la dirección"
-                                    name="street"
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Col>
-                                    <hr />
-                                    <Button
-                                        className="btn-round btn-high"
-                                        variant="primary"
-                                        type="submit"
-                                        onClick={handleConsult}
-                                    >
-                                        Consultar
-                                    </Button>
-                                </Col>
-                            </Form.Group>
-                        </Form>
-                    </Col>
-                    <Col className="imagenUbicacion"></Col>
                 </Row>
             </Container>
         </>

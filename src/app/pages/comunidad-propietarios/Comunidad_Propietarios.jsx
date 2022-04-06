@@ -96,87 +96,92 @@ const ComunidadPropietarios = (props) => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosConsultar m-0 row p-4">
-                    <Col className="col-12 m-4">
-                        <h3 className=".headline-l">
-                            Planea con nosotros el proyecto
-                        </h3>
-                        <p className="body-1">
-                            El espacio de tus sueños comienza con una gran idea
-                            y tenemos miles de ellas.
-                        </p>
-                    </Col>
-                    <Col
-                        className="col d-flex flex-column align-items-baseline"
-                        md={4}
-                        style={{ 'justify-content': 'space-evenly' }}
-                    >
-                        <p className="body-2">
-                            Nuestra recomendación esencial al contratar un
-                            comerciante calificado, nunca cancelar la totalidad
-                            por adelantado, revisar siempre las referencias,
-                            calificaciones y afiliaciones del perfil.
-                        </p>
-                        <span className="pitchPropietarios">
-                            <p className=".headline-l">Propietario revisa la</p>
-                        </span>
-                        <button className="btn" onClick="listaChequeo">
-                            lista de chequeo
-                        </button>
-                        <span className="body-2">
-                            3196138057
-                            <br />
-                            Lunes a viernes, 8am - 5pm
-                            <br />
-                            Sabados 9am - 2pm
-                            <br />
-                        </span>
-                    </Col>
-                    <Col
-                        className="col d-flex flex-column align-items-baseline"
-                        md={4}
-                        style={{ 'justify-content': 'space-evenly' }}
-                    >
-                        <span className="pitchPropietarios">
-                            <h3 className=".headline-l">Observa cambios</h3>
-                        </span>
-                        <p className="body-1">
-                            Inspirate, tenemos muchos trabajos realizados.
-                        </p>
-                        <span className="pitchPropietarios">
+                    <Col className="col-10">
+                        <Col className="col-12 m-4">
                             <h3 className=".headline-l">
-                                ¿Requieres de asesoria?
+                                Planea con nosotros el proyecto
                             </h3>
-                        </span>
-                        <p className="body-1">
-                            Nuestra comunidad de comerciantes calificados te
-                            ayudaran con tus inquietudes.
-                        </p>
-                        <span className="pitchPropietarios">
-                            <h3 className=".headline-l">Presupuestos</h3>
-                        </span>
-                        <p className="body-1">
-                            Saber cuanto te puede costar es importante para
-                            iniciar el proyecto.
-                        </p>
-                    </Col>
-                    <Col
-                        className="col d-flex flex-column align-items-center"
-                        md={4}
-                        style={{ 'justify-content': 'space-evenly' }}
-                    >
-                        <button>Nuestro Blog</button>
-                        <button>
-                            Proyectos <br />
-                            Destacados
-                        </button>
-                        <button>
-                            Pregunta a un <br />
-                            Profesional
-                        </button>
-                        <button>
-                            Comenzar <br />
-                            Cotización
-                        </button>
+                            <p className="body-1">
+                                El espacio de tus sueños comienza con una gran
+                                idea y tenemos miles de ellas.
+                            </p>
+                        </Col>
+                        <Col
+                            className="col d-flex flex-column align-items-baseline"
+                            md={4}
+                            style={{ 'justify-content': 'space-evenly' }}
+                        >
+                            <p className="body-2">
+                                Nuestra recomendación esencial al contratar un
+                                comerciante calificado, nunca cancelar la
+                                totalidad por adelantado, revisar siempre las
+                                referencias, calificaciones y afiliaciones del
+                                perfil.
+                            </p>
+                            <span className="pitchPropietarios">
+                                <p className=".headline-l">
+                                    Propietario revisa la
+                                </p>
+                            </span>
+                            <button className="btn" onClick="listaChequeo">
+                                lista de chequeo
+                            </button>
+                            <span className="body-2">
+                                3196138057
+                                <br />
+                                Lunes a viernes, 8am - 5pm
+                                <br />
+                                Sabados 9am - 2pm
+                                <br />
+                            </span>
+                        </Col>
+                        <Col
+                            className="col d-flex flex-column align-items-baseline"
+                            md={4}
+                            style={{ 'justify-content': 'space-evenly' }}
+                        >
+                            <span className="pitchPropietarios">
+                                <h3 className=".headline-l">Observa cambios</h3>
+                            </span>
+                            <p className="body-1">
+                                Inspirate, tenemos muchos trabajos realizados.
+                            </p>
+                            <span className="pitchPropietarios">
+                                <h3 className=".headline-l">
+                                    ¿Requieres de asesoria?
+                                </h3>
+                            </span>
+                            <p className="body-1">
+                                Nuestra comunidad de comerciantes calificados te
+                                ayudaran con tus inquietudes.
+                            </p>
+                            <span className="pitchPropietarios">
+                                <h3 className=".headline-l">Presupuestos</h3>
+                            </span>
+                            <p className="body-1">
+                                Saber cuanto te puede costar es importante para
+                                iniciar el proyecto.
+                            </p>
+                        </Col>
+                        <Col
+                            className="col d-flex flex-column align-items-center"
+                            md={4}
+                            style={{ 'justify-content': 'space-evenly' }}
+                        >
+                            <button>Nuestro Blog</button>
+                            <button>
+                                Proyectos <br />
+                                Destacados
+                            </button>
+                            <button>
+                                Pregunta a un <br />
+                                Profesional
+                            </button>
+                            <button>
+                                Comenzar <br />
+                                Cotización
+                            </button>
+                        </Col>
                     </Col>
                 </Row>
             </Container>

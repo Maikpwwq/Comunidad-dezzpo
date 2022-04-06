@@ -23,6 +23,7 @@ import Prensa from '../pages/prensa/Prensa'
 import Presupuestos from '../pages/presupuestos/Presupuestos'
 import ProfesionalesServicios from '../pages/profesionales-servicios/Profesionales_Servicios'
 import Registro from '../pages/registro/Registro'
+import Ubicacion from '../pages/ubicacion/Ubicacion'
 
 // import NoMatch from "./NoMatch";
 
@@ -52,6 +53,7 @@ class Rutas extends React.Component {
                     <Route path="asi-trabajamos" element={<AsiTrabajamos />} />
                     <Route path="ayuda-pqrs" element={<AyudaPQRS />} />
                     <Route path="blog" element={<Blog />} />
+                    <Route path="ubicacion" element={<Ubicacion />} />
                     <Route path="calificaciones" element={<Calificaciones />} />
                     <Route
                         path="comunidad-comerciantes"
