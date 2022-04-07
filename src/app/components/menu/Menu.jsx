@@ -36,9 +36,7 @@ const MenuComunidad = (props) => {
                                 <img
                                     src={LogoMenuComunidadDezzpo}
                                     alt="Logo Comunidad Dezzpo"
-                                    style={{ padding: '5px 10px' }}
-                                    height="80px"
-                                    width="210px"
+                                    className="logo-comunidad-dezzpo"
                                 />
                             </NavLink>
 

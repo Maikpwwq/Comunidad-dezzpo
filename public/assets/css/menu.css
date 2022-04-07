@@ -2,6 +2,10 @@
     .mobile-menu{
         visibility: visible !important;
     }
+    .logo-comunidad-dezzpo{
+        height: 45px !important; 
+        width: 110px !important;
+    }
     .menuFijo{
         position: absolute;
         min-height: 80px;
@@ -70,6 +74,11 @@
 }
 .containerLogo{
     justify-content: space-evenly !important;
+}
+.logo-comunidad-dezzpo{
+    height: 60px;
+    width: 200px;
+    padding: '5px 10px';
 }
 .mobile-menu{
     visibility: hidden;
