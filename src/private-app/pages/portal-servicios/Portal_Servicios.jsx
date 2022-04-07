@@ -1,6 +1,6 @@
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { firestore } from '../../../firebase/firebaseClient' // storage,
 import { collection, getDocs, query, where } from 'firebase/firestore'
 // import { ref, getDownloadURL } from 'firebase/storage'
@@ -20,6 +20,7 @@ import Button from 'react-bootstrap/Button'
 // import TableCell from '@mui/material/TableCell'
 
 const Portal_Servicios = (props) => {
+    const navigate = useNavigate()
     const { state } = useLocation() || {}
     const { searchInput } = state || ' '
     // console.log(state.searchInput)
@@ -132,6 +133,10 @@ const Portal_Servicios = (props) => {
             })
     }, [])
 
+    const handleNewProject = () => {
+        navigate('/nuevo-proyecto')
+    }
+
     console.log(searchData)
 
     return (
@@ -164,7 +169,10 @@ const Portal_Servicios = (props) => {
                     <Col className="col-10 pt-4 pb-4 p-0">
                         <h2 className="headline-xl">
                             Directorio Profesionales
-                            <Button className="body-1">
+                            <Button
+                                className="body-1"
+                                onClick={handleNewProject}
+                            >
                                 Publica un proyecto gratis
                             </Button>
                         </h2>
