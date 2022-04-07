@@ -61,7 +61,7 @@ theme = {
         MuiDrawer: {
             styleOverrides: {
                 paper: {
-                    backgroundColor: '#575856',  // '#081627'
+                    backgroundColor: '#575856', // '#081627'
                 },
             },
         },
@@ -130,7 +130,7 @@ theme = {
             styleOverrides: {
                 root: {
                     '&.Mui-selected': {
-                        color: '#4fc3f7', // 
+                        color: '#4fc3f7', //
                     },
                 },
             },
@@ -201,6 +201,7 @@ export default function Paperbase() {
                 <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                     <Header onDrawerToggle={handleDrawerToggle} />
                     <Box
+                        className="p-0"
                         component="main"
                         sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
                     >

@@ -11,12 +11,15 @@ const Notificaciones = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">
-                <Row className="m-0 w-100 d-flex">
-                    <Col>
+                <Row className="m-0 w-100 d-flex pt-4 pb-4">
+                    <Col className="col-10">
                         <h2 className="headline-xl">Notificaciones</h2>
                         <div>
                             <TextareaAutosize
-                                minRows={10} cols="30" placeholder="Notificaciones"></TextareaAutosize>
+                                minRows={10}
+                                cols="30"
+                                placeholder="Notificaciones"
+                            ></TextareaAutosize>
                         </div>
                     </Col>
                 </Row>

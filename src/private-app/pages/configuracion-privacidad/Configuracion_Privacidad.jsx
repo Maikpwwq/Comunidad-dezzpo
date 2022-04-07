@@ -17,7 +17,7 @@ const ConfiguracionPrivacidad = (props) => {
         <>
             <Container fluid className="p-0 h-100">
                 <Row className="p-4">
-                    <Col className="m-0 w-100 d-flex align-items-start justify-content-start">
+                    <Col className="col-10 m-0 w-100 d-flex justify-content-start">
                         <h2 className="headline-xl">
                             Configuracion de privacidad
                         </h2>

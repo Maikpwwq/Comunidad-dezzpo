@@ -22,7 +22,7 @@ const ComunidadPropietarios = (props) => {
                 <Row className="comunidadPropietariosTitulo m-0 d-flex flex-row justify-content-start align-content-start">
                     <Col className="col-md-6 align-items-start">
                         <Col
-                            className="opacidadNegro mt-4 mb-4"
+                            className="w-100 opacidadNegro mt-4 mb-4"
                             md={6}
                             sm={12}
                             lg={4}

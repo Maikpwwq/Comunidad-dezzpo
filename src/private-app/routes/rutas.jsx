@@ -1,8 +1,11 @@
 /* - Componente importancion de las paginas y distribucion de las rutas -  */
 import React from 'react'
-import { Routes, Navigate, Route } from 'react-router-dom'
+import { Routes, Navigate, useLocation, Route } from 'react-router-dom'
+// import { auth } from '../../firebase/firebaseClient'
+// import { signOut } from 'firebase/auth'
 
-//Paginas
+// //Paginas
+import Home from '../../app/pages/inicio/Inicio'
 import Ajustes from '../pages/ajustes/Ajustes'
 import Biblioteca from '../pages/biblioteca/Biblioteca'
 import Cambiar_Clave from '../pages/cambiar-clave/Cambiar_Clave'
@@ -19,14 +22,24 @@ import Portal_Servicios from '../pages/portal-servicios/Portal_Servicios'
 import Suscripciones from '../pages/suscripciones/Suscripciones'
 
 // Componentes
-
+// signOut(auth)
+//                                     .then(() => {
+//                                         console.log(
+//                                             'Cerro su sesión de manera exitosa!'
+//                                         )
+//                                     })
+//                                     .catch((error) => {
+//                                         console.log(error)
+//                                     })
 class Rutas extends React.Component {
     render() {
+        // const location = useLocation()
         return (
             <>
                 <Routes>
                     <Route index element={<Perfil />}></Route>
                     <Route path="/perfil" element={<Perfil></Perfil>} />
+                    <Route path="/perfil/:id" element={<Perfil></Perfil>} />
                     <Route path="/ajustes" element={<Ajustes></Ajustes>} />
                     <Route
                         path="/biblioteca"
@@ -39,6 +52,23 @@ class Rutas extends React.Component {
                     <Route
                         path="/calificaciones"
                         element={<Calificaciones></Calificaciones>}
+                    ></Route>
+                    <Route
+                        path="/cerrar-sesion"
+                        element={
+                            <Navigate
+                                to="/" //{<Home />}
+                                replace
+                                state={{ from: location }}
+                            />
+                        }
+                        // render={
+                        //     <Navigate
+                        //         to="/"
+                        //         replace
+                        //         state={{ from: location }}
+                        //     />
+                        // }
                     ></Route>
                     <Route
                         path="/certificaciones"

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, Navigate, useNavigate, useMatch } from 'react-router-dom'
 
 //imagenes
 import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
@@ -26,6 +26,9 @@ import TimerIcon from '@mui/icons-material/Timer'
 import SettingsIcon from '@mui/icons-material/Settings'
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup'
 
+// const match = useMatch('/')
+// console.log(match)
+
 const item = {
     py: '2px',
     px: 3,
@@ -43,11 +46,7 @@ const itemCategory = {
 
 export default function Navigator(props) {
     const { ...other } = props
-
-    const match = useNavigate()
-
-    console.log(match)
-
+    // const cerrarSesion = () => {}
     return (
         <Drawer variant="permanent" {...other}>
             <List disablePadding>
@@ -85,12 +84,14 @@ export default function Navigator(props) {
                         </ListItem>
                         {children.map(
                             ({ id: childId, icon, route, active }) => (
+                                // { (childId !== 'Cerrar Sesion') ? () :
                                 <ListItem
                                     disablePadding
                                     button
                                     activeClassName="Mui-selected"
                                     key={childId}
                                     component={NavLink}
+                                    // component={NavLink} { Navigate }
                                     to={route}
                                     exact
                                 >
@@ -99,6 +100,7 @@ export default function Navigator(props) {
                                         <ListItemText>{childId}</ListItemText>
                                     </ListItemButton>
                                 </ListItem>
+                                // : cerrarSesion()}
                             )
                         )}
 
@@ -123,12 +125,12 @@ const categories = [
             {
                 id: 'Portal de servicios',
                 icon: <HomeIcon />,
-                route: 'portal-servicios', // `${match.url}/calificaciones`
+                route: 'portal-servicios',
             },
             {
                 id: 'Notificaciones',
                 icon: <NotificationsIcon />,
-                route: 'notificaciones', // `${match.url}/calificaciones`
+                route: 'notificaciones',
             },
             {
                 id: 'Suscripciones',
@@ -173,7 +175,7 @@ const categories = [
             {
                 id: 'Cerrar Sesion',
                 icon: <PhonelinkSetupIcon />,
-                route: 'cerrar-sesion',
+                route: `cerrar-sesion`, // ${match.url}/
             },
         ],
     },

@@ -37,8 +37,8 @@ const CambiarClave = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">
-                <Col className="m-0 w-100 d-flex align-items-start justify-content-start">
-                    <Row md={10}>
+                <Row className="m-0 w-100 d-flex pt-4 pb-4">
+                    <Col className="col-10">
                         <span>
                             <h2 className="headline-xl">
                                 Asigna una nueva contrasena
@@ -76,8 +76,8 @@ const CambiarClave = (props) => {
                                 Establecer
                             </Button>
                         </Box>
-                    </Row>
-                </Col>
+                    </Col>
+                </Row>
             </Container>
         </>
     )

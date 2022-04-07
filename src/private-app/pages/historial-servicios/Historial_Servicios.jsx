@@ -15,8 +15,8 @@ const HistorialServicios = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">
-                <Row className="m-0 w-100 d-flex align-items-start">
-                    <Col md={10}>
+                <Row className="m-0 w-100 d-flex align-items-start pt-4 pb-4">
+                    <Col className="col-10" md={10}>
                         <h2 className="headline-xl"> Proyectos Publicados</h2>
                         <div className="p-4">
                             <Table>

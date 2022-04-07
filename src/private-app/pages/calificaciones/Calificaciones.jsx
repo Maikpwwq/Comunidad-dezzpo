@@ -19,8 +19,8 @@ const Calificaciones = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">
-                <Row className="m-0 w-100 d-flex">
-                    <Col className="">
+                <Row className="m-0 w-100 d-flex pt-4 pb-4">
+                    <Col className="col-10">
                         <h2 className="headline-xl">Calificaciones</h2>
                         {/* Estatus (Premium, Gold, Plus, Básico) */}
                         <p className="p-description">

@@ -390,11 +390,12 @@ body {
    display: flex;
    flex-direction: column;
    justify-content: space-evenly;
-   padding-right: 0px !important;
-   padding-left: 0px !important;
-   width: 100%;
-   padding-top: 1.5em;
-   padding-bottom: 1.5em;
+   // padding-right: 0px !important;
+   // padding-left: 0px !important;
+   // width: 100%;
+   // padding-top: 1.5em;
+   // padding-bottom: 1.5em;
+   padding: 1.5em;
    margin-top: 0;
    align-items: center;
    color: #e9ebe6;
@@ -404,8 +405,8 @@ body {
    text-align: center;
    margin-top: 0px;
    color: #e9ebe6;
-   padding-left: 2.5em;
-   padding-right: 2.5em;
+   padding-left: 1em;
+   padding-right: 1em;
 }
 .opacidadBlaco{
    background-color: rgba(233, 235, 230, 0.8);
