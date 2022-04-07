@@ -169,8 +169,18 @@ const AyudaPQRS = (props) => {
                                 UN ASESOR
                             </p>
                             <br />
-                            <Button className="btn btn-round btn-high" onClick={handleClickChat}>
-                                CHAT EN VIVO
+                            <Button
+                                className="btn btn-round btn-high"
+                                onClick={handleClickChat}
+                            >
+                                <a
+                                    className="body-1"
+                                    href="https://api.whatsapp.com/send?phone=573196138057"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    CHAT EN VIVO
+                                </a>
                             </Button>
                         </Col>
                     </Row>

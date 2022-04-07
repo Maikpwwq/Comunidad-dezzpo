@@ -349,7 +349,8 @@ body {
    color:  var(--primary-light-gray-text-color);  
 }
 .col ul a:hover{    
-   text-decoration: underline;   
+   // text-decoration: underline; 
+   text-decoration: none !important; 
    color:  var(--primary-light-gray-text-color);   
 }
 .row {
@@ -373,7 +374,7 @@ body {
 }
 .row a{
    color:  var(--primary-light-gray-text-color);  
-   text-decoration: none;
+   text-decoration: none; 
 }
 .row a:link{
    color:  var(--primary-light-gray-text-color);  
@@ -382,7 +383,7 @@ body {
    color:  var(--primary-light-gray-text-color);  
 }
 .row a:hover{    
-   text-decoration: underline;   
+   text-decoration: none !important; 
    color:  var(--primary-light-gray-text-color);  
 }
 .opacidadNegro {

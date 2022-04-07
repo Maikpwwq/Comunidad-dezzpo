@@ -11,3 +11,10 @@
     border-top: #e9ebe6;
     border-top-style: solid;
 }
+.listaContacto .chat-with-us{
+    font-size: 1rem !important;
+    text-decoration: none !important;
+}
+.listaContacto .chat-with-us:visited, .listaContacto .chat-with-us:link { 
+    color: #deaf06 !important;
+}

@@ -51,6 +51,12 @@
     width: 100%;
     margin-left: 0px;
 }
+.comunidadPropietariosConsultar h3{
+    justify-content: space-around;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
 .comunidadPropietariosListaVerificacion{
     /* background: #e9ebe6 url(../img/ComunidadPropietarios4.png) no-repeat center;  */
     background: #e9ebe6 url(
