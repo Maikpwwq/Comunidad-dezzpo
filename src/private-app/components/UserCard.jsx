@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
@@ -30,7 +31,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 // }))
 
 export default function UserCard({ props }) {
-    const {
+    const navigate = useNavigate()
+
+    const { 
+        userId,
         userRazonSocial,
         userUbication,
         userProfession,
@@ -45,8 +49,12 @@ export default function UserCard({ props }) {
     //     setExpanded(!expanded)
     // }
 
-    const handleVerSitio = () => {}
-    const handleCotizar = () => {}
+    const handleVerSitio = () => {
+        navigate('/app/perfil', { state: userId })
+    }
+    const handleCotizar = () => {
+        navigate('/nuevo-proyecto')
+    }
     const handleFavorite = () => {}
     const handleShare = () => {}
 

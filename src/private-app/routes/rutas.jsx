@@ -1,6 +1,12 @@
 /* - Componente importancion de las paginas y distribucion de las rutas -  */
 import React from 'react'
-import { Routes, Navigate, useLocation, Route } from 'react-router-dom'
+import {
+    Routes,
+    Navigate,
+    useNavigate,
+    useLocation,
+    Route,
+} from 'react-router-dom'
 // import { auth } from '../../firebase/firebaseClient'
 // import { signOut } from 'firebase/auth'
 
@@ -34,6 +40,7 @@ import Suscripciones from '../pages/suscripciones/Suscripciones'
 class Rutas extends React.Component {
     render() {
         // const location = useLocation()
+        // const navigate = useNavigate()
         return (
             <>
                 <Routes>
@@ -62,6 +69,9 @@ class Rutas extends React.Component {
                                 state={{ from: location }}
                             />
                         }
+                        // render={() => {
+                        //     navigate('/')
+                        // }}
                         // render={
                         //     <Navigate
                         //         to="/"

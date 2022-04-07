@@ -17,7 +17,7 @@ import Form from 'react-bootstrap/Form'
 
 const NuevoProyecto = (props) => {
     const draftID = uuidv4()
-    const { state } = useLocation() || {}
+    const { state } = useLocation() || {} 
     const { categoriaProfesional, tipoProyecto } = state || ' '
     const _firestore = firestore
     const draftRef = collection(_firestore, 'drafts')

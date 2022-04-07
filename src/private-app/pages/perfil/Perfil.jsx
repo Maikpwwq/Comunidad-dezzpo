@@ -1,5 +1,6 @@
 // Pagina de Usuario - Perfil
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { auth, firestore, storage } from '../../../firebase/firebaseClient'
 import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
@@ -26,7 +27,12 @@ const Input = styled('input')({
 
 const Perfil = (props) => {
     const user = auth.currentUser || {}
-    const userID = user.uid || ''
+    const userID = user.uid || '' // Este es el id de la cuenta de Auth
+    const { state } = useLocation() || {}
+    const userId = state || ' ' // Este es el id como parametro de busqueda de un perfil especifico
+    const userConsultId = userId !== null && userId !== ' ' ? userId : userID
+    console.log(userID)
+    console.log(userConsultId)
     const _firestore = firestore
     const _storage = storage
     const usersRef = collection(_firestore, 'users')
@@ -64,7 +70,7 @@ const Perfil = (props) => {
 
     const updateProfilePhoto = (event) => {
         const file = event.target.files
-        const profilesRef = ref(_storage, `profiles/${userID}`)
+        const profilesRef = ref(_storage, `profiles/${userConsultId}`)
         if (file[0] instanceof Blob) {
             console.log(file[0])
             try {
@@ -83,7 +89,7 @@ const Perfil = (props) => {
                                 userPhotoUrl: url,
                             })
                             const photoInfo = { userPhotoUrl: url }
-                            userToFirestore(photoInfo, userID)
+                            userToFirestore(photoInfo, userConsultId)
                                 .then((docSnap) => {
                                     console.log(
                                         'Se actualiza URL imagen de perfil a firestore',
@@ -113,7 +119,10 @@ const Perfil = (props) => {
     const updateGalleryPhoto = (event) => {
         const file = event.target.files
         const fileId = uuidv4()
-        const userGalleryRef = ref(_storage, `profiles/${userID}/${fileId}`)
+        const userGalleryRef = ref(
+            _storage,
+            `profiles/${userConsultId}/${fileId}`
+        )
         if (file[0] instanceof Blob) {
             console.log(file[0])
             try {
@@ -132,7 +141,7 @@ const Perfil = (props) => {
                                 userGalleryUrl: [url],
                             })
                             const photoInfo = { userGalleryUrl: [url] }
-                            userToFirestore(photoInfo, userID)
+                            userToFirestore(photoInfo, userConsultId)
                                 .then((docSnap) => {
                                     console.log(
                                         'Se actualiza URL de imagen a la galeria de usuario del firestore',
@@ -161,7 +170,7 @@ const Perfil = (props) => {
 
     useEffect(() => {
         if (user !== null) {
-            console.log(user)
+            // console.log(user)
             const {
                 uid,
                 email,
@@ -171,12 +180,8 @@ const Perfil = (props) => {
                 emailVerified,
                 metadata,
             } = user
-            // setUserInfo({
-            //     ...userInfo,
-
-            // })
             // resolving promise data user
-            const userData = userFromFirestore(userID)
+            const userData = userFromFirestore(userConsultId)
             // userData.forEach((doc) => {
             //     console.log(doc.id, " => ", doc.data())
             // })
@@ -185,22 +190,25 @@ const Perfil = (props) => {
                 if (docSnap) {
                     // docSnap._document.data...
                     const data = docSnap.data()
-                    // console.log(docSnap.data())
-                    setUserInfo({
-                        ...userInfo,
-                        userPhone: data.userPhone || phoneNumber,
-                        userPhotoUrl: data.userPhotoUrl || photoURL,
-                        userId: uid,
-                        userMail: email,
-                        userName: displayName,
-                        userJoined: metadata.creationTime,
-                        userProfession: data.userProfession,
-                        userExperience: data.userExperience,
-                        userUbication: data.userUbication,
-                        userRazonSocial: data.userRazonSocial,
-                        userIdentification: data.userIdentification,
-                        userDescription: data.userDescription,
-                    })
+                    console.log(data)
+                    if (data) {
+                        setUserInfo({
+                            ...userInfo,
+                            userPhone: data.userPhone || phoneNumber,
+                            userPhotoUrl: data.userPhotoUrl || photoURL,
+                            userId: data.userId || uid,
+                            userMail: data.userMail || email,
+                            userName: data.userName || displayName,
+                            userGalleryUrl: data.GalleryUrl || [],
+                            userJoined: metadata.creationTime,
+                            userProfession: data.userProfession,
+                            userExperience: data.userExperience,
+                            userUbication: data.userUbication,
+                            userRazonSocial: data.userRazonSocial,
+                            userIdentification: data.userIdentification,
+                            userDescription: data.userDescription,
+                        })
+                    }
                 } else {
                     console.log(
                         'No se encontro información relacionada con este usuario!'
