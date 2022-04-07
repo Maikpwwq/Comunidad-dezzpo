@@ -17,17 +17,29 @@ const DatosContacto = (props) => {
                         Ponte en Contacto{' '}
                     </h2>
                     <ul className="listaContacto pt-3 w-100 align-items-end">
-                        <Row className="border-top m-0 w-100 d-flex">
+                        <Row className="border-top m-0 w-100 d-flex pt-2 pb-2">
                             <span
                                 className="icon-TelefonoContactoIcono"
                                 style={{ width: 'auto' }}
                             ></span>
                             <Col className="m-0 p-0 body-1 align-items-end">
-                                <li> +57 3196138057 - Office </li>
-                                <li> +57 3196138057 - PBX </li>
+                                <li>
+                                    {' '}
+                                    +57{' '}
+                                    <a
+                                        className="chat-with-us body-1"
+                                        href="https://api.whatsapp.com/send?phone=573196138057"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        3196138057
+                                    </a>{' '}
+                                    - Office{' '}
+                                </li>
+                                {/* <li> +57 3196138057 - PBX </li> */}
                             </Col>
                         </Row>
-                        <Row className="border-top m-0 w-100 d-flex">
+                        <Row className="border-top m-0 w-100 d-flex pt-2 pb-2">
                             <span
                                 className="icon-DireccionDomicilioIcono"
                                 style={{ width: 'auto' }}
@@ -37,7 +49,7 @@ const DatosContacto = (props) => {
                                 <li> Piso 5 </li>
                             </Col>
                         </Row>
-                        <Row className="border-top m-0 w-100 d-flex">
+                        <Row className="border-top m-0 w-100 d-flex pt-2">
                             <Col className="m-0 p-0 pt-2 pb-2 body-1 align-items-end">
                                 <li>
                                     <span
@@ -47,6 +59,7 @@ const DatosContacto = (props) => {
                                         }}
                                     ></span>
                                     <a
+                                        className="chat-with-us"
                                         href="mailto:comunidad.dezzpo@gmail.com"
                                         title="Correo Comunidad Dezzpo"
                                     >

@@ -349,7 +349,8 @@ body {
    color:  var(--primary-light-gray-text-color);  
 }
 .col ul a:hover{    
-   text-decoration: underline;   
+   // text-decoration: underline; 
+   text-decoration: none !important; 
    color:  var(--primary-light-gray-text-color);   
 }
 .row {
@@ -373,7 +374,7 @@ body {
 }
 .row a{
    color:  var(--primary-light-gray-text-color);  
-   text-decoration: none;
+   text-decoration: none; 
 }
 .row a:link{
    color:  var(--primary-light-gray-text-color);  
@@ -382,7 +383,7 @@ body {
    color:  var(--primary-light-gray-text-color);  
 }
 .row a:hover{    
-   text-decoration: underline;   
+   text-decoration: none !important; 
    color:  var(--primary-light-gray-text-color);  
 }
 .opacidadNegro {
@@ -390,11 +391,12 @@ body {
    display: flex;
    flex-direction: column;
    justify-content: space-evenly;
-   padding-right: 0px !important;
-   padding-left: 0px !important;
-   width: 100%;
-   padding-top: 1.5em;
-   padding-bottom: 1.5em;
+   // padding-right: 0px !important;
+   // padding-left: 0px !important;
+   // width: 100%;
+   // padding-top: 1.5em;
+   // padding-bottom: 1.5em;
+   padding: 1.5em;
    margin-top: 0;
    align-items: center;
    color: #e9ebe6;
@@ -404,8 +406,8 @@ body {
    text-align: center;
    margin-top: 0px;
    color: #e9ebe6;
-   padding-left: 2.5em;
-   padding-right: 2.5em;
+   padding-left: 1em;
+   padding-right: 1em;
 }
 .opacidadBlaco{
    background-color: rgba(233, 235, 230, 0.8);

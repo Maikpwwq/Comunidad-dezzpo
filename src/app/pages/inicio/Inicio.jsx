@@ -19,7 +19,13 @@ const Inicio = () => {
             <Container fluid className="p-0">
                 <Row className="m-0 w-100 bannerComunidad">
                     {/* imagen fondo */}
-                    <Col id="contenedorBanner" className="col-6 m-0 p-0">
+                    <Col
+                        id="contenedorBanner"
+                        className="m-0 p-0"
+                        lg={6}
+                        md={6}
+                        sm={12}
+                    >
                         {/* Mensaje del Banner izquierda */}
                         <div className="slogan">
                             <span className="opacidadNegro">

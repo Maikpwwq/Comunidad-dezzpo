@@ -79,7 +79,7 @@ const Ingreso = (props) => {
                         md={6}
                         sm={12}
                     >
-                        <Col className="ps-4 pe-4">
+                        <Col className="ps-4 pe-4 ">
                             <h2 className="headline-l textBlanco">
                                 Bienvenido!
                             </h2>

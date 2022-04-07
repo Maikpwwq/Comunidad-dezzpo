@@ -115,7 +115,7 @@ const Registro = (props) => {
                                 </Form.Label>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Elija su usuario"
+                                    placeholder="Elija su usuario" 
                                     name="username"
                                 />
                             </Form.Group>

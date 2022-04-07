@@ -62,7 +62,8 @@ const Ajustes = (props) => {
             } = user
             const userData = userFromFirestore(userID)
             userData.then((docSnap) => {
-                if (docSnap.exists()) {
+                // docSnap.exists()
+                if (docSnap) {
                     const data = docSnap.data()
                     setUserEditInfo({
                         ...userEditInfo,
@@ -128,140 +129,154 @@ const Ajustes = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">
-                <Row className="m-0 w-100 d-flex align-items-start justify-content-start">
-                    <Row className="pb-4" md={10}>
-                        <div>
-                            <FormGroup
-                                action=""
-                                style={{
-                                    display: 'flex',
-                                    'flex-direction': 'row',
-                                    'align-items': 'center',
-                                }}
-                            >
-                                <div className="pb-4 w-100">
-                                    <h3 className="body-1 pb-4">
-                                        Datos de contacto
-                                    </h3>
-                                </div>
-                                <hr />
-                                <TextField
-                                    id="userName"
-                                    name="userName"
-                                    label="Nombre de usuario"
-                                    value={userEditInfo.userName}
-                                    onChange={handleChange}
-                                    defaultValue="@NOMBRE USUARIO"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userProfession"
-                                    name="userProfession"
-                                    label="Profesión"
-                                    value={userEditInfo.userProfession}
-                                    onChange={handleChange}
-                                    defaultValue="@PROFESIÓN"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userJoined"
-                                    name="userJoined"
-                                    label="Activo desde"
-                                    value={userEditInfo.userJoined}
-                                    // onChange={handleChange}
-                                    defaultValue="@SeUnioDesdeHace"
-                                    variant="filled"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userExperience"
-                                    name="userExperience"
-                                    label="Experiencia"
-                                    value={userEditInfo.userExperience}
-                                    onChange={handleChange}
-                                    defaultValue="@TiempoExperiencia"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userRazonSocial"
-                                    name="userRazonSocial"
-                                    label="Razón Social"
-                                    value={userEditInfo.userRazonSocial}
-                                    onChange={handleChange}
-                                    defaultValue="Razón Social"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userUbication"
-                                    name="userUbication"
-                                    label="Ubicación"
-                                    value={userEditInfo.userUbication}
-                                    onChange={handleChange}
-                                    defaultValue="ubicación"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userIdentification"
-                                    name="userIdentification"
-                                    label="Identificación"
-                                    value={userEditInfo.userIdentification}
-                                    onChange={handleChange}
-                                    defaultValue="Identificación"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userMail"
-                                    name="userMail"
-                                    label="Correo de usuario"
-                                    value={userEditInfo.userMail}
-                                    // onChange={handleChange}
-                                    defaultValue="@CORREO USUARIO"
-                                    variant="filled"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userPhone"
-                                    label="Celular"
-                                    name="userPhone"
-                                    value={userEditInfo.userPhone}
-                                    onChange={handleChange}
-                                    defaultValue="Celular"
-                                    className="pb-4 pe-4"
-                                />
-
-                                <Row className="pb-4 w-100">
-                                    <Col className="">
-                                        <Button
-                                            type="submit"
-                                            className="btn btn-primary"
-                                            onClick={handleSubmit}
-                                        >
-                                            Guardar cambios
-                                        </Button>
-                                    </Col>
-                                </Row>
-
-                                <label
-                                    htmlFor="ofertaServicios"
-                                    className="body-1 pb-4 w-100"
+                <Row className="m-0 w-100 d-flex align-items-start pb-4 pt-4">
+                    <Col className="col-10">
+                        <Row className="pb-4">
+                            <div>
+                                <FormGroup
+                                    action=""
+                                    style={{
+                                        display: 'flex',
+                                        'flex-direction': 'row',
+                                        'align-items': 'center',
+                                    }}
                                 >
-                                    Servicios ofrecidos
-                                </label>
-                                <hr />
-                                <TextareaAutosize
-                                    value={userEditInfo.userDescription}
-                                    onChange={handleChange}
-                                    name="userDescription"
-                                    id="ofertaServicios"
-                                    placeholder="Registra los servicios que ofreces"
-                                    cols="30"
-                                    minRows={8}
-                                    className="w-100"
-                                ></TextareaAutosize>
-                            </FormGroup>
-                        </div>
-                    </Row>
-                    <Col className="pt-4" md={10}>
+                                    <div className="pb-4 w-100">
+                                        <h3 className="body-1 pb-4">
+                                            Datos de contacto
+                                        </h3>
+                                    </div>
+                                    <hr />
+                                    <TextField
+                                        id="userName"
+                                        name="userName"
+                                        label="Nombre de usuario"
+                                        value={userEditInfo.userName}
+                                        onChange={handleChange}
+                                        defaultValue="@NOMBRE USUARIO"
+                                        className="pb-4 pe-4"
+                                    />
+                                    <TextField
+                                        id="userProfession"
+                                        name="userProfession"
+                                        label="Profesión"
+                                        value={userEditInfo.userProfession}
+                                        onChange={handleChange}
+                                        defaultValue="@PROFESIÓN"
+                                        className="pb-4 pe-4"
+                                    />
+                                    <TextField
+                                        id="userJoined"
+                                        name="userJoined"
+                                        label="Activo desde"
+                                        value={userEditInfo.userJoined}
+                                        // onChange={handleChange}
+                                        defaultValue="@SeUnioDesdeHace"
+                                        variant="filled"
+                                        className="pb-4 pe-4"
+                                    />
+                                    <TextField
+                                        id="userExperience"
+                                        name="userExperience"
+                                        label="Experiencia"
+                                        value={userEditInfo.userExperience}
+                                        onChange={handleChange}
+                                        defaultValue="@TiempoExperiencia"
+                                        className="pb-4 pe-4"
+                                    />
+                                    <TextField
+                                        id="userRazonSocial"
+                                        name="userRazonSocial"
+                                        label="Razón Social"
+                                        value={userEditInfo.userRazonSocial}
+                                        onChange={handleChange}
+                                        defaultValue="Razón Social"
+                                        className="pb-4 pe-4"
+                                    />
+                                    <TextField
+                                        id="userUbication"
+                                        name="userUbication"
+                                        label="Ubicación"
+                                        value={userEditInfo.userUbication}
+                                        onChange={handleChange}
+                                        defaultValue="ubicación"
+                                        className="pb-4 pe-4"
+                                    />
+                                    <TextField
+                                        id="userIdentification"
+                                        name="userIdentification"
+                                        label="Identificación"
+                                        value={userEditInfo.userIdentification}
+                                        onChange={handleChange}
+                                        defaultValue="Identificación"
+                                        className="pb-4 pe-4"
+                                    />
+                                    <TextField
+                                        id="userMail"
+                                        name="userMail"
+                                        label="Correo de usuario"
+                                        value={userEditInfo.userMail}
+                                        // onChange={handleChange}
+                                        defaultValue="@CORREO USUARIO"
+                                        variant="filled"
+                                        className="pb-4 pe-4"
+                                    />
+                                    <TextField
+                                        id="userPhone"
+                                        label="Celular"
+                                        name="userPhone"
+                                        value={userEditInfo.userPhone}
+                                        onChange={handleChange}
+                                        defaultValue="Celular"
+                                        className="pb-4 pe-4"
+                                    />
+
+                                    <Row className="pb-4 w-100">
+                                        <Col className="">
+                                            <Button
+                                                type="submit"
+                                                className="btn btn-primary"
+                                                onClick={handleSubmit}
+                                            >
+                                                Guardar cambios
+                                            </Button>
+                                        </Col>
+                                    </Row>
+
+                                    <label
+                                        htmlFor="ofertaServicios"
+                                        className="body-1 pb-4 w-100"
+                                    >
+                                        Servicios ofrecidos
+                                    </label>
+                                    <hr />
+                                    <TextareaAutosize
+                                        value={userEditInfo.userDescription}
+                                        onChange={handleChange}
+                                        name="userDescription"
+                                        id="ofertaServicios"
+                                        placeholder="Registra los servicios que ofreces"
+                                        cols="30"
+                                        minRows={8}
+                                        className="w-100"
+                                    ></TextareaAutosize>
+                                    <Row className="pb-4 w-100">
+                                        <Col className="">
+                                            <Button
+                                                type="submit"
+                                                className="btn btn-primary"
+                                                onClick={handleSubmit}
+                                            >
+                                                Guardar cambios
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                            </div>
+                        </Row>
+                    </Col>
+
+                    <Col className="col-10 pt-4">
                         <p className="p-description">Confirma tu identidad</p>
                         <p className="body-1">
                             Adjunta tu documento de identificación para...

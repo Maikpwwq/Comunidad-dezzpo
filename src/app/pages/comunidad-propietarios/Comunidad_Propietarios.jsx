@@ -1,5 +1,6 @@
 // Pagina de Comunidad Propietarios
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import '../../../../public/assets/css/comunidad_propietarios.css'
 
 import Registro from '../../pages/registro/Registro'
@@ -20,14 +21,9 @@ const ComunidadPropietarios = (props) => {
         <>
             <Container fluid className="p-0" style={{ 'overflow-y': 'scroll' }}>
                 <Row className="comunidadPropietariosTitulo m-0 d-flex flex-row justify-content-start align-content-start">
-                    <Col className="col-md-6 align-items-start">
-                        <Col
-                            className="opacidadNegro mt-4 mb-4"
-                            md={6}
-                            sm={12}
-                            lg={4}
-                        >
-                            <span className="pitchPropietarios">
+                    <Col className="align-items-start" md={8} sm={12} lg={6}>
+                        <Col className="col-12 opacidadNegro mt-4 mb-4">
+                            <span className="">
                                 {' '}
                                 <p className="p-description">
                                     SOMOS UNA COMUNIDAD DE COMERCIANTES
@@ -51,12 +47,11 @@ const ComunidadPropietarios = (props) => {
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosRegistro m-0 d-flex flex-column">
                     <Col className="m-0" style={{ 'padding-left': '0px' }}>
-                        <span className="pitchPropietarios">
-                            <h2 className="textBlanco headline-xl">
-                                {' '}
-                                COMUNIDAD PROPIETARIOS
-                            </h2>
-                        </span>
+                        <h2 className="textBlanco headline-xl">
+                            {' '}
+                            COMUNIDAD PROPIETARIOS
+                        </h2>
+
                         <Registro></Registro>
                     </Col>
                     <Col md={8}>
@@ -99,92 +94,114 @@ const ComunidadPropietarios = (props) => {
                 <Row className="comunidadPropietariosConsultar m-0 row p-4">
                     <Col className="col-10">
                         <Col className="col-12 m-4">
-                            <h3 className=".headline-l">
-                                Planea con nosotros el proyecto
-                            </h3>
+                            <Row className="w-100">
+                                <h3 className=".headline-l">
+                                    Planea con nosotros el proyecto{' '}
+                                    <Button className="btn btn-round btn-high">
+                                        <NavLink to="/blog">
+                                            Nuestro Blog
+                                        </NavLink>
+                                    </Button>
+                                </h3>
+                            </Row>
+
                             <p className="body-1">
                                 El espacio de tus sueños comienza con una gran
                                 idea y tenemos miles de ellas.
                             </p>
                         </Col>
-                        <Col
-                            className="col d-flex flex-column align-items-baseline"
-                            md={4}
-                            style={{ 'justify-content': 'space-evenly' }}
-                        >
-                            <p className="body-2">
-                                Nuestra recomendación esencial al contratar un
-                                comerciante calificado, nunca cancelar la
-                                totalidad por adelantado, revisar siempre las
-                                referencias, calificaciones y afiliaciones del
-                                perfil.
-                            </p>
-                            <span className="pitchPropietarios">
+                        <Row>
+                            <Col
+                                className="d-flex flex-column align-items-baseline"
+                                lg={4}
+                                sm={12}
+                                style={{ 'justify-content': 'space-evenly' }}
+                            >
+                                <p className="body-2">
+                                    Nuestra recomendación esencial al contratar
+                                    un comerciante calificado, nunca cancelar la
+                                    totalidad por adelantado, revisar siempre
+                                    las referencias, calificaciones y
+                                    afiliaciones del perfil.
+                                </p>
+
                                 <p className=".headline-l">
                                     Propietario revisa la
                                 </p>
-                            </span>
-                            <Button className="btn" onClick="listaChequeo">
-                                lista de chequeo
-                            </Button>
-                            <span className="body-2">
-                                3196138057
-                                <br />
-                                Lunes a viernes, 8am - 5pm
-                                <br />
-                                Sabados 9am - 2pm
-                                <br />
-                            </span>
-                        </Col>
-                        <Col
-                            className="col d-flex flex-column align-items-baseline"
-                            md={4}
-                            style={{ 'justify-content': 'space-evenly' }}
-                        >
-                            <span className="pitchPropietarios">
-                                <h3 className=".headline-l">Observa cambios</h3>
-                            </span>
-                            <p className="body-1">
-                                Inspirate, tenemos muchos trabajos realizados.
-                            </p>
-                            <span className="pitchPropietarios">
-                                <h3 className=".headline-l">
-                                    ¿Requieres de asesoria?
-                                </h3>
-                            </span>
-                            <p className="body-1">
-                                Nuestra comunidad de comerciantes calificados te
-                                ayudaran con tus inquietudes.
-                            </p>
-                            <span className="pitchPropietarios">
-                                <h3 className=".headline-l">Presupuestos</h3>
-                            </span>
-                            <p className="body-1">
-                                Saber cuanto te puede costar es importante para
-                                iniciar el proyecto.
-                            </p>
-                        </Col>
-                        <Col
-                            className="col d-flex flex-column align-items-center"
-                            md={4}
-                            style={{ 'justify-content': 'space-evenly' }}
-                        >
-                            <Button className="btn btn-primary btn-high">
-                                Nuestro Blog
-                            </Button>
-                            <Button className="btn btn-primary btn-high">
-                                Proyectos <br />
-                                Destacados
-                            </Button>
-                            <Button className="btn btn-primary btn-high">
-                                Pregunta a un <br />
-                                Profesional
-                            </Button>
-                            <Button className="btn btn-primary btn-high">
-                                Comenzar <br />
-                                Cotización
-                            </Button>
-                        </Col>
+
+                                <Button className="btn" onClick="listaChequeo">
+                                    lista de chequeo
+                                </Button>
+                                <span className="body-2">
+                                    3196138057
+                                    <br />
+                                    Lunes a viernes, 8am - 5pm
+                                    <br />
+                                    Sabados 9am - 2pm
+                                    <br />
+                                </span>
+                            </Col>
+                            <Col
+                                className="d-flex flex-column align-items-baseline"
+                                lg={8}
+                                sm={12}
+                                style={{ 'justify-content': 'space-evenly' }}
+                            >
+                                <Row className="w-100">
+                                    <Col>
+                                        <h3 className=".headline-l">
+                                            Observa cambios{' '}
+                                            <Button className="btn btn-round btn-high">
+                                                <NavLink to="/blog">
+                                                    Proyectos <br />
+                                                    Destacados
+                                                </NavLink>
+                                            </Button>
+                                        </h3>
+                                    </Col>
+                                    <p className="body-1">
+                                        Inspirate, tenemos muchos trabajos
+                                        realizados.
+                                    </p>
+                                </Row>
+
+                                <Row className="w-100">
+                                    <Col>
+                                        <h3 className=".headline-l">
+                                            ¿Requieres de asesoria?{' '}
+                                            <Button className="btn btn-round btn-high">
+                                                <NavLink to="/asesorias">
+                                                    Pregunta a un <br />
+                                                    Profesional
+                                                </NavLink>
+                                            </Button>
+                                        </h3>
+                                    </Col>
+                                    <p className="body-1">
+                                        Nuestra comunidad de comerciantes
+                                        calificados te ayudaran con tus
+                                        inquietudes.
+                                    </p>
+                                </Row>
+                                <Row className="w-100">
+                                    <Col>
+                                        <h3 className=".headline-l">
+                                            Presupuestos{' '}
+                                            <Button className="btn btn-round btn-high">
+                                                <NavLink to="/nuevo-proyecto">
+                                                    Comenzar <br />
+                                                    Cotización
+                                                </NavLink>
+                                            </Button>
+                                        </h3>
+                                    </Col>
+                                    <p className="body-1">
+                                        Saber cuanto te puede costar es
+                                        importante para iniciar el proyecto.
+                                    </p>
+                                </Row>
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
             </Container>

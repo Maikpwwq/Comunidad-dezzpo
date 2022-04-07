@@ -15,8 +15,8 @@ const Mensajes = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">
-                <Row className="m-0 w-100 d-flex align-items-start">
-                    <Col md={6}>
+                <Row className="m-0 w-100 d-flex align-items-start pt-4 pb-4">
+                    <Col className="col-10" md={6}>
                         <h2 className="headline-xl">Mensajes</h2>
 
                         <FormControl

@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react'
 import { auth, firestore, storage } from '../../../firebase/firebaseClient'
 import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { v4 as uuidv4 } from 'uuid'
 
 import '../../../../public/assets/cssPrivateApp/perfil.css'
 // import ProfilePhoto from '../../../../public/assets/img/Profile.png'
+// import Bogota from '../../../../public/assets/img/Bogota.png'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -23,8 +25,8 @@ const Input = styled('input')({
 })
 
 const Perfil = (props) => {
-    const user = auth.currentUser
-    const userID = user.uid
+    const user = auth.currentUser || {}
+    const userID = user.uid || ''
     const _firestore = firestore
     const _storage = storage
     const usersRef = collection(_firestore, 'users')
@@ -49,6 +51,7 @@ const Perfil = (props) => {
         userMail: '',
         userPhone: ' ',
         userPhotoUrl: ' ',
+        userGalleryUrl: [],
         userId: ' ',
         userJoined: ' ',
         userProfession: ' ',
@@ -107,6 +110,55 @@ const Perfil = (props) => {
         }
     }
 
+    const updateGalleryPhoto = (event) => {
+        const file = event.target.files
+        const fileId = uuidv4()
+        const userGalleryRef = ref(_storage, `profiles/${userID}/${fileId}`)
+        if (file[0] instanceof Blob) {
+            console.log(file[0])
+            try {
+                uploadBytes(userGalleryRef, file[0]).then((response) => {
+                    const { bucket, path_ } = response.ref._location
+                    const base = `gs://${bucket}/${path_}`
+                    console.log(
+                        'Se cargo una imagen a la galleria de usuario del storage',
+                        base
+                    )
+                    const gsReference = ref(_storage, base)
+                    getDownloadURL(gsReference)
+                        .then((url) => {
+                            setUserInfo({
+                                ...userInfo,
+                                userGalleryUrl: [url],
+                            })
+                            const photoInfo = { userGalleryUrl: [url] }
+                            userToFirestore(photoInfo, userID)
+                                .then((docSnap) => {
+                                    console.log(
+                                        'Se actualiza URL de imagen a la galeria de usuario del firestore',
+                                        docSnap
+                                    )
+                                })
+                                .catch((error) => {
+                                    console.log(
+                                        'No se pudo actualizar URL de imagen a la galeria de usuario del firestore',
+                                        error
+                                    )
+                                })
+                        })
+                        .catch((error) => {
+                            console.log(
+                                'No se encontro una URL en el storage',
+                                error
+                            )
+                        })
+                })
+            } catch (e) {
+                console.log('La imagen de perfil no se cargo al storage', e)
+            }
+        }
+    }
+
     useEffect(() => {
         if (user !== null) {
             console.log(user)
@@ -129,7 +181,8 @@ const Perfil = (props) => {
             //     console.log(doc.id, " => ", doc.data())
             // })
             userData.then((docSnap) => {
-                if (docSnap.exists()) {
+                // docSnap.exists()
+                if (docSnap) {
                     // docSnap._document.data...
                     const data = docSnap.data()
                     // console.log(docSnap.data())
@@ -160,12 +213,18 @@ const Perfil = (props) => {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="h-100">
+                <Row className="h-100 pt-4 pb-4">
                     <Col className="col-10">
-                        <Row className="border-green_buttom m-0 w-100 d-flex">
+                        <Row className="border-green_buttom perfil-banner m-0 w-100 d-flex">
                             <Row className="pt-4 pb-4">
-                                <Col md={4}>
-                                    <div>
+                                <Col className="pe-0" md={4}>
+                                    <div
+                                        className="d-flex flex-inline-row"
+                                        style={{
+                                            'justify-content': 'center',
+                                            'align-items': 'baseline',
+                                        }}
+                                    >
                                         <img
                                             src={userInfo.userPhotoUrl}
                                             alt="imagen de perfil"
@@ -175,26 +234,33 @@ const Perfil = (props) => {
                                                 'border-radius': '50%',
                                             }}
                                         />
-                                    </div>
-                                    <label htmlFor="icon-button-file">
-                                        <Input
-                                            accept="image/*"
-                                            id="icon-button-file"
-                                            type="file"
-                                            onClick={updateProfilePhoto}
-                                        />
-                                        <Button
-                                            type="submit"
-                                            id="profilePhoto"
-                                            name="profilePhoto"
-                                            variant="contained"
-                                            component="span"
+
+                                        <label
+                                            htmlFor="icon-button-file"
+                                            style={{
+                                                position: 'relative',
+                                                right: '50px',
+                                            }}
                                         >
-                                            <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
-                                        </Button>
-                                    </label>
+                                            <Input
+                                                accept="image/*"
+                                                id="icon-button-file"
+                                                type="file"
+                                                onClick={updateProfilePhoto}
+                                            />
+                                            <Button
+                                                type="submit"
+                                                id="profilePhoto"
+                                                name="profilePhoto"
+                                                variant="contained"
+                                                component="span"
+                                            >
+                                                <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
+                                            </Button>
+                                        </label>
+                                    </div>
                                 </Col>
-                                <Col md={3}>
+                                <Col md={3} className="p-0">
                                     <Box
                                         style={{
                                             display: 'flex',
@@ -219,14 +285,6 @@ const Perfil = (props) => {
                                             variant="filled"
                                         />
                                         <TextField
-                                            id="userJoined"
-                                            name="userJoined"
-                                            label="Activo desde"
-                                            value={userInfo.userJoined}
-                                            defaultValue="@SeUnioDesdeHace"
-                                            variant="filled"
-                                        />
-                                        <TextField
                                             id="userExperience"
                                             name="userExperience"
                                             label="Experiencia"
@@ -234,61 +292,107 @@ const Perfil = (props) => {
                                             defaultValue="@TiempoExperiencia"
                                             variant="filled"
                                         />
-                                        <br />
-                                        certificaciones
                                     </Box>
                                 </Col>
-                                <Col md={5}>
-                                    <span>2 ratings</span>
+                                <Col
+                                    className="user-stadistics d-flex flex-column justify-content-end align-items-center"
+                                    md={5}
+                                >
+                                    <div className="ps-4 pe-4 opacidadNegro">
+                                        <span>2 ratings</span>
+                                        <br />
+                                        certificaciones
+                                    </div>
                                 </Col>
                             </Row>
                         </Row>
-                        <Row className="m-0 w-100 d-flex justify-content-start">
-                            <Col className="col-4 pt-4 pb-4 align-items-start">
+                        <Row className="mapa-ubicacion m-0 w-100 d-flex justify-content-start align-items-end">
+                            {/* <img
+                                className="p-0"
+                                src={Bogota}
+                                alt="Mapa Ubicacion"
+                                width="100%"
+                                height="330px"
+                            /> */}
+                            <Col className="col-6 p-0 align-items-start">
                                 <span className="p-4 p-description textBlanco fondoVerde">
                                     {userInfo.userRazonSocial} <br />
                                     {userInfo.userPhone} <br />
                                     {userInfo.userMail} <br />
                                 </span>
-                                <img src="" alt="Mapa Ubicacion" />
                             </Col>
                         </Row>
-                        <Row className="pt-4 pb-4 m-0 w-100 d-flex">
+                        <Row className="pt-4 m-0 w-100 d-flex align-items-start">
                             <Col md={7}>
-                                <Row>
+                                <Row className="pt-4 pb-4">
                                     <Col>
                                         <h3 className="headline-l">
                                             Servicios ofrecidos
                                         </h3>
-                                        <div>
-                                            <p className="body-1">
-                                                {userInfo.userDescription}
-                                            </p>
-                                        </div>
+                                        <p
+                                            className="body-1 pe-4"
+                                            style={{
+                                                'text-align': 'justify',
+                                            }}
+                                        >
+                                            {userInfo.userDescription}
+                                        </p>
                                     </Col>
                                 </Row>
+                                <Col>Certificaciones</Col>
                                 <Row>
                                     <Col>
                                         <h3 className="headline-l">Gallería</h3>
-                                        <div>
-                                            <img src="" alt="" />
-                                        </div>
-                                        <div>
-                                            <span>
-                                                comentarios y calificaciones
+                                        <Row className="w-100">
+                                            <span className="w-auto">
+                                                <img
+                                                    src="http://placeimg.com/150/150/tech"
+                                                    alt="galleria-usuario"
+                                                />
                                             </span>
-                                            <span>crear editar</span>
-                                            <span>educacion</span>
-                                            <span>crear editar</span>
-                                        </div>
+
+                                            <label
+                                                htmlFor="icon-button-file"
+                                                style={{
+                                                    position: 'relative',
+                                                    right: '50px',
+                                                    width: 'auto',
+                                                }}
+                                            >
+                                                <Input
+                                                    accept="image/*"
+                                                    id="icon-button-file"
+                                                    type="file"
+                                                    onClick={updateGalleryPhoto}
+                                                />
+                                                <Button
+                                                    type="submit"
+                                                    id="galleryPhoto"
+                                                    name="galleryPhoto"
+                                                    variant="contained"
+                                                    component="span"
+                                                >
+                                                    <PermMediaOutlinedIcon alt="+ Agregar foto a la galeria de usuario" />
+                                                </Button>
+                                            </label>
+                                        </Row>
                                     </Col>
                                 </Row>
-                                <Row>
-                                    Comentarios y calificaciones Crear/Editar
-                                    Educacion
+                                <Row className="pt-4 pb-4">
+                                    Comentarios
+                                    <Button>Crear</Button>
+                                    <Button>Editar</Button>
+                                </Row>
+                                <Row className="">
+                                    Calificaciones
+                                    <Button>Crear</Button>
+                                    <Button>Editar</Button>
                                 </Row>
                             </Col>
-                            <Col md={5} className="info-user_backgound">
+                            <Col
+                                md={5}
+                                className="pt-4 pb-4 info-user_backgound"
+                            >
                                 <Box
                                     style={{
                                         display: 'flex',
@@ -310,7 +414,14 @@ const Perfil = (props) => {
                                         defaultValue="@NOMBRE USUARIO"
                                         variant="filled"
                                     />
-
+                                    <TextField
+                                        id="userJoined"
+                                        name="userJoined"
+                                        label="Activo desde"
+                                        value={userInfo.userJoined}
+                                        defaultValue="@SeUnioDesdeHace"
+                                        variant="filled"
+                                    />
                                     <TextField
                                         id="userUbication"
                                         name="userUbication"
@@ -347,7 +458,7 @@ const Perfil = (props) => {
                             </Col>
                         </Row>
                     </Col>
-                    <Col className="col-2 h-100 fondoGris">SideContent</Col>
+                    {/* <Col className="col-2 h-100 fondoGris">SideContent</Col> */}
                 </Row>
             </Container>
         </>
