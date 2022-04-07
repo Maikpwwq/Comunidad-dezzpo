@@ -431,14 +431,6 @@ const Perfil = (props) => {
                                         variant="filled"
                                     />
                                     <TextField
-                                        id="userIdentification"
-                                        name="userIdentification"
-                                        label="Identificación"
-                                        value={userInfo.userIdentification}
-                                        defaultValue="Identificación"
-                                        variant="filled"
-                                    />
-                                    <TextField
                                         id="userMail"
                                         name="userMail"
                                         label="Correo de usuario"

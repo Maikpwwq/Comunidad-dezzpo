@@ -16,7 +16,8 @@ function Copyright() {
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="#">
-                COMUNIDAD DEZZPO INC. - Todos los derechos reservados -
+                COMUNIDAD DEZZPO INC.
+                <br /> - Todos los derechos reservados -
             </Link>{' '}
             {new Date().getFullYear()}.
         </Typography>

@@ -27,6 +27,7 @@ const FormasPago = (props) => {
                                     id="addMetodoPago"
                                     autoWidth
                                     label="Formas de Pago"
+                                    value=""
                                 >
                                     <MenuItem value="">
                                         <em>None</em>

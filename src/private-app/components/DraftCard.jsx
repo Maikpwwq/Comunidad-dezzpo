@@ -54,7 +54,7 @@ export default function DraftCard({ props }) {
     return (
         <>
             <Card
-                className="d-flex w-50"
+                className="d-flex"
                 // lg={6}
                 // md={6}
                 // sm={10}
