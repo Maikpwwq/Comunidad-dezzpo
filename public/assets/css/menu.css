@@ -1,4 +1,7 @@
 @media screen and (max-width: 600px) {
+    .mobile-menu{
+        visibility: visible !important;
+    }
     .menuFijo{ 
         position: absolute;  
         min-height: 80px;
@@ -53,7 +56,12 @@
 
 
 }
-
+.containerLogo{
+    justify-content: space-evenly !important;
+}
+.mobile-menu{
+    visibility: hidden;
+}
 .menuFijo{  
     position: relative;  
     height: auto;

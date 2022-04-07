@@ -9,6 +9,8 @@ import LogoMenuComunidadDezzpo from '../../../../public/assets/img/IsologoHeader
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
 
 const MenuComunidad = (props) => {
     /* getNavLinkClass = (path) => {
@@ -22,18 +24,35 @@ const MenuComunidad = (props) => {
                 <Col className="menuFijo w-100 p-0 m-0">
                     {/* Menu fijo */}
                     <Col className="p-0 barraMenu">
-                        <div className="containerLogo container d-flex justify-content-center">
-                            <img
-                                src={LogoMenuComunidadDezzpo}
-                                alt="Logo Comunidad Dezzpo"
-                                style={{ padding: '5px 10px' }}
-                                height="80px"
-                                width="210px"
-                            />
+                        <div className="containerLogo container d-flex">
+                            <IconButton
+                                aria-label="mobile-more"
+                                className="mobile-menu"
+                            >
+                                <MenuIcon sx={{ fontSize: '30px' }} />
+                            </IconButton>
+
+                            <NavLink exact to="/" className="activo body-2">
+                                <img
+                                    src={LogoMenuComunidadDezzpo}
+                                    alt="Logo Comunidad Dezzpo"
+                                    style={{ padding: '5px 10px' }}
+                                    height="80px"
+                                    width="210px"
+                                />
+                            </NavLink>
+
+                            <NavLink
+                                to="/ingreso"
+                                className="botonNavLink body-2"
+                            >
+                                {' '}
+                                Ingresar{' '}
+                            </NavLink>
                         </div>
                         <nav className="menuContenedor">
                             <ul className="menuSecciones" sm="collapseContents">
-                                <li className="botonSeccion">
+                                {/* <li className="botonSeccion">
                                     <NavLink
                                         exact
                                         to="/"
@@ -42,7 +61,7 @@ const MenuComunidad = (props) => {
                                         {' '}
                                         Home{' '}
                                     </NavLink>
-                                </li>
+                                </li> */}
                                 {/* seleccion asi trabajamos*/}
                                 <div className="dropdown">
                                     <li className="botonSeccion">
@@ -201,7 +220,7 @@ const MenuComunidad = (props) => {
                                         Apendice de costos{' '}
                                     </NavLink>
                                 </li>
-                                <li className="botonSeccion">
+                                {/* <li className="botonSeccion">
                                     <NavLink
                                         to="/ingreso"
                                         className="botonNavLink body-2"
@@ -209,7 +228,7 @@ const MenuComunidad = (props) => {
                                         {' '}
                                         Ingresar{' '}
                                     </NavLink>
-                                </li>
+                                </li> */}
                             </ul>
                         </nav>
                     </Col>
