@@ -12,6 +12,7 @@ import UserCard from '../../components/UserCard'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 // import Table from '@mui/material/Table'
 // import TableHead from '@mui/material/TableHead'
 // import TableBody from '@mui/material/TableBody'
@@ -160,13 +161,19 @@ const Portal_Servicios = (props) => {
                         )}
                     </Row>
 
-                    <Col className="col-10 p-4">
+                    <Col className="col-10 pt-4 pb-4 p-0">
                         <h2 className="headline-xl">
+                            Directorio Profesionales
+                            <Button className="body-1">
+                                Publica un proyecto gratis
+                            </Button>
+                        </h2>
+                        <h3 className="headline-l">
                             Busqueda Local Servicios: Buscar comerciantes
                             Calificados
-                        </h2>
+                        </h3>
                         <p className="body-2"> Comerciantes profesionales </p>
-                        <p className="body-1">Publica un proyecto gratis</p>
+
                         <Row className="m-0 w-100 d-flex">
                             {usersData.data ? (
                                 usersData.data.map((user) => (
@@ -212,15 +219,18 @@ const Portal_Servicios = (props) => {
                 </Row>
                 <Row className="m-0 w-100 d-flex">
                     <Col className="p-4">
-                        <span>
-                            <h2 className="headline-xl">
-                                Buscar Requerimientos: Obtener o Aplicar con
-                                Cotizaciones
-                            </h2>
-                        </span>
+                        <h2 className="headline-xl">
+                            Directorio Proyectos
+                            <Button className="body-1">
+                                Aplica a un Proyecto Gratis
+                            </Button>
+                        </h2>
+                        <h3 className="headline-l">
+                            Buscar Requerimientos: Obtener o Aplicar con
+                            Cotizaciones
+                        </h3>
                         <p className="body-2">Proyectos activos </p>
-                        <p className="body-1">Aplica a un Proyecto Gratis</p>
-                        <Row className="m-0 w-100 d-flex">
+                        <Row className="m-0 d-flex">
                             {draftsData.data ? (
                                 draftsData.data.map((draft) => (
                                     <DraftCard

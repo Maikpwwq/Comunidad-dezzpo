@@ -70,7 +70,10 @@ export default function DraftCard({ props }) {
                         alt="Paella dish"
                         style={{ maxWidth: '345px' }}
                     />
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Box
+                        className="w-100"
+                        sx={{ display: 'flex', flexDirection: 'column' }}
+                    >
                         {/* TODO: Categorias*/}
 
                         <CardHeader
@@ -97,34 +100,37 @@ export default function DraftCard({ props }) {
                             </Typography>
                             <br />
                         </CardContent>
-                    </Box>
-                    <CardActions className="d-flex flex-column" disableSpacing>
-                        <Button className="" onClick={handleVerSitio}>
-                            Ver sitio
-                        </Button>
-                        <Button className="" onClick={handleCotizar}>
-                            Cotizar
-                        </Button>
-                        <IconButton
-                            aria-label="add to favorites"
-                            onClick={handleFavorite}
-                        >
-                            <FavoriteIcon />
-                            {/* TODO: Contactar */}
-                        </IconButton>
-                        <IconButton aria-label="share" onClick={handleShare}>
-                            <ShareIcon />
-                        </IconButton>
+                        <CardActions className="d-flex" disableSpacing>
+                            <Button className="" onClick={handleVerSitio}>
+                                Ver sitio
+                            </Button>
+                            <Button className="" onClick={handleCotizar}>
+                                Cotizar
+                            </Button>
+                            <IconButton
+                                aria-label="add to favorites"
+                                onClick={handleFavorite}
+                            >
+                                <FavoriteIcon />
+                                {/* TODO: Contactar */}
+                            </IconButton>
+                            <IconButton
+                                aria-label="share"
+                                onClick={handleShare}
+                            >
+                                <ShareIcon />
+                            </IconButton>
 
-                        <ExpandMore
-                            expand={expanded}
-                            onClick={handleExpandClick}
-                            aria-expanded={expanded}
-                            aria-label="show more"
-                        >
-                            <ExpandMoreIcon />
-                        </ExpandMore>
-                    </CardActions>
+                            <ExpandMore
+                                expand={expanded}
+                                onClick={handleExpandClick}
+                                aria-expanded={expanded}
+                                aria-label="show more"
+                            >
+                                <ExpandMoreIcon />
+                            </ExpandMore>
+                        </CardActions>
+                    </Box>
                 </Box>
 
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>

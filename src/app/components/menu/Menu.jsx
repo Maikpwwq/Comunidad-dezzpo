@@ -34,12 +34,20 @@ const MenuComunidad = (props) => {
 
                             <NavLink exact to="/" className="activo body-2">
                                 <img
-                                    src={LogoMenuComunidadDezzpo} 
+                                    src={LogoMenuComunidadDezzpo}
                                     alt="Logo Comunidad Dezzpo"
                                     style={{ padding: '5px 10px' }}
                                     height="80px"
                                     width="210px"
                                 />
+                            </NavLink>
+
+                            <NavLink
+                                to="/app/portal-servicios"
+                                className="botonNavLink body-2"
+                            >
+                                {' '}
+                                Directorio{' '}
                             </NavLink>
 
                             <NavLink
