@@ -15,7 +15,7 @@
 .registrateImagen{
     display: flex;
     flex-direction: column;
-    min-height: 610px!important;
+    min-height: 620px!important;
     height: auto!important;
     width: 50%;
     margin-top: 20px;
@@ -37,7 +37,7 @@
 }
 #formularioRegistro .form-control{
     height: 27px;
-    width: 60%;
+    /* width: 60%; */
 }
 #formBasicCheckboxRobot {
     width: 10% !important;

@@ -34,7 +34,7 @@ const MenuComunidad = (props) => {
 
                             <NavLink exact to="/" className="activo body-2">
                                 <img
-                                    src={LogoMenuComunidadDezzpo}
+                                    src={LogoMenuComunidadDezzpo} 
                                     alt="Logo Comunidad Dezzpo"
                                     style={{ padding: '5px 10px' }}
                                     height="80px"
@@ -73,7 +73,7 @@ const MenuComunidad = (props) => {
                                             Asi trabajamos{' '}
                                         </NavLink>
                                     </li>
-                                    <div className="dropdownContenidos body-1">
+                                    <div className="dropdownContenidos body-1 p-4">
                                         <NavLink to="/ingreso">
                                             Ingresar
                                         </NavLink>
@@ -105,7 +105,7 @@ const MenuComunidad = (props) => {
                                             Nosotros{' '}
                                         </NavLink>
                                     </li>
-                                    <div className="dropdownContenidos body-1">
+                                    <div className="dropdownContenidos body-1 p-4">
                                         <NavLink to="/nosotros/#Acerca-de-nosotros">
                                             Acerca de nosotros
                                         </NavLink>
@@ -132,7 +132,7 @@ const MenuComunidad = (props) => {
                                             Comunidad de comerciantes{' '}
                                         </NavLink>
                                     </li>
-                                    <div className="dropdownContenidos body-1">
+                                    <div className="dropdownContenidos body-1 p-4">
                                         <NavLink to="/ingreso">
                                             Tu cuenta
                                         </NavLink>
@@ -163,7 +163,7 @@ const MenuComunidad = (props) => {
                                             Comunidad de propietarios{' '}
                                         </NavLink>
                                     </li>
-                                    <div className="dropdownContenidos body-1">
+                                    <div className="dropdownContenidos body-1 p-4">
                                         <NavLink to="/nuevo-proyecto">
                                             Crea un nuevo proyecto
                                         </NavLink>

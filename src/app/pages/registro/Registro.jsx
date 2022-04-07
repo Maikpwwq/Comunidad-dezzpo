@@ -76,7 +76,7 @@ const Registro = (props) => {
                         ></Col>
                     )}
                     <Col
-                        className="registrateformulario m-0 p-4"
+                        className="registrateformulario m-0 p-0 pt-2 pb-4"
                         md={6}
                         sm={12}
                     >
@@ -86,16 +86,17 @@ const Registro = (props) => {
                             className="p-4"
                             // preventDefault="true"
                         >
-                            <h2 className="headline-xl textBlanco">
-                                REGISTRATE
-                            </h2>
-                            <p className="body-1 textBlanco">
-                                Bienvenido a todos los beneficios de dezzpo.
-                            </p>
-                            <NavLink className="body-2" to="/ingreso/">
-                                {'¿Ya tienes una cuenta?'}
-                            </NavLink>
-                            {/* <Form.Group
+                            <Col className="d-flex">
+                                <h2 className="headline-xl textBlanco">
+                                    REGISTRATE
+                                </h2>
+                                <p className="body-1 textBlanco">
+                                    Bienvenido a todos los beneficios de dezzpo.
+                                </p>
+                                <NavLink className="body-2" to="/ingreso/">
+                                    {'¿Ya tienes una cuenta?'}
+                                </NavLink>
+                                {/* <Form.Group
                                 className="mb-2"
                                 controlId="formBasicName"
                             >
@@ -106,79 +107,84 @@ const Registro = (props) => {
                                     name="name"
                                 />
                             </Form.Group> */}
-                            <Form.Group
-                                className="mb-2 d-flex flex-column align-items-center"
-                                controlId="formBasicName"
-                            >
-                                <Form.Label className="mb-0">
-                                    Nombre de usuario
-                                </Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Elija su usuario" 
-                                    name="username"
-                                />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-2 d-flex flex-column align-items-center"
-                                controlId="formSignupEmail"
-                            >
-                                <Form.Label className="mb-0">Email</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    placeholder="Registre una cuenta de email valida"
-                                    name="email"
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-2 d-flex flex-column align-items-center"
-                                controlId="formSignupPassword"
-                            >
-                                <Form.Label className="mb-0">
-                                    Contraseña
-                                </Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Registre una clave"
-                                    name="password"
-                                    onChange={(e) =>
-                                        setPassword(e.target.value)
-                                    }
-                                />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-2 d-flex flex-column align-items-center"
-                                controlId="formBasicPassword"
-                            >
-                                <Form.Label className="mb-0">
-                                    Confirme la Contraseña
-                                </Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="De nuevo la clave"
-                                    name="confirmPassword"
-                                />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-2 mt-4"
-                                controlId="formBasicCheckboxRobot"
-                            >
-                                <Form.Check
-                                    className="d-flex flex-row align-items-center justify-content-center"
-                                    type="checkbox"
-                                    label="No soy un robot"
-                                />
-                            </Form.Group>
-                            <Col className="pt-4">
-                                <Button
-                                    className="btn-round btn-high"
-                                    variant="primary"
-                                    type="submit"
-                                    onClick={handleClick}
+                                <Form.Group
+                                    className="w-80 pt-4 mb-2 d-flex flex-column align-items-start"
+                                    controlId="formBasicName"
                                 >
-                                    Crear Cuenta
-                                </Button>
+                                    <Form.Label className="mb-0">
+                                        Nombre de usuario
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Elija su usuario"
+                                        name="username"
+                                    />
+                                </Form.Group>
+                                <Form.Group
+                                    className="w-80 mb-2 d-flex flex-column align-items-start"
+                                    controlId="formSignupEmail"
+                                >
+                                    <Form.Label className="mb-0">
+                                        Email
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="Registre una cuenta de email valida"
+                                        name="email"
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
+                                    />
+                                </Form.Group>
+                                <Form.Group
+                                    className="w-80 mb-2 d-flex flex-column align-items-start"
+                                    controlId="formSignupPassword"
+                                >
+                                    <Form.Label className="mb-0">
+                                        Contraseña
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Registre una clave"
+                                        name="password"
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
+                                    />
+                                </Form.Group>
+                                <Form.Group
+                                    className="w-80 mb-2 d-flex flex-column align-items-start"
+                                    controlId="formBasicPassword"
+                                >
+                                    <Form.Label className="mb-0">
+                                        Confirme la Contraseña
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="De nuevo la clave"
+                                        name="confirmPassword"
+                                    />
+                                </Form.Group>
+                                <Form.Group
+                                    className="mb-2 mt-2"
+                                    controlId="formBasicCheckboxRobot"
+                                >
+                                    <Form.Check
+                                        className="d-flex flex-row align-items-center justify-content-center"
+                                        type="checkbox"
+                                        label="No soy un robot"
+                                    />
+                                </Form.Group>
+                                <Col className="pt-2">
+                                    <Button
+                                        className="btn-round btn-high"
+                                        variant="primary"
+                                        type="submit"
+                                        onClick={handleClick}
+                                    >
+                                        Crear Cuenta
+                                    </Button>
+                                </Col>
                             </Col>
                         </Form>
                     </Col>
