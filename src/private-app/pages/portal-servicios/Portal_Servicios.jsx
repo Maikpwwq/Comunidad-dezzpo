@@ -228,16 +228,16 @@ const Portal_Servicios = (props) => {
                 <Row className="m-0 w-100 d-flex">
                     <Col className="p-4">
                         <h2 className="headline-xl">
-                            Directorio Proyectos
+                            Directorio Requerimientos
                             <Button className="body-1">
-                                Aplica a un Proyecto Gratis
+                                Aplica gratis a un requerimiento
                             </Button>
                         </h2>
                         <h3 className="headline-l">
                             Buscar Requerimientos: Obtener o Aplicar con
                             Cotizaciones
                         </h3>
-                        <p className="body-2">Proyectos activos </p>
+                        <p className="body-2">Requerimientos activos </p>
                         <Row className="m-0 d-flex">
                             {draftsData.data ? (
                                 draftsData.data.map((draft) => (

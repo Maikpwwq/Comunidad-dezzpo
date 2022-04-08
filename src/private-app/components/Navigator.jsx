@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { NavLink, Navigate, useNavigate, useMatch } from 'react-router-dom'
+import { auth } from '../../firebase/firebaseClient'
 
 //imagenes
 import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
@@ -46,6 +47,9 @@ const itemCategory = {
 
 export default function Navigator(props) {
     const { ...other } = props
+    const user = auth.currentUser || {}
+    const userPhotoUrl = user.photoURL || ''
+    const userName = user.displayName || ''
     // const cerrarSesion = () => {}
     return (
         <Drawer variant="permanent" {...other}>
@@ -58,21 +62,23 @@ export default function Navigator(props) {
                         color: '#fff',
                     }}
                 >
-                    <img
-                        src={LogoMenuComunidadDezzpo}
-                        alt="Logo Comunidad Dezzpo"
-                        style={{ padding: '3px 10px' }}
-                        height="55px"
-                        width="200px"
-                    />
+                    <NavLink to="/">
+                        <img
+                            src={LogoMenuComunidadDezzpo}
+                            alt="Logo Comunidad Dezzpo"
+                            style={{ padding: '3px 10px' }}
+                            height="55px"
+                            width="200px"
+                        />
+                    </NavLink>
                 </ListItem>
                 <ListItem sx={{ ...item, ...itemCategory }}>
                     <ListItemIcon>
                         <IconButton color="inherit" sx={{ p: 0.5 }}>
-                            <Avatar src={Avatar1} alt="My Avatar" />
+                            <Avatar src={userPhotoUrl} alt="My Avatar" />
                         </IconButton>
                     </ListItemIcon>
-                    <ListItemText>Bienvenido _nombre!</ListItemText>
+                    <ListItemText>Bienvenido {userName}!</ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (
                     <Box key={id} sx={{ bgcolor: '#575856' }}>

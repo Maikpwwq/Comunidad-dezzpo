@@ -4,6 +4,8 @@ import { auth, firestore } from '../../../firebase/firebaseClient'
 import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
 import { updateProfile } from 'firebase/auth'
 
+import '../../../../public/assets/cssPrivateApp/ajustes.css'
+
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -14,8 +16,8 @@ import FormGroup from '@mui/material/FormGroup'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 const Ajustes = (props) => {
-    const user = auth.currentUser
-    const userID = user.uid
+    const user = auth.currentUser || {}
+    const userID = user.uid || ''
     const _firestore = firestore
     const usersRef = collection(_firestore, 'users')
 
@@ -131,7 +133,7 @@ const Ajustes = (props) => {
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex align-items-start pb-4 pt-4">
                     <Col className="col-10">
-                        <Row className="pb-4">
+                        <Row className="pb-4 info-user_backgound">
                             <div>
                                 <FormGroup
                                     action=""

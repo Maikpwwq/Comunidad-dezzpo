@@ -10,6 +10,12 @@ import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+
 const FormasPago = (props) => {
     return (
         <>
@@ -50,19 +56,32 @@ const FormasPago = (props) => {
                                 <h2 className="headline-xl">Tickets de pago</h2>{' '}
                             </span>
                             <Col className="col-10 p-4">
-                                <table>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Orden de Servicios</th>
-                                        <th>Vigencia</th>
-                                        <th>Estado</th>
-                                        <th>Pagar en linea</th>
-                                        <th>Descargar</th>
-                                    </tr>
-                                    <tr>
-                                        <td>DATA...</td>
-                                    </tr>
-                                </table>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Fecha</TableCell>
+                                            <TableCell>
+                                                Orden de Servicios
+                                            </TableCell>
+                                            <TableCell>Vigencia</TableCell>
+                                            <TableCell>Estado</TableCell>
+                                            <TableCell>
+                                                Pagar en linea
+                                            </TableCell>
+                                            <TableCell>Descargar</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell>DATA...</TableCell>
+                                            <TableCell>DATA...</TableCell>
+                                            <TableCell>DATA...</TableCell>
+                                            <TableCell>DATA...</TableCell>
+                                            <TableCell>DATA...</TableCell>
+                                            <TableCell>DATA...</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
                             </Col>
                         </Row>
                     </Col>

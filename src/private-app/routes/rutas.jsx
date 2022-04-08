@@ -25,6 +25,7 @@ import Mensajes from '../pages/mensajes/Mensajes'
 import Notificaciones from '../pages/notificaciones/Notificaciones'
 import Perfil from '../pages/perfil/Perfil'
 import Portal_Servicios from '../pages/portal-servicios/Portal_Servicios'
+import Requerimiento from '../pages/requerimiento/Requerimiento'
 import Suscripciones from '../pages/suscripciones/Suscripciones'
 
 // Componentes
@@ -113,6 +114,10 @@ class Rutas extends React.Component {
                     <Route
                         path="/portal-servicios"
                         element={<Portal_Servicios></Portal_Servicios>}
+                    ></Route>
+                    <Route
+                        path="/requerimiento"
+                        element={<Requerimiento></Requerimiento>}
                     ></Route>
                     <Route
                         path="/suscripciones"

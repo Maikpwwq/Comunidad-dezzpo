@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
@@ -30,6 +31,7 @@ const ExpandMore = styled((props) => {
 }))
 
 export default function DraftCard({ props }) {
+    const navigate = useNavigate()
     const {
         draftName,
         draftDescription,
@@ -46,8 +48,10 @@ export default function DraftCard({ props }) {
     const handleExpandClick = () => {
         setExpanded(!expanded)
     }
-    const handleVerSitio = () => {}
-    const handleCotizar = () => {}
+    const handleVerRequerimiento = () => {
+        navigate('/app/requerimiento')
+    }
+    const handleAplicar = () => {}
     const handleFavorite = () => {}
     const handleShare = () => {}
 
@@ -101,11 +105,14 @@ export default function DraftCard({ props }) {
                             <br />
                         </CardContent>
                         <CardActions className="d-flex" disableSpacing>
-                            <Button className="" onClick={handleVerSitio}>
-                                Ver sitio
+                            <Button
+                                className=""
+                                onClick={handleVerRequerimiento}
+                            >
+                                Ver requerimiento
                             </Button>
-                            <Button className="" onClick={handleCotizar}>
-                                Cotizar
+                            <Button className="" onClick={handleAplicar}>
+                                Aplicar
                             </Button>
                             <IconButton
                                 aria-label="add to favorites"
