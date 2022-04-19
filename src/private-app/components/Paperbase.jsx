@@ -16,7 +16,8 @@ function Copyright() {
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="#">
-                COMUNIDAD DEZZPO INC. - Todos los derechos reservados -
+                COMUNIDAD DEZZPO INC.
+                <br /> - Todos los derechos reservados -
             </Link>{' '}
             {new Date().getFullYear()}.
         </Typography>
@@ -171,6 +172,9 @@ const drawerWidth = 256
 export default function Paperbase() {
     const [mobileOpen, setMobileOpen] = React.useState(false)
     const isSmUp = useMediaQuery(theme.breakpoints.up('sm'))
+
+    const localRole = localStorage.getItem('role')
+    console.log(JSON.parse(localRole))
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen)

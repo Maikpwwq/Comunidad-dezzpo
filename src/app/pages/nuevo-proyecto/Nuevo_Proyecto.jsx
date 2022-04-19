@@ -18,14 +18,21 @@ import Form from 'react-bootstrap/Form'
 const NuevoProyecto = (props) => {
     const draftID = uuidv4()
     const { state } = useLocation() || {}
-    const { categoriaProfesional, tipoProyecto } = state || ' '
+    const { categoriaProfesional, tipoProyecto, auth } = state || ' '
+    const hideRegister = auth
     const _firestore = firestore
     const draftRef = collection(_firestore, 'drafts')
     const [draftInfo, setDraftInfo] = useState({
         draftCategory: categoriaProfesional || ' ',
         draftProject: tipoProyecto || ' ',
+        draftId: draftID,
         draftName: 'Categoria',
-        draftDescription: '',
+        draftDescription: ' ',
+        draftPropietarioResidente: ' ',
+        draftCreated: ' ',
+        draftPriority: ' ',
+        draftCity: ' ',
+        draftDirection: ' ',
         draftRooms: ' ',
         draftPlans: ' ',
         draftPermissions: ' ',
@@ -341,24 +348,29 @@ const NuevoProyecto = (props) => {
                         </Form>
                     </Col>
                 </Col>
-                <Row className="nuevoProyectoMensaje w-100">
-                    <Col className="p-4 col-10">
-                        <h3 className="headline-xl textBlanco">
-                            Por ultimo ingresa tus datos de contacto
-                        </h3>
-                        <p className="body-1 textBlanco">
-                            Hasta cuatro Comerciantes calificados te contactaran
-                            para aplicar con una cotización a tu proyecto.{' '}
-                            <br />
-                            Para garantizar la mejor respuesta asegúrate que tus
-                            datos son exactos, solo compartiremos tu numero con
-                            los comerciantes calificados interesados, por favor
-                            responde a su llamada.
-                        </p>
-                    </Col>
-                    {/* Detalles de contacto */}
-                    <Registro showLogo={false} className="pb-4"></Registro>
-                </Row>
+                {/* Detalles de contacto */}
+                {hideRegister ? (
+                    <></>
+                ) : (
+                    <Row className="nuevoProyectoMensaje w-100">
+                        <Col className="p-4 col-10">
+                            <h3 className="headline-xl textBlanco">
+                                Por ultimo ingresa tus datos de contacto
+                            </h3>
+                            <p className="body-1 textBlanco">
+                                Hasta cuatro Comerciantes calificados te
+                                contactaran para aplicar con una cotización a tu
+                                proyecto. <br />
+                                Para garantizar la mejor respuesta asegúrate que
+                                tus datos son exactos, solo compartiremos tu
+                                numero con los comerciantes calificados
+                                interesados, por favor responde a su llamada.
+                            </p>
+                        </Col>
+
+                        <Registro showLogo={false} className="pb-4"></Registro>
+                    </Row>
+                )}
             </Container>
         </>
     )

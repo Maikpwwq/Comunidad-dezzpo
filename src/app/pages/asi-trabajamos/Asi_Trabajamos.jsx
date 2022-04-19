@@ -5,6 +5,7 @@ import '../../../../public/assets/css/asi_trabajamos.css'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 
 const AsiTrabajamos = (props) => {
@@ -22,9 +23,16 @@ const AsiTrabajamos = (props) => {
                             en Tiempo Real En Nuestro Chat
                         </span>
                         <br />
-                        <div>
-                            <button className="btn">CHAT EN VIVO</button>
-                        </div>
+                        <Button className="btn btn-round btn-high">
+                            <a
+                                className="body-1"
+                                href="https://api.whatsapp.com/send?phone=573196138057"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                CHAT EN VIVO
+                            </a>
+                        </Button>
                     </Col>
                 </Row>
             </Container>

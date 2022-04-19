@@ -1,5 +1,6 @@
 // Pagina de Usuario - Perfil
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { auth, firestore, storage } from '../../../firebase/firebaseClient'
 import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
@@ -26,21 +27,55 @@ const Input = styled('input')({
 
 const Perfil = (props) => {
     const user = auth.currentUser || {}
-    const userID = user.uid || ''
+    const userID = user.uid || '' // Este es el id de la cuenta de Auth
+    const { state } = useLocation() || {}
+    const localRole = localStorage.getItem('role')
+    const selectRole = parseInt(JSON.parse(localRole))
+    const [userRol, setUserRol] = useState({
+        rol: selectRole,
+    })
+    // console.log(userRol.rol)
+    // Este es el id como parametro de busqueda o consulta de un perfil especifico
+    const userId =
+        state != undefined && state != null && state.id != undefined
+            ? state.id
+            : ' '
+    const consult = userId !== null && userId !== ' ' ? true : false
+    const userConsultId = consult ? userId : userID
+    console.log(userId, consult, userConsultId)
+    // console.log(userID)
+    // console.log(userConsultId)
     const _firestore = firestore
     const _storage = storage
-    const usersRef = collection(_firestore, 'users')
+    const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
+    const usersComCalRef = collection(
+        _firestore,
+        'usersComerciantesCalificados'
+    )
 
-    const userToFirestore = async (updateInfo, userID) => {
-        await setDoc(doc(usersRef, userID), updateInfo, { merge: true })
+    const userProResToFirestore = async (updateInfo, userID) => {
+        await setDoc(doc(usersProResRef, userID), updateInfo, { merge: true })
+    }
+
+    const userComCalToFirestore = async (updateInfo, userID) => {
+        await setDoc(doc(usersComCalRef, userID), updateInfo, { merge: true })
     }
 
     const userFromFirestore = async (firestoreUserID) => {
         try {
-            const userData = await getDocFromServer(
-                doc(usersRef, firestoreUserID)
-            )
-            return userData
+            if (userRol.rol === 1) {
+                const userData = await getDocFromServer(
+                    doc(usersProResRef, firestoreUserID)
+                )
+                console.log(userConsultId, userRol.rol)
+                return userData
+            } else if (userRol.rol === 2) {
+                const userData = await getDocFromServer(
+                    doc(usersComCalRef, firestoreUserID)
+                )
+                console.log(userConsultId, userRol.rol)
+                return userData
+            }
         } catch (err) {
             console.log('Error getting user: ', err)
         }
@@ -63,8 +98,9 @@ const Perfil = (props) => {
     })
 
     const updateProfilePhoto = (event) => {
+        event.preventDefault()
         const file = event.target.files
-        const profilesRef = ref(_storage, `profiles/${userID}`)
+        const profilesRef = ref(_storage, `profiles/${userConsultId}`)
         if (file[0] instanceof Blob) {
             console.log(file[0])
             try {
@@ -83,19 +119,43 @@ const Perfil = (props) => {
                                 userPhotoUrl: url,
                             })
                             const photoInfo = { userPhotoUrl: url }
-                            userToFirestore(photoInfo, userID)
-                                .then((docSnap) => {
-                                    console.log(
-                                        'Se actualiza URL imagen de perfil a firestore',
-                                        docSnap
-                                    )
-                                })
-                                .catch((error) => {
-                                    console.log(
-                                        'No se pudo actualizar la imagen de perfil en firestore',
-                                        error
-                                    )
-                                })
+                            if (userRol.rol === 1) {
+                                const userLoadRol = userProResToFirestore(
+                                    photoInfo,
+                                    userConsultId
+                                )
+                                userLoadRol
+                                    .then((docSnap) => {
+                                        console.log(
+                                            'Se actualiza URL imagen de perfil a firestore',
+                                            docSnap
+                                        )
+                                    })
+                                    .catch((error) => {
+                                        console.log(
+                                            'No se pudo actualizar la imagen de perfil en firestore',
+                                            error
+                                        )
+                                    })
+                            } else if (userRol.rol === 2) {
+                                const userLoadRol = userComCalToFirestore(
+                                    photoInfo,
+                                    userConsultId
+                                )
+                                userLoadRol
+                                    .then((docSnap) => {
+                                        console.log(
+                                            'Se actualiza URL imagen de perfil a firestore',
+                                            docSnap
+                                        )
+                                    })
+                                    .catch((error) => {
+                                        console.log(
+                                            'No se pudo actualizar la imagen de perfil en firestore',
+                                            error
+                                        )
+                                    })
+                            }
                         })
                         .catch((error) => {
                             console.log(
@@ -113,7 +173,10 @@ const Perfil = (props) => {
     const updateGalleryPhoto = (event) => {
         const file = event.target.files
         const fileId = uuidv4()
-        const userGalleryRef = ref(_storage, `profiles/${userID}/${fileId}`)
+        const userGalleryRef = ref(
+            _storage,
+            `profiles/${userConsultId}/${fileId}`
+        )
         if (file[0] instanceof Blob) {
             console.log(file[0])
             try {
@@ -132,19 +195,43 @@ const Perfil = (props) => {
                                 userGalleryUrl: [url],
                             })
                             const photoInfo = { userGalleryUrl: [url] }
-                            userToFirestore(photoInfo, userID)
-                                .then((docSnap) => {
-                                    console.log(
-                                        'Se actualiza URL de imagen a la galeria de usuario del firestore',
-                                        docSnap
-                                    )
-                                })
-                                .catch((error) => {
-                                    console.log(
-                                        'No se pudo actualizar URL de imagen a la galeria de usuario del firestore',
-                                        error
-                                    )
-                                })
+                            if (userRol.rol === 1) {
+                                const userLoadRol = userProResToFirestore(
+                                    photoInfo,
+                                    userConsultId
+                                )
+                                userLoadRol
+                                    .then((docSnap) => {
+                                        console.log(
+                                            'Se actualiza URL de imagen a la galeria de usuario del firestore',
+                                            docSnap
+                                        )
+                                    })
+                                    .catch((error) => {
+                                        console.log(
+                                            'No se pudo actualizar URL de imagen a la galeria de usuario del firestore',
+                                            error
+                                        )
+                                    })
+                            } else if (userRol.rol === 2) {
+                                const userLoadRol = userComCalToFirestore(
+                                    photoInfo,
+                                    userConsultId
+                                )
+                                userLoadRol
+                                    .then((docSnap) => {
+                                        console.log(
+                                            'Se actualiza URL de imagen a la galeria de usuario del firestore',
+                                            docSnap
+                                        )
+                                    })
+                                    .catch((error) => {
+                                        console.log(
+                                            'No se pudo actualizar URL de imagen a la galeria de usuario del firestore',
+                                            error
+                                        )
+                                    })
+                            }
                         })
                         .catch((error) => {
                             console.log(
@@ -160,8 +247,9 @@ const Perfil = (props) => {
     }
 
     useEffect(() => {
-        if (user !== null) {
-            console.log(user)
+        console.log(userRol, state)
+        if (user !== null && !isNaN(userRol.rol) && userRol.rol !== '') {
+            // console.log(user)
             const {
                 uid,
                 email,
@@ -171,12 +259,10 @@ const Perfil = (props) => {
                 emailVerified,
                 metadata,
             } = user
-            // setUserInfo({
-            //     ...userInfo,
-
-            // })
             // resolving promise data user
-            const userData = userFromFirestore(userID)
+            console.log(userConsultId, userRol.rol)
+            const userData = userFromFirestore(userConsultId)
+
             // userData.forEach((doc) => {
             //     console.log(doc.id, " => ", doc.data())
             // })
@@ -185,22 +271,25 @@ const Perfil = (props) => {
                 if (docSnap) {
                     // docSnap._document.data...
                     const data = docSnap.data()
-                    // console.log(docSnap.data())
-                    setUserInfo({
-                        ...userInfo,
-                        userPhone: data.userPhone || phoneNumber,
-                        userPhotoUrl: data.userPhotoUrl || photoURL,
-                        userId: uid,
-                        userMail: email,
-                        userName: displayName,
-                        userJoined: metadata.creationTime,
-                        userProfession: data.userProfession,
-                        userExperience: data.userExperience,
-                        userUbication: data.userUbication,
-                        userRazonSocial: data.userRazonSocial,
-                        userIdentification: data.userIdentification,
-                        userDescription: data.userDescription,
-                    })
+                    console.log(data)
+                    if (data) {
+                        setUserInfo({
+                            ...userInfo,
+                            userPhone: data.userPhone || phoneNumber,
+                            userPhotoUrl: data.userPhotoUrl || photoURL,
+                            userId: data.userId || uid,
+                            userMail: data.userMail || email,
+                            userName: data.userName || displayName,
+                            userGalleryUrl: data.GalleryUrl || [],
+                            userJoined: metadata.creationTime,
+                            userProfession: data.userProfession,
+                            userExperience: data.userExperience,
+                            userUbication: data.userUbication,
+                            userRazonSocial: data.userRazonSocial,
+                            userIdentification: data.userIdentification,
+                            userDescription: data.userDescription,
+                        })
+                    }
                 } else {
                     console.log(
                         'No se encontro información relacionada con este usuario!'
@@ -428,14 +517,6 @@ const Perfil = (props) => {
                                         label="Ubicación"
                                         value={userInfo.userUbication}
                                         defaultValue="ubicación"
-                                        variant="filled"
-                                    />
-                                    <TextField
-                                        id="userIdentification"
-                                        name="userIdentification"
-                                        label="Identificación"
-                                        value={userInfo.userIdentification}
-                                        defaultValue="Identificación"
                                         variant="filled"
                                     />
                                     <TextField

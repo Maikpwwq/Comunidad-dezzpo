@@ -1,11 +1,15 @@
 /* - Componente importancion de las paginas y distribucion de las rutas -  */
 import React from 'react'
-import { Routes, Navigate, useLocation, Route } from 'react-router-dom'
-// import { auth } from '../../firebase/firebaseClient'
-// import { signOut } from 'firebase/auth'
+import {
+    Routes,
+    Navigate,
+    useNavigate,
+    useLocation,
+    Route,
+} from 'react-router-dom'
 
 // //Paginas
-import Home from '../../app/pages/inicio/Inicio'
+// import Home from '../../app/pages/inicio/Inicio'
 import Ajustes from '../pages/ajustes/Ajustes'
 import Biblioteca from '../pages/biblioteca/Biblioteca'
 import Cambiar_Clave from '../pages/cambiar-clave/Cambiar_Clave'
@@ -19,21 +23,13 @@ import Mensajes from '../pages/mensajes/Mensajes'
 import Notificaciones from '../pages/notificaciones/Notificaciones'
 import Perfil from '../pages/perfil/Perfil'
 import Portal_Servicios from '../pages/portal-servicios/Portal_Servicios'
+import Requerimiento from '../pages/requerimiento/Requerimiento'
 import Suscripciones from '../pages/suscripciones/Suscripciones'
 
-// Componentes
-// signOut(auth)
-//                                     .then(() => {
-//                                         console.log(
-//                                             'Cerro su sesión de manera exitosa!'
-//                                         )
-//                                     })
-//                                     .catch((error) => {
-//                                         console.log(error)
-//                                     })
 class Rutas extends React.Component {
     render() {
         // const location = useLocation()
+        // const navigate = useNavigate()
         return (
             <>
                 <Routes>
@@ -53,7 +49,7 @@ class Rutas extends React.Component {
                         path="/calificaciones"
                         element={<Calificaciones></Calificaciones>}
                     ></Route>
-                    <Route
+                    {/* <Route
                         path="/cerrar-sesion"
                         element={
                             <Navigate
@@ -62,6 +58,9 @@ class Rutas extends React.Component {
                                 state={{ from: location }}
                             />
                         }
+                        // render={() => {
+                        //     navigate('/')
+                        // }}
                         // render={
                         //     <Navigate
                         //         to="/"
@@ -69,7 +68,7 @@ class Rutas extends React.Component {
                         //         state={{ from: location }}
                         //     />
                         // }
-                    ></Route>
+                    ></Route> */}
                     <Route
                         path="/certificaciones"
                         element={<Certificaciones></Certificaciones>}
@@ -103,6 +102,10 @@ class Rutas extends React.Component {
                     <Route
                         path="/portal-servicios"
                         element={<Portal_Servicios></Portal_Servicios>}
+                    ></Route>
+                    <Route
+                        path="/requerimiento"
+                        element={<Requerimiento></Requerimiento>}
                     ></Route>
                     <Route
                         path="/suscripciones"

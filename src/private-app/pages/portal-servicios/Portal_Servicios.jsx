@@ -1,6 +1,6 @@
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { firestore } from '../../../firebase/firebaseClient' // storage,
 import { collection, getDocs, query, where } from 'firebase/firestore'
 // import { ref, getDownloadURL } from 'firebase/storage'
@@ -12,6 +12,7 @@ import UserCard from '../../components/UserCard'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 // import Table from '@mui/material/Table'
 // import TableHead from '@mui/material/TableHead'
 // import TableBody from '@mui/material/TableBody'
@@ -19,6 +20,7 @@ import Container from 'react-bootstrap/Container'
 // import TableCell from '@mui/material/TableCell'
 
 const Portal_Servicios = (props) => {
+    const navigate = useNavigate()
     const { state } = useLocation() || {}
     const { searchInput } = state || ' '
     // console.log(state.searchInput)
@@ -26,7 +28,11 @@ const Portal_Servicios = (props) => {
     const _firestore = firestore
 
     const draftRef = collection(_firestore, 'drafts')
-    const usersRef = collection(_firestore, 'users')
+    // const usersRef = collection(_firestore, 'users')
+    const usersComCalRef = collection(
+        _firestore,
+        'usersComerciantesCalificados'
+    )
     const [searchData, setSearchData] = useState({})
     const [usersData, setUsersData] = useState({})
     const [draftsData, setDraftsData] = useState({})
@@ -49,7 +55,7 @@ const Portal_Servicios = (props) => {
 
     const usersFromFirestore = async () => {
         try {
-            const userData = await getDocs(usersRef)
+            const userData = await getDocs(usersComCalRef)
             return userData
         } catch (err) {
             console.log(
@@ -117,6 +123,7 @@ const Portal_Servicios = (props) => {
                     const data = docSnap.docs.map((element) => ({
                         ...element.data(),
                     }))
+                    console.log(data)
                     setDraftsData({
                         data,
                     })
@@ -130,6 +137,10 @@ const Portal_Servicios = (props) => {
                 console.log(error)
             })
     }, [])
+
+    const handleNewProject = () => {
+        navigate('/nuevo-proyecto', { state: { auth: true } })
+    }
 
     console.log(searchData)
 
@@ -160,13 +171,22 @@ const Portal_Servicios = (props) => {
                         )}
                     </Row>
 
-                    <Col className="col-10 p-4">
+                    <Col className="col-10 pt-4 pb-4 p-0">
                         <h2 className="headline-xl">
+                            Directorio Profesionales
+                            <Button
+                                className="body-1"
+                                onClick={handleNewProject}
+                            >
+                                Publica un proyecto gratis
+                            </Button>
+                        </h2>
+                        <h3 className="headline-l">
                             Busqueda Local Servicios: Buscar comerciantes
                             Calificados
-                        </h2>
+                        </h3>
                         <p className="body-2"> Comerciantes profesionales </p>
-                        <p className="body-1">Publica un proyecto gratis</p>
+
                         <Row className="m-0 w-100 d-flex">
                             {usersData.data ? (
                                 usersData.data.map((user) => (
@@ -212,15 +232,18 @@ const Portal_Servicios = (props) => {
                 </Row>
                 <Row className="m-0 w-100 d-flex">
                     <Col className="p-4">
-                        <span>
-                            <h2 className="headline-xl">
-                                Buscar Requerimientos: Obtener o Aplicar con
-                                Cotizaciones
-                            </h2>
-                        </span>
-                        <p className="body-2">Proyectos activos </p>
-                        <p className="body-1">Aplica a un Proyecto Gratis</p>
-                        <Row className="m-0 w-100 d-flex">
+                        <h2 className="headline-xl">
+                            Directorio Requerimientos
+                            <Button className="body-1">
+                                Aplica gratis a un requerimiento
+                            </Button>
+                        </h2>
+                        <h3 className="headline-l">
+                            Buscar Requerimientos: Obtener o Aplicar con
+                            Cotizaciones
+                        </h3>
+                        <p className="body-2">Requerimientos activos </p>
+                        <Row className="m-0 d-flex">
                             {draftsData.data ? (
                                 draftsData.data.map((draft) => (
                                     <DraftCard

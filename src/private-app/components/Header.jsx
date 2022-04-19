@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
-
+import { NavLink, useNavigate, Redirect } from 'react-router-dom'
+import { auth } from '../../firebase/firebaseClient'
 import SearchBar from './SearchBar'
 
 //imagenes
@@ -27,7 +27,12 @@ const lightColor = 'rgba(255, 255, 255, 0.7)'
 
 function Header(props) {
     const { onDrawerToggle } = props
-
+    const user = auth.currentUser || {}
+    const userPhotoUrl = user.photoURL || ''
+    const navigate = useNavigate()
+    const handleHelp = () => {
+        navigate('/ayuda-pqrs')
+    }
     return (
         <React.Fragment>
             <AppBar color="primary" position="sticky" elevation={0}>
@@ -75,7 +80,7 @@ function Header(props) {
                         </Grid>
                         <Grid item>
                             <IconButton color="inherit" sx={{ p: 0.5 }}>
-                                <Avatar src={Avatar1} alt="My Avatar" />
+                                <Avatar src={userPhotoUrl} alt="My Avatar" />
                             </IconButton>
                         </Grid>
                     </Grid>
@@ -111,7 +116,10 @@ function Header(props) {
                         </Grid>
                         <Grid item>
                             <Tooltip title="Help">
-                                <IconButton color="inherit">
+                                <IconButton
+                                    color="inherit"
+                                    onClick={handleHelp}
+                                >
                                     <HelpIcon />
                                 </IconButton>
                             </Tooltip>

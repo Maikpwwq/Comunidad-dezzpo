@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { NavLink, Navigate, useNavigate, useMatch } from 'react-router-dom'
+import { auth } from '../../firebase/firebaseClient'
+import { signOut } from 'firebase/auth'
 
 //imagenes
-import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
+// import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
 import LogoMenuComunidadDezzpo from '../../../public/assets/img/IsologoUserApp.png'
 
 import Divider from '@mui/material/Divider'
@@ -46,7 +48,20 @@ const itemCategory = {
 
 export default function Navigator(props) {
     const { ...other } = props
-    // const cerrarSesion = () => {}
+    const user = auth.currentUser || {}
+    const userPhotoUrl = user.photoURL || ''
+    const userName = user.displayName || ''
+    const navigate = useNavigate()
+    const handleSignout = () => {
+        signOut(auth)
+            .then(() => {
+                console.log('Cerro su sesión de manera exitosa!')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        navigate('/')
+    }
     return (
         <Drawer variant="permanent" {...other}>
             <List disablePadding>
@@ -58,21 +73,23 @@ export default function Navigator(props) {
                         color: '#fff',
                     }}
                 >
-                    <img
-                        src={LogoMenuComunidadDezzpo}
-                        alt="Logo Comunidad Dezzpo"
-                        style={{ padding: '3px 10px' }}
-                        height="55px"
-                        width="200px"
-                    />
+                    <NavLink to="/">
+                        <img
+                            src={LogoMenuComunidadDezzpo}
+                            alt="Logo Comunidad Dezzpo"
+                            style={{ padding: '3px 10px' }}
+                            height="55px"
+                            width="200px"
+                        />
+                    </NavLink>
                 </ListItem>
                 <ListItem sx={{ ...item, ...itemCategory }}>
                     <ListItemIcon>
                         <IconButton color="inherit" sx={{ p: 0.5 }}>
-                            <Avatar src={Avatar1} alt="My Avatar" />
+                            <Avatar src={userPhotoUrl} alt="My Avatar" />
                         </IconButton>
                     </ListItemIcon>
-                    <ListItemText>Bienvenido _nombre!</ListItemText>
+                    <ListItemText>Bienvenido {userName}!</ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (
                     <Box key={id} sx={{ bgcolor: '#575856' }}>
@@ -103,6 +120,21 @@ export default function Navigator(props) {
                                 // : cerrarSesion()}
                             )
                         )}
+                        <ListItem
+                            disablePadding
+                            button
+                            activeClassName="Mui-selected"
+                            key="Cerrar Sesion"
+                            onClick={handleSignout}
+                            exact
+                        >
+                            <ListItemButton selected={false} sx={item}>
+                                <ListItemIcon>
+                                    <PhonelinkSetupIcon />
+                                </ListItemIcon>
+                                <ListItemText>Cerrar Sesion</ListItemText>
+                            </ListItemButton>
+                        </ListItem>
 
                         <Divider sx={{ mt: 2 }} />
                     </Box>
@@ -172,11 +204,11 @@ const categories = [
                 icon: <PhonelinkSetupIcon />,
                 route: 'cambiar-clave',
             },
-            {
-                id: 'Cerrar Sesion',
-                icon: <PhonelinkSetupIcon />,
-                route: `cerrar-sesion`, // ${match.url}/
-            },
+            // {
+            //     id: 'Cerrar Sesion',
+            //     icon: <PhonelinkSetupIcon />,
+            //     route: `cerrar-sesion`, // ${match.url}/
+            // },
         ],
     },
 ]

@@ -1,8 +1,11 @@
 // Pagina de Usuario - Ajustes
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { auth, firestore } from '../../../firebase/firebaseClient'
 import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
 import { updateProfile } from 'firebase/auth'
+
+import '../../../../public/assets/cssPrivateApp/ajustes.css'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -14,21 +17,44 @@ import FormGroup from '@mui/material/FormGroup'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 const Ajustes = (props) => {
-    const user = auth.currentUser
-    const userID = user.uid
+    const user = auth.currentUser || {}
+    const userID = user.uid || ''
     const _firestore = firestore
-    const usersRef = collection(_firestore, 'users')
+    const { state } = useLocation() || {}
+    const localRole = localStorage.getItem('role')
+    const selectRole = parseInt(JSON.parse(localRole))
+    const [userRol, setUserRol] = useState({
+        rol: selectRole,
+    })
+    console.log(userRol.rol)
 
-    const userToFirestore = async (updateInfo, userID) => {
-        await setDoc(doc(usersRef, userID), updateInfo)
+    const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
+    const usersComCalRef = collection(
+        _firestore,
+        'usersComerciantesCalificados'
+    )
+
+    const userProResToFirestore = async (updateInfo, userID) => {
+        await setDoc(doc(usersProResRef, userID), updateInfo)
+    }
+
+    const userComCalToFirestore = async (updateInfo, userID) => {
+        await setDoc(doc(usersComCalRef, userID), updateInfo)
     }
 
     const userFromFirestore = async (firestoreUserID) => {
         try {
-            const userData = await getDocFromServer(
-                doc(usersRef, firestoreUserID)
-            )
-            return userData
+            if (userRol.rol === 1) {
+                const userData = await getDocFromServer(
+                    doc(usersProResRef, firestoreUserID)
+                )
+                return userData
+            } else if (userRol.rol === 2) {
+                const userData = await getDocFromServer(
+                    doc(usersComCalRef, firestoreUserID)
+                )
+                return userData
+            }
         } catch (err) {
             console.log('Error getting user: ', err)
         }
@@ -50,7 +76,7 @@ const Ajustes = (props) => {
     })
 
     useEffect(() => {
-        if (user !== null) {
+        if (user !== null && userRol.rol) {
             const {
                 uid,
                 email,
@@ -97,11 +123,18 @@ const Ajustes = (props) => {
     }
 
     const handleSubmit = () => {
-        const snap = userToFirestore(userEditInfo, user.uid)
+        if (userRol.rol === 1) {
+            const snap = userProResToFirestore(userEditInfo, user.uid)
+            snap.then((docSnap) => {
+                console.log(docSnap)
+            })
+        } else if (userRol.rol === 2) {
+            const snap = userComCalToFirestore(userEditInfo, user.uid)
+            snap.then((docSnap) => {
+                console.log(docSnap)
+            })
+        }
         sendInfo()
-        snap.then((docSnap) => {
-            console.log(docSnap)
-        })
     }
     // Firebase Auth
     const sendInfo = () => {
@@ -131,7 +164,7 @@ const Ajustes = (props) => {
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex align-items-start pb-4 pt-4">
                     <Col className="col-10">
-                        <Row className="pb-4">
+                        <Row className="pb-4 info-user_backgound">
                             <div>
                                 <FormGroup
                                     action=""

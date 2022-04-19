@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
@@ -30,7 +31,9 @@ const ExpandMore = styled((props) => {
 }))
 
 export default function DraftCard({ props }) {
+    const navigate = useNavigate()
     const {
+        draftId,
         draftName,
         draftDescription,
         draftRooms,
@@ -41,20 +44,24 @@ export default function DraftCard({ props }) {
         draftProperty,
         draftPostalCode,
     } = props
+    console.log(props)
     const [expanded, setExpanded] = React.useState(false)
 
     const handleExpandClick = () => {
         setExpanded(!expanded)
     }
-    const handleVerSitio = () => {}
-    const handleCotizar = () => {}
+    const handleVerRequerimiento = () => {
+        console.log(draftId)
+        navigate('/app/requerimiento', { state: { draftId: draftId } })
+    }
+    const handleAplicar = () => {}
     const handleFavorite = () => {}
     const handleShare = () => {}
 
     return (
         <>
             <Card
-                className="d-flex w-50"
+                className="d-flex"
                 // lg={6}
                 // md={6}
                 // sm={10}
@@ -70,7 +77,10 @@ export default function DraftCard({ props }) {
                         alt="Paella dish"
                         style={{ maxWidth: '345px' }}
                     />
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Box
+                        className="w-100"
+                        sx={{ display: 'flex', flexDirection: 'column' }}
+                    >
                         {/* TODO: Categorias*/}
 
                         <CardHeader
@@ -97,34 +107,40 @@ export default function DraftCard({ props }) {
                             </Typography>
                             <br />
                         </CardContent>
-                    </Box>
-                    <CardActions className="d-flex flex-column" disableSpacing>
-                        <Button className="" onClick={handleVerSitio}>
-                            Ver sitio
-                        </Button>
-                        <Button className="" onClick={handleCotizar}>
-                            Cotizar
-                        </Button>
-                        <IconButton
-                            aria-label="add to favorites"
-                            onClick={handleFavorite}
-                        >
-                            <FavoriteIcon />
-                            {/* TODO: Contactar */}
-                        </IconButton>
-                        <IconButton aria-label="share" onClick={handleShare}>
-                            <ShareIcon />
-                        </IconButton>
+                        <CardActions className="d-flex" disableSpacing>
+                            <Button
+                                className=""
+                                onClick={handleVerRequerimiento}
+                            >
+                                Ver requerimiento
+                            </Button>
+                            <Button className="" onClick={handleAplicar}>
+                                Aplicar
+                            </Button>
+                            <IconButton
+                                aria-label="add to favorites"
+                                onClick={handleFavorite}
+                            >
+                                <FavoriteIcon />
+                                {/* TODO: Contactar */}
+                            </IconButton>
+                            <IconButton
+                                aria-label="share"
+                                onClick={handleShare}
+                            >
+                                <ShareIcon />
+                            </IconButton>
 
-                        <ExpandMore
-                            expand={expanded}
-                            onClick={handleExpandClick}
-                            aria-expanded={expanded}
-                            aria-label="show more"
-                        >
-                            <ExpandMoreIcon />
-                        </ExpandMore>
-                    </CardActions>
+                            <ExpandMore
+                                expand={expanded}
+                                onClick={handleExpandClick}
+                                aria-expanded={expanded}
+                                aria-label="show more"
+                            >
+                                <ExpandMoreIcon />
+                            </ExpandMore>
+                        </CardActions>
+                    </Box>
                 </Box>
 
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>

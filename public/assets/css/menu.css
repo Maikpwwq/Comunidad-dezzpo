@@ -1,38 +1,57 @@
 @media screen and (max-width: 600px) {
-    .menuFijo{ 
-        position: absolute;  
+    .mobile-menu{
+        visibility: visible !important;
+    }
+    .logo-comunidad-dezzpo{
+        height: 45px !important; 
+        width: 110px !important;
+    }
+    .menuFijo{
+        position: absolute;
         min-height: 80px;
-        margin: 0 0; 
-        padding: 0 0; 
-        width: 100%; 
+        margin: 0 0;
+        padding: 0 0;
+        width: 100%;
         right: 0px;
         left: 0px;
         top: 0px;
     }
-    .barraMenu{ 
-        display: inline-flex; 
-        position: fixed; 
+    .barraMenu{
+        display: inline-flex;
+        position: fixed;
         height: auto;
-        width: 100%; 
+        width: 100%;
         justify-content: center;
+    }
+    .menuFijo:hover .menuContenedor{
+        position: fixed;
+        height: 100%;
+        z-index: 1200;
+        top: 90px;
+        left: 0;
+        min-width: 256px;
+        align-items: start;
     }
     .menuFijo:hover .menuSecciones{
         display: flex!important;
         flex-direction: column;
+        /* position:fixed; */
     }
-    .menuSecciones{ 
-        display: none!important; 
-        flex-direction: column; 
-        overflow: visible; 
+    .menuSecciones{
+        display: none!important;
+        flex-direction: column;
+        overflow: visible;
         list-style-type: none;
         padding: 0 0;
         margin: 0 0;
         width: 100%;
         background-color: #009999;
-        color: white;  
+        color: white;
     }
     .dropdownContenidos{
         padding: 5px 3px;
+        position: relative !important;
+        margin-left: 18px;
     }
     .dropdown:hover .dropdownContenidos {
         display: flex;
@@ -44,7 +63,7 @@
     }
     .botonNavLink{
         height: auto !important;
-    }    
+    }
 }
 @media screen and (min-width: 600px) and (max-width: 900px) {
 
@@ -53,41 +72,51 @@
 
 
 }
-
-.menuFijo{  
-    position: relative;  
+.containerLogo{
+    justify-content: space-evenly !important;
+}
+.logo-comunidad-dezzpo{
+    height: 60px;
+    width: 200px;
+    padding: '5px 10px';
+}
+.mobile-menu{
+    visibility: hidden;
+}
+.menuFijo{
+    position: relative;
     height: auto;
 }
 .barraComunidad{
-    display: inline-flex; 
-    position: fixed; 
+    display: inline-flex;
+    position: fixed;
     height: 80px;
     justify-content: center;
 }
-.barraMenu{ 
-    display: inline-flex; 
-    position: relative; 
-    font-family: "lato Regular", Helvetica, sans-serif; 
-    color: #333333; 
+.barraMenu{
+    display: inline-flex;
+    position: relative;
+    font-family: "lato Regular", Helvetica, sans-serif;
+    color: #333333;
     background-color: #e9ebe6;
     flex-wrap: nowrap;
     height: auto;
-    width: 100%; 
+    width: 100%;
     justify-content: center;
     top: 0;
 }
 .menuContenedor{
-    display: flex; 
-    flex-direction: row; 
+    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
     background-color: #009999;
-    color: white;  
+    color: white;
 }
-.menuSecciones{ 
-    display: flex; 
-    flex-direction: row; 
-    overflow: visible; 
+.menuSecciones{
+    display: flex;
+    flex-direction: row;
+    overflow: visible;
     list-style-type: none;
     padding: 0 0;
     margin: 0 0;
@@ -102,7 +131,7 @@
 .dropdownContenidos{
     display: none;
     position: absolute;
-    background-color: var(--background-light-grey-color);    
+    background-color: var(--background-light-grey-color);
     min-width: 300px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -112,17 +141,17 @@
     color: white;
 }
 .menuContenedor a:visited{
-    color: white;    
+    color: white;
 }
 .dropdownContenidos a{
-    font-size: 21px; 
+    font-size: 21px;
     text-decoration: none;
     color: var(--content-text-color) !important;
     width: 100%;
 }
 .dropdownContenidos a:hover{
     background-color: rgba(0,0,0,0.8);
-    color: var(--content-text-white-color) !important;    
+    color: var(--content-text-white-color) !important;
     text-decoration: underline;
 }
 .dropdown:hover .dropdownContenidos {
@@ -130,9 +159,9 @@
     flex-direction: column;
     flex-wrap: nowrap;
 }
-.botonSeccion:hover a{ 
-    color: white; 
-    background-color: #009999; 
+.botonSeccion:hover a{
+    color: white;
+    background-color: #009999;
     text-decoration: underline;
 }
 .botonSeccion{
@@ -142,7 +171,7 @@
     border-left-color: black;
     height: 100%;
     display: flex;
-    align-content: center;                        
+    align-content: center;
 }
 .activo{
     padding: 5px 10px;

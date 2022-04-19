@@ -30,71 +30,104 @@ const Calificaciones = (props) => {
                             Valore el usuario segun los siguientes tres
                             aspectos:
                         </p>
-                        <Col className="col-8">
+                        <Col className="col-12">
                             <FormLabel
-                                className="body-2"
+                                className="body-2 pt-4 d-flex align-items-center w-100 justify-content-between"
                                 forHtml="addMetodoPago"
                             >
-                                Gestión: <br />
-                                Cumple con los tiempos de entrega de las
-                                certificaciones,- polizas, actas y contratos
+                                <Col className="col-10 body-1">
+                                    Gestión: <br />
+                                    Cumple con los tiempos de entrega de las
+                                    certificaciones,- polizas, actas y
+                                    contratos.
+                                </Col>
+                                <br />
+                                <FormControl className="ps-4 pb-2">
+                                    <Select
+                                        style={{ width: '10%' }}
+                                        value=""
+                                        name="Gestión"
+                                        id="Gestión"
+                                        autoWidth
+                                    >
+                                        <MenuItem value="">
+                                            <em>seleccione </em>
+                                        </MenuItem>
+                                        <MenuItem value="1">1</MenuItem>
+                                        <MenuItem value="2">2</MenuItem>
+                                        <MenuItem value="3">3</MenuItem>
+                                        <MenuItem value="4">4</MenuItem>
+                                        <MenuItem value="5">5</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </FormLabel>
-                            <FormControl className="pb-4">
-                                <Select name="Gestión" id="Gestión" autoWidth>
-                                    <MenuItem value="">
-                                        <em>seleccione </em>
-                                    </MenuItem>
-                                    <MenuItem value="1">1</MenuItem>
-                                    <MenuItem value="2">2</MenuItem>
-                                    <MenuItem value="3">3</MenuItem>
-                                    <MenuItem value="4">4</MenuItem>
-                                    <MenuItem value="5">5</MenuItem>
-                                </Select>
-                            </FormControl>
 
-                            <FormLabel className="body-2" forHtml="Calidad">
-                                Calidad: <br />
-                                El servicio cumplio con las especificaciones y
-                                normas tecnicas establecidas, mientras el
-                                personal contratado fue suficiente y tenia todas
-                                las competencias necesarias para ejecutar las
-                                actividades del contrato
+                            <FormLabel
+                                className="body-2 pt-4 d-flex align-items-center w-100 justify-content-between"
+                                forHtml="Calidad"
+                            >
+                                <Col className="col-10 body-1">
+                                    Calidad:
+                                    <br />
+                                    El servicio cumplio con las especificaciones
+                                    y normas tecnicas establecidas, mientras el
+                                    personal contratado fue suficiente y tenia
+                                    todas las competencias necesarias para
+                                    ejecutar las actividades del contrato.
+                                </Col>
+                                <br />
+                                <FormControl className="ps-4 pb-2">
+                                    <Select
+                                        style={{ width: '10%' }}
+                                        value=""
+                                        name="Calidad"
+                                        id="Calidad"
+                                        autoWidth
+                                    >
+                                        <MenuItem value="">
+                                            <em>seleccione </em>
+                                        </MenuItem>
+                                        <MenuItem value="1">1</MenuItem>
+                                        <MenuItem value="2">2</MenuItem>
+                                        <MenuItem value="3">3</MenuItem>
+                                        <MenuItem value="4">4</MenuItem>
+                                        <MenuItem value="5">5</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </FormLabel>
-                            <FormControl className="pb-4">
-                                <Select name="Calidad" id="Calidad" autoWidth>
-                                    <MenuItem value="">
-                                        <em>seleccione </em>
-                                    </MenuItem>
-                                    <MenuItem value="1">1</MenuItem>
-                                    <MenuItem value="2">2</MenuItem>
-                                    <MenuItem value="3">3</MenuItem>
-                                    <MenuItem value="4">4</MenuItem>
-                                    <MenuItem value="5">5</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormLabel className="body-2" forHtml="Oportunidad">
-                                Oportunidad: <br />
-                                El servicio fue prestado en las fechas y horario
-                                programados, además las facturas, soportes y
-                                documentos contractuales fueren entregados
-                                oportunamente
+
+                            <FormLabel
+                                className="body-2 pt-4 pb-4 d-flex align-items-center w-100 justify-content-between"
+                                forHtml="Oportunidad"
+                            >
+                                <Col className="col-10 body-1">
+                                    Oportunidad: <br />
+                                    El servicio fue prestado en las fechas y
+                                    horario programados, además las facturas,
+                                    soportes y documentos contractuales fueren
+                                    entregados oportunamente.
+                                </Col>
+                                <br />
+                                <FormControl className="ps-4 pb-4">
+                                    <Select
+                                        style={{ width: '10%' }}
+                                        value=""
+                                        name="Oportunidad"
+                                        id="Oportunidad"
+                                        autoWidth
+                                    >
+                                        <MenuItem value="">
+                                            <em>seleccione </em>
+                                        </MenuItem>
+                                        <MenuItem value="1">1</MenuItem>
+                                        <MenuItem value="2">2</MenuItem>
+                                        <MenuItem value="3">3</MenuItem>
+                                        <MenuItem value="4">4</MenuItem>
+                                        <MenuItem value="5">5</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </FormLabel>
-                            <FormControl className="pb-4">
-                                <Select
-                                    name="Oportunidad"
-                                    id="Oportunidad"
-                                    autoWidth
-                                >
-                                    <MenuItem value="">
-                                        <em>seleccione </em>
-                                    </MenuItem>
-                                    <MenuItem value="1">1</MenuItem>
-                                    <MenuItem value="2">2</MenuItem>
-                                    <MenuItem value="3">3</MenuItem>
-                                    <MenuItem value="4">4</MenuItem>
-                                    <MenuItem value="5">5</MenuItem>
-                                </Select>
-                            </FormControl>
+
                             <TextareaAutosize
                                 // value={userEditInfo.userDescription}
                                 // onChange={handleChange}
@@ -105,9 +138,16 @@ const Calificaciones = (props) => {
                                 minRows={8}
                                 className="w-80"
                             ></TextareaAutosize>
-                            <Button type="submit" onClick={handleSubmit}>
-                                Enviar
-                            </Button>
+                            <Row className="pt-4">
+                                <Col>
+                                    <Button
+                                        type="submit"
+                                        onClick={handleSubmit}
+                                    >
+                                        Enviar
+                                    </Button>
+                                </Col>
+                            </Row>
                         </Col>
                     </Col>
                 </Row>
