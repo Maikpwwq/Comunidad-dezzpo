@@ -173,6 +173,9 @@ export default function Paperbase() {
     const [mobileOpen, setMobileOpen] = React.useState(false)
     const isSmUp = useMediaQuery(theme.breakpoints.up('sm'))
 
+    const localRole = localStorage.getItem('role')
+    console.log(JSON.parse(localRole))
+
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen)
     }

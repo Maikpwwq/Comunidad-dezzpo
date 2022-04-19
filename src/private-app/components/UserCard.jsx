@@ -50,7 +50,7 @@ export default function UserCard({ props }) {
     // }
 
     const handleVerSitio = () => {
-        navigate('/app/perfil', { state: userId })
+        navigate('/app/perfil', { state: { id: userId } })
     }
     const handleCotizar = () => {
         navigate('/nuevo-proyecto')

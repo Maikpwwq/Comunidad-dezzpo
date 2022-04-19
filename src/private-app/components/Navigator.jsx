@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { NavLink, Navigate, useNavigate, useMatch } from 'react-router-dom'
 import { auth } from '../../firebase/firebaseClient'
+import { signOut } from 'firebase/auth'
 
 //imagenes
-import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
+// import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
 import LogoMenuComunidadDezzpo from '../../../public/assets/img/IsologoUserApp.png'
 
 import Divider from '@mui/material/Divider'
@@ -50,7 +51,17 @@ export default function Navigator(props) {
     const user = auth.currentUser || {}
     const userPhotoUrl = user.photoURL || ''
     const userName = user.displayName || ''
-    // const cerrarSesion = () => {}
+    const navigate = useNavigate()
+    const handleSignout = () => {
+        signOut(auth)
+            .then(() => {
+                console.log('Cerro su sesión de manera exitosa!')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        navigate('/')
+    }
     return (
         <Drawer variant="permanent" {...other}>
             <List disablePadding>
@@ -109,6 +120,21 @@ export default function Navigator(props) {
                                 // : cerrarSesion()}
                             )
                         )}
+                        <ListItem
+                            disablePadding
+                            button
+                            activeClassName="Mui-selected"
+                            key="Cerrar Sesion"
+                            onClick={handleSignout}
+                            exact
+                        >
+                            <ListItemButton selected={false} sx={item}>
+                                <ListItemIcon>
+                                    <PhonelinkSetupIcon />
+                                </ListItemIcon>
+                                <ListItemText>Cerrar Sesion</ListItemText>
+                            </ListItemButton>
+                        </ListItem>
 
                         <Divider sx={{ mt: 2 }} />
                     </Box>
@@ -178,11 +204,11 @@ const categories = [
                 icon: <PhonelinkSetupIcon />,
                 route: 'cambiar-clave',
             },
-            {
-                id: 'Cerrar Sesion',
-                icon: <PhonelinkSetupIcon />,
-                route: `cerrar-sesion`, // ${match.url}/
-            },
+            // {
+            //     id: 'Cerrar Sesion',
+            //     icon: <PhonelinkSetupIcon />,
+            //     route: `cerrar-sesion`, // ${match.url}/
+            // },
         ],
     },
 ]

@@ -8,12 +8,23 @@ const FirebaseMethods = () => {
     const _firestore = firestore
     const _storage = storage
     const usersRef = collection(_firestore, 'users')
+    const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
+    const usersComCalRef = collection(
+        _firestore,
+        'usersComerciantesCalificados'
+    )
     const draftRef = collection(_firestore, 'drafts')
     const profilesRef = ref(_storage, 'profiles')
     const pathReference = ref(_storage, 'gs://app-comunidad-dezzpo.appspot.com/')
 
     const addFirestore = async (updateInfo, userID) => {
         await addDoc(doc(usersRef, userID), updateInfo)
+    }
+    const userProResToFirestore = async (updateInfo, userID) => {
+        await setDoc(doc(usersProResRef, userID), updateInfo)
+    }
+    const userComCalToFirestore = async (updateInfo, userID) => {
+        await setDoc(doc(usersComCalRef, userID), updateInfo)
     }
     const toFirestore = async (updateInfo, userID) => {
         await setDoc(doc(usersRef, userID), updateInfo)

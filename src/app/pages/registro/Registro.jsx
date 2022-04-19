@@ -13,21 +13,37 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+import ToggleButton from 'react-bootstrap/ToggleButton'
 
 const Registro = (props) => {
     const { showLogo } = props
 
     const _firestore = firestore
-    const usersRef = collection(_firestore, 'users')
+    // const usersRef = collection(_firestore, 'users')
+    const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
+    const usersComCalRef = collection(
+        _firestore,
+        'usersComerciantesCalificados'
+    )
 
     const [send, setSend] = React.useState(false)
     const [userSignupEmail, setEmail] = React.useState(null)
     const [userSignupPassword, setPassword] = React.useState('')
+    const [userSignupRol, setRol] = React.useState({})
 
     const navigate = useNavigate()
 
-    const userToFirestore = async (updateInfo, userID) => {
-        await setDoc(doc(usersRef, userID), updateInfo)
+    // const userToFirestore = async (updateInfo, userID) => {
+    //     await setDoc(doc(usersRef, userID), updateInfo)
+    // }
+
+    const userProResToFirestore = async (updateInfo, userID) => {
+        await setDoc(doc(usersProResRef, userID), updateInfo)
+    }
+
+    const userComCalToFirestore = async (updateInfo, userID) => {
+        await setDoc(doc(usersComCalRef, userID), updateInfo)
     }
 
     const handleClick = (e) => {
@@ -43,7 +59,16 @@ const Registro = (props) => {
                         userId: user.uid,
                         // userName: user.displayName,
                     }
-                    userToFirestore(data, user.uid)
+                    console.log(userSignupRol)
+                    if (userSignupRol == 1) {
+                        userProResToFirestore(data, user.uid)
+                    }
+                    if (userSignupRol == 2) {
+                        userComCalToFirestore(data, user.uid)
+                    }
+                    // userToFirestore(data, user.uid)
+                    // localStorage.setItem('role', JSON.stringify(userSignupRol))
+                    localStorage.role = JSON.stringify(userSignupRol)
                     navigate('/app/perfil')
                 })
                 .catch((err) => {
@@ -107,6 +132,33 @@ const Registro = (props) => {
                                     name="name"
                                 />
                             </Form.Group> */}
+                                <ToggleButtonGroup
+                                    type="checkbox" // 'radio'
+                                    name="userRol"
+                                    className="mb-2 mt-2"
+                                    vertical="true"
+                                    // value={userSignupRol}
+                                >
+                                    <Form.Label className="mb-0">
+                                        Elegir rol:
+                                    </Form.Label>
+                                    <ToggleButton
+                                        className="body-1 textBlanco d-flex flex-row align-items-center justify-content-center"
+                                        value={1}
+                                        id="formBasicRolPropietarioResidente"
+                                        onChange={(e) => setRol(e.target.value)}
+                                    >
+                                        Soy Propietario/Residente
+                                    </ToggleButton>
+                                    <ToggleButton
+                                        className="body-1 textBlanco d-flex flex-row align-items-center justify-content-center"
+                                        value={2}
+                                        id="formBasicRolComercianteCalificado"
+                                        onChange={(e) => setRol(e.target.value)}
+                                    >
+                                        Soy Comerciante Calificado
+                                    </ToggleButton>
+                                </ToggleButtonGroup>
                                 <Form.Group
                                     className="w-80 pt-4 mb-2 d-flex flex-column align-items-start"
                                     controlId="formBasicName"

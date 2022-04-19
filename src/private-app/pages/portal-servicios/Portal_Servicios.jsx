@@ -28,7 +28,11 @@ const Portal_Servicios = (props) => {
     const _firestore = firestore
 
     const draftRef = collection(_firestore, 'drafts')
-    const usersRef = collection(_firestore, 'users')
+    // const usersRef = collection(_firestore, 'users')
+    const usersComCalRef = collection(
+        _firestore,
+        'usersComerciantesCalificados'
+    )
     const [searchData, setSearchData] = useState({})
     const [usersData, setUsersData] = useState({})
     const [draftsData, setDraftsData] = useState({})
@@ -51,7 +55,7 @@ const Portal_Servicios = (props) => {
 
     const usersFromFirestore = async () => {
         try {
-            const userData = await getDocs(usersRef)
+            const userData = await getDocs(usersComCalRef)
             return userData
         } catch (err) {
             console.log(
