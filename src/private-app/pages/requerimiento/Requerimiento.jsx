@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { firestore, storage } from '../../../firebase/firebaseClient'
+import { collection, doc, getDocFromServer } from 'firebase/firestore'
 
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -11,8 +12,10 @@ import TextField from '@mui/material/TextField'
 
 const Requerimiento = () => {
     const { state } = useLocation() || {}
+    const { draftId } = state || ' '
     const _firestore = firestore
-    const _storage = storage
+    // const _storage = storage
+    const draftRef = collection(_firestore, 'drafts')
 
     const [requerimientoInfo, setRequerimientoInfo] = useState({
         requerimientoTitulo: ' ',
@@ -30,6 +33,49 @@ const Requerimiento = () => {
         requerimientoDireccion: ' ',
         requerimientoCodigoPostal: ' ',
     })
+
+    const draftFromFirestore = async (projectID) => {
+        const draftData = await getDocFromServer(doc(draftRef, projectID))
+        console.log(draftData)
+        return draftData
+    }
+
+    useEffect(() => {
+        console.log(draftId)
+        if (draftId !== ' ' && draftId !== undefined) {
+            const snap = draftFromFirestore(draftId)
+            snap.then((docSnap) => {
+                // docSnap.exists()
+                console.log(docSnap)
+                if (docSnap) {
+                    // docSnap._document.data...
+                    const data = docSnap.data()
+                    console.log(data)
+                    if (data) {
+                        setRequerimientoInfo({
+                            ...requerimientoInfo,
+                            requerimientoTitulo: data.draftName,
+                            requerimientoCategoria: data.draftCategory,
+                            requerimientoTipoProyecto: data.draftProject,
+                            requerimientoDescripcion: data.draftDescription,
+                            requerimientoPropietario:
+                                data.draftPropietarioResidente,
+                            requerimientoCreated: data.draftCreated,
+                            requerimientoPrioridad: data.draftPriority,
+                            requerimientoTipoPropiedad: data.draftProperty,
+                            requerimientoCantidadObra: data.draftRooms,
+                            requerimientoPlanos: data.draftPlans,
+                            requerimientoPermisos: data.draftPermissions,
+                            requerimientoCiudad: data.draftCity,
+                            requerimientoDireccion: data.draftDirection,
+                            requerimientoCodigoPostal: data.draftPostalCode,
+                        })
+                    }
+                }
+            })
+        }
+    }, [draftId])
+
     return (
         <>
             <Container fluid className="p-0">

@@ -123,6 +123,7 @@ const Portal_Servicios = (props) => {
                     const data = docSnap.docs.map((element) => ({
                         ...element.data(),
                     }))
+                    console.log(data)
                     setDraftsData({
                         data,
                     })
@@ -138,7 +139,7 @@ const Portal_Servicios = (props) => {
     }, [])
 
     const handleNewProject = () => {
-        navigate('/nuevo-proyecto')
+        navigate('/nuevo-proyecto', { state: { auth: true } })
     }
 
     console.log(searchData)

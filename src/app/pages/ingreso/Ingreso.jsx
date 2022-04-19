@@ -39,7 +39,7 @@ const Ingreso = (props) => {
                 .then((userCredential) => {
                     var user = userCredential.user
                     console.log('Anonymous account successfully upgraded', user)
-                    console.log(userSignupRol)
+                    console.log(JSON.stringify(userSignupRol))
                     // localStorage.setItem('role', JSON.stringify(userSignupRol))
                     localStorage.role = JSON.stringify(userSignupRol)
                     // navigate('/app/perfil', { state: { role: userSignupRol } })

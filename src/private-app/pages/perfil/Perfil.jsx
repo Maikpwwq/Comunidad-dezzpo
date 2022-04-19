@@ -47,16 +47,11 @@ const Perfil = (props) => {
     // console.log(userConsultId)
     const _firestore = firestore
     const _storage = storage
-    // const usersRef = collection(_firestore, 'users')
     const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
     const usersComCalRef = collection(
         _firestore,
         'usersComerciantesCalificados'
     )
-
-    // const userToFirestore = async (updateInfo, userID) => {
-    //     await setDoc(doc(usersRef, userID), updateInfo, { merge: true })
-    // }
 
     const userProResToFirestore = async (updateInfo, userID) => {
         await setDoc(doc(usersProResRef, userID), updateInfo, { merge: true })
@@ -103,6 +98,7 @@ const Perfil = (props) => {
     })
 
     const updateProfilePhoto = (event) => {
+        event.preventDefault()
         const file = event.target.files
         const profilesRef = ref(_storage, `profiles/${userConsultId}`)
         if (file[0] instanceof Blob) {
@@ -123,10 +119,6 @@ const Perfil = (props) => {
                                 userPhotoUrl: url,
                             })
                             const photoInfo = { userPhotoUrl: url }
-                            // const userLoadRol = userToFirestore(
-                            //     photoInfo,
-                            //     userConsultId
-                            // )
                             if (userRol.rol === 1) {
                                 const userLoadRol = userProResToFirestore(
                                     photoInfo,
@@ -240,19 +232,6 @@ const Perfil = (props) => {
                                         )
                                     })
                             }
-                            // userToFirestore(photoInfo, userConsultId)
-                            //     .then((docSnap) => {
-                            //         console.log(
-                            //             'Se actualiza URL de imagen a la galeria de usuario del firestore',
-                            //             docSnap
-                            //         )
-                            //     })
-                            //     .catch((error) => {
-                            //         console.log(
-                            //             'No se pudo actualizar URL de imagen a la galeria de usuario del firestore',
-                            //             error
-                            //         )
-                            //     })
                         })
                         .catch((error) => {
                             console.log(
@@ -268,14 +247,6 @@ const Perfil = (props) => {
     }
 
     useEffect(() => {
-        // if (state.role == 1 || state.role == 2) {
-        //     setUserRol({ rol: state.role })
-        //     console.log(userRol, state.role)
-        // }
-        // if (!isNaN(JSON.parse(localRole))) {
-        //     console.log(JSON.parse(localRole))
-        //     setUserRol({ rol: JSON.parse(localRole)})
-        // }
         console.log(userRol, state)
         if (user !== null && !isNaN(userRol.rol) && userRol.rol !== '') {
             // console.log(user)

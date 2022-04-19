@@ -33,6 +33,7 @@ const ExpandMore = styled((props) => {
 export default function DraftCard({ props }) {
     const navigate = useNavigate()
     const {
+        draftId,
         draftName,
         draftDescription,
         draftRooms,
@@ -43,13 +44,15 @@ export default function DraftCard({ props }) {
         draftProperty,
         draftPostalCode,
     } = props
+    console.log(props)
     const [expanded, setExpanded] = React.useState(false)
 
     const handleExpandClick = () => {
         setExpanded(!expanded)
     }
     const handleVerRequerimiento = () => {
-        navigate('/app/requerimiento')
+        console.log(draftId)
+        navigate('/app/requerimiento', { state: { draftId: draftId } })
     }
     const handleAplicar = () => {}
     const handleFavorite = () => {}

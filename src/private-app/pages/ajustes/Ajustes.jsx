@@ -27,16 +27,12 @@ const Ajustes = (props) => {
         rol: selectRole,
     })
     console.log(userRol.rol)
-    // const usersRef = collection(_firestore, 'users')
+
     const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
     const usersComCalRef = collection(
         _firestore,
         'usersComerciantesCalificados'
     )
-
-    // const userToFirestore = async (updateInfo, userID) => {
-    //     await setDoc(doc(usersRef, userID), updateInfo)
-    // }
 
     const userProResToFirestore = async (updateInfo, userID) => {
         await setDoc(doc(usersProResRef, userID), updateInfo)
@@ -48,9 +44,6 @@ const Ajustes = (props) => {
 
     const userFromFirestore = async (firestoreUserID) => {
         try {
-            // const userData = await getDocFromServer(
-            //     doc(usersRef, firestoreUserID)
-            // )
             if (userRol.rol === 1) {
                 const userData = await getDocFromServer(
                     doc(usersProResRef, firestoreUserID)
@@ -130,7 +123,6 @@ const Ajustes = (props) => {
     }
 
     const handleSubmit = () => {
-        // const snap = userToFirestore(userEditInfo, user.uid)
         if (userRol.rol === 1) {
             const snap = userProResToFirestore(userEditInfo, user.uid)
             snap.then((docSnap) => {
