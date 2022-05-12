@@ -73,7 +73,7 @@ const Inicio = () => {
                             Desde iluminación y pequeños arreglos,
                             <br />
                             hasta diseños de ingeniería y remodelaciones
-                            remodelaciones completas.{' '}
+                            completas.{' '}
                         </p>
                     </Col>
                 </Row>

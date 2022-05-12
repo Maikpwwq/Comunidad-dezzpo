@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import AutoComplete from 'react-google-autocomplete'
+import { Loader } from '@googlemaps/js-api-loader'
+// import Marker from '../../components/maps/Marker'
 import '../../../../public/assets/css/ubicacion.css'
 
 import Row from 'react-bootstrap/Row'
@@ -10,9 +13,51 @@ import Form from 'react-bootstrap/Form'
 
 const Ubicacion = () => {
     const navigate = useNavigate()
+    const googleApiKey = process.env.REACT_APP_GOOGLE_APIKEY
+    const [clicks, setClicks] = useState([])
+    let map
+    const loader = new Loader({
+        apiKey: googleApiKey,
+        version: 'weekly',
+        libraries: ['places'],
+    })
+    // The latitude of Bogotá, Colombia is 4.624335, and the longitude is -74.063644.
+    const mapOptions = {
+        center: {
+            lat: 4.624335,
+            lng: -74.063644,
+        },
+        zoom: 8,
+        auth_referrer_policy: 'origin',
+    }
+
+    loader
+        .load()
+        .then((google) => {
+            map = new google.maps.Map(
+                document.getElementById('map'),
+                mapOptions
+            )
+            map.addListener('click', (e) => {
+                const marker = new google.maps.Marker({
+                    position: e.latLng,
+                    map: map,
+                })
+                // if (e.latLng.toJSON()) {
+                //     setClicks([...clicks, e.latLng.toJSON()])
+                //     console.log(clicks)
+                // }
+                // const coordenadas = JSON.stringify(e.latLng.toJSON(), null, 2)
+            })
+        })
+        .catch((e) => {
+            console.log(e)
+        })
+
     const handleConsult = () => {
         navigate('/app/perfil')
     }
+
     return (
         <>
             <Container fluid className="p-0">
@@ -33,10 +78,20 @@ const Ubicacion = () => {
                                 <Form.Label className="mb-0">
                                     Elija su ciudad
                                 </Form.Label>
-                                <Form.Select name="city" id="city">
+                                <br />
+                                <AutoComplete
+                                    className="w-100"
+                                    apiKey={googleApiKey}
+                                    // fields=
+                                    onPlaceSelected={(place) =>
+                                        console.log(place)
+                                    }
+                                />
+
+                                {/* <Form.Select name="city" id="city">
                                     <option>seleccionar uno</option>
                                     <option value="Bogota">Bogota</option>
-                                </Form.Select>
+                                </Form.Select> */}
                             </Form.Group>
                             <Form.Group
                                 className="mb-2"
@@ -66,11 +121,44 @@ const Ubicacion = () => {
                             </Form.Group>
                         </Form>
                     </Col>
-                    <Col className="imagenUbicacion"></Col>
+                    {/* className="imagenUbicacion" */}
+                    <Col>
+                        <div
+                            id="map"
+                            style={{ height: '450px', width: '700px' }}
+                        >
+                            {/* {clicks.map((latLng, i) => (
+                                <Marker key={i} position={latLng} />
+                            ))} */}
+                        </div>
+                    </Col>
                 </Row>
             </Container>
         </>
     )
 }
+
+// const Marker = (options) => {
+//     const [marker, setMarker] = useState()
+
+//     useEffect(() => {
+//         if (!marker) {
+//             setMarker(new google.maps.Marker())
+//         }
+
+//         // remove marker from map on unmount
+//         return () => {
+//             if (marker) {
+//                 marker.setMap(null)
+//             }
+//         }
+//     }, [marker])
+//     useEffect(() => {
+//         if (marker) {
+//             marker.setOptions(options)
+//         }
+//     }, [marker, options])
+//     return null
+// }
 
 export default Ubicacion

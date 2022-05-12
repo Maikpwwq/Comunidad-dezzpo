@@ -5,7 +5,6 @@ import { firestore } from '../../../firebase/firebaseClient' // storage,
 import { collection, getDocs, query, where } from 'firebase/firestore'
 // import { ref, getDownloadURL } from 'firebase/storage'
 
-import DraftCard from '../../components/DraftCard'
 import UserCard from '../../components/UserCard'
 
 // react-bootrstrap
@@ -27,7 +26,6 @@ const Portal_Servicios = (props) => {
     // const _storage = storage
     const _firestore = firestore
 
-    const draftRef = collection(_firestore, 'drafts')
     // const usersRef = collection(_firestore, 'users')
     const usersComCalRef = collection(
         _firestore,
@@ -35,7 +33,6 @@ const Portal_Servicios = (props) => {
     )
     const [searchData, setSearchData] = useState({})
     const [usersData, setUsersData] = useState({})
-    const [draftsData, setDraftsData] = useState({})
 
     const searchFromFirestore = async () => {
         try {
@@ -57,18 +54,6 @@ const Portal_Servicios = (props) => {
         try {
             const userData = await getDocs(usersComCalRef)
             return userData
-        } catch (err) {
-            console.log(
-                'Error al obtener los datos de la colleccion users: ',
-                err
-            )
-        }
-    }
-
-    const draftsFromFirestore = async () => {
-        try {
-            const draftData = await getDocs(draftRef)
-            return draftData
         } catch (err) {
             console.log(
                 'Error al obtener los datos de la colleccion users: ',
@@ -117,25 +102,6 @@ const Portal_Servicios = (props) => {
             .catch((error) => {
                 console.log(error)
             })
-        draftsFromFirestore()
-            .then((docSnap) => {
-                if (docSnap) {
-                    const data = docSnap.docs.map((element) => ({
-                        ...element.data(),
-                    }))
-                    console.log(data)
-                    setDraftsData({
-                        data,
-                    })
-                } else {
-                    console.log(
-                        'No se encontro información en la colleccion proyectos!'
-                    )
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
     }, [])
 
     const handleNewProject = () => {
@@ -171,7 +137,7 @@ const Portal_Servicios = (props) => {
                         )}
                     </Row>
 
-                    <Col className="col-10 pt-4 pb-4 p-0">
+                    <Col className="pt-4 pb-4 p-0">
                         <h2 className="headline-xl">
                             Directorio Profesionales
                             <Button
@@ -230,33 +196,7 @@ const Portal_Servicios = (props) => {
                         </Col> */}
                     </Col>
                 </Row>
-                <Row className="m-0 w-100 d-flex">
-                    <Col className="p-4">
-                        <h2 className="headline-xl">
-                            Directorio Requerimientos
-                            <Button className="body-1">
-                                Aplica gratis a un requerimiento
-                            </Button>
-                        </h2>
-                        <h3 className="headline-l">
-                            Buscar Requerimientos: Obtener o Aplicar con
-                            Cotizaciones
-                        </h3>
-                        <p className="body-2">Requerimientos activos </p>
-                        <Row className="m-0 d-flex">
-                            {draftsData.data ? (
-                                draftsData.data.map((draft) => (
-                                    <DraftCard
-                                        key={draft.id}
-                                        props={draft}
-                                        className=""
-                                    ></DraftCard>
-                                ))
-                            ) : (
-                                <></>
-                            )}
-                        </Row>
-                        {/* <Col className="col-10 p-4">
+                {/* <Col className="col-10 p-4">
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -284,8 +224,6 @@ const Portal_Servicios = (props) => {
                                 </TableBody>
                             </Table>
                         </Col> */}
-                    </Col>
-                </Row>
             </Container>
         </>
     )

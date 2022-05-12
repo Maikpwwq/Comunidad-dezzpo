@@ -49,6 +49,7 @@ const itemCategory = {
 export default function Navigator(props) {
     const { ...other } = props
     const user = auth.currentUser || {}
+    const userID = user.uid || false // Este es el id de la cuenta de Auth
     const userPhotoUrl = user.photoURL || ''
     const userName = user.displayName || ''
     const navigate = useNavigate()
@@ -62,6 +63,94 @@ export default function Navigator(props) {
             })
         navigate('/')
     }
+
+    const categories = userID
+        ? [
+              {
+                  id: 'Inicio',
+                  children: [
+                      {
+                          id: 'Mi cuenta',
+                          icon: <PeopleIcon />,
+                          route: 'perfil',
+                          active: true,
+                      },
+                      {
+                          id: 'Portal de servicios',
+                          icon: <HomeIcon />,
+                          route: 'portal-servicios',
+                      },
+                      {
+                          id: 'Directorio de Requerimientos',
+                          icon: <HomeIcon />,
+                          route: 'directorio-requerimientos',
+                      },
+                      {
+                          id: 'Notificaciones',
+                          icon: <NotificationsIcon />,
+                          route: 'notificaciones',
+                      },
+                      {
+                          id: 'Suscripciones',
+                          icon: <TimerIcon />,
+                          route: 'suscripciones',
+                      },
+                      {
+                          id: 'Biblioteca',
+                          icon: <DnsRoundedIcon />,
+                          route: 'biblioteca',
+                      },
+                      {
+                          id: 'Invitar a un Amigo',
+                          icon: <PublicIcon />,
+                          route: 'invitar-amigos',
+                      },
+                      {
+                          id: 'Ajustes',
+                          icon: <SettingsEthernetIcon />,
+                          route: 'ajustes',
+                      },
+                  ],
+              },
+              {
+                  id: 'Configuracion',
+                  children: [
+                      {
+                          id: 'Privacidad',
+                          icon: <SettingsIcon />,
+                          route: 'configuracion-privacidad',
+                      },
+                      {
+                          id: 'Formas de Pago',
+                          icon: <SettingsInputComponentIcon />,
+                          route: 'formas-pago',
+                      },
+                      {
+                          id: 'Cambiar Clave',
+                          icon: <PhonelinkSetupIcon />,
+                          route: 'cambiar-clave',
+                      },
+                  ],
+              },
+          ]
+        : [
+              {
+                  id: 'Inicio',
+                  children: [
+                      {
+                          id: 'Portal de servicios',
+                          icon: <HomeIcon />,
+                          route: 'portal-servicios',
+                      },
+                      {
+                          id: 'Directorio de Requerimientos',
+                          icon: <HomeIcon />,
+                          route: 'directorio-requerimientos',
+                      },
+                  ],
+              },
+          ]
+
     return (
         <Drawer variant="permanent" {...other}>
             <List disablePadding>
@@ -101,14 +190,12 @@ export default function Navigator(props) {
                         </ListItem>
                         {children.map(
                             ({ id: childId, icon, route, active }) => (
-                                // { (childId !== 'Cerrar Sesion') ? () :
                                 <ListItem
                                     disablePadding
                                     button
                                     activeClassName="Mui-selected"
                                     key={childId}
                                     component={NavLink}
-                                    // component={NavLink} { Navigate }
                                     to={route}
                                     exact
                                 >
@@ -117,98 +204,32 @@ export default function Navigator(props) {
                                         <ListItemText>{childId}</ListItemText>
                                     </ListItemButton>
                                 </ListItem>
-                                // : cerrarSesion()}
                             )
                         )}
-                        <ListItem
-                            disablePadding
-                            button
-                            activeClassName="Mui-selected"
-                            key="Cerrar Sesion"
-                            onClick={handleSignout}
-                            exact
-                        >
-                            <ListItemButton selected={false} sx={item}>
-                                <ListItemIcon>
-                                    <PhonelinkSetupIcon />
-                                </ListItemIcon>
-                                <ListItemText>Cerrar Sesion</ListItemText>
-                            </ListItemButton>
-                        </ListItem>
 
                         <Divider sx={{ mt: 2 }} />
                     </Box>
                 ))}
+                {userID ? (
+                    <ListItem
+                        disablePadding
+                        button
+                        activeClassName="Mui-selected"
+                        key="Cerrar Sesion"
+                        onClick={handleSignout}
+                        exact
+                    >
+                        <ListItemButton selected={false} sx={item}>
+                            <ListItemIcon>
+                                <PhonelinkSetupIcon />
+                            </ListItemIcon>
+                            <ListItemText>Cerrar Sesion</ListItemText>
+                        </ListItemButton>
+                    </ListItem>
+                ) : (
+                    <></>
+                )}
             </List>
         </Drawer>
     )
 }
-
-const categories = [
-    {
-        id: 'Inicio',
-        children: [
-            {
-                id: 'Mi cuenta',
-                icon: <PeopleIcon />,
-                route: 'perfil',
-                active: true,
-            },
-            {
-                id: 'Portal de servicios',
-                icon: <HomeIcon />,
-                route: 'portal-servicios',
-            },
-            {
-                id: 'Notificaciones',
-                icon: <NotificationsIcon />,
-                route: 'notificaciones',
-            },
-            {
-                id: 'Suscripciones',
-                icon: <TimerIcon />,
-                route: 'suscripciones',
-            },
-            {
-                id: 'Biblioteca',
-                icon: <DnsRoundedIcon />,
-                route: 'biblioteca',
-            },
-            {
-                id: 'Invitar a un Amigo',
-                icon: <PublicIcon />,
-                route: 'invitar-amigos',
-            },
-            {
-                id: 'Ajustes',
-                icon: <SettingsEthernetIcon />,
-                route: 'ajustes',
-            },
-        ],
-    },
-    {
-        id: 'Configuracion',
-        children: [
-            {
-                id: 'Privacidad',
-                icon: <SettingsIcon />,
-                route: 'configuracion-privacidad',
-            },
-            {
-                id: 'Formas de Pago',
-                icon: <SettingsInputComponentIcon />,
-                route: 'formas-pago',
-            },
-            {
-                id: 'Cambiar Clave',
-                icon: <PhonelinkSetupIcon />,
-                route: 'cambiar-clave',
-            },
-            // {
-            //     id: 'Cerrar Sesion',
-            //     icon: <PhonelinkSetupIcon />,
-            //     route: `cerrar-sesion`, // ${match.url}/
-            // },
-        ],
-    },
-]

@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { auth, firestore } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { collection, doc, setDoc } from 'firebase/firestore'
+import { format } from 'date-fns'
 
 import '../../../../public/assets/css/registro.css'
 
@@ -55,7 +56,7 @@ const Registro = (props) => {
                     console.log('Anonymous account successfully upgraded', user)
                     const data = {
                         userMail: user.email,
-                        userJoined: user.metadata.creationTime,
+                        userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
                         userId: user.uid,
                         // userName: user.displayName,
                     }
@@ -69,7 +70,7 @@ const Registro = (props) => {
                     // userToFirestore(data, user.uid)
                     // localStorage.setItem('role', JSON.stringify(userSignupRol))
                     localStorage.role = JSON.stringify(userSignupRol)
-                    navigate('/app/perfil')
+                    navigate('/app/ajustes')
                 })
                 .catch((err) => {
                     console.log('Error upgrading anonymous account', err)

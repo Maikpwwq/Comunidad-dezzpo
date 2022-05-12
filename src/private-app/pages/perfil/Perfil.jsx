@@ -5,6 +5,8 @@ import { auth, firestore, storage } from '../../../firebase/firebaseClient'
 import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
+import { format, formatDistance, subDays, parse } from 'date-fns'
+import { es } from 'date-fns/locale'
 
 import '../../../../public/assets/cssPrivateApp/perfil.css'
 // import ProfilePhoto from '../../../../public/assets/img/Profile.png'
@@ -28,6 +30,7 @@ const Input = styled('input')({
 const Perfil = (props) => {
     const user = auth.currentUser || {}
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
+    let isLoaded = false
     const { state } = useLocation() || {}
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
@@ -42,7 +45,7 @@ const Perfil = (props) => {
             : ' '
     const consult = userId !== null && userId !== ' ' ? true : false
     const userConsultId = consult ? userId : userID
-    console.log(userId, consult, userConsultId)
+    // console.log(userId, consult, userConsultId)
     // console.log(userID)
     // console.log(userConsultId)
     const _firestore = firestore
@@ -247,57 +250,87 @@ const Perfil = (props) => {
     }
 
     useEffect(() => {
-        console.log(userRol, state)
-        if (user !== null && !isNaN(userRol.rol) && userRol.rol !== '') {
-            // console.log(user)
-            const {
-                uid,
-                email,
-                displayName,
-                phoneNumber,
-                photoURL,
-                emailVerified,
-                metadata,
-            } = user
-            // resolving promise data user
-            console.log(userConsultId, userRol.rol)
-            const userData = userFromFirestore(userConsultId)
+        // console.log(userRol, state)
+        if (!isLoaded) {
+            if (user !== null && !isNaN(userRol.rol) && userRol.rol !== '') {
+                // console.log(user)
+                const {
+                    uid,
+                    email,
+                    displayName,
+                    phoneNumber,
+                    photoURL,
+                    emailVerified,
+                    metadata,
+                } = user
+                // resolving promise data user
+                console.log(userConsultId, userRol.rol, user)
+                const userData = userFromFirestore(userConsultId)
 
-            // userData.forEach((doc) => {
-            //     console.log(doc.id, " => ", doc.data())
-            // })
-            userData.then((docSnap) => {
-                // docSnap.exists()
-                if (docSnap) {
-                    // docSnap._document.data...
-                    const data = docSnap.data()
-                    console.log(data)
-                    if (data) {
-                        setUserInfo({
-                            ...userInfo,
-                            userPhone: data.userPhone || phoneNumber,
-                            userPhotoUrl: data.userPhotoUrl || photoURL,
-                            userId: data.userId || uid,
-                            userMail: data.userMail || email,
-                            userName: data.userName || displayName,
-                            userGalleryUrl: data.GalleryUrl || [],
-                            userJoined: metadata.creationTime,
-                            userProfession: data.userProfession,
-                            userExperience: data.userExperience,
-                            userUbication: data.userUbication,
-                            userRazonSocial: data.userRazonSocial,
-                            userIdentification: data.userIdentification,
-                            userDescription: data.userDescription,
-                        })
+                // userData.forEach((doc) => {
+                //     console.log(doc.id, " => ", doc.data())
+                // })
+                userData.then((docSnap) => {
+                    // docSnap.exists()
+                    if (docSnap) {
+                        // docSnap._document.data...
+                        const data = docSnap.data()
+                        const creationTime = data.userJoined
+                        // ? data.userJoined
+                        // : metadata.creationTime
+                        console.log(creationTime, data.userJoined)
+                        const formatedTime = parse(
+                            creationTime,
+                            'dd-MM-yyyy',
+                            new Date()
+                        )
+                        const distanceTime = formatDistance(
+                            formatedTime,
+                            new Date(),
+                            { addSuffix: true },
+                            { locale: es }
+                        )
+                        // console.log(distanceTime)
+                        if (data) {
+                            setUserInfo({
+                                ...userInfo,
+                                userPhone: data.userPhone || phoneNumber,
+                                userPhotoUrl: data.userPhotoUrl || photoURL,
+                                userId: data.userId || uid,
+                                userMail: data.userMail || email,
+                                userName: data.userName || displayName,
+                                userGalleryUrl: data.GalleryUrl || [],
+                                userJoined: distanceTime,
+                                userProfession: data.userProfession
+                                    ? data.userProfession
+                                    : '',
+                                userExperience: data.userExperience
+                                    ? data.userExperience
+                                    : '',
+                                userUbication: data.userUbication
+                                    ? data.userUbication
+                                    : '',
+                                userRazonSocial: data.userRazonSocial
+                                    ? data.userRazonSocial
+                                    : '',
+                                userIdentification: data.userIdentification
+                                    ? data.userIdentification
+                                    : '',
+                                userDescription: data.userDescription
+                                    ? data.userDescription
+                                    : '',
+                            })
+                        }
+                        isLoaded = true
+                    } else {
+                        console.log(
+                            'No se encontro información relacionada con este usuario!'
+                        )
                     }
-                } else {
-                    console.log(
-                        'No se encontro información relacionada con este usuario!'
-                    )
-                }
-            })
+                })
+            }
         }
-    }, [user])
+    }, [])
 
     return (
         <>
