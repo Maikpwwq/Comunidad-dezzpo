@@ -18,20 +18,20 @@ const Requerimiento = () => {
     const draftRef = collection(_firestore, 'drafts')
 
     const [requerimientoInfo, setRequerimientoInfo] = useState({
-        requerimientoTitulo: ' ',
-        requerimientoCategoria: ' ',
-        requerimientoTipoProyecto: ' ',
-        requerimientoDescripcion: ' ',
-        requerimientoPropietario: ' ',
-        requerimientoCreated: ' ',
-        requerimientoPrioridad: ' ',
-        requerimientoTipoPropiedad: ' ',
-        requerimientoCantidadObra: ' ',
-        requerimientoPlanos: ' ',
-        requerimientoPermisos: ' ',
-        requerimientoCiudad: ' ',
-        requerimientoDireccion: ' ',
-        requerimientoCodigoPostal: ' ',
+        requerimientoTitulo: '',
+        requerimientoCategoria: '',
+        requerimientoTipoProyecto: '',
+        requerimientoDescripcion: '',
+        requerimientoPropietario: '',
+        requerimientoCreated: '',
+        requerimientoPrioridad: '',
+        requerimientoTipoPropiedad: '',
+        requerimientoCantidadObra: '',
+        requerimientoPlanos: '',
+        requerimientoPermisos: '',
+        requerimientoCiudad: '',
+        requerimientoDireccion: '',
+        requerimientoCodigoPostal: '',
     })
 
     const draftFromFirestore = async (projectID) => {

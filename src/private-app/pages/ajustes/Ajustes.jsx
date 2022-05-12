@@ -61,18 +61,18 @@ const Ajustes = (props) => {
     }
 
     const [userEditInfo, setUserEditInfo] = useState({
-        userName: ' ',
-        userMail: ' ',
-        userPhone: ' ',
-        userPhotoUrl: ' ',
-        userId: ' ',
-        userJoined: ' ',
-        userProfession: ' ',
-        userExperience: ' ',
-        userUbication: ' ',
-        userRazonSocial: ' ',
-        userIdentification: ' ',
-        userDescription: ' ',
+        userName: '',
+        userMail: '',
+        userPhone: '',
+        userPhotoUrl: '',
+        userId: '',
+        userJoined: '',
+        userProfession: '',
+        userExperience: '',
+        userUbication: '',
+        userRazonSocial: '',
+        userIdentification: '',
+        userDescription: '',
     })
 
     useEffect(() => {
@@ -126,7 +126,7 @@ const Ajustes = (props) => {
         if (userRol.rol === 1) {
             const snap = userProResToFirestore(userEditInfo, user.uid)
             snap.then((docSnap) => {
-                console.log(docSnap)
+                console.log(docSnap) 
             })
         } else if (userRol.rol === 2) {
             const snap = userComCalToFirestore(userEditInfo, user.uid)

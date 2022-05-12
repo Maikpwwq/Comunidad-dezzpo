@@ -14,8 +14,8 @@ const BuscadorNuevoProyecto = ({ data }) => {
     const { categoriaProfesional, tipoProyecto } = data || ' '
 
     const [projectData, setProjectData] = useState({
-        categoriaProfesional: categoriaProfesional || ' ',
-        tipoProyecto: tipoProyecto || ' ',
+        categoriaProfesional: categoriaProfesional || '',
+        tipoProyecto: tipoProyecto || '',
     })
 
     const handleChange = (event) => {
@@ -115,7 +115,7 @@ const BuscadorNuevoProyecto = ({ data }) => {
                                     onChange={handleChange}
                                 >
                                     <option>seleccionar categoria</option>{' '}
-                                    <option value="administradores PH">
+                                    {/* <option value="administradores PH">
                                         {' '}
                                         administradores PH{' '}
                                     </option>
@@ -131,7 +131,7 @@ const BuscadorNuevoProyecto = ({ data }) => {
                                         {' '}
                                         Integradores Control de acceso{' '}
                                     </option>
-                                    <option value=" Albañiles ">
+                                    <option value="Albañiles">
                                         {' '}
                                         Albañiles{' '}
                                     </option>
@@ -295,67 +295,30 @@ const BuscadorNuevoProyecto = ({ data }) => {
                                     <option value=" Trabajadores de piedras ">
                                         {' '}
                                         Trabajadores de piedras{' '}
-                                    </option>
-                                </Form.Select>
-                            </Form.Group>
-                            {/* <Form.Group
-                                className="mb-2"
-                                controlId="formBasicProject"
-                            >
-                                <InputGroup className="mb-3">
-                                    <InputGroup.Text
-                                        id="basic-addon1"
-                                        style={{
-                                            border: 'none',
-                                            background: 'none',
-                                        }}
-                                    >
-                                        <span className="icon-LupaFomularioIcono">
-                                            <span className="path1"></span>
-                                            <span className="path2"></span>
-                                            <span className="path3"></span>
-                                            <span className="path4"></span>
-                                            <span className="path5"></span>
-                                        </span>
-                                    </InputGroup.Text>
-
-                                    <Form.Label className="mb-0">
-                                        ¿Qué tipo de proyecto es?
-                                    </Form.Label>
-                                </InputGroup>
-                                <Form.Select
-                                    className="casillaSeleccion"
-                                    name="seleccionarServicio"
-                                    id="seleccionarServicio"
-                                >
-                                    <option>seleccionar uno</option>{' '}
-                                    <option value="Administraciones PH">
-                                        {' '}
-                                        Administraciones PH{' '}
-                                    </option>
+                                    </option> */}
                                     <option value="Acabados en muros">
                                         {' '}
                                         Acabados en muros{' '}
+                                    </option>
+                                    <option value="Administraciones PH">
+                                        {' '}
+                                        Administraciones PH{' '}
                                     </option>
                                     <option value="Aislamiento acústico">
                                         {' '}
                                         Aislamiento acústico{' '}
                                     </option>
-                                    <option value="Control de acceso">
-                                        {' '}
-                                        Control de acceso{' '}
-                                    </option>
                                     <option value="Albañilería">
                                         {' '}
                                         Albañilería{' '}
                                     </option>
-                                    <option value="Artesanías y manualidades ">
-                                        {' '}
-                                        Artesanías y manualidades{' '}
-                                    </option>
                                     <option value="Arquitectura">
                                         {' '}
                                         Arquitectura{' '}
+                                    </option>
+                                    <option value="Artesanías y manualidades ">
+                                        {' '}
+                                        Artesanías y manualidades{' '}
                                     </option>
                                     <option value="Asistencia toderos">
                                         {' '}
@@ -365,7 +328,6 @@ const BuscadorNuevoProyecto = ({ data }) => {
                                         {' '}
                                         Automatización{' '}
                                     </option>
-                                    <option value="Domótica"> Domótica </option>
                                     <option value="Carpintería">
                                         {' '}
                                         Carpintería{' '}
@@ -384,13 +346,9 @@ const BuscadorNuevoProyecto = ({ data }) => {
                                         {' '}
                                         Construcción obra{' '}
                                     </option>
-                                    <option value="Reformas Cocinas">
+                                    <option value="Control de acceso">
                                         {' '}
-                                        Reformas Cocinas{' '}
-                                    </option>
-                                    <option value="Reformas Baños">
-                                        {' '}
-                                        Reformas Baños{' '}
+                                        Control de acceso{' '}
                                     </option>
                                     <option value="Control de plagas">
                                         {' '}
@@ -400,6 +358,7 @@ const BuscadorNuevoProyecto = ({ data }) => {
                                         {' '}
                                         Diseño e impresión{' '}
                                     </option>
+                                    <option value="Domótica"> Domótica </option>
                                     <option value="Drenajes e inundaciones">
                                         {' '}
                                         Drenajes e inundaciones{' '}
@@ -446,67 +405,71 @@ const BuscadorNuevoProyecto = ({ data }) => {
                                         {' '}
                                         Instalación de ventanas{' '}
                                     </option>
-                                    <option value=" Jardinería ">
+                                    <option value="Jardinería">
                                         {' '}
                                         Jardinería{' '}
                                     </option>
-                                    <option value=" Lavandería ">
+                                    <option value="Lavandería">
                                         {' '}
                                         Lavandería{' '}
                                     </option>
-                                    <option value=" Tanques de agua ">
-                                        {' '}
-                                        Tanques de agua{' '}
-                                    </option>
-                                    <option value=" Limpiezas técnicas ">
+                                    <option value="Limpiezas técnicas">
                                         {' '}
                                         Limpiezas técnicas{' '}
                                     </option>
-                                    <option value=" Maestro Obra ">
+                                    <option value="Maestro Obra">
                                         {' '}
                                         Maestro Obra{' '}
                                     </option>
-                                    <option value=" Mudanzas ">
-                                        {' '}
-                                        Mudanzas{' '}
-                                    </option>
-                                    <option value=" Movilizar pesos ">
+                                    <option value="Mecanica">Mecanica</option>
+                                    <option value="Movilizar pesos">
                                         {' '}
                                         Movilizar pesos{' '}
                                     </option>
-                                    <option value="Mecanica">Mecanica</option>
-                                    <option value=" Paisajismo ">
+                                    <option value="Mudanzas"> Mudanzas </option>
+                                    <option value="Paisajismo">
                                         {' '}
                                         Paisajismo{' '}
                                     </option>
-                                    <option value="Pintura ">Pintura </option>
-                                    <option value="Plomería ">Plomería </option>
-                                    <option value="Redes cableado estructurado ">
+                                    <option value="Pintura">Pintura </option>
+                                    <option value="Plomería">Plomería </option>
+                                    <option value="Redes cableado estructurado">
                                         Redes cableado estructurado{' '}
                                     </option>
-                                    <option value=" Reformas Piscinas ">
+                                    <option value="Reformas Cocinas">
+                                        {' '}
+                                        Reformas Cocinas{' '}
+                                    </option>
+                                    <option value="Reformas Baños">
+                                        {' '}
+                                        Reformas Baños{' '}
+                                    </option>
+                                    <option value="Reformas Piscinas">
                                         {' '}
                                         Reformas Piscinas{' '}
                                     </option>
-                                    <option value=" Servicio doméstico ">
+                                    <option value="Servicio doméstico">
                                         {' '}
                                         Servicio doméstico{' '}
                                     </option>
-                                    <option value=" Sistemas de Seguridad y alarmas ">
+                                    <option value="Sistemas de Seguridad y alarmas">
                                         {' '}
                                         Sistemas de Seguridad y alarmas{' '}
                                     </option>
-                                    <option value=" Tapicería ">
+                                    <option value="Tanques de agua">
+                                        {' '}
+                                        Tanques de agua{' '}
+                                    </option>
+                                    <option value="Tapicería">
                                         {' '}
                                         Tapicería{' '}
                                     </option>
-                                    <option value=" Trabajos en piedra ">
+                                    <option value="Trabajos en piedra">
                                         {' '}
                                         Trabajos en piedra{' '}
                                     </option>
                                 </Form.Select>
-                            </Form.Group> */}
-
+                            </Form.Group>
                             <Form.Group>
                                 <Col className="pb-4">
                                     <hr />
@@ -530,8 +493,8 @@ const BuscadorNuevoProyecto = ({ data }) => {
 
 BuscadorNuevoProyecto.defaultProps = {
     data: {
-        categoriaProfesional: ' ',
-        tipoProyecto: ' ',
+        categoriaProfesional: '',
+        tipoProyecto: '',
     },
 }
 

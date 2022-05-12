@@ -1,6 +1,6 @@
 // Pagina de Usuario - Perfil
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { auth, firestore, storage } from '../../../firebase/firebaseClient'
 import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
@@ -31,6 +31,8 @@ const Perfil = (props) => {
     const user = auth.currentUser || {}
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
     let isLoaded = false
+    let { id } = useParams()
+    console.log(id)
     const { state } = useLocation() || {}
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
@@ -42,8 +44,8 @@ const Perfil = (props) => {
     const userId =
         state != undefined && state != null && state.id != undefined
             ? state.id
-            : ' '
-    const consult = userId !== null && userId !== ' ' ? true : false
+            : id
+    const consult = userId !== null && userId !== undefined ? true : false
     const userConsultId = consult ? userId : userID
     // console.log(userId, consult, userConsultId)
     // console.log(userID)
@@ -85,19 +87,19 @@ const Perfil = (props) => {
     }
 
     const [userInfo, setUserInfo] = useState({
-        userName: ' ',
+        userName: '',
         userMail: '',
-        userPhone: ' ',
-        userPhotoUrl: ' ',
+        userPhone: '',
+        userPhotoUrl: '',
         userGalleryUrl: [],
-        userId: ' ',
-        userJoined: ' ',
-        userProfession: ' ',
-        userExperience: ' ',
-        userUbication: ' ',
-        userRazonSocial: ' ',
-        userIdentification: ' ',
-        userDescription: ' ',
+        userId: '',
+        userJoined: '',
+        userProfession: '',
+        userExperience: '',
+        userUbication: '',
+        userRazonSocial: '',
+        userIdentification: '',
+        userDescription: '',
     })
 
     const updateProfilePhoto = (event) => {
@@ -339,7 +341,7 @@ const Perfil = (props) => {
                     <Col className="col-10">
                         <Row className="border-green_buttom perfil-banner m-0 w-100 d-flex">
                             <Row className="pt-4 pb-4">
-                                <Col className="pe-0" md={4}>
+                                <Col className="pe-0" md={3}>
                                     <div
                                         className="d-flex flex-inline-row"
                                         style={{
@@ -382,7 +384,7 @@ const Perfil = (props) => {
                                         </label>
                                     </div>
                                 </Col>
-                                <Col md={3} className="p-0">
+                                <Col md={4} className="p-0">
                                     <Box
                                         style={{
                                             display: 'flex',
@@ -449,7 +451,9 @@ const Perfil = (props) => {
                                 <Row className="pt-4 pb-4">
                                     <Col>
                                         <h3 className="headline-l">
-                                            Servicios ofrecidos
+                                            {userRol.rol === 1
+                                                ? 'Presentación'
+                                                : 'Servicios ofrecidos'}
                                         </h3>
                                         <p
                                             className="body-1 pe-4"

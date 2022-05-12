@@ -37,14 +37,14 @@ const Portal_Servicios = (props) => {
     const searchFromFirestore = async () => {
         try {
             const queryRef = query(
-                collection(_firestore, 'users'),
+                usersComCalRef,
                 where('userRazonSocial', '==', searchInput)
             )
             const searchUsers = await getDocs(queryRef)
             return searchUsers
         } catch (err) {
             console.log(
-                'Error al obtener los datos de busqueda en la colleccion users: ',
+                'Error al obtener los datos de busqueda en la colleccion Comerciantes Calificados: ',
                 err
             )
         }
@@ -56,7 +56,7 @@ const Portal_Servicios = (props) => {
             return userData
         } catch (err) {
             console.log(
-                'Error al obtener los datos de la colleccion users: ',
+                'Error al obtener los datos de la colleccion Comerciantes Calificados: ',
                 err
             )
         }
