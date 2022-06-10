@@ -61,18 +61,18 @@ const Ajustes = (props) => {
     }
 
     const [userEditInfo, setUserEditInfo] = useState({
-        userName: ' ',
-        userMail: ' ',
-        userPhone: ' ',
-        userPhotoUrl: ' ',
-        userId: ' ',
-        userJoined: ' ',
-        userProfession: ' ',
-        userExperience: ' ',
-        userUbication: ' ',
-        userRazonSocial: ' ',
-        userIdentification: ' ',
-        userDescription: ' ',
+        userName: '',
+        userMail: '',
+        userPhone: '',
+        userPhotoUrl: '',
+        userId: '',
+        userJoined: '',
+        userProfession: '',
+        userExperience: '',
+        userUbication: '',
+        userRazonSocial: '',
+        userIdentification: '',
+        userDescription: '',
     })
 
     useEffect(() => {
@@ -84,7 +84,7 @@ const Ajustes = (props) => {
                 phoneNumber,
                 photoURL,
                 emailVerified,
-                metadata,
+                // metadata,
             } = user
             const userData = userFromFirestore(userID)
             userData.then((docSnap) => {
@@ -98,7 +98,7 @@ const Ajustes = (props) => {
                         userId: uid,
                         userMail: email,
                         userName: displayName,
-                        userJoined: metadata.creationTime,
+                        userJoined: data.userJoined,
                         userProfession: data.userProfession,
                         userExperience: data.userExperience,
                         userUbication: data.userUbication,
@@ -126,7 +126,7 @@ const Ajustes = (props) => {
         if (userRol.rol === 1) {
             const snap = userProResToFirestore(userEditInfo, user.uid)
             snap.then((docSnap) => {
-                console.log(docSnap)
+                console.log(docSnap) 
             })
         } else if (userRol.rol === 2) {
             const snap = userComCalToFirestore(userEditInfo, user.uid)
@@ -190,12 +190,13 @@ const Ajustes = (props) => {
                                         className="pb-4 pe-4"
                                     />
                                     <TextField
-                                        id="userProfession"
-                                        name="userProfession"
-                                        label="Profesión"
-                                        value={userEditInfo.userProfession}
-                                        onChange={handleChange}
-                                        defaultValue="@PROFESIÓN"
+                                        id="userMail"
+                                        name="userMail"
+                                        label="Correo de usuario"
+                                        value={userEditInfo.userMail}
+                                        // onChange={handleChange}
+                                        defaultValue="@CORREO USUARIO"
+                                        variant="filled"
                                         className="pb-4 pe-4"
                                     />
                                     <TextField
@@ -208,24 +209,45 @@ const Ajustes = (props) => {
                                         variant="filled"
                                         className="pb-4 pe-4"
                                     />
-                                    <TextField
-                                        id="userExperience"
-                                        name="userExperience"
-                                        label="Experiencia"
-                                        value={userEditInfo.userExperience}
-                                        onChange={handleChange}
-                                        defaultValue="@TiempoExperiencia"
-                                        className="pb-4 pe-4"
-                                    />
-                                    <TextField
-                                        id="userRazonSocial"
-                                        name="userRazonSocial"
-                                        label="Razón Social"
-                                        value={userEditInfo.userRazonSocial}
-                                        onChange={handleChange}
-                                        defaultValue="Razón Social"
-                                        className="pb-4 pe-4"
-                                    />
+                                    {userRol.rol === 2 ? (
+                                        <>
+                                            <TextField
+                                                id="userProfession"
+                                                name="userProfession"
+                                                label="Profesión"
+                                                value={
+                                                    userEditInfo.userProfession
+                                                }
+                                                onChange={handleChange}
+                                                defaultValue="@PROFESIÓN"
+                                                className="pb-4 pe-4"
+                                            />
+                                            <TextField
+                                                id="userExperience"
+                                                name="userExperience"
+                                                label="Experiencia"
+                                                value={
+                                                    userEditInfo.userExperience
+                                                }
+                                                onChange={handleChange}
+                                                defaultValue="@TiempoExperiencia"
+                                                className="pb-4 pe-4"
+                                            />
+                                            <TextField
+                                                id="userRazonSocial"
+                                                name="userRazonSocial"
+                                                label="Razón Social"
+                                                value={
+                                                    userEditInfo.userRazonSocial
+                                                }
+                                                onChange={handleChange}
+                                                defaultValue="Razón Social"
+                                                className="pb-4 pe-4"
+                                            />
+                                        </>
+                                    ) : (
+                                        <></>
+                                    )}
                                     <TextField
                                         id="userUbication"
                                         name="userUbication"
@@ -244,16 +266,7 @@ const Ajustes = (props) => {
                                         defaultValue="Identificación"
                                         className="pb-4 pe-4"
                                     />
-                                    <TextField
-                                        id="userMail"
-                                        name="userMail"
-                                        label="Correo de usuario"
-                                        value={userEditInfo.userMail}
-                                        // onChange={handleChange}
-                                        defaultValue="@CORREO USUARIO"
-                                        variant="filled"
-                                        className="pb-4 pe-4"
-                                    />
+
                                     <TextField
                                         id="userPhone"
                                         label="Celular"
@@ -280,7 +293,9 @@ const Ajustes = (props) => {
                                         htmlFor="ofertaServicios"
                                         className="body-1 pb-4 w-100"
                                     >
-                                        Servicios ofrecidos
+                                        {userRol.rol === 2
+                                            ? 'Servicios ofrecidos'
+                                            : 'Presentación'}
                                     </label>
                                     <hr />
                                     <TextareaAutosize

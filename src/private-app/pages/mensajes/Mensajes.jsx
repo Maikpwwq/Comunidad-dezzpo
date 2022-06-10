@@ -1,6 +1,8 @@
 // Pagina de Usuario - Mensajes
 import React from 'react'
-
+import es from 'date-fns/locale/es'
+import { auth } from '../../../firebase/firebaseClient'
+import SendBirdApp from '@sendbird/uikit-react/App'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -12,14 +14,26 @@ import MenuItem from '@mui/material/MenuItem'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 const Mensajes = (props) => {
+    let userId = auth.currentUser.uid || null
+    let appId = process.env.REACT_APP_SENDBIRD_APPID
+
     return (
         <>
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex align-items-start pt-4 pb-4">
-                    <Col className="col-10" md={6}>
+                    <Col
+                        className="col-10"
+                        md={10}
+                        sm={12}
+                        style={{ height: '50vh' }}
+                    >
                         <h2 className="headline-xl">Mensajes</h2>
-
-                        <FormControl
+                        <SendBirdApp
+                            appId={appId} // Sendbird application ID.
+                            userId={userId} // user ID.
+                            dateLocale={es}
+                        />
+                        {/* <FormControl
                             fullWidth
                             style={{
                                 display: 'flex',
@@ -49,7 +63,6 @@ const Mensajes = (props) => {
                                     Asesorias con un profesional
                                 </MenuItem>
                             </Select>
-                            {/*Desplegar consuta bandeja de entrada*/}
                         </FormControl>
                         <div>
                             <label for="nuevosMensajes">Nuevos Mensajes </label>
@@ -75,20 +88,7 @@ const Mensajes = (props) => {
                                 cols="30"
                                 placeholder="Asesorias con un profesional"
                             ></TextareaAutosize>
-                        </div>
-                    </Col>
-                </Row>
-                <Row className="m-0 w-100 d-flex pt-3">
-                    Titulo: xxxxx
-                    <Col md={10}>
-                        HILO DE CONVERSACIÓN
-                        <div className="">
-                            {/*Desplegar hilo conversaciones*/}
-                            <p className="body-1">
-                                Publicado el 23/05/2019 a las10:30 am, por
-                                @Nombre usuario{' '}
-                            </p>
-                        </div>
+                        </div> */}
                     </Col>
                 </Row>
             </Container>

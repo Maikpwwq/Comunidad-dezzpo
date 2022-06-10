@@ -1,12 +1,19 @@
 // Pagina de NuevoProyecto
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
+import {
+    collection,
+    doc,
+    setDoc,
+    getDocFromServer,
+    getDocs,
+} from 'firebase/firestore'
 import { firestore } from '../../../firebase/firebaseClient'
 import '../../../../public/assets/css/nuevo_proyecto.css'
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
 import Registro from '../../pages/registro/Registro'
+import SubCategorias from '../../pages/categorias/Sub_Categorias'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -21,30 +28,82 @@ const NuevoProyecto = (props) => {
     const { categoriaProfesional, tipoProyecto, auth } = state || ' '
     const hideRegister = auth
     const _firestore = firestore
+    // categoria
+    const [categoriaInfo, setCategoriaInfo] = useState([])
+    const categoriaRef = collection(_firestore, 'categoriasServicios')
     const draftRef = collection(_firestore, 'drafts')
     const [draftInfo, setDraftInfo] = useState({
-        draftCategory: categoriaProfesional || ' ',
-        draftProject: tipoProyecto || ' ',
+        draftCategory: categoriaProfesional || '',
+        draftProject: tipoProyecto || '',
         draftId: draftID,
         draftName: 'Categoria',
-        draftDescription: ' ',
-        draftPropietarioResidente: ' ',
-        draftCreated: ' ',
-        draftPriority: ' ',
-        draftCity: ' ',
-        draftDirection: ' ',
-        draftRooms: ' ',
-        draftPlans: ' ',
-        draftPermissions: ' ',
+        draftDescription: '',
+        draftPropietarioResidente: '',
+        draftCreated: '',
+        draftPriority: '',
+        draftCity: '',
+        draftDirection: '',
+        draftSize: '',
+        draftRooms: '',
+        draftPlans: '',
+        draftPermissions: '',
         draftAtachments: 'Archivos',
-        draftBestSchedule: ' ',
-        draftProperty: ' ',
-        draftPostalCode: ' ',
+        draftBestScheduleDate: '',
+        draftBestScheduleTime: '',
+        draftProperty: '',
+        draftPostalCode: '',
     })
 
     const draftToFirestore = async (updateInfo, projectID) => {
         await setDoc(doc(draftRef, projectID), updateInfo)
     }
+
+    const categoriasFromFirestore = async () => {
+        try {
+            const collectionConsult = draftInfo.draftCategory
+                ? draftInfo.draftCategory
+                : categoriaProfesional
+            const subCategoriaRef = collection(
+                doc(categoriaRef, 'aPTAljOeD48FbniBg6Lw'),
+                collectionConsult
+            )
+            const categoriaData = await getDocs(subCategoriaRef)
+            return categoriaData
+        } catch (err) {
+            console.log(
+                'Error al obtener los datos de la colleccion categorias: ',
+                err
+            )
+        }
+    }
+
+    useEffect(() => {
+        // draftInfo.draftCategory
+        // if (categoriaProfesional ) {
+        categoriasFromFirestore()
+            .then((docSnap) => {
+                if (docSnap) {
+                    const data = docSnap.docs.map((element) => ({
+                        ...element.data(),
+                    }))
+                    console.log(data, categoriaProfesional)
+                    if (data.length > 0) {
+                        setCategoriaInfo({
+                            data,
+                        })
+                        console.log(categoriaInfo)
+                    }
+                } else {
+                    console.log(
+                        'No se encontro información en la colleccion proyectos!'
+                    )
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        //} categoriaProfesional
+    }, [])
 
     const handleSave = () => {
         console.log(draftInfo)
@@ -94,6 +153,17 @@ const NuevoProyecto = (props) => {
                         ></BuscadorNuevoProyecto>
                     </Col>
                 </Row>
+                <Row className="">
+                    <Col className="col-10">
+                        {categoriaInfo.data ? (
+                            categoriaInfo.data.map((item, index) => (
+                                <SubCategorias key={index} props={item} />
+                            ))
+                        ) : (
+                            <></>
+                        )}
+                    </Col>
+                </Row>
                 <Col className="nuevoProyectoBuscador2 align-items-baseline">
                     <Col
                         className="ms-4 pt-4 pb-4 ps-4 align-items-start"
@@ -141,6 +211,28 @@ const NuevoProyecto = (props) => {
                             </Form.Group>
                             <Form.Group
                                 className="mb-3"
+                                controlId="formNewProjectSize"
+                            >
+                                <Form.Label className="body-2">
+                                    Escoge el tamaño
+                                </Form.Label>
+                                <Form.Select
+                                    name="draftSize"
+                                    value={draftInfo.draftSize}
+                                    onChange={handleChange}
+                                >
+                                    <option>
+                                        Selecciona el tamaño del proyecto
+                                    </option>
+                                    <option value="sencillo">Sencillo</option>
+                                    <option value="mediano">Mediano</option>
+                                    <option value="doble">Doble</option>
+                                    <option value="grande">Grande</option>
+                                    <option value="Otra">Otro</option>
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-3"
                                 controlId="formNewProjectProperty"
                             >
                                 <Form.Label className="body-2">
@@ -164,9 +256,6 @@ const NuevoProyecto = (props) => {
                                         Propiedad moderna (1960-presente){' '}
                                     </option>
                                     <option value="Otra">Otra </option>
-                                    <option value="NotKnow">
-                                        Lo desconozco
-                                    </option>
                                 </Form.Select>
                             </Form.Group>
                             <Form.Group
@@ -283,10 +372,17 @@ const NuevoProyecto = (props) => {
                                     servicio? *
                                 </Form.Label>
                                 <Form.Control
-                                    type="text"
+                                    type="date"
                                     placeholder="Dispone de algun horario en particular"
-                                    name="draftBestSchedule"
-                                    value={draftInfo.draftBestSchedule}
+                                    name="draftBestScheduleDate"
+                                    value={draftInfo.draftBestScheduleDate}
+                                    onChange={handleChange}
+                                />
+                                <Form.Control
+                                    type="time"
+                                    placeholder="Dispone de algun horario en particular"
+                                    name="draftBestScheduleTime"
+                                    value={draftInfo.draftBestScheduleTime}
                                     onChange={handleChange}
                                 />
                                 <Form.Text className="text-muted">

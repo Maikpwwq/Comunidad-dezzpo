@@ -2,6 +2,7 @@ import * as React from 'react'
 import { NavLink, useNavigate, Redirect } from 'react-router-dom'
 import { auth } from '../../firebase/firebaseClient'
 import SearchBar from './SearchBar'
+import '../../../public/assets/cssPrivateApp/header.css'
 
 //imagenes
 import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
@@ -33,6 +34,7 @@ function Header(props) {
     const handleHelp = () => {
         navigate('/ayuda-pqrs')
     }
+    // console.log(user)
     return (
         <React.Fragment>
             <AppBar color="primary" position="sticky" elevation={0}>
@@ -127,36 +129,48 @@ function Header(props) {
                     </Grid>
                 </Toolbar>
             </AppBar>
-            <AppBar
-                component="div"
-                position="static"
-                elevation={0}
-                sx={{ zIndex: 0 }}
-            >
-                <Tabs value={0} textColor="inherit">
-                    <Tab
-                        label="Ver tu perfil"
-                        component={NavLink}
-                        to="perfil"
-                    />
-                    <Tab
-                        label="Calificaciones"
-                        component={NavLink}
-                        to="calificaciones"
-                    />
-                    <Tab label="Mensajes" component={NavLink} to="mensajes" />
-                    <Tab
-                        label="Historial de servicio"
-                        component={NavLink}
-                        to="historial-servicios"
-                    />
-                    <Tab
-                        label="Certificaciones"
-                        component={NavLink}
-                        to="certificaciones"
-                    />
-                </Tabs>
-            </AppBar>
+            {user.uid ? (
+                <AppBar
+                    component="div"
+                    position="static"
+                    elevation={0}
+                    sx={{ zIndex: 0 }}
+                >
+                    <Tabs
+                        value={0}
+                        textColor="inherit"
+                        // style={{ 'overflow-x': 'auto' }}
+                    >
+                        <Tab
+                            label="Ver tu perfil"
+                            component={NavLink}
+                            to="perfil"
+                        />
+                        <Tab
+                            label="Calificaciones"
+                            component={NavLink}
+                            to="calificaciones"
+                        />
+                        <Tab
+                            label="Mensajes"
+                            component={NavLink}
+                            to="mensajes"
+                        />
+                        <Tab
+                            label="Historial de servicio"
+                            component={NavLink}
+                            to="historial-servicios"
+                        />
+                        <Tab
+                            label="Certificaciones"
+                            component={NavLink}
+                            to="certificaciones"
+                        />
+                    </Tabs>
+                </AppBar>
+            ) : (
+                <></>
+            )}
         </React.Fragment>
     )
 }

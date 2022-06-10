@@ -1,7 +1,7 @@
 /* - Componente importancion de las paginas y distribucion de las rutas -  */
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-
+import es from 'date-fns/locale/es'
 //Paginas
 import ApendiceCostos from '../pages/apendice-costos/Apendice_Costos'
 import Aplicar from '../pages/aplicar/Aplicar'
@@ -31,6 +31,8 @@ import Ubicacion from '../pages/ubicacion/Ubicacion'
 import FooterComunidad from '../components/footer/Footer'
 import MenuComunidad from '../components/menu/Menu'
 
+import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
+
 import Button from '@material-ui/core/Button'
 
 class Rutas extends React.Component {
@@ -38,48 +40,67 @@ class Rutas extends React.Component {
         //   const { name } = this.props;
         return (
             <div>
-                {/* <Button variant="contained"> {name} </Button> */}
-                <MenuComunidad />
-                <Routes>
-                    <Route index element={<Inicio />}></Route>
-                    <Route path="/" element={<Inicio />} />
-                    <Route path="Comunidad-dezzpo/" element={<Inicio />} />
-                    <Route
-                        path="apendice-costos"
-                        element={<ApendiceCostos />}
-                    />
-                    <Route path="aplicar" element={<Aplicar />} />
-                    <Route path="asesorias" element={<Asesorias />} />
-                    <Route path="asi-trabajamos" element={<AsiTrabajamos />} />
-                    <Route path="ayuda-pqrs" element={<AyudaPQRS />} />
-                    <Route path="blog" element={<Blog />} />
-                    <Route path="ubicacion" element={<Ubicacion />} />
-                    <Route path="calificaciones" element={<Calificaciones />} />
-                    <Route
-                        path="comunidad-comerciantes"
-                        element={<ComunidadComerciantes />}
-                    />
-                    <Route
-                        path="comunidad-propietarios"
-                        element={<ComunidadPropietarios />}
-                    />
-                    <Route path="contactenos" element={<Contactenos />} />
-                    <Route path="ingreso" element={<Ingreso />} />
-                    <Route path="legal" element={<Legal />} />
-                    <Route path="nosotros" element={<Nosotros />} />
-                    <Route path="nosotros/*" element={<Nosotros />} />
-                    <Route path="nuevo-proyecto" element={<NuevoProyecto />} />
-                    <Route path="patrocinadores" element={<Patrocinadores />} />
-                    <Route path="prensa" element={<Prensa />} />
-                    <Route path="presupuestos" element={<Presupuestos />} />
-                    <Route
-                        path="profesionales-servicios"
-                        element={<ProfesionalesServicios />}
-                    />
-                    <Route path="registro" element={<Registro />} />
-                    {/* <Route path="*" element={<Navigate to={<NoMatch/>} />} /> */}
-                </Routes>
-                <FooterComunidad />
+                <SendbirdProvider
+                    appId={process.env.REACT_APP_SENDBIRD_APPID} // Sendbird application ID.
+                    userId={process.env.REACT_APP_SENDBIRD_USERID} // user ID.
+                    accessToken={process.env.REACT_APP_SENDBIRD_APPTOKEN}
+                    dateLocale={es}
+                >
+                    {/* <Button variant="contained"> {name} </Button> */}
+                    <MenuComunidad />
+                    <Routes>
+                        <Route index element={<Inicio />}></Route>
+                        <Route path="/" element={<Inicio />} />
+                        <Route path="Comunidad-dezzpo/" element={<Inicio />} />
+                        <Route
+                            path="apendice-costos"
+                            element={<ApendiceCostos />}
+                        />
+                        <Route path="aplicar" element={<Aplicar />} />
+                        <Route path="asesorias" element={<Asesorias />} />
+                        <Route
+                            path="asi-trabajamos"
+                            element={<AsiTrabajamos />}
+                        />
+                        <Route path="ayuda-pqrs" element={<AyudaPQRS />} />
+                        <Route path="blog" element={<Blog />} />
+                        <Route path="ubicacion" element={<Ubicacion />} />
+                        <Route
+                            path="calificaciones"
+                            element={<Calificaciones />}
+                        />
+                        <Route
+                            path="comunidad-comerciantes"
+                            element={<ComunidadComerciantes />}
+                        />
+                        <Route
+                            path="comunidad-propietarios"
+                            element={<ComunidadPropietarios />}
+                        />
+                        <Route path="contactenos" element={<Contactenos />} />
+                        <Route path="ingreso" element={<Ingreso />} />
+                        <Route path="legal" element={<Legal />} />
+                        <Route path="nosotros" element={<Nosotros />} />
+                        <Route path="nosotros/*" element={<Nosotros />} />
+                        <Route
+                            path="nuevo-proyecto"
+                            element={<NuevoProyecto />}
+                        />
+                        <Route
+                            path="patrocinadores"
+                            element={<Patrocinadores />}
+                        />
+                        <Route path="prensa" element={<Prensa />} />
+                        <Route path="presupuestos" element={<Presupuestos />} />
+                        <Route
+                            path="profesionales-servicios"
+                            element={<ProfesionalesServicios />}
+                        />
+                        <Route path="registro" element={<Registro />} />
+                        {/* <Route path="*" element={<Navigate to={<NoMatch/>} />} /> */}
+                    </Routes>
+                    <FooterComunidad />
+                </SendbirdProvider>
             </div>
         )
     }

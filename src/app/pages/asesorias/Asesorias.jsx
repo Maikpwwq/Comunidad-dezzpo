@@ -19,9 +19,9 @@ const Asesorias = (props) => {
     const draftID = uuidv4()
     const asesoriaRef = collection(_firestore, 'asesorias')
     const [asesoriaInfo, setAsesoriaInfo] = useState({
-        asesoriaTitulo: ' ',
-        asesoriaDescription: ' ',
-        asesoriaSelect: ' ',
+        asesoriaTitulo: '',
+        asesoriaDescription: '',
+        asesoriaSelect: '',
     })
 
     const asesoriaToFirestore = async (updateInfo, projectID) => {

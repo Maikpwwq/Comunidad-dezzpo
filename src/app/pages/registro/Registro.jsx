@@ -1,9 +1,13 @@
 // Pagina de registro
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import withSendBird from '@sendbird/uikit-react/withSendBird'
+import SendbirdSelectors from '@sendbird/uikit-react/sendBirdSelectors'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { auth, firestore } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { collection, doc, setDoc } from 'firebase/firestore'
+import { format } from 'date-fns'
 
 import '../../../../public/assets/css/registro.css'
 
@@ -17,7 +21,11 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 
 const Registro = (props) => {
-    const { showLogo } = props
+    const { showLogo, connect, createChannel, sbSdk } = props
+
+    // useEffect(() => {
+    //     conectarSB()
+    // }, [connect])
 
     const _firestore = firestore
     // const usersRef = collection(_firestore, 'users')
@@ -27,10 +35,11 @@ const Registro = (props) => {
         'usersComerciantesCalificados'
     )
 
-    const [send, setSend] = React.useState(false)
-    const [userSignupEmail, setEmail] = React.useState(null)
-    const [userSignupPassword, setPassword] = React.useState('')
-    const [userSignupRol, setRol] = React.useState({})
+    const [send, setSend] = useState(false)
+    const [userSignupEmail, setEmail] = useState(null)
+    const [userSignupPassword, setPassword] = useState('')
+    const [userSignupRol, setRol] = useState(null)
+    const [channelUrl, setChannelUrl] = useState(null)
 
     const navigate = useNavigate()
 
@@ -46,20 +55,64 @@ const Registro = (props) => {
         await setDoc(doc(usersComCalRef, userID), updateInfo)
     }
 
+    const handleSelectRol = (e, rol) => {
+        setRol(e)
+        // console.log(e, rol, userSignupRol)
+    }
+
+    const conectarSB = (userId) => {
+        connect(userId) 
+            .then((user) => {
+                console.log('user', user)
+            })
+            .catch((error) => {
+                console.log('error', error)
+            })
+    }
+
+    const crearCanal = (userId) => {
+        // console.log(sdk)
+        if (typeof sbSdk.GroupChannelParams == 'function') {
+            const param = new sbSdk.GroupChannelParams()
+            param.addUserIds([userId])
+            param.setName('Comentarios')
+            // console.log('param', param)
+            createChannel(param)
+                .then((channel) => {
+                    const { url, name, coverUrl, members } = channel
+                    setChannelUrl(url)
+                    console.log('channel', url, name, coverUrl, members)
+                })
+                .catch((error) => {
+                    console.log('error', error)
+                })
+        }
+    }
+
     const handleClick = (e) => {
         e.preventDefault()
         const signUp = (email, password) => {
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
+                    if (typeof connect == 'function') {
+                        conectarSB(user.uid)
+                    }
+                    if (
+                        typeof createChannel == 'function' &&
+                        typeof sbSdk === 'object'
+                    ) {
+                        crearCanal(user.uid)
+                    }
                     var user = userCredential.user
                     console.log('Anonymous account successfully upgraded', user)
                     const data = {
                         userMail: user.email,
-                        userJoined: user.metadata.creationTime,
+                        userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
                         userId: user.uid,
+                        channelUrl: channelUrl,
                         // userName: user.displayName,
                     }
-                    console.log(userSignupRol)
+                    console.log(userSignupRol, channelUrl)
                     if (userSignupRol == 1) {
                         userProResToFirestore(data, user.uid)
                     }
@@ -69,7 +122,7 @@ const Registro = (props) => {
                     // userToFirestore(data, user.uid)
                     // localStorage.setItem('role', JSON.stringify(userSignupRol))
                     localStorage.role = JSON.stringify(userSignupRol)
-                    navigate('/app/perfil')
+                    navigate('/app/ajustes')
                 })
                 .catch((err) => {
                     console.log('Error upgrading anonymous account', err)
@@ -116,45 +169,42 @@ const Registro = (props) => {
                                     REGISTRATE
                                 </h2>
                                 <p className="body-1 textBlanco">
-                                    Bienvenido a todos los beneficios de dezzpo.
+                                    Bienvenido a todos los beneficios de dezzpo.{' '}
+                                    <NavLink className="body-2" to="/ingreso/">
+                                        {'¿Ya tienes una cuenta?'}
+                                    </NavLink>
                                 </p>
-                                <NavLink className="body-2" to="/ingreso/">
-                                    {'¿Ya tienes una cuenta?'}
-                                </NavLink>
-                                {/* <Form.Group
-                                className="mb-2"
-                                controlId="formBasicName"
-                            >
-                                <Form.Label className="mb-0">Nombre</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Registre su nombre"
-                                    name="name"
-                                />
-                            </Form.Group> */}
+
+                                <Form.Label className="mb-0 mt-2">
+                                    Elegir rol:
+                                </Form.Label>
                                 <ToggleButtonGroup
-                                    type="checkbox" // 'radio'
                                     name="userRol"
-                                    className="mb-2 mt-2"
+                                    // className="mb-2"
                                     vertical="true"
-                                    // value={userSignupRol}
+                                    orientation="vertical"
+                                    // exclusive
+                                    aria-label="Elegir rol:"
+                                    onChange={handleSelectRol}
+                                    // size="small"
+                                    color="primary"
+                                    value={userSignupRol}
                                 >
-                                    <Form.Label className="mb-0">
-                                        Elegir rol:
-                                    </Form.Label>
                                     <ToggleButton
-                                        className="body-1 textBlanco d-flex flex-row align-items-center justify-content-center"
-                                        value={1}
+                                        className="body-1 select-rol textBlanco d-flex flex-row align-items-center justify-content-center"
+                                        value={1} // "SoyPropietarioResidente" //
                                         id="formBasicRolPropietarioResidente"
-                                        onChange={(e) => setRol(e.target.value)}
+                                        aria-label="Soy Propietario/Residente"
+                                        //onChange={(e) => setRol(e.target.value)}
                                     >
                                         Soy Propietario/Residente
                                     </ToggleButton>
                                     <ToggleButton
-                                        className="body-1 textBlanco d-flex flex-row align-items-center justify-content-center"
-                                        value={2}
+                                        className="body-1 select-rol  textBlanco d-flex flex-row align-items-center justify-content-center"
+                                        value={2} // "SoyComercianteCalificado" //
                                         id="formBasicRolComercianteCalificado"
-                                        onChange={(e) => setRol(e.target.value)}
+                                        aria-label="Soy Comerciante Calificado"
+                                        //onChange={(e) => setRol(e.target.value)}
                                     >
                                         Soy Comerciante Calificado
                                     </ToggleButton>
@@ -217,7 +267,7 @@ const Registro = (props) => {
                                         name="confirmPassword"
                                     />
                                 </Form.Group>
-                                <Form.Group
+                                {/* <Form.Group
                                     className="mb-2 mt-2"
                                     controlId="formBasicCheckboxRobot"
                                 >
@@ -226,7 +276,7 @@ const Registro = (props) => {
                                         type="checkbox"
                                         label="No soy un robot"
                                     />
-                                </Form.Group>
+                                </Form.Group> */}
                                 <Col className="pt-2">
                                     <Button
                                         className="btn-round btn-high"
@@ -246,4 +296,16 @@ const Registro = (props) => {
     )
 }
 
-export default Registro
+Registro.propTypes = {
+    showLogo: PropTypes.bool,
+    connect: PropTypes.func.isRequired,
+    createChannel: PropTypes.func.isRequired,
+    sbSdk: PropTypes.object.isRequired,
+}
+
+export default withSendBird(Registro, (state) => ({
+    // Mapping context state to props
+    connect: SendbirdSelectors.getConnect(state),
+    createChannel: SendbirdSelectors.getCreateChannel(state),
+    sbSdk: SendbirdSelectors.getSdk(state),
+}))

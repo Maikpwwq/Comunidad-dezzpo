@@ -202,7 +202,10 @@ export default function Paperbase() {
                         sx={{ display: { sm: 'block', xs: 'none' } }}
                     />
                 </Box>
-                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <Box
+                    sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}
+                    style={{ overflowX: 'auto' }}
+                >
                     <Header onDrawerToggle={handleDrawerToggle} />
                     <Box
                         className="p-0"
