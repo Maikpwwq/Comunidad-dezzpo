@@ -1,6 +1,5 @@
 // Pagina de Contactenos
 import React from 'react'
-import '../../../../public/assets/css/iconmoon/style.css'
 import '../../../../public/assets/css/contactenos.css'
 
 // Imagenes

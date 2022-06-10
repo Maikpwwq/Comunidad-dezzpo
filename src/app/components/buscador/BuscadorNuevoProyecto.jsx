@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import '../../../../public/assets/css/buscador_nuevos_proyectos.css'
-
+import IcoMoon from 'react-icomoon'
+import iconSet from '../../../../public/assets/css/icomoon/selection.json'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -11,11 +12,12 @@ import InputGroup from 'react-bootstrap/InputGroup'
 
 const BuscadorNuevoProyecto = ({ data }) => {
     const navigate = useNavigate()
-    const { categoriaProfesional, tipoProyecto } = data || ' '
+    const { categoriaProfesional, tipoProyecto } = data || {}
+    // const { paramCategoriaProfesional, paramTipoProyecto } = useParams()
 
     const [projectData, setProjectData] = useState({
-        categoriaProfesional: categoriaProfesional || '',
-        tipoProyecto: tipoProyecto || '',
+        categoriaProfesional: categoriaProfesional || '', // || paramCategoriaProfesional
+        tipoProyecto: tipoProyecto || '', // || paramTipoProyecto
     })
 
     const handleChange = (event) => {
@@ -27,6 +29,8 @@ const BuscadorNuevoProyecto = ({ data }) => {
 
     const handleClick = () => {
         navigate('/nuevo-proyecto', { state: projectData })
+        console.log(projectData)
+        // setDraftInfo(projectData)
     }
 
     return (
@@ -51,13 +55,15 @@ const BuscadorNuevoProyecto = ({ data }) => {
                                             background: 'none',
                                         }}
                                     >
-                                        <span className="icon-LupaFomularioIcono">
-                                            <span className="path1"></span>
-                                            <span className="path2"></span>
-                                            <span className="path3"></span>
-                                            <span className="path4"></span>
-                                            <span className="path5"></span>
-                                        </span>
+                                        <IcoMoon
+                                            iconSet={iconSet}
+                                            icon="LupaFomularioIcono"
+                                            style={{
+                                                height: '21px',
+                                                marginRight: '8px',
+                                                width: 'auto',
+                                            }}
+                                        />
                                     </InputGroup.Text>
                                     <Form.Label className="mb-0">
                                         ¿Qué tipo de proyecto es?
@@ -95,13 +101,15 @@ const BuscadorNuevoProyecto = ({ data }) => {
                                             background: 'none',
                                         }}
                                     >
-                                        <span className="icon-LupaFomularioIcono">
-                                            <span className="path1"></span>
-                                            <span className="path2"></span>
-                                            <span className="path3"></span>
-                                            <span className="path4"></span>
-                                            <span className="path5"></span>
-                                        </span>
+                                        <IcoMoon
+                                            iconSet={iconSet}
+                                            icon="LupaFomularioIcono"
+                                            style={{
+                                                height: '21px',
+                                                marginRight: '8px',
+                                                width: 'auto',
+                                            }}
+                                        />
                                     </InputGroup.Text>
 
                                     <Form.Label className="mb-0">

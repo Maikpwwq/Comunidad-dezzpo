@@ -26,14 +26,11 @@ import Registro from '../pages/registro/Registro'
 import Ubicacion from '../pages/ubicacion/Ubicacion'
 
 // import NoMatch from "./NoMatch";
-
 // Componentes
 import FooterComunidad from '../components/footer/Footer'
 import MenuComunidad from '../components/menu/Menu'
 
 import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
-
-import Button from '@material-ui/core/Button'
 
 class Rutas extends React.Component {
     render() {
