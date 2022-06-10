@@ -204,7 +204,7 @@ export default function Paperbase() {
                 </Box>
                 <Box
                     sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-                    style={{ 'overflow-x': 'auto' }}
+                    style={{ overflowX: 'auto' }}
                 >
                     <Header onDrawerToggle={handleDrawerToggle} />
                     <Box

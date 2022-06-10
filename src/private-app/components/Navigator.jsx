@@ -193,11 +193,11 @@ export default function Navigator(props) {
                                 <ListItem
                                     disablePadding
                                     button
-                                    activeClassName="Mui-selected"
+                                    // activeClassName="Mui-selected"
                                     key={childId}
                                     component={NavLink}
                                     to={route}
-                                    exact
+                                    // exact
                                 >
                                     <ListItemButton selected={active} sx={item}>
                                         <ListItemIcon>{icon}</ListItemIcon>
@@ -214,10 +214,10 @@ export default function Navigator(props) {
                     <ListItem
                         disablePadding
                         button
-                        activeClassName="Mui-selected"
+                        // activeClassName="Mui-selected"
                         key="Cerrar Sesion"
                         onClick={handleSignout}
-                        exact
+                        // exact
                     >
                         <ListItemButton selected={false} sx={item}>
                             <ListItemIcon>

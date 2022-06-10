@@ -34,7 +34,7 @@ function Header(props) {
     const handleHelp = () => {
         navigate('/ayuda-pqrs')
     }
-    console.log(user)
+    // console.log(user)
     return (
         <React.Fragment>
             <AppBar color="primary" position="sticky" elevation={0}>

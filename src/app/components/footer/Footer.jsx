@@ -128,8 +128,7 @@ const FooterComunidad = (props) => {
                                                     <span
                                                         className="icon-IntagramSocialIcono p-1"
                                                         style={{
-                                                            'font-size':
-                                                                '1.5em',
+                                                            fontSize: '1.5em',
                                                         }}
                                                     >
                                                         <span className="path1"></span>
@@ -150,8 +149,7 @@ const FooterComunidad = (props) => {
                                                     <span
                                                         className="icon-TwitterSocialIcono p-1"
                                                         style={{
-                                                            'font-size':
-                                                                '1.5em',
+                                                            fontSize: '1.5em',
                                                         }}
                                                     >
                                                         <span className="path1"></span>
@@ -170,8 +168,7 @@ const FooterComunidad = (props) => {
                                                     <span
                                                         className="icon-FacebookSocialIcono p-1"
                                                         style={{
-                                                            'font-size':
-                                                                '1.5em',
+                                                            fontSize: '1.5em',
                                                         }}
                                                     >
                                                         <span className="path1"></span>
@@ -190,8 +187,7 @@ const FooterComunidad = (props) => {
                                                     <span
                                                         className="icon-LinkedinSocialIcono p-1"
                                                         style={{
-                                                            'font-size':
-                                                                '1.5em',
+                                                            fontSize: '1.5em',
                                                         }}
                                                     >
                                                         <span className="path1"></span>

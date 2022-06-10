@@ -5,13 +5,14 @@ import { auth, firestore, storage } from '../../../firebase/firebaseClient'
 import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
-import { format, formatDistance, subDays, parse } from 'date-fns'
+import { format, formatDistance, subDays, parse, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
 
 import '../../../../public/assets/cssPrivateApp/perfil.css'
 // import ProfilePhoto from '../../../../public/assets/img/Profile.png'
 // import Bogota from '../../../../public/assets/img/Bogota.png'
 
+import Comentarios from '../../../private-app/components/Comentarios'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -24,7 +25,9 @@ import TextField from '@mui/material/TextField'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
 const Input = styled('input')({
-    display: 'none',
+    // display: 'none',
+    visibility: 'hidden',
+    position: 'absolute',
 })
 
 const Perfil = (props) => {
@@ -32,12 +35,12 @@ const Perfil = (props) => {
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
     let isLoaded = false
     let { id } = useParams()
-    console.log(id)
+    // console.log(id)
     const { state } = useLocation() || {}
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
     const [userRol, setUserRol] = useState({
-        rol: selectRole,
+        rol: selectRole ? selectRole : 2,
     })
     // console.log(userRol.rol)
     // Este es el id como parametro de busqueda o consulta de un perfil especifico
@@ -47,6 +50,7 @@ const Perfil = (props) => {
             : id
     const consult = userId !== null && userId !== undefined ? true : false
     const userConsultId = consult ? userId : userID
+    // console.log(userConsultId)
     // console.log(userId, consult, userConsultId)
     // console.log(userID)
     // console.log(userConsultId)
@@ -72,13 +76,13 @@ const Perfil = (props) => {
                 const userData = await getDocFromServer(
                     doc(usersProResRef, firestoreUserID)
                 )
-                console.log(userConsultId, userRol.rol)
+                // console.log(userConsultId, userRol.rol)
                 return userData
             } else if (userRol.rol === 2) {
                 const userData = await getDocFromServer(
                     doc(usersComCalRef, firestoreUserID)
                 )
-                console.log(userConsultId, userRol.rol)
+                // console.log(userConsultId, userRol.rol)
                 return userData
             }
         } catch (err) {
@@ -90,6 +94,7 @@ const Perfil = (props) => {
         userName: '',
         userMail: '',
         userPhone: '',
+        userChannelUrl: null,
         userPhotoUrl: '',
         userGalleryUrl: [],
         userId: '',
@@ -103,7 +108,7 @@ const Perfil = (props) => {
     })
 
     const updateProfilePhoto = (event) => {
-        event.preventDefault()
+        // event.preventDefault()
         const file = event.target.files
         const profilesRef = ref(_storage, `profiles/${userConsultId}`)
         if (file[0] instanceof Blob) {
@@ -266,7 +271,7 @@ const Perfil = (props) => {
                     metadata,
                 } = user
                 // resolving promise data user
-                console.log(userConsultId, userRol.rol, user)
+                // console.log(userConsultId, userRol.rol, user)
                 const userData = userFromFirestore(userConsultId)
 
                 // userData.forEach((doc) => {
@@ -278,24 +283,30 @@ const Perfil = (props) => {
                         // docSnap._document.data...
                         const data = docSnap.data()
                         const creationTime = data.userJoined
-                        // ? data.userJoined
-                        // : metadata.creationTime
-                        console.log(creationTime, data.userJoined)
+                            ? data.userJoined
+                            : metadata.creationTime
+                        //console.log(creationTime)
                         const formatedTime = parse(
                             creationTime,
                             'dd-MM-yyyy',
                             new Date()
                         )
+                        // const formatedTime = parseISO(creationTime)
+                        // const formatedTime = new Date(creationTime)
+                        //console.log(creationTime, formatedTime)
                         const distanceTime = formatDistance(
                             formatedTime,
                             new Date(),
                             { addSuffix: true },
                             { locale: es }
                         )
-                        // console.log(distanceTime)
+                        //console.log(distanceTime)
                         if (data) {
                             setUserInfo({
                                 ...userInfo,
+                                userChannelUrl: data.userChannelUrl
+                                    ? data.userChannelUrl
+                                    : '',
                                 userPhone: data.userPhone || phoneNumber,
                                 userPhotoUrl: data.userPhotoUrl || photoURL,
                                 userId: data.userId || uid,
@@ -345,8 +356,8 @@ const Perfil = (props) => {
                                     <div
                                         className="d-flex flex-inline-row"
                                         style={{
-                                            'justify-content': 'center',
-                                            'align-items': 'baseline',
+                                            justifyContent: 'center',
+                                            alignItems: 'baseline',
                                         }}
                                     >
                                         <img
@@ -355,41 +366,43 @@ const Perfil = (props) => {
                                             height="150px"
                                             width="150px"
                                             style={{
-                                                'border-radius': '50%',
+                                                borderRadius: '50%',
                                             }}
                                         />
 
-                                        <label
-                                            htmlFor="icon-button-file"
-                                            style={{
-                                                position: 'relative',
-                                                right: '50px',
-                                            }}
-                                        >
-                                            <Input
-                                                accept="image/*"
-                                                id="icon-button-file"
-                                                type="file"
-                                                onClick={updateProfilePhoto}
-                                            />
-                                            <Button
-                                                type="submit"
-                                                id="profilePhoto"
-                                                name="profilePhoto"
-                                                variant="contained"
-                                                component="span"
+                                        {!consult && (
+                                            <label
+                                                htmlFor="icon-button-file"
+                                                style={{
+                                                    position: 'relative',
+                                                    right: '50px',
+                                                }}
                                             >
-                                                <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
-                                            </Button>
-                                        </label>
+                                                <Input
+                                                    accept="image/*"
+                                                    id="icon-button-file"
+                                                    type="file"
+                                                    onClick={updateProfilePhoto}
+                                                />
+                                                <Button
+                                                    type="submit"
+                                                    id="profilePhoto"
+                                                    name="profilePhoto"
+                                                    variant="contained"
+                                                    component="span"
+                                                >
+                                                    <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
+                                                </Button>
+                                            </label>
+                                        )}
                                     </div>
                                 </Col>
                                 <Col md={4} className="p-0">
                                     <Box
                                         style={{
                                             display: 'flex',
-                                            'flex-direction': 'column',
-                                            'align-items': 'center',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
                                         }}
                                         action=""
                                     >
@@ -451,6 +464,14 @@ const Perfil = (props) => {
                                 <Row className="pt-4 pb-4">
                                     <Col>
                                         <h3 className="headline-l">
+                                            Calificaciones
+                                            {/* <Button>Crear</Button> <Button>Editar</Button> */}
+                                        </h3>
+                                    </Col>
+                                </Row>
+                                <Row className="pt-4 pb-4">
+                                    <Col>
+                                        <h3 className="headline-l">
                                             {userRol.rol === 1
                                                 ? 'Presentación'
                                                 : 'Servicios ofrecidos'}
@@ -458,14 +479,20 @@ const Perfil = (props) => {
                                         <p
                                             className="body-1 pe-4"
                                             style={{
-                                                'text-align': 'justify',
+                                                textAlign: 'justify',
                                             }}
                                         >
                                             {userInfo.userDescription}
                                         </p>
                                     </Col>
                                 </Row>
-                                <Col>Certificaciones</Col>
+                                <Row className="pt-4 pb-4">
+                                    <Col>
+                                        <h3 className="headline-l">
+                                            Certificaciones
+                                        </h3>
+                                    </Col>
+                                </Row>
                                 <Row>
                                     <Col>
                                         <h3 className="headline-l">Gallería</h3>
@@ -476,43 +503,51 @@ const Perfil = (props) => {
                                                     alt="galleria-usuario"
                                                 />
                                             </span>
-
-                                            <label
-                                                htmlFor="icon-button-file"
-                                                style={{
-                                                    position: 'relative',
-                                                    right: '50px',
-                                                    width: 'auto',
-                                                }}
-                                            >
-                                                <Input
-                                                    accept="image/*"
-                                                    id="icon-button-file"
-                                                    type="file"
-                                                    onClick={updateGalleryPhoto}
-                                                />
-                                                <Button
-                                                    type="submit"
-                                                    id="galleryPhoto"
-                                                    name="galleryPhoto"
-                                                    variant="contained"
-                                                    component="span"
+                                            {!consult && (
+                                                <label
+                                                    htmlFor="icon-button-file2"
+                                                    style={{
+                                                        position: 'relative',
+                                                        right: '50px',
+                                                        width: 'auto',
+                                                    }}
                                                 >
-                                                    <PermMediaOutlinedIcon alt="+ Agregar foto a la galeria de usuario" />
-                                                </Button>
-                                            </label>
+                                                    <Input
+                                                        accept="image/*"
+                                                        id="icon-button-file2"
+                                                        type="file"
+                                                        onClick={
+                                                            updateGalleryPhoto
+                                                        }
+                                                    />
+                                                    <Button
+                                                        type="submit"
+                                                        id="galleryPhoto"
+                                                        name="galleryPhoto"
+                                                        variant="contained"
+                                                        component="span"
+                                                    >
+                                                        <PermMediaOutlinedIcon alt="+ Agregar foto a la galeria de usuario" />
+                                                    </Button>
+                                                </label>
+                                            )}
                                         </Row>
                                     </Col>
                                 </Row>
                                 <Row className="pt-4 pb-4">
-                                    Comentarios
-                                    <Button>Crear</Button>
-                                    <Button>Editar</Button>
-                                </Row>
-                                <Row className="">
-                                    Calificaciones
-                                    <Button>Crear</Button>
-                                    <Button>Editar</Button>
+                                    {userInfo.userChannelUrl && (
+                                        <Row className="m-0 w-100">
+                                            <Col>
+                                                <Comentarios
+                                                    userID={userConsultId}
+                                                    channelUrl={
+                                                        userInfo.userChannelUrl
+                                                    }
+                                                    nickname={userInfo.userName}
+                                                />
+                                            </Col>
+                                        </Row>
+                                    )}
                                 </Row>
                             </Col>
                             <Col
@@ -522,8 +557,8 @@ const Perfil = (props) => {
                                 <Box
                                     style={{
                                         display: 'flex',
-                                        'flex-direction': 'column',
-                                        'align-items': 'center',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
                                     }}
                                     action=""
                                 >

@@ -26,7 +26,7 @@ const NuestraComunidad = (props) => {
                             alt="Categorias Populares entre la Comunidad"
                             height="170"
                             width="100%"
-                            maxWidth="900"
+                            maxwidth="900"
                         />
                     </Col>
                     <Col className="categoriasPopulares mt-4 p-4">

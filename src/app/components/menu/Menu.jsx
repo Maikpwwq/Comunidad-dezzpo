@@ -32,7 +32,7 @@ const MenuComunidad = (props) => {
                                 <MenuIcon sx={{ fontSize: '30px' }} />
                             </IconButton>
 
-                            <NavLink exact to="/" className="activo body-2">
+                            <NavLink to="/" className="activo body-2">
                                 <img
                                     src={LogoMenuComunidadDezzpo}
                                     alt="Logo Comunidad Dezzpo"

@@ -38,8 +38,8 @@ const Ingreso = (props) => {
             signInWithCredential(auth, usercredential)
                 .then((userCredential) => {
                     var user = userCredential.user
-                    console.log('Anonymous account successfully upgraded', user)
-                    console.log(JSON.stringify(userSignupRol))
+                    // console.log('Anonymous account successfully upgraded', user)
+                    // console.log(JSON.stringify(userSignupRol))
                     // localStorage.setItem('role', JSON.stringify(userSignupRol))
                     localStorage.role = JSON.stringify(userSignupRol)
                     // navigate('/app/perfil', { state: { role: userSignupRol } })
@@ -176,7 +176,7 @@ const Ingreso = (props) => {
                                     />
                                 </Form.Group>
 
-                                <Form.Group
+                                {/* <Form.Group
                                     className="mb-2 mt-4"
                                     controlId="formBasicCheckboxRecordar"
                                 >
@@ -195,7 +195,7 @@ const Ingreso = (props) => {
                                         type="checkbox"
                                         label="No soy un robot"
                                     />
-                                </Form.Group>
+                                </Form.Group> */}
                                 <Form.Group>
                                     <Col className="pb-4 pt-4">
                                         <Button
