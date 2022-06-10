@@ -1,9 +1,9 @@
 /* Footer de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react'
 import '../../../../public/assets/css/footer.css'
-//import '../../../../public/assets/css/iconmoon/style.css';
 import { Link, Redirect } from 'react-router-dom'
-
+import IcoMoon from 'react-icomoon'
+import iconSet from '../../../../public/assets/css/icomoon/selection.json'
 // images
 import LogoFooterComunidadDezzpo from '../../../../public/assets/img/IsologoFooter.png'
 
@@ -125,19 +125,13 @@ const FooterComunidad = (props) => {
                                                     href="https://www.instagram.com/comunidad_dezzpo/"
                                                     title="Instagram"
                                                 >
-                                                    <span
-                                                        className="icon-IntagramSocialIcono p-1"
+                                                    <IcoMoon
+                                                        iconSet={iconSet}
+                                                        icon="IntagramSocialIcono"
                                                         style={{
-                                                            fontSize: '1.5em',
+                                                            height: '33px',
                                                         }}
-                                                    >
-                                                        <span className="path1"></span>
-                                                        <span className="path2"></span>
-                                                        <span className="path3"></span>
-                                                        <span className="path4"></span>
-                                                        <span className="path5"></span>
-                                                    </span>{' '}
-                                                    {/* Instagram{' '} */}
+                                                    />
                                                 </a>
                                             </li>
                                             {/* siguenos Twitter */}
@@ -146,17 +140,13 @@ const FooterComunidad = (props) => {
                                                     href="https://www.twitter.com/"
                                                     title="Twitter"
                                                 >
-                                                    <span
-                                                        className="icon-TwitterSocialIcono p-1"
+                                                    <IcoMoon
+                                                        iconSet={iconSet}
+                                                        icon="TwitterSocialIcono"
                                                         style={{
-                                                            fontSize: '1.5em',
+                                                            height: '33px',
                                                         }}
-                                                    >
-                                                        <span className="path1"></span>
-                                                        <span className="path2"></span>
-                                                    </span>
-                                                    {/* {' '}
-                                            Twitter{' '} */}
+                                                    />
                                                 </a>
                                             </li>
                                             {/* siguenos Facebook */}
@@ -165,17 +155,13 @@ const FooterComunidad = (props) => {
                                                     href="https://www.facebook.com/comunidad.dezzpo"
                                                     title="Facebook"
                                                 >
-                                                    <span
-                                                        className="icon-FacebookSocialIcono p-1"
+                                                    <IcoMoon
+                                                        iconSet={iconSet}
+                                                        icon="FacebookSocialIcono"
                                                         style={{
-                                                            fontSize: '1.5em',
+                                                            height: '33px',
                                                         }}
-                                                    >
-                                                        <span className="path1"></span>
-                                                        <span className="path2"></span>
-                                                    </span>
-                                                    {/* {' '}
-                                            Facebook{' '} */}
+                                                    />
                                                 </a>
                                             </li>
                                             {/* siguenos Linkedin */}
@@ -184,19 +170,13 @@ const FooterComunidad = (props) => {
                                                     href="https://www.linkedin.com/company/dezzpo-inc/"
                                                     title="LinkedIn"
                                                 >
-                                                    <span
-                                                        className="icon-LinkedinSocialIcono p-1"
+                                                    <IcoMoon
+                                                        iconSet={iconSet}
+                                                        icon="LinkedinSocialIcono"
                                                         style={{
-                                                            fontSize: '1.5em',
+                                                            height: '33px',
                                                         }}
-                                                    >
-                                                        <span className="path1"></span>
-                                                        <span className="path2"></span>
-                                                        <span className="path3"></span>
-                                                        <span className="path4"></span>
-                                                    </span>
-                                                    {/* {' '}
-                                            LinkedIn{' '} */}
+                                                    />
                                                 </a>
                                             </li>
                                         </ul>

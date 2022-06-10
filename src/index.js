@@ -1,13 +1,15 @@
 import 'dotenv/config'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
+// import { hydrateRoot } from 'react-dom/client' // SSR
+// import ReactDOM from 'react-dom' // Deprecated V18
 import { BrowserRouter as Router } from 'react-router-dom'
 // Create browser history, for navigation a la single page apps
 import { createBrowserHistory } from 'history'
 
 import Rutas from './router'
 import './index.scss'
-
+// import '../public/assets/css/icomoon/style.css'
 // import "./styles.styl";
 // import * as serviceWorker from './serviceWorker';
 
@@ -20,11 +22,28 @@ history.listen((location, action) => {
     console.log(action)
 })
 
-ReactDOM.render(
+const containerReactApp = document.getElementById('app')
+const root = createRoot(containerReactApp)
+root.render(
     <Router history={history}>
         <Rutas />
-    </Router>,
-    document.getElementById('app')
+    </Router>
 )
+
+// SSR
+// const root = hydrateRoot(
+//     containerReactApp, 
+//     <Router history={history}>
+//         <Rutas />
+//     </Router>
+// )
+
+// Deprecated V18
+// ReactDOM.render(
+//     <Router history={history}>
+//         <Rutas />
+//     </Router>,
+//     document.getElementById('app')
+// )
 
 // serviceWorker.unregister();

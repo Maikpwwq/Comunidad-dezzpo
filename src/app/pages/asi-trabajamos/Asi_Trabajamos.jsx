@@ -77,7 +77,7 @@ const AsiTrabajamos = (props) => {
                     >
                         <Col
                             className="certificaciones-titulo d-flex mb-4 mt-4 p-0 align-items-center"
-                            style={{ 'min-height': '8em' }}
+                            style={{ minHeight: '8em' }}
                             lg={4}
                             md={6}
                             sm={10}
@@ -129,49 +129,47 @@ const AsiTrabajamos = (props) => {
                             siguientes tres aspectos:
                             <br />`{'>'}` Gestión `{'>'}` Calidad `{'>'}`
                             Oportunidad
-                            <br />
-                            <br />
-                            <ul className="ps-0">
-                                <li>
-                                    Estado de observaciones generales y
-                                    evaluacion del desempeño:
-                                </li>
-                                <br />
-                                <li>
-                                    - Cumple con los tiempos de entrega de las
-                                    certificaciones, polizas, actas y contratos.
-                                </li>
-
-                                <br />
-                                <li>
-                                    - El servicio fue prestado en las fechas y
-                                    horario programados.
-                                </li>
-                                <li>
-                                    - El servicio cumplio con las
-                                    especificaciones y normas tecnicas
-                                    establecidas.
-                                </li>
-                                <li>
-                                    - Fue suficiente el presonal y tenia todas
-                                    las competencias necesarias para ejecutar
-                                    las actividades del contrato.
-                                </li>
-                                <li>
-                                    - Las facturas, soportes y documentos
-                                    contractuales fueren entregados
-                                    oportunamente.
-                                </li>
-                            </ul>
                         </p>
+                        <br />
+                        <br />
+                        <ul className="ps-0">
+                            <li>
+                                Estado de observaciones generales y evaluacion
+                                del desempeño:
+                            </li>
+                            <br />
+                            <li>
+                                - Cumple con los tiempos de entrega de las
+                                certificaciones, polizas, actas y contratos.
+                            </li>
+
+                            <br />
+                            <li>
+                                - El servicio fue prestado en las fechas y
+                                horario programados.
+                            </li>
+                            <li>
+                                - El servicio cumplio con las especificaciones y
+                                normas tecnicas establecidas.
+                            </li>
+                            <li>
+                                - Fue suficiente el presonal y tenia todas las
+                                competencias necesarias para ejecutar las
+                                actividades del contrato.
+                            </li>
+                            <li>
+                                - Las facturas, soportes y documentos
+                                contractuales fueren entregados oportunamente.
+                            </li>
+                        </ul>
                     </Col>
                     <Col
                         className="col-12"
-                        style={{ 'min-height': '200px' }}
+                        style={{ minHeight: '200px' }}
                     ></Col>
                     <Col
                         className="col-12"
-                        style={{ 'min-height': '200px' }}
+                        style={{ minHeight: '200px' }}
                     ></Col>
                 </Row>
             </Container>

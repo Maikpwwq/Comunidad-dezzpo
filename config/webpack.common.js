@@ -23,7 +23,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].[contenthash].js',
-        publicPath: '/', // '/Comunidad-dezzpo/'
+        publicPath: '/Comunidad-dezzpo/', // '/'
     },
     resolve: {
         modules: ['node_modules'],
