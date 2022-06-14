@@ -142,11 +142,11 @@ export default function Navigator(props) {
                           icon: <HomeIcon />,
                           route: 'portal-servicios',
                       },
-                      {
-                          id: 'Directorio de Requerimientos',
-                          icon: <HomeIcon />,
-                          route: 'directorio-requerimientos',
-                      },
+                    //   {
+                    //       id: 'Directorio de Requerimientos',
+                    //       icon: <HomeIcon />,
+                    //       route: 'directorio-requerimientos',
+                    //   },
                   ],
               },
           ]

@@ -1,5 +1,5 @@
 // Pagina de Apendice de costos
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../../../public/assets/css/apendice_costos.css'
 import { Link } from 'react-router-dom'
 
@@ -8,7 +8,52 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
+import { collection, doc, getDocs } from 'firebase/firestore'
+import { firestore } from '../../../firebase/firebaseClient'
+
 const ApendiceCostos = () => {
+    const [categoriaInfo, setCategoriaInfo] = useState([])
+    const _firestore = firestore
+    const categoriaRef = collection(_firestore, 'categoriasServicios')
+    const subCategoriaRef = doc(categoriaRef, 'aPTAljOeD48FbniBg6Lw')
+
+    const categoriasFromFirestore = async () => {
+        try {
+            const categoriaData = await getDocs(subCategoriaRef)
+            return categoriaData
+        } catch (err) {
+            console.log(
+                'Error al obtener los datos de la colleccion categorias: ',
+                err
+            )
+        }
+    }
+
+    useEffect(() => {
+        categoriasFromFirestore()
+            .then((docSnap) => {
+                if (docSnap) {
+                    const data = docSnap.docs.map((element) => ({
+                        ...element.data(),
+                    }))
+                    console.log(data)
+                    if (data.length > 0) {
+                        setCategoriaInfo({
+                            data,
+                        })
+                        console.log(categoriaInfo)
+                    }
+                } else {
+                    console.log(
+                        'No se encontro información en la colleccion proyectos!'
+                    )
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])
+
     return (
         <>
             <Container fluid className="p-0">
@@ -22,6 +67,11 @@ const ApendiceCostos = () => {
                     </Col>
                 </Row>
             </Container>
+            {/* <Container fluid className="p-0">
+                <Row className="m-0 w-100 d-flex">
+                    TODO insert Firebase Table!
+                </Row>
+            </Container> */}
             <Container fluid className="p-0">
                 <Row className="apendiceCostosPreguntas m-0 w-100">
                     <Col>

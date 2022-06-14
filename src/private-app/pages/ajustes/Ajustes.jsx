@@ -170,8 +170,8 @@ const Ajustes = (props) => {
                                     action=""
                                     style={{
                                         display: 'flex',
-                                        'flex-direction': 'row',
-                                        'align-items': 'center',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
                                     }}
                                 >
                                     <div className="pb-4 w-100">

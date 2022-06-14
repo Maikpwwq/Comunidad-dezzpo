@@ -57,7 +57,7 @@ const ComunidadComerciantes = (props) => {
                 </Row>
             </Container>
             <Container fluid className="p-0 fondoVerde">
-                <Row className="p-0" style={{ 'align-items': 'inherit' }}>
+                <Row className="p-0" style={{ alignItems: 'inherit' }}>
                     <Col
                         className="colLeft p-0 ps-4 m-0"
                         lg={6}

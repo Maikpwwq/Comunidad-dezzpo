@@ -34,16 +34,16 @@ const Perfil = (props) => {
     const user = auth.currentUser || {}
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
     let isLoaded = false
-    let { id } = useParams()
+    let { id } = useParams() // Este es el id de la busqueda
     // console.log(id)
-    const { state } = useLocation() || {}
+    const { state } = useLocation() || {} // No se pasa mas?
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
     const [userRol, setUserRol] = useState({
         rol: selectRole ? selectRole : 2,
     })
     // console.log(userRol.rol)
-    // Este es el id como parametro de busqueda o consulta de un perfil especifico
+    // Este es el id que se obtienen como parametro de busqueda o consulta de un perfil especifico
     const userId =
         state != undefined && state != null && state.id != undefined
             ? state.id

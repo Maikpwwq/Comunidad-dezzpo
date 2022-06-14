@@ -37,8 +37,8 @@ const Mensajes = (props) => {
                             fullWidth
                             style={{
                                 display: 'flex',
-                                'flex-direction': 'column',
-                                'align-items': 'center',
+                                flexDirection: 'column',
+                                alignItems: 'center',
                             }}
                         >
                             <InputLabel forHtml="bandejaMensajes">

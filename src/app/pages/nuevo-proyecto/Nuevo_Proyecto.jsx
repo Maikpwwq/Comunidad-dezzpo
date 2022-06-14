@@ -15,7 +15,7 @@ import '../../../../public/assets/css/nuevo_proyecto.css'
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
 import Registro from '../../pages/registro/Registro'
 import SubCategorias from '../../pages/categorias/Sub_Categorias'
-
+import PasoAPaso from '../../components/paso_a_paso/Paso_A_Paso'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -23,63 +23,6 @@ import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { styled } from '@mui/material/styles'
-import Stack from '@mui/material/Stack'
-import Stepper from '@mui/material/Stepper'
-import Step from '@mui/material/Step'
-import StepLabel from '@mui/material/StepLabel'
-import StepConnector, {
-    stepConnectorClasses,
-} from '@mui/material/StepConnector'
-import SettingsIcon from '@mui/icons-material/Settings'
-import GroupAddIcon from '@mui/icons-material/GroupAdd'
-import VideoLabelIcon from '@mui/icons-material/VideoLabel'
-
-const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-    [`&.${stepConnectorClasses.alternativeLabel}`]: {
-        top: 22,
-    },
-    [`&.${stepConnectorClasses.active}`]: {
-        [`& .${stepConnectorClasses.line}`]: {
-            backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-        },
-    },
-    [`&.${stepConnectorClasses.completed}`]: {
-        [`& .${stepConnectorClasses.line}`]: {
-            backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-        },
-    },
-    [`& .${stepConnectorClasses.line}`]: {
-        height: 3,
-        border: 0,
-        backgroundColor:
-            theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-        borderRadius: 1,
-    },
-}))
-
-const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-    backgroundColor:
-        theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
-    zIndex: 1,
-    color: '#fff',
-    width: 50,
-    height: 50,
-    display: 'flex',
-    borderRadius: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    ...(ownerState.active && {
-        backgroundImage:
-            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
-    }),
-    ...(ownerState.completed && {
-        backgroundImage:
-            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-    }),
-}))
 
 const NuevoProyecto = (props) => {
     const draftID = uuidv4()
@@ -96,8 +39,11 @@ const NuevoProyecto = (props) => {
         paramCategoriaProfesional
     )
     console.log('B', draftProject, tipoProyecto, paramTipoProyecto)
+    const requerimiento = localStorage.requerimiento || null
+    console.log('requerimiento-local', requerimiento)
+    // console.log(requerimiento.draftId)
     const hideRegister = auth
-    const _firestore = firestore
+    const _firestore = firestore 
     // categoria
     const [categoriaInfo, setCategoriaInfo] = useState([])
     const categoriaRef = collection(_firestore, 'categoriasServicios')
@@ -106,6 +52,7 @@ const NuevoProyecto = (props) => {
     const [activeStep, setActiveStep] = useState(0)
     const [draftInfo, setDraftInfo] = useState({
         draftCategory: draftCategory,
+        draftSubCategory: '',
         draftProject: draftProject,
         draftId: draftID,
         draftName: 'Categoria',
@@ -185,20 +132,37 @@ const NuevoProyecto = (props) => {
     }, [])
 
     const handleSave = () => {
-        console.log(draftInfo, activeStep)
+        console.log(draftInfo)
         const snap = draftToFirestore(draftInfo, draftID)
         snap.then((docSnap) => {
             console.log(docSnap)
         })
+    }
+
+    // TODO Crear funcion para leer los borradores de requerimientos desde firebase y desde local storage
+
+    const goForward = () => {
         if (activeStep < steps.length) {
             let active = activeStep + 1
             setActiveStep(active)
         }
+        // TODO Almacenar requerimiento en local storage hasta que se realice el almacenamiento final
+        localStorage.requerimiento = JSON.stringify(draftInfo)
     }
 
     const handleChangeInfo = (event) => {
         event.preventDefault()
-        console.log('Detecto:', event)
+        console.log('Detecto Nuevo proyecto:', event)
+        // console.log(draftInfo)
+        // setDraftInfo({
+        //     ...draftInfo,
+        //     [event.target.name]: event.target.value,
+        // })
+    }
+
+    const handleSubCategoria = (event) => {
+        event.preventDefault()
+        console.log('Detecto Subcategoria:', event)
         // console.log(draftInfo)
         // setDraftInfo({
         //     ...draftInfo,
@@ -222,74 +186,17 @@ const NuevoProyecto = (props) => {
         }
     }
 
-    function ColorlibStepIcon(props) {
-        const { active, completed, className } = props
-
-        const icons = {
-            1: <SettingsIcon />,
-            2: <GroupAddIcon />,
-            3: <VideoLabelIcon />,
-        }
-
-        return (
-            <ColorlibStepIconRoot
-                ownerState={{ completed, active }}
-                className={className}
-            >
-                {icons[String(props.icon)]}
-            </ColorlibStepIconRoot>
-        )
-    }
-
-    ColorlibStepIcon.propTypes = {
-        /**
-         * Whether this step is active.
-         * @default false
-         */
-        active: PropTypes.bool,
-        className: PropTypes.string,
-        /**
-         * Mark the step as completed. Is passed to child components.
-         * @default false
-         */
-        completed: PropTypes.bool,
-        /**
-         * The label displayed in the step icon.
-         */
-        icon: PropTypes.node,
-    }
-
     const steps = [
-        'Select campaign settings',
-        'Create an ad group',
-        'Create an ad',
+        // Categorias de servicios - subcategoria
+        'Registra los ajustes',
+        'Programa la visita',
+        'Registro',
     ]
-
-    const CustomizedSteppers = (props) => {
-        let { activeStep } = props // useParams()
-        return (
-            <Stack sx={{ width: '100%', mt: 4, mb: 4 }} spacing={4}>
-                <Stepper
-                    alternativeLabel
-                    activeStep={activeStep}
-                    connector={<ColorlibConnector />}
-                >
-                    {steps.map((label) => (
-                        <Step key={label}>
-                            <StepLabel StepIconComponent={ColorlibStepIcon}>
-                                {label}
-                            </StepLabel>
-                        </Step>
-                    ))}
-                </Stepper>
-            </Stack>
-        )
-    }
 
     return (
         <>
             <Container fluid className="p-0">
-                <CustomizedSteppers activeStep={activeStep} />
+                <PasoAPaso activeStep={activeStep} steps={steps} />
                 {activeStep == 0 && (
                     <Col>
                         <Row className="nuevoProyectoBuscador">
@@ -327,24 +234,31 @@ const NuevoProyecto = (props) => {
                             </Col>
                         </Row>
                         {/* setActiveStep */}
-                        <Row className="categorias">
+                        <Row className="categorias w-100 m-0">
                             <Col className="col-10 categorias-contenedor">
-                                {categoriaInfo.data ? (
-                                    categoriaInfo.data.map((item, index) => (
-                                        <SubCategorias
-                                            key={index}
-                                            props={item}
-                                        />
-                                    ))
-                                ) : (
-                                    <></>
-                                )}
+                                <Row className="w-100 m-0">
+                                    {categoriaInfo.data ? (
+                                        categoriaInfo.data.map(
+                                            (item, index) => (
+                                                <SubCategorias
+                                                    key={index}
+                                                    props={item}
+                                                    onChange={
+                                                        handleSubCategoria
+                                                    }
+                                                />
+                                            )
+                                        )
+                                    ) : (
+                                        <></>
+                                    )}
+                                </Row>
                             </Col>
                         </Row>
                         <Col className="col-10">
                             <Row className="pt-4 pb-4 w-100">
                                 <Button
-                                    onClick={handleSave}
+                                    onClick={goForward}
                                     style={{ paddingRight: '10px' }}
                                     className="btn-round btn-high w-50"
                                     variant="primary"
@@ -548,7 +462,7 @@ const NuevoProyecto = (props) => {
                                 <Col className="col-10">
                                     <Row className="pt-4 pb-4 w-100">
                                         <Button
-                                            onClick={handleSave}
+                                            onClick={goForward}
                                             style={{ paddingRight: '10px' }}
                                             className="btn-round btn-high w-50"
                                             variant="primary"

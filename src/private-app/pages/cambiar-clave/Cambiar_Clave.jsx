@@ -47,8 +47,8 @@ const CambiarClave = (props) => {
                         <Box
                             style={{
                                 display: 'flex',
-                                'flex-direction': 'column',
-                                'align-items': 'center',
+                                flexDirection: 'column',
+                                alignItems: 'center',
                             }}
                             action=""
                         >
