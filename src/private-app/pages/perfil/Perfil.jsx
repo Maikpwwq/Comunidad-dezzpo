@@ -11,7 +11,7 @@ import { es } from 'date-fns/locale'
 import '../../../../public/assets/cssPrivateApp/perfil.css'
 // import ProfilePhoto from '../../../../public/assets/img/Profile.png'
 // import Bogota from '../../../../public/assets/img/Bogota.png'
-
+import CincoEstrellas from './CincoEstrellas'
 import Comentarios from '../../../private-app/components/Comentarios'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -21,7 +21,6 @@ import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
 const Input = styled('input')({
@@ -312,7 +311,7 @@ const Perfil = (props) => {
                                 userId: data.userId || uid,
                                 userMail: data.userMail || email,
                                 userName: data.userName || displayName,
-                                userGalleryUrl: data.GalleryUrl || [],
+                                userGalleryUrl: data.userGalleryUrl || [],
                                 userJoined: distanceTime,
                                 userProfession: data.userProfession
                                     ? data.userProfession
@@ -349,60 +348,68 @@ const Perfil = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="h-100 pt-4 pb-4">
-                    <Col className="col-10">
+                    <Col className="col" md={10} sm={12}>
                         <Row className="border-green_buttom perfil-banner m-0 w-100 d-flex">
-                            <Row className="pt-4 pb-4">
-                                <Col className="pe-0" md={3}>
-                                    <div
-                                        className="d-flex flex-inline-row"
+                            <Col className="ms-4 pt-4 pb-4 align-items-start">
+                                <div
+                                    className="d-flex flex-inline-row"
+                                    style={{
+                                        justifyContent: 'center',
+                                        alignItems: 'baseline',
+                                    }}
+                                >
+                                    <img
+                                        src={userInfo.userPhotoUrl}
+                                        alt="imagen de perfil"
+                                        height="150px"
+                                        width="150px"
                                         style={{
-                                            justifyContent: 'center',
-                                            alignItems: 'baseline',
+                                            borderRadius: '50%',
                                         }}
-                                    >
-                                        <img
-                                            src={userInfo.userPhotoUrl}
-                                            alt="imagen de perfil"
-                                            height="150px"
-                                            width="150px"
-                                            style={{
-                                                borderRadius: '50%',
-                                            }}
-                                        />
+                                    />
 
-                                        {!consult && (
-                                            <label
-                                                htmlFor="icon-button-file"
-                                                style={{
-                                                    position: 'relative',
-                                                    right: '50px',
-                                                }}
+                                    {!consult && (
+                                        <label
+                                            htmlFor="icon-button-file"
+                                            style={{
+                                                position: 'relative',
+                                                right: '50px',
+                                            }}
+                                        >
+                                            <Input
+                                                accept="image/*"
+                                                id="icon-button-file"
+                                                type="file"
+                                                onClick={updateProfilePhoto}
+                                            />
+                                            <Button
+                                                type="submit"
+                                                id="profilePhoto"
+                                                name="profilePhoto"
+                                                variant="contained"
+                                                component="span"
                                             >
-                                                <Input
-                                                    accept="image/*"
-                                                    id="icon-button-file"
-                                                    type="file"
-                                                    onClick={updateProfilePhoto}
-                                                />
-                                                <Button
-                                                    type="submit"
-                                                    id="profilePhoto"
-                                                    name="profilePhoto"
-                                                    variant="contained"
-                                                    component="span"
-                                                >
-                                                    <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
-                                                </Button>
-                                            </label>
-                                        )}
-                                    </div>
-                                </Col>
-                                <Col md={4} className="p-0">
+                                                <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
+                                            </Button>
+                                        </label>
+                                    )}
+                                </div>
+                                <Col
+                                    md={4}
+                                    className="p-2 d-flex flex-column align-items-center opacidadNegro"
+                                >
+                                    {/* user-stadistics justify-content-end */}
+                                    <CincoEstrellas />
+                                    <span>2 ratings</span>
+                                    <br />
+                                    certificaciones
                                     <Box
+                                        className="m-2 w-100"
                                         style={{
                                             display: 'flex',
                                             flexDirection: 'column',
                                             alignItems: 'center',
+                                            backgroundColor: '#ececec',
                                         }}
                                         action=""
                                     >
@@ -413,6 +420,7 @@ const Perfil = (props) => {
                                             value={userInfo.userRazonSocial}
                                             defaultValue="Razón Social"
                                             variant="filled"
+                                            className="w-100"
                                         />
                                         <TextField
                                             id="userProfession"
@@ -420,6 +428,7 @@ const Perfil = (props) => {
                                             value={userInfo.userProfession}
                                             defaultValue="@PROFESIÓN"
                                             variant="filled"
+                                            className="w-100"
                                         />
                                         <TextField
                                             id="userExperience"
@@ -428,20 +437,11 @@ const Perfil = (props) => {
                                             value={userInfo.userExperience}
                                             defaultValue="@TiempoExperiencia"
                                             variant="filled"
+                                            className="w-100"
                                         />
                                     </Box>
                                 </Col>
-                                <Col
-                                    className="user-stadistics d-flex flex-column justify-content-end align-items-center"
-                                    md={5}
-                                >
-                                    <div className="ps-4 pe-4 opacidadNegro">
-                                        <span>2 ratings</span>
-                                        <br />
-                                        certificaciones
-                                    </div>
-                                </Col>
-                            </Row>
+                            </Col>
                         </Row>
                         <Row className="mapa-ubicacion m-0 w-100 d-flex justify-content-start align-items-end">
                             {/* <img
@@ -461,15 +461,16 @@ const Perfil = (props) => {
                         </Row>
                         <Row className="pt-4 m-0 w-100 d-flex align-items-start">
                             <Col md={7}>
-                                <Row className="pt-4 pb-4">
+                                <Row className="p-4">
                                     <Col>
                                         <h3 className="headline-l">
                                             Calificaciones
                                             {/* <Button>Crear</Button> <Button>Editar</Button> */}
                                         </h3>
+                                        <CincoEstrellas />
                                     </Col>
                                 </Row>
-                                <Row className="pt-4 pb-4">
+                                <Row className="p-4">
                                     <Col>
                                         <h3 className="headline-l">
                                             {userRol.rol === 1
@@ -486,22 +487,43 @@ const Perfil = (props) => {
                                         </p>
                                     </Col>
                                 </Row>
-                                <Row className="pt-4 pb-4">
+                                <Row className="p-4">
                                     <Col>
                                         <h3 className="headline-l">
                                             Certificaciones
                                         </h3>
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row className="p-4">
                                     <Col>
                                         <h3 className="headline-l">Gallería</h3>
                                         <Row className="w-100">
                                             <span className="w-auto">
-                                                <img
-                                                    src="http://placeimg.com/150/150/tech"
-                                                    alt="galleria-usuario"
-                                                />
+                                                {userInfo.userGalleryUrl.map(
+                                                    (imagen, index) => {
+                                                        console.log(imagen)
+                                                        return (
+                                                            <Box
+                                                                component="img"
+                                                                src={imagen}
+                                                                alt="galleria-usuario"
+                                                                sx={{
+                                                                    height: 400,
+                                                                    display:
+                                                                        'block',
+                                                                    maxWidth: 400,
+                                                                    overflow:
+                                                                        'hidden',
+                                                                    width: '100%',
+                                                                }}
+                                                                style={{
+                                                                    borderRadius:
+                                                                        '5%',
+                                                                }}
+                                                            ></Box>
+                                                        )
+                                                    }
+                                                )}
                                             </span>
                                             {!consult && (
                                                 <label
@@ -534,7 +556,7 @@ const Perfil = (props) => {
                                         </Row>
                                     </Col>
                                 </Row>
-                                <Row className="pt-4 pb-4">
+                                <Row className="p-4">
                                     {userInfo.userChannelUrl && (
                                         <Row className="m-0 w-100">
                                             <Col>
@@ -552,7 +574,7 @@ const Perfil = (props) => {
                             </Col>
                             <Col
                                 md={5}
-                                className="pt-4 pb-4 info-user_backgound"
+                                className="mt-4 pt-4 info-user_backgound"
                             >
                                 <Box
                                     style={{
