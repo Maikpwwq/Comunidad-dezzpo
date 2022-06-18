@@ -461,7 +461,7 @@ const Perfil = (props) => {
                         </Row>
                         <Row className="pt-4 m-0 w-100 d-flex align-items-start">
                             <Col md={7}>
-                                <Row className="p-4">
+                                <Row className="p-4 pb-0">
                                     <Col>
                                         <h3 className="headline-l">
                                             Calificaciones
@@ -470,7 +470,7 @@ const Perfil = (props) => {
                                         <CincoEstrellas />
                                     </Col>
                                 </Row>
-                                <Row className="p-4">
+                                <Row className="p-4 pb-0">
                                     <Col>
                                         <h3 className="headline-l">
                                             {userRol.rol === 1
@@ -487,94 +487,17 @@ const Perfil = (props) => {
                                         </p>
                                     </Col>
                                 </Row>
-                                <Row className="p-4">
+                                <Row className="p-4 pb-0">
                                     <Col>
                                         <h3 className="headline-l">
                                             Certificaciones
                                         </h3>
                                     </Col>
                                 </Row>
-                                <Row className="p-4">
-                                    <Col>
-                                        <h3 className="headline-l">Gallería</h3>
-                                        <Row className="w-100">
-                                            <span className="w-auto">
-                                                {userInfo.userGalleryUrl.map(
-                                                    (imagen, index) => {
-                                                        console.log(imagen)
-                                                        return (
-                                                            <Box
-                                                                component="img"
-                                                                src={imagen}
-                                                                alt="galleria-usuario"
-                                                                sx={{
-                                                                    height: 400,
-                                                                    display:
-                                                                        'block',
-                                                                    maxWidth: 400,
-                                                                    overflow:
-                                                                        'hidden',
-                                                                    width: '100%',
-                                                                }}
-                                                                style={{
-                                                                    borderRadius:
-                                                                        '5%',
-                                                                }}
-                                                            ></Box>
-                                                        )
-                                                    }
-                                                )}
-                                            </span>
-                                            {!consult && (
-                                                <label
-                                                    htmlFor="icon-button-file2"
-                                                    style={{
-                                                        position: 'relative',
-                                                        right: '50px',
-                                                        width: 'auto',
-                                                    }}
-                                                >
-                                                    <Input
-                                                        accept="image/*"
-                                                        id="icon-button-file2"
-                                                        type="file"
-                                                        onClick={
-                                                            updateGalleryPhoto
-                                                        }
-                                                    />
-                                                    <Button
-                                                        type="submit"
-                                                        id="galleryPhoto"
-                                                        name="galleryPhoto"
-                                                        variant="contained"
-                                                        component="span"
-                                                    >
-                                                        <PermMediaOutlinedIcon alt="+ Agregar foto a la galeria de usuario" />
-                                                    </Button>
-                                                </label>
-                                            )}
-                                        </Row>
-                                    </Col>
-                                </Row>
-                                <Row className="p-4">
-                                    {userInfo.userChannelUrl && (
-                                        <Row className="m-0 w-100">
-                                            <Col>
-                                                <Comentarios
-                                                    userID={userConsultId}
-                                                    channelUrl={
-                                                        userInfo.userChannelUrl
-                                                    }
-                                                    nickname={userInfo.userName}
-                                                />
-                                            </Col>
-                                        </Row>
-                                    )}
-                                </Row>
                             </Col>
                             <Col
                                 md={5}
-                                className="mt-4 pt-4 info-user_backgound"
+                                className="pt-4 pb-4 info-user_backgound"
                             >
                                 <Box
                                     style={{
@@ -631,6 +554,79 @@ const Perfil = (props) => {
                                     />
                                 </Box>
                             </Col>
+                        </Row>
+                        <Row className="p-0 m-0 w-100 d-flex align-items-start">
+                            <Row className="pt-4 pb-4 p-0">
+                                <Col className="p-0">
+                                    <h3 className="headline-l mb-4">
+                                        Gallería
+                                    </h3>
+                                    <Row className="w-100">
+                                        {userInfo.userGalleryUrl.map(
+                                            (imagen, index) => {
+                                                console.log(imagen)
+                                                return (
+                                                    <Box
+                                                        component="img"
+                                                        src={imagen}
+                                                        alt="galleria-usuario"
+                                                        sx={{
+                                                            height: 400,
+                                                            display: 'block',
+                                                            maxWidth: 400,
+                                                            overflow: 'hidden',
+                                                            width: '100%',
+                                                            borderRadius: '5%',
+                                                        }}
+                                                        className="p-2"
+                                                    ></Box>
+                                                )
+                                            }
+                                        )}
+                                        {!consult && (
+                                            <label
+                                                htmlFor="icon-button-file2"
+                                                style={{
+                                                    position: 'relative',
+                                                    right: '50px',
+                                                    width: 'auto',
+                                                }}
+                                            >
+                                                <Input
+                                                    accept="image/*"
+                                                    id="icon-button-file2"
+                                                    type="file"
+                                                    onClick={updateGalleryPhoto}
+                                                />
+                                                <Button
+                                                    type="submit"
+                                                    id="galleryPhoto"
+                                                    name="galleryPhoto"
+                                                    variant="contained"
+                                                    component="span"
+                                                >
+                                                    <PermMediaOutlinedIcon alt="+ Agregar foto a la galeria de usuario" />
+                                                </Button>
+                                            </label>
+                                        )}
+                                    </Row>
+                                </Col>
+                            </Row>
+                            <Row className="p-0">
+                                {userInfo.userChannelUrl && (
+                                    <Row className="p-0 m-0 w-100">
+                                        <Col className="p-0">
+                                            <Comentarios
+                                                userID={userConsultId}
+                                                channelUrl={
+                                                    userInfo.userChannelUrl
+                                                }
+                                                nickname={userInfo.userName}
+                                            />
+                                        </Col>
+                                    </Row>
+                                )}
+                            </Row>
                         </Row>
                     </Col>
                     {/* <Col className="col-2 h-100 fondoGris">SideContent</Col> */}

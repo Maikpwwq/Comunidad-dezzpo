@@ -61,13 +61,13 @@ export default function UserCard({ props }) {
 
     return (
         <Card className="mb-4" sx={{ maxWidth: 345 }}>
-            <CardMedia
+            {/* <CardMedia
                 component="img"
                 height="194"
                 image="http://placeimg.com/260/194/arch"
                 // src="http://placeimg.com/260/194/arch"
                 alt="Paella dish"
-            />
+            /> */}
             {/* TODO: Categorias*/}
             <CardHeader
                 avatar={
