@@ -142,7 +142,7 @@ const NuevoProyecto = (props) => {
     // TODO Crear funcion para leer los borradores de requerimientos desde firebase y desde local storage
 
     const goForward = () => {
-        if (activeStep < steps.length) {
+        if (activeStep <= steps.length) {
             let active = activeStep + 1
             setActiveStep(active)
         }
@@ -187,7 +187,7 @@ const NuevoProyecto = (props) => {
     }
 
     const steps = [
-        // Categorias de servicios - subcategoria
+        'Categoria/Subcategoria',
         'Registra los ajustes',
         'Programa la visita',
         'Registro',
@@ -281,7 +281,7 @@ const NuevoProyecto = (props) => {
                 {activeStep == 1 && (
                     <Col className="nuevoProyectoBuscador2 align-items-baseline">
                         <Col
-                            className="ms-4 pt-4 pb-4 ps-4 align-items-start"
+                            className="ms-4 pt-4 pb-4 ps-4 align-items-start opacidadNegro"
                             xl={6}
                             lg={8}
                             md={10}
@@ -305,7 +305,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectDescription"
                                 >
-                                    <Form.Label className="body-2">
+                                    <Form.Label className="body-2 text-white">
                                         Describe el tipo de servicio que
                                         necesitas *
                                     </Form.Label>
@@ -328,7 +328,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectSize"
                                 >
-                                    <Form.Label className="body-2">
+                                    <Form.Label className="body-2 text-white">
                                         Escoge el tamaño
                                     </Form.Label>
                                     <Form.Select
@@ -352,7 +352,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectProperty"
                                 >
-                                    <Form.Label className="body-2">
+                                    <Form.Label className="body-2 text-white">
                                         ¿Qué tipo de propiedad es?
                                     </Form.Label>
                                     <Form.Select
@@ -379,7 +379,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectRooms"
                                 >
-                                    <Form.Label className="body-2">
+                                    <Form.Label className="body-2 text-white">
                                         ¿Cuantas habitaciones y/o espacios seran
                                         intervenidos?, ejemplo ¿Cantidad de m2?
                                     </Form.Label>
@@ -399,7 +399,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectPlans"
                                 >
-                                    <Form.Label className="body-2">
+                                    <Form.Label className="body-2 text-white">
                                         ¿Han sido diseñados planos
                                         arquitectonicos para este proyecto?
                                     </Form.Label>
@@ -431,7 +431,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectPermissions"
                                 >
-                                    <Form.Label className="body-2">
+                                    <Form.Label className="body-2 text-white">
                                         ¿Cúal es el estado de los permisos para
                                         este proyecto?
                                     </Form.Label>
@@ -487,7 +487,7 @@ const NuevoProyecto = (props) => {
                 {activeStep == 2 && (
                     <Col className="nuevoProyectoBuscador3  align-items-baseline">
                         <Col
-                            className="ms-4 pt-4 pb-4 ps-4 align-items-start"
+                            className="ms-4 pt-4 pb-4 ps-4 align-items-start opacidadNegro"
                             xl={4}
                             lg={6}
                             md={8}
@@ -507,7 +507,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectBestSchedule"
                                 >
-                                    <Form.Label className="body-2">
+                                    <Form.Label className="body-2  text-white">
                                         ¿Con cuál disponibilidad de horario y
                                         tiempo cuenta usted para atender la
                                         prestación del servicio? *
@@ -535,7 +535,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectPostalCode"
                                 >
-                                    <Form.Label className="body-2">
+                                    <Form.Label className="body-2 text-white">
                                         ¿Cual es el codigo postal de la
                                         propiedad?
                                     </Form.Label>
@@ -563,7 +563,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectAtachments"
                                 >
-                                    <Form.Label className="body-2">
+                                    <Form.Label className="body-2 text-white">
                                         Cargar fotos imagenes y documentos
                                         relacionados.{' '}
                                     </Form.Label>
@@ -600,7 +600,7 @@ const NuevoProyecto = (props) => {
                     </Col>
                 )}
                 {/* Detalles de contacto */}
-                {activeStep == 2 && !hideRegister ? (
+                {activeStep == 3 && !hideRegister ? (
                     <Row className="nuevoProyectoMensaje w-100">
                         <Col className="p-4 col-10">
                             <h3 className="headline-xl textBlanco">
