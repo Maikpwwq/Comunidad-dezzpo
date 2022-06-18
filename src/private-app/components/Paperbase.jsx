@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { auth } from '../../firebase/firebaseClient'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -173,6 +174,8 @@ export default function Paperbase() {
     const [mobileOpen, setMobileOpen] = React.useState(false)
     const isSmUp = useMediaQuery(theme.breakpoints.up('sm'))
 
+    const user = auth.currentUser || {}
+
     const localRole = localStorage.getItem('role')
     console.log(JSON.parse(localRole))
 
@@ -184,24 +187,30 @@ export default function Paperbase() {
         <ThemeProvider theme={theme}>
             <Box sx={{ display: 'flex', minHeight: '100vh' }}>
                 <CssBaseline />
-                <Box
-                    component="nav"
-                    sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-                >
-                    {isSmUp ? null : (
+                {user.uid && (
+                    <Box
+                        component="nav"
+                        sx={{
+                            width: { sm: drawerWidth },
+                            flexShrink: { sm: 0 },
+                        }}
+                    >
+                        {isSmUp ? null : (
+                            <Navigator
+                                PaperProps={{ style: { width: drawerWidth } }}
+                                variant="temporary"
+                                open={mobileOpen}
+                                onClose={handleDrawerToggle}
+                            />
+                        )}
+
                         <Navigator
                             PaperProps={{ style: { width: drawerWidth } }}
-                            variant="temporary"
-                            open={mobileOpen}
-                            onClose={handleDrawerToggle}
+                            sx={{ display: { sm: 'block', xs: 'none' } }}
                         />
-                    )}
+                    </Box>
+                )}
 
-                    <Navigator
-                        PaperProps={{ style: { width: drawerWidth } }}
-                        sx={{ display: { sm: 'block', xs: 'none' } }}
-                    />
-                </Box>
                 <Box
                     sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}
                     style={{ overflowX: 'auto' }}

@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 // Create browser history, for navigation a la single page apps
 import { createBrowserHistory } from 'history'
-
+import ScrollToTop from './app/components/ScrollToTop'
 import Rutas from './router'
 import './index.scss'
 // import '../public/assets/css/icomoon/style.css'
@@ -26,6 +26,7 @@ const containerReactApp = document.getElementById('app')
 const root = createRoot(containerReactApp)
 root.render(
     <Router history={history}>
+        <ScrollToTop />
         <Rutas />
     </Router>
 )

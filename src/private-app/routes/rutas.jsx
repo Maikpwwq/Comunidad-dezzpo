@@ -27,6 +27,8 @@ import Directorio_Requerimientos from '../pages/directorio-requerimientos/Direct
 import Requerimiento from '../pages/requerimiento/Requerimiento'
 import Suscripciones from '../pages/suscripciones/Suscripciones'
 
+import ApendiceCostos from '../../app/pages/apendice-costos/Apendice_Costos'
+
 class Rutas extends React.Component {
     render() {
         // const location = useLocation()
@@ -38,6 +40,10 @@ class Rutas extends React.Component {
                     <Route path="/perfil" element={<Perfil></Perfil>} />
                     <Route path="/perfil/:id" element={<Perfil></Perfil>} />
                     <Route path="/ajustes" element={<Ajustes></Ajustes>} />
+                    <Route
+                        path="/apendice-costos"
+                        element={<ApendiceCostos></ApendiceCostos>}
+                    />
                     <Route
                         path="/biblioteca"
                         element={<Biblioteca></Biblioteca>}

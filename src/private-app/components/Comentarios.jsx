@@ -130,8 +130,8 @@ const Comentarios = (props) => {
 
     return (
         <>
-            <Container fixed>
-                <Box sx={{ bgcolor: '#cfe8fc', height: '200px' }}>
+            <Container fixed className="p-2">
+                <Box sx={{ bgcolor: '#cfe8fc' }}>
                     <SendbirdProvider
                         appId={appId} // Sendbird application ID.
                         userId={userID} // user ID.

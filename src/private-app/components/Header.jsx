@@ -5,6 +5,7 @@ import SearchBar from './SearchBar'
 import '../../../public/assets/cssPrivateApp/header.css'
 
 //imagenes
+import LogoMenuComunidadDezzpo from '../../../public/assets/img/IsologoUserApp.png'
 import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
 
 import PropTypes from 'prop-types'
@@ -34,58 +35,93 @@ function Header(props) {
     const handleHelp = () => {
         navigate('/ayuda-pqrs')
     }
+    const handleShowNotifications = () => {}
     // console.log(user)
     return (
         <React.Fragment>
             <AppBar color="primary" position="sticky" elevation={0}>
                 <Toolbar>
-                    <Grid container spacing={1} alignItems="center">
-                        <Grid
-                            sx={{ display: { sm: 'none', xs: 'block' } }}
-                            item
-                        >
-                            <IconButton
-                                color="inherit"
-                                aria-label="open drawer"
-                                onClick={onDrawerToggle}
-                                edge="start"
+                    {user.uid ? (
+                        <Grid container spacing={1} alignItems="center">
+                            <Grid
+                                sx={{ display: { sm: 'none', xs: 'block' } }}
+                                item
                             >
-                                <MenuIcon />
-                            </IconButton>
-                        </Grid>
-                        <Grid item xs />
-                        <Grid item>
-                            <Link
-                                href="/"
-                                variant="body2"
-                                sx={{
-                                    textDecoration: 'none',
-                                    color: lightColor,
-                                    '&:hover': {
-                                        color: 'common.white',
-                                    },
-                                }}
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
-                                Go to docs
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Tooltip title="Alerts • No alerts">
-                                <IconButton color="inherit">
-                                    <Badge badgeContent={17} color="error">
-                                        <NotificationsIcon />
-                                    </Badge>
+                                <IconButton
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    onClick={onDrawerToggle}
+                                    edge="start"
+                                >
+                                    <MenuIcon />
                                 </IconButton>
-                            </Tooltip>
+                            </Grid>
+                            <Grid sx={{}} item>
+                                <NavLink to="/">
+                                    <img
+                                        src={LogoMenuComunidadDezzpo}
+                                        alt="Logo Comunidad Dezzpo"
+                                        style={{ padding: '3px 10px' }}
+                                        height="55px"
+                                        width="200px"
+                                    />
+                                </NavLink>
+                            </Grid>
+                            <Grid item xs />
+                            <Grid item>
+                                <Link
+                                    href="/legal/"
+                                    variant="body2"
+                                    sx={{
+                                        textDecoration: 'none',
+                                        color: lightColor,
+                                        '&:hover': {
+                                            color: 'common.white',
+                                        },
+                                    }}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >
+                                    Documentación
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Tooltip title="Alerts • No alerts">
+                                    <IconButton color="inherit">
+                                        <Badge badgeContent={17} color="error">
+                                            <NotificationsIcon
+                                                onClick={
+                                                    handleShowNotifications
+                                                }
+                                            />
+                                        </Badge>
+                                    </IconButton>
+                                </Tooltip>
+                            </Grid>
+                            <Grid item>
+                                <IconButton color="inherit" sx={{ p: 0.5 }}>
+                                    <Avatar
+                                        src={userPhotoUrl}
+                                        alt="My Avatar"
+                                    />
+                                </IconButton>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <IconButton color="inherit" sx={{ p: 0.5 }}>
-                                <Avatar src={userPhotoUrl} alt="My Avatar" />
-                            </IconButton>
+                    ) : (
+                        <Grid container spacing={1} alignItems="center">
+                            <Grid sx={{}} item>
+                                <NavLink to="/">
+                                    <img
+                                        src={LogoMenuComunidadDezzpo}
+                                        alt="Logo Comunidad Dezzpo"
+                                        style={{ padding: '3px 10px' }}
+                                        height="55px"
+                                        width="200px"
+                                    />
+                                </NavLink>
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    )}
                 </Toolbar>
             </AppBar>
             <AppBar
@@ -106,7 +142,7 @@ function Header(props) {
                                 <SearchBar></SearchBar>
                             </Typography>
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                             <Button
                                 sx={{ borderColor: lightColor }}
                                 variant="outlined"
@@ -125,7 +161,7 @@ function Header(props) {
                                     <HelpIcon />
                                 </IconButton>
                             </Tooltip>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </Toolbar>
             </AppBar>

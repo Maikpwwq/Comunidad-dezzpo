@@ -48,6 +48,14 @@ const MenuComunidad = (props) => {
                                 Directorio{' '}
                             </NavLink>
 
+                            {/* <NavLink
+                                to="/app/apendice-costos"
+                                className="botonNavLink body-2"
+                            >
+                                {' '}
+                                Apendice Costos{' '}
+                            </NavLink> */}
+
                             <NavLink
                                 to="/ingreso"
                                 className="botonNavLink body-2"
