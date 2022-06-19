@@ -6,6 +6,7 @@ import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
 import { updateProfile } from 'firebase/auth'
 
 import '../../../../public/assets/cssPrivateApp/ajustes.css'
+import Ubicacion from '../../../app/pages/ubicacion/Ubicacion'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -15,6 +16,7 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import FormGroup from '@mui/material/FormGroup'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
+import Modal from '@mui/material/Modal'
 
 const Ajustes = (props) => {
     const user = auth.currentUser || {}
@@ -27,6 +29,10 @@ const Ajustes = (props) => {
         rol: selectRole,
     })
     console.log(userRol.rol)
+
+    const [open, setOpen] = useState(false)
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
 
     const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
     const usersComCalRef = collection(
@@ -126,7 +132,7 @@ const Ajustes = (props) => {
         if (userRol.rol === 1) {
             const snap = userProResToFirestore(userEditInfo, user.uid)
             snap.then((docSnap) => {
-                console.log(docSnap) 
+                console.log(docSnap)
             })
         } else if (userRol.rol === 2) {
             const snap = userComCalToFirestore(userEditInfo, user.uid)
@@ -323,7 +329,21 @@ const Ajustes = (props) => {
                             </div>
                         </Row>
                     </Col>
-
+                    <Button className="body-2" onClick={handleOpen}>
+                        {'Registrar ubicación'}
+                    </Button>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Ubicacion
+                            setLocInfo={setUserEditInfo}
+                            locInfo={userEditInfo}
+                            setOpen={setOpen}
+                        />
+                    </Modal>
                     <Col className="col-10 pt-4">
                         <p className="p-description">Confirma tu identidad</p>
                         <p className="body-1">

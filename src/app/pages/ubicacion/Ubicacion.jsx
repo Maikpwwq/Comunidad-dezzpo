@@ -10,12 +10,22 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import PropTypes from 'prop-types'
 
-const Ubicacion = () => {
+const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
     const navigate = useNavigate()
     const googleApiKey = process.env.REACT_APP_GOOGLE_APIKEY
-    const [clicks, setClicks] = useState([])
-    let map
+    const [clicks, setClicks] = useState({
+        lat: 4.624335,
+        lng: -74.063644,
+    })
+
+    const [locationInfo, setLocationInfo] = useState({
+        city: '',
+        street: '',
+        postalCode: '',
+    })
+
     const loader = new Loader({
         apiKey: googleApiKey,
         version: 'weekly',
@@ -31,31 +41,90 @@ const Ubicacion = () => {
         auth_referrer_policy: 'origin',
     }
 
-    loader
-        .load()
-        .then((google) => {
-            map = new google.maps.Map(
-                document.getElementById('map'),
-                mapOptions
-            )
-            map.addListener('click', (e) => {
-                const marker = new google.maps.Marker({
-                    position: e.latLng,
-                    map: map,
+    let map
+    useEffect(() => {
+        loader
+            .load()
+            .then((google) => {
+                map = new google.maps.Map(
+                    document.getElementById('map'),
+                    mapOptions
+                )
+                map.addListener('click', (e) => {
+                    const marker = new google.maps.Marker({
+                        position: e.latLng,
+                        map: map,
+                    })
+                    if (e.latLng.toJSON()) {
+                        const coordenadas = e.latLng.toJSON()
+                        // const coordenadas = JSON.stringify(
+                        //     e.latLng.toJSON(),
+                        //     null,
+                        //     2
+                        // )
+                        console.log('coordenadas', coordenadas)
+                        setClicks({
+                            lat: coordenadas.lat,
+                            lng: coordenadas.lng,
+                        })
+                    }
                 })
-                // if (e.latLng.toJSON()) {
-                //     setClicks([...clicks, e.latLng.toJSON()])
-                //     console.log(clicks)
-                // }
-                // const coordenadas = JSON.stringify(e.latLng.toJSON(), null, 2)
+                if (clicks.lat !== 4.624335) {
+                    const geocoder = new google.maps.Geocoder()
+                    const infowindow = new google.maps.InfoWindow()
+                    console.log(typeof clicks.lat, typeof clicks.lng)
+                    geocoder.geocode({ location: clicks }).then((response) => {
+                        if (response.results[0]) {
+                            map.setZoom(8)
+                            const marker = new google.maps.Marker({
+                                position: clicks,
+                                map: map,
+                            })
+                            const formattedAddress =
+                                response.results[0].formatted_address
+                            const ZipCode =
+                                response.results[0].address_components[7]
+                                    .long_name
+                            console.log(ZipCode)
+                            infowindow.setContent(formattedAddress)
+                            setLocationInfo({
+                                ...locationInfo,
+                                street: formattedAddress,
+                                postalCode: ZipCode,
+                            })
+                            infowindow.open(map, marker)
+                        } else {
+                            window.alert('No results found')
+                        }
+                    })
+                }
             })
+            .catch((e) => {
+                console.log(e)
+            })
+    }, [clicks])
+
+    useEffect(() => {
+        if (locInfo) {
+            setLocInfo({
+                ...locInfo,
+                draftCity: locationInfo.city,
+                draftDirection: locationInfo.street,
+                draftPostalCode: locationInfo.postalCode,
+            })
+            console.log('UbicationChanged')
+        }
+    }, [locationInfo])
+
+    const handleChange = (event) => {
+        setLocationInfo({
+            ...locationInfo,
+            [event.target.name]: event.target.value,
         })
-        .catch((e) => {
-            console.log(e)
-        })
+    }
 
     const handleConsult = () => {
-        navigate('/app/perfil')
+        setOpen(false)
     }
 
     return (
@@ -86,6 +155,9 @@ const Ubicacion = () => {
                                     onPlaceSelected={(place) =>
                                         console.log(place)
                                     }
+                                    name="city"
+                                    // value={locationInfo.city}
+                                    // onChange={handleChange}
                                 />
 
                                 {/* <Form.Select name="city" id="city">
@@ -104,6 +176,8 @@ const Ubicacion = () => {
                                     type="text"
                                     placeholder="Registre la dirección"
                                     name="street"
+                                    value={locationInfo.street}
+                                    onChange={handleChange}
                                 />
                             </Form.Group>
                             <Form.Group>
@@ -112,7 +186,7 @@ const Ubicacion = () => {
                                     <Button
                                         className="btn-round btn-high"
                                         variant="primary"
-                                        type="submit"
+                                        // type="submit"
                                         onClick={handleConsult}
                                     >
                                         Confirmar dirección
@@ -160,5 +234,11 @@ const Ubicacion = () => {
 //     }, [marker, options])
 //     return null
 // }
+
+Ubicacion.propTypes = {
+    setOpen: PropTypes.func,
+    setLocInfo: PropTypes.func,
+    locInfo: PropTypes.object,
+}
 
 export default Ubicacion

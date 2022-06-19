@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -11,10 +11,11 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import { red } from '@mui/material/colors'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import PropTypes from 'prop-types'
 
-const SubCategorias = ({ props }) => {
+const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
     const navigate = useNavigate()
-
+    const [selected, setSelected] = useState(true)
     const {
         subCategoria,
         subCategoriaDescription,
@@ -23,9 +24,26 @@ const SubCategorias = ({ props }) => {
         subCategoriaCantidad,
     } = props
 
-    const handleSeleccionar = () => {
+    const handleSeleccionar = (e) => {
+        e.preventDefault()
         // navigate('/app/perfil', { state: { id: userId } })
         // navigate(`/app/perfil/${userId}`)
+        console.log(e, selected)
+        setSelected(!selected)
+        if (selected) {
+            const previewSelected = categoriaInfo.selected
+            previewSelected.push(props)
+            // const selectedCategories = new Array(previewSelected, props)
+            setCategoriaInfo({ ...categoriaInfo, selected: previewSelected })
+            console.log(categoriaInfo)
+        } else {
+            const previewSelected = categoriaInfo.selected
+            const deleteSelected = previewSelected.indexOf(props)
+            previewSelected.splice(deleteSelected, 1)
+            // const selectedCategories = new Array(previewSelected, props)
+            setCategoriaInfo({ ...categoriaInfo, selected: previewSelected })
+            console.log(categoriaInfo)
+        }
     }
 
     return (
@@ -58,21 +76,22 @@ const SubCategorias = ({ props }) => {
             </CardContent>
             <CardActions disableSpacing>
                 <Button className="" onClick={handleSeleccionar}>
-                    Seleccionar
+                    {selected ? 'Seleccionar' : 'Quitar'}
                 </Button>
             </CardActions>
         </Card>
     )
 }
 
-SubCategorias.defaultProps = {
-    props: {
-        subCategoria: '',
-        subCategoriaDescription: '',
-        subCategoriaPrecio: '',
-        subCategoriaPhotoUrl: '',
-        subCategoriaCantidad: '',
-    },
+SubCategorias.propTypes = {
+    subCategoria: PropTypes.string,
+    subCategoriaDescription: PropTypes.string,
+    subCategoriaPrecio: PropTypes.string,
+    subCategoriaPhotoUrl: PropTypes.string,
+    subCategoriaCantidad: PropTypes.string,
+    props: PropTypes.object,
+    setCategoriaInfo: PropTypes.func,
+    categoriaInfo: PropTypes.object,
 }
 
 export default SubCategorias

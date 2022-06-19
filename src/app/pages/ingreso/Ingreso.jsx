@@ -103,7 +103,7 @@ const Ingreso = (props) => {
                                 </NavLink>
                             </p>
                             <br />
-                            <ul className="align-items-center">
+                            {/* <ul className="align-items-center">
                                 <li className="body-1">
                                     <Button className="btn btn-round btn-middle">
                                         INGRESAR CON FACEBOOK
@@ -115,7 +115,7 @@ const Ingreso = (props) => {
                                     </Button>
                                 </li>
                             </ul>
-                            <br />
+                            <br /> */}
                             <Button
                                 className="BOTON-TEXT textBlanco"
                                 variant="primary"

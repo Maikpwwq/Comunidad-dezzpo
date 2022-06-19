@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore'
 import { firestore } from '../../../firebase/firebaseClient'
 import '../../../../public/assets/css/nuevo_proyecto.css'
+import Ubicacion from '../ubicacion/Ubicacion'
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
 import Registro from '../../pages/registro/Registro'
 import SubCategorias from '../../pages/categorias/Sub_Categorias'
@@ -22,6 +23,13 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import Modal from '@mui/material/Modal'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+
 import { styled } from '@mui/material/styles'
 
 const NuevoProyecto = (props) => {
@@ -43,9 +51,12 @@ const NuevoProyecto = (props) => {
     console.log('requerimiento-local', requerimiento)
     // console.log(requerimiento.draftId)
     const hideRegister = auth
-    const _firestore = firestore 
+    const _firestore = firestore
     // categoria
-    const [categoriaInfo, setCategoriaInfo] = useState([])
+    const [categoriaInfo, setCategoriaInfo] = useState({
+        selected: [],
+        data: [],
+    })
     const categoriaRef = collection(_firestore, 'categoriasServicios')
     const draftRef = collection(_firestore, 'drafts')
 
@@ -73,6 +84,10 @@ const NuevoProyecto = (props) => {
         draftPostalCode: '',
     })
 
+    const [open, setOpen] = useState(false)
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
+
     const draftToFirestore = async (updateInfo, projectID) => {
         await setDoc(doc(draftRef, projectID), updateInfo)
     }
@@ -91,7 +106,7 @@ const NuevoProyecto = (props) => {
             // 'aPTAljOeD48FbniBg6Lw' main document categories
             const subCategoriaRef = collection(
                 doc(categoriaRef, 'aPTAljOeD48FbniBg6Lw'),
-                draftCategory
+                draftInfo.draftCategory
             )
             const categoriaData = await getDocs(subCategoriaRef)
             return categoriaData
@@ -112,9 +127,14 @@ const NuevoProyecto = (props) => {
                     const data = docSnap.docs.map((element) => ({
                         ...element.data(),
                     }))
-                    console.log(data, categoriaProfesional)
+                    console.log(
+                        data,
+                        draftInfo.draftCategory,
+                        categoriaProfesional
+                    )
                     if (data.length > 0) {
                         setCategoriaInfo({
+                            ...categoriaInfo,
                             data,
                         })
                         console.log(categoriaInfo)
@@ -129,7 +149,7 @@ const NuevoProyecto = (props) => {
                 console.log(error)
             })
         //} categoriaProfesional
-    }, [])
+    }, [draftInfo])
 
     const handleSave = () => {
         console.log(draftInfo)
@@ -137,6 +157,7 @@ const NuevoProyecto = (props) => {
         snap.then((docSnap) => {
             console.log(docSnap)
         })
+        goForward()
     }
 
     // TODO Crear funcion para leer los borradores de requerimientos desde firebase y desde local storage
@@ -148,26 +169,6 @@ const NuevoProyecto = (props) => {
         }
         // TODO Almacenar requerimiento en local storage hasta que se realice el almacenamiento final
         localStorage.requerimiento = JSON.stringify(draftInfo)
-    }
-
-    const handleChangeInfo = (event) => {
-        event.preventDefault()
-        console.log('Detecto Nuevo proyecto:', event)
-        // console.log(draftInfo)
-        // setDraftInfo({
-        //     ...draftInfo,
-        //     [event.target.name]: event.target.value,
-        // })
-    }
-
-    const handleSubCategoria = (event) => {
-        event.preventDefault()
-        console.log('Detecto Subcategoria:', event)
-        // console.log(draftInfo)
-        // setDraftInfo({
-        //     ...draftInfo,
-        //     [event.target.name]: event.target.value,
-        // })
     }
 
     const handleChange = (event) => {
@@ -229,7 +230,8 @@ const NuevoProyecto = (props) => {
                             >
                                 <BuscadorNuevoProyecto
                                     data={state}
-                                    onChange={handleChangeInfo}
+                                    setDraftInfo={setDraftInfo}
+                                    draftInfo={draftInfo}
                                 ></BuscadorNuevoProyecto>
                             </Col>
                         </Row>
@@ -243,8 +245,11 @@ const NuevoProyecto = (props) => {
                                                 <SubCategorias
                                                     key={index}
                                                     props={item}
-                                                    onChange={
-                                                        handleSubCategoria
+                                                    setCategoriaInfo={
+                                                        setCategoriaInfo
+                                                    }
+                                                    categoriaInfo={
+                                                        categoriaInfo
                                                     }
                                                 />
                                             )
@@ -253,6 +258,68 @@ const NuevoProyecto = (props) => {
                                         <></>
                                     )}
                                 </Row>
+                                <Col>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>
+                                                    Sub Categoria
+                                                </TableCell>
+                                                <TableCell>
+                                                    Unidad Medida
+                                                </TableCell>
+                                                <TableCell>
+                                                    Description
+                                                </TableCell>
+                                                <TableCell>
+                                                    Precio unitario
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {categoriaInfo.selected.length >
+                                                0 &&
+                                                categoriaInfo.selected.map(
+                                                    ({
+                                                        subCategoria,
+                                                        subCategoriaCantidad,
+                                                        subCategoriaDescription,
+                                                        subCategoriaPhotoUrl,
+                                                        subCategoriaPrecio,
+                                                    }) => {
+                                                        return (
+                                                            <TableRow
+                                                                key={
+                                                                    subCategoria
+                                                                }
+                                                            >
+                                                                <TableCell>
+                                                                    {
+                                                                        subCategoria
+                                                                    }
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {
+                                                                        subCategoriaCantidad
+                                                                    }
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {
+                                                                        subCategoriaDescription
+                                                                    }
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {
+                                                                        subCategoriaPrecio
+                                                                    }
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        )
+                                                    }
+                                                )}
+                                        </TableBody>
+                                    </Table>
+                                </Col>
                             </Col>
                         </Row>
                         <Col className="col-10">
@@ -381,7 +448,7 @@ const NuevoProyecto = (props) => {
                                 >
                                     <Form.Label className="body-2 text-white">
                                         ¿Cuantas habitaciones y/o espacios seran
-                                        intervenidos?, ejemplo ¿Cantidad de m2?
+                                        intervenidos?
                                     </Form.Label>
                                     <Form.Control
                                         type="text"
@@ -488,11 +555,11 @@ const NuevoProyecto = (props) => {
                     <Col className="nuevoProyectoBuscador3  align-items-baseline">
                         <Col
                             className="ms-4 pt-4 pb-4 ps-4 align-items-start opacidadNegro"
-                            xl={4}
+                            xl={5}
                             lg={6}
                             md={8}
-                            sm={10}
-                            xs={10}
+                            sm={12}
+                            xs={12}
                         >
                             <p className="p-description">
                                 Cómo, dónde y cuándo{' '}
@@ -549,14 +616,19 @@ const NuevoProyecto = (props) => {
                                     <Form.Text className="text-muted">
                                         Nos permitira validar comerciantes
                                         profesionales activos en la zona o bien
-                                        registra tu dirección{' '}
-                                        <NavLink
+                                        registra tu dirección.{' '}
+                                        <Button
+                                            className="body-2"
+                                            onClick={handleOpen}
+                                        >
+                                            {', aquí'}
+                                        </Button>
+                                        {/* <NavLink
                                             className="body-2"
                                             to="/ubicacion"
                                         >
                                             {', aquí'}
-                                        </NavLink>
-                                        .
+                                        </NavLink> */}
                                     </Form.Text>
                                 </Form.Group>
                                 <Form.Group
@@ -574,6 +646,18 @@ const NuevoProyecto = (props) => {
                                         type="file"
                                     />
                                 </Form.Group>
+                                <Modal
+                                    open={open}
+                                    onClose={handleClose}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                >
+                                    <Ubicacion
+                                        setLocInfo={setDraftInfo}
+                                        locInfo={draftInfo}
+                                        setOpen={setOpen}
+                                    />
+                                </Modal>
                                 <Col className="col-10">
                                     <Row className="pt-4 pb-4 w-100">
                                         <Button
@@ -611,8 +695,8 @@ const NuevoProyecto = (props) => {
                                 contactaran para aplicar con una cotización a tu
                                 proyecto. <br />
                                 Para garantizar la mejor respuesta asegúrate que
-                                tus datos son exactos, solo compartiremos tu
-                                numero con los comerciantes calificados
+                                tus datos son exactos, solo compartiremos tu{' '}
+                                <br /> numero con los comerciantes calificados
                                 interesados, por favor responde a su llamada.
                             </p>
                         </Col>
