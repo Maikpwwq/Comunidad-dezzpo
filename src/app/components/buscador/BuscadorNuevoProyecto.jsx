@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import '../../../../public/assets/css/buscador_nuevos_proyectos.css'
 import IcoMoon from 'react-icomoon'
@@ -9,8 +9,9 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
+import PropTypes from 'prop-types'
 
-const BuscadorNuevoProyecto = ({ data }) => {
+const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
     const navigate = useNavigate()
     const { categoriaProfesional, tipoProyecto } = data || {}
     // const { paramCategoriaProfesional, paramTipoProyecto } = useParams()
@@ -19,6 +20,17 @@ const BuscadorNuevoProyecto = ({ data }) => {
         categoriaProfesional: categoriaProfesional || '', // || paramCategoriaProfesional
         tipoProyecto: tipoProyecto || '', // || paramTipoProyecto
     })
+
+    useEffect(() => {
+        if (draftInfo) {
+            setDraftInfo({
+                ...draftInfo,
+                draftCategory: projectData.categoriaProfesional,
+                draftProject: projectData.tipoProyecto,
+            })
+            console.log('BuscadorChanged')
+        }
+    }, [projectData])
 
     const handleChange = (event) => {
         setProjectData({
@@ -499,11 +511,10 @@ const BuscadorNuevoProyecto = ({ data }) => {
     )
 }
 
-BuscadorNuevoProyecto.defaultProps = {
-    data: {
-        categoriaProfesional: '',
-        tipoProyecto: '',
-    },
+BuscadorNuevoProyecto.propTypes = {
+    data: PropTypes.object,
+    setDraftInfo: PropTypes.func,
+    draftInfo: PropTypes.object,
 }
 
 export default BuscadorNuevoProyecto

@@ -11,6 +11,7 @@ import { es } from 'date-fns/locale'
 import '../../../../public/assets/cssPrivateApp/perfil.css'
 // import ProfilePhoto from '../../../../public/assets/img/Profile.png'
 // import Bogota from '../../../../public/assets/img/Bogota.png'
+import MapaPerfil from './MapaPerfil'
 import CincoEstrellas from './CincoEstrellas'
 import Comentarios from '../../../private-app/components/Comentarios'
 // react-bootrstrap
@@ -22,7 +23,7 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
-
+ 
 const Input = styled('input')({
     // display: 'none',
     visibility: 'hidden',
@@ -93,14 +94,14 @@ const Perfil = (props) => {
         userName: '',
         userMail: '',
         userPhone: '',
-        userChannelUrl: null,
+        userChannelUrl: undefined,
         userPhotoUrl: '',
         userGalleryUrl: [],
         userId: '',
         userJoined: '',
         userProfession: '',
         userExperience: '',
-        userUbication: '',
+        userDirection: '',
         userRazonSocial: '',
         userIdentification: '',
         userDescription: '',
@@ -319,8 +320,8 @@ const Perfil = (props) => {
                                 userExperience: data.userExperience
                                     ? data.userExperience
                                     : '',
-                                userUbication: data.userUbication
-                                    ? data.userUbication
+                                userDirection: data.userDirection
+                                    ? data.userDirection
                                     : '',
                                 userRazonSocial: data.userRazonSocial
                                     ? data.userRazonSocial
@@ -418,7 +419,7 @@ const Perfil = (props) => {
                                             name="userRazonSocial"
                                             label="Razón Social"
                                             value={userInfo.userRazonSocial}
-                                            defaultValue="Razón Social"
+                                            // defaultValue="Razón Social"
                                             variant="filled"
                                             className="w-100"
                                         />
@@ -426,7 +427,7 @@ const Perfil = (props) => {
                                             id="userProfession"
                                             label="Profesión"
                                             value={userInfo.userProfession}
-                                            defaultValue="@PROFESIÓN"
+                                            // defaultValue="@PROFESIÓN"
                                             variant="filled"
                                             className="w-100"
                                         />
@@ -435,7 +436,7 @@ const Perfil = (props) => {
                                             name="userExperience"
                                             label="Experiencia"
                                             value={userInfo.userExperience}
-                                            defaultValue="@TiempoExperiencia"
+                                            // defaultValue="@TiempoExperiencia"
                                             variant="filled"
                                             className="w-100"
                                         />
@@ -443,22 +444,8 @@ const Perfil = (props) => {
                                 </Col>
                             </Col>
                         </Row>
-                        <Row className="mapa-ubicacion m-0 w-100 d-flex justify-content-start align-items-end">
-                            {/* <img
-                                className="p-0"
-                                src={Bogota}
-                                alt="Mapa Ubicacion"
-                                width="100%"
-                                height="330px"
-                            /> */}
-                            <Col className="col-6 p-0 align-items-start">
-                                <span className="p-4 p-description textBlanco fondoVerde">
-                                    {userInfo.userRazonSocial} <br />
-                                    {userInfo.userPhone} <br />
-                                    {userInfo.userMail} <br />
-                                </span>
-                            </Col>
-                        </Row>
+                        {/* p-description textBlanco fondoVerde */}
+                        <MapaPerfil userInfo={userInfo} />
                         <Row className="pt-4 m-0 w-100 d-flex align-items-start">
                             <Col md={7}>
                                 <Row className="p-4 pb-0">
@@ -517,7 +504,7 @@ const Perfil = (props) => {
                                         name="userName"
                                         label="Nombre de usuario"
                                         value={userInfo.userName}
-                                        defaultValue="@NOMBRE USUARIO"
+                                        // defaultValue="@NOMBRE USUARIO"
                                         variant="filled"
                                     />
                                     <TextField
@@ -525,15 +512,15 @@ const Perfil = (props) => {
                                         name="userJoined"
                                         label="Activo desde"
                                         value={userInfo.userJoined}
-                                        defaultValue="@SeUnioDesdeHace"
+                                        // defaultValue="@SeUnioDesdeHace"
                                         variant="filled"
                                     />
                                     <TextField
-                                        id="userUbication"
-                                        name="userUbication"
+                                        id="userDirection"
+                                        name="userDirection"
                                         label="Ubicación"
-                                        value={userInfo.userUbication}
-                                        defaultValue="ubicación"
+                                        value={userInfo.userDirection}
+                                        // defaultValue="ubicación"
                                         variant="filled"
                                     />
                                     <TextField
@@ -541,7 +528,7 @@ const Perfil = (props) => {
                                         name="userMail"
                                         label="Correo de usuario"
                                         value={userInfo.userMail}
-                                        defaultValue="@CORREO USUARIO"
+                                        // defaultValue="@CORREO USUARIO"
                                         variant="filled"
                                     />
                                     <TextField
@@ -549,7 +536,7 @@ const Perfil = (props) => {
                                         label="Celular"
                                         name="userPhone"
                                         value={userInfo.userPhone}
-                                        defaultValue="Celular"
+                                        // defaultValue="Celular"
                                         variant="filled"
                                     />
                                 </Box>
@@ -567,6 +554,7 @@ const Perfil = (props) => {
                                                 console.log(imagen)
                                                 return (
                                                     <Box
+                                                        key={index}
                                                         component="img"
                                                         src={imagen}
                                                         alt="galleria-usuario"

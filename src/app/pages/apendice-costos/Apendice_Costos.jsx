@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
+import TableBody from '@mui/material/TableBody' 
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
@@ -192,6 +192,7 @@ const ApendiceCostos = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>subCategoria</TableCell>
+                                <TableCell>Unidad Medida</TableCell>
                                 <TableCell>Description</TableCell>
                                 <TableCell>Precio unitario</TableCell>
                             </TableRow>
@@ -209,6 +210,9 @@ const ApendiceCostos = () => {
                                         <TableRow key={subCategoria}>
                                             <TableCell>
                                                 {subCategoria}
+                                            </TableCell>
+                                            <TableCell>
+                                                {subCategoriaCantidad}
                                             </TableCell>
                                             <TableCell>
                                                 {subCategoriaDescription}

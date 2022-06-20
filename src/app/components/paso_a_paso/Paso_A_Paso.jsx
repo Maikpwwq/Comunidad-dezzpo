@@ -8,9 +8,10 @@ import StepLabel from '@mui/material/StepLabel'
 import StepConnector, {
     stepConnectorClasses,
 } from '@mui/material/StepConnector'
-import SettingsIcon from '@mui/icons-material/Settings'
-import GroupAddIcon from '@mui/icons-material/GroupAdd'
-import VideoLabelIcon from '@mui/icons-material/VideoLabel'
+import CategoryIcon from '@mui/icons-material/Category'
+import BuildCircleIcon from '@mui/icons-material/BuildCircle'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+import LoginIcon from '@mui/icons-material/Login'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -63,9 +64,10 @@ function ColorlibStepIcon(props) {
     const { active, completed, className } = props
 
     const icons = {
-        1: <SettingsIcon />,
-        2: <GroupAddIcon />,
-        3: <VideoLabelIcon />,
+        1: <CategoryIcon />,
+        2: <BuildCircleIcon />,
+        3: <CalendarTodayIcon />,
+        4: <LoginIcon />,
     }
 
     return (

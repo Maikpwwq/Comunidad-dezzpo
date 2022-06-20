@@ -16,3 +16,9 @@
     height: 27px;
     text-align: left;
 }
+.gm-style-iw-d {
+    color: black !important;
+}
+.pac-container {
+    z-index: 1500 !important;
+}

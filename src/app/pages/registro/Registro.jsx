@@ -5,12 +5,15 @@ import withSendBird from '@sendbird/uikit-react/withSendBird'
 import SendbirdSelectors from '@sendbird/uikit-react/sendBirdSelectors'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { auth, firestore } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+} from 'firebase/auth'
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { format } from 'date-fns'
 
 import '../../../../public/assets/css/registro.css'
-
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -20,13 +23,20 @@ import Form from 'react-bootstrap/Form'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 
+// const styles = () => ({
+//     selectRolBtn: {
+//         backgroundColor: '#2283bd',
+//         '&:hover': { backgroundColor: '#2594c2' },
+//     },
+// })
+
 const Registro = (props) => {
     const { showLogo, connect, createChannel, sbSdk } = props
 
     // useEffect(() => {
     //     conectarSB()
     // }, [connect])
-
+    const googleProvider = new GoogleAuthProvider()
     const _firestore = firestore
     // const usersRef = collection(_firestore, 'users')
     const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
@@ -36,10 +46,10 @@ const Registro = (props) => {
     )
 
     const [send, setSend] = useState(false)
-    const [userSignupEmail, setEmail] = useState(null)
+    const [userSignupEmail, setEmail] = useState(undefined)
     const [userSignupPassword, setPassword] = useState('')
-    const [userSignupRol, setRol] = useState(null)
-    const [channelUrl, setChannelUrl] = useState(null)
+    const [userSignupRol, setRol] = useState(undefined)
+    const [channelUrl, setChannelUrl] = useState(undefined)
 
     const navigate = useNavigate()
 
@@ -61,7 +71,7 @@ const Registro = (props) => {
     }
 
     const conectarSB = (userId) => {
-        connect(userId) 
+        connect(userId)
             .then((user) => {
                 console.log('user', user)
             })
@@ -91,53 +101,126 @@ const Registro = (props) => {
 
     const handleClick = (e) => {
         e.preventDefault()
-        const signUp = (email, password) => {
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    if (typeof connect == 'function') {
-                        conectarSB(user.uid)
-                    }
-                    if (
-                        typeof createChannel == 'function' &&
-                        typeof sbSdk === 'object'
-                    ) {
-                        crearCanal(user.uid)
-                    }
-                    var user = userCredential.user
-                    console.log('Anonymous account successfully upgraded', user)
-                    const data = {
-                        userMail: user.email,
-                        userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
-                        userId: user.uid,
-                        channelUrl: channelUrl,
-                        // userName: user.displayName,
-                    }
-                    console.log(userSignupRol, channelUrl)
-                    if (userSignupRol == 1) {
-                        userProResToFirestore(data, user.uid)
-                    }
-                    if (userSignupRol == 2) {
-                        userComCalToFirestore(data, user.uid)
-                    }
-                    // userToFirestore(data, user.uid)
-                    // localStorage.setItem('role', JSON.stringify(userSignupRol))
-                    localStorage.role = JSON.stringify(userSignupRol)
-                    navigate('/app/ajustes')
-                })
-                .catch((err) => {
-                    console.log('Error upgrading anonymous account', err)
-                    console.log(err.code)
-                    var errorCode = err.code
-                    var errorMessage = err.message
-                    if (errorCode === 'auth/wrong-password') {
-                        alert('Clave incorrecta.')
-                    } else {
-                        alert(errorMessage)
-                    }
-                })
+        if (userSignupRol) {
+            const signUp = (email, password) => {
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        if (typeof connect == 'function') {
+                            conectarSB(user.uid)
+                        }
+                        if (
+                            typeof createChannel == 'function' &&
+                            typeof sbSdk === 'object'
+                        ) {
+                            crearCanal(user.uid)
+                        }
+                        var user = userCredential.user
+                        console.log(
+                            'Anonymous account successfully upgraded',
+                            user
+                        )
+                        const data = {
+                            userMail: user.email,
+                            userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
+                            userId: user.uid,
+                            channelUrl: channelUrl,
+                            // userName: user.displayName,
+                        }
+                        console.log(userSignupRol, channelUrl)
+                        if (userSignupRol == 1) {
+                            userProResToFirestore(data, user.uid)
+                        }
+                        if (userSignupRol == 2) {
+                            userComCalToFirestore(data, user.uid)
+                        }
+                        // userToFirestore(data, user.uid)
+                        // localStorage.setItem('role', JSON.stringify(userSignupRol))
+                        localStorage.role = JSON.stringify(userSignupRol)
+                        localStorage.userID = JSON.stringify(user.uid)
+                        navigate('/app/ajustes')
+                    })
+                    .catch((err) => {
+                        console.log('Error upgrading anonymous account', err)
+                        console.log(err.code)
+                        var errorCode = err.code
+                        var errorMessage = err.message
+                        if (errorCode === 'auth/wrong-password') {
+                            alert('Clave incorrecta.')
+                        } else {
+                            alert(errorMessage)
+                        }
+                    })
+            }
+            setSend(true)
+            signUp(userSignupEmail, userSignupPassword)
         }
-        setSend(true)
-        signUp(userSignupEmail, userSignupPassword)
+    }
+
+    const handleGoogleProvider = (e) => {
+        e.preventDefault()
+        if (userSignupRol && connect) {
+            const signUp = () => {
+                signInWithPopup(auth, googleProvider)
+                    .then((result) => {
+                        console.log('googleProvider', result)
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        const credential =
+                            GoogleAuthProvider.credentialFromResult(result)
+                        const token = credential.accessToken
+                        // The signed-in user info.
+                        const user = result.user
+                        console.log('Account successfully upgraded', user)
+                        if (typeof connect == 'function') {
+                            conectarSB(user.uid)
+                        }
+                        if (
+                            typeof createChannel == 'function' &&
+                            typeof sbSdk === 'object'
+                        ) {
+                            crearCanal(user.uid) // almacena un channelUrl
+                        }
+                        const data = {
+                            userMail: user.email,
+                            userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
+                            userId: user.uid,
+                            channelUrl: channelUrl,
+                            // userName: user.displayName,
+                        }
+                        console.log(userSignupRol, channelUrl)
+                        if (userSignupRol == 1) {
+                            userProResToFirestore(data, user.uid)
+                        }
+                        if (userSignupRol == 2) {
+                            userComCalToFirestore(data, user.uid)
+                        }
+                        localStorage.role = JSON.stringify(userSignupRol) // localStorage.setItem('role', JSON.stringify(userSignupRol))
+                        localStorage.userID = JSON.stringify(user.uid)
+                        navigate('/app/ajustes')
+                    })
+                    .catch((error) => {
+                        // Handle Errors here.
+                        const errorCode = error.code
+                        const errorMessage = error.message
+                        // The email of the user's account used.
+                        // const email = error.customData.email
+                        // The AuthCredential type that was used.
+                        const credential =
+                            GoogleAuthProvider.credentialFromError(error)
+                        console.log(
+                            'Error upgrading anonymous account',
+                            errorMessage,
+                            error
+                        )
+                        if (errorCode === 'auth/wrong-password') {
+                            alert('Clave incorrecta.')
+                        } else {
+                            alert(errorMessage)
+                        }
+                    })
+            }
+            signUp()
+            setSend(true)
+        }
     }
 
     return (
@@ -174,7 +257,6 @@ const Registro = (props) => {
                                         {'¿Ya tienes una cuenta?'}
                                     </NavLink>
                                 </p>
-
                                 <Form.Label className="mb-0 mt-2">
                                     Elegir rol:
                                 </Form.Label>
@@ -187,20 +269,26 @@ const Registro = (props) => {
                                     aria-label="Elegir rol:"
                                     onChange={handleSelectRol}
                                     // size="small"
-                                    color="primary"
                                     value={userSignupRol}
+                                    color="primary"
                                 >
                                     <ToggleButton
                                         className="body-1 select-rol textBlanco d-flex flex-row align-items-center justify-content-center"
                                         value={1} // "SoyPropietarioResidente" //
                                         id="formBasicRolPropietarioResidente"
                                         aria-label="Soy Propietario/Residente"
+                                        // style={{
+                                        //     backgroundColor: '#2283bd',
+                                        //     '&:hover': {
+                                        //         backgroundColor: '#2594c2',
+                                        //     },
+                                        // }}
                                         //onChange={(e) => setRol(e.target.value)}
                                     >
                                         Soy Propietario/Residente
                                     </ToggleButton>
                                     <ToggleButton
-                                        className="body-1 select-rol  textBlanco d-flex flex-row align-items-center justify-content-center"
+                                        className="body-1 select-rol textBlanco d-flex flex-row align-items-center justify-content-center"
                                         value={2} // "SoyComercianteCalificado" //
                                         id="formBasicRolComercianteCalificado"
                                         aria-label="Soy Comerciante Calificado"
@@ -209,6 +297,22 @@ const Registro = (props) => {
                                         Soy Comerciante Calificado
                                     </ToggleButton>
                                 </ToggleButtonGroup>
+                                <ul className="align-items-center">
+                                    <li className="body-1">
+                                        <Button
+                                            className="btn btn-round btn-middle"
+                                            onClick={handleGoogleProvider}
+                                        >
+                                            REGISTRARSE CON GMAIL
+                                        </Button>
+                                    </li>
+                                    {/* <li className="body-1 pt-2">
+                                            <Button className="btn btn-round btn-middle">
+                                                REGISTRARSE CON FACEBOOK
+                                            </Button>
+                                        </li> */}
+                                </ul>
+                                <br />
                                 <Form.Group
                                     className="w-80 pt-4 mb-2 d-flex flex-column align-items-start"
                                     controlId="formBasicName"

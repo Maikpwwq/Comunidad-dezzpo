@@ -65,7 +65,7 @@ const Certificaciones = (props) => {
                                     label="Fecha"
                                     value={certificationDate}
                                     onChange={handleChange}
-                                    defaultValue="Selecciona"
+                                    // defaultValue="Selecciona"
                                     variant="standard"
                                 />
                                 <TextField
@@ -73,7 +73,7 @@ const Certificaciones = (props) => {
                                     label="Hora"
                                     value={certificationHour}
                                     onChange={handleChange}
-                                    defaultValue="Selecciona"
+                                    // defaultValue="Selecciona"
                                     variant="standard"
                                 />
                                 <TextField
@@ -81,7 +81,7 @@ const Certificaciones = (props) => {
                                     label="Servicio"
                                     value={certificationService}
                                     onChange={handleChange}
-                                    defaultValue="Selecciona"
+                                    // defaultValue="Selecciona"
                                     variant="standard"
                                 />
                                 <Button>Valor de la Gestión</Button>

@@ -36,7 +36,7 @@ export default function UserCard({ props }) {
     const { 
         userId,
         userRazonSocial,
-        userUbication,
+        userDirection,
         userProfession,
         userPhotoUrl,
         userJoined,
@@ -93,7 +93,7 @@ export default function UserCard({ props }) {
                 </Typography>
                 <br />
                 <Typography>Experiencia: {userExperience}</Typography>
-                <Typography>Ubicacion: {userUbication}</Typography>
+                <Typography>Ubicacion: {userDirection}</Typography>
                 <Typography>Se unio el: {userJoined}</Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -164,7 +164,7 @@ export default function UserCard({ props }) {
 UserCard.defaultProps = {
     props: {
         userRazonSocial: 'The App Name',
-        userUbication: 'The App Name',
+        userDirection: 'The App Name',
         userProfession: 'The App Name',
         userPhotoUrl: 'The App Name',
         userJoined: 'The App Name',
