@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
+import ScrollToTopOnMount from '../../components/ScrollToTop'
 import { v4 as uuidv4 } from 'uuid'
 import {
     collection,
@@ -47,7 +48,7 @@ const NuevoProyecto = (props) => {
         paramCategoriaProfesional
     )
     console.log('B', draftProject, tipoProyecto, paramTipoProyecto)
-    const requerimiento = localStorage.requerimiento || null
+    const requerimiento = localStorage.requerimiento || undefined
     console.log('requerimiento-local', requerimiento)
     // console.log(requerimiento.draftId)
     const hideRegister = auth
@@ -163,7 +164,7 @@ const NuevoProyecto = (props) => {
     // TODO Crear funcion para leer los borradores de requerimientos desde firebase y desde local storage
 
     const goForward = () => {
-        if (activeStep <= steps.length) {
+        if (activeStep < steps.length) {
             let active = activeStep + 1
             setActiveStep(active)
         }
@@ -200,6 +201,7 @@ const NuevoProyecto = (props) => {
                 <PasoAPaso activeStep={activeStep} steps={steps} />
                 {activeStep == 0 && (
                     <Col>
+                        <ScrollToTopOnMount />
                         <Row className="nuevoProyectoBuscador">
                             <Col
                                 className="align-items-start p-4 m-4"
@@ -347,6 +349,7 @@ const NuevoProyecto = (props) => {
                 )}
                 {activeStep == 1 && (
                     <Col className="nuevoProyectoBuscador2 align-items-baseline">
+                        <ScrollToTopOnMount />
                         <Col
                             className="ms-4 pt-4 pb-4 ps-4 align-items-start opacidadNegro"
                             xl={6}
@@ -553,6 +556,7 @@ const NuevoProyecto = (props) => {
                 )}
                 {activeStep == 2 && (
                     <Col className="nuevoProyectoBuscador3  align-items-baseline">
+                        <ScrollToTopOnMount />
                         <Col
                             className="ms-4 pt-4 pb-4 ps-4 align-items-start opacidadNegro"
                             xl={5}
@@ -686,6 +690,7 @@ const NuevoProyecto = (props) => {
                 {/* Detalles de contacto */}
                 {activeStep == 3 && !hideRegister ? (
                     <Row className="nuevoProyectoMensaje w-100">
+                        <ScrollToTopOnMount />
                         <Col className="p-4 col-10">
                             <h3 className="headline-xl textBlanco">
                                 Por ultimo ingresa tus datos de contacto

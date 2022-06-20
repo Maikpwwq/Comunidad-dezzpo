@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AutoComplete from 'react-google-autocomplete'
 import { Loader } from '@googlemaps/js-api-loader'
+import { googleLoader } from '../../../google/GoogleMapsAdmin'
 // import Marker from '../../components/maps/Marker'
 import '../../../../public/assets/css/ubicacion.css'
 
@@ -13,7 +14,6 @@ import Form from 'react-bootstrap/Form'
 import PropTypes from 'prop-types'
 
 const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
-    const navigate = useNavigate()
     const googleApiKey = process.env.REACT_APP_GOOGLE_APIKEY
     const [clicks, setClicks] = useState({
         lat: 4.624335,
@@ -25,12 +25,7 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
         street: '',
         postalCode: '',
     })
-
-    const loader = new Loader({
-        apiKey: googleApiKey,
-        version: 'weekly',
-        libraries: ['places'],
-    })
+    const loader = googleLoader
     // The latitude of Bogotá, Colombia is 4.624335, and the longitude is -74.063644.
     const mapOptions = {
         center: {
@@ -82,15 +77,15 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                             })
                             const formattedAddress =
                                 response.results[0].formatted_address
-                            const ZipCode =
-                                response.results[0].address_components[7]
-                                    .long_name
-                            console.log(ZipCode)
+                            // const ZipCode =
+                            //     response.results[0].address_components[7]
+                            //         .long_name
+                            console.log(response.results[0])
                             infowindow.setContent(formattedAddress)
                             setLocationInfo({
                                 ...locationInfo,
                                 street: formattedAddress,
-                                postalCode: ZipCode,
+                                // postalCode: ZipCode,
                             })
                             infowindow.open(map, marker)
                         } else {
@@ -106,13 +101,26 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
 
     useEffect(() => {
         if (locInfo) {
-            setLocInfo({
-                ...locInfo,
-                draftCity: locationInfo.city,
-                draftDirection: locationInfo.street,
-                draftPostalCode: locationInfo.postalCode,
-            })
-            console.log('UbicationChanged')
+            if (locInfo.draftId) {
+                console.log(locInfo.draftId)
+                setLocInfo({
+                    ...locInfo,
+                    draftCity: locationInfo.city,
+                    draftDirection: locationInfo.street,
+                    draftPostalCode: locationInfo.postalCode,
+                })
+                console.log('DirectionChanged')
+            }
+            if (locInfo.userId) {
+                console.log(locInfo.userId)
+                setLocInfo({
+                    ...locInfo,
+                    userDirection: locationInfo.street,
+                    userCiudad: locationInfo.city,
+                    userCodigoPostal: locationInfo.postalCode,
+                })
+                console.log('DirectionChanged')
+            }
         }
     }, [locationInfo])
 
@@ -151,19 +159,16 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                                 <AutoComplete
                                     className="w-100"
                                     apiKey={googleApiKey}
-                                    // fields=
-                                    onPlaceSelected={(place) =>
-                                        console.log(place)
-                                    }
+                                    onPlaceSelected={(place) => {
+                                        const selectedCity =
+                                            place.formatted_address
+                                        setLocationInfo({
+                                            ...locationInfo,
+                                            city: selectedCity,
+                                        })
+                                    }}
                                     name="city"
-                                    // value={locationInfo.city}
-                                    // onChange={handleChange}
                                 />
-
-                                {/* <Form.Select name="city" id="city">
-                                    <option>seleccionar uno</option>
-                                    <option value="Bogota">Bogota</option>
-                                </Form.Select> */}
                             </Form.Group>
                             <Form.Group
                                 className="mb-2"

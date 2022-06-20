@@ -5,7 +5,11 @@ import withSendBird from '@sendbird/uikit-react/withSendBird'
 import SendbirdSelectors from '@sendbird/uikit-react/sendBirdSelectors'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { auth, firestore } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+} from 'firebase/auth'
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { format } from 'date-fns'
 
@@ -32,7 +36,7 @@ const Registro = (props) => {
     // useEffect(() => {
     //     conectarSB()
     // }, [connect])
-
+    const googleProvider = new GoogleAuthProvider()
     const _firestore = firestore
     // const usersRef = collection(_firestore, 'users')
     const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
@@ -42,10 +46,10 @@ const Registro = (props) => {
     )
 
     const [send, setSend] = useState(false)
-    const [userSignupEmail, setEmail] = useState(null)
+    const [userSignupEmail, setEmail] = useState(undefined)
     const [userSignupPassword, setPassword] = useState('')
-    const [userSignupRol, setRol] = useState(null)
-    const [channelUrl, setChannelUrl] = useState(null)
+    const [userSignupRol, setRol] = useState(undefined)
+    const [channelUrl, setChannelUrl] = useState(undefined)
 
     const navigate = useNavigate()
 
@@ -111,7 +115,10 @@ const Registro = (props) => {
                             crearCanal(user.uid)
                         }
                         var user = userCredential.user
-                        console.log('Anonymous account successfully upgraded', user)
+                        console.log(
+                            'Anonymous account successfully upgraded',
+                            user
+                        )
                         const data = {
                             userMail: user.email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
@@ -149,6 +156,73 @@ const Registro = (props) => {
         }
     }
 
+    const handleGoogleProvider = (e) => {
+        e.preventDefault()
+        if (userSignupRol && connect) {
+            const signUp = () => {
+                signInWithPopup(auth, googleProvider)
+                    .then((result) => {
+                        console.log('googleProvider', result)
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        const credential =
+                            GoogleAuthProvider.credentialFromResult(result)
+                        const token = credential.accessToken
+                        // The signed-in user info.
+                        const user = result.user
+                        console.log('Account successfully upgraded', user)
+                        if (typeof connect == 'function') {
+                            conectarSB(user.uid)
+                        }
+                        if (
+                            typeof createChannel == 'function' &&
+                            typeof sbSdk === 'object'
+                        ) {
+                            crearCanal(user.uid) // almacena un channelUrl
+                        }
+                        const data = {
+                            userMail: user.email,
+                            userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
+                            userId: user.uid,
+                            channelUrl: channelUrl,
+                            // userName: user.displayName,
+                        }
+                        console.log(userSignupRol, channelUrl)
+                        if (userSignupRol == 1) {
+                            userProResToFirestore(data, user.uid)
+                        }
+                        if (userSignupRol == 2) {
+                            userComCalToFirestore(data, user.uid)
+                        }
+                        localStorage.role = JSON.stringify(userSignupRol) // localStorage.setItem('role', JSON.stringify(userSignupRol))
+                        localStorage.userID = JSON.stringify(user.uid)
+                        navigate('/app/ajustes')
+                    })
+                    .catch((error) => {
+                        // Handle Errors here.
+                        const errorCode = error.code
+                        const errorMessage = error.message
+                        // The email of the user's account used.
+                        // const email = error.customData.email
+                        // The AuthCredential type that was used.
+                        const credential =
+                            GoogleAuthProvider.credentialFromError(error)
+                        console.log(
+                            'Error upgrading anonymous account',
+                            errorMessage,
+                            error
+                        )
+                        if (errorCode === 'auth/wrong-password') {
+                            alert('Clave incorrecta.')
+                        } else {
+                            alert(errorMessage)
+                        }
+                    })
+            }
+            signUp()
+            setSend(true)
+        }
+    }
+
     return (
         <>
             <Container fluid className="p-0">
@@ -183,7 +257,6 @@ const Registro = (props) => {
                                         {'¿Ya tienes una cuenta?'}
                                     </NavLink>
                                 </p>
-
                                 <Form.Label className="mb-0 mt-2">
                                     Elegir rol:
                                 </Form.Label>
@@ -224,6 +297,22 @@ const Registro = (props) => {
                                         Soy Comerciante Calificado
                                     </ToggleButton>
                                 </ToggleButtonGroup>
+                                <ul className="align-items-center">
+                                    <li className="body-1">
+                                        <Button
+                                            className="btn btn-round btn-middle"
+                                            onClick={handleGoogleProvider}
+                                        >
+                                            REGISTRARSE CON GMAIL
+                                        </Button>
+                                    </li>
+                                    {/* <li className="body-1 pt-2">
+                                            <Button className="btn btn-round btn-middle">
+                                                REGISTRARSE CON FACEBOOK
+                                            </Button>
+                                        </li> */}
+                                </ul>
+                                <br />
                                 <Form.Group
                                     className="w-80 pt-4 mb-2 d-flex flex-column align-items-start"
                                     controlId="formBasicName"

@@ -7,6 +7,8 @@ import {
     EmailAuthProvider,
     signInWithCredential,
     sendPasswordResetEmail,
+    GoogleAuthProvider,
+    signInWithPopup,
 } from 'firebase/auth'
 
 import '../../../../public/assets/css/ingreso.css'
@@ -21,9 +23,10 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 
 const Ingreso = (props) => {
+    const googleProvider = new GoogleAuthProvider()
     const navigate = useNavigate()
     const [send, setSend] = React.useState(false)
-    const [userLoginEmail, setEmail] = React.useState(null)
+    const [userLoginEmail, setEmail] = React.useState(undefined)
     const [userLoginPassword, setPassword] = React.useState('')
     const [userSignupRol, setRol] = React.useState({})
 
@@ -60,6 +63,50 @@ const Ingreso = (props) => {
             }
             setSend(true)
             logIn(credential)
+        }
+    }
+
+    const handleGoogleProvider = (e) => {
+        e.preventDefault()
+        if (userSignupRol) {
+            const logIn = () => {
+                signInWithPopup(auth, googleProvider)
+                    .then((result) => {
+                        // console.log('googleProvider', result)
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        const credential =
+                            GoogleAuthProvider.credentialFromResult(result)
+                        const token = credential.accessToken
+                        // The signed-in user info.
+                        const user = result.user
+                        console.log('Account successfully upgraded', user)
+                        localStorage.role = JSON.stringify(userSignupRol)
+                        localStorage.userID = JSON.stringify(user.uid)
+                        navigate('/app/perfil')
+                    })
+                    .catch((error) => {
+                        // Handle Errors here.
+                        const errorCode = error.code
+                        const errorMessage = error.message
+                        // The email of the user's account used.
+                        // const email = error.customData.email
+                        // The AuthCredential type that was used.
+                        const credential =
+                            GoogleAuthProvider.credentialFromError(error)
+                        console.log(
+                            'Error upgrading anonymous account',
+                            errorMessage,
+                            error
+                        )
+                        if (errorCode === 'auth/wrong-password') {
+                            alert('Clave incorrecta.')
+                        } else {
+                            alert(errorMessage)
+                        }
+                    })
+            }
+            setSend(true)
+            logIn()
         }
     }
 
@@ -103,19 +150,6 @@ const Ingreso = (props) => {
                                 </NavLink>
                             </p>
                             <br />
-                            {/* <ul className="align-items-center">
-                                <li className="body-1">
-                                    <Button className="btn btn-round btn-middle">
-                                        INGRESAR CON FACEBOOK
-                                    </Button>
-                                </li>
-                                <li className="body-1 pt-2">
-                                    <Button className="btn btn-round btn-middle">
-                                        INGRESAR CON GMAIL
-                                    </Button>
-                                </li>
-                            </ul>
-                            <br /> */}
                             <Button
                                 className="BOTON-TEXT textBlanco"
                                 variant="primary"
@@ -152,6 +186,22 @@ const Ingreso = (props) => {
                                         Soy Comerciante Calificado
                                     </ToggleButton>
                                 </ToggleButtonGroup>
+                                <ul className="align-items-center">
+                                    {/* <li className="body-1">
+                                        <Button className="btn btn-round btn-middle">
+                                            INGRESAR CON FACEBOOK
+                                        </Button>
+                                    </li> */}
+                                    <li className="body-1 pt-2">
+                                        <Button
+                                            className="btn btn-round btn-middle"
+                                            onClick={handleGoogleProvider}
+                                        >
+                                            INGRESAR CON GMAIL
+                                        </Button>
+                                    </li>
+                                </ul>
+                                <br />
                                 <Form.Group
                                     className="mb-2 d-flex flex-column align-items-center"
                                     controlId="formLoginCredential"

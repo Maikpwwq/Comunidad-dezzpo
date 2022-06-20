@@ -97,7 +97,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoTitulo
                                     }
-                                    defaultValue="@Titulo"
+                                    // defaultValue="@Titulo"
                                     variant="filled"
                                 />
                                 <TextField
@@ -107,7 +107,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoCategoria
                                     }
-                                    defaultValue="@Categoria"
+                                    // defaultValue="@Categoria"
                                     variant="filled"
                                 />
                                 <TextField
@@ -117,7 +117,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoTipoProyecto
                                     }
-                                    defaultValue="@TipoProyecto"
+                                    // defaultValue="@TipoProyecto"
                                     variant="filled"
                                 />
                                 <TextField
@@ -127,7 +127,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoDescripcion
                                     }
-                                    defaultValue="@Descripción"
+                                    // defaultValue="@Descripción"
                                     variant="filled"
                                 />
                                 <TextField
@@ -137,7 +137,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoPropietario
                                     }
-                                    defaultValue="@PROPIETARIO"
+                                    // defaultValue="@PROPIETARIO"
                                     variant="filled"
                                 />
                             </Col>
@@ -149,7 +149,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoCreated
                                     }
-                                    defaultValue="@Created"
+                                    // defaultValue="@Created"
                                     variant="filled"
                                 />
                                 <TextField
@@ -159,7 +159,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoPropietario
                                     }
-                                    defaultValue="@PROPIETARIO"
+                                    // defaultValue="@PROPIETARIO"
                                     variant="filled"
                                 />
                                 <TextField
@@ -169,7 +169,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoPrioridad
                                     }
-                                    defaultValue="@PRIORIDAD"
+                                    // defaultValue="@PRIORIDAD"
                                     variant="filled"
                                 />
                                 <TextField
@@ -179,7 +179,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoTipoPropiedad
                                     }
-                                    defaultValue="@TipoPropiedad"
+                                    // defaultValue="@TipoPropiedad"
                                     variant="filled"
                                 />
                                 <TextField
@@ -189,7 +189,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoCantidadObra
                                     }
-                                    defaultValue="@CantidadObra"
+                                    // defaultValue="@CantidadObra"
                                     variant="filled"
                                 />
                                 <TextField
@@ -199,7 +199,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoPlanos
                                     }
-                                    defaultValue="@PLANOS"
+                                    // defaultValue="@PLANOS"
                                     variant="filled"
                                 />
                                 <TextField
@@ -209,7 +209,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoPermisos
                                     }
-                                    defaultValue="@PERMISOS"
+                                    // defaultValue="@PERMISOS"
                                     variant="filled"
                                 />
                             </Col>
@@ -222,7 +222,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoCiudad
                                     }
-                                    defaultValue="@Ciudad"
+                                    // defaultValue="@Ciudad"
                                     variant="filled"
                                 />
                                 <TextField
@@ -232,7 +232,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoDireccion
                                     }
-                                    defaultValue="@Direccion"
+                                    // defaultValue="@Direccion"
                                     variant="filled"
                                 />
                                 <TextField
@@ -242,7 +242,7 @@ const Requerimiento = () => {
                                     value={
                                         requerimientoInfo.requerimientoCodigoPostal
                                     }
-                                    defaultValue="@CodigoPostal"
+                                    // defaultValue="@CodigoPostal"
                                     variant="filled"
                                 />
                             </Col>

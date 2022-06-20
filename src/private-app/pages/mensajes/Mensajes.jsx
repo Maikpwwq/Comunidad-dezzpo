@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 const Mensajes = (props) => {
-    let userId = auth.currentUser.uid || null
+    let userId = auth.currentUser.uid || undefined
     let appId = process.env.REACT_APP_SENDBIRD_APPID
 
     return (

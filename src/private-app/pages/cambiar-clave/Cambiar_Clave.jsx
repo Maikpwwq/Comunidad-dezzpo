@@ -13,8 +13,8 @@ import TextField from '@mui/material/TextField'
 
 const CambiarClave = (props) => {
     const [newPassword, setNewPassword] = useState({
-        newPassword: 'againNewPassword',
-        againNewPassword: 'newPassword',
+        newPassword: 'Ingresa tu nueva clave',
+        againNewPassword: 'Repite la nueva clave',
     })
 
     const handleChange = (event) => {
@@ -58,7 +58,7 @@ const CambiarClave = (props) => {
                                 label="Ingresa tu nueva clave"
                                 value={newPassword.newPassword}
                                 onChange={handleChange}
-                                defaultValue="Ingresa tu nueva clave"
+                                // defaultValue="Ingresa tu nueva clave"
                                 variant="standard"
                             />
                             <br />
@@ -69,7 +69,7 @@ const CambiarClave = (props) => {
                                 label="Repite la nueva clave"
                                 value={newPassword.againNewPassword}
                                 onChange={handleChange}
-                                defaultValue="Repite la nueva clave"
+                                // defaultValue="Repite la nueva clave"
                                 variant="standard"
                             />
                             <Button type="submit" onClick={updatePassword}>
