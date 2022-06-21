@@ -5,7 +5,7 @@ import SearchBar from './SearchBar'
 import '../../../public/assets/cssPrivateApp/header.css'
 
 //imagenes
-import LogoMenuComunidadDezzpo from '../../../public/assets/img/IsologoUserApp.png'
+import LogoMenuComunidadDezzpo from '../../../public/assets/img/IsologoHeader.png'
 import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
 
 import PropTypes from 'prop-types'
@@ -40,9 +40,20 @@ function Header(props) {
     return (
         <React.Fragment>
             <AppBar color="primary" position="sticky" elevation={0}>
-                <Toolbar>
+                <Toolbar
+                    style={{
+                        background: '#e9ebe6',
+                        height: '80px',
+                        color: 'black',
+                    }}
+                >
                     {user.uid ? (
-                        <Grid container spacing={1} alignItems="center">
+                        <Grid
+                            container
+                            spacing={1}
+                            alignItems="center"
+                            style={{ justifyContent: 'center' }}
+                        >
                             <Grid
                                 sx={{ display: { sm: 'none', xs: 'block' } }}
                                 item
@@ -74,9 +85,9 @@ function Header(props) {
                                     variant="body2"
                                     sx={{
                                         textDecoration: 'none',
-                                        color: lightColor,
+                                        color: 'common.black',
                                         '&:hover': {
-                                            color: 'common.white',
+                                            color: 'common.gray',
                                         },
                                     }}
                                     rel="noopener noreferrer"
@@ -108,7 +119,12 @@ function Header(props) {
                             </Grid>
                         </Grid>
                     ) : (
-                        <Grid container spacing={1} alignItems="center">
+                        <Grid
+                            container
+                            spacing={1}
+                            alignItems="center"
+                            style={{ justifyContent: 'center' }}
+                        >
                             <Grid sx={{}} item>
                                 <NavLink to="/">
                                     <img

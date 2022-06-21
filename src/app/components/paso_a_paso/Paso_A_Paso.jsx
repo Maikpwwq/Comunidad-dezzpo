@@ -101,11 +101,16 @@ ColorlibStepIcon.propTypes = {
 const PasoAPaso = (props) => {
     let { activeStep, steps } = props // useParams()
     return (
-        <Stack sx={{ width: '100%', mt: 4, mb: 4 }} spacing={4}>
+        <Stack
+            sx={{ width: '100%', pt: 2, pb: 2 }}
+            spacing={4}
+            className="paso-a-paso opacidad-stepper"
+        >
             <Stepper
                 alternativeLabel
                 activeStep={activeStep}
                 connector={<ColorlibConnector />}
+                style={{ overflowX: 'scroll', width: '100%' }}
             >
                 {steps.map((label) => (
                     <Step key={label}>

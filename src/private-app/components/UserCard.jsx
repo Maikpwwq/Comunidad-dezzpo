@@ -33,7 +33,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 export default function UserCard({ props }) {
     const navigate = useNavigate()
 
-    const { 
+    const {
         userId,
         userRazonSocial,
         userDirection,
@@ -88,7 +88,11 @@ export default function UserCard({ props }) {
                 subheader={userProfession}
             ></CardHeader>
             <CardContent>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    style={{ overflowY: 'auto', maxHeight: 100 }}
+                >
                     {userDescription}
                 </Typography>
                 <br />

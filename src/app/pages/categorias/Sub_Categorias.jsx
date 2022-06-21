@@ -47,7 +47,7 @@ const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
     }
 
     return (
-        <Card className="mb-4" sx={{ maxWidth: 345 }}>
+        <Card className="mb-4" sx={{ maxWidth: 345, minHeight: 212 }}>
             {/* TODO: Categorias*/}
             <CardHeader
                 // avatar={
@@ -66,13 +66,20 @@ const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
                 // }
                 title={subCategoria}
             ></CardHeader>
-            <CardContent>
-                <Typography variant="body2" color="text.secondary">
+            <CardContent className="pt-0 pb-0">
+                <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    className="pb-2"
+                >
                     {subCategoriaDescription}
                 </Typography>
-                <br />
-                <Typography>Precio: {subCategoriaPrecio}</Typography>
-                <Typography>Cantidad: {subCategoriaCantidad}</Typography>
+                <Typography variant="body1">
+                    Precio: {subCategoriaPrecio}
+                </Typography>
+                <Typography variant="body1">
+                    Cantidad: {subCategoriaCantidad}
+                </Typography>
             </CardContent>
             <CardActions disableSpacing>
                 <Button className="" onClick={handleSeleccionar}>
