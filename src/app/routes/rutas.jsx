@@ -24,6 +24,7 @@ import Presupuestos from '../pages/presupuestos/Presupuestos'
 import ProfesionalesServicios from '../pages/profesionales-servicios/Profesionales_Servicios'
 import Registro from '../pages/registro/Registro'
 import Ubicacion from '../pages/ubicacion/Ubicacion'
+import ScrollToTopOnMount from '../components/ScrollToTop'
 
 // import NoMatch from "./NoMatch";
 // Componentes
@@ -45,6 +46,7 @@ class Rutas extends React.Component {
                 >
                     {/* <Button variant="contained"> {name} </Button> */}
                     <MenuComunidad />
+                    <ScrollToTopOnMount />
                     <Routes>
                         <Route index element={<Inicio />}></Route>
                         <Route path="/" element={<Inicio />} />

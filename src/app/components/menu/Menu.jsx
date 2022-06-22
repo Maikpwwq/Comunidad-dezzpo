@@ -84,7 +84,7 @@ const MenuComunidad = (props) => {
                                             className="botonNavLink body-2"
                                         >
                                             {' '}
-                                            Asi trabajamos{' '}
+                                            Asi trabajamos {''}
                                         </NavLink>
                                     </li>
                                     <div className="dropdownContenidos body-1 p-4">

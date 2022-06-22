@@ -157,7 +157,7 @@ const Nosotros = (props) => {
                 <Row className="nosotrosEquipo m-0">
                     <Col className="md-12 m-0">
                         <Col>
-                            <div className="opacidadBlaco">
+                            <div className="opacidadBlanco">
                                 <span className="pitchPropietarios">
                                     <h2 className="headline-xl">
                                         Equipo Dezzpo

@@ -31,8 +31,6 @@ import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-import { styled } from '@mui/material/styles'
-
 const NuevoProyecto = (props) => {
     const draftID = uuidv4()
     const { state } = useLocation() || {}
@@ -197,8 +195,9 @@ const NuevoProyecto = (props) => {
 
     return (
         <>
-            <Container fluid className="p-0">
+            <Container fluid className="p-0" style={{ position: 'relative' }}>
                 <PasoAPaso activeStep={activeStep} steps={steps} />
+                <div className="pasos-fixed"></div>
                 {activeStep == 0 && (
                     <Col>
                         <ScrollToTopOnMount />
@@ -239,7 +238,7 @@ const NuevoProyecto = (props) => {
                         </Row>
                         {/* setActiveStep */}
                         <Row className="categorias w-100 m-0">
-                            <Col className="col-10 categorias-contenedor">
+                            <Col className="p-0 col-10 categorias-contenedor">
                                 <Row className="w-100 m-0">
                                     {categoriaInfo.data ? (
                                         categoriaInfo.data.map(
@@ -260,68 +259,6 @@ const NuevoProyecto = (props) => {
                                         <></>
                                     )}
                                 </Row>
-                                <Col>
-                                    <Table>
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell>
-                                                    Sub Categoria
-                                                </TableCell>
-                                                <TableCell>
-                                                    Unidad Medida
-                                                </TableCell>
-                                                <TableCell>
-                                                    Description
-                                                </TableCell>
-                                                <TableCell>
-                                                    Precio unitario
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {categoriaInfo.selected.length >
-                                                0 &&
-                                                categoriaInfo.selected.map(
-                                                    ({
-                                                        subCategoria,
-                                                        subCategoriaCantidad,
-                                                        subCategoriaDescription,
-                                                        subCategoriaPhotoUrl,
-                                                        subCategoriaPrecio,
-                                                    }) => {
-                                                        return (
-                                                            <TableRow
-                                                                key={
-                                                                    subCategoria
-                                                                }
-                                                            >
-                                                                <TableCell>
-                                                                    {
-                                                                        subCategoria
-                                                                    }
-                                                                </TableCell>
-                                                                <TableCell>
-                                                                    {
-                                                                        subCategoriaCantidad
-                                                                    }
-                                                                </TableCell>
-                                                                <TableCell>
-                                                                    {
-                                                                        subCategoriaDescription
-                                                                    }
-                                                                </TableCell>
-                                                                <TableCell>
-                                                                    {
-                                                                        subCategoriaPrecio
-                                                                    }
-                                                                </TableCell>
-                                                            </TableRow>
-                                                        )
-                                                    }
-                                                )}
-                                        </TableBody>
-                                    </Table>
-                                </Col>
                             </Col>
                         </Row>
                         <Col className="col-10">
@@ -350,25 +287,71 @@ const NuevoProyecto = (props) => {
                 {activeStep == 1 && (
                     <Col className="nuevoProyectoBuscador2 align-items-baseline">
                         <ScrollToTopOnMount />
-                        <Col
-                            className="ms-4 pt-4 pb-4 ps-4 align-items-start opacidadNegro"
-                            xl={6}
-                            lg={8}
-                            md={10}
-                            sm={12}
-                        >
+                        <Col className="ms-4 p-4">
                             {' '}
                             <p className="p-description">
                                 Compara precios de los mejores profesionales
                                 calificados{' '}
                             </p>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Sub Categoria</TableCell>
+                                        <TableCell>Unidad Medida</TableCell>
+                                        <TableCell>Description</TableCell>
+                                        <TableCell>Precio unitario</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {categoriaInfo.selected.length > 0 &&
+                                        categoriaInfo.selected.map(
+                                            ({
+                                                subCategoria,
+                                                subCategoriaCantidad,
+                                                subCategoriaDescription,
+                                                subCategoriaPhotoUrl,
+                                                subCategoriaPrecio,
+                                            }) => {
+                                                return (
+                                                    <TableRow
+                                                        key={subCategoria}
+                                                    >
+                                                        <TableCell>
+                                                            {subCategoria}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                subCategoriaCantidad
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                subCategoriaDescription
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {subCategoriaPrecio}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                )
+                                            }
+                                        )}
+                                </TableBody>
+                            </Table>
+                        </Col>
+                        <Col
+                            className="pt-4 pb-4 ps-4 align-items-start opacidadNegro"
+                            xl={6}
+                            lg={8}
+                            md={10}
+                            sm={12}
+                        >
                             <Form>
                                 <p className="body-1">
                                     2. Crea una oferta. <br />
                                     <br />
                                     Dejanos conocer un poco más hacerca del
                                     proyecto que vas a postular.
-                                    <br />
                                     <br />* Campos requeridos
                                 </p>
                                 <Form.Group
@@ -714,6 +697,10 @@ const NuevoProyecto = (props) => {
             </Container>
         </>
     )
+}
+
+NuevoProyecto.propTypes = {
+    classes: PropTypes.object.isRequired,
 }
 
 export default NuevoProyecto

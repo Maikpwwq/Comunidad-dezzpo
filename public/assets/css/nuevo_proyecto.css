@@ -1,3 +1,28 @@
+@media screen and (max-width: 600px) {
+    .paso-a-paso {
+        position: sticky;
+        top: 0px;
+        width: 100%;
+        z-index: 800;
+    }
+    .pasos-fixed {
+        display: block !important;
+        height: 140px;
+    }
+}
+.pasos-fixed {
+    display: none;
+}
+.opacidad-stepper{
+    background-color: rgba(233, 235, 230, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;  
+    font-size: 21px;
+    text-align: center;
+    padding-left: 0px;
+    align-items: center;
+ }
 .nuevoProyectoBuscador{
     /* background: #e9ebe6 url(../img/ComunidadPropietarios2.png) no-repeat center;  */
     background: #e9ebe6 url(

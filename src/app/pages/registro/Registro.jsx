@@ -14,14 +14,18 @@ import { collection, doc, setDoc } from 'firebase/firestore'
 import { format } from 'date-fns'
 
 import '../../../../public/assets/css/registro.css'
+//imagenes
+import LogoGmail from '../../../../public/assets/img/G.jpg'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
+import Box from '@mui/material/Box'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
+import Typography from '@mui/material/Typography'
 
 // const styles = () => ({
 //     selectRolBtn: {
@@ -300,15 +304,34 @@ const Registro = (props) => {
                                 <ul className="align-items-center">
                                     <li className="body-1">
                                         <Button
-                                            className="btn btn-round btn-middle"
+                                            className="btn btn-round btn-middle d-flex align-items-center"
                                             onClick={handleGoogleProvider}
+                                            style={{
+                                                background: '#e9ebe6',
+                                            }}
                                         >
-                                            REGISTRARSE CON GMAIL
+                                            <Box
+                                                component="img"
+                                                src={LogoGmail}
+                                                alt="Registrarse-con-cuenta-gmail"
+                                                sx={{
+                                                    height: 33,
+                                                    display: 'block',
+                                                    maxWidth: 33,
+                                                    overflow: 'hidden',
+                                                    width: '100%',
+                                                    borderRadius: '50%',
+                                                }}
+                                                className="p-2"
+                                            />
+                                            <Typography className="body-1">
+                                                Registrarse con Gmail
+                                            </Typography>
                                         </Button>
                                     </li>
                                     {/* <li className="body-1 pt-2">
                                             <Button className="btn btn-round btn-middle">
-                                                REGISTRARSE CON FACEBOOK
+                                                Registrarse con Facebook
                                             </Button>
                                         </li> */}
                                 </ul>
