@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody' 
+import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
@@ -218,7 +218,12 @@ const ApendiceCostos = () => {
                                                 {subCategoriaDescription}
                                             </TableCell>
                                             <TableCell>
-                                                {subCategoriaPrecio}
+                                                {parseInt(
+                                                    subCategoriaPrecio
+                                                ).toLocaleString('es-CO', {
+                                                    style: 'currency',
+                                                    currency: 'COP',
+                                                })}
                                             </TableCell>
                                         </TableRow>
                                     )

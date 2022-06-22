@@ -75,7 +75,11 @@ const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
                     {subCategoriaDescription}
                 </Typography>
                 <Typography variant="body1">
-                    Precio: {subCategoriaPrecio}
+                    Precio:{' '}
+                    {parseInt(subCategoriaPrecio).toLocaleString('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
+                    })}
                 </Typography>
                 <Typography variant="body1">
                     Cantidad: {subCategoriaCantidad}

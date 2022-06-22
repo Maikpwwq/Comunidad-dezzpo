@@ -22,6 +22,9 @@ const Requerimiento = () => {
         requerimientoCategoria: '',
         requerimientoTipoProyecto: '',
         requerimientoDescripcion: '',
+        requerimientoId: '',
+        requerimientoTotal: 0,
+        requerimientoCategorias: '',
         requerimientoPropietario: '',
         requerimientoCreated: '',
         requerimientoPrioridad: '',
@@ -32,6 +35,9 @@ const Requerimiento = () => {
         requerimientoCiudad: '',
         requerimientoDireccion: '',
         requerimientoCodigoPostal: '',
+        requerimientoAdjuntos: '',
+        requerimientoMejorFecha: '',
+        requerimientoMejorHora: '',
     })
 
     const draftFromFirestore = async (projectID) => {
@@ -58,6 +64,9 @@ const Requerimiento = () => {
                             requerimientoCategoria: data.draftCategory,
                             requerimientoTipoProyecto: data.draftProject,
                             requerimientoDescripcion: data.draftDescription,
+                            requerimientoId: data.draftId,
+                            requerimientoTotal: data.draftTotal,
+                            requerimientoSubCategory: data.draftSubCategory,
                             requerimientoPropietario:
                                 data.draftPropietarioResidente,
                             requerimientoCreated: data.draftCreated,
@@ -69,6 +78,9 @@ const Requerimiento = () => {
                             requerimientoCiudad: data.draftCity,
                             requerimientoDireccion: data.draftDirection,
                             requerimientoCodigoPostal: data.draftPostalCode,
+                            requerimientoAdjuntos: data.draftAtachments,
+                            requerimientoMejorFecha: data.draftBestScheduleDate,
+                            requerimientoMejorHora: data.draftBestScheduleTime,
                         })
                     }
                 }

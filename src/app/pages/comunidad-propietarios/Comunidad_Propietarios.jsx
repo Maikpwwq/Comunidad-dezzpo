@@ -26,19 +26,19 @@ const ComunidadPropietarios = (props) => {
                             <span className="">
                                 {' '}
                                 <p className="p-description">
-                                    SOMOS UNA COMUNIDAD DE COMERCIANTES
-                                    PROFESIONALES, CONTRATA PERSONAL CALIFICADO
-                                    MANTENIMIENTO GENERAL RESIDENCIAL Y DE
-                                    PROPIEDAD HORIZONTAL, CONSULTA PÚBLICAMENTE
-                                    LOS PERFILES Y LA REPUTACIÓN DE LOS
-                                    PRESTADORES DE SERVICIOS. AHORA TUS
-                                    PROYECTOS Y REMODELACIONES MÁS RÁPIDO Y
-                                    SIMPLE QUE NUNCA <br />
+                                    Somos un Marketplace de servicios,
+                                    promocionamos contratistas de adecuaciones y
+                                    acabados inmobiliarios. Compara perfiles y
+                                    estadísticas, con base en calificaciones de
+                                    la comunidad. Cambiamos la forma de
+                                    contratar: reformas locales, remodelaciones,
+                                    instaladores e independientes de la
+                                    construcción. Asistimos tus proyectos con
+                                    agilidad, calidad y empatía. <br />
                                 </p>
                             </span>
                             <h3 className=".headline-l textVerde">
-                                Contrata seguro con <br />
-                                nuestra comunidad
+                                Contrata seguro con nuestra comunidad
                             </h3>
                         </Col>
                     </Col>
