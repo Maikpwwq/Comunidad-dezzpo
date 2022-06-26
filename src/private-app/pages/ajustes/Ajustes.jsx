@@ -323,9 +323,9 @@ const Ajustes = (props) => {
                             </FormGroup>
                         </Row>
                     </Col>
-                    <hr />
                     <Col className="col-10">
-                        <Row className="pb-4">
+                        <hr />
+                        <Row className="">
                             <label
                                 htmlFor="ofertaServicios"
                                 className="p-description pb-4 w-100"
@@ -344,7 +344,7 @@ const Ajustes = (props) => {
                                 minRows={8}
                                 className="w-100"
                             ></TextareaAutosize>
-                            <Row className="pb-4 w-100">
+                            <Row className="pb-2 pt-2 w-100">
                                 <Col className="">
                                     <Button
                                         type="submit"
@@ -357,8 +357,8 @@ const Ajustes = (props) => {
                             </Row>
                         </Row>
                     </Col>
-                    <hr />
-                    <Col className="col-10 pt-4">
+                    <Col className="col-10">
+                        <hr />
                         <p className="p-description">Confirma tu identidad</p>
                         <p className="body-1">
                             Adjunta tu documento de identificación para...

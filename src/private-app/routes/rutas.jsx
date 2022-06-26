@@ -26,6 +26,8 @@ import Portal_Servicios from '../pages/portal-servicios/Portal_Servicios'
 import Directorio_Requerimientos from '../pages/directorio-requerimientos/Directorio_Requerimientos'
 import Requerimiento from '../pages/requerimiento/Requerimiento'
 import Suscripciones from '../pages/suscripciones/Suscripciones'
+import Cotizar from '../pages/cotizar/Cotizar'
+import Proyecto from '../pages/proyecto/Proyecto'
 
 import ApendiceCostos from '../../app/pages/apendice-costos/Apendice_Costos'
 
@@ -119,6 +121,14 @@ class Rutas extends React.Component {
                     <Route
                         path="/requerimiento"
                         element={<Requerimiento></Requerimiento>}
+                    ></Route>
+                    <Route
+                        path="/cotizacion"
+                        element={<Cotizar></Cotizar>}
+                    ></Route>
+                    <Route
+                        path="/proyecto"
+                        element={<Proyecto></Proyecto>}
                     ></Route>
                     <Route
                         path="/suscripciones"

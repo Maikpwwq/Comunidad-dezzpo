@@ -54,7 +54,11 @@ export default function DraftCard({ props }) {
         console.log(draftId)
         navigate('/app/requerimiento', { state: { draftId: draftId } })
     }
-    const handleAplicar = () => {}
+    const handleAplicar = () => {
+        navigate('/app/cotizacion', {
+            state: { draftId: draftId },
+        })
+    }
     const handleFavorite = () => {}
     const handleShare = () => {}
 
