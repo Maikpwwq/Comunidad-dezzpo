@@ -1,15 +1,33 @@
 import React, { useState } from 'react'
-import { Navigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
+import { collection, doc, setDoc } from 'firebase/firestore'
+import { firestore, auth } from '../../../firebase/firebaseClient'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
 
 const Cotizar = (props) => {
+    const quotationID = uuidv4()
+    const user = auth.currentUser || {}
+    const userID = user.uid || ''
     const { state } = useLocation() || {}
+    const navigate = useNavigate()
     const { draftId } = state || {}
+    const _firestore = firestore
+    const quotationRef = collection(_firestore, 'quotation')
+    const draftRef = collection(_firestore, 'drafts')
+
     const [cotizacion, setCotizacion] = useState({
+        quotationId: quotationID,
+        proponentId: userID,
         description: '',
         scope: '',
         tiempoEjecucion: '',
@@ -24,9 +42,20 @@ const Cotizar = (props) => {
         })
     }
 
+    const quotationToFirestore = async (updateInfo, docId) => {
+        await setDoc(doc(quotationRef, docId), updateInfo)
+    } 
+
+    const draftToFirestore = async (updateInfo, projectID) => {
+        await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
+    }
+
     const handleEnviar = () => {
-        // TODO: Implementar el envio de la cotizacion
-        draftId && console.log(draftId)
+        quotationToFirestore(cotizacion, quotationID)
+        const update = { draftApply: [quotationID] } // TODO: add just to five id's
+        console.log(draftId)
+        draftToFirestore(update, draftId)
+        navigate(-1)
     }
 
     return (
@@ -90,8 +119,46 @@ const Cotizar = (props) => {
                     >
                         Tabla de valores
                     </label>
+                    <Row className="m-0 w-100 d-flex">
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Ítem</TableCell>
+                                    <TableCell>Actividad</TableCell>
+                                    <TableCell>Unidad Medida</TableCell>
+                                    <TableCell>Cantidad</TableCell>
+                                    <TableCell>Precio unitario</TableCell>
+                                    <TableCell>Valor sin IVA</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>Ítem</TableCell>
+                                    <TableCell>Actividad</TableCell>
+                                    <TableCell>Unidad Medida</TableCell>
+                                    <TableCell>
+                                        Cantidad
+                                        {/* {parseInt(
+                                            Cantidad
+                                        ).toLocaleString('es-CO', {
+                                            style: 'currency',
+                                            currency: 'COP',
+                                        })} */}
+                                    </TableCell>
+                                    <TableCell>Valor sin IVA</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell>VALOR SUBTOTAL</TableCell>
+                                    <TableCell>VALOR SUBTOTAL</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </Row>
 
-                    {/* Ítem Actividad Unidad Cantidad Precio unitario Valor sin IVA VALOR SUBTOTAL $ */}
                     <label
                         htmlFor="ofertaServiciostiempoEjecucion"
                         className="p-description pt-4 pb-2 w-100"

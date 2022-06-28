@@ -23,7 +23,11 @@ const Requerimiento = () => {
     const _firestore = firestore
     // const _storage = storage
     const draftRef = collection(_firestore, 'drafts')
+    const quotationRef = collection(_firestore, 'quotation')
 
+    const [cotizacionesInfo, setCotizacionesInfo] = useState({
+        appliedQuotations: [],
+    })
     const [requerimientoInfo, setRequerimientoInfo] = useState({
         requerimientoTitulo: '',
         requerimientoCategoria: '',
@@ -45,12 +49,19 @@ const Requerimiento = () => {
         requerimientoAdjuntos: '',
         requerimientoMejorFecha: '',
         requerimientoMejorHora: '',
+        requerimientoAplicaciones: '',
     })
 
     const draftFromFirestore = async (projectID) => {
         const draftData = await getDocFromServer(doc(draftRef, projectID))
-        console.log(draftData)
+        // console.log(draftData)
         return draftData
+    }
+
+    const quotationFromFirestore = async (docId) => {
+        const quotationData = await getDocFromServer(doc(quotationRef, docId))
+        // console.log(quotationData)
+        return quotationData
     }
 
     useEffect(() => {
@@ -59,11 +70,11 @@ const Requerimiento = () => {
             const snap = draftFromFirestore(draftId)
             snap.then((docSnap) => {
                 // docSnap.exists()
-                console.log(docSnap)
+                // console.log(docSnap)
                 if (docSnap) {
                     // docSnap._document.data...
                     const data = docSnap.data()
-                    console.log(data)
+                    // console.log(data)
                     if (data) {
                         setRequerimientoInfo({
                             ...requerimientoInfo,
@@ -73,7 +84,7 @@ const Requerimiento = () => {
                             requerimientoDescripcion: data.draftDescription,
                             requerimientoId: data.draftId,
                             requerimientoTotal: data.draftTotal,
-                            requerimientoSubCategory: data.draftSubCategory,
+                            requerimientoCategorias: data.draftSubCategory,
                             requerimientoPropietario:
                                 data.draftPropietarioResidente,
                             requerimientoCreated: data.draftCreated,
@@ -88,6 +99,16 @@ const Requerimiento = () => {
                             requerimientoAdjuntos: data.draftAtachments,
                             requerimientoMejorFecha: data.draftBestScheduleDate,
                             requerimientoMejorHora: data.draftBestScheduleTime,
+                            requerimientoAplicaciones: data.draftApply,
+                        })
+                        // console.log(data, data.draftApply)
+                        const snap2 = quotationFromFirestore(data.draftApply[0])
+                        snap2.then((docQuotation) => {
+                            // console.log(docQuotation.data())
+                            setCotizacionesInfo({
+                                ...cotizacionesInfo,
+                                appliedQuotations: [docQuotation.data()],
+                            })
                         })
                     }
                 }
@@ -341,13 +362,16 @@ const Requerimiento = () => {
                             <Col>
                                 <p className="headline-l">
                                     COTIZACIONES{' '}
-                                    <Button
-                                        className="BOTON-TEXT textBlanco"
-                                        variant="primary"
-                                        onClick={handleCotizar}
-                                    >
-                                        + ASIGNAR NUEVA COTIZACION
-                                    </Button>
+                                    {requerimientoInfo.requerimientoAplicaciones
+                                        .length < 4 && (
+                                        <Button
+                                            className="BOTON-TEXT textBlanco"
+                                            variant="primary"
+                                            onClick={handleCotizar}
+                                        >
+                                            + ASIGNAR NUEVA COTIZACION
+                                        </Button>
+                                    )}
                                 </p>
                                 {/* TODO: poblar tabla de cotizaciones */}
                                 <Table>
@@ -356,22 +380,45 @@ const Requerimiento = () => {
                                             <TableCell>
                                                 Comerciante calificado
                                             </TableCell>
+                                            <TableCell>Alcance</TableCell>
                                             <TableCell>Descripción</TableCell>
                                             <TableCell></TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        <TableRow>
-                                            <TableCell>
-                                                Comerciante calificado
-                                            </TableCell>
-                                            <TableCell>Descripción</TableCell>
-                                            <TableCell>
-                                                <Button className="btn btn-round btn-high">
-                                                    DESCARGAR COTIZACION
-                                                </Button>
-                                            </TableCell>
-                                        </TableRow>
+                                        {cotizacionesInfo.appliedQuotations &&
+                                            cotizacionesInfo.appliedQuotations.map(
+                                                (item) => {
+                                                    const {
+                                                        proponentId,
+                                                        scope,
+                                                        description,
+                                                        quotationId,
+                                                    } = item
+                                                    return (
+                                                        <TableRow
+                                                            key={quotationId}
+                                                        >
+                                                            {' '}
+                                                            <TableCell>
+                                                                {proponentId}
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {scope}
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {description}
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Button className="btn btn-round btn-high">
+                                                                    DESCARGAR
+                                                                    COTIZACION
+                                                                </Button>
+                                                            </TableCell>{' '}
+                                                        </TableRow>
+                                                    )
+                                                }
+                                            )}
                                     </TableBody>
                                 </Table>
                             </Col>

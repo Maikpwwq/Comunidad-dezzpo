@@ -35,8 +35,8 @@ import Typography from '@mui/material/Typography'
 // })
 
 const Registro = (props) => {
-    const { showLogo, connect, createChannel, sbSdk } = props
-
+    const { showLogo, draftId, connect, createChannel, sbSdk } = props
+    // sessionStorage.draftId = draftID
     // useEffect(() => {
     //     conectarSB()
     // }, [connect])
@@ -109,29 +109,35 @@ const Registro = (props) => {
             const signUp = (email, password) => {
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
-                        if (typeof connect == 'function') {
-                            conectarSB(user.uid)
-                        }
-                        if (
-                            typeof createChannel == 'function' &&
-                            typeof sbSdk === 'object'
-                        ) {
-                            crearCanal(user.uid)
-                        }
                         var user = userCredential.user
                         console.log(
                             'Anonymous account successfully upgraded',
                             user
                         )
+                        if (typeof connect == 'function') {
+                            conectarSB(user.uid)
+                        } else console.log('no hay connect', typeof connect)
+                        if (
+                            typeof createChannel == 'function' &&
+                            typeof sbSdk === 'object'
+                        ) {
+                            crearCanal(user.uid)
+                        } else
+                            console.log(
+                                'no hay channel',
+                                typeof createChannel,
+                                typeof sbSdk
+                            )
                         const data = {
                             userMail: user.email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
                             userId: user.uid,
-                            channelUrl: channelUrl,
+                            channelUrl: channelUrl || '',
                             // userName: user.displayName,
                         }
                         console.log(userSignupRol, channelUrl)
                         if (userSignupRol == 1) {
+                            data.createdDrafts = draftId
                             userProResToFirestore(data, user.uid)
                         }
                         if (userSignupRol == 2) {
@@ -174,24 +180,31 @@ const Registro = (props) => {
                         // The signed-in user info.
                         const user = result.user
                         console.log('Account successfully upgraded', user)
+                        // almacena un channelUrl
                         if (typeof connect == 'function') {
                             conectarSB(user.uid)
-                        }
+                        } else console.log('no hay connect', typeof connect)
                         if (
                             typeof createChannel == 'function' &&
                             typeof sbSdk === 'object'
                         ) {
-                            crearCanal(user.uid) // almacena un channelUrl
-                        }
+                            crearCanal(user.uid)
+                        } else
+                            console.log(
+                                'no hay channel',
+                                typeof createChannel,
+                                typeof sbSdk
+                            )
                         const data = {
                             userMail: user.email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
                             userId: user.uid,
-                            channelUrl: channelUrl,
+                            channelUrl: channelUrl || '',
                             // userName: user.displayName,
                         }
                         console.log(userSignupRol, channelUrl)
                         if (userSignupRol == 1) {
+                            data.createdDrafts = draftId
                             userProResToFirestore(data, user.uid)
                         }
                         if (userSignupRol == 2) {
@@ -428,6 +441,7 @@ Registro.propTypes = {
     connect: PropTypes.func.isRequired,
     createChannel: PropTypes.func.isRequired,
     sbSdk: PropTypes.object.isRequired,
+    draftId: PropTypes.string,
 }
 
 export default withSendBird(Registro, (state) => ({

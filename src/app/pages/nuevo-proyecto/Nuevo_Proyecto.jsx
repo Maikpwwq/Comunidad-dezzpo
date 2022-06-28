@@ -1,7 +1,7 @@
-// Pagina de NuevoProyecto
+// Pagina de NuevoProyecto 
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Navigate, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
 import ScrollToTopOnMount from '../../components/ScrollToTop'
 import { v4 as uuidv4 } from 'uuid'
 import {
@@ -29,6 +29,7 @@ import Modal from '@mui/material/Modal'
 
 const NuevoProyecto = (props) => {
     const draftID = uuidv4()
+    const navigate = useNavigate()
     const { state } = useLocation() || {}
     const { categoriaProfesional, tipoProyecto, auth } = state || {}
     const { paramCategoriaProfesional, paramTipoProyecto } = useParams()
@@ -78,6 +79,7 @@ const NuevoProyecto = (props) => {
         draftBestScheduleTime: '',
         draftProperty: '',
         draftPostalCode: '',
+        draftApply: '',
     })
 
     const [open, setOpen] = useState(false)
@@ -149,11 +151,11 @@ const NuevoProyecto = (props) => {
 
     const handleSave = () => {
         console.log(draftInfo)
-        const snap = draftToFirestore(draftInfo, draftID)
+        const snap = draftToFirestore(draftInfo, draftInfo.draftID)
         snap.then((docSnap) => {
             console.log(docSnap)
         })
-        goForward()
+        hideRegister ? navigate('/app/directorio-requerimientos') : goForward()
     }
 
     // TODO Crear funcion para leer los borradores de requerimientos desde firebase y desde local storage
@@ -655,7 +657,11 @@ const NuevoProyecto = (props) => {
                             </p>
                         </Col>
 
-                        <Registro showLogo={false} className="pb-4"></Registro>
+                        <Registro
+                            draftId={draftInfo.draftID}
+                            showLogo={false}
+                            className="pb-4"
+                        ></Registro>
                     </Row>
                 ) : (
                     <></>

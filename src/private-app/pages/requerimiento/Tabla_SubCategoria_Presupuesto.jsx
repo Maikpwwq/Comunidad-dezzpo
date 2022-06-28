@@ -105,6 +105,7 @@ const TablaSubCategoriaPresupuesto = (props) => {
 
 TablaSubCategoriaPresupuesto.propTypes = {
     requerimientoCategorias: PropTypes.array.isRequired,
+    requerimientoTotal: PropTypes.number.isRequired,
 }
 
 export default TablaSubCategoriaPresupuesto

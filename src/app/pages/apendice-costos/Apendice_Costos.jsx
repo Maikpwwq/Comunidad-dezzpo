@@ -187,7 +187,6 @@ const ApendiceCostos = () => {
             </Container>
             <Container fluid className="p-0">
                 <Row className="m-0 w-100 d-flex">
-                    {/* TODO insert Firebase Table! */}
                     <Table>
                         <TableHead>
                             <TableRow>

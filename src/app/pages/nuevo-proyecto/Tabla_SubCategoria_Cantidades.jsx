@@ -30,7 +30,7 @@ const TablaSubCategoriaCantidades = (props) => {
         categoriaInfo.selected.map((selection, index, array) => {
             const { subCategoriaCantidades, subCategoriaPrecioFinal } =
                 selection
-            console.log(subCategoriaCantidades, subCategoriaPrecioFinal)
+            // console.log(subCategoriaCantidades, subCategoriaPrecioFinal)
             suma = suma + subCategoriaPrecioFinal
         })
         setPrecioTotalizadoDraft(suma)
@@ -43,11 +43,11 @@ const TablaSubCategoriaCantidades = (props) => {
                 setDraftInfo({
                     ...draftInfo,
                     draftTotal: precioTotalizadoDraft,
-                    draftSubCategory: [categoriaInfo.selected],
+                    draftSubCategory: categoriaInfo.selected,
                 })
             }
         }
-    }, [categoriaInfo.selected, cantidadesCategorias])
+    }, [cantidadesCategorias, categoriaInfo.selected])
 
     return (
         <>
