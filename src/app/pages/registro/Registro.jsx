@@ -254,28 +254,31 @@ const Registro = (props) => {
                         ></Col>
                     )}
                     <Col
-                        className="registrateformulario m-0 p-0 pt-2 pb-4"
+                        className="registrateformulario m-0 p-0"
                         md={6}
                         sm={12}
                     >
                         <Form
                             id="formularioRegistro"
                             action=""
-                            className="p-4"
+                            className="p-2"
                             // preventDefault="true"
                         >
                             <Col className="d-flex">
                                 <h2 className="headline-xl textBlanco">
-                                    REGISTRATE
+                                    Registrate!
                                 </h2>
                                 <p className="body-1 textBlanco">
                                     Bienvenido a todos los beneficios de dezzpo.{' '}
-                                    <NavLink className="body-2" to="/ingreso/">
+                                    <NavLink
+                                        className="body-2 BOTON-TEXT"
+                                        to="/ingreso/"
+                                    >
                                         {'¿Ya tienes una cuenta?'}
                                     </NavLink>
                                 </p>
-                                <Form.Label className="mb-0 mt-2">
-                                    Elegir rol:
+                                <Form.Label className="mb-0">
+                                    1. Elegir rol:
                                 </Form.Label>
                                 <ToggleButtonGroup
                                     name="userRol"
@@ -314,100 +317,79 @@ const Registro = (props) => {
                                         Soy Comerciante Calificado
                                     </ToggleButton>
                                 </ToggleButtonGroup>
-                                <ul className="align-items-center">
-                                    <li className="body-1">
-                                        <Button
-                                            className="btn btn-round btn-middle d-flex align-items-center"
-                                            onClick={handleGoogleProvider}
-                                            style={{
-                                                background: '#e9ebe6',
-                                            }}
-                                        >
-                                            <Box
-                                                component="img"
-                                                src={LogoGmail}
-                                                alt="Registrarse-con-cuenta-gmail"
-                                                sx={{
-                                                    height: 33,
-                                                    display: 'block',
-                                                    maxWidth: 33,
-                                                    overflow: 'hidden',
-                                                    width: '100%',
-                                                    borderRadius: '50%',
-                                                }}
-                                                className="p-2"
-                                            />
-                                            <Typography className="body-1">
-                                                Registrarse con Gmail
-                                            </Typography>
-                                        </Button>
-                                    </li>
-                                    {/* <li className="body-1 pt-2">
-                                            <Button className="btn btn-round btn-middle">
-                                                Registrarse con Facebook
-                                            </Button>
-                                        </li> */}
-                                </ul>
-                                <br />
-                                <Form.Group
-                                    className="w-80 pt-4 mb-2 d-flex flex-column align-items-start"
-                                    controlId="formBasicName"
+                                <Form.Label className="mb-0 mt-2">
+                                    2. Ingresa tus datos:
+                                </Form.Label>
+                                <Col
+                                    className="d-flex flex-column align-items-center"
+                                    lg={10}
+                                    md={12}
+                                    sm={10}
+                                    xs={12}
                                 >
-                                    <Form.Label className="mb-0">
-                                        Nombre de usuario
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Elija su usuario"
-                                        name="username"
-                                    />
-                                </Form.Group>
-                                <Form.Group
-                                    className="w-80 mb-2 d-flex flex-column align-items-start"
-                                    controlId="formSignupEmail"
-                                >
-                                    <Form.Label className="mb-0">
-                                        Email
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        placeholder="Registre una cuenta de email valida"
-                                        name="email"
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
-                                    />
-                                </Form.Group>
-                                <Form.Group
-                                    className="w-80 mb-2 d-flex flex-column align-items-start"
-                                    controlId="formSignupPassword"
-                                >
-                                    <Form.Label className="mb-0">
-                                        Contraseña
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="Registre una clave"
-                                        name="password"
-                                        onChange={(e) =>
-                                            setPassword(e.target.value)
-                                        }
-                                    />
-                                </Form.Group>
-                                <Form.Group
-                                    className="w-80 mb-2 d-flex flex-column align-items-start"
-                                    controlId="formBasicPassword"
-                                >
-                                    <Form.Label className="mb-0">
-                                        Confirme la Contraseña
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="De nuevo la clave"
-                                        name="confirmPassword"
-                                    />
-                                </Form.Group>
-                                {/* <Form.Group
+                                    <Form.Group
+                                        className="pt-2 mb-2 d-flex flex-column align-items-start"
+                                        controlId="formBasicName"
+                                        style={{ width: 'inherit' }}
+                                    >
+                                        <Form.Label className="mb-0">
+                                            Nombre de usuario
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="elija su usuario"
+                                            name="username"
+                                        />
+                                    </Form.Group>
+                                    <Form.Group
+                                        className="w-80 mb-2 d-flex flex-column align-items-start"
+                                        controlId="formSignupEmail"
+                                        style={{ width: 'inherit' }}
+                                    >
+                                        <Form.Label className="mb-0">
+                                            Email
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="registre una cuenta de email valida"
+                                            name="email"
+                                            onChange={(e) =>
+                                                setEmail(e.target.value)
+                                            }
+                                        />
+                                    </Form.Group>
+                                    <Form.Group
+                                        className="w-80 mb-2 d-flex flex-column align-items-start"
+                                        controlId="formSignupPassword"
+                                        style={{ width: 'inherit' }}
+                                    >
+                                        <Form.Label className="mb-0">
+                                            Contraseña
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="registre una clave"
+                                            name="password"
+                                            onChange={(e) =>
+                                                setPassword(e.target.value)
+                                            }
+                                        />
+                                    </Form.Group>
+                                    <Form.Group
+                                        className="w-80 mb-2 d-flex flex-column align-items-start"
+                                        controlId="formBasicPassword"
+                                        style={{ width: 'inherit' }}
+                                    >
+                                        <Form.Label className="mb-0">
+                                            Confirme la Contraseña
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="de nuevo la clave"
+                                            name="confirmPassword"
+                                        />
+                                    </Form.Group>
+                                    {/* <Form.Group
                                     className="mb-2 mt-2"
                                     controlId="formBasicCheckboxRobot"
                                 >
@@ -417,7 +399,8 @@ const Registro = (props) => {
                                         label="No soy un robot"
                                     />
                                 </Form.Group> */}
-                                <Col className="pt-2">
+                                </Col>
+                                <Col className="pt-4">
                                     <Button
                                         className="btn-round btn-high"
                                         variant="primary"
@@ -426,6 +409,41 @@ const Registro = (props) => {
                                     >
                                         Crear Cuenta
                                     </Button>
+                                    <br />
+                                    <ul className="align-items-center mt-2 w-100">
+                                        <li className="body-1">
+                                            <Button
+                                                className="btn btn-round btn-middle d-flex align-items-center p-0 pe-2"
+                                                onClick={handleGoogleProvider}
+                                                style={{
+                                                    background: '#e9ebe6',
+                                                }}
+                                            >
+                                                <Box
+                                                    component="img"
+                                                    src={LogoGmail}
+                                                    alt="Registrarse-con-cuenta-gmail"
+                                                    sx={{
+                                                        height: 33,
+                                                        display: 'block',
+                                                        maxWidth: 33,
+                                                        overflow: 'hidden',
+                                                        width: '100%',
+                                                        borderRadius: '50%',
+                                                    }}
+                                                    className="p-2"
+                                                />
+                                                <Typography className="body-1">
+                                                    Registrarse con Gmail
+                                                </Typography>
+                                            </Button>
+                                        </li>
+                                        {/* <li className="body-1 pt-2">
+                                            <Button className="btn btn-round btn-middle">
+                                                Registrarse con Facebook
+                                            </Button>
+                                        </li> */}
+                                    </ul>
                                 </Col>
                             </Col>
                         </Form>
