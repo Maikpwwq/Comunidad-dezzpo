@@ -28,6 +28,7 @@ body{
         https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Buscador-Dezzpo.png?alt=media&token=db72bbeb-29f7-4fa8-b995-6eced5b2f007
     ) no-repeat center; 
     background-size: cover;
+    min-height: 515px;
     height: auto;
     width: auto;
     display: flex;

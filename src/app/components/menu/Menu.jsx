@@ -12,6 +12,7 @@ import Row from 'react-bootstrap/Row'
 import IconButton from '@mui/material/IconButton'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import MenuIcon from '@mui/icons-material/Menu'
+import LoginIcon from '@mui/icons-material/Login'
 
 const MenuComunidad = (props) => {
     /* getNavLinkClass = (path) => {
@@ -25,7 +26,7 @@ const MenuComunidad = (props) => {
                 <Col className="menuFijo w-100 p-0 m-0">
                     {/* Menu fijo */}
                     <Col className="p-0 barraMenu">
-                        <Row className="m-0 d-flex w-100 menuVisible">
+                        <Row className="m-0 ps-2 pe-4 d-flex w-100 menuVisible">
                             <div className="containerLogo container d-flex w-auto ms-0">
                                 <IconButton
                                     aria-label="mobile-more"
@@ -42,7 +43,7 @@ const MenuComunidad = (props) => {
                                     />
                                 </NavLink>
                             </div>
-                            <Row className="w-auto me-4">
+                            <Row className="w-auto">
                                 <NavLink
                                     to="/app/portal-servicios"
                                     className="botonNavLink body-2"
@@ -64,7 +65,7 @@ const MenuComunidad = (props) => {
                                     to="/ingreso"
                                     className="botonNavLink body-2"
                                 >
-                                    <strong>Ingresar</strong>
+                                    <LoginIcon /> <strong>Ingresar </strong>
                                 </NavLink>
                             </Row>
                         </Row>
