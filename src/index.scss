@@ -255,6 +255,7 @@ $theme-colors: ();
       &.btn-middle {
          // Botón Border Activo
          border: 2px solid var(--selected-border-blue-color);
+         background-color: var(--background-white-color) !important;
 
          &:hover {
             color: var(--primary-light-gray-text-color);

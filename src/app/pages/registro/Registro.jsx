@@ -320,6 +320,40 @@ const Registro = (props) => {
                                 <Form.Label className="mb-0 mt-2">
                                     2. Ingresa tus datos:
                                 </Form.Label>
+                                <ul className="align-items-center mt-2 w-100">
+                                    <li className="body-1">
+                                        <Button
+                                            className="btn btn-round btn-middle d-flex align-items-center p-0 pe-2"
+                                            onClick={handleGoogleProvider}
+                                            style={{
+                                                background: '#e9ebe6',
+                                            }}
+                                        >
+                                            <Box
+                                                component="img"
+                                                src={LogoGmail}
+                                                alt="Registrarse-con-cuenta-gmail"
+                                                sx={{
+                                                    height: 33,
+                                                    display: 'block',
+                                                    maxWidth: 33,
+                                                    overflow: 'hidden',
+                                                    width: '100%',
+                                                    borderRadius: '50%',
+                                                }}
+                                                className="p-2"
+                                            />
+                                            <Typography className="body-1">
+                                                Registrarse con Gmail
+                                            </Typography>
+                                        </Button>
+                                    </li>
+                                    {/* <li className="body-1 pt-2">
+                                            <Button className="btn btn-round btn-middle">
+                                                Registrarse con Facebook
+                                            </Button>
+                                        </li> */}
+                                </ul>
                                 <Col
                                     className="d-flex flex-column align-items-center"
                                     lg={10}
@@ -400,7 +434,7 @@ const Registro = (props) => {
                                     />
                                 </Form.Group> */}
                                 </Col>
-                                <Col className="pt-4">
+                                <Col className="pt-3 pb-3">
                                     <Button
                                         className="btn-round btn-high"
                                         variant="primary"
@@ -410,40 +444,6 @@ const Registro = (props) => {
                                         Crear Cuenta
                                     </Button>
                                     <br />
-                                    <ul className="align-items-center mt-2 w-100">
-                                        <li className="body-1">
-                                            <Button
-                                                className="btn btn-round btn-middle d-flex align-items-center p-0 pe-2"
-                                                onClick={handleGoogleProvider}
-                                                style={{
-                                                    background: '#e9ebe6',
-                                                }}
-                                            >
-                                                <Box
-                                                    component="img"
-                                                    src={LogoGmail}
-                                                    alt="Registrarse-con-cuenta-gmail"
-                                                    sx={{
-                                                        height: 33,
-                                                        display: 'block',
-                                                        maxWidth: 33,
-                                                        overflow: 'hidden',
-                                                        width: '100%',
-                                                        borderRadius: '50%',
-                                                    }}
-                                                    className="p-2"
-                                                />
-                                                <Typography className="body-1">
-                                                    Registrarse con Gmail
-                                                </Typography>
-                                            </Button>
-                                        </li>
-                                        {/* <li className="body-1 pt-2">
-                                            <Button className="btn btn-round btn-middle">
-                                                Registrarse con Facebook
-                                            </Button>
-                                        </li> */}
-                                    </ul>
                                 </Col>
                             </Col>
                         </Form>

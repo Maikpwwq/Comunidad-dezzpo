@@ -95,10 +95,11 @@ const MenuComunidad = (props) => {
                                     </li>
                                     <div className="dropdownContenidos body-1 p-0">
                                         <NavLink
-                                            to="/ingreso"
+                                            to="/profesionales-servicios"
                                             className="p-2 pb-0"
                                         >
-                                            Ingresar
+                                            {' '}
+                                            Profesionales y servicios{' '}
                                         </NavLink>
                                         <NavLink
                                             to="/asesorias"
@@ -117,6 +118,12 @@ const MenuComunidad = (props) => {
                                             className="p-2 pb-0"
                                         >
                                             Perfil Propietario
+                                        </NavLink>
+                                        <NavLink
+                                            to="/ingreso"
+                                            className="p-2 pb-0"
+                                        >
+                                            Ingresar
                                         </NavLink>
                                         <NavLink
                                             to="/registro"
@@ -209,6 +216,13 @@ const MenuComunidad = (props) => {
                                             Asi funciona
                                         </NavLink>
                                         <NavLink
+                                            to="/profesionales-servicios"
+                                            className="p-2 pb-0"
+                                        >
+                                            {' '}
+                                            Profesionales y servicios{' '}
+                                        </NavLink>
+                                        <NavLink
                                             to="/contactenos"
                                             className="p-2 pb-0"
                                         >
@@ -256,6 +270,13 @@ const MenuComunidad = (props) => {
                                             Asi funciona
                                         </NavLink>
                                         <NavLink
+                                            to="/profesionales-servicios"
+                                            className="p-2 pb-0"
+                                        >
+                                            {' '}
+                                            Profesionales y servicios{' '}
+                                        </NavLink>
+                                        <NavLink
                                             to="/contactenos"
                                             className="p-2 pb-0"
                                         >
@@ -281,7 +302,7 @@ const MenuComunidad = (props) => {
                                         Presupuestos{' '}
                                     </NavLink>
                                 </li>
-                                <li className="botonSeccion">
+                                {/* <li className="botonSeccion">
                                     <NavLink
                                         to="/profesionales-servicios"
                                         className="botonNavLink body-2"
@@ -289,7 +310,7 @@ const MenuComunidad = (props) => {
                                         {' '}
                                         Profesionales y servicios{' '}
                                     </NavLink>
-                                </li>
+                                </li> */}
                                 <li className="botonSeccion">
                                     <NavLink
                                         to="/asesorias"

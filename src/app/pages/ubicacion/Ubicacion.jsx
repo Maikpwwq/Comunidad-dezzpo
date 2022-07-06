@@ -139,7 +139,7 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
         <>
             <Container fluid className="p-0">
                 <Row className="ingresoUbicacion m-0 w-100">
-                    <Col className="left m-4 p-0 pt-4 pb-4">
+                    <Col className="left p-4 w-100">
                         <Form action="busquedaCiudad">
                             <h3 className="headline-l textBlanco">
                                 Ingresa tu ubicación
@@ -153,7 +153,7 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                                 controlId="formBasicCity"
                             >
                                 <Form.Label className="mb-0">
-                                    Elija su ciudad
+                                    1. Elija su ciudad
                                 </Form.Label>
                                 <br />
                                 <AutoComplete
@@ -175,7 +175,7 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                                 controlId="formBasicStreet"
                             >
                                 <Form.Label className="mb-0">
-                                    Dirección
+                                    2. Ubique su dirección en el mapa
                                 </Form.Label>
                                 <Form.Control
                                     type="text"
@@ -183,6 +183,7 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                                     name="street"
                                     value={locationInfo.street}
                                     onChange={handleChange}
+                                    variant="filled"
                                 />
                             </Form.Group>
                             <Form.Group>
@@ -201,7 +202,7 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                         </Form>
                     </Col>
                     {/* className="imagenUbicacion" */}
-                    <Col>
+                    <Col className="p-0">
                         <div
                             id="map"
                             style={{ height: '450px', width: '700px' }}

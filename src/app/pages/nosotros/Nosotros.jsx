@@ -9,6 +9,7 @@ import RoadMap from '../../../../public/assets/img/RoadMap.svg'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
 const Nosotros = (props) => {
     return (
@@ -156,22 +157,20 @@ const Nosotros = (props) => {
             <Container fluid className="p-0" id="eqipo-dezzpo">
                 <Row className="nosotrosEquipo m-0">
                     <Col className="md-12 m-0">
-                        <Col>
-                            <div className="opacidadBlanco">
-                                <span className="pitchPropietarios">
-                                    <h2 className="headline-xl">
-                                        Equipo Dezzpo
-                                    </h2>
-                                    <br />
-                                    <p className="p-description">
-                                        Conoce a nuestro equipo
-                                    </p>
-                                </span>
-                            </div>
+                        <Col className="p-2 ps-4 pe-4 opacidadBlanco">
+                            <span className="pitchPropietarios">
+                                <h2 className="headline-xl">Equipo Dezzpo</h2>
+                                <br />
+                                <p className="p-description">
+                                    Conoce a nuestro equipo
+                                </p>
+                            </span>
                         </Col>
-                        <Col className="right">
+                        <Col className="right p-4">
                             <div>
-                                <button>Vinculate</button>
+                                <Button className="btn-round btn-middle w-auto">
+                                    Vinculate
+                                </Button>
                             </div>
                         </Col>
                     </Col>

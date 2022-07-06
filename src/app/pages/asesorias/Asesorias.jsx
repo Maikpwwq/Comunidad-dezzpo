@@ -211,7 +211,7 @@ const Asesorias = (props) => {
                         </Col>
                         <Col className="pb-4" md={4} sm={10}>
                             <Button
-                                className="btn btn-round btn-high"
+                                className="btn btn-round btn-middle"
                                 onClick={handleBlogButton}
                             >
                                 BLOG DE LA COMUNIDAD

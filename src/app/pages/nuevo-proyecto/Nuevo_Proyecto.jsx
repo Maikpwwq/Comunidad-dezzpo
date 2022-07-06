@@ -1,7 +1,13 @@
-// Pagina de NuevoProyecto 
+// Pagina de NuevoProyecto
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Navigate, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
+import {
+    Navigate,
+    NavLink,
+    useLocation,
+    useNavigate,
+    useParams,
+} from 'react-router-dom'
 import ScrollToTopOnMount from '../../components/ScrollToTop'
 import { v4 as uuidv4 } from 'uuid'
 import {
@@ -26,6 +32,7 @@ import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Modal from '@mui/material/Modal'
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 
 const NuevoProyecto = (props) => {
     const draftID = uuidv4()
@@ -196,7 +203,7 @@ const NuevoProyecto = (props) => {
         <>
             <Container fluid className="p-0" style={{ position: 'relative' }}>
                 <PasoAPaso activeStep={activeStep} steps={steps} />
-                <div className="pasos-fixed"></div>
+                {/* <div className="pasos-fixed"></div> */}
                 {activeStep == 0 && (
                     <Col>
                         <ScrollToTopOnMount />
@@ -261,30 +268,31 @@ const NuevoProyecto = (props) => {
                             </Col>
                         </Row>
                         <Col className="col-10">
-                            <Row className="pt-4 pb-4 w-100">
+                            <Row className="pt-4 pb-4 w-100 justify-content-center">
                                 <Button
                                     onClick={goForward}
                                     style={{ paddingRight: '10px' }}
-                                    className="btn-round btn-high w-50"
+                                    className="btn-round btn-high w-auto"
                                     variant="primary"
                                     // type="submit"
                                 >
                                     Guardar y continuar
                                 </Button>
+                                <span className="p-4 w-auto"> </span>
                                 <Button
                                     onClick={handleComeBack}
-                                    className="btn-round btn-high w-50"
+                                    className="btn-round btn-middle w-auto"
                                     variant="secondary"
                                     // type="submit"
                                 >
-                                    Volver atras
+                                    <KeyboardBackspaceIcon /> Volver atras
                                 </Button>
                             </Row>
                         </Col>
                     </Col>
                 )}
                 {activeStep == 1 && (
-                    <Col className="nuevoProyectoBuscador2 align-items-baseline">
+                    <Col className="nuevoProyectoBuscador2 align-items-baseline p-2 ps-4">
                         <ScrollToTopOnMount />
                         <TablaSubCategoriaCantidades
                             categoriaInfo={categoriaInfo}
@@ -481,23 +489,25 @@ const NuevoProyecto = (props) => {
                                     </Form.Select>
                                 </Form.Group>
                                 <Col className="col-10">
-                                    <Row className="pt-4 pb-4 w-100">
+                                    <Row className="pt-4 pb-4 w-100 justify-content-center">
                                         <Button
                                             onClick={goForward}
                                             style={{ paddingRight: '10px' }}
-                                            className="btn-round btn-high w-50"
+                                            className="btn-round btn-high w-auto"
                                             variant="primary"
                                             // type="submit"
                                         >
                                             Guardar y continuar
                                         </Button>
+                                        <span className="p-4 w-auto"> </span>
                                         <Button
                                             onClick={handleComeBack}
-                                            className="btn-round btn-high w-50"
+                                            className="btn-round btn-middle w-auto"
                                             variant="secondary"
                                             // type="submit"
                                         >
-                                            Volver atras
+                                            <KeyboardBackspaceIcon /> Volver
+                                            atras
                                         </Button>
                                     </Row>
                                 </Col>
@@ -506,15 +516,14 @@ const NuevoProyecto = (props) => {
                     </Col>
                 )}
                 {activeStep == 2 && (
-                    <Col className="nuevoProyectoBuscador3  align-items-baseline">
+                    <Col className="nuevoProyectoBuscador3 align-items-baseline p-2 ps-4">
                         <ScrollToTopOnMount />
                         <Col
-                            className="ms-4 pt-4 pb-4 ps-4 align-items-start opacidadNegro"
-                            xl={5}
-                            lg={6}
-                            md={8}
+                            className="pt-4 pb-4 ps-4 align-items-start opacidadNegro"
+                            xl={6}
+                            lg={8}
+                            md={10}
                             sm={12}
-                            xs={12}
                         >
                             <p className="p-description">
                                 Cómo, dónde y cuándo{' '}
@@ -614,23 +623,25 @@ const NuevoProyecto = (props) => {
                                     />
                                 </Modal>
                                 <Col className="col-10">
-                                    <Row className="pt-4 pb-4 w-100">
+                                    <Row className="pt-4 pb-4 w-100 justify-content-center">
                                         <Button
                                             onClick={handleSave}
                                             style={{ paddingRight: '10px' }}
-                                            className="btn-round btn-high w-50"
+                                            className="btn-round btn-high w-auto"
                                             variant="primary"
                                             // type="submit"
                                         >
-                                            Guardar
+                                            Guardar y finalizar
                                         </Button>
+                                        <span className="p-4 w-auto"> </span>
                                         <Button
                                             onClick={handleComeBack}
-                                            className="btn-round btn-high w-50"
+                                            className="btn-round btn-middle w-auto"
                                             variant="secondary"
                                             // type="submit"
                                         >
-                                            Volver atras
+                                            <KeyboardBackspaceIcon /> Volver
+                                            atras
                                         </Button>
                                     </Row>
                                 </Col>
