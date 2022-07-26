@@ -683,7 +683,7 @@ const NuevoProyecto = (props) => {
 }
 
 NuevoProyecto.propTypes = {
-    classes: PropTypes.object.isRequired,
+    // classes: PropTypes.object.isRequired,
 }
 
 export default NuevoProyecto

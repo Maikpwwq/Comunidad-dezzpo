@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import './comentarPerfil.css'
 import SendBirdApp from '@sendbird/uikit-react/App'
 import Channel from '@sendbird/uikit-react/Channel'
-import withSendBird from '@sendbird/uikit-react/withSendBird'
-import SendbirdSelectors from '@sendbird/uikit-react/sendBirdSelectors'
+import withSendBird from '@sendbird/uikit-react/withSendbird'
+import SendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
 
 function ComentarPerfil(props) {
     const { channelUrl } = props
@@ -105,6 +105,6 @@ ComentarPerfil.propTypes = {
 export default withSendBird(ComentarPerfil, (state) => ({
     // Mapping context state to props
     // connect: SendbirdSelectors.getConnect(state),
-    // createChannel: SendbirdSelectors.getCreateChannel(state),
+    // createChannel: SendbirdSelectors.getCreateGroupChannel(state),
     // sdk: SendbirdSelectors.getSdk(state),
 }))

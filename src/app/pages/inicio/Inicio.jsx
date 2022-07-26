@@ -6,60 +6,165 @@ import Registro from '../registro/Registro'
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
 import NuestraComunidad from '../../components/nuestra-comunidad/NuestraComunidad'
 
+import Subscribe from './Subscribe'
+
 // imagenes
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
+import { useTheme } from '@mui/material/styles'
+import Box from '@mui/material/Box'
+import MobileStepper from '@mui/material/MobileStepper'
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
+import SwipeableViews from 'react-swipeable-views'
+import { bindKeyboard } from 'react-swipeable-views-utils'
 
-const Inicio = () => {
+const CustomSwipeableViews = bindKeyboard(SwipeableViews)
+
+const styles = (theme) => ({
+    stepper: {
+        position: 'relative',
+        top: '300px',
+        zIndex: 1000,
+        background: 'transparent',
+        height: '0px',
+        padding: 0,
+    },
+})
+
+// const slideRenderer = ({ key, index }) => (
+//     <div key={key}>
+//         {console.log(key, index)}
+//         {index === 0 && (
+
+//         )}
+//         {index === 1 && }
+//         {index === 2 && (
+
+//         )}
+//         {index === 3 && }
+//     </div>
+// )
+
+const Inicio = (props) => {
+    const theme = useTheme()
+    const classes = styles(theme)
+    // const { imagenes } = [{ numero: 1 }, { numero: 2 }, { numero: 3 }]
+    const maxSteps = 2 // imagenes.length
+    const [activeStep, setActiveStep] = React.useState(0)
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    }
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1)
+    }
+
+    const handleStepChange = (step) => {
+        setActiveStep(step)
+    }
+
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="m-0 w-100 bannerComunidad">
-                    {/* imagen fondo */}
-                    <Col
-                        id="contenedorBanner"
-                        className="m-0 p-0"
-                        lg={6}
-                        md={6}
-                        sm={12}
+                <Box sx={{ width: '100%', flexGrow: 1 }}>
+                    <MobileStepper
+                        // variant=
+                        sx={classes.stepper}
+                        // steps={maxSteps}
+                        // position="static"
+                        activeStep={activeStep}
+                        nextButton={
+                            <Button
+                                size="lg"
+                                onClick={handleNext}
+                                disabled={activeStep === maxSteps - 1}
+                            >
+                                {theme.direction === 'rtl' ? (
+                                    <KeyboardArrowLeft fontSize="large" />
+                                ) : (
+                                    <KeyboardArrowRight fontSize="large" />
+                                )}
+                            </Button>
+                        }
+                        backButton={
+                            <Button
+                                size="lg"
+                                onClick={handleBack}
+                                disabled={activeStep === 0}
+                            >
+                                {theme.direction === 'rtl' ? (
+                                    <KeyboardArrowRight fontSize="large" />
+                                ) : (
+                                    <KeyboardArrowLeft fontSize="large" />
+                                )}
+                            </Button>
+                        }
+                    />
+                    <CustomSwipeableViews
+                        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                        index={activeStep}
+                        onChangeIndex={handleStepChange}
+                        enableMouseEvents
+                        // slideRenderer={slideRenderer}
                     >
-                        {/* Mensaje del Banner izquierda */}
-                        <div className="slogan">
-                            <span className="opacidadNegro">
-                                {' '}
-                                <p className="p-description">
-                                    <strong className="pb-4">
-                                        <em>
+                        <Row className="m-0 w-100 bannerComunidad">
+                            {/* imagen fondo */}
+                            <Col
+                                id="contenedorBanner"
+                                className="m-0 p-0"
+                                lg={6}
+                                md={6}
+                                sm={12}
+                            >
+                                {/* Mensaje del Banner izquierda */}
+                                <div className="slogan">
+                                    <span className="opacidadNegro">
+                                        {' '}
+                                        <p className="p-description">
+                                            <strong className="pb-4">
+                                                <em>
+                                                    {' '}
+                                                    Hemos facilitado el
+                                                    servicio, <br />
+                                                    haciendolo más rapido y{' '}
+                                                    <br />
+                                                    simple que nunca{' '}
+                                                </em>
+                                            </strong>
+                                        </p>{' '}
+                                        <h3 className=".headline-l textVerde">
                                             {' '}
-                                            Hemos facilitado el servicio, <br />
-                                            haciendolo más rapido y <br />
-                                            simple que nunca{' '}
-                                        </em>
-                                    </strong>
-                                </p>{' '}
-                                <h3 className=".headline-l textVerde">
-                                    {' '}
-                                    Unete a la Comunidad{' '}
-                                </h3>{' '}
-                            </span>
-                        </div>
-                    </Col>
-                    {/* Formulario nuevo proyecto */}
-                    <Col
-                        className="col m-4 p-0"
-                        xl={4}
-                        lg={6}
-                        xm={6}
-                        md={8}
-                        sm={12}
-                        xs={12}
-                    >
-                        <BuscadorNuevoProyecto></BuscadorNuevoProyecto>
-                    </Col>
-                </Row>
+                                            Unete a la Comunidad{' '}
+                                        </h3>{' '}
+                                    </span>
+                                </div>
+                            </Col>
+                            {/* Formulario nuevo proyecto */}
+                            <Col
+                                className="col m-4 p-0"
+                                xl={4}
+                                lg={6}
+                                xm={6}
+                                md={8}
+                                sm={12}
+                                xs={12}
+                            >
+                                <BuscadorNuevoProyecto></BuscadorNuevoProyecto>
+                            </Col>
+                        </Row>
+                        <Subscribe />
+                        {/* TODO: CREAR PIEZAS VISUALES PARA EL BANNER */}
+                        {/* <Row className="m-0 w-100">
+                            Quieres prestar servicios!
+                        </Row>
+                        <Row className="m-0 w-100">Ayudame a elegir!</Row> */}
+                    </CustomSwipeableViews>
+                </Box>
             </Container>
             <Container fluid className="p-0">
                 <Row className="m-0 w-100 mensajeBanner">

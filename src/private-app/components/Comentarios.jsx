@@ -1,8 +1,8 @@
 import React from 'react'
 import es from 'date-fns/locale/es'
 import SendBirdApp from '@sendbird/uikit-react/App'
-import withSendBird from '@sendbird/uikit-react/withSendBird'
-import SendbirdSelectors from '@sendbird/uikit-react/sendBirdSelectors'
+import withSendBird from '@sendbird/uikit-react/withSendbird'
+import SendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
 import { v4 as uuidv4 } from 'uuid'
 import '@sendbird/uikit-react/dist/index.css'
 // Custom

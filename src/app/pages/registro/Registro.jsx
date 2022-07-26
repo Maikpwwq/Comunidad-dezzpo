@@ -1,8 +1,8 @@
 // Pagina de registro
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import withSendBird from '@sendbird/uikit-react/withSendBird'
-import SendbirdSelectors from '@sendbird/uikit-react/sendBirdSelectors'
+import withSendbird from '@sendbird/uikit-react/withSendbird'
+import SendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { auth, firestore } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import {
@@ -462,9 +462,9 @@ Registro.propTypes = {
     draftId: PropTypes.string,
 }
 
-export default withSendBird(Registro, (state) => ({
+export default withSendbird(Registro, (state) => ({
     // Mapping context state to props
     connect: SendbirdSelectors.getConnect(state),
-    createChannel: SendbirdSelectors.getCreateChannel(state),
+    createChannel: SendbirdSelectors.getCreateGroupChannel(state),
     sbSdk: SendbirdSelectors.getSdk(state),
 }))
