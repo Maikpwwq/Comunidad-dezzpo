@@ -9,9 +9,8 @@ const envKeys = Object.keys(process.env).reduce((prev, next) => {
     return prev
 }, {})
 
-// para uso en local dejar vacio "/", para postear en Github pages usar '/Comunidad-dezzpo/'
-const ASSET_PATH = process.env.ASSET_PATH || '/'
-const isDevelopment = process.env.NODE_ENV !== 'production'
+const { ASSET_PATH, NODE_ENV } = process.env
+const isDevelopment = NODE_ENV !== 'production'
 
 // @type {import('webpack').Configuration}
 

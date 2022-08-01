@@ -1,5 +1,8 @@
 import * as React from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import PropTypes from 'prop-types'
+
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
@@ -39,10 +42,19 @@ export default function DraftCard({ props }) {
         draftRooms,
         draftPlans,
         draftPermissions,
-        draftAtachments,
-        draftBestSchedule,
         draftProperty,
         draftPostalCode,
+        draftTotal,
+        draftProject,
+        draftCategory,
+        draftCreated,
+        draftPriority,
+        draftCity,
+        draftDirection,
+        draftSize,
+        draftBestScheduleDate,
+        draftBestScheduleTime,
+        draftApply,
     } = props
     console.log(props)
     const [expanded, setExpanded] = React.useState(false)
@@ -54,7 +66,11 @@ export default function DraftCard({ props }) {
         console.log(draftId)
         navigate('/app/requerimiento', { state: { draftId: draftId } })
     }
-    const handleAplicar = () => {}
+    const handleAplicar = () => {
+        navigate('/app/cotizacion', {
+            state: { draftId: draftId },
+        })
+    }
     const handleFavorite = () => {}
     const handleShare = () => {}
 
@@ -69,14 +85,14 @@ export default function DraftCard({ props }) {
             >
                 {/* maxWidth: 345, */}
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <CardMedia
+                    {/* <CardMedia
                         component="img"
                         height="194"
                         image="http://placeimg.com/260/194/arch"
                         // src="http://placeimg.com/260/194/arch"
                         alt="Paella dish"
                         style={{ maxWidth: '345px' }}
-                    />
+                    /> */}
                     <Box
                         className="w-100"
                         sx={{ display: 'flex', flexDirection: 'column' }}
@@ -93,19 +109,26 @@ export default function DraftCard({ props }) {
                                     CD
                                 </Avatar>
                             }
-                            action={
-                                <IconButton aria-label="settings">
-                                    <MoreVertIcon />
-                                </IconButton>
-                            }
-                            title={draftName}
-                            subheader={draftRooms}
+                            action={draftCreated}
+                            // action={
+                            //     <IconButton aria-label="settings">
+                            //         <MoreVertIcon />
+                            //     </IconButton>
+                            // }
+                            title={(draftCategory, draftName)}
+                            subheader={(draftProject, draftSize, draftRooms)}
                         ></CardHeader>
                         <CardContent>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body1" color="text.secondary">
                                 {draftDescription}
                             </Typography>
                             <br />
+                            <Typography variant="body2" color="text.secondary">
+                                Prioridad: {draftPriority}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                Presupuesto: {draftTotal}
+                            </Typography>
                         </CardContent>
                         <CardActions className="d-flex" disableSpacing>
                             <Button
@@ -114,9 +137,11 @@ export default function DraftCard({ props }) {
                             >
                                 Ver requerimiento
                             </Button>
-                            <Button className="" onClick={handleAplicar}>
-                                Aplicar
-                            </Button>
+                            {draftApply.length < 4 && (
+                                <Button className="" onClick={handleAplicar}>
+                                    Aplicar
+                                </Button>
+                            )}
                             <IconButton
                                 aria-label="add to favorites"
                                 onClick={handleFavorite}
@@ -150,19 +175,18 @@ export default function DraftCard({ props }) {
                                 Tipo propiedad: {draftProperty}
                             </Typography>
                             <Typography paragraph>
+                                Ubicación: {draftCity}, {draftDirection}
                                 CodigoPostal: {draftPostalCode}
                             </Typography>
                             <Typography paragraph>
-                                Programar mejor: {draftBestSchedule}
+                                Programar mejor: {draftBestScheduleDate},{' '}
+                                {draftBestScheduleTime}
                             </Typography>
                             <Typography paragraph>
-                                Planos: {draftPlans}
+                                Requiere planos: {draftPlans}
                             </Typography>
                             <Typography paragraph>
-                                Permisos: {draftPermissions}
-                            </Typography>
-                            <Typography paragraph>
-                                Adjuntos: {draftAtachments}
+                                Requiere Permisos: {draftPermissions}
                             </Typography>
                         </CardContent>
                     </Collapse>
@@ -172,16 +196,27 @@ export default function DraftCard({ props }) {
     )
 }
 
-DraftCard.defaultProps = {
-    props: {
-        draftName: 'The App Name',
-        draftDescription: 'The App Name',
-        draftRooms: 'The App Name',
-        draftPlans: 'The App Name',
-        draftPermissions: 'The App Name',
-        draftAtachments: 'The App Name',
-        draftBestSchedule: 'The App Name',
-        draftProperty: 'The App Name',
-        draftPostalCode: 'The App Name',
-    },
+DraftCard.propTypes = {
+    props: PropTypes.object.isRequired,
+    draftId: PropTypes.string.isRequired,
+    draftName: PropTypes.string.isRequired,
+    draftDescription: PropTypes.string.isRequired,
+    draftRooms: PropTypes.string.isRequired,
+    draftPlans: PropTypes.string,
+    draftPermissions: PropTypes.string,
+    draftAtachments: PropTypes.any,
+    draftBestSchedule: PropTypes.string.isRequired,
+    draftProperty: PropTypes.string.isRequired,
+    draftPostalCode: PropTypes.string.isRequired,
+    draftApply: PropTypes.string,
+    draftTotal: PropTypes.number.isRequired,
+    draftProject: PropTypes.string.isRequired,
+    draftCategory: PropTypes.string.isRequired,
+    draftCreated: PropTypes.string,
+    draftPriority: PropTypes.string,
+    draftCity: PropTypes.string.isRequired,
+    draftDirection: PropTypes.string.isRequired,
+    draftSize: PropTypes.string.isRequired,
+    draftBestScheduleDate: PropTypes.string.isRequired,
+    draftBestScheduleTime: PropTypes.string.isRequired,
 }

@@ -1,8 +1,8 @@
 // Pagina de registro
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import withSendBird from '@sendbird/uikit-react/withSendBird'
-import SendbirdSelectors from '@sendbird/uikit-react/sendBirdSelectors'
+import withSendbird from '@sendbird/uikit-react/withSendbird'
+import SendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { auth, firestore } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import {
@@ -35,8 +35,8 @@ import Typography from '@mui/material/Typography'
 // })
 
 const Registro = (props) => {
-    const { showLogo, connect, createChannel, sbSdk } = props
-
+    const { showLogo, draftId, connect, createChannel, sbSdk } = props
+    // sessionStorage.draftId = draftID
     // useEffect(() => {
     //     conectarSB()
     // }, [connect])
@@ -109,29 +109,35 @@ const Registro = (props) => {
             const signUp = (email, password) => {
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
-                        if (typeof connect == 'function') {
-                            conectarSB(user.uid)
-                        }
-                        if (
-                            typeof createChannel == 'function' &&
-                            typeof sbSdk === 'object'
-                        ) {
-                            crearCanal(user.uid)
-                        }
                         var user = userCredential.user
                         console.log(
                             'Anonymous account successfully upgraded',
                             user
                         )
+                        if (typeof connect == 'function') {
+                            conectarSB(user.uid)
+                        } else console.log('no hay connect', typeof connect)
+                        if (
+                            typeof createChannel == 'function' &&
+                            typeof sbSdk === 'object'
+                        ) {
+                            crearCanal(user.uid)
+                        } else
+                            console.log(
+                                'no hay channel',
+                                typeof createChannel,
+                                typeof sbSdk
+                            )
                         const data = {
                             userMail: user.email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
                             userId: user.uid,
-                            channelUrl: channelUrl,
+                            channelUrl: channelUrl || '',
                             // userName: user.displayName,
                         }
                         console.log(userSignupRol, channelUrl)
                         if (userSignupRol == 1) {
+                            data.createdDrafts = draftId
                             userProResToFirestore(data, user.uid)
                         }
                         if (userSignupRol == 2) {
@@ -174,24 +180,31 @@ const Registro = (props) => {
                         // The signed-in user info.
                         const user = result.user
                         console.log('Account successfully upgraded', user)
+                        // almacena un channelUrl
                         if (typeof connect == 'function') {
                             conectarSB(user.uid)
-                        }
+                        } else console.log('no hay connect', typeof connect)
                         if (
                             typeof createChannel == 'function' &&
                             typeof sbSdk === 'object'
                         ) {
-                            crearCanal(user.uid) // almacena un channelUrl
-                        }
+                            crearCanal(user.uid)
+                        } else
+                            console.log(
+                                'no hay channel',
+                                typeof createChannel,
+                                typeof sbSdk
+                            )
                         const data = {
                             userMail: user.email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
                             userId: user.uid,
-                            channelUrl: channelUrl,
+                            channelUrl: channelUrl || '',
                             // userName: user.displayName,
                         }
                         console.log(userSignupRol, channelUrl)
                         if (userSignupRol == 1) {
+                            data.createdDrafts = draftId
                             userProResToFirestore(data, user.uid)
                         }
                         if (userSignupRol == 2) {
@@ -241,28 +254,31 @@ const Registro = (props) => {
                         ></Col>
                     )}
                     <Col
-                        className="registrateformulario m-0 p-0 pt-2 pb-4"
+                        className="registrateformulario m-0 p-0"
                         md={6}
                         sm={12}
                     >
                         <Form
                             id="formularioRegistro"
                             action=""
-                            className="p-4"
+                            className="p-2"
                             // preventDefault="true"
                         >
                             <Col className="d-flex">
                                 <h2 className="headline-xl textBlanco">
-                                    REGISTRATE
+                                    Registrate!
                                 </h2>
                                 <p className="body-1 textBlanco">
                                     Bienvenido a todos los beneficios de dezzpo.{' '}
-                                    <NavLink className="body-2" to="/ingreso/">
+                                    <NavLink
+                                        className="body-2 BOTON-TEXT"
+                                        to="/ingreso/"
+                                    >
                                         {'¿Ya tienes una cuenta?'}
                                     </NavLink>
                                 </p>
-                                <Form.Label className="mb-0 mt-2">
-                                    Elegir rol:
+                                <Form.Label className="mb-0">
+                                    1. Elegir rol:
                                 </Form.Label>
                                 <ToggleButtonGroup
                                     name="userRol"
@@ -301,10 +317,13 @@ const Registro = (props) => {
                                         Soy Comerciante Calificado
                                     </ToggleButton>
                                 </ToggleButtonGroup>
-                                <ul className="align-items-center">
+                                <Form.Label className="mb-0 mt-2">
+                                    2. Ingresa tus datos:
+                                </Form.Label>
+                                <ul className="align-items-center mt-2 w-100">
                                     <li className="body-1">
                                         <Button
-                                            className="btn btn-round btn-middle d-flex align-items-center"
+                                            className="btn btn-round btn-middle d-flex align-items-center p-0 pe-2"
                                             onClick={handleGoogleProvider}
                                             style={{
                                                 background: '#e9ebe6',
@@ -335,66 +354,76 @@ const Registro = (props) => {
                                             </Button>
                                         </li> */}
                                 </ul>
-                                <br />
-                                <Form.Group
-                                    className="w-80 pt-4 mb-2 d-flex flex-column align-items-start"
-                                    controlId="formBasicName"
+                                <Col
+                                    className="d-flex flex-column align-items-center"
+                                    lg={10}
+                                    md={12}
+                                    sm={10}
+                                    xs={12}
                                 >
-                                    <Form.Label className="mb-0">
-                                        Nombre de usuario
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Elija su usuario"
-                                        name="username"
-                                    />
-                                </Form.Group>
-                                <Form.Group
-                                    className="w-80 mb-2 d-flex flex-column align-items-start"
-                                    controlId="formSignupEmail"
-                                >
-                                    <Form.Label className="mb-0">
-                                        Email
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        placeholder="Registre una cuenta de email valida"
-                                        name="email"
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
-                                    />
-                                </Form.Group>
-                                <Form.Group
-                                    className="w-80 mb-2 d-flex flex-column align-items-start"
-                                    controlId="formSignupPassword"
-                                >
-                                    <Form.Label className="mb-0">
-                                        Contraseña
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="Registre una clave"
-                                        name="password"
-                                        onChange={(e) =>
-                                            setPassword(e.target.value)
-                                        }
-                                    />
-                                </Form.Group>
-                                <Form.Group
-                                    className="w-80 mb-2 d-flex flex-column align-items-start"
-                                    controlId="formBasicPassword"
-                                >
-                                    <Form.Label className="mb-0">
-                                        Confirme la Contraseña
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="De nuevo la clave"
-                                        name="confirmPassword"
-                                    />
-                                </Form.Group>
-                                {/* <Form.Group
+                                    <Form.Group
+                                        className="pt-2 mb-2 d-flex flex-column align-items-start"
+                                        controlId="formBasicName"
+                                        style={{ width: 'inherit' }}
+                                    >
+                                        <Form.Label className="mb-0">
+                                            Nombre de usuario
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="elija su usuario"
+                                            name="username"
+                                        />
+                                    </Form.Group>
+                                    <Form.Group
+                                        className="w-80 mb-2 d-flex flex-column align-items-start"
+                                        controlId="formSignupEmail"
+                                        style={{ width: 'inherit' }}
+                                    >
+                                        <Form.Label className="mb-0">
+                                            Email
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="registre una cuenta de email valida"
+                                            name="email"
+                                            onChange={(e) =>
+                                                setEmail(e.target.value)
+                                            }
+                                        />
+                                    </Form.Group>
+                                    <Form.Group
+                                        className="w-80 mb-2 d-flex flex-column align-items-start"
+                                        controlId="formSignupPassword"
+                                        style={{ width: 'inherit' }}
+                                    >
+                                        <Form.Label className="mb-0">
+                                            Contraseña
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="registre una clave"
+                                            name="password"
+                                            onChange={(e) =>
+                                                setPassword(e.target.value)
+                                            }
+                                        />
+                                    </Form.Group>
+                                    <Form.Group
+                                        className="w-80 mb-2 d-flex flex-column align-items-start"
+                                        controlId="formBasicPassword"
+                                        style={{ width: 'inherit' }}
+                                    >
+                                        <Form.Label className="mb-0">
+                                            Confirme la Contraseña
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="de nuevo la clave"
+                                            name="confirmPassword"
+                                        />
+                                    </Form.Group>
+                                    {/* <Form.Group
                                     className="mb-2 mt-2"
                                     controlId="formBasicCheckboxRobot"
                                 >
@@ -404,15 +433,17 @@ const Registro = (props) => {
                                         label="No soy un robot"
                                     />
                                 </Form.Group> */}
-                                <Col className="pt-2">
+                                </Col>
+                                <Col className="pt-3 pb-3">
                                     <Button
-                                        className="btn-round btn-high"
+                                        className="btn-main btn-round btn-high body-1"
                                         variant="primary"
                                         type="submit"
                                         onClick={handleClick}
                                     >
                                         Crear Cuenta
                                     </Button>
+                                    <br />
                                 </Col>
                             </Col>
                         </Form>
@@ -428,11 +459,12 @@ Registro.propTypes = {
     connect: PropTypes.func.isRequired,
     createChannel: PropTypes.func.isRequired,
     sbSdk: PropTypes.object.isRequired,
+    draftId: PropTypes.string,
 }
 
-export default withSendBird(Registro, (state) => ({
+export default withSendbird(Registro, (state) => ({
     // Mapping context state to props
     connect: SendbirdSelectors.getConnect(state),
-    createChannel: SendbirdSelectors.getCreateChannel(state),
+    createChannel: SendbirdSelectors.getCreateGroupChannel(state),
     sbSdk: SendbirdSelectors.getSdk(state),
 }))

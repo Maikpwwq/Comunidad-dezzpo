@@ -36,15 +36,31 @@ const setResponse = (html, preloadedState, manifest) => {
 
 const renderApp = (app) => {
     app.get('*', (req, res) => {
+        // BEGIN New redirect handling
+        // const redirectInfo = requiresRedirect(req)
+        // if (redirectInfo !== false) {
+        //   return res.redirect(redirectInfo.destination)
+        // }
+        // END
+
         const store = createStore() // reducer, initialState
         const Routing = serverRoutes
+        const context = { url: undefined }
         const html = renderToString(
             <Provider store={store}>
-                <StaticRouter location={req.url} context={{}}>
+                <StaticRouter location={req.url} context={context}>
                     <Routing />
                 </StaticRouter>
             </Provider>
         )
+        if (context.url !== undefined) {
+            // Somewhere a `<Redirect>` was rendered
+            // res.redirect(301, context.url);
+            console.log('redirecting to', context.url)
+            res.writeHead(301, {
+                Location: context.url,
+            })
+        }
         const finalState = store.getState()
         res.send(setResponse(html, finalState, req.hashManifest))
     })

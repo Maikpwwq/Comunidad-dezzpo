@@ -147,11 +147,16 @@ const Portal_Servicios = (props) => {
                                 Publica un proyecto gratis
                             </Button>
                         </h2>
-                        <h3 className="headline-l">
+                        {/* <h3 className="headline-l">
                             Busqueda Local Servicios: Buscar comerciantes
                             Calificados
-                        </h3>
-                        <p className="body-2"> Comerciantes profesionales </p>
+                        </h3> */}
+                        <p className="body-2">
+                            {' '}
+                            Directorio de comerciantes calificados, contratistas
+                            independientes y empresas del sector. <br />
+                            Encuentra todo lo mejor en asisitencia técnica!
+                        </p>
 
                         <Row className="m-0 w-100 d-flex">
                             {usersData.data ? (

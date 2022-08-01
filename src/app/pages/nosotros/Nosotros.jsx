@@ -1,7 +1,8 @@
 // Pagina de Nosotros
 import React from 'react'
 import '../../../../public/assets/css/nosotros.css'
-
+import IcoMoon from 'react-icomoon'
+import iconSet from '../../../../public/assets/css/icomoon/selection.json'
 // Imagenes
 import RoadMap from '../../../../public/assets/img/RoadMap.svg'
 
@@ -9,6 +10,7 @@ import RoadMap from '../../../../public/assets/img/RoadMap.svg'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
 const Nosotros = (props) => {
     return (
@@ -156,22 +158,20 @@ const Nosotros = (props) => {
             <Container fluid className="p-0" id="eqipo-dezzpo">
                 <Row className="nosotrosEquipo m-0">
                     <Col className="md-12 m-0">
-                        <Col>
-                            <div className="opacidadBlanco">
-                                <span className="pitchPropietarios">
-                                    <h2 className="headline-xl">
-                                        Equipo Dezzpo
-                                    </h2>
-                                    <br />
-                                    <p className="p-description">
-                                        Conoce a nuestro equipo
-                                    </p>
-                                </span>
-                            </div>
+                        <Col className="p-2 ps-4 pe-4 opacidadBlanco">
+                            <span className="pitchPropietarios">
+                                <h2 className="headline-xl">Equipo Dezzpo</h2>
+                                <br />
+                                <p className="p-description">
+                                    Conoce a nuestro equipo
+                                </p>
+                            </span>
                         </Col>
-                        <Col className="right">
+                        <Col className="right p-4">
                             <div>
-                                <button>Vinculate</button>
+                                <Button className="btn-round btn-middle btn-orange w-auto body-1">
+                                    Vinculate
+                                </Button>
                             </div>
                         </Col>
                     </Col>
@@ -190,16 +190,28 @@ const Nosotros = (props) => {
                         </Col>
                         <Col className="">
                             <p className="p-description">
-                                Pronto estaremos disponibles en <br />
-                                <li>
-                                    <a href="#">Apple App Store </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Android Google Play App Store{' '}
-                                    </a>{' '}
-                                </li>
+                                Pronto estaremos disponibles en: <br />
                             </p>
+                            {/* Apple App Store */}
+                            <IcoMoon
+                                iconSet={iconSet}
+                                icon="GooglePlay"
+                                style={{
+                                    height: '48px',
+                                    marginBottom: '8px',
+                                    width: 'auto',
+                                }}
+                            />
+                            {/* Android Google Play App Store */}
+                            <IcoMoon
+                                iconSet={iconSet}
+                                icon="AppStore"
+                                style={{
+                                    height: '48px',
+                                    marginBottom: '8px',
+                                    width: 'auto',
+                                }}
+                            />
                         </Col>
                     </Col>
                 </Row>

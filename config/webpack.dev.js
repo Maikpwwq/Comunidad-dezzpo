@@ -1,7 +1,7 @@
 // Configuracion de desarrollo de webpack dev server
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
-const { HotModuleReplacementPlugin } = require('webpack')
+// const { HotModuleReplacementPlugin } = require('webpack')
 const path = require('path')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
@@ -51,7 +51,7 @@ const devConfig = {
         ],
     },
     plugins: [
-        new HotModuleReplacementPlugin(),
+        // new HotModuleReplacementPlugin(), is auto with hot true
         new ReactRefreshWebpackPlugin({
             overlay: {
                 sockIntegration: 'wds',

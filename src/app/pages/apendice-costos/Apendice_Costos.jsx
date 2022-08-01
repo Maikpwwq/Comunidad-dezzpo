@@ -2,15 +2,16 @@
 import React, { useState, useEffect } from 'react'
 import '../../../../public/assets/css/apendice_costos.css'
 import { Link } from 'react-router-dom'
-import { collection, doc, getDocs } from 'firebase/firestore'
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 import { firestore } from '../../../firebase/firebaseClient'
+import AdministrarDB from './AdministrarDB'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody' 
+import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
@@ -186,15 +187,16 @@ const ApendiceCostos = () => {
                 </Row>
             </Container>
             <Container fluid className="p-0">
+                {/* <AdministrarDB /> */}
                 <Row className="m-0 w-100 d-flex">
-                    {/* TODO insert Firebase Table! */}
                     <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell>subCategoria</TableCell>
                                 <TableCell>Unidad Medida</TableCell>
                                 <TableCell>Description</TableCell>
-                                <TableCell>Precio unitario</TableCell>
+                                <TableCell>Precio unitario bajo</TableCell>
+                                <TableCell>Precio unitario alto</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -206,6 +208,8 @@ const ApendiceCostos = () => {
                                     subCategoriaPhotoUrl,
                                     subCategoriaPrecio,
                                 }) => {
+                                    let precioBajo = subCategoriaPrecio * 1.05
+                                    let precioAlto = subCategoriaPrecio * 1.65
                                     return (
                                         <TableRow key={subCategoria}>
                                             <TableCell>
@@ -218,7 +222,20 @@ const ApendiceCostos = () => {
                                                 {subCategoriaDescription}
                                             </TableCell>
                                             <TableCell>
-                                                {subCategoriaPrecio}
+                                                {parseInt(
+                                                    precioBajo
+                                                ).toLocaleString('es-CO', {
+                                                    style: 'currency',
+                                                    currency: 'COP',
+                                                })}
+                                            </TableCell>
+                                            <TableCell>
+                                                {parseInt(
+                                                    precioAlto
+                                                ).toLocaleString('es-CO', {
+                                                    style: 'currency',
+                                                    currency: 'COP',
+                                                })}
                                             </TableCell>
                                         </TableRow>
                                     )

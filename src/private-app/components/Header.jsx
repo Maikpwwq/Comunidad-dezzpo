@@ -79,7 +79,10 @@ function Header(props) {
                                 </NavLink>
                             </Grid>
                             <Grid item xs />
-                            <Grid item>
+                            <Grid
+                                item
+                                sx={{ display: { sm: 'block', xs: 'none' } }}
+                            >
                                 <Link
                                     href="/legal/"
                                     variant="body2"
@@ -96,7 +99,10 @@ function Header(props) {
                                     Documentación
                                 </Link>
                             </Grid>
-                            <Grid item>
+                            <Grid
+                                item
+                                sx={{ display: { sm: 'block', xs: 'none' } }}
+                            >
                                 <Tooltip title="Alerts • No alerts">
                                     <IconButton color="inherit">
                                         <Badge badgeContent={17} color="error">
@@ -109,7 +115,10 @@ function Header(props) {
                                     </IconButton>
                                 </Tooltip>
                             </Grid>
-                            <Grid item>
+                            <Grid
+                                item
+                                sx={{ display: { sm: 'block', xs: 'none' } }}
+                            >
                                 <IconButton color="inherit" sx={{ p: 0.5 }}>
                                     <Avatar
                                         src={userPhotoUrl}

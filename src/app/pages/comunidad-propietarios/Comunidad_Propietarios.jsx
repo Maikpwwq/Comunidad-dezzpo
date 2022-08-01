@@ -26,19 +26,19 @@ const ComunidadPropietarios = (props) => {
                             <span className="">
                                 {' '}
                                 <p className="p-description">
-                                    SOMOS UNA COMUNIDAD DE COMERCIANTES
-                                    PROFESIONALES, CONTRATA PERSONAL CALIFICADO
-                                    MANTENIMIENTO GENERAL RESIDENCIAL Y DE
-                                    PROPIEDAD HORIZONTAL, CONSULTA PÚBLICAMENTE
-                                    LOS PERFILES Y LA REPUTACIÓN DE LOS
-                                    PRESTADORES DE SERVICIOS. AHORA TUS
-                                    PROYECTOS Y REMODELACIONES MÁS RÁPIDO Y
-                                    SIMPLE QUE NUNCA <br />
+                                    Somos un Marketplace de servicios,
+                                    promocionamos contratistas de adecuaciones y
+                                    acabados inmobiliarios. Compara perfiles y
+                                    estadísticas, con base en calificaciones de
+                                    la comunidad. Cambiamos la forma de
+                                    contratar: reformas locales, remodelaciones,
+                                    instaladores e independientes de la
+                                    construcción. Asistimos tus proyectos con
+                                    agilidad, calidad y empatía. <br />
                                 </p>
                             </span>
                             <h3 className=".headline-l textVerde">
-                                Contrata seguro con <br />
-                                nuestra comunidad
+                                Contrata seguro con nuestra comunidad
                             </h3>
                         </Col>
                     </Col>
@@ -97,7 +97,7 @@ const ComunidadPropietarios = (props) => {
                             <Row className="w-100">
                                 <h3 className=".headline-l">
                                     Planea con nosotros el proyecto{' '}
-                                    <Button className="btn btn-round btn-high">
+                                    <Button className="btn btn-round btn-high btn-green body-1">
                                         <NavLink to="/blog">
                                             Nuestro Blog
                                         </NavLink>
@@ -129,8 +129,11 @@ const ComunidadPropietarios = (props) => {
                                     Propietario revisa la
                                 </p>
 
-                                <Button className="btn" onClick="listaChequeo">
-                                    lista de chequeo
+                                <Button
+                                    className="btn btn-avanzar body-1 pe-0 textBlanco"
+                                    onClick="listaChequeo"
+                                >
+                                    Lista de chequeo
                                 </Button>
                                 <span className="body-2">
                                     3196138057
@@ -151,7 +154,7 @@ const ComunidadPropietarios = (props) => {
                                     <Col>
                                         <h3 className=".headline-l">
                                             Observa cambios{' '}
-                                            <Button className="btn btn-round btn-high">
+                                            <Button className="btn btn-round btn-high btn-green body-1">
                                                 <NavLink to="/blog">
                                                     Proyectos <br />
                                                     Destacados
@@ -169,7 +172,7 @@ const ComunidadPropietarios = (props) => {
                                     <Col>
                                         <h3 className=".headline-l">
                                             ¿Requieres de asesoria?{' '}
-                                            <Button className="btn btn-round btn-high">
+                                            <Button className="btn btn-round btn-high btn-green body-1">
                                                 <NavLink to="/asesorias">
                                                     Pregunta a un <br />
                                                     Profesional
@@ -187,7 +190,7 @@ const ComunidadPropietarios = (props) => {
                                     <Col>
                                         <h3 className=".headline-l">
                                             Presupuestos{' '}
-                                            <Button className="btn btn-round btn-high">
+                                            <Button className="btn btn-round btn-high btn-green body-1">
                                                 <NavLink to="/nuevo-proyecto">
                                                     Comenzar <br />
                                                     Cotización

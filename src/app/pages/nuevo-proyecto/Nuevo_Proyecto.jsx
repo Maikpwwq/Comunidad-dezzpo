@@ -1,7 +1,13 @@
 // Pagina de NuevoProyecto
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
+import {
+    Navigate,
+    NavLink,
+    useLocation,
+    useNavigate,
+    useParams,
+} from 'react-router-dom'
 import ScrollToTopOnMount from '../../components/ScrollToTop'
 import { v4 as uuidv4 } from 'uuid'
 import {
@@ -18,6 +24,7 @@ import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyec
 import Registro from '../../pages/registro/Registro'
 import SubCategorias from '../../pages/categorias/Sub_Categorias'
 import PasoAPaso from '../../components/paso_a_paso/Paso_A_Paso'
+import TablaSubCategoriaCantidades from './Tabla_SubCategoria_Cantidades'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -25,14 +32,11 @@ import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Modal from '@mui/material/Modal'
-import Table from '@mui/material/Table'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 
 const NuevoProyecto = (props) => {
     const draftID = uuidv4()
+    const navigate = useNavigate()
     const { state } = useLocation() || {}
     const { categoriaProfesional, tipoProyecto, auth } = state || {}
     const { paramCategoriaProfesional, paramTipoProyecto } = useParams()
@@ -51,21 +55,22 @@ const NuevoProyecto = (props) => {
     // console.log(requerimiento.draftId)
     const hideRegister = auth
     const _firestore = firestore
+
+    const categoriaRef = collection(_firestore, 'categoriasServicios')
+    const draftRef = collection(_firestore, 'drafts')
     // categoria
     const [categoriaInfo, setCategoriaInfo] = useState({
         selected: [],
         data: [],
     })
-    const categoriaRef = collection(_firestore, 'categoriasServicios')
-    const draftRef = collection(_firestore, 'drafts')
-
     const [activeStep, setActiveStep] = useState(0)
     const [draftInfo, setDraftInfo] = useState({
         draftCategory: draftCategory,
         draftSubCategory: '',
         draftProject: draftProject,
         draftId: draftID,
-        draftName: 'Categoria',
+        draftTotal: 0,
+        draftName: '',
         draftDescription: '',
         draftPropietarioResidente: '',
         draftCreated: '',
@@ -81,6 +86,7 @@ const NuevoProyecto = (props) => {
         draftBestScheduleTime: '',
         draftProperty: '',
         draftPostalCode: '',
+        draftApply: '',
     })
 
     const [open, setOpen] = useState(false)
@@ -152,11 +158,11 @@ const NuevoProyecto = (props) => {
 
     const handleSave = () => {
         console.log(draftInfo)
-        const snap = draftToFirestore(draftInfo, draftID)
+        const snap = draftToFirestore(draftInfo, draftInfo.draftID)
         snap.then((docSnap) => {
             console.log(docSnap)
         })
-        goForward()
+        hideRegister ? navigate('/app/directorio-requerimientos') : goForward()
     }
 
     // TODO Crear funcion para leer los borradores de requerimientos desde firebase y desde local storage
@@ -197,7 +203,7 @@ const NuevoProyecto = (props) => {
         <>
             <Container fluid className="p-0" style={{ position: 'relative' }}>
                 <PasoAPaso activeStep={activeStep} steps={steps} />
-                <div className="pasos-fixed"></div>
+                {/* <div className="pasos-fixed"></div> */}
                 {activeStep == 0 && (
                     <Col>
                         <ScrollToTopOnMount />
@@ -262,83 +268,37 @@ const NuevoProyecto = (props) => {
                             </Col>
                         </Row>
                         <Col className="col-10">
-                            <Row className="pt-4 pb-4 w-100">
+                            <Row className="pt-4 pb-4 w-100 justify-content-center">
                                 <Button
                                     onClick={goForward}
                                     style={{ paddingRight: '10px' }}
-                                    className="btn-round btn-high w-50"
+                                    className="btn-round btn-high btn-main body-1 w-auto"
                                     variant="primary"
                                     // type="submit"
                                 >
                                     Guardar y continuar
                                 </Button>
+                                <span className="p-4 w-auto"> </span>
                                 <Button
                                     onClick={handleComeBack}
-                                    className="btn-round btn-high w-50"
+                                    className="btn-round btn-middle w-auto"
                                     variant="secondary"
                                     // type="submit"
                                 >
-                                    Volver atras
+                                    <KeyboardBackspaceIcon /> Volver atras
                                 </Button>
                             </Row>
                         </Col>
                     </Col>
                 )}
                 {activeStep == 1 && (
-                    <Col className="nuevoProyectoBuscador2 align-items-baseline">
+                    <Col className="nuevoProyectoBuscador2 align-items-baseline p-2 ps-4">
                         <ScrollToTopOnMount />
-                        <Col className="ms-4 p-4">
-                            {' '}
-                            <p className="p-description">
-                                Compara precios de los mejores profesionales
-                                calificados{' '}
-                            </p>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Sub Categoria</TableCell>
-                                        <TableCell>Unidad Medida</TableCell>
-                                        <TableCell>Description</TableCell>
-                                        <TableCell>Precio unitario</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {categoriaInfo.selected.length > 0 &&
-                                        categoriaInfo.selected.map(
-                                            ({
-                                                subCategoria,
-                                                subCategoriaCantidad,
-                                                subCategoriaDescription,
-                                                subCategoriaPhotoUrl,
-                                                subCategoriaPrecio,
-                                            }) => {
-                                                return (
-                                                    <TableRow
-                                                        key={subCategoria}
-                                                    >
-                                                        <TableCell>
-                                                            {subCategoria}
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            {
-                                                                subCategoriaCantidad
-                                                            }
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            {
-                                                                subCategoriaDescription
-                                                            }
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            {subCategoriaPrecio}
-                                                        </TableCell>
-                                                    </TableRow>
-                                                )
-                                            }
-                                        )}
-                                </TableBody>
-                            </Table>
-                        </Col>
+                        <TablaSubCategoriaCantidades
+                            categoriaInfo={categoriaInfo}
+                            setDraftInfo={setDraftInfo}
+                            draftInfo={draftInfo}
+                        />
                         <Col
                             className="pt-4 pb-4 ps-4 align-items-start opacidadNegro"
                             xl={6}
@@ -354,6 +314,22 @@ const NuevoProyecto = (props) => {
                                     proyecto que vas a postular.
                                     <br />* Campos requeridos
                                 </p>
+                                <Form.Group
+                                    className="mb-3"
+                                    controlId="formNewProjectName"
+                                >
+                                    <Form.Label className="body-2 text-white">
+                                        Dale un titulo a tu requerimiento *
+                                    </Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        style={{ height: '100px' }}
+                                        placeholder="¿Cual es el titulo de tu requerimiento?"
+                                        name="draftName"
+                                        value={draftInfo.draftName}
+                                        onChange={handleChange}
+                                    />
+                                </Form.Group>
                                 <Form.Group
                                     className="mb-3"
                                     controlId="formNewProjectDescription"
@@ -513,23 +489,25 @@ const NuevoProyecto = (props) => {
                                     </Form.Select>
                                 </Form.Group>
                                 <Col className="col-10">
-                                    <Row className="pt-4 pb-4 w-100">
+                                    <Row className="pt-4 pb-4 w-100 justify-content-center">
                                         <Button
                                             onClick={goForward}
                                             style={{ paddingRight: '10px' }}
-                                            className="btn-round btn-high w-50"
+                                            className="btn-round btn-high btn-main body-1 w-auto"
                                             variant="primary"
                                             // type="submit"
                                         >
                                             Guardar y continuar
                                         </Button>
+                                        <span className="p-4 w-auto"> </span>
                                         <Button
                                             onClick={handleComeBack}
-                                            className="btn-round btn-high w-50"
+                                            className="btn-round btn-middle w-auto"
                                             variant="secondary"
                                             // type="submit"
                                         >
-                                            Volver atras
+                                            <KeyboardBackspaceIcon /> Volver
+                                            atras
                                         </Button>
                                     </Row>
                                 </Col>
@@ -538,15 +516,14 @@ const NuevoProyecto = (props) => {
                     </Col>
                 )}
                 {activeStep == 2 && (
-                    <Col className="nuevoProyectoBuscador3  align-items-baseline">
+                    <Col className="nuevoProyectoBuscador3 align-items-baseline p-2 ps-4">
                         <ScrollToTopOnMount />
                         <Col
-                            className="ms-4 pt-4 pb-4 ps-4 align-items-start opacidadNegro"
-                            xl={5}
-                            lg={6}
-                            md={8}
+                            className="pt-4 pb-4 ps-4 align-items-start opacidadNegro"
+                            xl={6}
+                            lg={8}
+                            md={10}
                             sm={12}
-                            xs={12}
                         >
                             <p className="p-description">
                                 Cómo, dónde y cuándo{' '}
@@ -646,23 +623,25 @@ const NuevoProyecto = (props) => {
                                     />
                                 </Modal>
                                 <Col className="col-10">
-                                    <Row className="pt-4 pb-4 w-100">
+                                    <Row className="pt-4 pb-4 w-100 justify-content-center">
                                         <Button
                                             onClick={handleSave}
                                             style={{ paddingRight: '10px' }}
-                                            className="btn-round btn-high w-50"
+                                            className="btn-round btn-high btn-main body-1 w-auto"
                                             variant="primary"
                                             // type="submit"
                                         >
-                                            Guardar
+                                            Guardar y finalizar
                                         </Button>
+                                        <span className="p-4 w-auto"> </span>
                                         <Button
                                             onClick={handleComeBack}
-                                            className="btn-round btn-high w-50"
+                                            className="btn-round btn-middle w-auto"
                                             variant="secondary"
                                             // type="submit"
                                         >
-                                            Volver atras
+                                            <KeyboardBackspaceIcon /> Volver
+                                            atras
                                         </Button>
                                     </Row>
                                 </Col>
@@ -689,7 +668,11 @@ const NuevoProyecto = (props) => {
                             </p>
                         </Col>
 
-                        <Registro showLogo={false} className="pb-4"></Registro>
+                        <Registro
+                            draftId={draftInfo.draftID}
+                            showLogo={false}
+                            className="pb-4"
+                        ></Registro>
                     </Row>
                 ) : (
                     <></>
@@ -700,7 +683,7 @@ const NuevoProyecto = (props) => {
 }
 
 NuevoProyecto.propTypes = {
-    classes: PropTypes.object.isRequired,
+    // classes: PropTypes.object.isRequired,
 }
 
 export default NuevoProyecto

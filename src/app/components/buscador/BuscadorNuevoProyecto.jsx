@@ -55,11 +55,15 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                             action=""
                             id="formularioServicios"
                         >
+                            {' '}
+                            <h3 className="headline-l text-white pb-2">
+                                Solicitar asistencia
+                            </h3>
                             <Form.Group
-                                className="mb-2"
+                                className="mb-3"
                                 controlId="formTipoProyecto"
                             >
-                                <InputGroup className="mb-3">
+                                <InputGroup className="">
                                     <InputGroup.Text
                                         id="basic-addon1"
                                         style={{
@@ -89,6 +93,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                 >
                                     <option value="">seleccionar uno</option>
                                     {/* <option value="Persona">Persona</option> */}
+                                    {/* Domicilio, Oficina, Edificio, Organización, Aliado */}
                                     <option value="Hogar">Hogar</option>
                                     <option value="Negocio">Negocio</option>
                                     <option value="PH">
@@ -105,7 +110,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                 className="mb-2"
                                 controlId="formCategoriaProfesional"
                             >
-                                <InputGroup className="mb-3">
+                                <InputGroup className="">
                                     <InputGroup.Text
                                         id="basic-addon1"
                                         style={{
@@ -491,15 +496,15 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                 </Form.Select>
                             </Form.Group>
                             <Form.Group>
-                                <Col className="pb-4">
-                                    <hr />
+                                <Col className="pt-4 pb-2">
+                                    {/*  */}
                                     <Button
-                                        className="animacionBoton btn-round btn-high"
+                                        className="animacionBoton btn btn-siguiente btn-round btn-high"
                                         variant="primary"
                                         type="submit"
                                         onClick={handleClick}
                                     >
-                                        Siguiente{' '}
+                                        {' '}
                                     </Button>
                                 </Col>
                             </Form.Group>
