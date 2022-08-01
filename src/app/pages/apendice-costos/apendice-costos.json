@@ -1,0 +1,3492 @@
+[
+    {
+      "Subsistema": "Albañilería"
+    },
+    {
+      "Subcategoria": "Estuco",
+      "unidadMedida": "m2",
+      "promedio": 19000
+    },
+    {
+      "Subcategoria": "Pañete",
+      "unidadMedida": "m2",
+      "promedio": 9800
+    },
+    {
+      "Subcategoria": "Venecianos",
+      "unidadMedida": "m2",
+      "promedio": 21000
+    },
+    {
+      "Subcategoria": "Yeso decorativo",
+      "unidadMedida": "m2",
+      "promedio": 29000
+    },
+    {
+      "Subcategoria": "Drywall",
+      "unidadMedida": "m2",
+      "promedio": 18600
+    },
+    {
+      "Subcategoria": "SUSTITUCIÓN PAÑETE",
+      "unidadMedida": "m2",
+      "promedio": 28500
+    },
+    {
+      "Subcategoria": "PAÑETE",
+      "unidadMedida": "m2",
+      "promedio": 9800
+    },
+    {
+      "Subcategoria": "Nuevo enlucido de paredes (con recubrimiento)",
+      "promedio": 1195200
+    },
+    {
+      "Subcategoria": "Enlucido y raspado de habitación mediana sin techo.",
+      "unidadMedida": "(3m x 3m)",
+      "promedio": 2988000
+    },
+    {
+      "Subcategoria": "Recubrimiento de Habitación mediana sin techo",
+      "unidadMedida": "(3m x 3m)",
+      "promedio": 1593600
+    },
+    {
+      "Subcategoria": "Revestimiento de una habitación pequeña sin techo",
+      "unidadMedida": "(2m x 2m)",
+      "promedio": 1992000
+    },
+    {
+      "Subcategoria": "Nuevo revestimiento de techo (con recubrimiento) en una habitación pequeña",
+      "unidadMedida": "(2m x 2m)",
+      "promedio": 996000
+    },
+    {
+      "Subsistema": "Arquitectura"
+    },
+    {
+      "Subcategoria": "Planos arquitectónicos",
+      "unidadMedida": "m3",
+      "promedio": 179000
+    },
+    {
+      "Subsistema": "Asistencia toderos"
+    },
+    {
+      "Subcategoria": "Reparaciones generales",
+      "unidadMedida": "día persona",
+      "promedio": 80000
+    },
+    {
+      "Subcategoria": "Personal Fijo",
+      "unidadMedida": "día persona",
+      "promedio": 60000
+    },
+    {
+      "Subcategoria": "Verificación de necesidades",
+      "unidadMedida": "inspección técnica",
+      "promedio": 50000
+    },
+    {
+      "Subsistema": "Carpintería"
+    },
+    {
+      "Subcategoria": "Muebles a medida",
+      "unidadMedida": "m3",
+      "promedio": 298000
+    },
+    {
+      "Subcategoria": "Cocinas a medida",
+      "unidadMedida": "m3",
+      "promedio": 210000
+    },
+    {
+      "Subcategoria": "Revestimientos en madera",
+      "unidadMedida": "m2",
+      "promedio": 199000
+    },
+    {
+      "Subcategoria": "Armarios empotrados",
+      "unidadMedida": "m3",
+      "promedio": 216000
+    },
+    {
+      "Subcategoria": "Lijado y sellado de pisos",
+      "unidadMedida": "m2",
+      "promedio": 330000
+    },
+    {
+      "Subcategoria": "Casas de juego – jardín",
+      "unidadMedida": "m3",
+      "promedio": 400000
+    },
+    {
+      "Subcategoria": "Conservación de madera",
+      "unidadMedida": "m2",
+      "promedio": 89000
+    },
+    {
+      "Subcategoria": "Muebles en general",
+      "unidadMedida": "m3",
+      "promedio": 276000
+    },
+    {
+      "Subcategoria": "Pisos laminados",
+      "unidadMedida": "m2",
+      "promedio": 210000
+    },
+    {
+      "Subcategoria": "Cabañas en madera",
+      "unidadMedida": "m3",
+      "promedio": 565000
+    },
+    {
+      "Subcategoria": "Escaleras de madera",
+      "unidadMedida": "m2",
+      "promedio": 346000
+    },
+    {
+      "Subcategoria": "ventanas de madera",
+      "unidadMedida": "m2",
+      "promedio": 290000
+    },
+    {
+      "Subcategoria": "Pisos Deck",
+      "unidadMedida": "m2",
+      "promedio": 486000
+    },
+    {
+      "Subcategoria": "Puertas de madera exteriores e interiores",
+      "unidadMedida": "m2",
+      "promedio": 369000
+    },
+    {
+      "Subcategoria": "Parques de madera",
+      "unidadMedida": "m2",
+      "promedio": 306000
+    },
+    {
+      "Subcategoria": "Persianas de madera",
+      "unidadMedida": "m2",
+      "promedio": 169000
+    },
+    {
+      "Subcategoria": "Instalación de estantes empotrados en una alcoba",
+      "unidadMedida": "Unitario",
+      "promedio": 2390400
+    },
+    {
+      "Subcategoria": "Instalación de armarios empotrados o armarios en una alcoba",
+      "unidadMedida": "Unitario",
+      "promedio": 2350560
+    },
+    {
+      "Subcategoria": "Instalación de armarios empotrados (2 puertas) en una alcoba",
+      "unidadMedida": "Unitario",
+      "promedio": 3505920
+    },
+    {
+      "Subcategoria": "Decking hasta 10 m²",
+      "unidadMedida": "hasta 10 m²",
+      "promedio": 2390400
+    },
+    {
+      "Subcategoria": "Decking 10-20 m²",
+      "unidadMedida": "10-20 m²",
+      "promedio": 3784800
+    },
+    {
+      "Subcategoria": "Decking 20+ m²",
+      "unidadMedida": "20+ m²",
+      "promedio": 5378400
+    },
+    {
+      "Subsistema": "Carpintería en aluminio"
+    },
+    {
+      "Subcategoria": "ventanas corredizas",
+      "unidadMedida": "m2",
+      "promedio": 280000
+    },
+    {
+      "Subcategoria": "ventanas basculantes",
+      "unidadMedida": "m2",
+      "promedio": 230000
+    },
+    {
+      "Subcategoria": "puertas",
+      "unidadMedida": "m2",
+      "promedio": 300000
+    },
+    {
+      "Subcategoria": "divisiones de baño",
+      "unidadMedida": "m2",
+      "promedio": 169000
+    },
+    {
+      "Subcategoria": "estructuras en aluminio",
+      "unidadMedida": "m3",
+      "promedio": 80000
+    },
+    {
+      "Subcategoria": "vitrinas",
+      "unidadMedida": "m³",
+      "promedio": 90000
+    },
+    {
+      "Subcategoria": "mobiliario",
+      "unidadMedida": "m³",
+      "promedio": 68000
+    },
+    {
+      "Subsistema": "Carpintería metálica"
+    },
+    {
+      "Subcategoria": "Soldadura",
+      "unidadMedida": "punto",
+      "promedio": 8000
+    },
+    {
+      "Subcategoria": "Escaleras de Metal",
+      "unidadMedida": "m2",
+      "promedio": 267000
+    },
+    {
+      "Subcategoria": "Ornamentación",
+      "unidadMedida": "m2",
+      "promedio": 110000
+    },
+    {
+      "Subcategoria": "vallas de seguridad",
+      "unidadMedida": "dia",
+      "promedio": 60000
+    },
+    {
+      "Subcategoria": "puertas de seguridad",
+      "unidadMedida": "m²",
+      "promedio": 400000
+    },
+    {
+      "Subcategoria": "parrillas de seguridad",
+      "unidadMedida": "m²",
+      "promedio": 190000
+    },
+    {
+      "Subcategoria": "Techos de Zinc – Metal",
+      "unidadMedida": "m2",
+      "promedio": 25300
+    },
+    {
+      "Subcategoria": "Cercas de Madera – Metal – Alambre",
+      "unidadMedida": "m2",
+      "promedio": 96000
+    },
+    {
+      "Subcategoria": "Puertas de Madera – Metal",
+      "unidadMedida": "m2",
+      "promedio": 90000
+    },
+    {
+      "Subcategoria": "Rejas madera – metallicasalambre",
+      "unidadMedida": "m2",
+      "promedio": 91600
+    },
+    {
+      "Subcategoria": "Andamios",
+      "unidadMedida": "semana",
+      "promedio": 18000
+    },
+    {
+      "Subcategoria": "Esculturas",
+      "unidadMedida": "m³",
+      "promedio": 380000
+    },
+    {
+      "Subcategoria": "Estantería",
+      "unidadMedida": "semana",
+      "promedio": 19300
+    },
+    {
+      "Subcategoria": "Mobiliario",
+      "unidadMedida": "m³",
+      "promedio": 200000
+    },
+    {
+      "Subsistema": "Cerrajería"
+    },
+    {
+      "Subcategoria": "Cambio de Guardas",
+      "unidadMedida": "m2",
+      "promedio": 50000
+    },
+    {
+      "Subcategoria": "Apertura de cerraduras",
+      "unidadMedida": "m2",
+      "promedio": 83600
+    },
+    {
+      "Subcategoria": "Emergencia de cerrajería 24H",
+      "unidadMedida": "asistencia",
+      "promedio": 90000
+    },
+    {
+      "Subcategoria": "Remplazo de Chapa",
+      "unidadMedida": "unidad",
+      "promedio": 80000
+    },
+    {
+      "Subcategoria": "Reparaciones por forzado del sistema",
+      "unidadMedida": "asistencia",
+      "promedio": 130000
+    },
+    {
+      "Subsistema": "Construcción obra"
+    },
+    {
+      "Subcategoria": "Calzada pavimentada estándar",
+      "unidadMedida": "m²",
+      "promedio": 239040
+    },
+    {
+      "Subcategoria": "Entrada asfaltada",
+      "unidadMedida": "m²",
+      "promedio": 199200
+    },
+    {
+      "Subcategoria": "Camino de grava",
+      "unidadMedida": "m²",
+      "promedio": 159360
+    },
+    {
+      "Subcategoria": "Calzada de hormigón liso",
+      "unidadMedida": "m²",
+      "promedio": 159360
+    },
+    {
+      "Subcategoria": "Camino de entrada de resina",
+      "unidadMedida": "m²",
+      "promedio": 258960
+    },
+    {
+      "Subcategoria": "Camino de entrada de resina",
+      "unidadMedida": "m²",
+      "promedio": 219120
+    },
+    {
+      "Subcategoria": "Camino de entrada loco-pavimentado",
+      "unidadMedida": "m²",
+      "promedio": 199200
+    },
+    {
+      "Subcategoria": "CARGUE DE PISO MEDIANTE MORTERO 1:3",
+      "unidadMedida": "m2",
+      "promedio": 28000
+    },
+    {
+      "Subcategoria": "CONCRETO ESTAMPADO TIPO ADOQUÍN 4000 PSI CON MALLA ELECTRO SOLDADA DE 6 MM",
+      "unidadMedida": "m2",
+      "promedio": 276000
+    },
+    {
+      "Subcategoria": "PLACA FÁCIL LOSA DE CONCRETO 3800 PSI",
+      "unidadMedida": "m2",
+      "promedio": 210000
+    },
+    {
+      "Subcategoria": "SUPERFICIE PISO CONCRETO DE 3500 PSI MEJORADO SIKA LATEX Y EPOTOC 1-1 TOXEMENT",
+      "unidadMedida": "m2",
+      "promedio": 120000
+    },
+    {
+      "Subcategoria": "FUNDIDA DE CANAL MEDIANTE CONCRETO MEZCLADO EN OBRA DE 3500PSI ",
+      "unidadMedida": "ml",
+      "promedio": 55000
+    },
+    {
+      "Subcategoria": "BORDILLO MEDIANTE LADRILLO RECOCIDO",
+      "unidadMedida": "ml",
+      "promedio": 35000
+    },
+    {
+      "Subcategoria": "EXCAVACIÓN VIGAS DE AMARRE",
+      "unidadMedida": "m3",
+      "promedio": 150000
+    },
+    {
+      "Subcategoria": "EXCAVACIÓN DE CANAL PERIMETRAL A NIVEL Y TRAZO A CAJA DE RECOLECCIÓN DE AGUA LLUVIA",
+      "unidadMedida": "m3",
+      "promedio": 45000
+    },
+    {
+      "Subcategoria": "RELLENO VIGAS DE AMARRE Y BASE GAVIÓN ",
+      "unidadMedida": "m3",
+      "promedio": 250000
+    },
+    {
+      "Subcategoria": "NIVELACIÓN CON RECEBO B-400 COMPACTADO",
+      "unidadMedida": "m3",
+      "promedio": 111000
+    },
+    {
+      "Subcategoria": "MEDIACAÑA GRAVILLA Y CINTA EN GRAVILLA MONA # 4",
+      "unidadMedida": "ml",
+      "promedio": 26650
+    },
+    {
+      "Subcategoria": "CONSTRUCCIÓN MURO EN MAMPOSTERÍA BLOQUE #4, CON PAÑETE DE MORTERO 2.5 CM, Y REVESTIMIENTO ACRÍLICO KORAZA  ",
+      "unidadMedida": "m2",
+      "promedio": 163000
+    },
+    {
+      "Subcategoria": "CONSTRUCCIÓN VIGA EN CONCRETO ",
+      "unidadMedida": "m3",
+      "promedio": 1050000
+    },
+    {
+      "Subcategoria": "CONSTRUCCIÓN CANAL CORONA",
+      "unidadMedida": "m3",
+      "promedio": 1230000
+    },
+    {
+      "Subcategoria": "CONSTRUCCIÓN GAVIÓN ",
+      "unidadMedida": "m3",
+      "promedio": 415000
+    },
+    {
+      "Subcategoria": "INSTALACIÓN ESTRUCTURAS REPISAS DE TECHO REVESTIDAS EN MORTERO Y MALLA DE VENA ",
+      "unidadMedida": "m²",
+      "promedio": 32000
+    },
+    {
+      "Subcategoria": "SOBRE PISO MORTERO IMPERMEABLE",
+      "unidadMedida": "m2",
+      "promedio": 38000
+    },
+    {
+      "Subcategoria": "ELABORACIÓN DE SOBRE PISO EN MORTERO Y MALLA, NIVELACIÓN Y COMPACTACIÓN SENDERO PEATONAL",
+      "unidadMedida": "m2",
+      "promedio": 16766.6666666667
+    },
+    {
+      "Subcategoria": "Conversión estructural de techo de armadura",
+      "unidadMedida": "Techo",
+      "promedio": 119520000
+    },
+    {
+      "Subcategoria": "Construir una habitación en un techo existente.",
+      "unidadMedida": "habitación",
+      "promedio": 103584000
+    },
+    {
+      "Subcategoria": "Conversión de buhardilla con una habitación doble.",
+      "unidadMedida": "habitación doble",
+      "promedio": 159360000
+    },
+    {
+      "Subcategoria": "Conversión de techos",
+      "unidadMedida": "Techo",
+      "promedio": 219120000
+    },
+    {
+      "Subcategoria": "Conversión de desván de cadera a aguilón",
+      "unidadMedida": "Desván",
+      "promedio": 179280000
+    },
+    {
+      "Subcategoria": "Conversión de ático Mansard Dormer",
+      "unidadMedida": "Atico",
+      "promedio": 239040000
+    },
+    {
+      "Subcategoria": "El costo promedio de una extensión de la casa",
+      "unidadMedida": "m²",
+      "promedio": 5976000
+    },
+    {
+      "Subcategoria": "Extensión de una planta.",
+      "unidadMedida": "20m²",
+      "promedio": 119520000
+    },
+    {
+      "Subcategoria": "Extensión de doble piso.",
+      "unidadMedida": "20m²",
+      "promedio": 239040000
+    },
+    {
+      "Subcategoria": "Conversión al sótano.",
+      "unidadMedida": "m²",
+      "promedio": 12350400
+    },
+    {
+      "Subcategoria": "Costo típico de cocina dentro de nueva extensión.",
+      "unidadMedida": "cocina",
+      "promedio": 39840000
+    },
+    {
+      "Subcategoria": "Costo típico de baño dentro de nueva extensión.",
+      "unidadMedida": "baño",
+      "promedio": 31872000
+    },
+    {
+      "Subcategoria": "Costo típico del cuarto de baño dentro de la nueva extensión.",
+      "unidadMedida": "cuarto de baño",
+      "promedio": 31872000
+    },
+    {
+      "Subcategoria": "Conversión de garaje individual.",
+      "unidadMedida": "18 m²",
+      "promedio": 75696000
+    },
+    {
+      "Subcategoria": "Doble conversión de garaje.",
+      "unidadMedida": "36 m²",
+      "promedio": 147408000
+    },
+    {
+      "Subcategoria": "Puertas de garaje: extracción e instalación de una nueva puerta de intemperie.",
+      "unidadMedida": "puerta",
+      "promedio": 5179200
+    },
+    {
+      "Subcategoria": "Suministro y montaje de puertas y ventanas exteriores.",
+      "unidadMedida": "Puerta / Ventana",
+      "promedio": 2191200
+    },
+    {
+      "Subcategoria": "Suministro y ajuste de suelos.",
+      "unidadMedida": "Suelos",
+      "promedio": 5179200
+    },
+    {
+      "Subcategoria": "Instalar nuevas tuberías de gas y agua.",
+      "unidadMedida": "Red gas / agua",
+      "promedio": 7968000
+    },
+    {
+      "Subcategoria": "Instalar nuevos enchufes eléctricos.",
+      "unidadMedida": "Red eléctrica",
+      "promedio": 756960
+    },
+    {
+      "Subcategoria": "Instale la pared del perno (aislado)",
+      "promedio": 2988000
+    },
+    {
+      "Subsistema": "Reformas Cocinas"
+    },
+    {
+      "Subcategoria": "Cocinas a medida",
+      "unidadMedida": "m2",
+      "promedio": 210000
+    },
+    {
+      "Subcategoria": "Reforma de cocinas",
+      "unidadMedida": "m2",
+      "promedio": 196000
+    },
+    {
+      "Subcategoria": "Diseño e instalación de cocina",
+      "unidadMedida": "m3",
+      "promedio": 416000
+    },
+    {
+      "Subcategoria": "Cocinas empotradas",
+      "unidadMedida": "unidad",
+      "promedio": 760000
+    },
+    {
+      "Subcategoria": "Mesones en metal – piedra – madera laminada",
+      "unidadMedida": "m2",
+      "promedio": 226000
+    },
+    {
+      "Subcategoria": "Instalar encimeras de cocina laminadas",
+      "unidadMedida": "Sistema",
+      "promedio": 1593600
+    },
+    {
+      "Subcategoria": "Instalar unidades de cocina",
+      "unidadMedida": "Sistema",
+      "promedio": 11952000
+    },
+    {
+      "Subcategoria": "Electricidad y fontanería",
+      "unidadMedida": "Red electricidad / fontanería",
+      "promedio": 10119360
+    },
+    {
+      "Subcategoria": "Salpicaduras de salpicaduras",
+      "unidadMedida": "Sistema",
+      "promedio": 1593600
+    },
+    {
+      "Subcategoria": "Instale pisos embaldosados ",
+      "unidadMedida": "(2m x 4m)",
+      "promedio": 1992000
+    },
+    {
+      "Subcategoria": "Instale pisos laminados",
+      "unidadMedida": "(2m x 4m)",
+      "promedio": 1394400
+    },
+    {
+      "Subcategoria": "Instalar pisos de lino",
+      "unidadMedida": "(2m x 4m)",
+      "promedio": 836640
+    },
+    {
+      "Subcategoria": "Compra e instala electrodomésticos de cocina.",
+      "unidadMedida": "Sistema",
+      "promedio": 7569600
+    },
+    {
+      "Subcategoria": "Iluminación",
+      "unidadMedida": "Cocina",
+      "promedio": 1195200
+    },
+    {
+      "Subcategoria": "Pintura y decoración.",
+      "unidadMedida": "Cocina",
+      "promedio": 1792800
+    },
+    {
+      "Subcategoria": "Estucado Enlucido",
+      "unidadMedida": "Cocina",
+      "promedio": 1593600
+    },
+    {
+      "Subsistema": "Reformas Baños"
+    },
+    {
+      "Subcategoria": "Instalación de baño",
+      "unidadMedida": "Sistema",
+      "promedio": 1195200
+    },
+    {
+      "Subcategoria": "Instalación de ducha",
+      "unidadMedida": "Sistema",
+      "promedio": 1394400
+    },
+    {
+      "Subcategoria": "Instalación de cabina de ducha",
+      "unidadMedida": "Sistema",
+      "promedio": 1633440
+    },
+    {
+      "Subcategoria": "Instalación de lavamanos",
+      "unidadMedida": "Sistema",
+      "promedio": 398400
+    },
+    {
+      "Subcategoria": "Instalación de aseo",
+      "unidadMedida": "Sistema",
+      "promedio": 796800
+    },
+    {
+      "Subcategoria": "Instalación de grifo",
+      "unidadMedida": "Sistema",
+      "promedio": 358560
+    },
+    {
+      "Subcategoria": "Instalación de calefacción por suelo radiante.",
+      "unidadMedida": "Sistema",
+      "promedio": 2270880
+    },
+    {
+      "Subcategoria": "Instalación de extractor de aire.",
+      "unidadMedida": "Sistema",
+      "promedio": 796800
+    },
+    {
+      "Subcategoria": "Baño resellador",
+      "unidadMedida": "Sistema",
+      "promedio": 258960
+    },
+    {
+      "Subcategoria": "Instalación de radiador toallero.",
+      "unidadMedida": "Sistema",
+      "promedio": 597600
+    },
+    {
+      "Subcategoria": "Quitar el baño viejo",
+      "unidadMedida": "Sistema",
+      "promedio": 597600
+    },
+    {
+      "Subcategoria": "Eliminación de la antigua suite: por tonelada.",
+      "unidadMedida": "Sistema",
+      "promedio": 597600
+    },
+    {
+      "Subsistema": "Control de plagas"
+    },
+    {
+      "Subcategoria": "Control de plagas residenciales\n",
+      "unidadMedida": "m2",
+      "promedio": 4600
+    },
+    {
+      "Subcategoria": "Control de plagas comerciales",
+      "unidadMedida": "m2",
+      "promedio": 5900
+    },
+    {
+      "Subsistema": "Demoliciones"
+    },
+    {
+      "Subcategoria": "DEMOLICIÓN Y REEMPLAZO DE PIEZAS DE LADRILLO EN DETERIORO",
+      "unidadMedida": "unidad",
+      "promedio": 9000
+    },
+    {
+      "Subcategoria": "DEMOLICIÓN MEDIA CAÑA",
+      "unidadMedida": "m2",
+      "promedio": 4000
+    },
+    {
+      "Subcategoria": "DEMOLICIÓN SUPERFICIES",
+      "unidadMedida": "m2",
+      "promedio": 7500
+    },
+    {
+      "Subcategoria": "DEMOLICIÓN SUPERFICIES (TABLETA Y ADOQUÍN) HASTA PISO ",
+      "unidadMedida": "m2",
+      "promedio": 14200
+    },
+    {
+      "Subcategoria": "DEMOLICIÓN Y RETIRO SUPERFICIES HASTA -15 CM",
+      "unidadMedida": "m2",
+      "promedio": 43500
+    },
+    {
+      "Subcategoria": "EMPAQUE, TRASLADO Y EVACUACIÓN DE OBRA DE ESCOMBROS Y MATERIALES DE DEMOLICIÓN",
+      "unidadMedida": "viaje",
+      "promedio": 280000
+    },
+    {
+      "Subcategoria": "RETIRO Y DISPOSICIÓN TRASIEGOS",
+      "unidadMedida": "viaje",
+      "promedio": 280000
+    },
+    {
+      "Subcategoria": "DEMOLICIÓN Y REEMPLAZO DE PIEZAS DE LADRILLO EN DETERIORO",
+      "unidadMedida": "unidad",
+      "promedio": 9000
+    },
+    {
+      "Subcategoria": "DEMOLICIÓN MEDIA CAÑA",
+      "unidadMedida": "m2",
+      "promedio": 4000
+    },
+    {
+      "Subcategoria": "DEMOLICIÓN SUPERFICIES",
+      "unidadMedida": "m2",
+      "promedio": 7500
+    },
+    {
+      "Subcategoria": "DEMOLICIÓN SUPERFICIES (TABLETA Y ADOQUÍN) HASTA PISO ",
+      "unidadMedida": "m2",
+      "promedio": 14200
+    },
+    {
+      "Subcategoria": "DEMOLICIÓN Y RETIRO SUPERFICIES HASTA -15 CM",
+      "unidadMedida": "m2",
+      "promedio": 43500
+    },
+    {
+      "Subcategoria": "EMPAQUE, TRASLADO Y EVACUACIÓN DE OBRA DE ESCOMBROS Y MATERIALES DE DEMOLICIÓN",
+      "unidadMedida": "viaje",
+      "promedio": 280000
+    },
+    {
+      "Subcategoria": "RETIRO Y DISPOSICIÓN TRASIEGOS",
+      "unidadMedida": "viaje",
+      "promedio": 280000
+    },
+    {
+      "Subsistema": "Diseño e impresión"
+    },
+    {
+      "Subcategoria": "Renderizado de una pared externa por m2",
+      "unidadMedida": "m²",
+      "promedio": 199200
+    },
+    {
+      "Subcategoria": "Renderizado de una planta de 2 camas",
+      "unidadMedida": "planta",
+      "promedio": 9960000
+    },
+    {
+      "Subcategoria": "Renderizado de una casa adosada de 3 camas.",
+      "unidadMedida": "casa adosada",
+      "promedio": 17928000
+    },
+    {
+      "Subcategoria": "Renderizado de una casa unifamiliar de 4 camas",
+      "unidadMedida": "casa unifamiliar",
+      "promedio": 27888000
+    },
+    {
+      "Subsistema": "Drenajes e inundaciones"
+    },
+    {
+      "Subcategoria": "Instalación - limpieza y vaciado de fosos de aguas negras",
+      "unidadMedida": "Sistema",
+      "promedio": 890000
+    },
+    {
+      "Subcategoria": "Des-inundación de habitaciones",
+      "unidadMedida": "Sistema",
+      "promedio": 680000
+    },
+    {
+      "Subcategoria": "Limpieza de residuos  ",
+      "unidadMedida": "Sistema",
+      "promedio": 180000
+    },
+    {
+      "Subcategoria": "Instalación destape y limpieza de desagües",
+      "unidadMedida": "Sistema",
+      "promedio": 360000
+    },
+    {
+      "Subsistema": "Electricidad"
+    },
+    {
+      "Subcategoria": "Instalaciones y acometidas eléctricas",
+      "unidadMedida": "punto",
+      "promedio": 176000
+    },
+    {
+      "Subcategoria": "Iluminación exterior",
+      "unidadMedida": "circuito",
+      "promedio": 270000
+    },
+    {
+      "Subcategoria": "Iluminación interior",
+      "unidadMedida": "circuito",
+      "promedio": 246000
+    },
+    {
+      "Subcategoria": "Redistribución de cargas",
+      "unidadMedida": "asistencia",
+      "promedio": 396000
+    },
+    {
+      "Subcategoria": "certificación de instalaciones",
+      "unidadMedida": "piso",
+      "promedio": 480000
+    },
+    {
+      "Subcategoria": "Instalación de audio y sonido",
+      "unidadMedida": "asisencia",
+      "promedio": 230000
+    },
+    {
+      "Subcategoria": "INSTALACIÓN DE LAMPARAS",
+      "unidadMedida": "unidad",
+      "promedio": 70000
+    },
+    {
+      "Subcategoria": "REEMPLAZO DE TACOS",
+      "unidadMedida": "unidad",
+      "promedio": 40000
+    },
+    {
+      "Subcategoria": "CAMBIO TOMA CORRIENTES",
+      "unidadMedida": "unidad",
+      "promedio": 25000
+    },
+    {
+      "Subcategoria": "CAMBIO INTERRUPTORES LUZ",
+      "unidadMedida": "unidad",
+      "promedio": 25000
+    },
+    {
+      "Subcategoria": "REDISTRIBUCIÓN CARGAS CAJA TACOS",
+      "unidadMedida": "unidad",
+      "promedio": 240000
+    },
+    {
+      "Subcategoria": "ACOMETIDA ELECTRICIDAD",
+      "unidadMedida": "unidad",
+      "promedio": 50000
+    },
+    {
+      "Subcategoria": "CAMBIO CONTADOR ELECTRICIDAD",
+      "unidadMedida": "unidad",
+      "promedio": 50000
+    },
+    {
+      "Subcategoria": "INSTALACIÓN LUCES NAVIDEÑAS",
+      "unidadMedida": "unidad",
+      "promedio": 5000
+    },
+    {
+      "Subcategoria": "Luminarias - instalación",
+      "unidadMedida": "instalación",
+      "promedio": 597600
+    },
+    {
+      "Subcategoria": "Luminarias - reparación",
+      "unidadMedida": "reparación",
+      "promedio": 298800
+    },
+    {
+      "Subcategoria": "Interruptores de luz - instalación",
+      "unidadMedida": "instalación",
+      "promedio": 398400
+    },
+    {
+      "Subcategoria": "Interruptores de luz - reparación ",
+      "unidadMedida": "reparación",
+      "promedio": 199200
+    },
+    {
+      "Subcategoria": "Tomas de corriente - instalación",
+      "unidadMedida": "instalación",
+      "promedio": 597600
+    },
+    {
+      "Subcategoria": "Tomas de corriente - reparación ",
+      "unidadMedida": "reparación",
+      "promedio": 398400
+    },
+    {
+      "Subcategoria": "Placa de cocción eléctrica - instalación ",
+      "unidadMedida": "instalación",
+      "promedio": 637440
+    },
+    {
+      "Subcategoria": "Placa de cocción eléctrica - reparación ",
+      "unidadMedida": "reparación",
+      "promedio": 796800
+    },
+    {
+      "Subcategoria": "Placa de inducción - instalación ",
+      "unidadMedida": "instalación",
+      "promedio": 1195200
+    },
+    {
+      "Subcategoria": "Campana extractora - instalación",
+      "unidadMedida": "instalación",
+      "promedio": 996000
+    },
+    {
+      "Subcategoria": "Campana extractora - reparación ",
+      "unidadMedida": "reparación",
+      "promedio": 597600
+    },
+    {
+      "Subcategoria": "Ducha eléctrica - instalación ",
+      "unidadMedida": "instalación",
+      "promedio": 1394400
+    },
+    {
+      "Subcategoria": "Ducha eléctrica - reparación ",
+      "unidadMedida": "reparación",
+      "promedio": 956160
+    },
+    {
+      "Subcategoria": "Extractor extractor - instalación ",
+      "unidadMedida": "instalación",
+      "promedio": 796800
+    },
+    {
+      "Subcategoria": "Ventilador extractor - reparación",
+      "unidadMedida": "reparación",
+      "promedio": 597600
+    },
+    {
+      "Subcategoria": "Toallero calefactado - instalación (solo mano de obra)",
+      "unidadMedida": "instalación",
+      "promedio": 936240
+    },
+    {
+      "Subcategoria": "Toallero calefaccionado - reparación",
+      "unidadMedida": "reparación",
+      "promedio": 298800
+    },
+    {
+      "Subcategoria": "Instalación de una unidad de consumo adicional o nueva",
+      "unidadMedida": "unidad",
+      "promedio": 2988000
+    },
+    {
+      "Subcategoria": "Reemplace una unidad de consumo existente ",
+      "unidadMedida": "unidad",
+      "promedio": 1792800
+    },
+    {
+      "Subcategoria": "Reubique una unidad de consumo existente o una caja de fusibles ",
+      "unidadMedida": "unidad",
+      "promedio": 2191200
+    },
+    {
+      "Subcategoria": "Informe de condición red eléctrica (ICRE) ",
+      "unidadMedida": "Informe",
+      "promedio": 796800
+    },
+    {
+      "Subcategoria": "Diagnóstico de fallo eléctrico ",
+      "unidadMedida": "Diagnostico",
+      "promedio": 796800
+    },
+    {
+      "Subcategoria": "Re-cablear 1 habitación ",
+      "unidadMedida": "1 habitación ",
+      "promedio": 3984000
+    },
+    {
+      "Subcategoria": "Re-cablear casa adosada de 3 habitaciones ",
+      "unidadMedida": "3 habitaciones ",
+      "promedio": 14940000
+    },
+    {
+      "Subsistema": "Instalación de calderas"
+    },
+    {
+      "Subcategoria": "Combi (28kW) - no hay caldera instalada actualmente",
+      "unidadMedida": "Caldera",
+      "promedio": 8764800
+    },
+    {
+      "Subcategoria": "Combi (28kW): caldera combi instalada actualmente incluido el equipo de tiro",
+      "unidadMedida": "Caldera",
+      "promedio": 7370400
+    },
+    {
+      "Subcategoria": "Combi - caldera convencional actualmente instalada.",
+      "unidadMedida": "Caldera",
+      "promedio": 7968000
+    },
+    {
+      "Subcategoria": "Combi - sistema de caldera actualmente instalado",
+      "unidadMedida": "Caldera",
+      "promedio": 9960000
+    },
+    {
+      "Subcategoria": "Convencional - no hay caldera instalada actualmente",
+      "unidadMedida": "Caldera",
+      "promedio": 11952000
+    },
+    {
+      "Subcategoria": "Convencional - combi actualmente instalado",
+      "unidadMedida": "Caldera",
+      "promedio": 10756800
+    },
+    {
+      "Subcategoria": "Convencional: Sistema caldera convencional instalada actualmente ",
+      "unidadMedida": "Caldera",
+      "promedio": 7171200
+    },
+    {
+      "Subcategoria": "Convencional - sistema de caldera actualmente instalado.",
+      "unidadMedida": "Caldera",
+      "promedio": 7171200
+    },
+    {
+      "Subcategoria": "Sistema (28kW) - no hay caldera instalada actualmente",
+      "unidadMedida": "Caldera",
+      "promedio": 9960000
+    },
+    {
+      "Subcategoria": "Sistema - caldera combi actualmente instalada",
+      "unidadMedida": "Caldera",
+      "promedio": 10756800
+    },
+    {
+      "Subcategoria": "Sistema - caldera convencional actualmente instalada.",
+      "unidadMedida": "Caldera",
+      "promedio": 7171200
+    },
+    {
+      "Subcategoria": "Sistema (28kW): sistema de caldera instalado actualmente incluido el kit de tiro",
+      "unidadMedida": "Caldera",
+      "promedio": 6573600
+    },
+    {
+      "Subcategoria": "Casa de 3 camas (incluyendo tuberías y caldera)",
+      "unidadMedida": "Caldera",
+      "promedio": 13944000
+    },
+    {
+      "Subcategoria": "Casa de 4 camas (incluyendo tuberías y caldera)",
+      "unidadMedida": "Caldera",
+      "promedio": 17928000
+    },
+    {
+      "Subcategoria": "Casa de 5 camas (incluyendo tuberías y caldera)",
+      "unidadMedida": "Caldera",
+      "promedio": 21912000
+    },
+    {
+      "Subsistema": "Gasodomésticos"
+    },
+    {
+      "Subcategoria": "Certificación de instalaciones",
+      "unidadMedida": "Informe"
+    },
+    {
+      "Subcategoria": "Instalaciones de gas",
+      "unidadMedida": "Red"
+    },
+    {
+      "Subcategoria": "Calentamiento eléctrico bajo suelos",
+      "unidadMedida": "Sistema"
+    },
+    {
+      "Subcategoria": "Instalación y mantenimiento de Calderas eléctricas – Gas - Aceite",
+      "unidadMedida": "Sistema"
+    },
+    {
+      "Subcategoria": "Quemadores de gas",
+      "unidadMedida": "Sistema"
+    },
+    {
+      "Subcategoria": "Cocinas de Gas",
+      "unidadMedida": "Sistema"
+    },
+    {
+      "Subcategoria": "Paneles solares",
+      "unidadMedida": "Sistema"
+    },
+    {
+      "Subsistema": "Refrigeración"
+    },
+    {
+      "Subcategoria": "Radiadores"
+    },
+    {
+      "Subcategoria": "Aire acondicionado y refrigeración"
+    },
+    {
+      "Subsistema": "Impermeabilización"
+    },
+    {
+      "Subcategoria": "impermeabilización e hidrofugado de muros",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Muros de Jardín",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Corrección de fisuras y grietas",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN MEDIANTE VULKEM 350 Y REVESTIMIENTO NUEVO DE ADOQUÍN PEATONAL DE 26*5",
+      "unidadMedida": "m2",
+      "promedio": 178250
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN MEDIANTE VULKEM 350 CON REFUERZO ARENA CUARZO",
+      "unidadMedida": "m2",
+      "promedio": 60000
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN MEDIANTE VULKEM 350 Y BASE PRIMER 171 CON REFUERZO ARENA CUARZO",
+      "unidadMedida": "m2",
+      "promedio": 68750
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN MEDIANTE VULKEM 350 Y VULKEM 351 COMO ACABADO FINAL",
+      "unidadMedida": "m2",
+      "promedio": 63000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN SISTEMA POLIURETANO VULKEM 350",
+      "unidadMedida": "m2",
+      "promedio": 58700
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN MEDIANTE VULKEM 350 Y BASE PRIMER 171 CON REFUERZO ARENA CUARZO, CON NIVELACIÓN Y TRATAMIENTO DE FISURAS",
+      "unidadMedida": "m2",
+      "promedio": 90000
+    },
+    {
+      "Subcategoria": "INSTALACIÓN SISTEMA IMPERMEABLE CUBIERTAS MEMBRANA PVC ",
+      "unidadMedida": "m2",
+      "promedio": 86000
+    },
+    {
+      "Subcategoria": "INSTALACIÓN SISTEMA IMPERMEABLE CUBIERTA SIKAFILL POWER ",
+      "unidadMedida": "m2",
+      "promedio": 39400
+    },
+    {
+      "Subcategoria": "IMPRIMACIÓN, SELLAMIENTOS DE BOCA-BAJANTES Y MARQUESINAS, CORRECCIÓN DE FISURAS ",
+      "unidadMedida": "m2",
+      "promedio": 6800
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN PLATAFORMA VEHICULAR VULKEM 45 O 116, CAPA VULKEM 171 Y FILLER, CAPA VULKEM 350 Y FILLER, CAPA 354 COMO REFUERZO VEHICULAR Y CAPA VULKEM 346 ACABADO GENERAL ",
+      "unidadMedida": "m2",
+      "promedio": 110000
+    },
+    {
+      "Subcategoria": "REVESTIMIENTO IMPERMEABLE ACRÍLICO PRIMER ASFALTICO, MANTO XT 500 DE FIBER GLASS, PINTURA BITUMINOSA",
+      "unidadMedida": "m2",
+      "promedio": 47550
+    },
+    {
+      "Subcategoria": "DESMONTAJE SISTEMA MANTO, CORRECCIÓN DILATACIONES Y FISURAS, NIVELACIÓN CON MORTEROS, IMPRIMACIÓN, SELLAMIENTOS DE BOCA-BAJANTES Y MARQUESINAS, MANTO FL 100 DE FIBER GLASS CON FOIL DE ALUMINIO",
+      "unidadMedida": "m2",
+      "promedio": 44333.3333333333
+    },
+    {
+      "Subcategoria": "MANTO FL 103 DE FIBER GLASS FOIL DE ALUMINIO",
+      "unidadMedida": "m2",
+      "promedio": 32000
+    },
+    {
+      "Subcategoria": "IMPRIMACIÓN, SELLAMIENTOS DE BOCA-BAJANTES Y MARQUESINAS, MANTO FL 100 DE FIBER GLASS PINTURA BITUMINOSA PLATEADA",
+      "unidadMedida": "m2",
+      "promedio": 37500
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO CORRECTIVO CUBIERTA SISTEMA VULKEM, VULKEM 45 DE ALTA DENSIDAD, VULKEM 350, VULKEM 351, VULKEM 191 REACTIVADOR PARA UNA MAYOR ADHERENCIA, ACABADO EN ARENA DE CUARZO (FILLER)  ",
+      "unidadMedida": "m2",
+      "promedio": 35000
+    },
+    {
+      "Subcategoria": "PRELAVADO, REVESTIMIENTO IMPERMEABLE ACRÍLICO A DOS CAPAS CON MEMBRANA INTERMEDIA POLIÉSTER ACRÍLICO-COLOR ROJO",
+      "unidadMedida": "m2",
+      "promedio": 32000
+    },
+    {
+      "Subcategoria": "REVESTIMIENTO IMPERMEABLE 2 CAPAS",
+      "unidadMedida": "m2",
+      "promedio": 2500
+    },
+    {
+      "Subcategoria": "REVESTIMIENTO IMPERMEABLE EPOXICO  BLER DOS COMPONENTES",
+      "unidadMedida": "m2",
+      "promedio": 21500
+    },
+    {
+      "Subcategoria": "REVESTIMIENTO IMPERMEABLE EPOXICO  ",
+      "unidadMedida": "m2",
+      "promedio": 80000
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN JARDINERA SISTEMA VULKEM 250",
+      "unidadMedida": "m2",
+      "promedio": 55000
+    },
+    {
+      "Subcategoria": "SISTEMA VULKEM 250",
+      "unidadMedida": "m2",
+      "promedio": 48000
+    },
+    {
+      "Subcategoria": "DESMONTE SISTEMA IMPERMEABLE EXISTENTE",
+      "unidadMedida": "m2",
+      "promedio": 5960
+    },
+    {
+      "Subcategoria": "REGATA",
+      "unidadMedida": "ml",
+      "promedio": 1800
+    },
+    {
+      "Subcategoria": "RESTAURACIÓN IMPERMEABLE FOSOS DE ASCENSOR SELLOTOC A DOS CAPAS",
+      "unidadMedida": "unidad",
+      "promedio": 700000
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN DE ANTEPECHOS",
+      "unidadMedida": "m2",
+      "promedio": 17000
+    },
+    {
+      "Subcategoria": "TRATAMIENTO FISURAS SELLOS POLIURETANO",
+      "unidadMedida": "ml",
+      "promedio": 11000
+    },
+    {
+      "Subcategoria": "TRATAMIENTO FISURAS",
+      "unidadMedida": "ml",
+      "promedio": 1300
+    },
+    {
+      "Subcategoria": "SELLAMIENTO GENERAL DE FISURAS, AFINADO DE SUPERFICIES, CORRECCIÓN DE NIVELES",
+      "unidadMedida": "m2",
+      "promedio": 4175
+    },
+    {
+      "Subcategoria": "TRATAMIENTO FISURAS VULKEM 350 JARDINERA LATERAL",
+      "unidadMedida": "ml",
+      "promedio": 64500
+    },
+    {
+      "Subcategoria": "SELLAMIENTOS DE FISURAS, DILATACIONES ENTRE LOZAS, BAJANTES",
+      "unidadMedida": "m2",
+      "promedio": 47500
+    },
+    {
+      "Subcategoria": "SELLAMIENTOS DE CRISTALIZACIÓN ",
+      "unidadMedida": "gl",
+      "promedio": 230000
+    },
+    {
+      "Subcategoria": "REVESTIMIENTO IMPERMEABLE MORTERO SELLOTOC DE TOXEMENT, SUMINISTRO TAPA ACERO CON BISAGRA CON PINTURA A DOS MANOS",
+      "unidadMedida": "gl",
+      "promedio": 1575000
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN TANQUE SISTEMA EUCO MEMBRANA PVC, SUMINISTRO TAPA ACERO CON BISAGRA CON PINTURA A DOS MANOS",
+      "unidadMedida": "m2",
+      "promedio": 90000
+    },
+    {
+      "Subcategoria": "REEMPLAZO SISTEMA VULKEM 350-351 ",
+      "unidadMedida": "m2",
+      "promedio": 96000
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN JARDINERA SISTEMA VULKEM 250 POLIURETANO ",
+      "unidadMedida": "m2",
+      "promedio": 115000
+    },
+    {
+      "Subcategoria": "IMPERMEABILIZACIÓN JARDINERA SISTEMA MANTO DE FIBER GLASS XT 500 PRO",
+      "unidadMedida": "m2",
+      "promedio": 83000
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO CORRECTIVO CUBIERTA MANTO EN GENERAL, APLICACIÓN DE TRES CAPAS DE EMULSIÓN ASFÁLTICA Y PINTURA ACRÍLICA ",
+      "unidadMedida": "m2",
+      "promedio": 17000
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO CORRECTIVO CUBIERTA MANTO EN GENERAL, APLICACIÓN DE TRES CAPAS DE EMULSIÓN ASFÁLTICA Y PINTURA BITUMINOSA PLATEADA",
+      "unidadMedida": "m2",
+      "promedio": 17883.3333333333
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO CORRECTIVO CUBIERTA MANTO EN GENERAL, APLICACIÓN DE DOS CAPAS DE EMULSIÓN ASFÁLTICA Y PINTURA ACRÍLICA ",
+      "unidadMedida": "m2",
+      "promedio": 13400
+    },
+    {
+      "Subcategoria": "REFUERZOS ASFALTICOS CON MEMBRANAS EN FIBRA DE VIDRIO - POLIÉSTER EN JUNTAS Y TRASLAPOS, CAPA GENERAL DE EMULSIÓN ASFÁLTICA, CAPA GENERAL DE PINTURA BITUMINOSA PLATEADA",
+      "unidadMedida": "m2",
+      "promedio": 31000
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PREVENTIVO IMPERMEABILIZACIÓN CUBIERTA POLIURETANO",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PREVENTIVO IMPERMEABILIZACIÓN ASFÁLTICA CUBIERTA, PINTURA BITUMINOSA PLATEADA",
+      "unidadMedida": "m2",
+      "promedio": 10000
+    },
+    {
+      "Subsistema": "Instalación de adoquín"
+    },
+    {
+      "Subcategoria": "Instalación de Adoquines",
+      "unidadMedida": "m2",
+      "promedio": 86000
+    },
+    {
+      "Subsistema": "Instalación de cableado estructurado."
+    },
+    {
+      "Subcategoria": "Instalación de antenas parabólicas",
+      "unidadMedida": "unidad",
+      "promedio": 60000
+    },
+    {
+      "Subsistema": "Instalación de cerámica"
+    },
+    {
+      "Subcategoria": "Instalación de alfombras",
+      "unidadMedida": "m2",
+      "promedio": 34000
+    },
+    {
+      "Subcategoria": "instalación y mantenimiento de Pisos Deck",
+      "unidadMedida": "m2",
+      "promedio": 486000
+    },
+    {
+      "Subcategoria": "Pisos epóxicos 3D",
+      "unidadMedida": "m2",
+      "promedio": 299000
+    },
+    {
+      "Subcategoria": "Mosaicos",
+      "unidadMedida": "m2",
+      "promedio": 370000
+    },
+    {
+      "Subcategoria": "Ceramicas",
+      "unidadMedida": "m2",
+      "promedio": 36000
+    },
+    {
+      "Subcategoria": "Azulejos",
+      "unidadMedida": "m2",
+      "promedio": 38000
+    },
+    {
+      "Subcategoria": "Brillado de pisos",
+      "unidadMedida": "m2",
+      "promedio": 46000
+    },
+    {
+      "Subcategoria": "Pisos laminados de madera",
+      "unidadMedida": "m2",
+      "promedio": 230000
+    },
+    {
+      "Subcategoria": "Pisos de madera",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Pisos Plásticos",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Pisos de Linóleo",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Pisos en concreto pulido",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "La eliminación de baldosas por metro cuadrado",
+      "promedio": 59760
+    },
+    {
+      "Subcategoria": "Azulejos baño pequeño: 16 metros cuadrados",
+      "promedio": 3286800
+    },
+    {
+      "Subcategoria": "Azulejo de baño medio: 36 metros cuadrados.",
+      "promedio": 4382400
+    },
+    {
+      "Subcategoria": "Azulejos de baño grande: 64 metros cuadrados",
+      "promedio": 6772800
+    },
+    {
+      "Subcategoria": "Instalar la alfombra en una habitación pequeña ",
+      "unidadMedida": "(2.5 m x 2.5 m)",
+      "promedio": 1115520
+    },
+    {
+      "Subcategoria": "Instalar la alfombra en una habitación mediana ",
+      "unidadMedida": "(4 m x 3.5 m)",
+      "promedio": 1992000
+    },
+    {
+      "Subcategoria": "Instalar la alfombra en una habitación grande ",
+      "unidadMedida": "(5 m x 5 m)",
+      "promedio": 3187200
+    },
+    {
+      "Subcategoria": "Instalar laminado en una habitación pequeña",
+      "unidadMedida": "(2.5 m x 2.5 m)",
+      "promedio": 1314720
+    },
+    {
+      "Subcategoria": "Instalar laminado en una habitación mediana ",
+      "unidadMedida": "(4 m x 3.5 m)",
+      "promedio": 2490000
+    },
+    {
+      "Subcategoria": "Instalar laminado en una habitación grande",
+      "unidadMedida": "(5 m x 5 m)",
+      "promedio": 3784800
+    },
+    {
+      "Subcategoria": "Instale la lámina de vinilo en una habitación pequeña",
+      "unidadMedida": "(2.5 m x 2.5 m)",
+      "promedio": 876480
+    },
+    {
+      "Subcategoria": "Instalar la lámina de vinilo en una habitación mediana",
+      "unidadMedida": "(4 m x 3.5 m)",
+      "promedio": 1454160
+    },
+    {
+      "Subcategoria": "Instale la lámina de vinilo en una habitación grande",
+      "unidadMedida": "(5 m x 5 m)",
+      "promedio": 2589600
+    },
+    {
+      "Subcategoria": "Instale pisos de madera dura en una habitación pequeña",
+      "unidadMedida": "(2.5 m x 2.5 m)",
+      "promedio": 3187200
+    },
+    {
+      "Subcategoria": "Instale pisos de madera dura en una habitación mediana ",
+      "unidadMedida": "(4 m x 3.5 m)",
+      "promedio": 6135360
+    },
+    {
+      "Subcategoria": "Instale pisos de madera dura en una habitación grande",
+      "unidadMedida": "(5 m x 5 m)",
+      "promedio": 8964000
+    },
+    {
+      "Subsistema": "Instalación de cubiertas"
+    },
+    {
+      "Subcategoria": "Construcción y reparación de chimeneas\n",
+      "unidadMedida": "m3",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "PVC parabólico",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Canalones y bajantes de agua",
+      "unidadMedida": "m3",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Techos StandingSeam",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Tejado pizarra y tejas",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Techos de paja",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Cubiertas en Zing",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Marquesina",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Cristal decorativo",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Cristal simple doble",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "PVC",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Tragaluz",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Ventanas abatibles",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Ventanas con marcos de madera",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Aislamientos termo acústicos ",
+      "unidadMedida": "m2",
+      "promedio": 0
+    },
+    {
+      "Subcategoria": "Techos en PVC",
+      "unidadMedida": "m2",
+      "promedio": 26400
+    },
+    {
+      "Subcategoria": "Techos de paja",
+      "unidadMedida": "m2",
+      "promedio": 36700
+    },
+    {
+      "Subcategoria": "Vuelva a colocar el techo inclinado en bungalow de 2 camas con azulejos",
+      "promedio": 19621200
+    },
+    {
+      "Subcategoria": "Reemplace el techo inclinado en una casa de 3 pisos y 3 camas con azulejos",
+      "promedio": 23904000
+    },
+    {
+      "Subcategoria": "Vuelva a colocar el techo inclinado en bungalow de 2 camas con tejas de pizarra",
+      "promedio": 19920000
+    },
+    {
+      "Subcategoria": "Reemplace el techo inclinado en una casa de 3 pisos y 3 camas con tejas de pizarra",
+      "promedio": 25298400
+    },
+    {
+      "Subcategoria": "Reemplace el techo plano de fieltro en un solo garaje (sin utilizar tablas de entarimado)",
+      "promedio": 4780800
+    },
+    {
+      "Subcategoria": "Reemplace azulejos rotos o faltantes",
+      "unidadMedida": "1-6 unidades",
+      "promedio": 318720
+    },
+    {
+      "Subcategoria": "Reemplazar teja cresta",
+      "unidadMedida": "Unidad",
+      "promedio": 338640
+    },
+    {
+      "Subcategoria": "Reemplace tejas de cumbrera",
+      "unidadMedida": "6 Unidades",
+      "promedio": 836640
+    },
+    {
+      "Subcategoria": "Ajuste de ventilación de techo",
+      "promedio": 1494000
+    },
+    {
+      "Subcategoria": "Reparación de techo inclinado con fugas para casa de 3 camas",
+      "promedio": 597600
+    },
+    {
+      "Subcategoria": "Reparación de la chimenea de plomo intermitente",
+      "promedio": 1593600
+    },
+    {
+      "Subsistema": "Costos generales de reparación de chimeneas."
+    },
+    {
+      "Subcategoria": "Reparación de la cubierta",
+      "unidadMedida": "chimenea",
+      "promedio": 696325
+    },
+    {
+      "Subcategoria": "Reparacion de chimenea",
+      "unidadMedida": "chimenea",
+      "promedio": 397900
+    },
+    {
+      "Subcategoria": "Reparacion inminente",
+      "unidadMedida": "chimenea",
+      "promedio": 358110
+    },
+    {
+      "Subcategoria": "Reubicación de ladrillo",
+      "unidadMedida": "chimenea",
+      "promedio": 2984250
+    },
+    {
+      "Subcategoria": "Reparación de plomo y tapajuntas",
+      "unidadMedida": "chimenea",
+      "promedio": 2785300
+    },
+    {
+      "Subcategoria": "Andamios para la reparación de chimeneas.",
+      "unidadMedida": "chimenea",
+      "promedio": 2228240
+    },
+    {
+      "Subcategoria": "Reconstrucción de la chimenea",
+      "unidadMedida": "chimenea",
+      "promedio": 8156950
+    },
+    {
+      "Subcategoria": "Desmontaje de chimenea",
+      "unidadMedida": "chimenea",
+      "promedio": 7162200
+    },
+    {
+      "Subcategoria": "Desmontaje de chimenea",
+      "unidadMedida": "chimenea",
+      "promedio": 4376900
+    },
+    {
+      "Subsistema": "Costes de instalación de puertas exteriores."
+    },
+    {
+      "Subcategoria": "Suministrar e instalar una puerta sólida de uPVC",
+      "unidadMedida": "Puerta uPVC",
+      "promedio": 2250960
+    },
+    {
+      "Subcategoria": "Suministro e instalación de una puerta de PVC acristalada.",
+      "unidadMedida": "Puerta uPVC",
+      "promedio": 2350560
+    },
+    {
+      "Subcategoria": "Suministre e instale un juego de puertas de pvc francesas o de patio.",
+      "unidadMedida": "Puerta uPVC",
+      "promedio": 3585600
+    },
+    {
+      "Subcategoria": "Suministre e instale un juego de 2.7 m puertas plegables uPVC  3400",
+      "unidadMedida": "Puerta plegable uPVC",
+      "promedio": 11553600
+    },
+    {
+      "Subcategoria": "Suministrar e instalar un juego de puertas correderas de PVC.",
+      "unidadMedida": "Puerta corredera uPVC",
+      "promedio": 3386400
+    },
+    {
+      "Subsistema": "Costos de mantenimiento y rehabilitación de puertas."
+    },
+    {
+      "Subcategoria": "Prepare imprima aplique capa base y brille una puerta con pintura acrílica.",
+      "unidadMedida": "Puerta",
+      "promedio": 836640
+    },
+    {
+      "Subcategoria": "Recortar o redimensionar una puerta.",
+      "unidadMedida": "Puerta",
+      "promedio": 697200
+    },
+    {
+      "Subcategoria": "Reemplace el marco de una puerta",
+      "unidadMedida": "Puerta",
+      "promedio": 597600
+    },
+    {
+      "Subsistema": "Instalación de ventanas"
+    },
+    {
+      "Subcategoria": "Marquesina ",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Cristal decorativo",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Cristal simple doble",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "PVC",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Tragaluz",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Ventanas abatibles",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Ventanas con marcos de madera",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Correcciòn siliconado",
+      "unidadMedida": "ml"
+    },
+    {
+      "Subcategoria": "Suministro y ajuste de la ventana de uPVC (100 cm x 100 cm)",
+      "promedio": 1992000
+    },
+    {
+      "Subcategoria": "Suministre y ajuste la ventana de guillotina de uPVC (100 cm x 100 cm)",
+      "promedio": 2689200
+    },
+    {
+      "Subcategoria": "Suministro y ajuste de ventana pequeña (66cm x 98 cm).",
+      "promedio": 3585600
+    },
+    {
+      "Subcategoria": "Suministre y instale un pequeño invernadero de uPVC",
+      "unidadMedida": "(2.5 m x 2.5 m)",
+      "promedio": 39840000
+    },
+    {
+      "Subcategoria": "Suministre y instale un invernadero de uPVC de tamaño mediano",
+      "unidadMedida": "(4 m x 3.5 m)",
+      "promedio": 79680000
+    },
+    {
+      "Subcategoria": "Suministro y ajuste de invernadero de gran tamaño.",
+      "unidadMedida": "(5 m x 5 m)",
+      "promedio": 119520000
+    },
+    {
+      "Subsistema": "Jardinería"
+    },
+    {
+      "Subcategoria": "Talado de arboles",
+      "unidadMedida": "arbol"
+    },
+    {
+      "Subcategoria": "Adelgazamiento de coronas",
+      "unidadMedida": "arbol"
+    },
+    {
+      "Subcategoria": "Traslado de arboles",
+      "unidadMedida": "arbol"
+    },
+    {
+      "Subcategoria": "Siembre de arboles",
+      "unidadMedida": "arbol"
+    },
+    {
+      "Subcategoria": "Diseño de Jardines",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Mantenimiento de Jardines",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Casa de Jardin",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Muros vegetales verticales",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Paisajismo",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Mantenimiento de Césped",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Fuentes y Estanques de agua",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Riegos y drenajes de suelos",
+      "unidadMedida": "ml"
+    },
+    {
+      "Subcategoria": "RETIRO ARBOLES",
+      "unidadMedida": "unidad",
+      "promedio": 2000000
+    },
+    {
+      "Subcategoria": "EVACUACIÓN TIERRA, EMPAQUE JARDINERAS",
+      "unidadMedida": "m2",
+      "promedio": 35000
+    },
+    {
+      "Subcategoria": "MURO PERIMETRAL JARDÍN LADRILLO",
+      "unidadMedida": "m2",
+      "promedio": 110000
+    },
+    {
+      "Subcategoria": "Eliminando 2 árboles de tallos múltiples",
+      "unidadMedida": "arbol",
+      "promedio": 2988000
+    },
+    {
+      "Subcategoria": "La eliminación de 1 árbol de abedul de tallo múltiple",
+      "unidadMedida": "arbol",
+      "promedio": 2191200
+    },
+    {
+      "Subcategoria": "Extracción de 1 gran roble.",
+      "unidadMedida": "arbol",
+      "promedio": 11952000
+    },
+    {
+      "Subcategoria": "Reducción de la corona",
+      "unidadMedida": "arbol",
+      "promedio": 1095600
+    },
+    {
+      "Subcategoria": "Cortar o podar un árbol de roble",
+      "unidadMedida": "arbol",
+      "promedio": 2988000
+    },
+    {
+      "Subcategoria": "Trabajo general del árbol (equipo de 3) por hora.",
+      "unidadMedida": "hora",
+      "promedio": 677280
+    },
+    {
+      "Subcategoria": "Tasas diarias de 1-2 jardineros de árboles.",
+      "promedio": 1693200
+    },
+    {
+      "Subcategoria": "Encuesta de arboles",
+      "promedio": 1195200
+    },
+    {
+      "Subcategoria": "Trituración de madera (1 día)",
+      "unidadMedida": "día",
+      "promedio": 1992000
+    },
+    {
+      "Subcategoria": "Moler tacones",
+      "promedio": 478080
+    },
+    {
+      "Subcategoria": "Limpieza de jardín por día.",
+      "unidadMedida": "día",
+      "promedio": 1294800
+    },
+    {
+      "Subcategoria": "Recorte de setos por hora",
+      "unidadMedida": "hora",
+      "promedio": 338640
+    },
+    {
+      "Subsistema": "Tanques de agua"
+    },
+    {
+      "Subcategoria": "LIMPIEZA TANQUES DE AGUA",
+      "unidadMedida": "unidad",
+      "promedio": 134000
+    },
+    {
+      "Subcategoria": "LAVADO GENERAL TANQUE DE RESERVA Y TANQUE DE DRENAJE ",
+      "unidadMedida": "unidad ",
+      "promedio": 280000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN DE RED SANITARIA CON CONEXIÓN A CAJA DE RECOLECCIÓN DE AGUAS LLUVIAS.",
+      "unidadMedida": "ml",
+      "promedio": 25000
+    },
+    {
+      "Subcategoria": "REPARACIÓN Y MANTENIMIENTO BOMBA DE AGUA ACTUAL ",
+      "unidadMedida": "unidad",
+      "promedio": 1850000
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO GENERAL DEL SISTEMA BOMBEO AGUA POTABLE POR BOMBA",
+      "unidadMedida": "unidad",
+      "promedio": 2100000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN DE MOTO BOMBA MARCA BARNES DE 10 HP, CON SUCCIÓN DE 2 PULGADAS POR DESCARGA, 140 METROS DE ALTURA A 200 PSI.",
+      "unidadMedida": "unidad",
+      "promedio": 3910000
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PERIÓDICO Y PREDICTIVO SISTEMAS DE PRESIÓN HIDRÁULICA ",
+      "unidadMedida": "unidad",
+      "promedio": 80000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN DE TANQUE 500 LT BYPASS PARA RESERVA DURANTE INTERVENCIÓN ",
+      "unidadMedida": "unidad ",
+      "promedio": 567000
+    },
+    {
+      "Subsistema": "Limpiezas técnicas."
+    },
+    {
+      "Subcategoria": "HIDRÓFUGO  LADRILLO",
+      "unidadMedida": "m2",
+      "promedio": 4400
+    },
+    {
+      "Subcategoria": "LAVADO DE RESTAURACIÓN FACHADA",
+      "unidadMedida": "m2",
+      "promedio": 4500
+    },
+    {
+      "Subcategoria": "LAVADO GENERAL Y SELLADO SUPERFICIE PISO",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "LAVADO GENERAL DE SUPERFICIE DE FACHADA, INCLUYE EMBOQUILLADO, LAVADO E HIDRÓFUGO Y LIMPIEZA DE VIDRIOS",
+      "unidadMedida": "m2",
+      "promedio": 15866.6666666667
+    },
+    {
+      "Subcategoria": "LAVADO, RESTAURACIÓN  IMPERMEABLE Y DECORATIVA  ESTÉTICA KORAZA 5 AÑOS A TODO COSTO",
+      "unidadMedida": "M2",
+      "promedio": 14200
+    },
+    {
+      "Subcategoria": "LAVADO E HIDRFUGADO CON SELLAMIENTOS DE BOQUILLA FACHADA ",
+      "unidadMedida": "m2",
+      "promedio": 15450
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PREVENTIVO FACHADA MÁRMOL",
+      "unidadMedida": "m2",
+      "promedio": 21200
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PREVENTIVO FACHADA PIEDRA MUÑECA",
+      "unidadMedida": "m2",
+      "promedio": 11500
+    },
+    {
+      "Subcategoria": "RETIRO Y TRATAMIENTO DE REVESTIMIENTO EN GRANIPLAST, TRATAMIENTO DE FISURAS PINTUCO FIX",
+      "unidadMedida": "m2",
+      "promedio": 16100
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO FLANCHE CON SELLAMIENTOS ELASTOMERICOS E IMPERMEABLES",
+      "unidadMedida": "ml",
+      "promedio": 7000
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PREVENTIVO FACHADA LADRILLO A NIVEL DEL SUELO",
+      "unidadMedida": "m2",
+      "promedio": 12500
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PREVENTIVO FACHADA LADRILLO PRENSADO Y CONCRETO ABUJARDADO ",
+      "unidadMedida": "m2",
+      "promedio": 14450
+    },
+    {
+      "Subcategoria": "LIMPIEZA DE VIDRIOS MEDIANTE ARAGAN, DESENGRASANTE Y LIMPIA VIDRIOS CON RECTIFICADO DE SILICONADO PERIMETRAL",
+      "unidadMedida": "m2",
+      "promedio": 4125
+    },
+    {
+      "Subcategoria": "LIMPIEZA CARPINTERÍA METÁLICA VENTANERIA",
+      "unidadMedida": "m2",
+      "promedio": 3000
+    },
+    {
+      "Subcategoria": "RESTAURACIÓN BOQUILLAS E HIDRÓFUGO MUROS ",
+      "unidadMedida": "m2",
+      "promedio": 17400
+    },
+    {
+      "Subcategoria": "LAVADO Y SELLADO DE SUPERFICIE PISO",
+      "unidadMedida": "m2",
+      "promedio": 10000
+    },
+    {
+      "Subcategoria": "PROTECCIÓN CRISTALERÍA Y EMBOQUILLADO",
+      "unidadMedida": "m2",
+      "promedio": 6100
+    },
+    {
+      "Subcategoria": "RETIRO DE GRAFITIS ",
+      "unidadMedida": "m2",
+      "promedio": 9000
+    },
+    {
+      "Subcategoria": "PINTURA ANTI GRAFITIS SOBRE LADRILLO",
+      "unidadMedida": "m2",
+      "promedio": 26000
+    },
+    {
+      "Subcategoria": "LAVADO GENERAL DE SUPERFICIE DE FACHADA, INCLUYE EMBOQUILLADO, LAVADO E HIDRÓFUGO Y LIMPIEZA DE VIDRIOS",
+      "unidadMedida": "m2",
+      "promedio": 15866.6666666667
+    },
+    {
+      "Subcategoria": "LAVADO, RESTAURACIÓN  IMPERMEABLE Y DECORATIVA  ESTÉTICA KORAZA 5 AÑOS A TODO COSTO",
+      "unidadMedida": "M2",
+      "promedio": 14200
+    },
+    {
+      "Subcategoria": "LIMPIEZA DE VIDRIOS MEDIANTE ARAGAN, DESENGRASANTE Y LIMPIA VIDRIOS CON RECTIFICADO DE SILICONADO PERIMETRAL",
+      "unidadMedida": "m2",
+      "promedio": 4125
+    },
+    {
+      "Subcategoria": "LIMPIEZA CARPINTERÍA METÁLICA VENTANERIA",
+      "unidadMedida": "m2",
+      "promedio": 3000
+    },
+    {
+      "Subcategoria": "LAVADO GENERAL CON RINSES RENOVADORES DE SUPERFICIE E HIDROPRESIÓN.",
+      "unidadMedida": "m2",
+      "promedio": 2100
+    },
+    {
+      "Subcategoria": "APLICACIÓN GENERAL DE HIDRÓFUGO PARA SUPERFICIES AQUAPISO.",
+      "unidadMedida": "m2",
+      "promedio": 3900
+    },
+    {
+      "Subcategoria": "LAVADO Y SELLADO DE SUPERFICIE PISO",
+      "unidadMedida": "m2",
+      "promedio": 10000
+    },
+    {
+      "Subcategoria": "LAVADO GENERAL CON RINSES RENOVADORES DE SUPERFICIE E HIDROPRESIÓN.",
+      "unidadMedida": "m2",
+      "promedio": 2100
+    },
+    {
+      "Subcategoria": "Limpieza doméstica quincenal de 2 horas.",
+      "promedio": 111552
+    },
+    {
+      "Subcategoria": "Limpieza única de 5 horas.",
+      "promedio": 338640
+    },
+    {
+      "Subsistema": "Maestro Obra"
+    },
+    {
+      "Subcategoria": "Mejoras del Hogar"
+    },
+    {
+      "Subcategoria": "Ampliaciones",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Remodelación de interiores",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Remodelación de garaje",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Estructuras en acero",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Fundición de armaduras",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Muros de Jardín",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Corrección de fisuras y grietas",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Accesos para discapacitados",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Construcción y reparación de chimeneas",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Remodelación de bodega y sótano",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Conversión de áticos y altillos",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN DE TABLETA CERÁMICA ALFARES Y ADOQUÍN",
+      "unidadMedida": "m2",
+      "promedio": 47000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN GUARDA ESCOBA ",
+      "unidadMedida": "ml",
+      "promedio": 13000
+    },
+    {
+      "Subcategoria": "ENCHAPE CERÁMICO",
+      "unidadMedida": "m2",
+      "promedio": 56000
+    },
+    {
+      "Subcategoria": "SUSTITUCIÓN PIEDRA MUÑECA POR LADRILLO",
+      "unidadMedida": "m2",
+      "promedio": 103000
+    },
+    {
+      "Subcategoria": "SUSTITUCIÓN PIEDRA MUÑECA NUEVA",
+      "unidadMedida": "m2",
+      "promedio": 115000
+    },
+    {
+      "Subcategoria": "MURO EN SUPER BOARD",
+      "unidadMedida": "m2",
+      "promedio": 80000
+    },
+    {
+      "Subcategoria": "GRANITO",
+      "unidadMedida": "ml",
+      "promedio": 26000
+    },
+    {
+      "Subcategoria": "DEMARCACIÓN CERRAMIENTO Y PROTECCIÓN DE OBRA",
+      "unidadMedida": "m2",
+      "promedio": 2500
+    },
+    {
+      "Subcategoria": "INSTALACIÓN FLANCHE Y PINTURA",
+      "unidadMedida": "ml",
+      "promedio": 1800
+    },
+    {
+      "Subcategoria": "INSTALACIÓN BANDEJAS DE TECHO GALVANIZADAS, REVESTIDAS EN ESMALTE",
+      "unidadMedida": "m2",
+      "promedio": 90600
+    },
+    {
+      "Subcategoria": "INSTALACIÓN PORCELANATO PARA EXTERIORES ANTIDESLIZANTE.",
+      "unidadMedida": "m2",
+      "promedio": 120000
+    },
+    {
+      "Subcategoria": "AFINADO CON MORTEROS DE RESTAURACIÓN ACRÍLICO",
+      "unidadMedida": "m2",
+      "promedio": 10100
+    },
+    {
+      "Subcategoria": "DESMONTE DE CORTAVIENTOS Y PEDESTALES DE FIJACIÓN ",
+      "unidadMedida": "unidad",
+      "promedio": 90000
+    },
+    {
+      "Subcategoria": "RESTAURACIÓN ÁREAS PEATONALES Y RAMPAS VEHICULARES EN LADRILLO COCIDO",
+      "unidadMedida": "m2",
+      "promedio": 57200
+    },
+    {
+      "Subcategoria": "DESMONTE GENERAL DE PIEZAS EN DETERIORO.",
+      "unidadMedida": "m2",
+      "promedio": 8000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN FORMATO Y FORMA EXISTENTE CON ADHESIVOS LÁTEX.",
+      "unidadMedida": "m2",
+      "promedio": 35000
+    },
+    {
+      "Subcategoria": "APLICACIÓN BOQUILLA GENERAL SOBRE TODAS LAS JUNTAS, PEGUES Y REMATES DE LA TABLETA CON ADITIVOS DE FIJACIÓN COLORACIÓN E IMPERMEABILIZACIÓN.",
+      "unidadMedida": "m2",
+      "promedio": 8200
+    },
+    {
+      "Subcategoria": "APLICACIÓN GENERAL DE HIDRÓFUGO PARA SUPERFICIES AQUAPISO.",
+      "unidadMedida": "m2",
+      "promedio": 3900
+    },
+    {
+      "Subcategoria": "INSTALACIÓN PISO DECK NO INCLUYE MATERIAL",
+      "unidadMedida": "m2",
+      "promedio": 23000
+    },
+    {
+      "Subcategoria": "REMPLAZO CARCAMO METÁLICO EN ÁNGULO DE 1 1/4\" Y CONTRAMARCO DE 1 1/2\" PARA TRÁFICO VEHICULAR",
+      "unidadMedida": "ml",
+      "promedio": 390000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN REGISTRO DE CORTE",
+      "unidadMedida": "unidad",
+      "promedio": 360000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN RED ",
+      "unidadMedida": "unidad",
+      "promedio": 650000
+    },
+    {
+      "Subcategoria": "ELABORACIÓN, SUMINISTRO E INSTALACIÓN FLAUTA NUEVA",
+      "unidadMedida": "unidad",
+      "promedio": 1900000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN DE GRAMA SINTÉTICA",
+      "unidadMedida": "m2",
+      "promedio": 58000
+    },
+    {
+      "Subcategoria": "ALQUILER ANDAMIO TUBULAR 2 SECCIONES, 3 PLANCHONES",
+      "unidadMedida": "semana",
+      "promedio": 100000
+    },
+    {
+      "Subcategoria": "SUMINISTRO Y REEMPLAZO TUBO DE ESCAPE CALDERA 10\"",
+      "unidadMedida": "ml",
+      "promedio": 350000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN CANALETA EN PVC 4\" X 2",
+      "unidadMedida": "ml",
+      "promedio": 37000
+    },
+    {
+      "Subcategoria": "EL COSTO DE INSPECCIÓN Y REDACCIÓN DE INFORME TÉCNICO POR INGENIERÍA    ",
+      "unidadMedida": "unidad ",
+      "promedio": 800000
+    },
+    {
+      "Subcategoria": "CARGUE DE PISO MEDIANTE MORTERO 1:3",
+      "unidadMedida": "m2",
+      "promedio": 28000
+    },
+    {
+      "Subcategoria": "CONCRETO ESTAMPADO TIPO ADOQUÍN 4000 PSI CON MALLA ELECTRO SOLDADA DE 6 MM",
+      "unidadMedida": "m2",
+      "promedio": 276000
+    },
+    {
+      "Subcategoria": "PLACA FÁCIL LOSA DE CONCRETO 3800 PSI",
+      "unidadMedida": "m2",
+      "promedio": 210000
+    },
+    {
+      "Subcategoria": "SUPERFICIE PISO CONCRETO DE 3500 PSI MEJORADO SIKA LATEX Y EPOTOC 1-1 TOXEMENT",
+      "unidadMedida": "m2",
+      "promedio": 120000
+    },
+    {
+      "Subcategoria": "FUNDIDA DE CANAL MEDIANTE CONCRETO MEZCLADO EN OBRA DE 3500PSI ",
+      "unidadMedida": "ml",
+      "promedio": 55000
+    },
+    {
+      "Subcategoria": "BORDILLO MEDIANTE LADRILLO RECOCIDO",
+      "unidadMedida": "ml",
+      "promedio": 35000
+    },
+    {
+      "Subcategoria": "NIVELACIÓN CON RECEBO B-400 COMPACTADO",
+      "unidadMedida": "m3",
+      "promedio": 111000
+    },
+    {
+      "Subcategoria": "MEDIACAÑA GRAVILLA Y CINTA EN GRAVILLA MONA # 4",
+      "unidadMedida": "ml",
+      "promedio": 26650
+    },
+    {
+      "Subcategoria": "CONSTRUCCIÓN MURO EN MAMPOSTERÍA BLOQUE #4, CON PAÑETE DE MORTERO 2.5 CM, Y REVESTIMIENTO ACRÍLICO KORAZA  ",
+      "unidadMedida": "m2",
+      "promedio": 163000
+    },
+    {
+      "Subcategoria": "SOBRE PISO MORTERO IMPERMEABLE",
+      "unidadMedida": "m2",
+      "promedio": 38000
+    },
+    {
+      "Subcategoria": "ELABORACIÓN DE SOBRE PISO EN MORTERO Y MALLA, NIVELACIÓN Y COMPACTACIÓN SENDERO PEATONAL",
+      "unidadMedida": "m2",
+      "promedio": 16766.6666666667
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN DE TABLETA CERÁMICA ALFAGRES Y ADOQUÍN",
+      "unidadMedida": "m2",
+      "promedio": 47000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN GUARDA ESCOBA ",
+      "unidadMedida": "ml",
+      "promedio": 13000
+    },
+    {
+      "Subcategoria": "ENCHAPE CERÁMICO",
+      "unidadMedida": "m2",
+      "promedio": 56000
+    },
+    {
+      "Subcategoria": "SUSTITUCIÓN PIEDRA MUÑECA POR LADRILLO",
+      "unidadMedida": "m2",
+      "promedio": 103000
+    },
+    {
+      "Subcategoria": "SUSTITUCIÓN PIEDRA MUÑECA NUEVA",
+      "unidadMedida": "m2",
+      "promedio": 115000
+    },
+    {
+      "Subcategoria": "MURO EN SUPER BOARD",
+      "unidadMedida": "m2",
+      "promedio": 80000
+    },
+    {
+      "Subcategoria": "SUSTITUCIÓN PAÑETE",
+      "unidadMedida": "m2",
+      "promedio": 28500
+    },
+    {
+      "Subcategoria": "PAÑETE",
+      "unidadMedida": "m2",
+      "promedio": 9800
+    },
+    {
+      "Subcategoria": "GRANITO",
+      "unidadMedida": "ml",
+      "promedio": 26000
+    },
+    {
+      "Subcategoria": "DEMARCACIÓN CERRAMIENTO Y PROTECCIÓN DE OBRA",
+      "unidadMedida": "m2",
+      "promedio": 2500
+    },
+    {
+      "Subcategoria": "INSTALACIÓN FLANCHE Y PINTURA",
+      "unidadMedida": "ml",
+      "promedio": 1800
+    },
+    {
+      "Subcategoria": "INSTALACIÓN PORCELANATO PARA EXTERIORES ANTIDESLIZANTE.",
+      "unidadMedida": "m2",
+      "promedio": 120000
+    },
+    {
+      "Subcategoria": "AFINADO CON MORTEROS DE RESTAURACIÓN ACRÍLICO",
+      "unidadMedida": "m2",
+      "promedio": 10100
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN DE RED SANITARIA CON CONEXIÓN A CAJA DE RECOLECCIÓN DE AGUAS LLUVIAS.",
+      "unidadMedida": "ml",
+      "promedio": 25000
+    },
+    {
+      "Subcategoria": "DESMONTE GENERAL DE PIEZAS LADRILLO EN DETERIORO.",
+      "unidadMedida": "m2",
+      "promedio": 8000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN FORMATO Y FORMA EXISTENTE CON ADHESIVOS LÁTEX.",
+      "unidadMedida": "m2",
+      "promedio": 35000
+    },
+    {
+      "Subcategoria": "APLICACIÓN BOQUILLA GENERAL SOBRE TODAS LAS JUNTAS, PEGUES Y REMATES DE LA TABLETA CON ADITIVOS DE FIJACIÓN COLORACIÓN E IMPERMEABILIZACIÓN.",
+      "unidadMedida": "m2",
+      "promedio": 8200
+    },
+    {
+      "Subcategoria": "INSTALACIÓN PISO DECK NO INCLUYE MATERIAL",
+      "unidadMedida": "m2",
+      "promedio": 23000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN DE GRAMA SINTÉTICA",
+      "unidadMedida": "m2",
+      "promedio": 58000
+    },
+    {
+      "Subcategoria": "ALQUILER ANDAMIO TUBULAR 2 SECCIONES, 3 PLANCHONES",
+      "unidadMedida": "semana",
+      "promedio": 100000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN CANALETA EN PVC 4\" X 2",
+      "unidadMedida": "ml",
+      "promedio": 37000
+    },
+    {
+      "Subcategoria": "IMPRIMACIÓN, SELLAMIENTOS DE BOCA-BAJANTES Y MARQUESINAS, CORRECCIÓN DE FISURAS ",
+      "unidadMedida": "m2",
+      "promedio": 6800
+    },
+    {
+      "Subcategoria": "TRATAMIENTO FISURAS SELLOS POLIURETANO",
+      "unidadMedida": "ml",
+      "promedio": 11000
+    },
+    {
+      "Subcategoria": "TRATAMIENTO FISURAS",
+      "unidadMedida": "ml",
+      "promedio": 1300
+    },
+    {
+      "Subcategoria": "SELLAMIENTO GENERAL DE FISURAS, AFINADO DE SUPERFICIES, CORRECCIÓN DE NIVELES",
+      "unidadMedida": "m2",
+      "promedio": 4175
+    },
+    {
+      "Subcategoria": "SELLAMIENTOS DE FISURAS, DILATACIONES ENTRE LOZAS, BAJANTES",
+      "unidadMedida": "m2",
+      "promedio": 47500
+    },
+    {
+      "Subcategoria": "SELLAMIENTOS DE CRISTALIZACIÓN ",
+      "unidadMedida": "gl",
+      "promedio": 230000
+    },
+    {
+      "Subcategoria": "RESTAURACIÓN BOQUILLAS E HIDRÓFUGO MUROS ",
+      "unidadMedida": "m2",
+      "promedio": 17400
+    },
+    {
+      "Subcategoria": "INSTALACIÓN DE PISO LAMINADO SIN MATERIALES ",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "INSTALACIÓN DE PISO LAMINADO CON MATERIALES",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subsistema": "Movilizar pesos"
+    },
+    {
+      "Subcategoria": "Furgón de mudanzas",
+      "unidadMedida": "hora",
+      "promedio": 89000
+    },
+    {
+      "Subcategoria": "Mudanzas especializadas",
+      "unidadMedida": "día",
+      "promedio": 400000
+    },
+    {
+      "Subcategoria": "Bodegas de almacenamiento",
+      "unidadMedida": "m3",
+      "promedio": 8000
+    },
+    {
+      "Subcategoria": "Servicios de movilidad",
+      "unidadMedida": "viaje",
+      "promedio": 14600
+    },
+    {
+      "Subcategoria": "Recolección de escombros",
+      "unidadMedida": "viaje",
+      "promedio": 270000
+    },
+    {
+      "Subsistema": "Mecánica"
+    },
+    {
+      "Subcategoria": "Servicios especializados Ingeniería"
+    },
+    {
+      "Subcategoria": "Instaladores"
+    },
+    {
+      "Subcategoria": "Recolección de aceites"
+    },
+    {
+      "Subcategoria": "Calculos de Ingeniería"
+    },
+    {
+      "Subcategoria": "Bicicletas"
+    },
+    {
+      "Subcategoria": "Ascensores"
+    },
+    {
+      "Subcategoria": "Vehículos"
+    },
+    {
+      "Subcategoria": "Maquinaria Pesada"
+    },
+    {
+      "Subcategoria": "Maquinaria Industrial"
+    },
+    {
+      "Subcategoria": "Diseño"
+    },
+    {
+      "Subcategoria": "sistemas neumáticos"
+    },
+    {
+      "Subcategoria": "sistemas hidráulicos"
+    },
+    {
+      "Subcategoria": "construcciones civiles"
+    },
+    {
+      "Subcategoria": "mecanizados"
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PUERTAS VEHICULARES  SUMINISTRO E INSTALACIÓN MOTORES REACTOR  PARA PUERTA CORREDIZAS Y BRAZOS HIDRÁULICOS BENINKA                                                ",
+      "unidadMedida": "unidad",
+      "promedio": 2740000
+    },
+    {
+      "Subcategoria": "INSTALACIÓN MOTOR PARA PUERTA VEHICULAR + CHIP Y MANTENIMIENTO DE LA MISMA ",
+      "unidadMedida": "unidad",
+      "promedio": 2770000
+    },
+    {
+      "Subsistema": "Pintura"
+    },
+    {
+      "Subcategoria": "Pintura de ornamentación",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Pintura de parqueaderos",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Pintura de fachadas y edificios",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Pintura interna y decorativa",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Murales de pintura",
+      "unidadMedida": "m2"
+    },
+    {
+      "Subcategoria": "Efectos de pintura",
+      "unidadMedida": "servicio"
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO GENERAL DE CERRAMIENTO METÁLICO PERIMETRAL INCLUYE MATIZADO, RESANE, LIJADO Y ACABADO EN ESMALTE SEGÚN TONO EXISTENTE.",
+      "unidadMedida": "m2",
+      "promedio": 12800
+    },
+    {
+      "Subcategoria": "AFINADO MORTEROS ACRÍLICOS",
+      "unidadMedida": "m2",
+      "promedio": 26250
+    },
+    {
+      "Subcategoria": "REVESTIMIENTO PINTURA KORAZA 5 AÑOS EN ANTEPECHOS",
+      "unidadMedida": "ml",
+      "promedio": 5000
+    },
+    {
+      "Subcategoria": "REVESTIMIENTO DECORATIVO IMPERMEABLE CULATAS EMBOQUILLADO, LIMPIEZA Y KORAZA 5 AÑOS",
+      "unidadMedida": "m2",
+      "promedio": 14100
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO TEJA SHINGLER CUBIERTA",
+      "unidadMedida": "m2",
+      "promedio": 14700
+    },
+    {
+      "Subcategoria": "RESANES EN ESTUCO",
+      "unidadMedida": "m2",
+      "promedio": 13000
+    },
+    {
+      "Subcategoria": "SILICONADO DE VENTANAS",
+      "unidadMedida": "ml",
+      "promedio": 5500
+    },
+    {
+      "Subcategoria": "PUERTA VEHICULAR",
+      "unidadMedida": "unidad",
+      "promedio": 178000
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PUERTA VEHICULAR EN MADERA DOS CAPAS DE BARNIZ PARA EXTERIORES IMPRANOL ",
+      "unidadMedida": "m2",
+      "promedio": 39700
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PUERTA VEHICULAR EN MADERA DOS CAPAS DE SELLADOR NITRO PARA MADERA CON TINTAS EN TONALIDAD DE SELECCIÓN Y ACABADO EN REVESTIMIENTO BARNES DE PINTUCO A DOS CARAS ",
+      "unidadMedida": "m2",
+      "promedio": 42300
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO Y PINTURA COLUMNAS PERIMETRALES PARQUEADEROS PINTURA EPOXICA AMARILLO NEGRO",
+      "unidadMedida": "m2",
+      "promedio": 12000
+    },
+    {
+      "Subcategoria": "PUERTA DEPÓSITOS",
+      "unidadMedida": "unidad",
+      "promedio": 35000
+    },
+    {
+      "Subcategoria": "PINTURA GABINETES",
+      "unidadMedida": "unidad",
+      "promedio": 85000
+    },
+    {
+      "Subcategoria": "PINTURA GENERAL VACÍOS   "
+    },
+    {
+      "Subcategoria": "PINTURA ESMALTE COLOR NEGRO",
+      "unidadMedida": "ml",
+      "promedio": 8500
+    },
+    {
+      "Subcategoria": "PINTURA EPOXICA",
+      "unidadMedida": "m2",
+      "promedio": 13600
+    },
+    {
+      "Subcategoria": "PINTURA MUROS ELABORACIÓN RESANES, PINTURA TIPO 1 FINO A DOS MANOS",
+      "unidadMedida": "m2",
+      "promedio": 10360
+    },
+    {
+      "Subcategoria": "PINTURA TECHOS  ELABORACIÓN RESANES, PINTURA TIPO 1 FINO A DOS MANOS",
+      "unidadMedida": "m2",
+      "promedio": 9825
+    },
+    {
+      "Subcategoria": "PINTURA MUROS ELABORACIÓN RESANES, PINTURA TIPO 2  A DOS MANOS",
+      "unidadMedida": "m2",
+      "promedio": 7500
+    },
+    {
+      "Subcategoria": "PINTURA TECHOS  ELABORACIÓN RESANES, PINTURA TIPO 2 A DOS MANOS",
+      "unidadMedida": "m2",
+      "promedio": 8000
+    },
+    {
+      "Subcategoria": "PINTURA MUROS PARQUEADEROS ELABORACIÓN RESANES, PINTURA TIPO 1 FINO A DOS MANOS",
+      "unidadMedida": "m2",
+      "promedio": 11200
+    },
+    {
+      "Subcategoria": "PINTURA TECHOS PARQUEADEROS  ELABORACIÓN RESANES, PINTURA TIPO 1 FINO A DOS MANOS, PINTURA TUBERÍA EN COLORES SEGÚN NORMA",
+      "unidadMedida": "m2",
+      "promedio": 9891.66666666667
+    },
+    {
+      "Subcategoria": "DELINEACIÓN, DEMARCACIÓN Y NUMERACIÓN PARQUEADEROS: ",
+      "unidadMedida": "ml",
+      "promedio": 4180
+    },
+    {
+      "Subcategoria": "PINTURA PUERTAS MADERA ",
+      "unidadMedida": "unidad",
+      "promedio": 165000
+    },
+    {
+      "Subcategoria": "PINTURA PASAMANOS Y BARANDAS DE ESCALERAS EN MADERA",
+      "unidadMedida": "ml",
+      "promedio": 28300
+    },
+    {
+      "Subcategoria": "PINTURA DE APARTAMENTO",
+      "unidadMedida": "m2",
+      "promedio": 10300
+    },
+    {
+      "Subcategoria": "PINTURA FACHADA CON KORAZA, CON PRELAVADO A HIDROPRESIÓN Y SELLANTE IMPRIMAX ",
+      "unidadMedida": "m2",
+      "promedio": 15000
+    },
+    {
+      "Subcategoria": "PINTURA FACHADA CON KORAZA, CON PRELAVADO A HIDROPRESIÓN Y SELLANTE IMPRIMAX SIN MATERIAL",
+      "unidadMedida": "m2",
+      "promedio": 12200
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO GENERAL DE CERRAMIENTO METÁLICO PERIMETRAL INCLUYE MATIZADO, RESANE, LIJADO Y ACABADO EN ESMALTE SEGÚN TONO EXISTENTE.",
+      "unidadMedida": "m2",
+      "promedio": 12800
+    },
+    {
+      "Subcategoria": "AFINADO MORTEROS ACRÍLICOS",
+      "unidadMedida": "m2",
+      "promedio": 26250
+    },
+    {
+      "Subcategoria": "REVESTIMIENTO PINTURA KORAZA 5 AÑOS EN ANTEPECHOS",
+      "unidadMedida": "ml",
+      "promedio": 5000
+    },
+    {
+      "Subcategoria": "REVESTIMIENTO DECORATIVO IMPERMEABLE CULATAS EMBOQUILLADO, LIMPIEZA Y KORAZA 5 AÑOS",
+      "unidadMedida": "m2",
+      "promedio": 14100
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO TEJA SHINGLER CUBIERTA",
+      "unidadMedida": "m2",
+      "promedio": 14700
+    },
+    {
+      "Subcategoria": "RESANES EN ESTUCO",
+      "unidadMedida": "m2",
+      "promedio": 13000
+    },
+    {
+      "Subcategoria": "SILICONADO DE VENTANAS",
+      "unidadMedida": "ml",
+      "promedio": 5500
+    },
+    {
+      "Subcategoria": "PINTURA PUERTA VEHICULAR",
+      "unidadMedida": "unidad",
+      "promedio": 178000
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PUERTA VEHICULAR EN MADERA DOS CAPAS DE BARNIZ PARA EXTERIORES IMPRANOL ",
+      "unidadMedida": "m2",
+      "promedio": 39700
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO PUERTA VEHICULAR EN MADERA DOS CAPAS DE SELLADOR NITRO PARA MADERA CON TINTAS EN TONALIDAD DE SELECCIÓN Y ACABADO EN REVESTIMIENTO BARNES DE PINTUCO A DOS CARAS ",
+      "unidadMedida": "m2",
+      "promedio": 42300
+    },
+    {
+      "Subcategoria": "PUERTA DEPÓSITOS",
+      "unidadMedida": "unidad",
+      "promedio": 35000
+    },
+    {
+      "Subcategoria": "PINTURA GABINETES",
+      "unidadMedida": "unidad",
+      "promedio": 85000
+    },
+    {
+      "Subcategoria": "PINTURA ESMALTE COLOR NEGRO",
+      "unidadMedida": "ml",
+      "promedio": 8500
+    },
+    {
+      "Subcategoria": "PINTURA EPOXICA",
+      "unidadMedida": "m2",
+      "promedio": 13600
+    },
+    {
+      "Subcategoria": "PINTURA MUROS ELABORACIÓN RESANES, PINTURA TIPO 1 FINO A DOS MANOS",
+      "unidadMedida": "m2",
+      "promedio": 10360
+    },
+    {
+      "Subcategoria": "PINTURA TECHOS  ELABORACIÓN RESANES, PINTURA TIPO 1 FINO A DOS MANOS",
+      "unidadMedida": "m2",
+      "promedio": 9825
+    },
+    {
+      "Subcategoria": "PINTURA MUROS ELABORACIÓN RESANES, PINTURA TIPO 2  A DOS MANOS",
+      "unidadMedida": "m2",
+      "promedio": 7500
+    },
+    {
+      "Subcategoria": "PINTURA TECHOS  ELABORACIÓN RESANES, PINTURA TIPO 2 A DOS MANOS",
+      "unidadMedida": "m2",
+      "promedio": 8000
+    },
+    {
+      "Subcategoria": "PINTURA PUERTAS MADERA ",
+      "unidadMedida": "unidad",
+      "promedio": 165000
+    },
+    {
+      "Subcategoria": "PINTURA PASAMANOS Y BARANDAS DE ESCALERAS EN MADERA",
+      "unidadMedida": "ml",
+      "promedio": 28300
+    },
+    {
+      "Subcategoria": "PINTURA DE APARTAMENTO",
+      "unidadMedida": "m2",
+      "promedio": 10300
+    },
+    {
+      "Subcategoria": "PINTURA FACHADA CON KORAZA, CON PRELAVADO A HIDROPRESIÓN Y SELLANTE IMPRIMAX ",
+      "unidadMedida": "m2",
+      "promedio": 15000
+    },
+    {
+      "Subcategoria": "PINTURA FACHADA CON KORAZA, CON PRELAVADO A HIDROPRESIÓN Y SELLANTE IMPRIMAX SIN MATERIAL",
+      "unidadMedida": "m2",
+      "promedio": 12200
+    },
+    {
+      "Subcategoria": "Pintar una habitación pequeña.",
+      "unidadMedida": "(2m x 2m)",
+      "promedio": 996000
+    },
+    {
+      "Subcategoria": "Pintar una habitación mediana.",
+      "unidadMedida": "(3m x 3m)",
+      "promedio": 1394400
+    },
+    {
+      "Subcategoria": "Pintar una habitación grande.",
+      "unidadMedida": "(6m x 5m)",
+      "promedio": 1792800
+    },
+    {
+      "Subcategoria": "Pintar una casa de 2 camas o piso",
+      "unidadMedida": "casa de 2 camas",
+      "promedio": 7171200
+    },
+    {
+      "Subcategoria": "Pintar una casa de 3 camas o piso",
+      "unidadMedida": "casa de 3 camas",
+      "promedio": 9561600
+    },
+    {
+      "Subcategoria": "Pintar una casa de 4 camas o piso",
+      "unidadMedida": "casa de 4 camas",
+      "promedio": 10756800
+    },
+    {
+      "Subcategoria": "Pintar una casa de 5 camas o piso",
+      "unidadMedida": "casa de 5 camas",
+      "promedio": 14700960
+    },
+    {
+      "Subcategoria": "Pinta una habitación que haya sido empapelada previamente",
+      "unidadMedida": "(4,5m x 3m)",
+      "promedio": 2191200
+    },
+    {
+      "Subcategoria": "Carpintería brillante en una habitación",
+      "unidadMedida": "(3m x 3m)",
+      "promedio": 796800
+    },
+    {
+      "Subcategoria": "Pinturas básicas de color.",
+      "unidadMedida": "(25 litros)",
+      "promedio": 119520
+    },
+    {
+      "Subcategoria": "Pinturas especializadas en color.",
+      "unidadMedida": "(25 litros)",
+      "promedio": 159360
+    },
+    {
+      "Subcategoria": "Imprimación y pelaje.",
+      "unidadMedida": "(1 litros)",
+      "promedio": 79680
+    },
+    {
+      "Subsistema": "Plomería"
+    },
+    {
+      "Subcategoria": "Arreglando una tubería de agua ráfaga con fácil acceso.",
+      "unidadMedida": "tubería de agua ráfaga",
+      "promedio": 637440
+    },
+    {
+      "Subcategoria": "Arreglando una tubería de agua de ráfaga sin acceso visible",
+      "unidadMedida": "tubería de agua ráfaga",
+      "promedio": 1235040
+    },
+    {
+      "Subcategoria": "Reparando un solo radiador",
+      "unidadMedida": "radiador",
+      "promedio": 916320
+    },
+    {
+      "Subcategoria": "Reparando un radiador doble",
+      "unidadMedida": "radiador doble",
+      "promedio": 996000
+    },
+    {
+      "Subcategoria": "Reparando un grifo de fácil acceso.",
+      "unidadMedida": "grifo",
+      "promedio": 577680
+    },
+    {
+      "Subcategoria": "Reparando un grifo sin acceso visible",
+      "unidadMedida": "grifo",
+      "promedio": 956160
+    },
+    {
+      "Subcategoria": "Reparando un fregadero",
+      "unidadMedida": "fregadero",
+      "promedio": 597600
+    },
+    {
+      "Subcategoria": "Reparando una cuenca de agua",
+      "promedio": 996000
+    },
+    {
+      "Subcategoria": "Bloqueo del fregadero",
+      "unidadMedida": "fregadero",
+      "promedio": 338640
+    },
+    {
+      "Subcategoria": "Sustitución de una válvula de ducha",
+      "unidadMedida": "ducha",
+      "promedio": 1454160
+    },
+    {
+      "Subcategoria": "Reemplazo de puertas de ducha",
+      "unidadMedida": "ducha",
+      "promedio": 1195200
+    },
+    {
+      "Subcategoria": "Sustitución de plato de ducha",
+      "unidadMedida": "ducha",
+      "promedio": 1992000
+    },
+    {
+      "Subcategoria": "Bloqueo de la ducha",
+      "unidadMedida": "ducha",
+      "promedio": 338640
+    },
+    {
+      "Subcategoria": "Remodelación de un baño convencional.",
+      "unidadMedida": "baño",
+      "promedio": 1195200
+    },
+    {
+      "Subcategoria": "Remodelación de un baño de pie enrollable independiente",
+      "unidadMedida": "baño",
+      "promedio": 1792800
+    },
+    {
+      "Subcategoria": "Restauración completa de baño de tapa enrollable.",
+      "unidadMedida": "baño",
+      "promedio": 2988000
+    },
+    {
+      "Subcategoria": "Bloqueo de baño",
+      "unidadMedida": "baño",
+      "promedio": 338640
+    },
+    {
+      "Subcategoria": "Reemplazo de una válvula defectuosa en la cisterna del inodoro",
+      "unidadMedida": "cisterna",
+      "promedio": 398400
+    },
+    {
+      "Subcategoria": "Reemplazo de inodoro",
+      "unidadMedida": "inodoro",
+      "promedio": 796800
+    },
+    {
+      "Subcategoria": "Bloqueo de inodoro",
+      "unidadMedida": "inodoro",
+      "promedio": 338640
+    },
+    {
+      "Subcategoria": "Reemplace un tanque de agua fría estándar",
+      "unidadMedida": "tanque de agua",
+      "promedio": 1593600
+    },
+    {
+      "Subcategoria": "Reemplace un tanque de agua caliente estándar",
+      "unidadMedida": "tanque de agua",
+      "promedio": 2390400
+    },
+    {
+      "Subcategoria": "Reparación de dispositivo de fácil acceso.",
+      "promedio": 338640
+    },
+    {
+      "Subcategoria": "Reparación de dispositivo sin acceso visible.",
+      "promedio": 597600
+    },
+    {
+      "Subcategoria": "Instalación de baños",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "redes",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "Fontaneria",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "Reparación de tuberías",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "Duchas",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "Radiadores",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "Instalación de paneles solares",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "Sistema de rociadores",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "Tanques de reserva",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "Calderas y calentadores de gas",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "Grifería   ",
+      "unidadMedida": "unidad"
+    },
+    {
+      "Subcategoria": "CAMBIO EMPAQUES MEZCLADOR",
+      "unidadMedida": "unidad",
+      "promedio": 40000
+    },
+    {
+      "Subcategoria": "TANQUES DE RESERVA AGUA",
+      "unidadMedida": "unidad",
+      "promedio": 130000
+    },
+    {
+      "Subcategoria": "REEMPLAZO LLAVE MEZCLADORA",
+      "unidadMedida": "unidad",
+      "promedio": 90000
+    },
+    {
+      "Subcategoria": "CAMBIO REGISTRO",
+      "unidadMedida": "unidad",
+      "promedio": 110000
+    },
+    {
+      "Subcategoria": "REEMPLAZO TUBERIA ",
+      "unidadMedida": "ml",
+      "promedio": 25000
+    },
+    {
+      "Subcategoria": "INSTALACION TUBERIA",
+      "unidadMedida": "unidad",
+      "promedio": 15000
+    },
+    {
+      "Subcategoria": "MANTENIMIENTO FUGAS PLATERO",
+      "unidadMedida": "unidad",
+      "promedio": 50000
+    },
+    {
+      "Subcategoria": "REEMPLAZO DESAGUE",
+      "unidadMedida": "unidad",
+      "promedio": 80000
+    },
+    {
+      "Subcategoria": "CAMBIO CONTADOR DE AGUA",
+      "unidadMedida": "unidad",
+      "promedio": 130000
+    },
+    {
+      "Subcategoria": "LIMPIEZA TANQUES DE AGUA",
+      "unidadMedida": "unidad",
+      "promedio": 70000
+    },
+    {
+      "Subcategoria": "LAVADO GENERAL TANQUE DE RESERVA",
+      "unidadMedida": "unidad ",
+      "promedio": 80000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN REGISTRO DE CORTE",
+      "unidadMedida": "unidad",
+      "promedio": 360000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN RED ",
+      "unidadMedida": "unidad",
+      "promedio": 650000
+    },
+    {
+      "Subcategoria": "SUMINISTRO E INSTALACIÓN DE TANQUE 100 LT",
+      "unidadMedida": "unidad ",
+      "promedio": 160000
+    },
+    {
+      "Subsistema": "Reformas Piscinas"
+    },
+    {
+      "Subcategoria": "Instalación de piscinas",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Mantenimiento de piscinas",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subcategoria": "Diseño de piscinas",
+      "unidadMedida": "m3"
+    },
+    {
+      "Subsistema": "Servicio doméstico"
+    },
+    {
+      "Subcategoria": "Limpieza de alfombras",
+      "unidadMedida": "m2",
+      "promedio": 11900
+    },
+    {
+      "Subcategoria": "Limpieza de oficinas",
+      "unidadMedida": "m2",
+      "promedio": 8300
+    },
+    {
+      "Subcategoria": "Aseo domestico",
+      "unidadMedida": "m2",
+      "promedio": 7600
+    },
+    {
+      "Subcategoria": "Limpieza de cristales",
+      "unidadMedida": "m2",
+      "promedio": 4600
+    },
+    {
+      "Subcategoria": "Limpieza de hornos",
+      "unidadMedida": "m3",
+      "promedio": 4900
+    },
+    {
+      "Subsistema": "Sistemas de Seguridad y alarmas"
+    },
+    {
+      "Subcategoria": "Control de acceso",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subcategoria": "Instalación de alarmas",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subcategoria": "Instalación de CC-TV",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subcategoria": "Instalación de alarmas contra incendios",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subcategoria": "Instalación y reparación de puertas de garaje",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subcategoria": "Persianas enrollables",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subcategoria": "Vallas de seguridad",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subcategoria": "Puertas de seguridad",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subcategoria": "Parrillas de seguridad",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subcategoria": "Control de acceso",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subcategoria": "Instalación de antenas",
+      "unidadMedida": "sistema"
+    },
+    {
+      "Subsistema": "CONTROL DE ACCESOS."
+    },
+    {
+      "Subcategoria": "Lectora proximidad",
+      "unidadMedida": "Conectividad, Telemetria",
+      "promedio": 59950
+    },
+    {
+      "Subcategoria": "Biometrico",
+      "unidadMedida": "Conectividad, Automatizacion, Telemetria",
+      "promedio": 206250
+    },
+    {
+      "Subcategoria": "Contacto magnetico",
+      "unidadMedida": "Conectividad, Voltaje",
+      "promedio": 57500
+    },
+    {
+      "Subcategoria": "Pulsador",
+      "unidadMedida": "Conectividad, Actualizacion",
+      "promedio": 46400
+    },
+    {
+      "Subcategoria": "Software",
+      "unidadMedida": "Funcionamiento adecuado, Telemetria",
+      "promedio": 109950
+    },
+    {
+      "Subcategoria": "Cerraduras",
+      "unidadMedida": "Conectividad, Automatizacion, Limpieza",
+      "promedio": 154550
+    },
+    {
+      "Subcategoria": "Paso peatonal",
+      "unidadMedida": "Instalacion,  Autorizacion",
+      "promedio": 97800
+    },
+    {
+      "Subcategoria": "Paso Vehicular",
+      "unidadMedida": "Instalacion, Autorizacion ",
+      "promedio": 148350
+    },
+    {
+      "Subsistema": "EVACUACIÓN. *"
+    },
+    {
+      "Subcategoria": "Central de incidencias",
+      "unidadMedida": "Funcionamiento adecuado",
+      "promedio": 314950
+    },
+    {
+      "Subsistema": "GESTIÓN, CENTRALIZACIÓN Y RED DEDICADA ELÉCTRICA Y DE DATOS."
+    },
+    {
+      "Subcategoria": "Baterias",
+      "unidadMedida": "Sobrecalentamiento",
+      "promedio": 85350
+    },
+    {
+      "Subcategoria": "Fuentes de alimentacion",
+      "unidadMedida": "Sobrecalentamiento",
+      "promedio": 57650
+    },
+    {
+      "Subcategoria": "Servidores de Base Datos",
+      "unidadMedida": "Conectividad, Telemetria",
+      "promedio": 223850
+    },
+    {
+      "Subcategoria": "Infraestructura Comunicación",
+      "unidadMedida": "Conectividad, Telemetria",
+      "promedio": 223750
+    },
+    {
+      "Subcategoria": "Racks",
+      "unidadMedida": "Conectividad, Voltaje, Limpieza",
+      "promedio": 223750
+    },
+    {
+      "Subcategoria": "Latiguillos",
+      "unidadMedida": "Etiquetado e identificacion, Telemetria",
+      "promedio": 281000
+    },
+    {
+      "Subcategoria": "Cuadro Red Electrica",
+      "unidadMedida": "Conectividad, Sobrecalentamiento, Voltaje",
+      "promedio": 396750
+    },
+    {
+      "Subcategoria": "UPS",
+      "unidadMedida": "Conectividad, Sobrecalentamiento, Voltaje",
+      "promedio": 271000
+    },
+    {
+      "Subcategoria": "Termostatos",
+      "unidadMedida": "Conectividad, Automatizacion",
+      "promedio": 63150
+    },
+    {
+      "Subcategoria": "Antivirus",
+      "unidadMedida": "Actualizacion, Comprobar",
+      "promedio": 97800
+    },
+    {
+      "Subcategoria": "Puntos de red",
+      "unidadMedida": "Conectividad, Comprobar, Telemetria",
+      "promedio": 48950
+    },
+    {
+      "Subsistema": "INTRUSIÓN."
+    },
+    {
+      "Subcategoria": "Sensor",
+      "unidadMedida": "Conectividad, Transmision adecuada",
+      "promedio": 68750
+    },
+    {
+      "Subcategoria": "Detectores",
+      "unidadMedida": "Conectividad, Transmision adecuada",
+      "promedio": 68750
+    },
+    {
+      "Subsistema": "VIDEO VIGILANCIA."
+    },
+    {
+      "Subcategoria": "Camaras",
+      "unidadMedida": "Luminocidad, Reajuste optico, Orientacion",
+      "promedio": 94650
+    },
+    {
+      "Subcategoria": "Grabadores - DVR - NVR",
+      "unidadMedida": "Conectividad, Transmision adecuada",
+      "promedio": 75300
+    },
+    {
+      "Subcategoria": "Concentradores de señal",
+      "unidadMedida": "Conectividad, Transmision adecuada",
+      "promedio": 48950
+    },
+    {
+      "Subsistema": "Tapicería"
+    },
+    {
+      "Subcategoria": "Tapizado de muebles"
+    },
+    {
+      "Subcategoria": "Limpieza de tapices"
+    },
+    {
+      "Subcategoria": "Instalación de alfombras"
+    },
+    {
+      "Subsistema": "Los costos de limpieza de alfombras *"
+    },
+    {
+      "Subcategoria": "Sala de estar ",
+      "unidadMedida": "(3.6m x 3m)",
+      "promedio": 139440
+    },
+    {
+      "Subcategoria": "Escaleras y rellano ",
+      "unidadMedida": "(3m x 1m)",
+      "promedio": 119520
+    },
+    {
+      "Subcategoria": "Habitación pequeña ",
+      "unidadMedida": "(2m x 2m)",
+      "promedio": 87648
+    },
+    {
+      "Subcategoria": "Habitación doble ",
+      "unidadMedida": "(3m x 2.5m)",
+      "promedio": 107568
+    },
+    {
+      "Subsistema": "Trabajos en piedra"
+    },
+    {
+      "Subcategoria": "Revestimientos en piedra"
+    },
+    {
+      "Subcategoria": "Limpieza de fachadas en ladrillo y piedra"
+    },
+    {
+      "Subcategoria": "Muros de jardín"
+    },
+    {
+      "Subcategoria": "Paisajismos"
+    },
+    {
+      "Subcategoria": "Mesones en piedra"
+    },
+    {
+      "Subcategoria": "Concretos pulidos"
+    },
+    {
+      "Subcategoria": "Revestimientos en piedra"
+    },
+    {
+      "Subcategoria": "Pavimentos de piedra"
+    },
+    {
+      "Subcategoria": "Limpieza de ladrillos y bloques"
+    },
+    {
+      "Subcategoria": "Caminos de ladrillo y bloque"
+    }
+  ]

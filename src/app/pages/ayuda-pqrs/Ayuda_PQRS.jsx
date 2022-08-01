@@ -170,7 +170,7 @@ const AyudaPQRS = (props) => {
                             </p>
                             <br />
                             <Button
-                                className="btn btn-round btn-high"
+                                className="btn btn-round btn-high btn-avanzar"
                                 onClick={handleClickChat}
                             >
                                 <a

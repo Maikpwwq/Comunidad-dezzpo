@@ -1,7 +1,8 @@
 // Pagina de Nosotros
 import React from 'react'
 import '../../../../public/assets/css/nosotros.css'
-
+import IcoMoon from 'react-icomoon'
+import iconSet from '../../../../public/assets/css/icomoon/selection.json'
 // Imagenes
 import RoadMap from '../../../../public/assets/img/RoadMap.svg'
 
@@ -168,7 +169,7 @@ const Nosotros = (props) => {
                         </Col>
                         <Col className="right p-4">
                             <div>
-                                <Button className="btn-round btn-middle w-auto">
+                                <Button className="btn-round btn-middle btn-orange w-auto body-1">
                                     Vinculate
                                 </Button>
                             </div>
@@ -189,16 +190,28 @@ const Nosotros = (props) => {
                         </Col>
                         <Col className="">
                             <p className="p-description">
-                                Pronto estaremos disponibles en <br />
-                                <li>
-                                    <a href="#">Apple App Store </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Android Google Play App Store{' '}
-                                    </a>{' '}
-                                </li>
+                                Pronto estaremos disponibles en: <br />
                             </p>
+                            {/* Apple App Store */}
+                            <IcoMoon
+                                iconSet={iconSet}
+                                icon="GooglePlay"
+                                style={{
+                                    height: '48px',
+                                    marginBottom: '8px',
+                                    width: 'auto',
+                                }}
+                            />
+                            {/* Android Google Play App Store */}
+                            <IcoMoon
+                                iconSet={iconSet}
+                                icon="AppStore"
+                                style={{
+                                    height: '48px',
+                                    marginBottom: '8px',
+                                    width: 'auto',
+                                }}
+                            />
                         </Col>
                     </Col>
                 </Row>

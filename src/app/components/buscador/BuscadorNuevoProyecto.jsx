@@ -497,13 +497,14 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                             </Form.Group>
                             <Form.Group>
                                 <Col className="pt-4 pb-2">
+                                    {/*  */}
                                     <Button
-                                        className="animacionBoton btn-round btn-high"
+                                        className="animacionBoton btn btn-siguiente btn-round btn-high"
                                         variant="primary"
                                         type="submit"
                                         onClick={handleClick}
                                     >
-                                        Siguiente{' '}
+                                        {' '}
                                     </Button>
                                 </Col>
                             </Form.Group>

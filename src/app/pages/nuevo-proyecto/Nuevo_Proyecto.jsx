@@ -272,7 +272,7 @@ const NuevoProyecto = (props) => {
                                 <Button
                                     onClick={goForward}
                                     style={{ paddingRight: '10px' }}
-                                    className="btn-round btn-high w-auto"
+                                    className="btn-round btn-high btn-main body-1 w-auto"
                                     variant="primary"
                                     // type="submit"
                                 >
@@ -493,7 +493,7 @@ const NuevoProyecto = (props) => {
                                         <Button
                                             onClick={goForward}
                                             style={{ paddingRight: '10px' }}
-                                            className="btn-round btn-high w-auto"
+                                            className="btn-round btn-high btn-main body-1 w-auto"
                                             variant="primary"
                                             // type="submit"
                                         >
@@ -627,7 +627,7 @@ const NuevoProyecto = (props) => {
                                         <Button
                                             onClick={handleSave}
                                             style={{ paddingRight: '10px' }}
-                                            className="btn-round btn-high w-auto"
+                                            className="btn-round btn-high btn-main body-1 w-auto"
                                             variant="primary"
                                             // type="submit"
                                         >

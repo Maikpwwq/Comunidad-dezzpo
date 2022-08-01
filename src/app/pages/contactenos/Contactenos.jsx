@@ -14,6 +14,7 @@ import DatosContacto from '../../components/datos_contacto/DatosContacto'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
 const Contactenos = (props) => {
     return (
@@ -65,16 +66,20 @@ const Contactenos = (props) => {
                                 />
                                 <br />
                                 <textarea
+                                    className="mb-4"
                                     name="message"
                                     id="message"
                                     cols="30"
-                                    rows="10"
+                                    rows="6"
                                     required
                                 >
                                     mensaje:
                                 </textarea>
                                 <br />
-                                <button>ENVIAR</button>
+                                <br />
+                                <Button className="btn-main btn-round btn-high body-1">
+                                    ENVIAR
+                                </Button>
                             </form>
                         </div>
                     </Col>

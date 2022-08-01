@@ -436,7 +436,7 @@ const Registro = (props) => {
                                 </Col>
                                 <Col className="pt-3 pb-3">
                                     <Button
-                                        className="btn-round btn-high"
+                                        className="btn-main btn-round btn-high body-1"
                                         variant="primary"
                                         type="submit"
                                         onClick={handleClick}

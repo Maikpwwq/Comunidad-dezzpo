@@ -2,33 +2,20 @@
 import React, { useState, useEffect } from 'react'
 import '../../../../public/assets/css/apendice_costos.css'
 import { Link } from 'react-router-dom'
-import { collection, doc, getDocs } from 'firebase/firestore'
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 import { firestore } from '../../../firebase/firebaseClient'
-import * as XLSX from 'xlsx/xlsx.mjs'
-/* load 'fs' for readFile and writeFile support */
-import * as fs from 'fs'
+import AdministrarDB from './AdministrarDB'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
-import { styled } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-XLSX.set_fs(fs)
-
-const Input = styled('input')({
-    // display: 'none',
-    // visibility: 'hidden',
-    position: 'absolute',
-})
-
 const ApendiceCostos = () => {
-    const [excelInfo, setExcelInfo] = useState({})
     const [categoriaInfo, setCategoriaInfo] = useState([])
     const _firestore = firestore
     const categoriaRef = collection(_firestore, 'categoriasServicios')
@@ -164,49 +151,6 @@ const ApendiceCostos = () => {
         }
     }
 
-    const readExcel = (event) => {
-        const target = event.target
-        const value = target.type === 'checkbox' ? target.checked : target.value
-        const name = target.name
-        const file = event.target.files
-        setExcelInfo({ ...excelInfo, [name]: value })
-        // let hojas = []
-        if (file[0] instanceof Blob) {
-            const promise = new Promise((resolve, reject) => {
-                const fileReader = new FileReader()
-                fileReader.readAsArrayBuffer(file[0])
-
-                fileReader.onload = (e) => {
-                    const bufferArray = e.target.result
-
-                    const wb = XLSX.read(bufferArray, { type: 'buffer' })
-
-                    const wsname = wb.SheetNames[0]
-
-                    const ws = wb.Sheets[wsname]
-
-                    const data = XLSX.utils.sheet_to_json(ws)
-
-                    resolve(data)
-
-                    setExcelInfo({
-                        fileXlsx: data,
-                    })
-
-                    // console.log(this.state);
-                }
-
-                fileReader.onerror = (error) => {
-                    reject(error)
-                }
-            })
-
-            promise.then((d) => {
-                console.log('excelData', d, excelInfo)
-            })
-        }
-    }
-
     useEffect(() => {
         let subCategoriasData
         let subCategorias = []
@@ -243,19 +187,7 @@ const ApendiceCostos = () => {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                {/* <Row className="m-0 w-100 d-flex">
-                    <Button>
-                        UploadExcel
-                        <Input
-                            required
-                            name="icon-button-file"
-                            id="icon-button-file"
-                            type="file"
-                            onClick={readExcel}
-                            placeholder="UploadExcel"
-                        />
-                    </Button>
-                </Row> */}
+                {/* <AdministrarDB /> */}
                 <Row className="m-0 w-100 d-flex">
                     <Table>
                         <TableHead>

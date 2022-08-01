@@ -158,7 +158,7 @@ const Asesorias = (props) => {
                                     />
                                 </Form.Group>
                                 <Button
-                                    className="btn btn-round btn-high"
+                                    className="btn btn-round btn-high btn-avanzar"
                                     onClick={handleClick}
                                 >
                                     PUBLICAR
@@ -172,11 +172,11 @@ const Asesorias = (props) => {
                                 en Tiempo Real En Nuestro Chat
                             </span>
                             <Button
-                                className="btn btn-round btn-high"
+                                className="btn btn-round btn-high btn-avanzar"
                                 onClick={handleClickChat}
                             >
                                 <a
-                                    className="body-1"
+                                    className="body-1 ps-3"
                                     href="https://api.whatsapp.com/send?phone=573196138057"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -211,10 +211,10 @@ const Asesorias = (props) => {
                         </Col>
                         <Col className="pb-4" md={4} sm={10}>
                             <Button
-                                className="btn btn-round btn-middle"
+                                className="btn btn-round btn-middle btn-blog"
                                 onClick={handleBlogButton}
                             >
-                                BLOG DE LA COMUNIDAD
+                                {/* BLOG DE LA COMUNIDAD */}
                             </Button>
                         </Col>
                     </Row>

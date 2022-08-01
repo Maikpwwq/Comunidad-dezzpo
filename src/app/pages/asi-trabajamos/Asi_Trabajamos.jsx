@@ -23,7 +23,7 @@ const AsiTrabajamos = (props) => {
                             en Tiempo Real En Nuestro Chat
                         </span>
                         <br />
-                        <Button className="btn btn-round btn-high">
+                        <Button className="btn btn-round btn-high btn-avanzar">
                             <a
                                 className="body-1"
                                 href="https://api.whatsapp.com/send?phone=573196138057"
@@ -39,12 +39,14 @@ const AsiTrabajamos = (props) => {
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosVinculate m-0 w-100 d-flex justify-content-end">
                     <Col className="col d-flex center" lg={4} md={8} sm={12}>
-                        <span className="headline-xl opacidadNegro">
+                        <span className="headline-xl opacidadNegro p-4">
                             {' '}
                             PERFIL COMERCIANTE{' '}
                         </span>
-                        <div>
-                            <button className="btn">Vinculate</button>
+                        <div className="pt-4">
+                            <Button className="btn btn-vinculate">
+                                Vinculate
+                            </Button>
                         </div>
                     </Col>
                 </Row>
