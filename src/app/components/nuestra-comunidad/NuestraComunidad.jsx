@@ -2,6 +2,7 @@ import * as React from 'react'
 import '../../../../public/assets/css/nuestra_comunidad.css'
 import CategoriasServicios from '../../components/categorias-servicios/CategoriasServicios'
 import CategoriasSlider from './CategoriasSlider'
+
 //imagenes
 //import CategoriasPopulares from '../../../../public/assets/img/CategoriasPopulares.png'
 import LocalCiudades from '../../../../public/assets/img/LocalCiudades.png'
@@ -32,25 +33,25 @@ const NuestraComunidad = (props) => {
                         </h3>
                         <ul className="body-2 textBlanco pt-4">
                             <li>
-                                Pintor y decorador, Pintura y decoracion de
-                                interiores{' '}
+                                Pintor y decorador; Pintura y decoracion de
+                                interiores.{' '}
                             </li>
                             <li>
-                                Electricista, Instalación y validación de
-                                acometidas electricas{' '}
+                                Electricista; Instalación y validación de
+                                acometidas electricas.{' '}
                             </li>
                             <li>
-                                Instaladores de techos y cubiertas,
-                                mantenimiento de cubiertas{' '}
+                                Instaladores de techos y cubiertas;
+                                mantenimiento de cubiertas.{' '}
                             </li>
-                            <li>Maestro, Construcciones y ampliaciones </li>
-                            <li>Plomero, reparacion de fugas </li>
-                            <li>Carpinteria, instalacion de closets, más </li>
+                            <li>Maestro; Construcciones y ampliaciones. </li>
+                            <li>Plomero; reparacion de fugas. </li>
+                            <li>Carpinteria; instalacion de closets, más. </li>
                         </ul>
                     </Col>
                 </Col>
             </Container>
-            {/* seccion de categorias y servicios */}
+            .{/* seccion de categorias y servicios */}
             <CategoriasServicios />
             <Container fluid className="p-0">
                 {/* seccion de comerciantes Locales*/}

@@ -28,7 +28,7 @@ import ScrollToTopOnMount from '../components/ScrollToTop'
 
 // import NoMatch from "./NoMatch";
 // Componentes
-import SliderAction from './sliderAction'
+import SliderAction from './SliderAction'
 import FooterComunidad from '../components/footer/Footer'
 import MenuComunidad from '../components/menu/Menu'
 
