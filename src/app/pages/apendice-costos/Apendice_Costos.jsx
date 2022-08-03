@@ -4,7 +4,9 @@ import '../../../../public/assets/css/apendice_costos.css'
 import { Link } from 'react-router-dom'
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 import { firestore } from '../../../firebase/firebaseClient'
-import AdministrarDB from './AdministrarDB'
+// import AdministrarDB from './AdministrarDB' Usar para editar la base de datos firestore desde el XLSX
+import ApendiceJson from './apendice-costos.json'
+
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -153,25 +155,32 @@ const ApendiceCostos = () => {
 
     useEffect(() => {
         let subCategoriasData
-        let subCategorias = []
-        subCategoriasData = categoriasFromFirestore()
-        subCategoriasData
-            .then((response) => {
-                if (response) {
-                    subCategorias = response
-                    console.log('subCategorias', subCategorias)
-                    if (subCategorias.length > 0) {
-                        setCategoriaInfo(subCategorias)
-                        console.log(categoriaInfo)
-                    }
-                } else {
-                    console.log('No se encontro información de las categorias!')
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }, [])
+        // leyendo desde el archivo local
+        if (ApendiceJson) {
+            // console.log(ApendiceJson)
+            subCategoriasData = ApendiceJson // JSON.stringify()
+            setCategoriaInfo(subCategoriasData)
+        }
+        // leyendo desde firestore
+        // let subCategorias = []
+        // subCategoriasData = categoriasFromFirestore()
+        // subCategoriasData
+        //     .then((response) => {
+        //         if (response) {
+        //             subCategorias = response
+        //             console.log('subCategorias', subCategorias)
+        //             if (subCategorias.length > 0) {
+        //                 setCategoriaInfo(subCategorias)
+        //                 console.log(categoriaInfo)
+        //             }
+        //         } else {
+        //             console.log('No se encontro información de las categorias!')
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //     })
+    }, [ApendiceJson])
 
     return (
         <>
@@ -188,8 +197,8 @@ const ApendiceCostos = () => {
             </Container>
             <Container fluid className="p-0">
                 {/* <AdministrarDB /> */}
-                <Row className="m-0 w-100 d-flex">
-                    <Table>
+                <Row className="m-0 w-100 d-flex ps-4 pe-4">
+                    <Table className="">
                         <TableHead>
                             <TableRow>
                                 <TableCell>subCategoria</TableCell>
@@ -200,47 +209,62 @@ const ApendiceCostos = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {categoriaInfo.map(
-                                ({
-                                    subCategoria,
-                                    subCategoriaCantidad,
-                                    subCategoriaDescription,
-                                    subCategoriaPhotoUrl,
-                                    subCategoriaPrecio,
-                                }) => {
+                            {categoriaInfo.map((categoria) => {
+                                if (categoria.subCategoria === undefined) {
+                                    const { subSistema } = categoria
+                                    return (
+                                        <>
+                                            <TableRow key={subSistema}>
+                                                <TableCell className="center headline-l w-100">
+                                                    {subSistema}
+                                                </TableCell>
+                                            </TableRow>
+                                        </>
+                                    )
+                                } else {
+                                    const {
+                                        subCategoria,
+                                        subCategoriaCantidad,
+                                        subCategoriaDescription,
+                                        subCategoriaPhotoUrl,
+                                        subCategoriaPrecio,
+                                    } = categoria
+
                                     let precioBajo = subCategoriaPrecio * 1.05
                                     let precioAlto = subCategoriaPrecio * 1.65
                                     return (
-                                        <TableRow key={subCategoria}>
-                                            <TableCell>
-                                                {subCategoria}
-                                            </TableCell>
-                                            <TableCell>
-                                                {subCategoriaCantidad}
-                                            </TableCell>
-                                            <TableCell>
-                                                {subCategoriaDescription}
-                                            </TableCell>
-                                            <TableCell>
-                                                {parseInt(
-                                                    precioBajo
-                                                ).toLocaleString('es-CO', {
-                                                    style: 'currency',
-                                                    currency: 'COP',
-                                                })}
-                                            </TableCell>
-                                            <TableCell>
-                                                {parseInt(
-                                                    precioAlto
-                                                ).toLocaleString('es-CO', {
-                                                    style: 'currency',
-                                                    currency: 'COP',
-                                                })}
-                                            </TableCell>
-                                        </TableRow>
+                                        <>
+                                            <TableRow key={subCategoria}>
+                                                <TableCell>
+                                                    {subCategoria}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {subCategoriaCantidad}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {subCategoriaDescription}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {parseInt(
+                                                        precioBajo
+                                                    ).toLocaleString('es-CO', {
+                                                        style: 'currency',
+                                                        currency: 'COP',
+                                                    })}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {parseInt(
+                                                        precioAlto
+                                                    ).toLocaleString('es-CO', {
+                                                        style: 'currency',
+                                                        currency: 'COP',
+                                                    })}
+                                                </TableCell>
+                                            </TableRow>
+                                        </>
                                     )
                                 }
-                            )}
+                            })}
                         </TableBody>
                     </Table>
                 </Row>

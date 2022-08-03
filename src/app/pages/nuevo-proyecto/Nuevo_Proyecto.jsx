@@ -242,6 +242,17 @@ const NuevoProyecto = (props) => {
                                 ></BuscadorNuevoProyecto>
                             </Col>
                         </Row>
+                        <Row className="w-100 m-0">
+                            <Col className="p-2" lg={8} md={10}>
+                                <p>
+                                    Al seleccionar categorías podrás ir
+                                    agregando uno a uno todos los servicios que
+                                    vas a solicitar. <br /> Luego en el
+                                    siguiente paso podrás modificar la cantidad
+                                    de obra que requieres.
+                                </p>
+                            </Col>
+                        </Row>
                         {/* setActiveStep */}
                         <Row className="categorias w-100 m-0">
                             <Col className="p-0 col-10 categorias-contenedor">

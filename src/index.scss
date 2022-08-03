@@ -67,9 +67,9 @@ $theme-colors: ();
 //h3
 .headline-l {
     // Nombre del trámite
-    font-family: var(--font-helvetica-semibold);
-    font-size: 1.5rem; // 24px/26px
-    font-weight: 600;
+    font-family: var(--font-helvetica-semibold) !important;
+    font-size: 1.5rem !important; // 24px/26px
+    font-weight: 600 !important;
     color: var(--primary-black-text-color);
     line-height: 1.25em !important;
 }
@@ -417,8 +417,8 @@ body {
     align-items: flex-end;
 }
 .center {
-    text-align: center;
-    align-items: center;
+    text-align: center !important;
+    align-items: center !important;
 }
 .col {
     display: flex;

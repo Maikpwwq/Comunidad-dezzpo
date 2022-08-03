@@ -28,6 +28,7 @@ import ScrollToTopOnMount from '../components/ScrollToTop'
 
 // import NoMatch from "./NoMatch";
 // Componentes
+import SliderAction from './sliderAction'
 import FooterComunidad from '../components/footer/Footer'
 import MenuComunidad from '../components/menu/Menu'
 
@@ -47,6 +48,7 @@ class Rutas extends React.Component {
                     {/* <Button variant="contained"> {name} </Button> */}
                     <MenuComunidad />
                     <ScrollToTopOnMount />
+                    <SliderAction />
                     <Routes>
                         <Route index element={<Inicio />}></Route>
                         <Route path="/" element={<Inicio />} />

@@ -86,6 +86,7 @@
 .menuFijo{
     position: relative;
     height: auto;
+    z-index: 100;
 }
 .barraComunidad{
     display: inline-flex;

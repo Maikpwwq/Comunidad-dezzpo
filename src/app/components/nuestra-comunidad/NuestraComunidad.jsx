@@ -1,55 +1,17 @@
 import * as React from 'react'
 import '../../../../public/assets/css/nuestra_comunidad.css'
 import CategoriasServicios from '../../components/categorias-servicios/CategoriasServicios'
-
+import CategoriasSlider from './CategoriasSlider'
 //imagenes
 //import CategoriasPopulares from '../../../../public/assets/img/CategoriasPopulares.png'
-import PopularCerrajeria from '../../../../public/assets/img/Cerrajeria.png'
-import PopularCarpinteria from '../../../../public/assets/img/Carpinteria.png'
-import PopularPintura from '../../../../public/assets/img/Pintura.png'
 import LocalCiudades from '../../../../public/assets/img/LocalCiudades.png'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
-import { useTheme } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-import MobileStepper from '@mui/material/MobileStepper'
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
-import SwipeableViews from 'react-swipeable-views'
-import { autoPlay, virtualize, bindKeyboard } from 'react-swipeable-views-utils'
-
-const AutoPlaySwipeableViews = bindKeyboard(autoPlay(SwipeableViews))
-
-const styles = (theme) => ({
-    stepper: {
-        position: 'relative',
-        top: '80px',
-        zIndex: 1000,
-        background: 'transparent',
-        height: '0px',
-        padding: 0,
-    },
-})
 
 const NuestraComunidad = (props) => {
-    const theme = useTheme()
-    const classes = styles(theme)
-    const maxSteps = 2
-    const [activeStep, setActiveStep] = React.useState(0)
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    }
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1)
-    }
-
-    const handleStepChange = (step) => {
-        setActiveStep(step)
-    }
 
     return (
         <>
@@ -61,108 +23,7 @@ const NuestraComunidad = (props) => {
                             Tenemos una gran cantidad de profesionales que
                             quieren trabajar en su proyecto.
                         </p>
-                        <Box
-                            sx={{
-                                width: '80%',
-                                sm: { width: '100%' },
-                                flexGrow: 1,
-                            }}
-                        >
-                            <MobileStepper
-                                // variant=
-                                sx={classes.stepper}
-                                // steps={maxSteps}
-                                // position="static"
-                                activeStep={activeStep}
-                                nextButton={
-                                    <Button
-                                        size="lg"
-                                        onClick={handleNext}
-                                        disabled={activeStep === maxSteps - 1}
-                                        style={{ left: '68px' }}
-                                    >
-                                        {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowLeft fontSize="large" />
-                                        ) : (
-                                            <KeyboardArrowRight fontSize="large" />
-                                        )}
-                                    </Button>
-                                }
-                                backButton={
-                                    <Button
-                                        size="lg"
-                                        onClick={handleBack}
-                                        disabled={activeStep === 0}
-                                        style={{ right: '68px' }}
-                                    >
-                                        {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowRight fontSize="large" />
-                                        ) : (
-                                            <KeyboardArrowLeft fontSize="large" />
-                                        )}
-                                    </Button>
-                                }
-                            />
-                            <AutoPlaySwipeableViews
-                                axis={
-                                    theme.direction === 'rtl'
-                                        ? 'x-reverse'
-                                        : 'x'
-                                }
-                                index={activeStep}
-                                onChangeIndex={handleStepChange}
-                                enableMouseEvents
-                                // slideRenderer={slideRenderer}
-                            >
-                                <Row>
-                                    <img
-                                        src={PopularCerrajeria}
-                                        alt="Categorias Populares entre la Comunidad"
-                                        height="170"
-                                        style={{ width: '33%', padding: 0 }}
-                                        maxwidth="300"
-                                    />
-                                    <img
-                                        src={PopularCarpinteria}
-                                        alt="Categorias Populares entre la Comunidad"
-                                        height="170"
-                                        style={{ width: '34%' }}
-                                        maxwidth="300"
-                                    />
-                                    <img
-                                        src={PopularPintura}
-                                        alt="Categorias Populares entre la Comunidad"
-                                        height="170"
-                                        style={{ width: '33%', padding: 0 }}
-                                        maxwidth="300"
-                                    />
-                                </Row>
-
-                                <Row>
-                                    <img
-                                        src={PopularCarpinteria}
-                                        alt="Categorias Populares entre la Comunidad"
-                                        height="170"
-                                        style={{ width: '33%', padding: 0 }}
-                                        maxwidth="300"
-                                    />
-                                    <img
-                                        src={PopularPintura}
-                                        alt="Categorias Populares entre la Comunidad"
-                                        height="170"
-                                        style={{ width: '34%' }}
-                                        maxwidth="300"
-                                    />
-                                    <img
-                                        src={PopularCerrajeria}
-                                        alt="Categorias Populares entre la Comunidad"
-                                        height="170"
-                                        style={{ width: '33%', padding: 0 }}
-                                        maxwidth="300"
-                                    />
-                                </Row>
-                            </AutoPlaySwipeableViews>
-                        </Box>
+                        <CategoriasSlider />
                     </Col>
                     <Col className="categoriasPopulares mt-4 p-4">
                         <h3 className=".headline-l">

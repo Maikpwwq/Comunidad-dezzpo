@@ -1,6 +1,5 @@
 // Pagina de Inicio
 import React from 'react'
-import { Link, NavLink, Redirect } from 'react-router-dom'
 import '../../../../public/assets/css/home.css'
 import Registro from '../registro/Registro'
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'

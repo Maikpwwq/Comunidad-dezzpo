@@ -56,7 +56,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                             id="formularioServicios"
                         >
                             {' '}
-                            <h3 className="headline-l text-white pb-2">
+                            <h3 className="headline-l textBlanco pb-2">
                                 Solicitar asistencia
                             </h3>
                             <Form.Group

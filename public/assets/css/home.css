@@ -1,36 +1,35 @@
 /* Pantallas de Moviles */
 @media screen and (max-width: 600px) {
 
-    #contenedorBanner{
+    #contenedorBanner {
         flex-direction: column !important;
     }
 
-    .comoComerciantes, .comoPropietarios {
+    .comoComerciantes,
+    .comoPropietarios {
         flex-direction: column !important;
     }
 }
+
 /* Pantallas en tabletas */
-@media screen and (min-width: 600px) and (max-width: 900px) {
+@media screen and (min-width: 600px) and (max-width: 900px) {}
 
-}
 /* Pantallas de Ordenador */
-@media screen and (min-width: 900px) {
-   
-}
+@media screen and (min-width: 900px) {}
 
 .MuiMobileStepper-dots {
     display: none !important;
 }
 
-body{
+body {
     margin: 0;
     padding: 0;
 }
-.bannerComunidad{
+
+.bannerComunidad {
     /* background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; */
-    background: #e9ebe6 url(
-        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Buscador-Dezzpo.png?alt=media&token=db72bbeb-29f7-4fa8-b995-6eced5b2f007
-    ) no-repeat center; 
+    background: #e9ebe6 url(https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Buscador-Dezzpo.png?alt=media&token=db72bbeb-29f7-4fa8-b995-6eced5b2f007
+) no-repeat center;
     background-size: cover;
     min-height: 515px;
     height: auto;
@@ -40,26 +39,30 @@ body{
     align-items: center;
     align-content: center;
     font-family: "lato Regular", Helvetica, sans-serif;
-    font-size: 21px;        
+    font-size: 21px;
 }
-#contenedorBanner{
+
+#contenedorBanner {
     display: flex;
     flex-direction: row;
     height: auto;
 }
-.slogan{
+
+.slogan {
     display: flex;
     flex-direction: column;
     padding: 0px 33px 0px 33px;
     color: white;
 }
-.mensajeBanner{
+
+.mensajeBanner {
     text-align: center;
     background-color: #006699;
     color: white;
     font-size: 27px;
 }
-#comoFunciona{
+
+#comoFunciona {
     background: #13495e;
     width: 100%;
     /* height: 330px; */
@@ -71,15 +74,18 @@ body{
     border-top-style: solid;
     color: white;
 }
-#comoFunciona .comunidadTitulo{
+
+#comoFunciona .comunidadTitulo {
     width: 33%;
     text-align: center;
 }
+
 #comoFunciona p {
     align-items: center;
     display: flex;
 }
-.comoPropietarios{
+
+.comoPropietarios {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -88,16 +94,14 @@ body{
     align-items: center;
     align-content: center;
 }
-.nuevoProyecto{
-    
-}
-.seleccionaPerfiles{
-    
-}
-.calificaServicio{
-    
-}
-.comoComerciantes{
+
+.nuevoProyecto {}
+
+.seleccionaPerfiles {}
+
+.calificaServicio {}
+
+.comoComerciantes {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -108,12 +112,9 @@ body{
     align-items: center;
     align-content: center;
 }
-.buscarOfertas{
-   
-}
-.cargaPresupuesto{
-    
-}
-.calificaPropietario{
 
-}
+.buscarOfertas {}
+
+.cargaPresupuesto {}
+
+.calificaPropietario {}

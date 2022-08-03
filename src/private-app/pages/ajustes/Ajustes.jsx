@@ -8,6 +8,8 @@ import { updateProfile } from 'firebase/auth'
 import '../../../../public/assets/cssPrivateApp/ajustes.css'
 import Ubicacion from '../../../app/pages/ubicacion/Ubicacion'
 
+import ChipsCategories from '../../components/ChipsCategories'
+
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -322,6 +324,9 @@ const Ajustes = (props) => {
                                 </Row>
                             </FormGroup>
                         </Row>
+                    </Col>
+                    <Col className="">
+                        <ChipsCategories />
                     </Col>
                     <Col className="col-10">
                         <hr />

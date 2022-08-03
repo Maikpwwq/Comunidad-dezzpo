@@ -68,7 +68,7 @@ const ComunidadPropietarios = (props) => {
                         sm={10}
                     >
                         <Col className="opacidadNegro">
-                            <p className="body-2">
+                            <p className="body-2 textBlanco">
                                 Con ayuda de la comunidad haz realidad la casa
                                 que deseas. Encuentra un profesional Seguro y
                                 Confiable, para cada trabajo. Desde iluminación
