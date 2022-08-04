@@ -9,6 +9,7 @@ import '../../../../public/assets/cssPrivateApp/ajustes.css'
 import Ubicacion from '../../../app/pages/ubicacion/Ubicacion'
 
 import ChipsCategories from '../../components/ChipsCategories'
+import ListadoCategorias from '../../../app/components/ListadoCategorias'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -77,6 +78,10 @@ const Ajustes = (props) => {
         userJoined: '',
         userProfession: '',
         userExperience: '',
+        userCategorie: '',
+        userClasification: [],
+        userGrade: '',
+        userCategories: '',
         userDirection: '',
         userCiudad: '',
         userCodigoPostal: '',
@@ -111,7 +116,13 @@ const Ajustes = (props) => {
                         userJoined: data.userJoined,
                         userProfession: data.userProfession,
                         userExperience: data.userExperience,
+                        userCategorie: data.userCategorie,
+                        userClasification: data.userClasification,
+                        userGrade: data.userGrade,
+                        userCategories: data.userCategories,
                         userDirection: data.userDirection,
+                        userCiudad: data.userCiudad,
+                        userCodigoPostal: data.userCodigoPostal,
                         userRazonSocial: data.userRazonSocial,
                         userIdentification: data.userIdentification,
                         userDescription: data.userDescription,
@@ -325,9 +336,6 @@ const Ajustes = (props) => {
                             </FormGroup>
                         </Row>
                     </Col>
-                    <Col className="">
-                        <ChipsCategories />
-                    </Col>
                     <Col className="col-10">
                         <hr />
                         <Row className="">
@@ -344,11 +352,30 @@ const Ajustes = (props) => {
                                 onChange={handleChange}
                                 name="userDescription"
                                 id="ofertaServicios"
-                                placeholder="Registra los servicios que ofreces"
+                                placeholder={
+                                    userRol.rol === 2
+                                        ? 'Registra los servicios que ofreces (max. 400 caracteres).'
+                                        : 'Registra tu presentación (max. 400 caracteres).'
+                                }
                                 cols="30"
-                                minRows={8}
+                                minRows={4}
                                 className="w-100"
                             ></TextareaAutosize>
+                            {userRol.rol === 2 ? (
+                                <Col className="pt-2">
+                                    <p className="body-1 m-0">
+                                        Selecciona hasta cuatro categorias para
+                                        mostrar en tu perfil de usuario
+                                    </p>
+                                    <ChipsCategories
+                                        setUserEditInfo={setUserEditInfo}
+                                        userEditInfo={userEditInfo}
+                                        listadoCategorias={ListadoCategorias}
+                                    />
+                                </Col>
+                            ) : (
+                                <></>
+                            )}
                             <Row className="pb-2 pt-2 w-100">
                                 <Col className="">
                                     <Button

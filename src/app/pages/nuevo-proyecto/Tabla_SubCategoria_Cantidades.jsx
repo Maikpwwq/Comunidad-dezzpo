@@ -19,19 +19,24 @@ const TablaSubCategoriaCantidades = (props) => {
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
     ]
     const [precioTotalizadoDraft, setPrecioTotalizadoDraft] = useState(0)
-    const [cantidadesCategorias, setCantidadesCategorias] = useState(1)
-    const handleChangeCantidades = (e) => {
-        console.log(e.target.value)
-        setCantidadesCategorias(e.target.value)
+    const [cantidadesCategorias, setCantidadesCategorias] = useState({
+        cantidadInicial: 1,
+    })
+    const handleChangeCantidades = (e, subCategoria) => {
+        setCantidadesCategorias({
+            ...cantidadesCategorias,
+            [subCategoria]: e.target.value,
+        })
+        console.log(e.target.value, cantidadesCategorias)
     }
-
+    categoriaInfo.quatities
     const handleCalculateDraft = () => {
         var suma = 0
         categoriaInfo.selected.map((selection, index, array) => {
             const { subCategoriaCantidades, subCategoriaPrecioFinal } =
                 selection
-            // console.log(subCategoriaCantidades, subCategoriaPrecioFinal)
-            suma = suma + subCategoriaPrecioFinal
+            console.log(subCategoriaCantidades, subCategoriaPrecioFinal)
+            suma = suma + subCategoriaPrecioFinal // * subCategoriaCantidades
         })
         setPrecioTotalizadoDraft(suma)
     }
@@ -78,7 +83,10 @@ const TablaSubCategoriaCantidades = (props) => {
                                         subCategoriaPhotoUrl,
                                         subCategoriaPrecio,
                                     } = selection
-                                    const subCategoriaCantidades = 1 //TODO: Cambiar esto por las cantidades de subcategorias
+                                    //TODO: Cambiar esto por las cantidades de subcategorias
+                                    const subCategoriaCantidades =
+                                        cantidadesCategorias[subCategoria] ||
+                                        cantidadesCategorias.cantidadInicial
                                     const subCategoriaPrecioFinal =
                                         parseFloat(subCategoriaPrecio) *
                                         subCategoriaCantidades
@@ -122,10 +130,16 @@ const TablaSubCategoriaCantidades = (props) => {
                                                         <Select
                                                             id="demo-simple-select"
                                                             value={
-                                                                cantidadesCategorias
+                                                                cantidadesCategorias[
+                                                                    subCategoria
+                                                                ] ||
+                                                                cantidadesCategorias.cantidadInicial
                                                             }
-                                                            onChange={
-                                                                handleChangeCantidades
+                                                            onChange={(e) =>
+                                                                handleChangeCantidades(
+                                                                    e,
+                                                                    subCategoria
+                                                                )
                                                             }
                                                             inputProps={{
                                                                 'aria-label':

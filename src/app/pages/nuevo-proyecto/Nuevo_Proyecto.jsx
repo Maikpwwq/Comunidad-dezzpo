@@ -61,6 +61,7 @@ const NuevoProyecto = (props) => {
     // categoria
     const [categoriaInfo, setCategoriaInfo] = useState({
         selected: [],
+        quatities: [],
         data: [],
     })
     const [activeStep, setActiveStep] = useState(0)

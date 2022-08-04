@@ -36,9 +36,10 @@ const Portal_Servicios = (props) => {
 
     const searchFromFirestore = async () => {
         try {
+            // TODO: Refactor this query to search in categories from users profiles
             const queryRef = query(
                 usersComCalRef,
-                where('userRazonSocial', '==', searchInput)
+                where('userCategories', '==', searchInput)
             )
             const searchUsers = await getDocs(queryRef)
             return searchUsers
