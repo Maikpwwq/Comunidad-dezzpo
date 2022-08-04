@@ -15,6 +15,7 @@ import MapaPerfil from './MapaPerfil'
 import CincoEstrellas from './CincoEstrellas'
 import Comentarios from '../../../private-app/components/Comentarios'
 import ChipsCategories from '../../components/ChipsCategories'
+import ListadoCategorias from '../../../app/components/ListadoCategorias'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -106,6 +107,7 @@ const Perfil = (props) => {
         userClasification: '',
         userGrade: '',
         userCategories: [],
+        userCategoriesChips: [],
         userDirection: '',
         userCiudad: '',
         userCodigoPostal: '',
@@ -309,6 +311,15 @@ const Perfil = (props) => {
                         )
                         //console.log(distanceTime)
                         if (data) {
+                            const chipsInfo = []
+                            data.userCategories.forEach((chip) => {
+                                // console.log(chip)
+                                ListadoCategorias.forEach((cat) => {
+                                    if (chip === cat.label) {
+                                        chipsInfo.push(cat)
+                                    }
+                                })
+                            })
                             setUserInfo({
                                 ...userInfo,
                                 userChannelUrl: data.userChannelUrl
@@ -336,6 +347,8 @@ const Perfil = (props) => {
                                 userCategories: data.userCategories
                                     ? data.userCategories
                                     : '',
+                                userCategoriesChips:
+                                    chipsInfo.length > 0 ? chipsInfo : [],
                                 userGrade: data.userGrade ? data.userGrade : '',
                                 userDirection: data.userDirection
                                     ? data.userDirection
@@ -356,6 +369,7 @@ const Perfil = (props) => {
                                     ? data.userDescription
                                     : '',
                             })
+                            // chipsInfoAdapter(data.userCategories)
                         }
                         isLoaded = true
                     } else {
@@ -367,6 +381,8 @@ const Perfil = (props) => {
             }
         }
     }, [])
+
+    console.log(userInfo.userCategoriesChips)
 
     return (
         <>
@@ -491,12 +507,17 @@ const Perfil = (props) => {
                                                 <h3 className="headline-l">
                                                     Servicios ofrecidos
                                                 </h3>
-                                                {/* TODO: Pasar un listado con todos los parametros requeridos */}
-                                                <ChipsCategories
-                                                    listadoCategorias={
-                                                        userInfo.userCategories
-                                                    }
-                                                />
+                                                {userInfo.userCategoriesChips
+                                                    .length > 0 ? (
+                                                    <ChipsCategories 
+                                                        listadoCategorias={
+                                                            userInfo.userCategoriesChips
+                                                        }
+                                                        editableContent={false}
+                                                    />
+                                                ) : (
+                                                    <></>
+                                                )}
                                             </>
                                         )}
                                         <p

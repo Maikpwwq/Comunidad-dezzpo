@@ -11,7 +11,13 @@ const ListItem = styled('li')(({ theme }) => ({
 
 // TODO - Refactor this component to use a props.serCategories from user profile
 const ChipsCategories = (props) => {
-    const { setUserEditInfo, userEditInfo, listadoCategorias } = props
+    const {
+        setUserEditInfo,
+        userEditInfo,
+        listadoCategorias,
+        editableContent,
+    } = props
+    const editable = editableContent === false ? false : true
     const [chipData, setChipData] = useState({
         categorias: listadoCategorias,
         selected: {
@@ -20,11 +26,13 @@ const ChipsCategories = (props) => {
         },
     })
 
-    const handleDelete = (chipToDelete) => () => {
-        setChipData((chips) =>
-            chips.filter((chip) => chip.key !== chipToDelete.key)
-        )
-    }
+    console.log(listadoCategorias, chipData.categorias)
+
+    // const handleDelete = (chipToDelete) => () => {
+    //     setChipData((chips) =>
+    //         chips.filter((chip) => chip.key !== chipToDelete.key)
+    //     )
+    // }
 
     useEffect(() => {
         if (userEditInfo) {
@@ -103,8 +111,10 @@ const ChipsCategories = (props) => {
                 component="ul"
             >
                 {typeof chipData !== 'undefined' &&
-                    typeof chipData === 'object' &&
+                    typeof chipData.categorias === 'object' &&
+                    chipData.categorias.length > 0 &&
                     chipData.categorias.map((data) => {
+                        console.log(data)
                         let icon
 
                         if (data.label === 'React') {
@@ -114,11 +124,14 @@ const ChipsCategories = (props) => {
                         return (
                             <ListItem key={data.key}>
                                 <Chip
+                                    className="body-1"
                                     icon={icon}
                                     color="primary"
                                     label={data.label}
                                     variant={data.variant} // "outlined" or "filled"
-                                    onClick={(e) => handleClick(e, data.key)}
+                                    onClick={(e) => {
+                                        editable ? handleClick(e, data.key) : {}
+                                    }}
                                     // onDelete={
                                     //     data.label === 'React'
                                     //         ? undefined
@@ -137,6 +150,7 @@ ChipsCategories.propTypes = {
     setUserEditInfo: PropTypes.func,
     userEditInfo: PropTypes.object,
     listadoCategorias: PropTypes.array.isRequired,
+    editableContent: PropTypes.bool,
 }
 
 export default ChipsCategories

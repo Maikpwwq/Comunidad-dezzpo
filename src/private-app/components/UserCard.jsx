@@ -1,5 +1,11 @@
 import * as React from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import ChipsCategories from './ChipsCategories'
+import ListadoCategorias from '../../app/components/ListadoCategorias'
+
+import PropTypes from 'prop-types'
+
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
@@ -32,7 +38,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 export default function UserCard({ props }) {
     const navigate = useNavigate()
-
+    const [chips, setChips] = React.useState([])
     const {
         userId,
         userRazonSocial,
@@ -42,6 +48,7 @@ export default function UserCard({ props }) {
         userJoined,
         userExperience,
         userDescription,
+        userCategories,
     } = props
     // const [expanded, setExpanded] = React.useState(false)
 
@@ -58,6 +65,21 @@ export default function UserCard({ props }) {
     }
     const handleFavorite = () => {}
     const handleShare = () => {}
+
+    React.useEffect(() => {
+        const chipsInfo = []
+        if (userCategories && userCategories.length > 0) {
+            userCategories.forEach((chip) => {
+                // console.log(chip)
+                ListadoCategorias.forEach((cat) => {
+                    if (chip === cat.label) {
+                        chipsInfo.push(cat)
+                    }
+                })
+            })
+            setChips(chipsInfo)
+        }
+    }, [userCategories])
 
     return (
         <Card className="mb-4" sx={{ maxWidth: 345 }}>
@@ -95,6 +117,14 @@ export default function UserCard({ props }) {
                 >
                     {userDescription}
                 </Typography>
+                {chips.length > 0 ? (
+                    <ChipsCategories
+                        listadoCategorias={chips}
+                        editableContent={false}
+                    />
+                ) : (
+                    <></>
+                )}
                 <br />
                 <Typography>Experiencia: {userExperience}</Typography>
                 <Typography>Ubicacion: {userDirection}</Typography>
@@ -165,14 +195,14 @@ export default function UserCard({ props }) {
     )
 }
 
-UserCard.defaultProps = {
-    props: {
-        userRazonSocial: 'The App Name',
-        userDirection: 'The App Name',
-        userProfession: 'The App Name',
-        userPhotoUrl: 'The App Name',
-        userJoined: 'The App Name',
-        userExperience: 'The App Name',
-        userDescription: 'The App Name',
-    },
+UserCard.propTypes = {
+    userId: PropTypes.string,
+    userRazonSocial: PropTypes.string,
+    userDirection: PropTypes.string,
+    userProfession: PropTypes.string,
+    userPhotoUrl: PropTypes.string,
+    userJoined: PropTypes.string,
+    userExperience: PropTypes.string,
+    userDescription: PropTypes.string,
+    userCategories: PropTypes.object,
 }

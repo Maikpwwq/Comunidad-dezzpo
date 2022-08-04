@@ -4,19 +4,12 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { firestore } from '../../../firebase/firebaseClient' // storage,
 import { collection, getDocs, query, where } from 'firebase/firestore'
 // import { ref, getDownloadURL } from 'firebase/storage'
-
 import UserCard from '../../components/UserCard'
-
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-// import Table from '@mui/material/Table'
-// import TableHead from '@mui/material/TableHead'
-// import TableBody from '@mui/material/TableBody'
-// import TableRow from '@mui/material/TableRow'
-// import TableCell from '@mui/material/TableCell'
 
 const Portal_Servicios = (props) => {
     const navigate = useNavigate()
@@ -140,7 +133,7 @@ const Portal_Servicios = (props) => {
                                 Busqueda Local Servicios: Buscar comerciantes
                                 Calificados
                             </p>
-                            <Col className="pt-2 p-0">
+                            <Row className="pt-2 p-0">
                                 {searchData.docSnap ? (
                                     searchData.docSnap.map((user) => (
                                         <UserCard
@@ -155,7 +148,7 @@ const Portal_Servicios = (props) => {
                                         busqueda!
                                     </>
                                 )}
-                            </Col>
+                            </Row>
                         </Row>
                     ) : (
                         <></>
@@ -188,64 +181,8 @@ const Portal_Servicios = (props) => {
                                 <></>
                             )}
                         </Row>
-                        {/* <Col className="col-10 p-4">
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Miembro</TableCell>
-                                        <TableCell>
-                                            Oferta de Servicios
-                                        </TableCell>
-                                        <TableCell>Certificaciones</TableCell>
-                                        <TableCell>Calificaciones</TableCell>
-                                        <TableCell>Se unio el</TableCell>
-                                        <TableCell>Ubicación</TableCell>
-                                        <TableCell>Contactar</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </Col> */}
                     </Col>
                 </Row>
-                {/* <Col className="col-10 p-4">
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Imagenes</TableCell>
-                                        <TableCell>Descripción</TableCell>
-                                        <TableCell>
-                                            Fecha de Publicación
-                                        </TableCell>
-                                        <TableCell>Valor Aproximado</TableCell>
-                                        <TableCell>Se unio el</TableCell>
-                                        <TableCell>Ubicación</TableCell>
-                                        <TableCell>Postular</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </Col> */}
             </Container>
         </>
     )
