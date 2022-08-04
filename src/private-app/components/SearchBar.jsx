@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { styled, alpha } from '@mui/material/styles'
+import ListadoCategorias from '../../app/components/ListadoCategorias'
 import SearchIcon from '@mui/icons-material/Search'
-import InputBase from '@mui/material/InputBase'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -30,7 +32,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }))
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledSelect = styled(Select)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -47,22 +49,33 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const SearchBar = () => {
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useState({
-        searchInput: '',
+        searchInput: [],
     })
 
     const handleChange = (event) => {
-        setSearchParams({
-            ...searchParams,
-            [event.target.name]: event.target.value,
+        const changeSerachParams = event.target.value
+        const multipleSearch = []
+        changeSerachParams.map((item) => {
+            multipleSearch.push(item)
         })
+        if (multipleSearch.length > 0) {
+            console.log(multipleSearch)
+            setSearchParams({
+                ...searchParams,
+                searchInput: multipleSearch,
+            })
+            handleSearch(multipleSearch)
+        }
     }
 
-    const handleSearch = (event) => {
+    const handleSearch = (multipleSearch) => {
         // Detectar tecla 'Enter' if (event.key === 'Enter')
-        if (event.keyCode === 13) {
-            // console.log(event, searchParams)
-            navigate('/app/portal-servicios', { state: searchParams })
-        }
+        // if (event.keyCode === 13) {
+        // console.log(event, searchParams)
+        navigate('/app/portal-servicios', {
+            state: { searchInput: multipleSearch },
+        })
+        // }
     }
 
     return (
@@ -71,16 +84,30 @@ const SearchBar = () => {
                 <SearchIconWrapper>
                     <SearchIcon />
                 </SearchIconWrapper>
-                <StyledInputBase
-                    placeholder="Busqueda Local: Buscar por categoria"
-                    inputProps={{ 'aria-label': 'search' }}
+                <StyledSelect
+                    style={{ borderStyle: 'solid', borderWidth: '1px' }}
                     className="w-100"
+                    id="search-select-category"
                     name="searchInput"
+                    multiple
+                    // autoFocus={true}
+                    // onKeyDown={handleSearch}
                     value={searchParams.searchInput}
-                    onChange={handleChange}
-                    onKeyDown={handleSearch}
-                    // onKeyPress={handleSearch} Deprecated 2021
-                />
+                    onChange={(e) => handleChange(e)}
+                    inputProps={{
+                        'aria-label': 'search', //Without label
+                    }}
+                    // 'Busqueda Local: Buscar por categoria'
+                >
+                    {ListadoCategorias.map((item) => {
+                        const { key, label } = item
+                        return (
+                            <MenuItem value={label} key={key}>
+                                {label}
+                            </MenuItem>
+                        )
+                    })}
+                </StyledSelect>
             </Search>
         </>
     )

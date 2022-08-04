@@ -14,6 +14,8 @@ import '../../../../public/assets/cssPrivateApp/perfil.css'
 import MapaPerfil from './MapaPerfil'
 import CincoEstrellas from './CincoEstrellas'
 import Comentarios from '../../../private-app/components/Comentarios'
+import ChipsCategories from '../../components/ChipsCategories'
+import ListadoCategorias from '../../../app/components/ListadoCategorias'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -23,7 +25,7 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
- 
+
 const Input = styled('input')({
     // display: 'none',
     visibility: 'hidden',
@@ -101,7 +103,14 @@ const Perfil = (props) => {
         userJoined: '',
         userProfession: '',
         userExperience: '',
+        userCategorie: '',
+        userClasification: '',
+        userGrade: '',
+        userCategories: [],
+        userCategoriesChips: [],
         userDirection: '',
+        userCiudad: '',
+        userCodigoPostal: '',
         userRazonSocial: '',
         userIdentification: '',
         userDescription: '',
@@ -302,6 +311,15 @@ const Perfil = (props) => {
                         )
                         //console.log(distanceTime)
                         if (data) {
+                            const chipsInfo = []
+                            data.userCategories.forEach((chip) => {
+                                // console.log(chip)
+                                ListadoCategorias.forEach((cat) => {
+                                    if (chip === cat.label) {
+                                        chipsInfo.push(cat)
+                                    }
+                                })
+                            })
                             setUserInfo({
                                 ...userInfo,
                                 userChannelUrl: data.userChannelUrl
@@ -320,8 +338,26 @@ const Perfil = (props) => {
                                 userExperience: data.userExperience
                                     ? data.userExperience
                                     : '',
+                                userCategorie: data.userCategorie
+                                    ? data.userCategorie
+                                    : '',
+                                userClasification: data.userClasification
+                                    ? data.userClasification
+                                    : '',
+                                userCategories: data.userCategories
+                                    ? data.userCategories
+                                    : '',
+                                userCategoriesChips:
+                                    chipsInfo.length > 0 ? chipsInfo : [],
+                                userGrade: data.userGrade ? data.userGrade : '',
                                 userDirection: data.userDirection
                                     ? data.userDirection
+                                    : '',
+                                userCiudad: data.userCiudad
+                                    ? data.userCiudad
+                                    : '',
+                                userCodigoPostal: data.userCodigoPostal
+                                    ? data.userCodigoPostal
                                     : '',
                                 userRazonSocial: data.userRazonSocial
                                     ? data.userRazonSocial
@@ -333,6 +369,7 @@ const Perfil = (props) => {
                                     ? data.userDescription
                                     : '',
                             })
+                            // chipsInfoAdapter(data.userCategories)
                         }
                         isLoaded = true
                     } else {
@@ -344,6 +381,8 @@ const Perfil = (props) => {
             }
         }
     }, [])
+
+    console.log(userInfo.userCategoriesChips)
 
     return (
         <>
@@ -459,11 +498,28 @@ const Perfil = (props) => {
                                 </Row>
                                 <Row className="p-4 pb-0">
                                     <Col>
-                                        <h3 className="headline-l">
-                                            {userRol.rol === 1
-                                                ? 'Presentación'
-                                                : 'Servicios ofrecidos'}
-                                        </h3>
+                                        {userRol.rol === 1 ? (
+                                            <h3 className="headline-l">
+                                                Presentación
+                                            </h3>
+                                        ) : (
+                                            <>
+                                                <h3 className="headline-l">
+                                                    Servicios ofrecidos
+                                                </h3>
+                                                {userInfo.userCategoriesChips
+                                                    .length > 0 ? (
+                                                    <ChipsCategories 
+                                                        listadoCategorias={
+                                                            userInfo.userCategoriesChips
+                                                        }
+                                                        editableContent={false}
+                                                    />
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </>
+                                        )}
                                         <p
                                             className="body-1 pe-4"
                                             style={{

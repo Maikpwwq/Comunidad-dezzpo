@@ -1,0 +1,34 @@
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
+import Box from '@mui/material/Box'
+
+const SliderAction = () => {
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        navigate('/nuevo-proyecto')
+        // setDraftInfo(projectData)
+    }
+
+    return (
+        <Box
+            className="asisteme ps-4 pt-2 pb-2 pe-4"
+            sx={{ width: { sm: 'auto', md: '99.5%', lg: '99.5%' } }}
+        >
+            <p className="headline-s textBlanco m-0 pe-4">
+                Te ayudamos a elegir el profesional calificado para tus
+                proyectos.
+            </p>
+            <Button
+                className="headline-s btn-round btn-high btn-avanzar"
+                variant="primary"
+                onClick={handleClick}
+            >
+                Asísteme
+            </Button>
+        </Box>
+    )
+}
+
+export default SliderAction

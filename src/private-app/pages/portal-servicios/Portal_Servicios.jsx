@@ -4,19 +4,12 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { firestore } from '../../../firebase/firebaseClient' // storage,
 import { collection, getDocs, query, where } from 'firebase/firestore'
 // import { ref, getDownloadURL } from 'firebase/storage'
-
 import UserCard from '../../components/UserCard'
-
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-// import Table from '@mui/material/Table'
-// import TableHead from '@mui/material/TableHead'
-// import TableBody from '@mui/material/TableBody'
-// import TableRow from '@mui/material/TableRow'
-// import TableCell from '@mui/material/TableCell'
 
 const Portal_Servicios = (props) => {
     const navigate = useNavigate()
@@ -36,12 +29,17 @@ const Portal_Servicios = (props) => {
 
     const searchFromFirestore = async () => {
         try {
+            // TODO: Refactor this query to search in categories from users profiles
+            const response = []
             const queryRef = query(
                 usersComCalRef,
-                where('userRazonSocial', '==', searchInput)
+                where('userCategories', 'array-contains-any', searchInput)
             )
             const searchUsers = await getDocs(queryRef)
-            return searchUsers
+            searchUsers.forEach((DOC) => {
+                response.push(DOC.data())
+            })
+            return response
         } catch (err) {
             console.log(
                 'Error al obtener los datos de busqueda en la colleccion Comerciantes Calificados: ',
@@ -63,25 +61,31 @@ const Portal_Servicios = (props) => {
     }
 
     useEffect(() => {
-        searchFromFirestore()
-            .then((docSnap) => {
-                if (docSnap) {
-                    const data = docSnap.docs.map((element) => ({
-                        ...element.data(),
-                    }))
-                    setSearchData({
-                        data,
-                    })
-                } else {
-                    console.log(
-                        'No se encontro información para la busqueda en la colleccion usuarios!'
-                    )
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        if (typeof searchInput !== 'undefined') {
+            const multileSearch = searchFromFirestore()
+            multileSearch
+                .then((docSnap) => {
+                    if (docSnap && docSnap.length > 0) {
+                        console.log('docSnap', docSnap)
+                        setSearchData({
+                            docSnap,
+                        })
+                    } else {
+                        console.log(
+                            'No se encontro información para la busqueda en la colleccion usuarios!'
+                        )
+                        setSearchData({
+                            docSnap: [],
+                        })
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     }, [searchInput])
+
+    console.log('SearchData', searchData)
 
     useEffect(() => {
         usersFromFirestore()
@@ -108,17 +112,30 @@ const Portal_Servicios = (props) => {
         navigate('/nuevo-proyecto', { state: { auth: true } })
     }
 
-    console.log(searchData)
-
     return (
         <>
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex">
-                    <Row>
-                        {searchInput ? (
-                            <Col>
-                                {searchData.data ? (
-                                    searchData.data.map((user) => (
+                    <Col className="pt-4 pb-2 p-0">
+                        <h2 className="headline-xl">
+                            Directorio Profesionales
+                            <Button
+                                className="body-1 ms-4"
+                                onClick={handleNewProject}
+                            >
+                                Publica un proyecto gratis
+                            </Button>
+                        </h2>
+                    </Col>
+                    {searchInput ? (
+                        <Row className="">
+                            <p className="body-1">
+                                Busqueda Local Servicios: Buscar comerciantes
+                                Calificados
+                            </p>
+                            <Row className="pt-2 p-0">
+                                {searchData.docSnap ? (
+                                    searchData.docSnap.map((user) => (
                                         <UserCard
                                             key={user.id}
                                             props={user}
@@ -128,29 +145,22 @@ const Portal_Servicios = (props) => {
                                 ) : (
                                     <>
                                         No se encontraron resultados de la
-                                        busqueda
+                                        busqueda!
                                     </>
                                 )}
-                            </Col>
-                        ) : (
-                            <></>
-                        )}
-                    </Row>
-
+                            </Row>
+                        </Row>
+                    ) : (
+                        <></>
+                    )}
+                </Row>
+                <Row className="m-0 w-100 d-flex">
                     <Col className="pt-4 pb-4 p-0">
-                        <h2 className="headline-xl">
-                            Directorio Profesionales
-                            <Button
-                                className="body-1"
-                                onClick={handleNewProject}
-                            >
-                                Publica un proyecto gratis
-                            </Button>
-                        </h2>
-                        {/* <h3 className="headline-l">
-                            Busqueda Local Servicios: Buscar comerciantes
-                            Calificados
-                        </h3> */}
+                        <Col className="pb-2 p-0">
+                            <h3 className="headline-l">
+                                Todos los profesionales
+                            </h3>
+                        </Col>
                         <p className="body-2">
                             {' '}
                             Directorio de comerciantes calificados, contratistas
@@ -171,64 +181,8 @@ const Portal_Servicios = (props) => {
                                 <></>
                             )}
                         </Row>
-                        {/* <Col className="col-10 p-4">
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Miembro</TableCell>
-                                        <TableCell>
-                                            Oferta de Servicios
-                                        </TableCell>
-                                        <TableCell>Certificaciones</TableCell>
-                                        <TableCell>Calificaciones</TableCell>
-                                        <TableCell>Se unio el</TableCell>
-                                        <TableCell>Ubicación</TableCell>
-                                        <TableCell>Contactar</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </Col> */}
                     </Col>
                 </Row>
-                {/* <Col className="col-10 p-4">
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Imagenes</TableCell>
-                                        <TableCell>Descripción</TableCell>
-                                        <TableCell>
-                                            Fecha de Publicación
-                                        </TableCell>
-                                        <TableCell>Valor Aproximado</TableCell>
-                                        <TableCell>Se unio el</TableCell>
-                                        <TableCell>Ubicación</TableCell>
-                                        <TableCell>Postular</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                        <TableCell>DATA...</TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </Col> */}
             </Container>
         </>
     )
