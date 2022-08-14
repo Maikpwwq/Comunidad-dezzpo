@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 // Pagina de Ingreso
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import SnackBarAlert from '../../components/SnackBarAlert'
 import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import {
     EmailAuthProvider,
@@ -29,15 +30,33 @@ import Typography from '@mui/material/Typography'
 const Ingreso = (props) => {
     const googleProvider = new GoogleAuthProvider()
     const navigate = useNavigate()
-    const [send, setSend] = React.useState(false)
-    const [userLoginEmail, setEmail] = React.useState(undefined)
-    const [userLoginPassword, setPassword] = React.useState('')
-    const [userSignupRol, setRol] = React.useState({})
+    const [alert, setAlert] = useState({
+        open: false,
+        message: '',
+        severity: 'success',
+    })
+    const [send, setSend] = useState(false)
+    const [userLoginEmail, setEmail] = useState(undefined)
+    const [userLoginPassword, setPassword] = useState('')
+    const [userSignupRol, setRol] = useState(0)
+
+    const handleAlert = (message, severity) => {
+        setAlert({ ...alert, open: true, message: message, severity: severity })
+    }
+
+    const handleClose = (event, reason) => {
+        // console.log(reason, event)
+        if (reason === 'clickaway') {
+            return
+        } else {
+            setAlert({ ...alert, open: false, message: '' })
+        }
+    }
 
     const handleClick = (e) => {
-        if (userSignupRol) {
-            e.preventDefault()
-            console.log(userLoginEmail, userLoginPassword, userSignupRol)
+        e.preventDefault()
+        if (userSignupRol > 0) {
+            // console.log(userLoginEmail, userLoginPassword, userSignupRol)
             let credential = EmailAuthProvider.credential(
                 userLoginEmail,
                 userLoginPassword
@@ -49,30 +68,34 @@ const Ingreso = (props) => {
                         // console.log('Anonymous account successfully upgraded', user)
                         // console.log(JSON.stringify(userSignupRol))
                         // localStorage.setItem('role', JSON.stringify(userSignupRol))
+                        console.log(userSignupRol)
                         localStorage.role = JSON.stringify(userSignupRol)
                         localStorage.userID = JSON.stringify(user.uid)
                         // navigate('/app/perfil', { state: { role: userSignupRol } })
+                        handleAlert('Cuenta autorizada con éxito.', 'success')
                         navigate('/app/perfil')
                     })
                     .catch((err) => {
-                        console.log('Error upgrading anonymous account', err)
+                        // console.log('Error upgrading anonymous account', err)
                         var errorCode = err.code
                         var errorMessage = err.message
                         if (errorCode === 'auth/wrong-password') {
-                            alert('Clave incorrecta.')
+                            handleAlert('Clave incorrecta!', 'error')
                         } else {
-                            alert(errorMessage)
+                            handleAlert(errorMessage, 'error')
                         }
                     })
             }
             setSend(true)
             logIn(credential)
+        } else {
+            handleAlert('Selecciona un rol para ingresar!', 'info')
         }
     }
 
     const handleGoogleProvider = (e) => {
         e.preventDefault()
-        if (userSignupRol) {
+        if (userSignupRol > 0) {
             const logIn = () => {
                 signInWithPopup(auth, googleProvider)
                     .then((result) => {
@@ -83,9 +106,10 @@ const Ingreso = (props) => {
                         const token = credential.accessToken
                         // The signed-in user info.
                         const user = result.user
-                        console.log('Account successfully upgraded', user)
+                        // console.log('Account successfully upgraded', user)
                         localStorage.role = JSON.stringify(userSignupRol)
                         localStorage.userID = JSON.stringify(user.uid)
+                        handleAlert('Cuenta autorizada con éxito.', 'success')
                         navigate('/app/perfil')
                     })
                     .catch((error) => {
@@ -97,20 +121,22 @@ const Ingreso = (props) => {
                         // The AuthCredential type that was used.
                         const credential =
                             GoogleAuthProvider.credentialFromError(error)
-                        console.log(
-                            'Error upgrading anonymous account',
-                            errorMessage,
-                            error
-                        )
+                        // console.log(
+                        //     'Error upgrading anonymous account',
+                        //     errorMessage,
+                        //     error
+                        // )
                         if (errorCode === 'auth/wrong-password') {
-                            alert('Clave incorrecta.')
+                            handleAlert('Clave incorrecta!', 'error')
                         } else {
-                            alert(errorMessage)
+                            handleAlert(errorMessage, 'error')
                         }
                     })
             }
             setSend(true)
             logIn()
+        } else {
+            handleAlert('Selecciona un rol para ingresar!', 'info')
         }
     }
 
@@ -118,12 +144,20 @@ const Ingreso = (props) => {
         e.preventDefault()
         sendPasswordResetEmail(auth, userLoginEmail)
             .then((result) => {
-                console.log(`Se envio correo de restauración ${result}`)
+                handleAlert(
+                    'Se envio correo de restauración con éxito.',
+                    'info'
+                )
+                // console.log(`Se envio correo de restauración ${result}`)
             })
             .catch((error) => {
-                console.log(
-                    `Se produjo un error al enviar correo de restauración ${error}`
+                handleAlert(
+                    'Se produjo un error al enviar correo de restauración.',
+                    'error'
                 )
+                // console.log(
+                //     `Se produjo un error al enviar correo de restauración ${error}`
+                // )
             })
     }
 
@@ -188,39 +222,39 @@ const Ingreso = (props) => {
                                     2. Ingresa tus datos:
                                 </Form.Label>
                                 <ul className="align-items-center mt-2 w-100">
-                                        {/* <li className="body-1">
+                                    {/* <li className="body-1">
                                         <Button className="btn btn-round btn-middle">
                                             Ingresar con Facebook
                                         </Button>
                                     </li> */}
-                                        <li className="body-1">
-                                            <Button
-                                                className="btn btn-round btn-middle d-flex align-items-center p-0 pe-2"
-                                                onClick={handleGoogleProvider}
-                                                style={{
-                                                    background: '#e9ebe6',
+                                    <li className="body-1">
+                                        <Button
+                                            className="btn btn-round btn-middle d-flex align-items-center p-0 pe-2"
+                                            onClick={handleGoogleProvider}
+                                            style={{
+                                                background: '#e9ebe6',
+                                            }}
+                                        >
+                                            <Box
+                                                component="img"
+                                                src={LogoGmail}
+                                                alt="Ingresar-con-cuenta-gmail"
+                                                sx={{
+                                                    height: 33,
+                                                    display: 'block',
+                                                    maxWidth: 33,
+                                                    overflow: 'hidden',
+                                                    width: '100%',
+                                                    borderRadius: '50%',
                                                 }}
-                                            >
-                                                <Box
-                                                    component="img"
-                                                    src={LogoGmail}
-                                                    alt="Ingresar-con-cuenta-gmail"
-                                                    sx={{
-                                                        height: 33,
-                                                        display: 'block',
-                                                        maxWidth: 33,
-                                                        overflow: 'hidden',
-                                                        width: '100%',
-                                                        borderRadius: '50%',
-                                                    }}
-                                                    className="p-2"
-                                                />
-                                                <Typography className="body-1">
-                                                    Ingresar con Gmail
-                                                </Typography>
-                                            </Button>
-                                        </li>
-                                    </ul>
+                                                className="p-2"
+                                            />
+                                            <Typography className="body-1">
+                                                Ingresar con Gmail
+                                            </Typography>
+                                        </Button>
+                                    </li>
+                                </ul>
                                 <Col
                                     className="d-flex flex-column align-items-center"
                                     lg={10}
@@ -303,6 +337,14 @@ const Ingreso = (props) => {
                                         ¿Olvidaste la contraseña?
                                     </Button>
                                 </Col>
+                                {alert.open && (
+                                    <SnackBarAlert
+                                        message={alert.message}
+                                        onClose={handleClose}
+                                        severity={alert.severity} // success, error, warning, info, default
+                                        open={alert.open}
+                                    />
+                                )}
                             </Col>
                         </Form>
                     </Col>

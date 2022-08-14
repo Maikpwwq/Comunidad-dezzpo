@@ -28,21 +28,21 @@ const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
         e.preventDefault()
         // navigate('/app/perfil', { state: { id: userId } })
         // navigate(`/app/perfil/${userId}`)
-        console.log(e, selected)
+        // console.log(e, selected)
         setSelected(!selected)
         if (selected) {
             const previewSelected = categoriaInfo.selected
             previewSelected.push(props)
             // const selectedCategories = new Array(previewSelected, props)
             setCategoriaInfo({ ...categoriaInfo, selected: previewSelected })
-            console.log(categoriaInfo)
+            // console.log(categoriaInfo)
         } else {
             const previewSelected = categoriaInfo.selected
             const deleteSelected = previewSelected.indexOf(props)
             previewSelected.splice(deleteSelected, 1)
             // const selectedCategories = new Array(previewSelected, props)
             setCategoriaInfo({ ...categoriaInfo, selected: previewSelected })
-            console.log(categoriaInfo)
+            // console.log(categoriaInfo)
         }
     }
 

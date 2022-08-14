@@ -56,14 +56,21 @@ const TablaSubCategoriaCantidades = (props) => {
 
     return (
         <>
-            <Col className="ms-4 p-4">
+            <Col className="w-100">
                 {' '}
                 <p className="p-description">
                     Compara precios de los mejores profesionales calificados{' '}
                 </p>
-                <Table>
+                {/* TODO: on small view, show table display:grid, and make ms-0 ps-2  */}
+                <Table
+                    className=""
+                    sx={{
+                        display: { sm: 'grid', xs: 'grid' },
+                        overflowX: 'scroll',
+                    }}
+                >
                     <TableHead>
-                        <TableRow>
+                        <TableRow className="w-100" sx={{ display: 'table' }}>
                             <TableCell>Sub Categoria</TableCell>
                             <TableCell>Unidad Medida</TableCell>
                             <TableCell>Description</TableCell>

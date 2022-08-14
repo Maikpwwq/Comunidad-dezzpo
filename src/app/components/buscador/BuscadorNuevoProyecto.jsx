@@ -29,7 +29,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                 draftCategory: projectData.categoriaProfesional,
                 draftProject: projectData.tipoProyecto,
             })
-            console.log('BuscadorChanged')
+            // console.log('BuscadorChanged')
         }
     }, [projectData])
 
@@ -42,7 +42,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
 
     const handleClick = () => {
         navigate('/nuevo-proyecto', { state: projectData })
-        console.log(projectData)
+        // console.log(projectData)
         // setDraftInfo(projectData)
     }
 

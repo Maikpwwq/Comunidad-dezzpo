@@ -374,9 +374,17 @@ const Requerimiento = () => {
                                     )}
                                 </p>
                                 {/* TODO: poblar tabla de cotizaciones */}
-                                <Table>
+                                <Table
+                                    sx={{
+                                        display: { sm: 'grid', xs: 'grid' },
+                                        overflowX: 'scroll',
+                                    }}
+                                >
                                     <TableHead>
-                                        <TableRow>
+                                        <TableRow
+                                            className="w-100"
+                                            sx={{ display: 'table' }}
+                                        >
                                             <TableCell>
                                                 Comerciante calificado
                                             </TableCell>
@@ -413,6 +421,13 @@ const Requerimiento = () => {
                                                                 <Button className="btn btn-round btn-high">
                                                                     DESCARGAR
                                                                     COTIZACION
+                                                                </Button>
+                                                                {/* TODO: ACTIVAR BTNS SEGUN ROL DE USUARIO */}
+                                                                <Button className="btn btn-round btn-middle">
+                                                                    AJUSTAR
+                                                                </Button>
+                                                                <Button className="btn btn-round btn-low">
+                                                                    CONTRATAR
                                                                 </Button>
                                                             </TableCell>{' '}
                                                         </TableRow>

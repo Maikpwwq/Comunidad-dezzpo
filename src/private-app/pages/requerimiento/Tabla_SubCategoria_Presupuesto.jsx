@@ -18,9 +18,14 @@ const TablaSubCategoriaPresupuesto = (props) => {
                 <p className="p-description">
                     Compara precios de los mejores profesionales calificados{' '}
                 </p>
-                <Table>
+                <Table
+                    sx={{
+                        display: { sm: 'grid', xs: 'grid' },
+                        overflowX: 'scroll',
+                    }}
+                >
                     <TableHead>
-                        <TableRow>
+                        <TableRow className="w-100" sx={{ display: 'table' }}>
                             <TableCell>Sub Categoria</TableCell>
                             <TableCell>Unidad Medida</TableCell>
                             <TableCell>Description</TableCell>

@@ -25,9 +25,6 @@ const ChipsCategories = (props) => {
             labels: [],
         },
     })
-
-    console.log(listadoCategorias, chipData.categorias)
-
     // const handleDelete = (chipToDelete) => () => {
     //     setChipData((chips) =>
     //         chips.filter((chip) => chip.key !== chipToDelete.key)
@@ -114,7 +111,7 @@ const ChipsCategories = (props) => {
                     typeof chipData.categorias === 'object' &&
                     chipData.categorias.length > 0 &&
                     chipData.categorias.map((data) => {
-                        console.log(data)
+                        // console.log(data)
                         let icon
 
                         if (data.label === 'React') {

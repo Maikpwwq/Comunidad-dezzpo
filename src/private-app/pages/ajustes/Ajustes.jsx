@@ -7,7 +7,7 @@ import { updateProfile } from 'firebase/auth'
 
 import '../../../../public/assets/cssPrivateApp/ajustes.css'
 import Ubicacion from '../../../app/pages/ubicacion/Ubicacion'
-
+import SnackBarAlert from '../../../app/components/SnackBarAlert'
 import ChipsCategories from '../../components/ChipsCategories'
 import ListadoCategorias from '../../../app/components/ListadoCategorias'
 
@@ -32,7 +32,11 @@ const Ajustes = (props) => {
         rol: selectRole,
     })
     console.log(userRol.rol)
-
+    const [alert, setAlert] = useState({
+        open: false,
+        message: '',
+        severity: 'success',
+    })
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
@@ -74,6 +78,8 @@ const Ajustes = (props) => {
         userMail: '',
         userPhone: '',
         userPhotoUrl: '',
+        userGalleryUrl: [],
+        userCreatedDrafts: [],
         userId: '',
         userJoined: '',
         userProfession: '',
@@ -91,6 +97,7 @@ const Ajustes = (props) => {
     })
 
     useEffect(() => {
+        console.log(userRol.rol, user)
         if (user !== null && userRol.rol) {
             const {
                 uid,
@@ -127,6 +134,7 @@ const Ajustes = (props) => {
                         userIdentification: data.userIdentification,
                         userDescription: data.userDescription,
                     })
+                    console.log(user, userEditInfo)
                 } else {
                     console.log(
                         'No se encontro información relacionada con este usuario!'
@@ -135,6 +143,19 @@ const Ajustes = (props) => {
             })
         }
     }, [user])
+
+    const handleAlert = (message, severity) => {
+        setAlert({ ...alert, open: true, message: message, severity: severity })
+    }
+
+    const handleCloseAlert = (event, reason) => {
+        // console.log(reason, event)
+        if (reason === 'clickaway') {
+            return
+        } else {
+            setAlert({ ...alert, open: false, message: '' })
+        }
+    }
 
     const handleChange = (event) => {
         setUserEditInfo({
@@ -147,12 +168,20 @@ const Ajustes = (props) => {
         if (userRol.rol === 1) {
             const snap = userProResToFirestore(userEditInfo, user.uid)
             snap.then((docSnap) => {
-                console.log(docSnap)
+                handleAlert(
+                    'Se actualizó correctamente su información!',
+                    'success'
+                )
+                // console.log(docSnap)
             })
         } else if (userRol.rol === 2) {
             const snap = userComCalToFirestore(userEditInfo, user.uid)
             snap.then((docSnap) => {
-                console.log(docSnap)
+                handleAlert(
+                    'Se actualizó correctamente su información!',
+                    'success'
+                )
+                // console.log(docSnap)
             })
         }
         sendInfo()
@@ -160,14 +189,14 @@ const Ajustes = (props) => {
     // Firebase Auth
     const sendInfo = () => {
         event.preventDefault()
-        console.log('enviando datos...')
+        // console.log('enviando datos...')
         const profile = {
             displayName: userEditInfo.userName,
             phoneNumber: userEditInfo.userPhone,
             photoURL: userEditInfo.userPhotoUrl,
         }
         if (user !== null) {
-            console.log(auth)
+            // console.log(auth)
             updateProfile(user, profile)
                 .then((result) => {
                     console.log(`Se actualizo el perfil de usuario ${result}`)
@@ -185,6 +214,14 @@ const Ajustes = (props) => {
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex align-items-start pb-4 pt-4">
                     <Col className="col-10">
+                        {alert.open && (
+                            <SnackBarAlert
+                                message={alert.message}
+                                onClose={handleCloseAlert}
+                                severity={alert.severity} // success, error, warning, info, default
+                                open={alert.open}
+                            />
+                        )}
                         <Row className="p-0 info-user_backgound">
                             <FormGroup
                                 action=""

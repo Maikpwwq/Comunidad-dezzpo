@@ -13,6 +13,10 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 
 const Cotizar = (props) => {
     const quotationID = uuidv4()
@@ -31,8 +35,10 @@ const Cotizar = (props) => {
         description: '',
         scope: '',
         tiempoEjecucion: '',
+        actividades: [],
         condicionesNegocio: '',
         garantia: '',
+        valorSubtotal: 0,
     })
 
     const handleChange = (e) => {
@@ -42,9 +48,75 @@ const Cotizar = (props) => {
         })
     }
 
+    const handleRemoveTableRow = (e, index) => {
+        e.preventDefault()
+        const actividades = cotizacion.actividades.filter((_, i) => i !== index)
+        console.log('actividades', actividades)
+        setCotizacion({
+            ...cotizacion,
+            actividades,
+        })
+    }
+
+    const handleNewTableRow = (e) => {
+        e.preventDefault()
+        setCotizacion({
+            ...cotizacion,
+            actividades: [
+                ...cotizacion.actividades,
+                {
+                    id: uuidv4(),
+                    item: 'Ítem',
+                    actividadTitle: 'Actividad',
+                    unidadMedida: 'Unidad Medida',
+                    cantidad: 'Cantidad',
+                    precio: 0,
+                    valor: 0,
+                },
+            ],
+        })
+    }
+
+    const handleActivityChange = (e, index) => {
+        e.preventDefault()
+        const { name, value } = e.target
+        console.log(name, value, index)
+        let sumaSubtotal = 0
+        const updateActivities = cotizacion.actividades.map((activity, i) => {
+            if (i === index) {
+                return {
+                    ...activity,
+                    [name]: value,
+                    valor: activity.cantidad * activity.precio,
+                }
+            }
+            sumaSubtotal = sumaSubtotal + activity.valor
+            return activity
+        })
+        setCotizacion({
+            ...cotizacion,
+            actividades: updateActivities,
+            valorSubtotal: sumaSubtotal,
+        })
+        // calculateSubtotal()
+        // calculateSubtotal()
+    }
+
+    const calculateSubtotal = () => {
+        let sumaSubtotal = 0
+        cotizacion.actividades.map((activity) => {
+            sumaSubtotal = sumaSubtotal + activity.valor
+        })
+        setCotizacion({
+            ...cotizacion,
+            valorSubtotal: sumaSubtotal,
+        })
+    }
+    // console.log('actividades', cotizacion.actividades)
+
     const quotationToFirestore = async (updateInfo, docId) => {
         await setDoc(doc(quotationRef, docId), updateInfo)
-    } 
+    }
 
     const draftToFirestore = async (updateInfo, projectID) => {
         await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
@@ -122,7 +194,11 @@ const Cotizar = (props) => {
                     <Row className="m-0 w-100 d-flex">
                         <Table>
                             <TableHead>
-                                <TableRow>
+                                <TableRow
+                                    className="w-100"
+                                    sx={{ display: 'table' }}
+                                >
+                                    <TableCell></TableCell>
                                     <TableCell>Ítem</TableCell>
                                     <TableCell>Actividad</TableCell>
                                     <TableCell>Unidad Medida</TableCell>
@@ -132,28 +208,148 @@ const Cotizar = (props) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow>
-                                    <TableCell>Ítem</TableCell>
-                                    <TableCell>Actividad</TableCell>
-                                    <TableCell>Unidad Medida</TableCell>
-                                    <TableCell>
-                                        Cantidad
-                                        {/* {parseInt(
+                                {cotizacion.actividades.map(
+                                    (actividad, index) => {
+                                        const {
+                                            id,
+                                            item,
+                                            actividadTitle,
+                                            unidadMedida,
+                                            cantidad,
+                                            precio,
+                                            valor,
+                                        } = actividad
+                                        // console.log(
+                                        //     index,
+                                        //     id,
+                                        //     item,
+                                        //     actividadTitle,
+                                        //     unidadMedida,
+                                        //     cantidad,
+                                        //     precio
+                                        // )
+                                        return (
+                                            <TableRow key={index}>
+                                                <RemoveCircleIcon
+                                                    onClick={(e) =>
+                                                        handleRemoveTableRow(
+                                                            e,
+                                                            index
+                                                        )
+                                                    }
+                                                />
+                                                <TableCell>
+                                                    <TextareaAutosize
+                                                        value={item}
+                                                        onChange={(e) =>
+                                                            handleActivityChange(
+                                                                e,
+                                                                index
+                                                            )
+                                                        }
+                                                        name="item"
+                                                        id="ActividadesItem"
+                                                        placeholder={item}
+                                                        cols="8"
+                                                        minRows={2}
+                                                        className="w-100"
+                                                    ></TextareaAutosize>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <TextareaAutosize
+                                                        value={actividadTitle}
+                                                        onChange={(e) =>
+                                                            handleActivityChange(
+                                                                e,
+                                                                index
+                                                            )
+                                                        }
+                                                        name="actividadTitle"
+                                                        id="ActividadesactividadTitle"
+                                                        placeholder={
+                                                            actividadTitle
+                                                        }
+                                                        cols="8"
+                                                        minRows={2}
+                                                        className="w-100"
+                                                    ></TextareaAutosize>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <TextareaAutosize
+                                                        value={unidadMedida}
+                                                        onChange={(e) =>
+                                                            handleActivityChange(
+                                                                e,
+                                                                index
+                                                            )
+                                                        }
+                                                        name="unidadMedida"
+                                                        id="ActividadesunidadMedida"
+                                                        placeholder={
+                                                            unidadMedida
+                                                        }
+                                                        cols="8"
+                                                        minRows={2}
+                                                        className="w-100"
+                                                    ></TextareaAutosize>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <input
+                                                        type="number"
+                                                        value={cantidad}
+                                                        onChange={(e) =>
+                                                            handleActivityChange(
+                                                                e,
+                                                                index
+                                                            )
+                                                        }
+                                                        placeholder={cantidad}
+                                                        name="cantidad"
+                                                        id="ActividadesCantidad"
+                                                        className="w-100"
+                                                    />
+                                                    {/* {parseInt(
                                             Cantidad
                                         ).toLocaleString('es-CO', {
                                             style: 'currency',
                                             currency: 'COP',
                                         })} */}
-                                    </TableCell>
-                                    <TableCell>Valor sin IVA</TableCell>
-                                </TableRow>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <input
+                                                        type="number"
+                                                        value={precio}
+                                                        onChange={(e) =>
+                                                            handleActivityChange(
+                                                                e,
+                                                                index
+                                                            )
+                                                        }
+                                                        placeholder={precio}
+                                                        name="precio"
+                                                        id="ActividadesPrecio"
+                                                        className="w-100"
+                                                    />
+                                                </TableCell>
+                                                <TableCell>{valor}</TableCell>
+                                            </TableRow>
+                                        )
+                                    }
+                                )}
                                 <TableRow>
-                                    <TableCell></TableCell>
+                                    <TableCell>
+                                        {' '}
+                                        <AddCircleIcon
+                                            onClick={handleNewTableRow}
+                                        />
+                                    </TableCell>
                                     <TableCell></TableCell>
                                     <TableCell></TableCell>
                                     <TableCell></TableCell>
                                     <TableCell>VALOR SUBTOTAL</TableCell>
-                                    <TableCell>VALOR SUBTOTAL</TableCell>
+                                    <TableCell>
+                                        {cotizacion.valorSubtotal}
+                                    </TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import withSendbird from '@sendbird/uikit-react/withSendbird'
 import SendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
 import { NavLink, useNavigate } from 'react-router-dom'
+import SnackBarAlert from '../../components/SnackBarAlert'
 import { auth, firestore } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
 import {
     createUserWithEmailAndPassword,
@@ -35,11 +36,25 @@ import Typography from '@mui/material/Typography'
 // })
 
 const Registro = (props) => {
-    const { showLogo, draftId, connect, createChannel, sbSdk } = props
+    const {
+        showLogo,
+        draftId,
+        connect,
+        createChannel,
+        sbSdk,
+        setDraftInfo,
+        draftInfo,
+        handleSave,
+    } = props
     // sessionStorage.draftId = draftID
     // useEffect(() => {
     //     conectarSB()
     // }, [connect])
+    const [alert, setAlert] = useState({
+        open: false,
+        message: '',
+        severity: 'success',
+    })
     const googleProvider = new GoogleAuthProvider()
     const _firestore = firestore
     // const usersRef = collection(_firestore, 'users')
@@ -103,6 +118,19 @@ const Registro = (props) => {
         }
     }
 
+    const handleAlert = (message, severity) => {
+        setAlert({ ...alert, open: true, message: message, severity: severity })
+    }
+
+    const handleClose = (event, reason) => {
+        // console.log(reason, event)
+        if (reason === 'clickaway') {
+            return
+        } else {
+            setAlert({ ...alert, open: false, message: '' })
+        }
+    }
+
     const handleClick = (e) => {
         e.preventDefault()
         if (userSignupRol) {
@@ -110,10 +138,10 @@ const Registro = (props) => {
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         var user = userCredential.user
-                        console.log(
-                            'Anonymous account successfully upgraded',
-                            user
-                        )
+                        // console.log(
+                        //     'Anonymous account successfully upgraded',
+                        //     user
+                        // )
                         if (typeof connect == 'function') {
                             conectarSB(user.uid)
                         } else console.log('no hay connect', typeof connect)
@@ -132,12 +160,12 @@ const Registro = (props) => {
                             userMail: user.email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
                             userId: user.uid,
-                            channelUrl: channelUrl || '',
+                            userChannelUrl: channelUrl || '',
                             // userName: user.displayName,
                         }
                         console.log(userSignupRol, channelUrl)
                         if (userSignupRol == 1) {
-                            data.createdDrafts = draftId
+                            data.userCreatedDrafts = [draftId]
                             userProResToFirestore(data, user.uid)
                         }
                         if (userSignupRol == 2) {
@@ -147,17 +175,26 @@ const Registro = (props) => {
                         // localStorage.setItem('role', JSON.stringify(userSignupRol))
                         localStorage.role = JSON.stringify(userSignupRol)
                         localStorage.userID = JSON.stringify(user.uid)
-                        navigate('/app/ajustes')
+                        handleAlert('Cuenta actualizada con éxito!', 'success')
+                        if (draftInfo) {
+                            setDraftInfo({
+                                ...draftInfo,
+                                draftPropietarioResidente: user.uid,
+                            })
+                            handleSave()
+                        } else {
+                            navigate('/app/ajustes')
+                        }
                     })
                     .catch((err) => {
-                        console.log('Error upgrading anonymous account', err)
-                        console.log(err.code)
+                        // console.log('Error upgrading anonymous account', err)
+                        // console.log(err.code)
                         var errorCode = err.code
                         var errorMessage = err.message
                         if (errorCode === 'auth/wrong-password') {
-                            alert('Clave incorrecta.')
+                            handleAlert('Clave incorrecta!', 'error')
                         } else {
-                            alert(errorMessage)
+                            handleAlert(errorMessage, 'error')
                         }
                     })
             }
@@ -172,14 +209,14 @@ const Registro = (props) => {
             const signUp = () => {
                 signInWithPopup(auth, googleProvider)
                     .then((result) => {
-                        console.log('googleProvider', result)
+                        // console.log('googleProvider', result)
                         // This gives you a Google Access Token. You can use it to access the Google API.
                         const credential =
                             GoogleAuthProvider.credentialFromResult(result)
                         const token = credential.accessToken
                         // The signed-in user info.
                         const user = result.user
-                        console.log('Account successfully upgraded', user)
+                        // console.log('Account successfully upgraded', user)
                         // almacena un channelUrl
                         if (typeof connect == 'function') {
                             conectarSB(user.uid)
@@ -202,7 +239,7 @@ const Registro = (props) => {
                             channelUrl: channelUrl || '',
                             // userName: user.displayName,
                         }
-                        console.log(userSignupRol, channelUrl)
+                        // console.log(userSignupRol, channelUrl)
                         if (userSignupRol == 1) {
                             data.createdDrafts = draftId
                             userProResToFirestore(data, user.uid)
@@ -212,7 +249,16 @@ const Registro = (props) => {
                         }
                         localStorage.role = JSON.stringify(userSignupRol) // localStorage.setItem('role', JSON.stringify(userSignupRol))
                         localStorage.userID = JSON.stringify(user.uid)
-                        navigate('/app/ajustes')
+                        handleAlert('Cuenta actualizada con éxito!', 'success')
+                        if (draftInfo) {
+                            setDraftInfo({
+                                ...draftInfo,
+                                draftPropietarioResidente: user.uid,
+                            })
+                            handleSave()
+                        } else {
+                            navigate('/app/ajustes')
+                        }
                     })
                     .catch((error) => {
                         // Handle Errors here.
@@ -223,11 +269,11 @@ const Registro = (props) => {
                         // The AuthCredential type that was used.
                         const credential =
                             GoogleAuthProvider.credentialFromError(error)
-                        console.log(
-                            'Error upgrading anonymous account',
-                            errorMessage,
-                            error
-                        )
+                        // console.log(
+                        //     'Error upgrading anonymous account',
+                        //     errorMessage,
+                        //     error
+                        // )
                         if (errorCode === 'auth/wrong-password') {
                             alert('Clave incorrecta.')
                         } else {
@@ -445,6 +491,14 @@ const Registro = (props) => {
                                     </Button>
                                     <br />
                                 </Col>
+                                {alert.open && (
+                                    <SnackBarAlert
+                                        message={alert.message}
+                                        onClose={handleClose}
+                                        severity={alert.severity} // success, error, warning, info, default
+                                        open={alert.open}
+                                    />
+                                )}
                             </Col>
                         </Form>
                     </Col>
@@ -460,6 +514,9 @@ Registro.propTypes = {
     createChannel: PropTypes.func.isRequired,
     sbSdk: PropTypes.object.isRequired,
     draftId: PropTypes.string,
+    setDraftInfo: PropTypes.func,
+    draftInfo: PropTypes.object,
+    handleSave: PropTypes.func,
 }
 
 export default withSendbird(Registro, (state) => ({
