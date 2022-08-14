@@ -7,6 +7,7 @@ import { signOut } from 'firebase/auth'
 // import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
 import LogoMenuComunidadDezzpo from '../../../public/assets/img/IsologoUserApp.png'
 
+import SnackBarAlert from '../../app/components/SnackBarAlert'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
@@ -27,7 +28,6 @@ import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputCompone
 import TimerIcon from '@mui/icons-material/Timer'
 import SettingsIcon from '@mui/icons-material/Settings'
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup'
-
 // const match = useMatch('/')
 // console.log(match)
 
@@ -56,12 +56,28 @@ export default function Navigator(props) {
     const handleSignout = () => {
         signOut(auth)
             .then(() => {
-                console.log('Cerro su sesión de manera exitosa!')
+                handleClick()
+                // console.log('Cerro su sesión de manera exitosa!')
             })
             .catch((error) => {
                 console.log(error)
             })
-        navigate('/')
+    }
+
+    const [open, setOpen] = React.useState(false)
+
+    const handleClick = () => {
+        setOpen(true)
+    }
+
+    const handleClose = (event, reason) => {
+        console.log(reason, event)
+        if (reason === 'clickaway') {
+            return
+        } else {
+            navigate('/')
+            setOpen(false)
+        }
     }
 
     const categories = userID
@@ -208,6 +224,14 @@ export default function Navigator(props) {
                         )}
 
                         <Divider sx={{ mt: 2 }} />
+                        {open && (
+                            <SnackBarAlert
+                                message="Cerro su sesión de manera exitosa!"
+                                onClose={handleClose}
+                                severity="success" // success, error, warning, info, default
+                                open={open}
+                            />
+                        )}
                     </Box>
                 ))}
                 {userID ? (

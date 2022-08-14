@@ -8,6 +8,7 @@ import {
     useNavigate,
     useParams,
 } from 'react-router-dom'
+import ListadoCategorias from '../../components/ListadoCategorias'
 import ScrollToTopOnMount from '../../components/ScrollToTop'
 import { v4 as uuidv4 } from 'uuid'
 import {
@@ -43,17 +44,17 @@ const NuevoProyecto = (props) => {
     const draftCategory =
         categoriaProfesional || paramCategoriaProfesional || ''
     const draftProject = tipoProyecto || paramTipoProyecto || ''
-    console.log(
-        'A',
-        draftCategory,
-        categoriaProfesional,
-        paramCategoriaProfesional
-    )
-    console.log('B', draftProject, tipoProyecto, paramTipoProyecto)
+    // console.log(
+    //     'A',
+    //     draftCategory,
+    //     categoriaProfesional,
+    //     paramCategoriaProfesional
+    // )
+    // console.log('B', draftProject, tipoProyecto, paramTipoProyecto)
     const requerimiento = localStorage.requerimiento || undefined
-    console.log('requerimiento-local', requerimiento)
+    // console.log('requerimiento-local', requerimiento)
     // console.log(requerimiento.draftId)
-    const hideRegister = auth
+    const [hideRegister, setHideRegister] = useState(auth)
     const _firestore = firestore
 
     const categoriaRef = collection(_firestore, 'categoriasServicios')
@@ -73,7 +74,7 @@ const NuevoProyecto = (props) => {
         draftTotal: 0,
         draftName: '',
         draftDescription: '',
-        draftPropietarioResidente: '',
+        draftPropietarioResidente: auth.currentUser.uid || '',
         draftCreated: '',
         draftPriority: '',
         draftCity: '',
@@ -95,20 +96,11 @@ const NuevoProyecto = (props) => {
     const handleClose = () => setOpen(false)
 
     const draftToFirestore = async (updateInfo, projectID) => {
-        await setDoc(doc(draftRef, projectID), updateInfo)
+        await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
     }
 
     const categoriasFromFirestore = async () => {
         try {
-            // const collectionConsult =
-            //     draftInfo.draftCategory !== ''
-            //         ? draftInfo.draftCategory
-            //         : categoriaProfesional
-            // console.log(
-            //     collectionConsult,
-            //     draftInfo.draftCategory,
-            //     categoriaProfesional
-            // )
             // 'aPTAljOeD48FbniBg6Lw' main document categories
             const subCategoriaRef = collection(
                 doc(categoriaRef, 'aPTAljOeD48FbniBg6Lw'),
@@ -133,17 +125,17 @@ const NuevoProyecto = (props) => {
                     const data = docSnap.docs.map((element) => ({
                         ...element.data(),
                     }))
-                    console.log(
-                        data,
-                        draftInfo.draftCategory,
-                        categoriaProfesional
-                    )
+                    // console.log(
+                    //     data,
+                    //     draftInfo.draftCategory,
+                    //     categoriaProfesional
+                    // )
                     if (data.length > 0) {
                         setCategoriaInfo({
                             ...categoriaInfo,
                             data,
                         })
-                        console.log(categoriaInfo)
+                        // console.log(categoriaInfo)
                     }
                 } else {
                     console.log(
@@ -158,16 +150,17 @@ const NuevoProyecto = (props) => {
     }, [draftInfo])
 
     const handleSave = () => {
-        console.log(draftInfo)
+        // hideRegister ? navigate('/app/directorio-requerimientos') : goForward()
+        // console.log(draftInfo)
         const snap = draftToFirestore(draftInfo, draftInfo.draftID)
+        // setHideRegister(true)
         snap.then((docSnap) => {
-            console.log(docSnap)
+            // console.log(docSnap)
+            navigate('/app/directorio-requerimientos')
         })
-        hideRegister ? navigate('/app/directorio-requerimientos') : goForward()
     }
 
     // TODO Crear funcion para leer los borradores de requerimientos desde firebase y desde local storage
-
     const goForward = () => {
         if (activeStep < steps.length) {
             let active = activeStep + 1
@@ -179,7 +172,7 @@ const NuevoProyecto = (props) => {
 
     const handleChange = (event) => {
         event.preventDefault()
-        console.log('Detecto:', event, draftInfo)
+        // console.log('Detecto:', event, draftInfo)
         setDraftInfo({
             ...draftInfo,
             [event.target.name]: event.target.value,
@@ -207,42 +200,46 @@ const NuevoProyecto = (props) => {
                 {/* <div className="pasos-fixed"></div> */}
                 {activeStep == 0 && (
                     <Col>
-                        <ScrollToTopOnMount />
-                        <Row className="nuevoProyectoBuscador">
-                            <Col
-                                className="align-items-start p-4 m-4"
-                                md={5}
-                                sm={8}
-                            >
-                                <Col className="opacidadNegro p-0">
-                                    <p className="headline-l textBlanco m-4 p-0">
-                                        {' '}
-                                        Con ayuda de la comunidad haz realidad
-                                        la casa que deseas. Encuentra un
-                                        profesional Seguro y Confiable, para
-                                        cada trabajo. Desde iluminación y
-                                        pequeños arreglos, hasta diseños de
-                                        ingeniería y remodelaciones completas.
-                                    </p>
+                        {(draftInfo.draftProject === '' ||
+                            draftInfo.draftCategory === '') && (
+                            <Row className="nuevoProyectoBuscador">
+                                <Col
+                                    className="align-items-start p-4 m-4"
+                                    md={5}
+                                    sm={8}
+                                >
+                                    <Col className="opacidadNegro p-0">
+                                        <p className="headline-l textBlanco m-4 p-0">
+                                            {' '}
+                                            Con ayuda de la comunidad haz
+                                            realidad la casa que deseas.
+                                            Encuentra un profesional Seguro y
+                                            Confiable, para cada trabajo. Desde
+                                            iluminación y pequeños arreglos,
+                                            hasta diseños de ingeniería y
+                                            remodelaciones completas.
+                                        </p>
+                                    </Col>
                                 </Col>
-                            </Col>
-                            {/* Se importa formulario nuevo proyecto */}
-                            <Col
-                                className="col m-4 p-0"
-                                xl={4}
-                                lg={6}
-                                xm={6}
-                                md={8}
-                                sm={12}
-                                xs={12}
-                            >
-                                <BuscadorNuevoProyecto
-                                    data={state}
-                                    setDraftInfo={setDraftInfo}
-                                    draftInfo={draftInfo}
-                                ></BuscadorNuevoProyecto>
-                            </Col>
-                        </Row>
+                                {/* Se importa formulario nuevo proyecto */}
+                                <Col
+                                    className="col m-4 p-0"
+                                    xl={4}
+                                    lg={6}
+                                    xm={6}
+                                    md={8}
+                                    sm={12}
+                                    xs={12}
+                                >
+                                    <BuscadorNuevoProyecto
+                                        data={state}
+                                        setDraftInfo={setDraftInfo}
+                                        draftInfo={draftInfo}
+                                    ></BuscadorNuevoProyecto>
+                                </Col>
+                            </Row>
+                        )}
+                        <ScrollToTopOnMount />
                         <Row className="w-100 m-0">
                             <Col className="p-2" lg={8} md={10}>
                                 <p>
@@ -252,6 +249,22 @@ const NuevoProyecto = (props) => {
                                     siguiente paso podrás modificar la cantidad
                                     de obra que requieres.
                                 </p>
+                                <Form.Select
+                                    className="casillaSeleccion"
+                                    name="draftCategory"
+                                    value={draftInfo.draftCategory}
+                                    onChange={handleChange}
+                                >
+                                    <option>seleccionar categoria</option>{' '}
+                                    {ListadoCategorias.map((categoria) => {
+                                        const { label, key } = categoria
+                                        return (
+                                            <option key={key} value={label}>
+                                                {label}
+                                            </option>
+                                        )
+                                    })}
+                                </Form.Select>
                             </Col>
                         </Row>
                         {/* setActiveStep */}
@@ -637,7 +650,11 @@ const NuevoProyecto = (props) => {
                                 <Col className="col-10">
                                     <Row className="pt-4 pb-4 w-100 justify-content-center">
                                         <Button
-                                            onClick={handleSave}
+                                            onClick={
+                                                !hideRegister
+                                                    ? goForward
+                                                    : handleSave
+                                            }
                                             style={{ paddingRight: '10px' }}
                                             className="btn-round btn-high btn-main body-1 w-auto"
                                             variant="primary"
@@ -681,7 +698,10 @@ const NuevoProyecto = (props) => {
                         </Col>
 
                         <Registro
+                            setDraftInfo={setDraftInfo}
+                            draftInfo={draftInfo}
                             draftId={draftInfo.draftID}
+                            handleSave={handleSave}
                             showLogo={false}
                             className="pb-4"
                         ></Registro>

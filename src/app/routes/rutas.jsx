@@ -88,6 +88,10 @@ class Rutas extends React.Component {
                             element={<NuevoProyecto />}
                         />
                         <Route
+                            path="nuevo-proyecto/*"
+                            element={<NuevoProyecto />}
+                        />
+                        <Route
                             path="patrocinadores"
                             element={<Patrocinadores />}
                         />

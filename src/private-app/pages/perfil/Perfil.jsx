@@ -16,6 +16,7 @@ import CincoEstrellas from './CincoEstrellas'
 import Comentarios from '../../../private-app/components/Comentarios'
 import ChipsCategories from '../../components/ChipsCategories'
 import ListadoCategorias from '../../../app/components/ListadoCategorias'
+import SnackBarAlert from '../../../app/components/SnackBarAlert'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -45,6 +46,11 @@ const Perfil = (props) => {
         rol: selectRole ? selectRole : 2,
     })
     // console.log(userRol.rol)
+    const [alert, setAlert] = useState({
+        open: false,
+        message: '',
+        severity: 'success',
+    })
     // Este es el id que se obtienen como parametro de busqueda o consulta de un perfil especifico
     const userId =
         state != undefined && state != null && state.id != undefined
@@ -99,6 +105,7 @@ const Perfil = (props) => {
         userChannelUrl: undefined,
         userPhotoUrl: '',
         userGalleryUrl: [],
+        userCreatedDrafts: [],
         userId: '',
         userJoined: '',
         userProfession: '',
@@ -126,10 +133,14 @@ const Perfil = (props) => {
                 uploadBytes(profilesRef, file[0]).then((response) => {
                     const { bucket, path_ } = response.ref._location
                     const base = `gs://${bucket}/${path_}`
-                    console.log(
+                    handleAlert(
                         'Se cargo una imagen de perfil al storage',
-                        base
+                        'success'
                     )
+                    // console.log(
+                    //     'Se cargo una imagen de perfil al storage',
+                    //     base
+                    // )
                     const gsReference = ref(_storage, base)
                     getDownloadURL(gsReference)
                         .then((url) => {
@@ -184,6 +195,10 @@ const Perfil = (props) => {
                         })
                 })
             } catch (e) {
+                handleAlert(
+                    'La imagen de perfil no se cargo al storage',
+                    'error'
+                )
                 console.log('La imagen de perfil no se cargo al storage', e)
             }
         }
@@ -202,10 +217,14 @@ const Perfil = (props) => {
                 uploadBytes(userGalleryRef, file[0]).then((response) => {
                     const { bucket, path_ } = response.ref._location
                     const base = `gs://${bucket}/${path_}`
-                    console.log(
-                        'Se cargo una imagen a la galleria de usuario del storage',
-                        base
+                    handleAlert(
+                        'Se cargo una imagen a la galleria del usuario',
+                        'success'
                     )
+                    // console.log(
+                    //     'Se cargo una imagen a la galleria de usuario del storage',
+                    //     base
+                    // )
                     const gsReference = ref(_storage, base)
                     getDownloadURL(gsReference)
                         .then((url) => {
@@ -260,8 +279,25 @@ const Perfil = (props) => {
                         })
                 })
             } catch (e) {
+                handleAlert(
+                    'La imagen de perfil no se cargo al storage',
+                    'error'
+                )
                 console.log('La imagen de perfil no se cargo al storage', e)
             }
+        }
+    }
+
+    const handleAlert = (message, severity) => {
+        setAlert({ ...alert, open: true, message: message, severity: severity })
+    }
+
+    const handleCloseAlert = (event, reason) => {
+        // console.log(reason, event)
+        if (reason === 'clickaway') {
+            return
+        } else {
+            setAlert({ ...alert, open: false, message: '' })
         }
     }
 
@@ -382,13 +418,21 @@ const Perfil = (props) => {
         }
     }, [])
 
-    console.log(userInfo.userCategoriesChips)
+    // console.log(userInfo.userCategoriesChips)
 
     return (
         <>
             <Container fluid className="p-0">
                 <Row className="h-100 pt-4 pb-4">
                     <Col className="col" md={10} sm={12}>
+                        {alert.open && (
+                            <SnackBarAlert
+                                message={alert.message}
+                                onClose={handleCloseAlert}
+                                severity={alert.severity} // success, error, warning, info, default
+                                open={alert.open}
+                            />
+                        )}
                         <Row className="border-green_buttom perfil-banner m-0 w-100 d-flex">
                             <Col className="ms-4 pt-4 pb-4 align-items-start">
                                 <div
@@ -509,7 +553,7 @@ const Perfil = (props) => {
                                                 </h3>
                                                 {userInfo.userCategoriesChips
                                                     .length > 0 ? (
-                                                    <ChipsCategories 
+                                                    <ChipsCategories
                                                         listadoCategorias={
                                                             userInfo.userCategoriesChips
                                                         }

@@ -198,9 +198,18 @@ const ApendiceCostos = () => {
             <Container fluid className="p-0">
                 {/* <AdministrarDB /> */}
                 <Row className="m-0 w-100 d-flex ps-4 pe-4">
-                    <Table className="">
+                    <Table
+                        className=""
+                        sx={{
+                            display: { sm: 'grid', xs: 'grid' },
+                            overflowX: 'scroll',
+                        }}
+                    >
                         <TableHead>
-                            <TableRow>
+                            <TableRow
+                                className="w-100"
+                                sx={{ display: 'table' }}
+                            >
                                 <TableCell>subCategoria</TableCell>
                                 <TableCell>Unidad Medida</TableCell>
                                 <TableCell>Description</TableCell>
