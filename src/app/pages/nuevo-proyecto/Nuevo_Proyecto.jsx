@@ -18,7 +18,7 @@ import {
     getDocFromServer,
     getDocs,
 } from 'firebase/firestore'
-import { firestore } from '../../../firebase/firebaseClient'
+import { firestore, auth } from '../../../firebase/firebaseClient'
 import '../../../../public/assets/css/nuevo_proyecto.css'
 import Ubicacion from '../ubicacion/Ubicacion'
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
@@ -37,9 +37,11 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 
 const NuevoProyecto = (props) => {
     const draftID = uuidv4()
+    const user = auth.currentUser || {}
+    const userID = user.uid ? true : false
     const navigate = useNavigate()
     const { state } = useLocation() || {}
-    const { categoriaProfesional, tipoProyecto, auth } = state || {}
+    const { categoriaProfesional, tipoProyecto } = state || {} // auth
     const { paramCategoriaProfesional, paramTipoProyecto } = useParams()
     const draftCategory =
         categoriaProfesional || paramCategoriaProfesional || ''
@@ -54,7 +56,7 @@ const NuevoProyecto = (props) => {
     const requerimiento = localStorage.requerimiento || undefined
     // console.log('requerimiento-local', requerimiento)
     // console.log(requerimiento.draftId)
-    const [hideRegister, setHideRegister] = useState(auth)
+    const [hideRegister, setHideRegister] = useState(userID)
     const _firestore = firestore
 
     const categoriaRef = collection(_firestore, 'categoriasServicios')
@@ -74,7 +76,7 @@ const NuevoProyecto = (props) => {
         draftTotal: 0,
         draftName: '',
         draftDescription: '',
-        draftPropietarioResidente: auth.currentUser.uid || '',
+        draftPropietarioResidente: user.uid || '',
         draftCreated: '',
         draftPriority: '',
         draftCity: '',
