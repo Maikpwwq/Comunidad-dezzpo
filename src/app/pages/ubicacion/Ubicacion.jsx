@@ -160,11 +160,13 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                                     className="w-100"
                                     apiKey={googleApiKey}
                                     onPlaceSelected={(place) => {
-                                        const selectedCity =
-                                            place.formatted_address
+                                        const { formatted_address } = place // , geometry
+                                        // const {location} = geometry
+                                        // const {lat} = location
+                                        // console.log(place)
                                         setLocationInfo({
                                             ...locationInfo,
-                                            city: selectedCity,
+                                            city: formatted_address,
                                         })
                                     }}
                                     name="city"
@@ -175,7 +177,7 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                                 controlId="formBasicStreet"
                             >
                                 <Form.Label className="mb-0">
-                                    2. Ubique su dirección en el mapa
+                                    2. Clickear una dirección en el mapa
                                 </Form.Label>
                                 <Form.Control
                                     type="text"
