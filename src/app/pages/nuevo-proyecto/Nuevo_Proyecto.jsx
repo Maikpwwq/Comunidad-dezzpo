@@ -98,6 +98,7 @@ const NuevoProyecto = (props) => {
     const handleClose = () => setOpen(false)
 
     const draftToFirestore = async (updateInfo, projectID) => {
+        // console.log(updateInfo)
         await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
     }
 
@@ -154,7 +155,7 @@ const NuevoProyecto = (props) => {
     const handleSave = () => {
         // hideRegister ? navigate('/app/directorio-requerimientos') : goForward()
         // console.log(draftInfo)
-        const snap = draftToFirestore(draftInfo, draftInfo.draftID)
+        const snap = draftToFirestore(draftInfo, draftInfo.draftId)
         // setHideRegister(true)
         snap.then((docSnap) => {
             // console.log(docSnap)
@@ -702,7 +703,7 @@ const NuevoProyecto = (props) => {
                         <Registro
                             setDraftInfo={setDraftInfo}
                             draftInfo={draftInfo}
-                            draftId={draftInfo.draftID}
+                            // draftId={draftInfo.draftID}
                             handleSave={handleSave}
                             showLogo={false}
                             className="pb-4"

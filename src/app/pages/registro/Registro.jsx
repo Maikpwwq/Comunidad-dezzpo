@@ -38,7 +38,7 @@ import Typography from '@mui/material/Typography'
 const Registro = (props) => {
     const {
         showLogo,
-        draftId,
+        // draftId,
         connect,
         createChannel,
         sbSdk,
@@ -77,6 +77,7 @@ const Registro = (props) => {
     // }
 
     const userProResToFirestore = async (updateInfo, userID) => {
+        console.log(updateInfo)
         await setDoc(doc(usersProResRef, userID), updateInfo)
     }
 
@@ -90,32 +91,36 @@ const Registro = (props) => {
     }
 
     const conectarSB = (userId) => {
-        connect(userId)
-            .then((user) => {
-                console.log('user', user)
-            })
-            .catch((error) => {
-                console.log('error', error)
-            })
-    }
-
-    const crearCanal = (userId) => {
-        // console.log(sdk)
-        if (typeof sbSdk.GroupChannelParams == 'function') {
-            const param = new sbSdk.GroupChannelParams()
-            param.addUserIds([userId])
-            param.setName('Comentarios')
-            // console.log('param', param)
-            createChannel(param)
-                .then((channel) => {
-                    const { url, name, coverUrl, members } = channel
-                    setChannelUrl(url)
-                    console.log('channel', url, name, coverUrl, members)
+        if (typeof connect == 'function') {
+            connect(userId)
+                .then((user) => {
+                    console.log('user', user)
                 })
                 .catch((error) => {
                     console.log('error', error)
                 })
-        }
+        } else console.log('no hay connect', typeof connect)
+    }
+
+    const crearCanal = (userId) => {
+        // console.log(sdk)
+        if (typeof createChannel == 'function' && typeof sbSdk === 'object') {
+            if (typeof sbSdk.GroupChannelParams == 'function') {
+                const param = new sbSdk.GroupChannelParams()
+                param.addUserIds([userId])
+                param.setName('Comentarios')
+                // console.log('param', param)
+                createChannel(param)
+                    .then((channel) => {
+                        const { url, name, coverUrl, members } = channel
+                        setChannelUrl(url)
+                        console.log('channel', url, name, coverUrl, members)
+                    })
+                    .catch((error) => {
+                        console.log('error', error)
+                    })
+            }
+        } else console.log('no hay channel', typeof createChannel, typeof sbSdk)
     }
 
     const handleAlert = (message, severity) => {
@@ -138,34 +143,21 @@ const Registro = (props) => {
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         var user = userCredential.user
-                        // console.log(
-                        //     'Anonymous account successfully upgraded',
-                        //     user
-                        // )
-                        if (typeof connect == 'function') {
-                            conectarSB(user.uid)
-                        } else console.log('no hay connect', typeof connect)
-                        if (
-                            typeof createChannel == 'function' &&
-                            typeof sbSdk === 'object'
-                        ) {
-                            crearCanal(user.uid)
-                        } else
-                            console.log(
-                                'no hay channel',
-                                typeof createChannel,
-                                typeof sbSdk
-                            )
+                        conectarSB(user.uid)
+                        crearCanal(user.uid)
                         const data = {
                             userMail: user.email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
                             userId: user.uid,
                             userChannelUrl: channelUrl || '',
+                            createdDrafts: [],
                             // userName: user.displayName,
                         }
                         console.log(userSignupRol, channelUrl)
                         if (userSignupRol == 1) {
-                            data.userCreatedDrafts = [draftId]
+                            if (draftInfo) {
+                                data.createdDrafts.push(draftInfo.draftId)
+                            }
                             userProResToFirestore(data, user.uid)
                         }
                         if (userSignupRol == 2) {
@@ -216,32 +208,21 @@ const Registro = (props) => {
                         const token = credential.accessToken
                         // The signed-in user info.
                         const user = result.user
-                        // console.log('Account successfully upgraded', user)
-                        // almacena un channelUrl
-                        if (typeof connect == 'function') {
-                            conectarSB(user.uid)
-                        } else console.log('no hay connect', typeof connect)
-                        if (
-                            typeof createChannel == 'function' &&
-                            typeof sbSdk === 'object'
-                        ) {
-                            crearCanal(user.uid)
-                        } else
-                            console.log(
-                                'no hay channel',
-                                typeof createChannel,
-                                typeof sbSdk
-                            )
+                        conectarSB(user.uid)
+                        crearCanal(user.uid)
                         const data = {
                             userMail: user.email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
                             userId: user.uid,
                             channelUrl: channelUrl || '',
+                            createdDrafts: [],
                             // userName: user.displayName,
                         }
                         // console.log(userSignupRol, channelUrl)
                         if (userSignupRol == 1) {
-                            data.createdDrafts = draftId
+                            if (draftInfo) {
+                                data.createdDrafts.push(draftInfo.draftId)
+                            }
                             userProResToFirestore(data, user.uid)
                         }
                         if (userSignupRol == 2) {

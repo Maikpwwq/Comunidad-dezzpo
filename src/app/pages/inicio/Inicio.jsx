@@ -226,11 +226,12 @@ const Inicio = (props) => {
                                     </p>
                                     <p className="body-1 textBlanco flex-column">
                                         <strong className="pb-4">
-                                            Selecciona el perfil adecuado y
-                                            consigue algunas cotizaciones.
+                                            Consigue hasta cuatro cotizaciones y
+                                            selecciona el perfil adecuado para
+                                            el servicio.
                                         </strong>{' '}
-                                        El servicio profesional se pondrá en
-                                        contacto con tigo. <br />
+                                        El profesional se pondrá en contacto con
+                                        tigo. <br />
                                     </p>
                                 </Col>
                                 <Col
@@ -273,10 +274,11 @@ const Inicio = (props) => {
                                     </p>
                                     <p className="body-1 textBlanco flex-column">
                                         <strong className="pb-4">
-                                            Busca la oferta indicada para ti.
+                                            Observa las oferta indicadas para
+                                            ti.
                                         </strong>{' '}
-                                        Filtra los proyectos de los propietarios
-                                        y postulate. <br />
+                                        Filtra requerimientos por ubicación y
+                                        postulate. <br />
                                     </p>
                                 </Col>
                                 <Col

@@ -348,14 +348,16 @@ const Perfil = (props) => {
                         //console.log(distanceTime)
                         if (data) {
                             const chipsInfo = []
-                            data.userCategories.forEach((chip) => {
-                                // console.log(chip)
-                                ListadoCategorias.forEach((cat) => {
-                                    if (chip === cat.label) {
-                                        chipsInfo.push(cat)
-                                    }
+                            if (data.userCategories) {
+                                data.userCategories.forEach((chip) => {
+                                    // console.log(chip)
+                                    ListadoCategorias.forEach((cat) => {
+                                        if (chip === cat.label) {
+                                            chipsInfo.push(cat)
+                                        }
+                                    })
                                 })
-                            })
+                            }
                             setUserInfo({
                                 ...userInfo,
                                 userChannelUrl: data.userChannelUrl
