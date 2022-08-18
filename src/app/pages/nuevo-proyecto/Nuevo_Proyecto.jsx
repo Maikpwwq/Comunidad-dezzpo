@@ -27,13 +27,17 @@ import SubCategorias from '../../pages/categorias/Sub_Categorias'
 import PasoAPaso from '../../components/paso_a_paso/Paso_A_Paso'
 import TablaSubCategoriaCantidades from './Tabla_SubCategoria_Cantidades'
 // react-bootrstrap
+import Box from '@mui/material/Box'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Modal from '@mui/material/Modal'
+import Typography from '@mui/material/Typography'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
 const NuevoProyecto = (props) => {
     const draftID = uuidv4()
@@ -57,6 +61,7 @@ const NuevoProyecto = (props) => {
     // console.log('requerimiento-local', requerimiento)
     // console.log(requerimiento.draftId)
     const [hideRegister, setHideRegister] = useState(userID)
+    const [showMore, setShowMore] = useState(false)
     const _firestore = firestore
 
     const categoriaRef = collection(_firestore, 'categoriasServicios')
@@ -152,6 +157,10 @@ const NuevoProyecto = (props) => {
         //} categoriaProfesional
     }, [draftInfo])
 
+    const handleShowMore = () => {
+        setShowMore(!showMore)
+    }
+
     const handleSave = () => {
         // hideRegister ? navigate('/app/directorio-requerimientos') : goForward()
         // console.log(draftInfo)
@@ -191,9 +200,9 @@ const NuevoProyecto = (props) => {
 
     const steps = [
         'Categoria/Subcategoria',
-        'Registra los ajustes',
+        'Elige tus ajustes',
         'Programa la visita',
-        'Registro',
+        'Registrarse',
     ]
 
     return (
@@ -381,141 +390,180 @@ const NuevoProyecto = (props) => {
                                         deba conocer.
                                     </Form.Text>
                                 </Form.Group>
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="formNewProjectSize"
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    className="pb-2"
+                                    onClick={handleShowMore}
                                 >
-                                    <Form.Label className="body-2 text-white">
-                                        Escoge el tamaño
-                                    </Form.Label>
-                                    <Form.Select
-                                        name="draftSize"
-                                        value={draftInfo.draftSize}
-                                        onChange={handleChange}
-                                    >
-                                        <option>
-                                            Selecciona el tamaño del proyecto
-                                        </option>
-                                        <option value="sencillo">
-                                            Sencillo
-                                        </option>
-                                        <option value="mediano">Mediano</option>
-                                        <option value="doble">Doble</option>
-                                        <option value="grande">Grande</option>
-                                        <option value="Otra">Otro</option>
-                                    </Form.Select>
-                                </Form.Group>
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="formNewProjectProperty"
-                                >
-                                    <Form.Label className="body-2 text-white">
-                                        ¿Qué tipo de propiedad es?
-                                    </Form.Label>
-                                    <Form.Select
-                                        name="draftProperty"
-                                        value={draftInfo.draftProperty}
-                                        onChange={handleChange}
-                                    >
-                                        <option>
-                                            Selecciona el tipo de propiedad
-                                        </option>
-                                        <option value="Colonial">
-                                            Propiedad Colonial (1800 - 1920){' '}
-                                        </option>
-                                        <option value="SubUrbana">
-                                            Propiedad suburbana (1920-1960){' '}
-                                        </option>
-                                        <option value="Moderna">
-                                            Propiedad moderna (1960-presente){' '}
-                                        </option>
-                                        <option value="Otra">Otra </option>
-                                    </Form.Select>
-                                </Form.Group>
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="formNewProjectRooms"
-                                >
-                                    <Form.Label className="body-2 text-white">
-                                        ¿Cuantas habitaciones y/o espacios seran
-                                        intervenidos?
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Por favor especifica"
-                                        name="draftRooms"
-                                        value={draftInfo.draftRooms}
-                                        onChange={handleChange}
-                                    />
-                                    <Form.Text className="text-muted">
-                                        Podremos estimar mejor la cantidad de
-                                        obra.
-                                    </Form.Text>
-                                </Form.Group>
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="formNewProjectPlans"
-                                >
-                                    <Form.Label className="body-2 text-white">
-                                        ¿Han sido diseñados planos
-                                        arquitectonicos para este proyecto?
-                                    </Form.Label>
-                                    <Form.Select
-                                        name="draftPlans"
-                                        value={draftInfo.draftPlans}
-                                        onChange={handleChange}
-                                    >
-                                        <option>
-                                            Selecciona el estado actual
-                                        </option>
-                                        <option value="Aproved">
-                                            Aprobados
-                                        </option>
-                                        <option value="Aplied">Aplicado</option>
-                                        <option value="NotAplied">
-                                            Sin aplicar aun
-                                        </option>
-                                        <option value="NotSure">
-                                            No estoy seguro
-                                        </option>
-                                        <option value="NotNeed">
-                                            No son necesarios en esta
-                                            oportunidad
-                                        </option>
-                                    </Form.Select>
-                                </Form.Group>
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="formNewProjectPermissions"
-                                >
-                                    <Form.Label className="body-2 text-white">
-                                        ¿Cúal es el estado de los permisos para
-                                        este proyecto?
-                                    </Form.Label>
-                                    <Form.Select
-                                        name="draftPermissions"
-                                        value={draftInfo.draftPermissions}
-                                        onChange={handleChange}
-                                    >
-                                        <option>
-                                            Selecciona el estado actual
-                                        </option>
-                                        <option value="Aproved">
-                                            Aprobados
-                                        </option>
-                                        <option value="Aplied">Aplicado</option>
-                                        <option value="NotAplied">
-                                            Sin aplicar aun
-                                        </option>
-                                        <option value="NotSure">
-                                            No estoy seguro
-                                        </option>
-                                        <option value="NotNeed">
-                                            No son necesarios en esta
-                                            oportunidad
-                                        </option>
-                                    </Form.Select>
-                                </Form.Group>
+                                    Ofrece mayores detalles
+                                    {showMore ? (
+                                        <ExpandLessIcon />
+                                    ) : (
+                                        <ExpandMoreIcon />
+                                    )}
+                                </Typography>
+                                {showMore && (
+                                    <Box>
+                                        <Form.Group
+                                            className="mb-3"
+                                            controlId="formNewProjectSize"
+                                        >
+                                            <Form.Label className="body-2 text-white">
+                                                Escoge el tamaño
+                                            </Form.Label>
+                                            <Form.Select
+                                                name="draftSize"
+                                                value={draftInfo.draftSize}
+                                                onChange={handleChange}
+                                            >
+                                                <option>
+                                                    Selecciona el tamaño del
+                                                    proyecto
+                                                </option>
+                                                <option value="sencillo">
+                                                    Sencillo
+                                                </option>
+                                                <option value="mediano">
+                                                    Mediano
+                                                </option>
+                                                <option value="doble">
+                                                    Doble
+                                                </option>
+                                                <option value="grande">
+                                                    Grande
+                                                </option>
+                                                <option value="Otra">
+                                                    Otro
+                                                </option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <Form.Group
+                                            className="mb-3"
+                                            controlId="formNewProjectProperty"
+                                        >
+                                            <Form.Label className="body-2 text-white">
+                                                ¿Qué tipo de propiedad es?
+                                            </Form.Label>
+                                            <Form.Select
+                                                name="draftProperty"
+                                                value={draftInfo.draftProperty}
+                                                onChange={handleChange}
+                                            >
+                                                <option>
+                                                    Selecciona el tipo de
+                                                    propiedad
+                                                </option>
+                                                <option value="Colonial">
+                                                    Propiedad Colonial (1800 -
+                                                    1920){' '}
+                                                </option>
+                                                <option value="SubUrbana">
+                                                    Propiedad suburbana
+                                                    (1920-1960){' '}
+                                                </option>
+                                                <option value="Moderna">
+                                                    Propiedad moderna
+                                                    (1960-presente){' '}
+                                                </option>
+                                                <option value="Otra">
+                                                    Otra{' '}
+                                                </option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <Form.Group
+                                            className="mb-3"
+                                            controlId="formNewProjectRooms"
+                                        >
+                                            <Form.Label className="body-2 text-white">
+                                                ¿Cuantas habitaciones y/o
+                                                espacios seran intervenidos?
+                                            </Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Por favor especifica"
+                                                name="draftRooms"
+                                                value={draftInfo.draftRooms}
+                                                onChange={handleChange}
+                                            />
+                                            <Form.Text className="text-muted">
+                                                Podremos estimar mejor la
+                                                cantidad de obra.
+                                            </Form.Text>
+                                        </Form.Group>
+                                        <Form.Group
+                                            className="mb-3"
+                                            controlId="formNewProjectPlans"
+                                        >
+                                            <Form.Label className="body-2 text-white">
+                                                ¿Han sido diseñados planos
+                                                arquitectonicos para este
+                                                proyecto?
+                                            </Form.Label>
+                                            <Form.Select
+                                                name="draftPlans"
+                                                value={draftInfo.draftPlans}
+                                                onChange={handleChange}
+                                            >
+                                                <option>
+                                                    Selecciona el estado actual
+                                                </option>
+                                                <option value="Aproved">
+                                                    Aprobados
+                                                </option>
+                                                <option value="Aplied">
+                                                    Aplicado
+                                                </option>
+                                                <option value="NotAplied">
+                                                    Sin aplicar aun
+                                                </option>
+                                                <option value="NotSure">
+                                                    No estoy seguro
+                                                </option>
+                                                <option value="NotNeed">
+                                                    No son necesarios en esta
+                                                    oportunidad
+                                                </option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <Form.Group
+                                            className="mb-3"
+                                            controlId="formNewProjectPermissions"
+                                        >
+                                            <Form.Label className="body-2 text-white">
+                                                ¿Cúal es el estado de los
+                                                permisos para este proyecto?
+                                            </Form.Label>
+                                            <Form.Select
+                                                name="draftPermissions"
+                                                value={
+                                                    draftInfo.draftPermissions
+                                                }
+                                                onChange={handleChange}
+                                            >
+                                                <option>
+                                                    Selecciona el estado actual
+                                                </option>
+                                                <option value="Aproved">
+                                                    Aprobados
+                                                </option>
+                                                <option value="Aplied">
+                                                    Aplicado
+                                                </option>
+                                                <option value="NotAplied">
+                                                    Sin aplicar aun
+                                                </option>
+                                                <option value="NotSure">
+                                                    No estoy seguro
+                                                </option>
+                                                <option value="NotNeed">
+                                                    No son necesarios en esta
+                                                    oportunidad
+                                                </option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                    </Box>
+                                )}
                                 <Col className="col-10">
                                     <Row className="pt-4 pb-4 w-100 justify-content-center">
                                         <Button
@@ -595,6 +643,32 @@ const NuevoProyecto = (props) => {
                                     controlId="formNewProjectPostalCode"
                                 >
                                     <Form.Label className="body-2 text-white">
+                                        Registra la dirección donde se requiere
+                                        el servicio.
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Registra la dirección"
+                                            name="draftDirection"
+                                            value={draftInfo.draftDirection}
+                                            onChange={handleChange}
+                                        />
+                                    </Form.Label>
+                                    <Form.Text className="text-muted">
+                                        <Button
+                                            className="body-2 pb-2 textVerde"
+                                            onClick={handleOpen}
+                                        >
+                                            {
+                                                'Si prefieres selecciona en el mapa desde aquí'
+                                            }
+                                        </Button>
+                                    </Form.Text>
+                                </Form.Group>
+                                {/* <Form.Group
+                                    className="mb-3"
+                                    controlId="formNewProjectPostalCode"
+                                >
+                                    <Form.Label className="body-2 text-white">
                                         ¿Cual es el codigo postal de la
                                         propiedad?
                                     </Form.Label>
@@ -615,14 +689,8 @@ const NuevoProyecto = (props) => {
                                         >
                                             {', aquí'}
                                         </Button>
-                                        {/* <NavLink
-                                            className="body-2"
-                                            to="/ubicacion"
-                                        >
-                                            {', aquí'}
-                                        </NavLink> */}
                                     </Form.Text>
-                                </Form.Group>
+                                </Form.Group> */}
                                 <Form.Group
                                     className="mb-3"
                                     controlId="formNewProjectAtachments"
