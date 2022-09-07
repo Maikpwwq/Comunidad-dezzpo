@@ -15,7 +15,7 @@
     background: #13495e;     
     min-height: 540px;
     width: 100%;
-    color: #e9ebe6;    
+    /* color: #e9ebe6;     */
     position: relative;
 }
 .ingresarFormulario{
@@ -28,13 +28,18 @@
     width: 60%;
     background: rgba(19, 73, 94, 0.9); 
     margin-top: 20px;
-    color: white;
     margin-right: 1em;
+}
+#formularioIngreso{
+    background-color: var(--background-white-color);
+    border-radius: 50px;
 }
 #formularioIngreso .form-control{
     height: 27px;
     text-align: center;
     width: 100%;
+    background-color: var(--background-light-gray-color);
+
 }
 #formBasicCheckboxRecordar {
     width: 10% !important;

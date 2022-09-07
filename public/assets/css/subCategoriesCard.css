@@ -1,0 +1,6 @@
+.card-categorie {
+    max-width: 345px !important;
+    min-height: 212px !important;
+    background-color: var(--background-category-card-grey-color) !important;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2) !important;
+}

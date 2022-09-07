@@ -36,6 +36,7 @@ const Ingreso = (props) => {
         severity: 'success',
     })
     const [send, setSend] = useState(false)
+    const [step, setStep] = useState(1)
     const [userLoginEmail, setEmail] = useState(undefined)
     const [userLoginPassword, setPassword] = useState('')
     const [userSignupRol, setRol] = useState(0)
@@ -51,6 +52,12 @@ const Ingreso = (props) => {
         } else {
             setAlert({ ...alert, open: false, message: '' })
         }
+    }
+
+    const handleSelectRol = (e, rol) => {
+        setRol(e)
+        setStep(2)
+        console.log(e, rol, userSignupRol)
     }
 
     const handleClick = (e) => {
@@ -170,134 +177,160 @@ const Ingreso = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="ingresoFormulario  m-0 w-100">
-                    <Col className="imagenIngreso" lg={6} md={6} sm={12}></Col>
+                    <Col className="imagenIngreso" lg={6} md={6} sm={12}>
+                        Bienvenido a!
+                    </Col>
                     <Col
                         className="ingresarFormulario m-0 p-0"
                         lg={5}
                         md={6}
                         sm={12}
                     >
-                        <Form id="formularioIngreso" action="" className="p-2">
+                        <Form id="formularioIngreso" action="" className="p-4">
                             <Col className="d-flex">
-                                <h2 className="headline-xl textBlanco">
-                                    Bienvenido!
-                                </h2>
-                                <p className="body-1 textBlanco">
-                                    Eres nuevo, crea fácil una cuenta,
-                                    <NavLink
-                                        className="body-2 BOTON-TEXT"
-                                        to="/registro/"
-                                    >
-                                        {' Registrate'}
-                                    </NavLink>
-                                </p>
-                                <Form.Label className="mb-0">
-                                    1. Elegir rol:
-                                </Form.Label>
-                                <ToggleButtonGroup
-                                    type="checkbox" // 'radio'
-                                    name="userRol"
-                                    className="mb-2 mt-2"
-                                    vertical="true"
-                                    // value={userSignupRol}
-                                >
-                                    <ToggleButton
-                                        className="body-1 textBlanco d-flex flex-row align-items-center justify-content-center"
-                                        value={1}
-                                        id="formBasicRolPropietarioResidente"
-                                        onChange={(e) => setRol(e.target.value)}
-                                    >
-                                        Soy Propietario/Residente
-                                    </ToggleButton>
-                                    <ToggleButton
-                                        className="body-1 textBlanco d-flex flex-row align-items-center justify-content-center"
-                                        value={2}
-                                        id="formBasicRolComercianteCalificado"
-                                        onChange={(e) => setRol(e.target.value)}
-                                    >
-                                        Soy Comerciante Calificado
-                                    </ToggleButton>
-                                </ToggleButtonGroup>
-                                <Form.Label className="mb-0 mt-2">
-                                    2. Ingresa tus datos:
-                                </Form.Label>
-                                <ul className="align-items-center mt-2 w-100">
-                                    {/* <li className="body-1">
+                                <h2 className="headline-xl">Iniciar sesión</h2>
+                                {step === 1 && (
+                                    <>
+                                        <Form.Label className="mb-0">
+                                            Primero, elige tu rol
+                                        </Form.Label>
+                                        <ToggleButtonGroup
+                                            type="checkbox" // 'radio'
+                                            name="userRol"
+                                            className="mb-2 mt-2"
+                                            vertical="true"
+                                            onChange={handleSelectRol}
+                                            // value={userSignupRol}
+                                        >
+                                            <ToggleButton
+                                                className="body-1 d-flex flex-row align-items-center justify-content-center"
+                                                value={1}
+                                                id="formBasicRolPropietarioResidente"
+                                                // onChange={(e) => {
+                                                //     setRol(e.target.value)
+                                                //     setStep(2)
+                                                // }}
+                                            >
+                                                Soy Propietario/Residente
+                                            </ToggleButton>
+                                            <ToggleButton
+                                                className="body-1 d-flex flex-row align-items-center justify-content-center"
+                                                value={2}
+                                                id="formBasicRolComercianteCalificado"
+                                                // onChange={(e) => {
+                                                //     setRol(e.target.value)
+                                                //     setStep(2)
+                                                // }}
+                                            >
+                                                Soy Comerciante Calificado
+                                            </ToggleButton>
+                                        </ToggleButtonGroup>
+                                        <p className="body-1 pt-4">
+                                            {/* Eres nuevo, crea fácil una cuenta, */}
+                                            <NavLink
+                                                className="body-2 BOTON-TEXT"
+                                                to="/registro/"
+                                            >
+                                                {' Registrarme'}
+                                            </NavLink>
+                                        </p>
+                                        <br />
+                                        {/* TODO: Modal ingresar datos olvidaste la contaseña */}
+                                        <Button
+                                            className="BOTON-TEXT pt-2"
+                                            variant="primary"
+                                            onClick={handleClickForgetPassword}
+                                        >
+                                            Olvidé mi contraseña
+                                        </Button>
+                                    </>
+                                )}
+                                {step === 2 && (
+                                    <>
+                                        <Form.Label className="mb-0 mt-2">
+                                            2. Ingresa tus datos:
+                                        </Form.Label>
+                                        <ul className="align-items-center mt-2 w-100">
+                                            {/* <li className="body-1">
                                         <Button className="btn btn-round btn-middle">
                                             Ingresar con Facebook
                                         </Button>
                                     </li> */}
-                                    <li className="body-1">
-                                        <Button
-                                            className="btn btn-round btn-middle d-flex align-items-center p-0 pe-2"
-                                            onClick={handleGoogleProvider}
-                                            style={{
-                                                background: '#e9ebe6',
-                                            }}
+                                            <li className="body-1">
+                                                <Button
+                                                    className="btn btn-round btn-middle d-flex align-items-center p-0 pe-2"
+                                                    onClick={
+                                                        handleGoogleProvider
+                                                    }
+                                                    style={{
+                                                        background: '#e9ebe6',
+                                                    }}
+                                                >
+                                                    <Box
+                                                        component="img"
+                                                        src={LogoGmail}
+                                                        alt="Ingresar-con-cuenta-gmail"
+                                                        sx={{
+                                                            height: 33,
+                                                            display: 'block',
+                                                            maxWidth: 33,
+                                                            overflow: 'hidden',
+                                                            width: '100%',
+                                                            borderRadius: '50%',
+                                                        }}
+                                                        className="p-2"
+                                                    />
+                                                    <Typography className="body-1">
+                                                        Ingresar con Gmail
+                                                    </Typography>
+                                                </Button>
+                                            </li>
+                                        </ul>
+                                        <Col
+                                            className="d-flex flex-column align-items-center"
+                                            lg={10}
+                                            md={12}
+                                            sm={10}
+                                            xs={12}
                                         >
-                                            <Box
-                                                component="img"
-                                                src={LogoGmail}
-                                                alt="Ingresar-con-cuenta-gmail"
-                                                sx={{
-                                                    height: 33,
-                                                    display: 'block',
-                                                    maxWidth: 33,
-                                                    overflow: 'hidden',
-                                                    width: '100%',
-                                                    borderRadius: '50%',
-                                                }}
-                                                className="p-2"
-                                            />
-                                            <Typography className="body-1">
-                                                Ingresar con Gmail
-                                            </Typography>
-                                        </Button>
-                                    </li>
-                                </ul>
-                                <Col
-                                    className="d-flex flex-column align-items-center"
-                                    lg={10}
-                                    md={12}
-                                    sm={10}
-                                    xs={12}
-                                >
-                                    <Form.Group
-                                        className="pt-2 mb-2 d-flex flex-column align-items-start"
-                                        controlId="formLoginCredential"
-                                        style={{ width: 'inherit' }}
-                                    >
-                                        <Form.Label className="mb-0">
-                                            Email
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="usa tu correo electrónico"
-                                            name="credential"
-                                            onChange={(e) =>
-                                                setEmail(e.target.value)
-                                            }
-                                        />
-                                    </Form.Group>
-                                    <Form.Group
-                                        className="mb-2 d-flex flex-column align-items-start"
-                                        controlId="formLoginPassword"
-                                        style={{ width: 'inherit' }}
-                                    >
-                                        <Form.Label className="mb-0">
-                                            Contraseña
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="password"
-                                            placeholder="usa tu contraseña"
-                                            name="password"
-                                            onChange={(e) =>
-                                                setPassword(e.target.value)
-                                            }
-                                        />
-                                    </Form.Group>
+                                            <Form.Group
+                                                className="pt-2 mb-2 d-flex flex-column align-items-start"
+                                                controlId="formLoginCredential"
+                                                style={{ width: 'inherit' }}
+                                            >
+                                                <Form.Label className="mb-0">
+                                                    Email
+                                                </Form.Label>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="usa tu correo electrónico"
+                                                    name="credential"
+                                                    onChange={(e) =>
+                                                        setEmail(e.target.value)
+                                                    }
+                                                />
+                                            </Form.Group>
+                                            <Form.Group
+                                                className="mb-2 d-flex flex-column align-items-start"
+                                                controlId="formLoginPassword"
+                                                style={{ width: 'inherit' }}
+                                            >
+                                                <Form.Label className="mb-0">
+                                                    Contraseña
+                                                </Form.Label>
+                                                <Form.Control
+                                                    type="password"
+                                                    placeholder="usa tu contraseña"
+                                                    name="password"
+                                                    onChange={(e) =>
+                                                        setPassword(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                            </Form.Group>
 
-                                    {/* <Form.Group
+                                            {/* <Form.Group
                                     className="mb-2 mt-4"
                                     controlId="formBasicCheckboxRecordar"
                                 >
@@ -317,33 +350,26 @@ const Ingreso = (props) => {
                                         label="No soy un robot"
                                     />
                                 </Form.Group> */}
-                                </Col>
-                                <Col className="pt-3 pb-2">
-                                    <Button
-                                        className="btn-main btn-round btn-high body-1"
-                                        variant="primary"
-                                        type="submit"
-                                        onClick={handleClick}
-                                    >
-                                        Iniciar Sesión
-                                    </Button>
-                                    <br />
-                                    {/* TODO: Modal ingresar datos olvidaste la contaseña */}
-                                    <Button
-                                        className="BOTON-TEXT textBlanco pt-2"
-                                        variant="primary"
-                                        onClick={handleClickForgetPassword}
-                                    >
-                                        ¿Olvidaste la contraseña?
-                                    </Button>
-                                </Col>
-                                {alert.open && (
-                                    <SnackBarAlert
-                                        message={alert.message}
-                                        onClose={handleClose}
-                                        severity={alert.severity} // success, error, warning, info, default
-                                        open={alert.open}
-                                    />
+                                        </Col>
+                                        <Col className="pt-3 pb-2">
+                                            <Button
+                                                className="btn-main btn-round btn-high body-1"
+                                                variant="primary"
+                                                type="submit"
+                                                onClick={handleClick}
+                                            >
+                                                Iniciar Sesión
+                                            </Button>
+                                            {alert.open && (
+                                                <SnackBarAlert
+                                                    message={alert.message}
+                                                    onClose={handleClose}
+                                                    severity={alert.severity} // success, error, warning, info, default
+                                                    open={alert.open}
+                                                />
+                                            )}
+                                        </Col>
+                                    </>
                                 )}
                             </Col>
                         </Form>

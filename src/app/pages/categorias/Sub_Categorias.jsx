@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import '../../../../public/assets/css/subCategoriesCard.css'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -7,6 +8,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import Avatar from '@mui/material/Avatar'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import { red } from '@mui/material/colors'
@@ -47,7 +49,7 @@ const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
     }
 
     return (
-        <Card className="mb-4" sx={{ maxWidth: 345, minHeight: 212 }}>
+        <Card className="card-categorie mb-4">
             {/* TODO: Categorias*/}
             <CardHeader
                 // avatar={
@@ -87,7 +89,14 @@ const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
             </CardContent>
             <CardActions disableSpacing>
                 <Button className="" onClick={handleSeleccionar}>
-                    {selected ? 'Seleccionar' : 'Quitar'}
+                    {/* {selected ? 'Seleccionar' : 'Quitar'} */}
+                    {selected ? (
+                        <>
+                            <AddShoppingCartIcon /> Agregar al carrito
+                        </>
+                    ) : (
+                        'Quitar'
+                    )}
                 </Button>
             </CardActions>
         </Card>

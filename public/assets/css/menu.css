@@ -1,12 +1,14 @@
 @media screen and (max-width: 600px) {
-    .mobile-menu{
+    .mobile-menu {
         visibility: visible !important;
     }
-    .logo-comunidad-dezzpo{
-        height: 45px !important; 
+
+    .logo-comunidad-dezzpo {
+        height: 45px !important;
         width: 110px !important;
     }
-    .menuFijo{
+
+    .menuFijo {
         position: absolute;
         min-height: 80px;
         margin: 0 0;
@@ -16,14 +18,16 @@
         left: 0px;
         top: 0px;
     }
-    .barraMenu{
+
+    .barraMenu {
         display: inline-flex;
         position: fixed;
         height: auto;
         width: 100%;
         justify-content: center;
     }
-    .menuFijo:hover .menuContenedor{
+
+    .menuFijo:hover .menuContenedor {
         position: fixed;
         height: 100%;
         z-index: 1200;
@@ -32,13 +36,15 @@
         min-width: 256px;
         align-items: start;
     }
-    .menuFijo:hover .menuSecciones{
-        display: flex!important;
+
+    .menuFijo:hover .menuSecciones {
+        display: flex !important;
         flex-direction: column;
         /* position:fixed; */
     }
-    .menuSecciones{
-        display: none!important;
+
+    .menuSecciones {
+        display: none !important;
         flex-direction: column;
         overflow: visible;
         list-style-type: none;
@@ -48,73 +54,86 @@
         background-color: var(--background-main-green-color);
         color: var(--primary-light-gray-text-color);
     }
-    .dropdownContenidos{
+
+    .dropdownContenidos {
         padding: 5px 3px;
         position: relative !important;
         margin-left: 18px;
     }
+
     .dropdown:hover .dropdownContenidos {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
     }
-    .activo{
+
+    .activo {
         height: auto !important;
     }
-    .botonNavLink{
+
+    .botonNavLink {
         height: auto !important;
     }
 }
-@media screen and (min-width: 600px) and (max-width: 900px) {
 
-}
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) and (max-width: 900px) {}
 
+@media screen and (min-width: 900px) {}
 
-}
-.containerLogo{
+.containerLogo {
     justify-content: space-evenly !important;
 }
-.logo-comunidad-dezzpo{
+
+.logo-comunidad-dezzpo {
     height: 45px;
     width: 160px;
     padding: '5px 10px';
 }
-.mobile-menu{
+
+.mobile-menu {
     visibility: hidden;
 }
-.menuFijo{
+
+.menuFijo {
     position: relative;
     height: auto;
     z-index: 100;
 }
-.barraComunidad{
+
+.barraComunidad {
     display: inline-flex;
     position: fixed;
     height: 80px;
     justify-content: center;
 }
-.barraMenu{
+
+.barraMenu {
     display: inline-flex;
     position: relative;
     font-family: "lato Regular", Helvetica, sans-serif;
     color: var(--primary-light-gray-text-color);
-    background-color: #2d2d2d; /* #e9ebe6 #333333 */ 
+    background-color: #2d2d2d;
+    /* #e9ebe6 #333333 */
     flex-wrap: nowrap;
     height: auto;
     width: 100%;
     justify-content: center;
     top: 0;
 }
-.menuContenedor{
+
+.menuContenedor {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    background-color: var(--background-main-green-color);
+    margin: 0 auto;
+    /* background-color: var(--background-main-green-color); */
     color: var(--primary-light-gray-text-color);
 }
-.menuSecciones{
+
+.menuSecciones {
+    width: 100%;
+    justify-content: space-between;
     display: flex;
     flex-direction: row;
     overflow: visible;
@@ -123,49 +142,55 @@
     margin: 0 0;
     height: auto;
 }
-.dropdown{
+
+.dropdown {
     transition: background-color 0.3s;
 }
-.dropdown:hover {
-    background-color: rgba(0,0,0,0.8);
-}
-.dropdownContenidos{
+
+.dropdownContenidos {
     display: none;
     position: absolute;
     background-color: var(--background-light-grey-color);
     min-width: 300px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     padding: 3px 10px;
 }
+
 .menuContenedor ul a:visited {
     color: white;
 }
-.menuContenedor a:visited{
+
+.menuContenedor a:visited {
     color: white;
 }
-.dropdownContenidos a{
+
+.dropdownContenidos a {
     font-size: 21px;
     text-decoration: none;
     color: var(--content-text-color) !important;
     width: 100%;
 }
-.dropdownContenidos a:hover{
-    background-color: rgba(0,0,0,0.8);
+
+.dropdownContenidos a:hover {
+    background-color: rgba(0, 0, 0, 0.8);
     color: var(--content-text-white-color) !important;
     text-decoration: underline;
 }
+
 .dropdown:hover .dropdownContenidos {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
 }
-.botonSeccion:hover a{
+
+.botonSeccion:hover a {
     color: white;
     background-color: var(--background-hover-green-color);
     text-decoration: underline;
 }
-.botonSeccion{
+
+/* .botonSeccion{
     margin: auto 0;
     border-left: solid;
     border-width: 3px;
@@ -173,8 +198,8 @@
     height: 100%;
     display: flex;
     align-content: center;
-}
-.activo{
+} */
+.activo {
     padding: 5px 10px;
     text-align: center;
     color: black;
@@ -186,10 +211,34 @@
     flex-direction: column;
     font-size: medium;
 }
-.botonNavLink{
+
+.botonNavLink {
     padding: 5px 10px;
     text-align: center;
-    color: var(--primary-light-gray-text-color) !important;
+    color: var(--primary-black-text-color) !important;
+    text-decoration: none;
+    min-height: 50px;
+    width: auto !important;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    font-size: 0.85rem !important;
+    font-weight: normal !important;
+    border-radius: 30px;
+}
+
+.botonNavLink:hover {
+    background-color: var(--background-main-green-color);
+    color: var(--content-text-white-color) !important;
+}
+
+.btn-menu-comunidad {
+    background-color: var(--background-smoke-color) !important;
+    padding: 5px 10px;
+    text-align: center;
+    color: var(--content-text-white-color) !important;
     text-decoration: none;
     min-height: 50px;
     width: auto !important;
@@ -200,7 +249,9 @@
     flex-direction: row;
     font-size: 0.9rem !important;
     font-weight: bold !important;
+    border-radius: 30px;
 }
+
 .menuVisible {
     flex-wrap: nowrap !important;
 }
