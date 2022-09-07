@@ -65,6 +65,7 @@ const Registro = (props) => {
     )
 
     const [send, setSend] = useState(false)
+    const [step, setStep] = useState(1)
     const [userSignupEmail, setEmail] = useState(undefined)
     const [userSignupPassword, setPassword] = useState('')
     const [userSignupRol, setRol] = useState(undefined)
@@ -87,7 +88,8 @@ const Registro = (props) => {
 
     const handleSelectRol = (e, rol) => {
         setRol(e)
-        // console.log(e, rol, userSignupRol)
+        setStep(2)
+        console.log(e, rol, userSignupRol)
     }
 
     const conectarSB = (userId) => {
@@ -292,165 +294,174 @@ const Registro = (props) => {
                             // preventDefault="true"
                         >
                             <Col className="d-flex">
-                                <h2 className="headline-xl textBlanco">
-                                    Registrate!
-                                </h2>
-                                <p className="body-1 textBlanco">
-                                    Bienvenido a todos los beneficios de dezzpo.{' '}
-                                    <NavLink
-                                        className="body-2 BOTON-TEXT"
-                                        to="/ingreso/"
-                                    >
-                                        {'¿Ya tienes una cuenta?'}
-                                    </NavLink>
-                                </p>
-                                <Form.Label className="mb-0">
-                                    1. Elegir rol:
-                                </Form.Label>
-                                <ToggleButtonGroup
-                                    name="userRol"
-                                    // className="mb-2"
-                                    vertical="true"
-                                    orientation="vertical"
-                                    // exclusive
-                                    aria-label="Elegir rol:"
-                                    onChange={handleSelectRol}
-                                    // size="small"
-                                    value={userSignupRol}
-                                    color="primary"
-                                >
-                                    <ToggleButton
-                                        className="body-1 select-rol textBlanco d-flex flex-row align-items-center justify-content-center"
-                                        value={1} // "SoyPropietarioResidente" //
-                                        id="formBasicRolPropietarioResidente"
-                                        aria-label="Soy Propietario/Residente"
-                                        // style={{
-                                        //     backgroundColor: '#2283bd',
-                                        //     '&:hover': {
-                                        //         backgroundColor: '#2594c2',
-                                        //     },
-                                        // }}
-                                        //onChange={(e) => setRol(e.target.value)}
-                                    >
-                                        Soy Propietario/Residente
-                                    </ToggleButton>
-                                    <ToggleButton
-                                        className="body-1 select-rol textBlanco d-flex flex-row align-items-center justify-content-center"
-                                        value={2} // "SoyComercianteCalificado" //
-                                        id="formBasicRolComercianteCalificado"
-                                        aria-label="Soy Comerciante Calificado"
-                                        //onChange={(e) => setRol(e.target.value)}
-                                    >
-                                        Soy Comerciante Calificado
-                                    </ToggleButton>
-                                </ToggleButtonGroup>
-                                <Form.Label className="mb-0 mt-2">
-                                    2. Ingresa tus datos:
-                                </Form.Label>
-                                <ul className="align-items-center mt-2 w-100">
-                                    <li className="body-1">
-                                        <Button
-                                            className="btn btn-round btn-middle d-flex align-items-center p-0 pe-2"
-                                            onClick={handleGoogleProvider}
-                                            style={{
-                                                background: '#e9ebe6',
-                                            }}
+                                <h2 className="headline-xl">Registrate</h2>
+                                {step == 1 ? (
+                                    <>
+                                        <Form.Label className="mb-0">
+                                            Primero, elige tu rol
+                                        </Form.Label>
+                                        <ToggleButtonGroup
+                                            name="userRol"
+                                            // className="mb-2"
+                                            vertical="true"
+                                            orientation="vertical"
+                                            // exclusive
+                                            aria-label="Elegir rol:"
+                                            onChange={handleSelectRol}
+                                            // size="small"
+                                            value={userSignupRol}
+                                            color="primary"
                                         >
-                                            <Box
-                                                component="img"
-                                                src={LogoGmail}
-                                                alt="Registrarse-con-cuenta-gmail"
-                                                sx={{
-                                                    height: 33,
-                                                    display: 'block',
-                                                    maxWidth: 33,
-                                                    overflow: 'hidden',
-                                                    width: '100%',
-                                                    borderRadius: '50%',
-                                                }}
-                                                className="p-2"
-                                            />
-                                            <Typography className="body-1">
-                                                Registrarse con Gmail
-                                            </Typography>
-                                        </Button>
-                                    </li>
-                                    {/* <li className="body-1 pt-2">
+                                            <ToggleButton
+                                                className="body-1 select-rol d-flex flex-row align-items-center justify-content-center"
+                                                value={1} // "SoyPropietarioResidente" //
+                                                id="formBasicRolPropietarioResidente"
+                                                aria-label="Soy Propietario/Residente"
+                                                // style={{
+                                                //     backgroundColor: '#2283bd',
+                                                //     '&:hover': {
+                                                //         backgroundColor: '#2594c2',
+                                                //     },
+                                                // }}
+                                                //onChange={(e) => setRol(e.target.value)}
+                                            >
+                                                Soy Propietario/Residente
+                                            </ToggleButton>
+                                            <ToggleButton
+                                                className="body-1 select-rol d-flex flex-row align-items-center justify-content-center"
+                                                value={2} // "SoyComercianteCalificado" //
+                                                id="formBasicRolComercianteCalificado"
+                                                aria-label="Soy Comerciante Calificado"
+                                                //onChange={(e) => setRol(e.target.value)}
+                                            >
+                                                Soy Comerciante Calificado
+                                            </ToggleButton>
+                                        </ToggleButtonGroup>
+                                        <p className="body-1">
+                                            {/* Bienvenido a todos los beneficios de
+                                            dezzpo.{' '} */}
+                                            <NavLink
+                                                className="body-2 BOTON-TEXT"
+                                                to="/ingreso/"
+                                            >
+                                                {/* {'¿Ya tienes una cuenta?'} */}
+                                                {'Ingresar'}
+                                            </NavLink>
+                                        </p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Form.Label className="mb-0 mt-2">
+                                            2. Ingresa tus datos:
+                                        </Form.Label>
+                                        <ul className="align-items-center mt-2 w-100">
+                                            <li className="body-1">
+                                                <Button
+                                                    className="btn btn-round btn-middle d-flex align-items-center p-0 pe-2"
+                                                    onClick={
+                                                        handleGoogleProvider
+                                                    }
+                                                    style={{
+                                                        background: '#e9ebe6',
+                                                    }}
+                                                >
+                                                    <Box
+                                                        component="img"
+                                                        src={LogoGmail}
+                                                        alt="Registrarse-con-cuenta-gmail"
+                                                        sx={{
+                                                            height: 33,
+                                                            display: 'block',
+                                                            maxWidth: 33,
+                                                            overflow: 'hidden',
+                                                            width: '100%',
+                                                            borderRadius: '50%',
+                                                        }}
+                                                        className="p-2"
+                                                    />
+                                                    <Typography className="body-1">
+                                                        Registrarse con Gmail
+                                                    </Typography>
+                                                </Button>
+                                            </li>
+                                            {/* <li className="body-1 pt-2">
                                             <Button className="btn btn-round btn-middle">
                                                 Registrarse con Facebook
                                             </Button>
                                         </li> */}
-                                </ul>
-                                <Col
-                                    className="d-flex flex-column align-items-center"
-                                    lg={10}
-                                    md={12}
-                                    sm={10}
-                                    xs={12}
-                                >
-                                    <Form.Group
-                                        className="pt-2 mb-2 d-flex flex-column align-items-start"
-                                        controlId="formBasicName"
-                                        style={{ width: 'inherit' }}
-                                    >
-                                        <Form.Label className="mb-0">
-                                            Nombre de usuario
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="elija su usuario"
-                                            name="username"
-                                        />
-                                    </Form.Group>
-                                    <Form.Group
-                                        className="w-80 mb-2 d-flex flex-column align-items-start"
-                                        controlId="formSignupEmail"
-                                        style={{ width: 'inherit' }}
-                                    >
-                                        <Form.Label className="mb-0">
-                                            Email
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="email"
-                                            placeholder="registre una cuenta de email valida"
-                                            name="email"
-                                            onChange={(e) =>
-                                                setEmail(e.target.value)
-                                            }
-                                        />
-                                    </Form.Group>
-                                    <Form.Group
-                                        className="w-80 mb-2 d-flex flex-column align-items-start"
-                                        controlId="formSignupPassword"
-                                        style={{ width: 'inherit' }}
-                                    >
-                                        <Form.Label className="mb-0">
-                                            Contraseña
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="password"
-                                            placeholder="registre una clave"
-                                            name="password"
-                                            onChange={(e) =>
-                                                setPassword(e.target.value)
-                                            }
-                                        />
-                                    </Form.Group>
-                                    <Form.Group
-                                        className="w-80 mb-2 d-flex flex-column align-items-start"
-                                        controlId="formBasicPassword"
-                                        style={{ width: 'inherit' }}
-                                    >
-                                        <Form.Label className="mb-0">
-                                            Confirme la Contraseña
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="password"
-                                            placeholder="de nuevo la clave"
-                                            name="confirmPassword"
-                                        />
-                                    </Form.Group>
-                                    {/* <Form.Group
+                                        </ul>
+                                        <Col
+                                            className="d-flex flex-column align-items-center"
+                                            lg={10}
+                                            md={12}
+                                            sm={10}
+                                            xs={12}
+                                        >
+                                            <Form.Group
+                                                className="pt-2 mb-2 d-flex flex-column align-items-start"
+                                                controlId="formBasicName"
+                                                style={{ width: 'inherit' }}
+                                            >
+                                                <Form.Label className="mb-0">
+                                                    Nombre de usuario
+                                                </Form.Label>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="elija su usuario"
+                                                    name="username"
+                                                />
+                                            </Form.Group>
+                                            <Form.Group
+                                                className="w-80 mb-2 d-flex flex-column align-items-start"
+                                                controlId="formSignupEmail"
+                                                style={{ width: 'inherit' }}
+                                            >
+                                                <Form.Label className="mb-0">
+                                                    Email
+                                                </Form.Label>
+                                                <Form.Control
+                                                    type="email"
+                                                    placeholder="registre una cuenta de email valida"
+                                                    name="email"
+                                                    onChange={(e) =>
+                                                        setEmail(e.target.value)
+                                                    }
+                                                />
+                                            </Form.Group>
+                                            <Form.Group
+                                                className="w-80 mb-2 d-flex flex-column align-items-start"
+                                                controlId="formSignupPassword"
+                                                style={{ width: 'inherit' }}
+                                            >
+                                                <Form.Label className="mb-0">
+                                                    Contraseña
+                                                </Form.Label>
+                                                <Form.Control
+                                                    type="password"
+                                                    placeholder="registre una clave"
+                                                    name="password"
+                                                    onChange={(e) =>
+                                                        setPassword(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                            </Form.Group>
+                                            <Form.Group
+                                                className="w-80 mb-2 d-flex flex-column align-items-start"
+                                                controlId="formBasicPassword"
+                                                style={{ width: 'inherit' }}
+                                            >
+                                                <Form.Label className="mb-0">
+                                                    Confirmar contraseña
+                                                </Form.Label>
+                                                <Form.Control
+                                                    type="password"
+                                                    placeholder="de nuevo la clave"
+                                                    name="confirmPassword"
+                                                />
+                                            </Form.Group>
+                                            {/* <Form.Group
                                     className="mb-2 mt-2"
                                     controlId="formBasicCheckboxRobot"
                                 >
@@ -460,25 +471,27 @@ const Registro = (props) => {
                                         label="No soy un robot"
                                     />
                                 </Form.Group> */}
-                                </Col>
-                                <Col className="pt-3 pb-3">
-                                    <Button
-                                        className="btn-main btn-round btn-high body-1"
-                                        variant="primary"
-                                        type="submit"
-                                        onClick={handleClick}
-                                    >
-                                        Crear Cuenta
-                                    </Button>
-                                    <br />
-                                </Col>
-                                {alert.open && (
-                                    <SnackBarAlert
-                                        message={alert.message}
-                                        onClose={handleClose}
-                                        severity={alert.severity} // success, error, warning, info, default
-                                        open={alert.open}
-                                    />
+                                        </Col>
+                                        <Col className="pt-3 pb-3">
+                                            <Button
+                                                className="btn-main btn-round btn-high body-1"
+                                                variant="primary"
+                                                type="submit"
+                                                onClick={handleClick}
+                                            >
+                                                Crear Cuenta
+                                            </Button>
+                                            <br />
+                                        </Col>
+                                        {alert.open && (
+                                            <SnackBarAlert
+                                                message={alert.message}
+                                                onClose={handleClose}
+                                                severity={alert.severity} // success, error, warning, info, default
+                                                open={alert.open}
+                                            />
+                                        )}
+                                    </>
                                 )}
                             </Col>
                         </Form>

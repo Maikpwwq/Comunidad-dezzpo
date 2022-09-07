@@ -1,12 +1,11 @@
 // Pagina de Inicio
 import React from 'react'
 import '../../../../public/assets/css/home.css'
-import Registro from '../registro/Registro'
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
 import NuestraComunidad from '../../components/nuestra-comunidad/NuestraComunidad'
 
 import Subscribe from './Subscribe'
-
+import DirectionalButton from '../../components/DirectionalButton/DirectionalButton'
 // imagenes
 
 // react-bootrstrap
@@ -126,15 +125,16 @@ const Inicio = (props) => {
                                         {' '}
                                         <p className="p-description">
                                             <strong className="pb-4">
-                                                <em>
-                                                    {' '}
-                                                    Hemos facilitado el
-                                                    servicio, <br />
-                                                    haciendolo más rapido y{' '}
-                                                    <br />
-                                                    simple que nunca{' '}
-                                                </em>
+                                                Bienvenido
                                             </strong>
+                                            <br />
+                                            <em>
+                                                {' '}
+                                                Hemos facilitado el servicio,{' '}
+                                                <br />
+                                                haciendolo más rapido y <br />
+                                                simple que nunca{' '}
+                                            </em>
                                         </p>{' '}
                                         <h3 className=".headline-l textVerde">
                                             {' '}
@@ -164,52 +164,55 @@ const Inicio = (props) => {
                         <Row className="m-0 w-100">Ayudame a elegir!</Row> */}
                     </CustomSwipeableViews>
                 </Box>
+                <DirectionalButton />
             </Container>
             <Container fluid className="p-0">
                 <Row className="m-0 w-100 mensajeBanner">
                     {/* Mensaje del Banner inferior*/}
                     <Col className="p-4" lg={7} md={8} sm={10}>
-                        <p className="m-0 p-description textBlanco">
-                            {' '}
-                            Encuentra aqui un profesional Seguro y Confiable
+                        <p className="m-0 p-description">
+                            Encuentra aqui un{' '}
+                            <strong> profesional Seguro y Confiable </strong>
                             para cada trabajo. Desde iluminación y pequeños
-                            arreglos, hasta diseños de ingeniería y
-                            remodelaciones completas.
+                            arreglos, hasta diseños de{' '}
+                            <strong>
+                                ingeniería y remodelaciones completas.
+                            </strong>
                         </p>
                     </Col>
                 </Row>
             </Container>
             {/* Seccion de Registro */}
-            <Registro></Registro>
             <Container fluid className="p-0">
                 {/* Seccion de como funciona la comunidad */}
                 <Row id="comoFunciona" className="m-0">
                     <Col className="">
-                        <h3 className="pt-4 headline-l textBlanco">
-                            ¿Como funciona nuestra comunidad?
+                        <h3 className="pt-4 headline-l">
+                            ¿Como funciona <br />
+                            <strong>nuestra comunidad?</strong>
                         </h3>
                         {/* Propietarios */}
                         <Col className="comoPropietarios">
+                            <Col
+                                className="comunidadTitulo m-4 w-auto"
+                                md={3}
+                                sm={10}
+                                xs={10}
+                            >
+                                <h4 className="headline-s textAzul">
+                                    PROPIETARIOS
+                                </h4>
+                            </Col>
                             <Row className="">
                                 <Col
-                                    className="comunidadTitulo m-4 w-auto"
-                                    md={3}
-                                    sm={10}
-                                    xs={10}
-                                >
-                                    <h4 className="headline-s textAzul">
-                                        PROPIETARIOS
-                                    </h4>
-                                </Col>
-                                <Col
-                                    className="nuevoProyecto p-4"
+                                    className="nuevoProyecto p-4 comoCard"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l text-white pb-2 justify-content-center">
+                                    <p className="m-auto headline-l pb-2 justify-content-center">
                                         1
                                     </p>
-                                    <p className="body-1 textBlanco flex-column">
+                                    <p className="body-1 flex-column">
                                         <strong className="pb-4">
                                             Crea una nueva oferta gratis.
                                         </strong>{' '}
@@ -217,14 +220,14 @@ const Inicio = (props) => {
                                     </p>
                                 </Col>
                                 <Col
-                                    className="seleccionaPerfiles p-4"
+                                    className="seleccionaPerfiles p-4 comoCard"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l text-white pb-2 justify-content-center">
+                                    <p className="m-auto headline-l pb-2 justify-content-center">
                                         2
                                     </p>
-                                    <p className="body-1 textBlanco flex-column">
+                                    <p className="body-1 flex-column">
                                         <strong className="pb-4">
                                             Consigue hasta cuatro cotizaciones y
                                             selecciona el perfil adecuado para
@@ -235,14 +238,14 @@ const Inicio = (props) => {
                                     </p>
                                 </Col>
                                 <Col
-                                    className="calificaServicio p-4"
+                                    className="calificaServicio p-4 comoCard"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l text-white pb-2 justify-content-center">
+                                    <p className="m-auto headline-l pb-2 justify-content-center">
                                         3
                                     </p>
-                                    <p className="body-1 textBlanco flex-column">
+                                    <p className="body-1 flex-column">
                                         <strong className="pb-4">
                                             Califica y comenta.
                                         </strong>{' '}
@@ -254,25 +257,22 @@ const Inicio = (props) => {
                         </Col>
                         {/* Comerciantes Calificados */}
                         <Col className="comoComerciantes">
+                            <Col className="comunidadTitulo p-4 w-auto" md={3}>
+                                <h4 className="headline-s textAzul">
+                                    COMERCIANTES <br />
+                                    CALIFICADOS
+                                </h4>
+                            </Col>
                             <Row className="">
                                 <Col
-                                    className="comunidadTitulo p-4 w-auto"
-                                    md={3}
-                                >
-                                    <h4 className="headline-s textAzul">
-                                        COMERCIANTES <br />
-                                        CALIFICADOS
-                                    </h4>
-                                </Col>
-                                <Col
-                                    className="buscarOfertas p-4"
+                                    className="buscarOfertas p-4 comoCard"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l text-white pb-2 justify-content-center">
+                                    <p className="m-auto headline-l pb-2 justify-content-center">
                                         1
                                     </p>
-                                    <p className="body-1 textBlanco flex-column">
+                                    <p className="body-1 flex-column">
                                         <strong className="pb-4">
                                             Observa las oferta indicadas para
                                             ti.
@@ -282,14 +282,14 @@ const Inicio = (props) => {
                                     </p>
                                 </Col>
                                 <Col
-                                    className="cargaPresupuesto p-4"
+                                    className="cargaPresupuesto p-4 comoCard"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l text-white pb-2 justify-content-center">
+                                    <p className="m-auto headline-l pb-2 justify-content-center">
                                         2
                                     </p>
-                                    <p className="body-1 textBlanco flex-column">
+                                    <p className="body-1 flex-column">
                                         <strong className="pb-4">
                                             Diligencia el presupuesto.
                                         </strong>
@@ -301,14 +301,14 @@ const Inicio = (props) => {
                                     </p>
                                 </Col>
                                 <Col
-                                    className="calificaPropietario p-4"
+                                    className="calificaPropietario p-4 comoCard"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l text-white pb-2 justify-content-center">
+                                    <p className="m-auto headline-l pb-2 justify-content-center">
                                         3
                                     </p>
-                                    <p className="body-1 textBlanco flex-column">
+                                    <p className="body-1 flex-column">
                                         <strong className="pb-4">
                                             Califica y comenta.
                                         </strong>

@@ -50,14 +50,14 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
         <>
             <Container fluid className="p-0">
                 <Col className="col-12">
-                    <div className="p-0 contenerdorFormulario center opacidadNegro">
+                    <div className="p-0 contenerdorFormulario center">
                         <Form
                             className="p-4"
                             action=""
                             id="formularioServicios"
                         >
                             {/* {' asistencia '} */}
-                            <h3 className="headline-l textBlanco pb-2">
+                            <h3 className="headline-l pb-2">
                                 Solicitar servicios
                             </h3>
                             <Form.Group

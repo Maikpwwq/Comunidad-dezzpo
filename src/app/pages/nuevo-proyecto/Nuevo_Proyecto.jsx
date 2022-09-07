@@ -8,6 +8,7 @@ import {
     useNavigate,
     useParams,
 } from 'react-router-dom'
+import DirectionalButton from '../../components/DirectionalButton/DirectionalButton'
 import ListadoCategorias from '../../components/ListadoCategorias'
 import ScrollToTopOnMount from '../../components/ScrollToTop'
 import { v4 as uuidv4 } from 'uuid'
@@ -35,6 +36,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
+import AddLocationIcon from '@mui/icons-material/AddLocation'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
@@ -254,7 +256,7 @@ const NuevoProyecto = (props) => {
                         <ScrollToTopOnMount />
                         <Row className="w-100 m-0">
                             <Col className="p-2" lg={8} md={10}>
-                                <p>
+                                <p className="body-1">
                                     Al seleccionar categorías podrás ir
                                     agregando uno a uno todos los servicios que
                                     vas a solicitar. <br /> Luego en el
@@ -285,23 +287,28 @@ const NuevoProyecto = (props) => {
                                 <Row className="w-100 m-0">
                                     {categoriaInfo.data ? (
                                         categoriaInfo.data.map(
-                                            (item, index) => (
-                                                <SubCategorias
-                                                    key={index}
-                                                    props={item}
-                                                    setCategoriaInfo={
-                                                        setCategoriaInfo
-                                                    }
-                                                    categoriaInfo={
-                                                        categoriaInfo
-                                                    }
-                                                />
-                                            )
+                                            (item, index) => {
+                                                return (
+                                                    <>
+                                                        <SubCategorias
+                                                            key={index}
+                                                            props={item}
+                                                            setCategoriaInfo={
+                                                                setCategoriaInfo
+                                                            }
+                                                            categoriaInfo={
+                                                                categoriaInfo
+                                                            }
+                                                        />
+                                                    </>
+                                                )
+                                            }
                                         )
                                     ) : (
                                         <></>
                                     )}
                                 </Row>
+                                <DirectionalButton />
                             </Col>
                         </Row>
                         <Col className="col-10">
@@ -336,8 +343,14 @@ const NuevoProyecto = (props) => {
                             setDraftInfo={setDraftInfo}
                             draftInfo={draftInfo}
                         />
+                        <Typography
+                            variant="h3"
+                            className="p-description w-100 center"
+                        >
+                            Elije tus ajustes
+                        </Typography>
                         <Col
-                            className="pt-4 pb-4 ps-4 align-items-start opacidadNegro"
+                            className="p-4 align-items-start cardFrame"
                             xl={6}
                             lg={8}
                             md={10}
@@ -345,17 +358,16 @@ const NuevoProyecto = (props) => {
                         >
                             <Form>
                                 <p className="body-1">
-                                    2. Crea una oferta. <br />
-                                    <br />
+                                    Crea una oferta. <br />
                                     Dejanos conocer un poco más hacerca del
-                                    proyecto que vas a postular.
-                                    <br />* Campos requeridos
+                                    proyecto que vas a postular. * Campos
+                                    requeridos
                                 </p>
                                 <Form.Group
                                     className="mb-3"
                                     controlId="formNewProjectName"
                                 >
-                                    <Form.Label className="body-2 text-white">
+                                    <Form.Label className="body-2">
                                         Dale un titulo a tu requerimiento *
                                     </Form.Label>
                                     <Form.Control
@@ -371,7 +383,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectDescription"
                                 >
-                                    <Form.Label className="body-2 text-white">
+                                    <Form.Label className="body-2">
                                         Describe el tipo de servicio que
                                         necesitas *
                                     </Form.Label>
@@ -409,7 +421,7 @@ const NuevoProyecto = (props) => {
                                             className="mb-3"
                                             controlId="formNewProjectSize"
                                         >
-                                            <Form.Label className="body-2 text-white">
+                                            <Form.Label className="body-">
                                                 Escoge el tamaño
                                             </Form.Label>
                                             <Form.Select
@@ -442,7 +454,7 @@ const NuevoProyecto = (props) => {
                                             className="mb-3"
                                             controlId="formNewProjectProperty"
                                         >
-                                            <Form.Label className="body-2 text-white">
+                                            <Form.Label className="body-">
                                                 ¿Qué tipo de propiedad es?
                                             </Form.Label>
                                             <Form.Select
@@ -475,7 +487,7 @@ const NuevoProyecto = (props) => {
                                             className="mb-3"
                                             controlId="formNewProjectRooms"
                                         >
-                                            <Form.Label className="body-2 text-white">
+                                            <Form.Label className="body-">
                                                 ¿Cuantas habitaciones y/o
                                                 espacios seran intervenidos?
                                             </Form.Label>
@@ -495,7 +507,7 @@ const NuevoProyecto = (props) => {
                                             className="mb-3"
                                             controlId="formNewProjectPlans"
                                         >
-                                            <Form.Label className="body-2 text-white">
+                                            <Form.Label className="body-">
                                                 ¿Han sido diseñados planos
                                                 arquitectonicos para este
                                                 proyecto?
@@ -530,7 +542,7 @@ const NuevoProyecto = (props) => {
                                             className="mb-3"
                                             controlId="formNewProjectPermissions"
                                         >
-                                            <Form.Label className="body-2 text-white">
+                                            <Form.Label className="body-">
                                                 ¿Cúal es el estado de los
                                                 permisos para este proyecto?
                                             </Form.Label>
@@ -594,27 +606,26 @@ const NuevoProyecto = (props) => {
                 {activeStep == 2 && (
                     <Col className="nuevoProyectoBuscador3 align-items-baseline p-2 ps-4">
                         <ScrollToTopOnMount />
+                        <Typography
+                            variant="h3"
+                            className="p-description w-100 center"
+                        >
+                            {/* Cómo, dónde y cuándo{' '} */}
+                            Programa la visita
+                        </Typography>
                         <Col
-                            className="pt-4 pb-4 ps-4 align-items-start opacidadNegro"
+                            className="p-4 align-items-start cardFrame"
                             xl={6}
                             lg={8}
                             md={10}
                             sm={12}
                         >
-                            <p className="p-description">
-                                Cómo, dónde y cuándo{' '}
-                            </p>
                             <Form>
-                                <p className="body-1">
-                                    3. Información Adicional. <br />
-                                    <br />
-                                    Danos algunos detalles Adicionales.
-                                </p>
                                 <Form.Group
                                     className="mb-3"
                                     controlId="formNewProjectBestSchedule"
                                 >
-                                    <Form.Label className="body-2  text-white">
+                                    <Form.Label className="body-2">
                                         ¿Con cuál disponibilidad de horario y
                                         tiempo cuenta usted para atender la
                                         prestación del servicio? *
@@ -642,7 +653,7 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectPostalCode"
                                 >
-                                    <Form.Label className="body-2 text-white">
+                                    <Form.Label className="body-2">
                                         Registra la dirección donde se requiere
                                         el servicio.
                                         <Form.Control
@@ -652,17 +663,14 @@ const NuevoProyecto = (props) => {
                                             value={draftInfo.draftDirection}
                                             onChange={handleChange}
                                         />
-                                    </Form.Label>
-                                    <Form.Text className="text-muted">
                                         <Button
                                             className="body-2 pb-2 textVerde"
                                             onClick={handleOpen}
                                         >
-                                            {
-                                                'Si prefieres selecciona en el mapa desde aquí'
-                                            }
+                                            <AddLocationIcon />
+                                            {'Seleccionar en el mapa'}
                                         </Button>
-                                    </Form.Text>
+                                    </Form.Label>
                                 </Form.Group>
                                 {/* <Form.Group
                                     className="mb-3"
@@ -695,8 +703,8 @@ const NuevoProyecto = (props) => {
                                     className="mb-3"
                                     controlId="formNewProjectAtachments"
                                 >
-                                    <Form.Label className="body-2 text-white">
-                                        Cargar fotos imagenes y documentos
+                                    <Form.Label className="body-2">
+                                        Cargar fotos, imagenes y documentos
                                         relacionados.{' '}
                                     </Form.Label>
                                     <Form.Control
