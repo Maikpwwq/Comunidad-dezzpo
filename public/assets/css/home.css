@@ -107,6 +107,12 @@ body {
     box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
 }
 
+.how-numbers{
+    border-radius: 20px 0px;
+    width: 50px;
+    color: var(--content-text-white-color) !important;
+}
+
 .comoComerciantes {
     display: flex;
     flex-direction: row;

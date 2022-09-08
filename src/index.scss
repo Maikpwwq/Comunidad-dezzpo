@@ -509,3 +509,15 @@ body {
     background-color: var(--background-category-card-grey-color);
     border-radius: 50px;
 }
+
+.arrow-back {
+    background-color: var(--background-nav-bar-active-color) !important;
+    border-radius: 15px 0 0 15px !important;
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+}
+
+.arrow-next {
+    background-color: var(--background-light-gray-color) !important;
+    border-radius: 0 15px 15px 0 !important;
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+}

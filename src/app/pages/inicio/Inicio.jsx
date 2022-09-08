@@ -5,13 +5,12 @@ import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyec
 import NuestraComunidad from '../../components/nuestra-comunidad/NuestraComunidad'
 
 import Subscribe from './Subscribe'
-import DirectionalButton from '../../components/DirectionalButton/DirectionalButton'
 // imagenes
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
+import Button from '@mui/material/Button'
 import Container from 'react-bootstrap/Container'
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -20,17 +19,21 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import SwipeableViews from 'react-swipeable-views'
 import { bindKeyboard } from 'react-swipeable-views-utils'
+import { Typography } from '@mui/material'
 
 const CustomSwipeableViews = bindKeyboard(SwipeableViews)
 
 const styles = (theme) => ({
     stepper: {
         position: 'relative',
-        top: '300px',
+        bottom: '-25px',
         zIndex: 1000,
         background: 'transparent',
         height: '0px',
         padding: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'row',
     },
 })
 
@@ -70,39 +73,6 @@ const Inicio = (props) => {
         <>
             <Container fluid className="p-0">
                 <Box sx={{ width: '100%', flexGrow: 1 }}>
-                    <MobileStepper
-                        // variant=
-                        sx={classes.stepper}
-                        // steps={maxSteps}
-                        // position="static"
-                        activeStep={activeStep}
-                        nextButton={
-                            <Button
-                                size="lg"
-                                onClick={handleNext}
-                                disabled={activeStep === maxSteps - 1}
-                            >
-                                {theme.direction === 'rtl' ? (
-                                    <KeyboardArrowLeft fontSize="large" />
-                                ) : (
-                                    <KeyboardArrowRight fontSize="large" />
-                                )}
-                            </Button>
-                        }
-                        backButton={
-                            <Button
-                                size="lg"
-                                onClick={handleBack}
-                                disabled={activeStep === 0}
-                            >
-                                {theme.direction === 'rtl' ? (
-                                    <KeyboardArrowRight fontSize="large" />
-                                ) : (
-                                    <KeyboardArrowLeft fontSize="large" />
-                                )}
-                            </Button>
-                        }
-                    />
                     <CustomSwipeableViews
                         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                         index={activeStep}
@@ -163,8 +133,43 @@ const Inicio = (props) => {
                         </Row>
                         <Row className="m-0 w-100">Ayudame a elegir!</Row> */}
                     </CustomSwipeableViews>
+                    <MobileStepper
+                        // variant=
+                        sx={classes.stepper}
+                        className="pb-4 mb-4"
+                        // steps={maxSteps}
+                        // position="static"
+                        activeStep={activeStep}
+                        nextButton={
+                            <Button
+                                size="lg"
+                                onClick={handleNext}
+                                className="arrow-next"
+                                disabled={activeStep === maxSteps - 1}
+                            >
+                                {theme.direction === 'rtl' ? (
+                                    <KeyboardArrowLeft fontSize="large" />
+                                ) : (
+                                    <KeyboardArrowRight fontSize="large" />
+                                )}
+                            </Button>
+                        }
+                        backButton={
+                            <Button
+                                size="lg"
+                                onClick={handleBack}
+                                className="arrow-back"
+                                disabled={activeStep === 0}
+                            >
+                                {theme.direction === 'rtl' ? (
+                                    <KeyboardArrowRight fontSize="large" />
+                                ) : (
+                                    <KeyboardArrowLeft fontSize="large" />
+                                )}
+                            </Button>
+                        }
+                    />
                 </Box>
-                <DirectionalButton />
             </Container>
             <Container fluid className="p-0">
                 <Row className="m-0 w-100 mensajeBanner">
@@ -205,14 +210,17 @@ const Inicio = (props) => {
                             </Col>
                             <Row className="">
                                 <Col
-                                    className="nuevoProyecto p-4 comoCard"
+                                    className="nuevoProyecto comoCard p-0"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#0f71b7' }}
+                                    >
                                         1
-                                    </p>
-                                    <p className="body-1 flex-column">
+                                    </Typography>
+                                    <p className="body-1 p-4 flex-column">
                                         <strong className="pb-4">
                                             Crea una nueva oferta gratis.
                                         </strong>{' '}
@@ -220,14 +228,17 @@ const Inicio = (props) => {
                                     </p>
                                 </Col>
                                 <Col
-                                    className="seleccionaPerfiles p-4 comoCard"
+                                    className="seleccionaPerfiles comoCard p-0"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#30347b' }}
+                                    >
                                         2
-                                    </p>
-                                    <p className="body-1 flex-column">
+                                    </Typography>
+                                    <p className="body-1 p-4 flex-column">
                                         <strong className="pb-4">
                                             Consigue hasta cuatro cotizaciones y
                                             selecciona el perfil adecuado para
@@ -238,14 +249,17 @@ const Inicio = (props) => {
                                     </p>
                                 </Col>
                                 <Col
-                                    className="calificaServicio p-4 comoCard"
+                                    className="calificaServicio comoCard p-0"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#149ba1' }}
+                                    >
                                         3
-                                    </p>
-                                    <p className="body-1 flex-column">
+                                    </Typography>
+                                    <p className="body-1 p-4 flex-column">
                                         <strong className="pb-4">
                                             Califica y comenta.
                                         </strong>{' '}
@@ -265,14 +279,17 @@ const Inicio = (props) => {
                             </Col>
                             <Row className="">
                                 <Col
-                                    className="buscarOfertas p-4 comoCard"
+                                    className="buscarOfertas comoCard p-0"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#ec6f27' }}
+                                    >
                                         1
-                                    </p>
-                                    <p className="body-1 flex-column">
+                                    </Typography>
+                                    <p className="body-1 p-4 flex-column">
                                         <strong className="pb-4">
                                             Observa las oferta indicadas para
                                             ti.
@@ -282,14 +299,17 @@ const Inicio = (props) => {
                                     </p>
                                 </Col>
                                 <Col
-                                    className="cargaPresupuesto p-4 comoCard"
+                                    className="cargaPresupuesto comoCard p-0"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#e42620' }}
+                                    >
                                         2
-                                    </p>
-                                    <p className="body-1 flex-column">
+                                    </Typography>
+                                    <p className="body-1 p-4 flex-column">
                                         <strong className="pb-4">
                                             Diligencia el presupuesto.
                                         </strong>
@@ -301,14 +321,17 @@ const Inicio = (props) => {
                                     </p>
                                 </Col>
                                 <Col
-                                    className="calificaPropietario p-4 comoCard"
+                                    className="calificaPropietario comoCard p-0"
                                     md={3}
                                     sm={6}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#c6b61e' }}
+                                    >
                                         3
-                                    </p>
-                                    <p className="body-1 flex-column">
+                                    </Typography>
+                                    <p className="body-1 p-4 flex-column">
                                         <strong className="pb-4">
                                             Califica y comenta.
                                         </strong>

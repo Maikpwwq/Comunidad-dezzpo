@@ -73,6 +73,7 @@ const NuevoProyecto = (props) => {
         selected: [],
         quatities: [],
         data: [],
+        subCatLength: 0,
     })
     const [activeStep, setActiveStep] = useState(0)
     const [draftInfo, setDraftInfo] = useState({
@@ -101,8 +102,20 @@ const NuevoProyecto = (props) => {
     })
 
     const [open, setOpen] = useState(false)
+    const [categoriesIndex, setCategoriesIndex] = useState(0)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
+
+    const handleNext = () => {
+        if (categoriesIndex < categoriaInfo.subCatLength - 1) {
+            setCategoriesIndex(categoriesIndex + 1)
+        }
+    }
+    const handleBack = () => {
+        if (categoriesIndex > 0) {
+            setCategoriesIndex(categoriesIndex - 1)
+        }
+    }
 
     const draftToFirestore = async (updateInfo, projectID) => {
         // console.log(updateInfo)
@@ -135,17 +148,37 @@ const NuevoProyecto = (props) => {
                     const data = docSnap.docs.map((element) => ({
                         ...element.data(),
                     }))
-                    // console.log(
-                    //     data,
-                    //     draftInfo.draftCategory,
-                    //     categoriaProfesional
-                    // )
+                    // TODO: Pasar la data por hojas que agrupen hasta seis subCategorias
                     if (data.length > 0) {
-                        setCategoriaInfo({
-                            ...categoriaInfo,
-                            data,
+                        console.log(
+                            data
+                            //     draftInfo.draftCategory,
+                            //     categoriaProfesional
+                        )
+                        let i = 0
+                        let j = 0
+                        let response = [[], [], [], [], [], []]
+                        data.map((element) => {
+                            if (i < 6) {
+                                if (!response[j]) {
+                                    response[j] = []
+                                }
+                                response[j].push(element)
+                                i++
+                            } else {
+                                j++
+                                i = 0
+                            }
                         })
-                        // console.log(categoriaInfo)
+                        console.log(response)
+                        if (response.length > 0) {
+                            setCategoriaInfo({
+                                ...categoriaInfo,
+                                data: response,
+                                subCatLength: data.length / 6,
+                            })
+                            // console.log(categoriaInfo)
+                        }
                     }
                 } else {
                     console.log(
@@ -285,8 +318,8 @@ const NuevoProyecto = (props) => {
                         <Row className="categorias w-100 m-0">
                             <Col className="p-0 col-10 categorias-contenedor">
                                 <Row className="w-100 m-0">
-                                    {categoriaInfo.data ? (
-                                        categoriaInfo.data.map(
+                                    {categoriaInfo.data[categoriesIndex] ? (
+                                        categoriaInfo.data[categoriesIndex].map(
                                             (item, index) => {
                                                 return (
                                                     <>
@@ -308,7 +341,10 @@ const NuevoProyecto = (props) => {
                                         <></>
                                     )}
                                 </Row>
-                                <DirectionalButton />
+                                <DirectionalButton
+                                    handleNext={handleNext}
+                                    handleBack={handleBack}
+                                />
                             </Col>
                         </Row>
                         <Col className="col-10">
