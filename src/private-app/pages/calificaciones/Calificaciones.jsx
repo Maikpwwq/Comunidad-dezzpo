@@ -1,5 +1,5 @@
 // Pagina de Usuario - Notificaciones
-import React from 'react'
+import React, { useState } from 'react'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -9,12 +9,35 @@ import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import InputLabel from '@mui/material/InputLabel'
+import Rating from '@mui/material/Rating'
 import FormLabel from '@mui/material/FormLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 
 const Calificaciones = (props) => {
+    const [rate, setRate] = useState({
+        gestion: 0,
+        calidad: 0,
+        oportunidad: 0,
+        description: '',
+    })
     const handleSubmit = () => {}
+
+    const handleRate = (value, name) => {
+        console.log(value, name)
+        if (name === 'calidad') {
+            setRate({ ...rate, calidad: value })
+        } else if (name === 'gestion') {
+            setRate({ ...rate, gestion: value })
+        } else if (name === 'oportunidad') {
+            setRate({ ...rate, oportunidad: value })
+        }
+    }
+
+    const handleChange = (event) => {
+        console.log(event.target.value)
+        setRate({ ...rate, description: event.target.value })
+    }
 
     return (
         <>
@@ -42,7 +65,17 @@ const Calificaciones = (props) => {
                                     contratos.
                                 </Col>
                                 <br />
-                                <FormControl className="ps-4 pb-2">
+                                <Rating
+                                    name="gestion"
+                                    value={rate.gestion}
+                                    onClick={(e) =>
+                                        handleRate(
+                                            e.target.value,
+                                            e.target.name
+                                        )
+                                    }
+                                />
+                                {/* <FormControl className="ps-4 pb-2">
                                     <Select
                                         style={{ width: '10%' }}
                                         value=""
@@ -59,7 +92,7 @@ const Calificaciones = (props) => {
                                         <MenuItem value="4">4</MenuItem>
                                         <MenuItem value="5">5</MenuItem>
                                     </Select>
-                                </FormControl>
+                                </FormControl> */}
                             </FormLabel>
 
                             <FormLabel
@@ -76,7 +109,17 @@ const Calificaciones = (props) => {
                                     ejecutar las actividades del contrato.
                                 </Col>
                                 <br />
-                                <FormControl className="ps-4 pb-2">
+                                <Rating
+                                    name="calidad"
+                                    value={rate.calidad}
+                                    onClick={(e) =>
+                                        handleRate(
+                                            e.target.value,
+                                            e.target.name
+                                        )
+                                    }
+                                />
+                                {/* <FormControl className="ps-4 pb-2">
                                     <Select
                                         style={{ width: '10%' }}
                                         value=""
@@ -93,7 +136,7 @@ const Calificaciones = (props) => {
                                         <MenuItem value="4">4</MenuItem>
                                         <MenuItem value="5">5</MenuItem>
                                     </Select>
-                                </FormControl>
+                                </FormControl> */}
                             </FormLabel>
 
                             <FormLabel
@@ -108,7 +151,17 @@ const Calificaciones = (props) => {
                                     entregados oportunamente.
                                 </Col>
                                 <br />
-                                <FormControl className="ps-4 pb-4">
+                                <Rating
+                                    name="oportunidad"
+                                    value={rate.oportunidad}
+                                    onClick={(e) =>
+                                        handleRate(
+                                            e.target.value,
+                                            e.target.name
+                                        )
+                                    }
+                                />
+                                {/* <FormControl className="ps-4 pb-4">
                                     <Select
                                         style={{ width: '10%' }}
                                         value=""
@@ -125,17 +178,16 @@ const Calificaciones = (props) => {
                                         <MenuItem value="4">4</MenuItem>
                                         <MenuItem value="5">5</MenuItem>
                                     </Select>
-                                </FormControl>
+                                </FormControl> */}
                             </FormLabel>
 
                             <TextareaAutosize
-                                // value={userEditInfo.userDescription}
-                                // onChange={handleChange}
-                                name="userDescription"
-                                id="ofertaServicios"
+                                value={rate.description}
+                                onChange={handleChange}
+                                name="rateDescription"
                                 placeholder="Observaciones generales"
-                                cols="30"
-                                minRows={8}
+                                cols="50"
+                                minRows={4}
                                 className="w-80"
                             ></TextareaAutosize>
                             <Row className="pt-4">

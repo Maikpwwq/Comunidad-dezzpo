@@ -65,7 +65,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                 controlId="formTipoProyecto"
                             >
                                 <InputGroup className="">
-                                    <InputGroup.Text
+                                    {/* <InputGroup.Text
                                         id="basic-addon1"
                                         style={{
                                             border: 'none',
@@ -81,7 +81,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                                 width: 'auto',
                                             }}
                                         />
-                                    </InputGroup.Text>
+                                    </InputGroup.Text> */}
                                     <Form.Label className="mb-0">
                                         ¿Qué tipo de proyecto es?
                                     </Form.Label>
@@ -112,7 +112,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                 controlId="formCategoriaProfesional"
                             >
                                 <InputGroup className="">
-                                    <InputGroup.Text
+                                    {/* <InputGroup.Text
                                         id="basic-addon1"
                                         style={{
                                             border: 'none',
@@ -128,7 +128,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                                 width: 'auto',
                                             }}
                                         />
-                                    </InputGroup.Text>
+                                    </InputGroup.Text> */}
 
                                     <Form.Label className="mb-0">
                                         ¿Qué tipo de profesional necesitas?

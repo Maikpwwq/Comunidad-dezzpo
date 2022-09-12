@@ -191,7 +191,7 @@ const Inicio = (props) => {
             <Container fluid className="p-0">
                 {/* Seccion de como funciona la comunidad */}
                 <Row id="comoFunciona" className="m-0">
-                    <Col className="">
+                    <Col className="col-lg-8 col-md-10 col-sm-12">
                         <h3 className="pt-4 headline-l">
                             ¿Como funciona <br />
                             <strong>nuestra comunidad?</strong>
@@ -204,15 +204,14 @@ const Inicio = (props) => {
                                 sm={10}
                                 xs={10}
                             >
-                                <h4 className="headline-s textAzul">
-                                    PROPIETARIOS
-                                </h4>
+                                <h4 className="headline-s">Propietarios</h4>
                             </Col>
-                            <Row className="">
+                            <Row className="ms-1 me-1 w-100">
                                 <Col
-                                    className="nuevoProyecto comoCard p-0"
+                                    className="nuevoProyecto comoCard p-0 mb-4 me-2"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
                                     <Typography
                                         className="how-numbers headline-l pb-2 pt-2 justify-content-center"
@@ -220,17 +219,18 @@ const Inicio = (props) => {
                                     >
                                         1
                                     </Typography>
-                                    <p className="body-1 p-4 flex-column">
-                                        <strong className="pb-4">
-                                            Crea una nueva oferta gratis.
-                                        </strong>{' '}
-                                        Describe tu proyecto <br />
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Crea una nueva{' '}
+                                        <strong className="pb-4">oferta</strong>{' '}
+                                        gratis.
+                                        {/* Describe tu proyecto <br /> */}
                                     </p>
                                 </Col>
                                 <Col
-                                    className="seleccionaPerfiles comoCard p-0"
+                                    className="seleccionaPerfiles comoCard p-0 mb-4 me-2"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
                                     <Typography
                                         className="how-numbers headline-l pb-2 pt-2 justify-content-center"
@@ -238,20 +238,22 @@ const Inicio = (props) => {
                                     >
                                         2
                                     </Typography>
-                                    <p className="body-1 p-4 flex-column">
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Consigue hasta cuatro{' '}
                                         <strong className="pb-4">
-                                            Consigue hasta cuatro cotizaciones y
-                                            selecciona el perfil adecuado para
-                                            el servicio.
+                                            cotizaciones
                                         </strong>{' '}
-                                        El profesional se pondrá en contacto con
-                                        tigo. <br />
+                                        y selecciona el perfil adecuado para el
+                                        servicio.
+                                        {/* El profesional se pondrá en contacto con
+                                        tigo. <br /> */}
                                     </p>
                                 </Col>
                                 <Col
-                                    className="calificaServicio comoCard p-0"
+                                    className="calificaServicio comoCard p-0 mb-4"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
                                     <Typography
                                         className="how-numbers headline-l pb-2 pt-2 justify-content-center"
@@ -259,29 +261,30 @@ const Inicio = (props) => {
                                     >
                                         3
                                     </Typography>
-                                    <p className="body-1 p-4 flex-column">
-                                        <strong className="pb-4">
-                                            Califica y comenta.
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Califica y comenta.
+                                        {/* <strong className="pb-4">
+                                            
                                         </strong>{' '}
                                         Finalizo el proyecto, <br />
-                                        Dejanos conocer tu experiencia. <br />
+                                        Dejanos conocer tu experiencia. <br /> */}
                                     </p>
                                 </Col>
                             </Row>
                         </Col>
                         {/* Comerciantes Calificados */}
                         <Col className="comoComerciantes">
-                            <Col className="comunidadTitulo p-4 w-auto" md={3}>
-                                <h4 className="headline-s textAzul">
-                                    COMERCIANTES <br />
-                                    CALIFICADOS
+                            <Col className="comunidadTitulo m-4 w-auto" md={3}>
+                                <h4 className="headline-s">
+                                    Comerciantes calificados
                                 </h4>
                             </Col>
-                            <Row className="">
+                            <Row className="ms-1 me-1 w-100">
                                 <Col
-                                    className="buscarOfertas comoCard p-0"
+                                    className="buscarOfertas comoCard p-0 mb-4 me-2"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
                                     <Typography
                                         className="how-numbers headline-l pb-2 pt-2 justify-content-center"
@@ -289,19 +292,20 @@ const Inicio = (props) => {
                                     >
                                         1
                                     </Typography>
-                                    <p className="body-1 p-4 flex-column">
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Observa las oferta indicadas para ti.
+                                        <br />
+                                        Filtra requerimientos por ubicación y{' '}
                                         <strong className="pb-4">
-                                            Observa las oferta indicadas para
-                                            ti.
+                                            postulate.
                                         </strong>{' '}
-                                        Filtra requerimientos por ubicación y
-                                        postulate. <br />
                                     </p>
                                 </Col>
                                 <Col
-                                    className="cargaPresupuesto comoCard p-0"
+                                    className="cargaPresupuesto comoCard p-0 mb-4 me-2"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
                                     <Typography
                                         className="how-numbers headline-l pb-2 pt-2 justify-content-center"
@@ -309,21 +313,27 @@ const Inicio = (props) => {
                                     >
                                         2
                                     </Typography>
-                                    <p className="body-1 p-4 flex-column">
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Diligencia el{' '}
                                         <strong className="pb-4">
-                                            Diligencia el presupuesto.
+                                            presupuesto.
+                                        </strong>{' '}
+                                        Haz una{' '}
+                                        <strong className="pb-4">
+                                            cotizacion{' '}
                                         </strong>
-                                        Haz una cotizacion detallada con los
-                                        datos suministrados, en caso de ser
-                                        escogido por el propietario para
-                                        desarrollar el servicio, nos pagaras una
-                                        comisión por el servicio prestado <br />
+                                        detallada con los datos suministrados.
+                                        {/* en caso de ser escogido por el
+                                        propietario para desarrollar el
+                                        servicio, nos pagaras una comisión por
+                                        el servicio prestado <br /> */}
                                     </p>
                                 </Col>
                                 <Col
-                                    className="calificaPropietario comoCard p-0"
+                                    className="calificaPropietario comoCard p-0 mb-4"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
                                     <Typography
                                         className="how-numbers headline-l pb-2 pt-2 justify-content-center"
@@ -331,12 +341,14 @@ const Inicio = (props) => {
                                     >
                                         3
                                     </Typography>
-                                    <p className="body-1 p-4 flex-column">
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Califica y comenta. <br />
+                                        Finalizó el proyecto, <br />
+                                        Dejanos conocer tu{' '}
                                         <strong className="pb-4">
-                                            Califica y comenta.
+                                            experiencia.{' '}
                                         </strong>
-                                        Finalizo el proyecto, <br />
-                                        Dejanos conocer tu experiencia. <br />
+                                        <br />
                                     </p>
                                 </Col>
                             </Row>

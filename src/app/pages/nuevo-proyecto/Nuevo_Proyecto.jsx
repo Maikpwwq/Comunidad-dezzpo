@@ -316,7 +316,7 @@ const NuevoProyecto = (props) => {
                         </Row>
                         {/* setActiveStep */}
                         <Row className="categorias w-100 m-0">
-                            <Col className="p-0 col-10 categorias-contenedor">
+                            <Col className="p-0 pt-4 col-10 categorias-contenedor">
                                 <Row className="w-100 m-0">
                                     {categoriaInfo.data[categoriesIndex] ? (
                                         categoriaInfo.data[categoriesIndex].map(

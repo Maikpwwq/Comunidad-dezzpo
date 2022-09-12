@@ -88,7 +88,7 @@ const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <Button className="" onClick={handleSeleccionar}>
+                <Button className="pt-4" onClick={handleSeleccionar}>
                     {/* {selected ? 'Seleccionar' : 'Quitar'} */}
                     {selected ? (
                         <>
