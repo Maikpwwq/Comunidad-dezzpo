@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { styled, alpha } from '@mui/material/styles'
+import IcoMoon from 'react-icomoon'
+import iconSet from '../../../public/assets/css/icomoon/selection.json'
 import ListadoCategorias from '../../app/components/ListadoCategorias'
 import SearchIcon from '@mui/icons-material/Search'
 import Select from '@mui/material/Select'
@@ -82,7 +84,16 @@ const SearchBar = () => {
         <>
             <Search>
                 <SearchIconWrapper>
-                    <SearchIcon />
+                    {/* <SearchIcon /> */}
+                    <IcoMoon
+                        iconSet={iconSet}
+                        icon="LupaFomularioIcono"
+                        style={{
+                            height: '28px',
+                            marginRight: '8px',
+                            width: 'auto',
+                        }}
+                    />
                 </SearchIconWrapper>
                 <StyledSelect
                     style={{ borderStyle: 'solid', borderWidth: '1px' }}

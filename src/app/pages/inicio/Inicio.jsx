@@ -5,13 +5,12 @@ import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyec
 import NuestraComunidad from '../../components/nuestra-comunidad/NuestraComunidad'
 
 import Subscribe from './Subscribe'
-import DirectionalButton from '../../components/DirectionalButton/DirectionalButton'
 // imagenes
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
+import Button from '@mui/material/Button'
 import Container from 'react-bootstrap/Container'
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -20,17 +19,21 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import SwipeableViews from 'react-swipeable-views'
 import { bindKeyboard } from 'react-swipeable-views-utils'
+import { Typography } from '@mui/material'
 
 const CustomSwipeableViews = bindKeyboard(SwipeableViews)
 
 const styles = (theme) => ({
     stepper: {
         position: 'relative',
-        top: '300px',
+        bottom: '-25px',
         zIndex: 1000,
         background: 'transparent',
         height: '0px',
         padding: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'row',
     },
 })
 
@@ -70,39 +73,6 @@ const Inicio = (props) => {
         <>
             <Container fluid className="p-0">
                 <Box sx={{ width: '100%', flexGrow: 1 }}>
-                    <MobileStepper
-                        // variant=
-                        sx={classes.stepper}
-                        // steps={maxSteps}
-                        // position="static"
-                        activeStep={activeStep}
-                        nextButton={
-                            <Button
-                                size="lg"
-                                onClick={handleNext}
-                                disabled={activeStep === maxSteps - 1}
-                            >
-                                {theme.direction === 'rtl' ? (
-                                    <KeyboardArrowLeft fontSize="large" />
-                                ) : (
-                                    <KeyboardArrowRight fontSize="large" />
-                                )}
-                            </Button>
-                        }
-                        backButton={
-                            <Button
-                                size="lg"
-                                onClick={handleBack}
-                                disabled={activeStep === 0}
-                            >
-                                {theme.direction === 'rtl' ? (
-                                    <KeyboardArrowRight fontSize="large" />
-                                ) : (
-                                    <KeyboardArrowLeft fontSize="large" />
-                                )}
-                            </Button>
-                        }
-                    />
                     <CustomSwipeableViews
                         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                         index={activeStep}
@@ -115,12 +85,17 @@ const Inicio = (props) => {
                             <Col
                                 id="contenedorBanner"
                                 className="m-0 p-0"
-                                lg={6}
+                                lg={7}
                                 md={6}
-                                sm={12}
+                                sm={10}
+                                xs={11}
+                                sx={{
+                                    position: { lg: 'relative' },
+                                    left: { lg: '100px' },
+                                }}
                             >
                                 {/* Mensaje del Banner izquierda */}
-                                <div className="slogan">
+                                <div className="slogan p-0">
                                     <span className="opacidadNegro">
                                         {' '}
                                         <p className="p-description">
@@ -163,14 +138,49 @@ const Inicio = (props) => {
                         </Row>
                         <Row className="m-0 w-100">Ayudame a elegir!</Row> */}
                     </CustomSwipeableViews>
+                    <MobileStepper
+                        // variant=
+                        sx={classes.stepper}
+                        className="pb-4 mb-4"
+                        // steps={maxSteps}
+                        // position="static"
+                        activeStep={activeStep}
+                        nextButton={
+                            <Button
+                                size="lg"
+                                onClick={handleNext}
+                                className="arrow-next"
+                                disabled={activeStep === maxSteps - 1}
+                            >
+                                {theme.direction === 'rtl' ? (
+                                    <KeyboardArrowLeft fontSize="large" />
+                                ) : (
+                                    <KeyboardArrowRight fontSize="large" />
+                                )}
+                            </Button>
+                        }
+                        backButton={
+                            <Button
+                                size="lg"
+                                onClick={handleBack}
+                                className="arrow-back"
+                                disabled={activeStep === 0}
+                            >
+                                {theme.direction === 'rtl' ? (
+                                    <KeyboardArrowRight fontSize="large" />
+                                ) : (
+                                    <KeyboardArrowLeft fontSize="large" />
+                                )}
+                            </Button>
+                        }
+                    />
                 </Box>
-                <DirectionalButton />
             </Container>
             <Container fluid className="p-0">
                 <Row className="m-0 w-100 mensajeBanner">
                     {/* Mensaje del Banner inferior*/}
                     <Col className="p-4" lg={7} md={8} sm={10}>
-                        <p className="m-0 p-description">
+                        <p className="m-0 body-2">
                             Encuentra aqui un{' '}
                             <strong> profesional Seguro y Confiable </strong>
                             para cada trabajo. Desde iluminación y pequeños
@@ -185,12 +195,12 @@ const Inicio = (props) => {
             {/* Seccion de Registro */}
             <Container fluid className="p-0">
                 {/* Seccion de como funciona la comunidad */}
-                <Row id="comoFunciona" className="m-0">
-                    <Col className="">
-                        <h3 className="pt-4 headline-l">
-                            ¿Como funciona <br />
+                <Row id="comoFunciona" className="color-steps m-0">
+                    <Col className="col-lg-8 col-md-10 col-sm-12">
+                        <Typography variant="h3" className="pt-4 headline-l">
+                            ¿Cómo funciona <br />
                             <strong>nuestra comunidad?</strong>
-                        </h3>
+                        </Typography>
                         {/* Propietarios */}
                         <Col className="comoPropietarios">
                             <Col
@@ -199,121 +209,151 @@ const Inicio = (props) => {
                                 sm={10}
                                 xs={10}
                             >
-                                <h4 className="headline-s textAzul">
-                                    PROPIETARIOS
-                                </h4>
+                                <h4 className="headline-s">Propietarios</h4>
                             </Col>
-                            <Row className="">
+                            <Row className="ms-1 me-1 w-100">
                                 <Col
-                                    className="nuevoProyecto p-4 comoCard"
+                                    className="nuevoProyecto comoCard p-0 mb-4 me-2"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#0f71b7' }}
+                                    >
                                         1
-                                    </p>
-                                    <p className="body-1 flex-column">
-                                        <strong className="pb-4">
-                                            Crea una nueva oferta gratis.
-                                        </strong>{' '}
-                                        Describe tu proyecto <br />
+                                    </Typography>
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Crea una nueva{' '}
+                                        <strong className="pb-4">oferta</strong>{' '}
+                                        gratis.
+                                        {/* Describe tu proyecto <br /> */}
                                     </p>
                                 </Col>
                                 <Col
-                                    className="seleccionaPerfiles p-4 comoCard"
+                                    className="seleccionaPerfiles comoCard p-0 mb-4 me-2"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#30347b' }}
+                                    >
                                         2
-                                    </p>
-                                    <p className="body-1 flex-column">
+                                    </Typography>
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Consigue hasta cuatro{' '}
                                         <strong className="pb-4">
-                                            Consigue hasta cuatro cotizaciones y
-                                            selecciona el perfil adecuado para
-                                            el servicio.
+                                            cotizaciones
                                         </strong>{' '}
-                                        El profesional se pondrá en contacto con
-                                        tigo. <br />
+                                        y selecciona el perfil adecuado para el
+                                        servicio.
+                                        {/* El profesional se pondrá en contacto con
+                                        tigo. <br /> */}
                                     </p>
                                 </Col>
                                 <Col
-                                    className="calificaServicio p-4 comoCard"
+                                    className="calificaServicio comoCard p-0 mb-4"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#149ba1' }}
+                                    >
                                         3
-                                    </p>
-                                    <p className="body-1 flex-column">
-                                        <strong className="pb-4">
-                                            Califica y comenta.
+                                    </Typography>
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Califica y comenta.
+                                        {/* <strong className="pb-4">
+                                            
                                         </strong>{' '}
                                         Finalizo el proyecto, <br />
-                                        Dejanos conocer tu experiencia. <br />
+                                        Dejanos conocer tu experiencia. <br /> */}
                                     </p>
                                 </Col>
                             </Row>
                         </Col>
                         {/* Comerciantes Calificados */}
                         <Col className="comoComerciantes">
-                            <Col className="comunidadTitulo p-4 w-auto" md={3}>
-                                <h4 className="headline-s textAzul">
-                                    COMERCIANTES <br />
-                                    CALIFICADOS
+                            <Col className="comunidadTitulo m-4 w-auto" md={3}>
+                                <h4 className="headline-s">
+                                    Comerciantes calificados
                                 </h4>
                             </Col>
-                            <Row className="">
+                            <Row className="ms-1 me-1 w-100">
                                 <Col
-                                    className="buscarOfertas p-4 comoCard"
+                                    className="buscarOfertas comoCard p-0 mb-4 me-2"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#ec6f27' }}
+                                    >
                                         1
-                                    </p>
-                                    <p className="body-1 flex-column">
+                                    </Typography>
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Observa las oferta indicadas para ti.
+                                        <br />
+                                        Filtra requerimientos por ubicación y{' '}
                                         <strong className="pb-4">
-                                            Observa las oferta indicadas para
-                                            ti.
+                                            postulate.
                                         </strong>{' '}
-                                        Filtra requerimientos por ubicación y
-                                        postulate. <br />
                                     </p>
                                 </Col>
                                 <Col
-                                    className="cargaPresupuesto p-4 comoCard"
+                                    className="cargaPresupuesto comoCard p-0 mb-4 me-2"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#e42620' }}
+                                    >
                                         2
-                                    </p>
-                                    <p className="body-1 flex-column">
+                                    </Typography>
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Diligencia el{' '}
                                         <strong className="pb-4">
-                                            Diligencia el presupuesto.
+                                            presupuesto.
+                                        </strong>{' '}
+                                        Haz una{' '}
+                                        <strong className="pb-4">
+                                            cotizacion{' '}
                                         </strong>
-                                        Haz una cotizacion detallada con los
-                                        datos suministrados, en caso de ser
-                                        escogido por el propietario para
-                                        desarrollar el servicio, nos pagaras una
-                                        comisión por el servicio prestado <br />
+                                        detallada con los datos suministrados.
+                                        {/* en caso de ser escogido por el
+                                        propietario para desarrollar el
+                                        servicio, nos pagaras una comisión por
+                                        el servicio prestado <br /> */}
                                     </p>
                                 </Col>
                                 <Col
-                                    className="calificaPropietario p-4 comoCard"
+                                    className="calificaPropietario comoCard p-0 mb-4"
+                                    lg={2}
                                     md={3}
-                                    sm={6}
+                                    sm={3}
                                 >
-                                    <p className="m-auto headline-l pb-2 justify-content-center">
+                                    <Typography
+                                        className="how-numbers headline-l pb-2 pt-2 justify-content-center"
+                                        sx={{ backgroundColor: '#c6b61e' }}
+                                    >
                                         3
-                                    </p>
-                                    <p className="body-1 flex-column">
+                                    </Typography>
+                                    <p className="body-1 p-4 d-inline-block">
+                                        Califica y comenta. <br />
+                                        Finalizó el proyecto, <br />
+                                        Dejanos conocer tu{' '}
                                         <strong className="pb-4">
-                                            Califica y comenta.
+                                            experiencia.{' '}
                                         </strong>
-                                        Finalizo el proyecto, <br />
-                                        Dejanos conocer tu experiencia. <br />
+                                        <br />
                                     </p>
                                 </Col>
                             </Row>

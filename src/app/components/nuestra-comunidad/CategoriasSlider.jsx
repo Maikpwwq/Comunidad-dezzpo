@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
+import Button from '@mui/material/Button'
 import { useTheme } from '@mui/material/styles'
 import Row from 'react-bootstrap/Row'
 import Box from '@mui/material/Box'
@@ -270,11 +270,14 @@ const Categorias = [
 const styles = (theme) => ({
     stepper: {
         position: 'relative',
-        top: '80px',
+        bottom: '-25px',
         zIndex: 1000,
         background: 'transparent',
         height: '0px',
         padding: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'row',
     },
 })
 
@@ -302,41 +305,6 @@ const CategoriasSlider = (props) => {
                 flexGrow: 1,
             }}
         >
-            <MobileStepper
-                // variant=
-                sx={classes.stepper}
-                // steps={maxSteps}
-                // position="static"
-                activeStep={activeStep}
-                nextButton={
-                    <Button
-                        size="lg"
-                        onClick={handleNext}
-                        disabled={activeStep === maxSteps - 1}
-                        style={{ left: '68px' }}
-                    >
-                        {theme.direction === 'rtl' ? (
-                            <KeyboardArrowLeft fontSize="large" />
-                        ) : (
-                            <KeyboardArrowRight fontSize="large" />
-                        )}
-                    </Button>
-                }
-                backButton={
-                    <Button
-                        size="lg"
-                        onClick={handleBack}
-                        disabled={activeStep === 0}
-                        style={{ right: '68px' }}
-                    >
-                        {theme.direction === 'rtl' ? (
-                            <KeyboardArrowRight fontSize="large" />
-                        ) : (
-                            <KeyboardArrowLeft fontSize="large" />
-                        )}
-                    </Button>
-                }
-            />
             <AutoPlaySwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={activeStep}
@@ -372,6 +340,44 @@ const CategoriasSlider = (props) => {
                     )
                 })}
             </AutoPlaySwipeableViews>
+            <MobileStepper
+                // variant=
+                sx={classes.stepper}
+                className="pb-4 mb-4"
+                // steps={maxSteps}
+                // position="static"
+                activeStep={activeStep}
+                nextButton={
+                    <Button
+                        size="lg"
+                        onClick={handleNext}
+                        className="arrow-next"
+                        disabled={activeStep === maxSteps - 1}
+                        // style={{ left: '68px' }}
+                    >
+                        {theme.direction === 'rtl' ? (
+                            <KeyboardArrowLeft fontSize="large" />
+                        ) : (
+                            <KeyboardArrowRight fontSize="large" />
+                        )}
+                    </Button>
+                }
+                backButton={
+                    <Button
+                        size="lg"
+                        onClick={handleBack}
+                        className="arrow-back"
+                        disabled={activeStep === 0}
+                        // style={{ right: '68px' }}
+                    >
+                        {theme.direction === 'rtl' ? (
+                            <KeyboardArrowRight fontSize="large" />
+                        ) : (
+                            <KeyboardArrowLeft fontSize="large" />
+                        )}
+                    </Button>
+                }
+            />
         </Box>
     )
 }

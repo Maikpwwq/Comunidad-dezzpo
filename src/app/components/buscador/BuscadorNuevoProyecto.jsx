@@ -50,7 +50,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
         <>
             <Container fluid className="p-0">
                 <Col className="col-12">
-                    <div className="p-0 contenerdorFormulario center">
+                    <div className="p-0 contenerdorFormulario center ms-2 me-2">
                         <Form
                             className="p-4"
                             action=""
@@ -65,7 +65,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                 controlId="formTipoProyecto"
                             >
                                 <InputGroup className="">
-                                    <InputGroup.Text
+                                    {/* <InputGroup.Text
                                         id="basic-addon1"
                                         style={{
                                             border: 'none',
@@ -81,8 +81,8 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                                 width: 'auto',
                                             }}
                                         />
-                                    </InputGroup.Text>
-                                    <Form.Label className="mb-0">
+                                    </InputGroup.Text> */}
+                                    <Form.Label className="body-1 mb-0">
                                         ¿Qué tipo de proyecto es?
                                     </Form.Label>
                                 </InputGroup>
@@ -112,7 +112,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                 controlId="formCategoriaProfesional"
                             >
                                 <InputGroup className="">
-                                    <InputGroup.Text
+                                    {/* <InputGroup.Text
                                         id="basic-addon1"
                                         style={{
                                             border: 'none',
@@ -128,9 +128,9 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                                 width: 'auto',
                                             }}
                                         />
-                                    </InputGroup.Text>
+                                    </InputGroup.Text> */}
 
-                                    <Form.Label className="mb-0">
+                                    <Form.Label className="body-1 mb-0">
                                         ¿Qué tipo de profesional necesitas?
                                     </Form.Label>
                                 </InputGroup>

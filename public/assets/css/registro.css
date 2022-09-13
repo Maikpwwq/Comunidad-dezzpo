@@ -11,17 +11,19 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    background: rgb(24, 177, 167);
+    background: linear-gradient(45deg, rgba(24, 177, 167, 1) 35%, rgba(0, 153, 204, 1) 100%);
 }
 .registrateImagen{
     display: flex;
     flex-direction: column;
-    min-height: 656px !important;
+    min-height: 565px !important;
     height: auto!important;
     width: 50%;
     margin-top: 20px;
-    background: #e9ebe6 url(../img/Ingresar_registro.png) no-repeat center; 
+    background: url(../img/IsologoFooter.png) no-repeat center; 
     background-attachment: scroll;         
-    background-size: cover;
+    background-size: 50% auto ;
 }
 .registrateformulario{
     display: flex;
