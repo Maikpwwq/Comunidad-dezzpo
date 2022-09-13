@@ -12,7 +12,11 @@
 }
 
 /* Pantallas en tabletas */
-@media screen and (min-width: 600px) and (max-width: 900px) {}
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    /* .bannerComunidad {
+        background-size: auto 100% !important;
+    } */
+}
 
 /* Pantallas de Ordenador */
 @media screen and (min-width: 900px) {}
@@ -27,10 +31,10 @@ body {
 }
 
 .bannerComunidad {
-    /* background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center; */
-    background: #e9ebe6 url(https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Buscador-Dezzpo.png?alt=media&token=db72bbeb-29f7-4fa8-b995-6eced5b2f007
-) no-repeat center;
-    background-size: cover;
+    background: url(../img/MainBanner.png) no-repeat center;
+    /* background: #e9ebe6 url(https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Buscador-Dezzpo.png?alt=media&token=db72bbeb-29f7-4fa8-b995-6eced5b2f007
+) no-repeat center; */
+    background-size: auto 100%;
     min-height: 515px;
     height: auto;
     width: auto;
@@ -46,6 +50,7 @@ body {
     display: flex;
     flex-direction: row;
     height: auto;
+    justify-content: end;
 }
 
 .slogan {
@@ -62,6 +67,12 @@ body {
     font-size: 27px;
 }
 
+.color-steps {
+    background: url(../img/ColorSteps.png) no-repeat bottom;
+    background-size: 100% 95%;
+    background-attachment: scroll;
+}
+
 #comoFunciona {
     /* background: #13495e; */
     width: 100%;
@@ -70,8 +81,8 @@ body {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    border-top: #1ec7e6;
-    border-top-style: solid;
+    /* border-top: #1ec7e6;
+    border-top-style: solid; */
     color: white;
 }
 
@@ -120,8 +131,8 @@ body {
     flex-direction: row;
     justify-content: space-evenly;
     text-align: left;
-    border-top: #1ec7e6;
-    border-top-style: solid;
+    /* border-top: #1ec7e6;
+    border-top-style: solid; */
     width: 100%;
     align-items: center;
     align-content: center;

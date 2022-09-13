@@ -290,10 +290,11 @@ const Registro = (props) => {
                         </Col>
                     )}
                     <Col
-                        className="registrateformulario m-0 p-0"
+                        className="registrateformulario m-0 p-0 mb-4"
                         lg={4}
                         md={5}
                         sm={10}
+                        xs={10}
                     >
                         <Paper
                             elevation={16}

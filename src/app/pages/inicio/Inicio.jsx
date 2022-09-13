@@ -85,12 +85,17 @@ const Inicio = (props) => {
                             <Col
                                 id="contenedorBanner"
                                 className="m-0 p-0"
-                                lg={6}
+                                lg={7}
                                 md={6}
-                                sm={12}
+                                sm={10}
+                                xs={11}
+                                sx={{
+                                    position: { lg: 'relative' },
+                                    left: { lg: '100px' },
+                                }}
                             >
                                 {/* Mensaje del Banner izquierda */}
-                                <div className="slogan">
+                                <div className="slogan p-0">
                                     <span className="opacidadNegro">
                                         {' '}
                                         <p className="p-description">
@@ -175,7 +180,7 @@ const Inicio = (props) => {
                 <Row className="m-0 w-100 mensajeBanner">
                     {/* Mensaje del Banner inferior*/}
                     <Col className="p-4" lg={7} md={8} sm={10}>
-                        <p className="m-0 p-description">
+                        <p className="m-0 body-2">
                             Encuentra aqui un{' '}
                             <strong> profesional Seguro y Confiable </strong>
                             para cada trabajo. Desde iluminación y pequeños
@@ -190,12 +195,12 @@ const Inicio = (props) => {
             {/* Seccion de Registro */}
             <Container fluid className="p-0">
                 {/* Seccion de como funciona la comunidad */}
-                <Row id="comoFunciona" className="m-0">
+                <Row id="comoFunciona" className="color-steps m-0">
                     <Col className="col-lg-8 col-md-10 col-sm-12">
-                        <h3 className="pt-4 headline-l">
-                            ¿Como funciona <br />
+                        <Typography variant="h3" className="pt-4 headline-l">
+                            ¿Cómo funciona <br />
                             <strong>nuestra comunidad?</strong>
-                        </h3>
+                        </Typography>
                         {/* Propietarios */}
                         <Col className="comoPropietarios">
                             <Col

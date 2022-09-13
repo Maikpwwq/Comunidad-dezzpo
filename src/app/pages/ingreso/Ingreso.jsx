@@ -192,10 +192,11 @@ const Ingreso = (props) => {
                         </Box>
                     </Col>
                     <Col
-                        className="ingresarFormulario m-0 p-0"
+                        className="ingresarFormulario m-0 p-0 mb-4"
                         lg={4}
                         md={5}
                         sm={10}
+                        xs={10}
                     >
                         <Paper
                             elevation={16}
