@@ -1,24 +1,31 @@
 @media screen and (max-width: 600px) {
-    .form-check-input, #formBasicCheckboxRecordar {
+
+    .form-check-input,
+    #formBasicCheckboxRecordar {
         width: 10% !important;
     }
 }
-.imagenIngreso{
-    background: #13495e url(../img/Ingresar_registro.png) no-repeat center; 
-    background-attachment: scroll;         
-    background-size: auto 100% ;
+
+.imagenIngreso {
+    background: url(../img/IsologoFooter.png) no-repeat center;
+    background-attachment: scroll;
+    background-size: 50% auto;
     min-height: 565px;
     height: auto;
     width: 100%;
 }
-.ingresoFormulario{
-    background: #13495e;     
+
+.ingresoFormulario {
+    /* background: #13495e;      */
+    background: rgb(24, 177, 167);
+    background: linear-gradient(45deg, rgba(24, 177, 167, 1) 35%, rgba(0, 153, 204, 1) 100%);
     min-height: 540px;
     width: 100%;
     /* color: #e9ebe6;     */
     position: relative;
 }
-.ingresarFormulario{
+
+.ingresarFormulario {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -26,21 +33,24 @@
     text-align: left;
     min-height: 480px;
     width: 60%;
-    background: rgba(19, 73, 94, 0.9); 
+    /* background: rgba(19, 73, 94, 0.9); */
     margin-top: 20px;
     margin-right: 1em;
 }
-#formularioIngreso{
+
+#formularioIngreso {
     background-color: var(--background-white-color);
     border-radius: 50px;
 }
-#formularioIngreso .form-control{
+
+#formularioIngreso .form-control {
     height: 27px;
     text-align: center;
     width: 100%;
     background-color: var(--background-light-gray-color);
 
 }
+
 #formBasicCheckboxRecordar {
     width: 10% !important;
     margin: 0 0;

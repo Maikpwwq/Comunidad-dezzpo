@@ -132,7 +132,7 @@ const Requerimiento = () => {
                     <Col className="col-10">
                         <h4 className="headline-xl">Detalle Requerimiento</h4>
                         <Button
-                            className="BOTON-TEXT textBlanco"
+                            className="btn-TEXT textBlanco"
                             variant="primary"
                             // onClick={}
                         >
@@ -365,7 +365,7 @@ const Requerimiento = () => {
                                     {requerimientoInfo.requerimientoAplicaciones
                                         .length < 4 && (
                                         <Button
-                                            className="BOTON-TEXT textBlanco"
+                                            className="btn-TEXT textBlanco"
                                             variant="primary"
                                             onClick={handleCotizar}
                                         >
