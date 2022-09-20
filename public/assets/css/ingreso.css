@@ -58,4 +58,5 @@
 
 .body-1.btn-round.btn-middle.w-auto.d-flex.flex-row.align-items-center.justify-content-center.btn.btn-primary{
     border: none;
+    font-weight: bold;
 }

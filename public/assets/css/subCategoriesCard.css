@@ -4,4 +4,9 @@
     background-color: var(--background-category-card-grey-color) !important;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2) !important;
     border-radius: 30px !important;
+    border: white 1px solid !important;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.pt-4.css-1e6y48t-MuiButtonBase-root-MuiButton-root{
+    color: var(--secondary-green-text-color) !important;
 }

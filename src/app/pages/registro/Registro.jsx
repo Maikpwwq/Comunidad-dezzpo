@@ -290,7 +290,7 @@ const Registro = (props) => {
                         </Col>
                     )}
                     <Col
-                        className="registrateformulario m-0 p-0 mb-4"
+                        className="registrateformulario m-0 p-0 mb-4 mt-4"
                         lg={4}
                         md={5}
                         sm={10}

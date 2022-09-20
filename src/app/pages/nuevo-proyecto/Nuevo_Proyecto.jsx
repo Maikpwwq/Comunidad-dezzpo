@@ -352,7 +352,7 @@ const NuevoProyecto = (props) => {
                                 <Button
                                     onClick={goForward}
                                     style={{ paddingRight: '10px' }}
-                                    className="btn-round btn-high btn-main body-1 w-auto"
+                                    className="p-2 ps-4 pe-4 btn-round btn-high body-1 w-auto"
                                     variant="primary"
                                     // type="submit"
                                 >
@@ -365,7 +365,7 @@ const NuevoProyecto = (props) => {
                                     variant="secondary"
                                     // type="submit"
                                 >
-                                    <KeyboardBackspaceIcon /> Volver atras
+                                    <KeyboardBackspaceIcon /> Volver atrás
                                 </Button>
                             </Row>
                         </Col>
@@ -617,7 +617,7 @@ const NuevoProyecto = (props) => {
                                         <Button
                                             onClick={goForward}
                                             style={{ paddingRight: '10px' }}
-                                            className="btn-round btn-high btn-main body-1 w-auto"
+                                            className="p-2 ps-4 pe-4 btn-round btn-high body-1 w-auto"
                                             variant="primary"
                                             // type="submit"
                                         >
@@ -771,7 +771,7 @@ const NuevoProyecto = (props) => {
                                                     : handleSave
                                             }
                                             style={{ paddingRight: '10px' }}
-                                            className="btn-round btn-high btn-main body-1 w-auto"
+                                            className="p-2 ps-4 pe-4 btn-round btn-high btn-main body-1 w-auto"
                                             variant="primary"
                                             // type="submit"
                                         >
