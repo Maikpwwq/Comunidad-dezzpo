@@ -59,6 +59,6 @@
 .body-1.select-rol.textBlanco.d-flex.flex-row.align-items-center.justify-content-center.btn.btn-primary:hover {
     background: #2594c2
 }
-/* .select-rol.btn{
-    background-color: var(--primary-green-text-color)
-} */
+.body-1.btn-round.btn-middle.w-auto.select-rol.d-flex.flex-row.align-items-center.justify-content-center.btn.btn-primary{
+    border: none;
+}

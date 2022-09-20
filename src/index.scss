@@ -346,6 +346,15 @@ $theme-colors: ();
         background-color: transparent;
         border: none;
     }
+    &.btn-buscador {
+        background-color: var(--background-main-green-color) !important;
+        border: none;
+        width: 190px;
+        min-height: 39px;
+        &:hover {
+            color: var(--content-text-white-color) !important;
+        }
+    }
     &.btn-siguiente {
         background: url('https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnSiguienteBlue.png?alt=media&token=2eed4755-bb79-41dc-8b0a-87899acaa40c')
             center / cover no-repeat;

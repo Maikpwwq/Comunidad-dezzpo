@@ -84,39 +84,39 @@ const Inicio = (props) => {
                             {/* imagen fondo */}
                             <Col
                                 id="contenedorBanner"
-                                className="m-0 p-0"
-                                lg={7}
-                                md={6}
+                                className="m-0 p-0 pt-4"
+                                xl={7}
+                                lg={6}
+                                md={5}
                                 sm={10}
                                 xs={11}
-                                sx={{
-                                    position: { lg: 'relative' },
-                                    left: { lg: '100px' },
-                                }}
                             >
                                 {/* Mensaje del Banner izquierda */}
-                                <div className="slogan p-0">
-                                    <span className="opacidadNegro">
+                                <Box className="slogan p-0">
+                                    {' '}
+                                    <Typography variant="h2">
+                                        <strong>Bienvenido</strong>
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        className="mb-2"
+                                    >
                                         {' '}
-                                        <p className="p-description">
-                                            <strong className="pb-4">
-                                                Bienvenido
-                                            </strong>
-                                            <br />
-                                            <em>
-                                                {' '}
-                                                Hemos facilitado el servicio,{' '}
-                                                <br />
-                                                haciendolo más rapido y <br />
-                                                simple que nunca{' '}
-                                            </em>
-                                        </p>{' '}
-                                        <h3 className=".headline-l textVerde">
-                                            {' '}
-                                            Unete a la Comunidad{' '}
-                                        </h3>{' '}
-                                    </span>
-                                </div>
+                                        Hemos facilitado el servicio, haciendolo
+                                        más <br /> rapido y simple que nunca{' '}
+                                    </Typography>
+                                    <Typography
+                                        variant="subtitle1"
+                                        className="textVerde btn btn-round btn-high"
+                                        sx={{
+                                            backgroundColor:
+                                                'transparent !important',
+                                        }}
+                                    >
+                                        {' '}
+                                        Unete a la Comunidad{' '}
+                                    </Typography>{' '}
+                                </Box>
                             </Col>
                             {/* Formulario nuevo proyecto */}
                             <Col

@@ -56,10 +56,10 @@ const Ingreso = (props) => {
         }
     }
 
-    const handleSelectRol = (e, rol) => {
+    const handleSelectRol = (e) => {
         setRol(e)
         setStep(2)
-        console.log(e, rol, userSignupRol)
+        // console.log(e, userSignupRol)
     }
 
     const handleClick = (e) => {
@@ -204,7 +204,7 @@ const Ingreso = (props) => {
                             className="pt-4 pb-4"
                         >
                             <Form action="" className="p-4">
-                                <Col className="d-flex">
+                                <Col className="d-flex pt-4 pb-4">
                                     <Typography
                                         variant="h4"
                                         className="headline-xl"
@@ -220,30 +220,21 @@ const Ingreso = (props) => {
                                                 type="checkbox" // 'radio'
                                                 name="userRol"
                                                 className="mb-2 mt-2 align-items-center"
-                                                // style={{ minHeight: '88px' }}
                                                 vertical="true"
                                                 onChange={handleSelectRol}
-                                                // value={userSignupRol}
                                             >
                                                 <ToggleButton
-                                                    className="mb-2 body-1 btn-round btn-high btn-main w-auto d-flex flex-row align-items-center justify-content-center"
+                                                    className="body-1 p-3 btn-round btn-high btn-buscador w-auto d-flex flex-row align-items-center justify-content-center"
                                                     value={1}
                                                     id="formBasicRolPropietarioResidente"
-                                                    // onChange={(e) => {
-                                                    //     setRol(e.target.value)
-                                                    //     setStep(2)
-                                                    // }}
                                                 >
                                                     Soy propietario / residente
                                                 </ToggleButton>
+                                                <br className="mb-2 mt-2" />
                                                 <ToggleButton
-                                                    className="body-1 btn-round btn-middle w-auto d-flex flex-row align-items-center justify-content-center"
+                                                    className="body-1 p-3 btn-round btn-middle w-auto d-flex flex-row align-items-center justify-content-center"
                                                     value={2}
                                                     id="formBasicRolComercianteCalificado"
-                                                    // onChange={(e) => {
-                                                    //     setRol(e.target.value)
-                                                    //     setStep(2)
-                                                    // }}
                                                 >
                                                     Soy comerciante calificado
                                                 </ToggleButton>
@@ -271,8 +262,10 @@ const Ingreso = (props) => {
                                     )}
                                     {step === 2 && (
                                         <>
-                                            <Form.Label className="mb-0 mt-2">
-                                                2. Ingresa tus datos:
+                                            <Form.Label className="mb-0 body-1">
+                                                {userSignupRol == 1
+                                                    ? 'Soy propietario/residente'
+                                                    : 'Soy comerciante calificado'}
                                             </Form.Label>
                                             <ul className="align-items-center mt-2 w-100">
                                                 {/* <li className="body-1">
@@ -326,7 +319,7 @@ const Ingreso = (props) => {
                                                     controlId="formLoginCredential"
                                                     style={{ width: 'inherit' }}
                                                 >
-                                                    <Form.Label className="mb-0">
+                                                    <Form.Label className="mb-0 body-1">
                                                         Email
                                                     </Form.Label>
                                                     <Form.Control
@@ -345,7 +338,7 @@ const Ingreso = (props) => {
                                                     controlId="formLoginPassword"
                                                     style={{ width: 'inherit' }}
                                                 >
-                                                    <Form.Label className="mb-0">
+                                                    <Form.Label className="mb-0 body-1">
                                                         Contraseña
                                                     </Form.Label>
                                                     <Form.Control
@@ -383,7 +376,7 @@ const Ingreso = (props) => {
                                             </Col>
                                             <Col className="pt-3 pb-2">
                                                 <Button
-                                                    className="btn-main btn-round btn-high body-1"
+                                                    className="btn-buscador btn-round btn-high body-1"
                                                     variant="primary"
                                                     type="submit"
                                                     onClick={handleClick}
