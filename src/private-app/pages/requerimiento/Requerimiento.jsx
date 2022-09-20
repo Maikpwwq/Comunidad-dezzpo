@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { firestore, storage } from '../../../firebase/firebaseClient'
+import { firestore, auth } from '../../../firebase/firebaseClient'
 import { collection, doc, getDocFromServer } from 'firebase/firestore'
 
 import TablaSubCategoriaPresupuesto from './Tabla_SubCategoria_Presupuesto'
@@ -17,6 +17,8 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
 const Requerimiento = () => {
+    const user = auth.currentUser || {}
+    const userID = user.uid || '' // Este es el id de la cuenta de Auth
     const { state } = useLocation() || {}
     const navigate = useNavigate()
     const { draftId } = state || ' '
@@ -24,6 +26,12 @@ const Requerimiento = () => {
     // const _storage = storage
     const draftRef = collection(_firestore, 'drafts')
     const quotationRef = collection(_firestore, 'quotation')
+
+    const localRole = localStorage.getItem('role')
+    const selectRole = parseInt(JSON.parse(localRole))
+    const [userRol, setUserRol] = useState({
+        rol: selectRole ? selectRole : 2,
+    })
 
     const [cotizacionesInfo, setCotizacionesInfo] = useState({
         appliedQuotations: [],
@@ -35,7 +43,7 @@ const Requerimiento = () => {
         requerimientoDescripcion: '',
         requerimientoId: '',
         requerimientoTotal: 0,
-        requerimientoCategorias: '',
+        requerimientoCategorias: [],
         requerimientoPropietario: '',
         requerimientoCreated: '',
         requerimientoPrioridad: '',
@@ -118,6 +126,32 @@ const Requerimiento = () => {
 
     // TODO: implementar arrow function para descargar archivos adjuntos
     const handleDescargarAdjuntos = () => {}
+
+    const handleSeeQuotation = (e, quotationId) => {
+        e.preventDefault()
+        navigate('/app/ver-cotizacion', {
+            state: {
+                quotationId: quotationId,
+            },
+        })
+    }
+    const handleEditQuotation = (e, quotationId) => {
+        e.preventDefault()
+        navigate('/app/editar-cotizacion', {
+            state: {
+                quotationId: quotationId,
+            },
+        })
+    }
+    const handleHire = (e, quotationId, proponentId) => {
+        e.preventDefault()
+        navigate('/app/contratar', {
+            state: {
+                quotationId: quotationId,
+                proponentId: proponentId,
+            },
+        })
+    }
 
     const handleCotizar = () => {
         navigate('/app/cotizacion', {
@@ -418,17 +452,58 @@ const Requerimiento = () => {
                                                                 {description}
                                                             </TableCell>
                                                             <TableCell>
-                                                                <Button className="btn btn-round btn-high">
-                                                                    DESCARGAR
-                                                                    COTIZACION
-                                                                </Button>
-                                                                {/* TODO: ACTIVAR BTNS SEGUN ROL DE USUARIO */}
-                                                                <Button className="btn btn-round btn-middle">
-                                                                    AJUSTAR
-                                                                </Button>
-                                                                <Button className="btn btn-round btn-low">
-                                                                    CONTRATAR
-                                                                </Button>
+                                                                {/* TODOS PUEDEN, VER SI ES COMERCIANTE PROPONENTE EDITAR */}
+                                                                {userID ==
+                                                                proponentId ? (
+                                                                    <Button
+                                                                        className="btn btn-round btn-middle"
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleEditQuotation(
+                                                                                e,
+                                                                                quotationId
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        AJUSTAR
+                                                                    </Button>
+                                                                ) : (
+                                                                    <Button
+                                                                        className="btn btn-round btn-high"
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleSeeQuotation(
+                                                                                e,
+                                                                                quotationId
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        VER
+                                                                        COTIZACION
+                                                                    </Button>
+                                                                )}
+                                                                {/* USUARIO PROPIETARIO / RESIDENTE PUEDE CONTRATAR */}
+                                                                {userRol.rol ==
+                                                                1 ? (
+                                                                    <Button
+                                                                        className="btn btn-round btn-middle"
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleHire(
+                                                                                e,
+                                                                                quotationId,
+                                                                                proponentId
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        CONTRATAR
+                                                                    </Button>
+                                                                ) : (
+                                                                    <></>
+                                                                )}
                                                             </TableCell>{' '}
                                                         </TableRow>
                                                     )

@@ -207,6 +207,7 @@ const Cotizar = (props) => {
                                     <TableCell>Valor sin IVA</TableCell>
                                 </TableRow>
                             </TableHead>
+                            {/* TODO: Create and delete activities */}
                             <TableBody>
                                 {cotizacion.actividades.map(
                                     (actividad, index) => {

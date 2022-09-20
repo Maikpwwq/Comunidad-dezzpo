@@ -5,12 +5,14 @@ import { collection, doc, getDocFromServer } from 'firebase/firestore'
 
 import Container from 'react-bootstrap/Container'
 
-const VerRequerimiento = () => {
+const EditarCotizacion = () => {
     return (
         <>
-            <Container fluid className="p-0"></Container>
+            <Container fluid className="p-0">
+                Cargar cotizacion
+            </Container>
         </>
     )
 }
 
-export default VerRequerimiento
+export default EditarCotizacion
