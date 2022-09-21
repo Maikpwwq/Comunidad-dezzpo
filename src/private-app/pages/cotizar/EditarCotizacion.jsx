@@ -6,6 +6,7 @@ import { collection, doc, getDocFromServer } from 'firebase/firestore'
 import Container from 'react-bootstrap/Container'
 
 const EditarCotizacion = () => {
+    
     return (
         <>
             <Container fluid className="p-0">

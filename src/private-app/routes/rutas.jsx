@@ -25,10 +25,11 @@ import Notificaciones from '../pages/notificaciones/Notificaciones'
 import Perfil from '../pages/perfil/Perfil'
 import Portal_Servicios from '../pages/portal-servicios/Portal_Servicios'
 import Directorio_Requerimientos from '../pages/directorio-requerimientos/Directorio_Requerimientos'
-import Requerimiento from '../pages/requerimiento/Requerimiento'
+import EditarRequerimiento from '../pages/requerimiento/EditarRequerimiento'
 import Suscripciones from '../pages/suscripciones/Suscripciones'
 import Cotizar from '../pages/cotizar/Cotizar'
 import VerCotizacion from '../pages/cotizar/VerCotizacion'
+import VerRequerimiento from '../pages/requerimiento/VerRequerimiento'
 import EditarCotizacion from '../pages/cotizar/EditarCotizacion'
 import Proyecto from '../pages/proyecto/Proyecto'
 
@@ -126,8 +127,16 @@ class Rutas extends React.Component {
                         }
                     ></Route>
                     <Route
-                        path="/requerimiento"
-                        element={<Requerimiento></Requerimiento>}
+                        path="/editar-requerimiento"
+                        element={<EditarRequerimiento></EditarRequerimiento>}
+                    ></Route>
+                    <Route
+                        path="/ver-requerimiento"
+                        element={<VerRequerimiento></VerRequerimiento>}
+                    ></Route>
+                    <Route
+                        path="/ver-requerimiento/:id"
+                        element={<VerRequerimiento></VerRequerimiento>}
                     ></Route>
                     <Route
                         path="/cotizacion"

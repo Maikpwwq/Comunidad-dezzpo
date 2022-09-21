@@ -1,6 +1,6 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import { firestore, auth } from '../../firebase/firebaseClient'
 import PropTypes from 'prop-types'
 
 import Box from '@mui/material/Box'
@@ -34,9 +34,12 @@ const ExpandMore = styled((props) => {
 }))
 
 export default function DraftCard({ props }) {
+    const user = auth.currentUser || {}
+    const userID = user.uid || '' // Este es el id de la cuenta de Auth
     const navigate = useNavigate()
     const {
         draftId,
+        draftPropietarioResidente,
         draftName,
         draftDescription,
         draftRooms,
@@ -47,27 +50,40 @@ export default function DraftCard({ props }) {
         draftTotal,
         draftProject,
         draftCategory,
+        // draftSubCategory,
         draftCreated,
         draftPriority,
         draftCity,
         draftDirection,
         draftSize,
+        // draftAtachments,
         draftBestScheduleDate,
         draftBestScheduleTime,
         draftApply,
     } = props
     console.log(props)
-    const [expanded, setExpanded] = React.useState(false)
+    const [expanded, setExpanded] = useState(false)
+
+    const localRole = localStorage.getItem('role')
+    const selectRole = parseInt(JSON.parse(localRole))
+    const [userRol, setUserRol] = useState({
+        rol: selectRole ? selectRole : 2,
+    })
 
     const handleExpandClick = () => {
         setExpanded(!expanded)
     }
     const handleVerRequerimiento = () => {
         console.log(draftId)
-        navigate('/app/requerimiento', { state: { draftId: draftId } })
+        navigate('/app/ver-requerimiento', { state: { draftId: draftId } })
     }
     const handleAplicar = () => {
         navigate('/app/cotizacion', {
+            state: { draftId: draftId },
+        })
+    }
+    const handleEditar = () => {
+        navigate('/app/editar-requerimiento', {
             state: { draftId: draftId },
         })
     }
@@ -142,6 +158,15 @@ export default function DraftCard({ props }) {
                                     Aplicar
                                 </Button>
                             )}
+                            {/* TODO: mostrar solo al propietario que crea el requerimiento */}
+                            {userRol.rol === 1 &&
+                            draftPropietarioResidente === userID ? (
+                                <Button className="" onClick={handleEditar}>
+                                    Editar
+                                </Button>
+                            ) : (
+                                <></>
+                            )}
                             <IconButton
                                 aria-label="add to favorites"
                                 onClick={handleFavorite}
@@ -199,6 +224,7 @@ export default function DraftCard({ props }) {
 DraftCard.propTypes = {
     props: PropTypes.object.isRequired,
     draftId: PropTypes.string.isRequired,
+    draftPropietarioResidente: PropTypes.string.isRequired,
     draftName: PropTypes.string.isRequired,
     draftDescription: PropTypes.string.isRequired,
     draftRooms: PropTypes.string.isRequired,
@@ -212,6 +238,7 @@ DraftCard.propTypes = {
     draftTotal: PropTypes.number.isRequired,
     draftProject: PropTypes.string.isRequired,
     draftCategory: PropTypes.string.isRequired,
+    draftSubCategory: PropTypes.string.isRequired,
     draftCreated: PropTypes.string,
     draftPriority: PropTypes.string,
     draftCity: PropTypes.string.isRequired,

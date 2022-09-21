@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { firestore, auth } from '../../../firebase/firebaseClient'
-import { collection, doc, getDocFromServer } from 'firebase/firestore'
+import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 
 import TablaSubCategoriaPresupuesto from './Tabla_SubCategoria_Presupuesto'
 import Row from 'react-bootstrap/Row'
@@ -10,17 +10,12 @@ import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import Table from '@mui/material/Table'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
 
-const Requerimiento = () => {
+const EditarRequerimiento = () => {
     const user = auth.currentUser || {}
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
-    const { state } = useLocation() || {}
     const navigate = useNavigate()
+    const { state } = useLocation() || {}
     const { draftId } = state || ' '
     const _firestore = firestore
     // const _storage = storage
@@ -70,6 +65,21 @@ const Requerimiento = () => {
         const quotationData = await getDocFromServer(doc(quotationRef, docId))
         // console.log(quotationData)
         return quotationData
+    }
+
+    // TODO: draftToFirestore implementation
+    const draftToFirestore = async (updateInfo, docId) => {
+        const draftData = await setDoc(doc(draftRef, docId), updateInfo)
+        return draftData
+    }
+
+    const handleEnviar = () => {
+        const snap = draftToFirestore(
+            requerimientoInfo,
+            requerimientoInfo.requerimientoId
+        )
+        console.log(snap)
+        navigate(-1)
     }
 
     useEffect(() => {
@@ -127,51 +137,12 @@ const Requerimiento = () => {
     // TODO: implementar arrow function para descargar archivos adjuntos
     const handleDescargarAdjuntos = () => {}
 
-    const handleSeeQuotation = (e, quotationId) => {
-        e.preventDefault()
-        navigate('/app/ver-cotizacion', {
-            state: {
-                quotationId: quotationId,
-            },
-        })
-    }
-    const handleEditQuotation = (e, quotationId) => {
-        e.preventDefault()
-        navigate('/app/editar-cotizacion', {
-            state: {
-                quotationId: quotationId,
-            },
-        })
-    }
-    const handleHire = (e, quotationId, proponentId) => {
-        e.preventDefault()
-        navigate('/app/contratar', {
-            state: {
-                quotationId: quotationId,
-                proponentId: proponentId,
-            },
-        })
-    }
-
-    const handleCotizar = () => {
-        navigate('/app/cotizacion', {
-            state: { draftId: requerimientoInfo.requerimientoId },
-        })
-    }
-
     return (
         <>
             <Container fluid className="p-0">
                 <Row className="h-100 pt-4 pb-4">
                     <Col className="col-10">
-                        <h4 className="headline-xl">Detalle Requerimiento</h4>
-                        <Button
-                            className="btn-TEXT textBlanco"
-                            variant="primary"
-                            // onClick={}
-                        >
-                            REALIZA UNA PREGUNTA ABIERTA AL PROPIETARÍO
-                        </Button>
+                        <h4 className="headline-xl">Editar Requerimiento</h4>
                         <Row className="p-0 pt-4 pb-4 w-100">
                             <Col className="col" md={6} sm={12}>
                                 <p className="p-description">Presupuesto</p>
@@ -184,7 +155,6 @@ const Requerimiento = () => {
                                     label="Total"
                                     value={requerimientoInfo.requerimientoTotal}
                                     // defaultValue="@Ciudad"
-                                    variant="filled"
                                 />
                                 {/* // id */}
                                 <p className="p-description">
@@ -199,7 +169,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoTitulo
                                     }
                                     // defaultValue="@Titulo"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -210,7 +179,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoCategoria
                                     }
                                     // defaultValue="@Categoria"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -221,7 +189,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoTipoProyecto
                                     }
                                     // defaultValue="@TipoProyecto"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -232,7 +199,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoDescripcion
                                     }
                                     // defaultValue="@Descripción"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -243,7 +209,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoPropietario
                                     }
                                     // defaultValue="@PROPIETARIO"
-                                    variant="filled"
                                 />
                                 <p className="p-description">Ubicacion</p>
                                 <TextField
@@ -255,18 +220,16 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoCiudad
                                     }
                                     // defaultValue="@Ciudad"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
                                     id="requerimientoDireccion"
                                     name="requerimientoDireccion"
-                                    label="Direccion"
+                                    label="Dirección"
                                     value={
                                         requerimientoInfo.requerimientoDireccion
                                     }
                                     // defaultValue="@Direccion"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -277,7 +240,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoCodigoPostal
                                     }
                                     // defaultValue="@CodigoPostal"
-                                    variant="filled"
                                 />
                             </Col>
                             <Col className="col" md={6} sm={12}>
@@ -291,7 +253,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoCreated
                                     }
                                     // defaultValue="@Created"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -302,7 +263,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoPrioridad
                                     }
                                     // defaultValue="@PRIORIDAD"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -313,7 +273,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoMejorFecha
                                     }
                                     // defaultValue="@PROPIETARIO"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -324,7 +283,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoMejorHora
                                     }
                                     // defaultValue="@PROPIETARIO"
-                                    variant="filled"
                                 />
                                 <p className="p-description">
                                     Descripción Propiedad
@@ -338,7 +296,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoTipoPropiedad
                                     }
                                     // defaultValue="@TipoPropiedad"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -349,7 +306,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoCantidadObra
                                     }
                                     // defaultValue="@CantidadObra"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -360,7 +316,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoPlanos
                                     }
                                     // defaultValue="@PLANOS"
-                                    variant="filled"
                                 />
                                 <TextField
                                     className="w-100"
@@ -371,7 +326,6 @@ const Requerimiento = () => {
                                         requerimientoInfo.requerimientoPermisos
                                     }
                                     // defaultValue="@PERMISOS"
-                                    variant="filled"
                                 />
                                 <h4 className=".headline-l pt-4">
                                     Archivos adjuntos{' '}
@@ -392,125 +346,15 @@ const Requerimiento = () => {
                                 requerimientoInfo.requerimientoTotal
                             }
                         />
-                        <Row>
-                            <Col>
-                                <p className="headline-l">
-                                    COTIZACIONES{' '}
-                                    {requerimientoInfo.requerimientoAplicaciones
-                                        .length < 4 && (
-                                        <Button
-                                            className="btn-TEXT textBlanco"
-                                            variant="primary"
-                                            onClick={handleCotizar}
-                                        >
-                                            + ASIGNAR NUEVA COTIZACION
-                                        </Button>
-                                    )}
-                                </p>
-                                {/* TODO: poblar tabla de cotizaciones */}
-                                <Table
-                                    sx={{
-                                        display: { sm: 'grid', xs: 'grid' },
-                                        overflowX: 'scroll',
-                                    }}
+                        <Row className="pb-4 w-100">
+                            <Col className="">
+                                <Button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    onClick={handleEnviar}
                                 >
-                                    <TableHead>
-                                        <TableRow
-                                            className="w-100"
-                                            sx={{ display: 'table' }}
-                                        >
-                                            <TableCell>
-                                                Comerciante calificado
-                                            </TableCell>
-                                            <TableCell>Alcance</TableCell>
-                                            <TableCell>Descripción</TableCell>
-                                            <TableCell></TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {cotizacionesInfo.appliedQuotations &&
-                                            cotizacionesInfo.appliedQuotations.map(
-                                                (item) => {
-                                                    const {
-                                                        proponentId,
-                                                        scope,
-                                                        description,
-                                                        quotationId,
-                                                    } = item
-                                                    return (
-                                                        <TableRow
-                                                            key={quotationId}
-                                                        >
-                                                            {' '}
-                                                            <TableCell>
-                                                                {proponentId}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                {scope}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                {description}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                {/* TODOS PUEDEN, VER SI ES COMERCIANTE PROPONENTE EDITAR */}
-                                                                {userID ==
-                                                                proponentId ? (
-                                                                    <Button
-                                                                        className="btn btn-round btn-middle"
-                                                                        onClick={(
-                                                                            e
-                                                                        ) =>
-                                                                            handleEditQuotation(
-                                                                                e,
-                                                                                quotationId
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        AJUSTAR
-                                                                    </Button>
-                                                                ) : (
-                                                                    <Button
-                                                                        className="btn btn-round btn-high"
-                                                                        onClick={(
-                                                                            e
-                                                                        ) =>
-                                                                            handleSeeQuotation(
-                                                                                e,
-                                                                                quotationId
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        VER
-                                                                        COTIZACION
-                                                                    </Button>
-                                                                )}
-                                                                {/* USUARIO PROPIETARIO / RESIDENTE PUEDE CONTRATAR */}
-                                                                {userRol.rol ==
-                                                                1 ? (
-                                                                    <Button
-                                                                        className="btn btn-round btn-middle"
-                                                                        onClick={(
-                                                                            e
-                                                                        ) =>
-                                                                            handleHire(
-                                                                                e,
-                                                                                quotationId,
-                                                                                proponentId
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        CONTRATAR
-                                                                    </Button>
-                                                                ) : (
-                                                                    <></>
-                                                                )}
-                                                            </TableCell>{' '}
-                                                        </TableRow>
-                                                    )
-                                                }
-                                            )}
-                                    </TableBody>
-                                </Table>
+                                    Enviar
+                                </Button>
                             </Col>
                         </Row>
                     </Col>
@@ -520,4 +364,4 @@ const Requerimiento = () => {
     )
 }
 
-export default Requerimiento
+export default EditarRequerimiento
