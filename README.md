@@ -32,8 +32,8 @@ _LinkedIn:_
 
 1. Michael Arias @Maikpwwq
 2. Comunidad.dezzpo@gmail.com
-3. WhatsApp: +57 319 6138057
+3. WhatsApp: +57 319 613 80 57
 
 ![Mockup site](/public/assets/img/Home-WIREFRAMES.png)
 
-**Agradecimientos a Bictia ❤️**
+**Agradecimientos a Bictia ❤️ MisionTic 2022 ❤️ Red Tecnoparque Sena**

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import { collection, doc, setDoc } from 'firebase/firestore'
+import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
 import { firestore, auth } from '../../../firebase/firebaseClient'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -19,18 +19,19 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 
 const Cotizar = (props) => {
-    const quotationID = uuidv4()
     const user = auth.currentUser || {}
     const userID = user.uid || ''
     const { state } = useLocation() || {}
     const navigate = useNavigate()
-    const { draftId } = state || {}
+    const { draftId, quotationId } = state || {}
+    const quotationID = quotationId ? quotationId : uuidv4()
+    console.log('quotationID', quotationID)
     const _firestore = firestore
     const quotationRef = collection(_firestore, 'quotation')
     const draftRef = collection(_firestore, 'drafts')
 
     const [cotizacion, setCotizacion] = useState({
-        quotationId: quotationID,
+        quotationId: '',
         proponentId: userID,
         description: '',
         scope: '',
@@ -77,6 +78,35 @@ const Cotizar = (props) => {
         })
     }
 
+    useEffect(() => {
+        if (quotationId && quotationId !== ' ' && quotationId !== undefined) {
+            const snap = quotationFromFirestore(quotationId)
+            snap.then((docSnap) => {
+                if (docSnap) {
+                    const data = docSnap.data()
+                    console.log(data)
+                    setCotizacion({
+                        ...cotizacion,
+                        quotationId: data.quotationId,
+                        proponentId: data.proponentId,
+                        description: data.description,
+                        scope: data.scope,
+                        procedimiento: data.procedimiento,
+                        tiempoEjecucion: data.tiempoEjecucion,
+                        actividades: data.actividades || [],
+                        condicionesNegocio: data.condicionesNegocio,
+                        garantia: data.garantia,
+                        valorSubtotal: data.valorSubtotal,
+                    })
+                } else {
+                    console.log(
+                        'No se encontro información relacionada con esta cotización!'
+                    )
+                }
+            })
+        }
+    }, [quotationId])
+
     const handleActivityChange = (e, index) => {
         e.preventDefault()
         const { name, value } = e.target
@@ -120,6 +150,11 @@ const Cotizar = (props) => {
 
     const draftToFirestore = async (updateInfo, projectID) => {
         await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
+    }
+
+    const quotationFromFirestore = async (docId) => {
+        const quotationData = await getDocFromServer(doc(quotationRef, docId))
+        return quotationData
     }
 
     const handleEnviar = () => {
@@ -207,135 +242,143 @@ const Cotizar = (props) => {
                                     <TableCell>Valor sin IVA</TableCell>
                                 </TableRow>
                             </TableHead>
+                            {/* TODO: Create and delete activities */}
                             <TableBody>
-                                {cotizacion.actividades.map(
-                                    (actividad, index) => {
-                                        const {
-                                            id,
-                                            item,
-                                            actividadTitle,
-                                            unidadMedida,
-                                            cantidad,
-                                            precio,
-                                            valor,
-                                        } = actividad
-                                        // console.log(
-                                        //     index,
-                                        //     id,
-                                        //     item,
-                                        //     actividadTitle,
-                                        //     unidadMedida,
-                                        //     cantidad,
-                                        //     precio
-                                        // )
-                                        return (
-                                            <TableRow key={index}>
-                                                <RemoveCircleIcon
-                                                    onClick={(e) =>
-                                                        handleRemoveTableRow(
-                                                            e,
-                                                            index
-                                                        )
-                                                    }
-                                                />
-                                                <TableCell>
-                                                    <TextareaAutosize
-                                                        value={item}
-                                                        onChange={(e) =>
-                                                            handleActivityChange(
+                                {cotizacion.actividades &&
+                                    cotizacion.actividades.map(
+                                        (actividad, index) => {
+                                            const {
+                                                id,
+                                                item,
+                                                actividadTitle,
+                                                unidadMedida,
+                                                cantidad,
+                                                precio,
+                                                valor,
+                                            } = actividad
+                                            // console.log(
+                                            //     index,
+                                            //     id,
+                                            //     item,
+                                            //     actividadTitle,
+                                            //     unidadMedida,
+                                            //     cantidad,
+                                            //     precio
+                                            // )
+                                            return (
+                                                <TableRow key={index}>
+                                                    <RemoveCircleIcon
+                                                        onClick={(e) =>
+                                                            handleRemoveTableRow(
                                                                 e,
                                                                 index
                                                             )
                                                         }
-                                                        name="item"
-                                                        id="ActividadesItem"
-                                                        placeholder={item}
-                                                        cols="8"
-                                                        minRows={2}
-                                                        className="w-100"
-                                                    ></TextareaAutosize>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <TextareaAutosize
-                                                        value={actividadTitle}
-                                                        onChange={(e) =>
-                                                            handleActivityChange(
-                                                                e,
-                                                                index
-                                                            )
-                                                        }
-                                                        name="actividadTitle"
-                                                        id="ActividadesactividadTitle"
-                                                        placeholder={
-                                                            actividadTitle
-                                                        }
-                                                        cols="8"
-                                                        minRows={2}
-                                                        className="w-100"
-                                                    ></TextareaAutosize>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <TextareaAutosize
-                                                        value={unidadMedida}
-                                                        onChange={(e) =>
-                                                            handleActivityChange(
-                                                                e,
-                                                                index
-                                                            )
-                                                        }
-                                                        name="unidadMedida"
-                                                        id="ActividadesunidadMedida"
-                                                        placeholder={
-                                                            unidadMedida
-                                                        }
-                                                        cols="8"
-                                                        minRows={2}
-                                                        className="w-100"
-                                                    ></TextareaAutosize>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <input
-                                                        type="number"
-                                                        value={cantidad}
-                                                        onChange={(e) =>
-                                                            handleActivityChange(
-                                                                e,
-                                                                index
-                                                            )
-                                                        }
-                                                        placeholder={cantidad}
-                                                        name="cantidad"
-                                                        id="ActividadesCantidad"
-                                                        className="w-100"
                                                     />
-                                                    {/* {parseInt(
+                                                    <TableCell>
+                                                        <TextareaAutosize
+                                                            value={item}
+                                                            onChange={(e) =>
+                                                                handleActivityChange(
+                                                                    e,
+                                                                    index
+                                                                )
+                                                            }
+                                                            name="item"
+                                                            id="ActividadesItem"
+                                                            placeholder={item}
+                                                            cols="8"
+                                                            minRows={2}
+                                                            className="w-100"
+                                                        ></TextareaAutosize>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <TextareaAutosize
+                                                            value={
+                                                                actividadTitle
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleActivityChange(
+                                                                    e,
+                                                                    index
+                                                                )
+                                                            }
+                                                            name="actividadTitle"
+                                                            id="ActividadesactividadTitle"
+                                                            placeholder={
+                                                                actividadTitle
+                                                            }
+                                                            cols="8"
+                                                            minRows={2}
+                                                            className="w-100"
+                                                        ></TextareaAutosize>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <TextareaAutosize
+                                                            value={unidadMedida}
+                                                            onChange={(e) =>
+                                                                handleActivityChange(
+                                                                    e,
+                                                                    index
+                                                                )
+                                                            }
+                                                            name="unidadMedida"
+                                                            id="ActividadesunidadMedida"
+                                                            placeholder={
+                                                                unidadMedida
+                                                            }
+                                                            cols="8"
+                                                            minRows={2}
+                                                            className="w-100"
+                                                        ></TextareaAutosize>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <input
+                                                            type="number"
+                                                            value={cantidad}
+                                                            onChange={(e) =>
+                                                                handleActivityChange(
+                                                                    e,
+                                                                    index
+                                                                )
+                                                            }
+                                                            placeholder={
+                                                                cantidad
+                                                            }
+                                                            name="cantidad"
+                                                            id="ActividadesCantidad"
+                                                            className="w-100"
+                                                        />
+                                                        {/* {parseInt(
                                             Cantidad
                                         ).toLocaleString('es-CO', {
                                             style: 'currency',
                                             currency: 'COP',
                                         })} */}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <input
-                                                        type="number"
-                                                        value={precio}
-                                                        onChange={(e) =>
-                                                            handleActivityChange(
-                                                                e,
-                                                                index
-                                                            )
-                                                        }
-                                                        placeholder={precio}
-                                                        name="precio"
-                                                        id="ActividadesPrecio"
-                                                        className="w-100"
-                                                    />
-                                                </TableCell>
-                                                <TableCell>{valor}</TableCell>
-                                            </TableRow>
-                                        )
-                                    }
-                                )}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <input
+                                                            type="number"
+                                                            value={precio}
+                                                            onChange={(e) =>
+                                                                handleActivityChange(
+                                                                    e,
+                                                                    index
+                                                                )
+                                                            }
+                                                            placeholder={precio}
+                                                            name="precio"
+                                                            id="ActividadesPrecio"
+                                                            className="w-100"
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {valor}
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        }
+                                    )}
                                 <TableRow>
                                     <TableCell>
                                         {' '}

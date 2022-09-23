@@ -18,7 +18,7 @@ const SliderAction = () => {
         >
             <p className="headline-s textBlanco m-0 pe-4">
                 Te ayudamos a elegir el profesional calificado para tus
-                proyectos.
+                proyectos. 
             </p>
             <Button
                 className="headline-s btn-round btn-high btn-avanzar"

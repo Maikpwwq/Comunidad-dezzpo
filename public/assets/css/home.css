@@ -18,8 +18,20 @@
     } */
 }
 
+/* Pantallas en tabletas */
+@media screen and (max-width: 1200px) {
+
+    /* .bannerComunidad {
+        background-size: auto 100% !important;   
+    } */
+    #contenedorBanner {
+        justify-content: center !important;
+    }
+}
+
+
 /* Pantallas de Ordenador */
-@media screen and (min-width: 900px) {}
+@media screen and (min-width: 1200px) {}
 
 .MuiMobileStepper-dots {
     display: none !important;
@@ -44,7 +56,7 @@ body {
     align-content: center;
     font-family: "lato Regular", Helvetica, sans-serif;
     font-size: 21px;
-} 
+}
 
 #contenedorBanner {
     display: flex;
@@ -57,7 +69,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 0px 33px 0px 33px;
-    color: white;
+    color: var(--content-text-color);
 }
 
 .mensajeBanner {
@@ -113,14 +125,14 @@ body {
 
 .calificaServicio {}
 
-.comoCard{
+.comoCard {
     background-color: var(--background-tooltip-color);
     border-radius: 15px;
     box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
     min-width: 230px;
 }
 
-.how-numbers{
+.how-numbers {
     border-radius: 20px 0px;
     width: 50px;
     color: var(--content-text-white-color) !important;

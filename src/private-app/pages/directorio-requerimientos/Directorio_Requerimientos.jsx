@@ -67,6 +67,7 @@ const Directorio_Requerimientos = (props) => {
                             Cotizaciones
                         </h3>
                         <p className="body-2">Requerimientos activos </p>
+                        {/* TODO: Para el propietario proponente cambiar la accion de Aplicar por Editar */}
                         <Row className="m-0 d-flex">
                             {draftsData.data ? (
                                 draftsData.data.map((draft) => (

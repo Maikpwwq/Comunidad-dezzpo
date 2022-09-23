@@ -45,8 +45,8 @@ $theme-colors: ();
 .dezzpo-svg {
     // Isotipo COMUNIDAD DEZZPO
     font-family: var(--font-marquisette-bold);
-    font-size: 1.6rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 300;
     color: var(--logo-comunidad-dezzpo-color);
     margin-left: 10px;
 }
@@ -240,11 +240,12 @@ $theme-colors: ();
                 background-color: var(--background-gray-color) !important;
                 border-color: var(--selected-border-gray-color) !important;
             }
+            font-weight: bold;
             color: var(--content-text-white-color);
-            background-color: var(--background-blue-color);
+            background-color: var(--background-hover-green-color);
 
             &:hover {
-                color: var(--selected-hover-dark-blue-color);
+                background-color: var(--selected-border-green-color);
             }
 
             &.inactive {
@@ -257,13 +258,14 @@ $theme-colors: ();
 
         &.btn-middle {
             // Botón Border Activo
-            color: var(--content-text-white-color);
-            border: 2px solid var(--selected-border-blue-color);
-            background-color: var(--background-middle-btn) !important;
+            color: var(--secondary-green-text-color);
+            border: 2px solid var(--selected-border-green-color); 
+            background-color: var(--background-tooltip-color) !important;
+            font-weight: bold;
 
             &:hover {
-                color: var(--selected-hover-dark-blue-color);
-                background-color: var(--background-blue-color) !important;
+                color: var(--content-text-white-color);
+                background-color: var(--selected-border-green-color) !important;
             }
 
             &.espaced {
@@ -345,6 +347,18 @@ $theme-colors: ();
         min-height: 39px;
         background-color: transparent;
         border: none;
+    }
+    &.btn-buscador {
+        background: rgb(24, 177, 167);
+        background: linear-gradient(-90deg, rgba(24, 177, 167, 1) 35%, rgba(0, 153, 204, 1) 100%);
+        // background-color: var(--background-main-green-color) !important; 
+        border: none;
+        width: 190px;
+        min-height: 39px;
+        font-weight: bold;
+        &:hover {
+            color: var(--content-text-white-color) !important;
+        }
     }
     &.btn-siguiente {
         background: url('https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnSiguienteBlue.png?alt=media&token=2eed4755-bb79-41dc-8b0a-87899acaa40c')

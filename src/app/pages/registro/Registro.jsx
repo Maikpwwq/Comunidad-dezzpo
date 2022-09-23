@@ -87,10 +87,10 @@ const Registro = (props) => {
         await setDoc(doc(usersComCalRef, userID), updateInfo)
     }
 
-    const handleSelectRol = (e, rol) => {
+    const handleSelectRol = (e) => {
         setRol(e)
         setStep(2)
-        console.log(e, rol, userSignupRol)
+        // console.log(e, userSignupRol)
     }
 
     const conectarSB = (userId) => {
@@ -290,7 +290,7 @@ const Registro = (props) => {
                         </Col>
                     )}
                     <Col
-                        className="registrateformulario m-0 p-0 mb-4"
+                        className="registrateformulario m-0 p-0 mb-4 mt-4"
                         lg={4}
                         md={5}
                         sm={10}
@@ -306,7 +306,7 @@ const Registro = (props) => {
                                 className="p-2"
                                 // preventDefault="true"
                             >
-                                <Col className="d-flex">
+                                <Col className="d-flex pt-4 pb-4">
                                     <Typography
                                         variant="h4"
                                         className="headline-xl"
@@ -331,26 +331,19 @@ const Registro = (props) => {
                                                 color="primary"
                                             >
                                                 <ToggleButton
-                                                    className="mb-2 body-1 btn-round btn-high btn-main w-auto select-rol d-flex flex-row align-items-center justify-content-center"
+                                                    className="body-1 p-3 btn-round btn-high btn-buscador w-auto select-rol d-flex flex-row align-items-center justify-content-center"
                                                     value={1} // "SoyPropietarioResidente" //
                                                     id="formBasicRolPropietarioResidente"
                                                     aria-label="Soy Propietario/Residente"
-                                                    // style={{
-                                                    //     backgroundColor: '#2283bd',
-                                                    //     '&:hover': {
-                                                    //         backgroundColor: '#2594c2',
-                                                    //     },
-                                                    // }}
-                                                    //onChange={(e) => setRol(e.target.value)}
                                                 >
                                                     Soy propietario/residente
                                                 </ToggleButton>
+                                                <br className="mb-2 mt-2" />
                                                 <ToggleButton
-                                                    className="body-1 btn-round btn-middle w-auto select-rol d-flex flex-row align-items-center justify-content-center"
+                                                    className="body-1 p-3 btn-round btn-middle w-auto select-rol d-flex flex-row align-items-center justify-content-center"
                                                     value={2} // "SoyComercianteCalificado" //
                                                     id="formBasicRolComercianteCalificado"
                                                     aria-label="Soy Comerciante Calificado"
-                                                    //onChange={(e) => setRol(e.target.value)}
                                                 >
                                                     Soy comerciante calificado
                                                 </ToggleButton>
@@ -369,8 +362,10 @@ const Registro = (props) => {
                                         </>
                                     ) : (
                                         <>
-                                            <Form.Label className="mb-0 mt-2">
-                                                2. Ingresa tus datos:
+                                            <Form.Label className="mb-0 body-1">
+                                                {userSignupRol == 1
+                                                    ? 'Soy propietario/residente'
+                                                    : 'Soy comerciante calificado'}
                                             </Form.Label>
                                             <ul className="align-items-center mt-2 w-100">
                                                 <li className="body-1">
@@ -425,7 +420,7 @@ const Registro = (props) => {
                                                     controlId="formBasicName"
                                                     style={{ width: 'inherit' }}
                                                 >
-                                                    <Form.Label className="mb-0">
+                                                    <Form.Label className="mb-0 body-1">
                                                         Nombre de usuario
                                                     </Form.Label>
                                                     <Form.Control
@@ -439,7 +434,7 @@ const Registro = (props) => {
                                                     controlId="formSignupEmail"
                                                     style={{ width: 'inherit' }}
                                                 >
-                                                    <Form.Label className="mb-0">
+                                                    <Form.Label className="mb-0 body-1">
                                                         Email
                                                     </Form.Label>
                                                     <Form.Control
@@ -458,7 +453,7 @@ const Registro = (props) => {
                                                     controlId="formSignupPassword"
                                                     style={{ width: 'inherit' }}
                                                 >
-                                                    <Form.Label className="mb-0">
+                                                    <Form.Label className="mb-0 body-1">
                                                         Contraseña
                                                     </Form.Label>
                                                     <Form.Control
@@ -477,7 +472,7 @@ const Registro = (props) => {
                                                     controlId="formBasicPassword"
                                                     style={{ width: 'inherit' }}
                                                 >
-                                                    <Form.Label className="mb-0">
+                                                    <Form.Label className="mb-0 body-1">
                                                         Confirmar contraseña
                                                     </Form.Label>
                                                     <Form.Control
@@ -499,7 +494,7 @@ const Registro = (props) => {
                                             </Col>
                                             <Col className="pt-3 pb-3">
                                                 <Button
-                                                    className="btn-main btn-round btn-high body-1"
+                                                    className="btn-buscador btn-round btn-high body-1"
                                                     variant="primary"
                                                     type="submit"
                                                     onClick={handleClick}

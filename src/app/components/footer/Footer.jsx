@@ -102,7 +102,7 @@ const FooterComunidad = (props) => {
                                     sm={8}
                                     xs={12}
                                 >
-                                    <Container className="containerLogo p-0 m-0 mt-4 mb-4 d-flex justify-content-start">
+                                    <Container className="containerLogo p-0 m-0 mb-3 d-flex justify-content-start">
                                         <img
                                             src={LogoFooterComunidadDezzpo}
                                             alt="Logo Comunidad Dezzpo"
@@ -111,9 +111,9 @@ const FooterComunidad = (props) => {
                                             width="210px"
                                         />
                                     </Container>
-                                    <h2 className="headline-xl textBlanco ps-4">
+                                    <h2 className="headline-l textBlanco ps-4">
                                         {' '}
-                                        SIGUENOS{' '}
+                                        Siguenos{' '}
                                     </h2>
                                     <Container className="p-0 ps-4">
                                         <ul className="listaFooter w-100 body-1 row justify-content-start">
@@ -187,8 +187,8 @@ const FooterComunidad = (props) => {
                             </Row>
                         </Row>
                         {/* parte inferior*/}
-                        <Row className="footerInferior pt-3 w-100">
-                            <p className="p-description textBlanco">
+                        <Row className="footerInferior pt-2 w-100">
+                            <p className="mb-2 body-1 textBlanco">
                                 {' '}
                                 © 2021 - Todos los derechos reservados -{' '}
                                 <span className="dezzpo-svg textBlanco">

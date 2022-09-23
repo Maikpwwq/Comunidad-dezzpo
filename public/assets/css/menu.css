@@ -30,7 +30,7 @@
     .menuFijo:hover .menuContenedor {
         position: fixed;
         height: 100%;
-        z-index: 1200;
+        z-index: 150;
         top: 80px;
         left: 0;
         min-width: 256px;
@@ -133,7 +133,7 @@
 
 .menuSecciones {
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
     display: flex;
     flex-direction: row;
     overflow: visible;
@@ -227,6 +227,7 @@
     font-size: 0.85rem !important;
     font-weight: normal !important;
     border-radius: 30px;
+    max-width: 160px;
 }
 
 .botonNavLink:hover {

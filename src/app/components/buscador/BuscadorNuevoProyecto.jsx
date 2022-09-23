@@ -50,7 +50,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
         <>
             <Container fluid className="p-0">
                 <Col className="col-12">
-                    <div className="p-0 contenerdorFormulario center ms-2 me-2">
+                    <div className="p-4 contenerdorFormulario center ms-2 me-2">
                         <Form
                             className="p-4"
                             action=""
@@ -155,12 +155,12 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                 <Col className="pt-4 pb-2">
                                     {/*  */}
                                     <Button
-                                        className="animacionBoton btn btn-siguiente btn-round btn-high"
+                                        className="animacionBoton body-1 btn-buscador btn btn-round btn-high"
                                         variant="primary"
                                         type="submit"
                                         onClick={handleClick}
                                     >
-                                        {' '}
+                                        <strong>Siguiente</strong>
                                     </Button>
                                 </Col>
                             </Form.Group>

@@ -16,6 +16,7 @@ import Cambiar_Clave from '../pages/cambiar-clave/Cambiar_Clave'
 import Certificaciones from '../pages/certificaciones/Certificaciones'
 import Calificaciones from '../pages/calificaciones/Calificaciones'
 import Configuracion_Privacidad from '../pages/configuracion-privacidad/Configuracion_Privacidad'
+import Contratar from '../pages/contratacion/Contratar'
 import Formas_Pago from '../pages/formas-pago/Formas_Pago'
 import Historial_Servicios from '../pages/historial-servicios/Historial_Servicios'
 import Invitar_Amigos from '../pages/invitar-amigos/Invitar_Amigos'
@@ -24,9 +25,12 @@ import Notificaciones from '../pages/notificaciones/Notificaciones'
 import Perfil from '../pages/perfil/Perfil'
 import Portal_Servicios from '../pages/portal-servicios/Portal_Servicios'
 import Directorio_Requerimientos from '../pages/directorio-requerimientos/Directorio_Requerimientos'
-import Requerimiento from '../pages/requerimiento/Requerimiento'
+import EditarRequerimiento from '../pages/requerimiento/EditarRequerimiento'
 import Suscripciones from '../pages/suscripciones/Suscripciones'
 import Cotizar from '../pages/cotizar/Cotizar'
+import VerCotizacion from '../pages/cotizar/VerCotizacion'
+import VerRequerimiento from '../pages/requerimiento/VerRequerimiento'
+import EditarCotizacion from '../pages/cotizar/EditarCotizacion'
 import Proyecto from '../pages/proyecto/Proyecto'
 
 import ApendiceCostos from '../../app/pages/apendice-costos/Apendice_Costos'
@@ -83,6 +87,10 @@ class Rutas extends React.Component {
                         element={<Certificaciones></Certificaciones>}
                     ></Route>
                     <Route
+                        path="/contratar"
+                        element={<Contratar></Contratar>}
+                    ></Route>
+                    <Route
                         path="/configuracion-privacidad"
                         element={
                             <Configuracion_Privacidad></Configuracion_Privacidad>
@@ -119,12 +127,37 @@ class Rutas extends React.Component {
                         }
                     ></Route>
                     <Route
-                        path="/requerimiento"
-                        element={<Requerimiento></Requerimiento>}
+                        path="/editar-requerimiento"
+                        element={<EditarRequerimiento></EditarRequerimiento>}
+                    ></Route>
+                    <Route
+                        path="/ver-requerimiento"
+                        element={<VerRequerimiento></VerRequerimiento>}
+                    ></Route>
+                    <Route
+                        path="/ver-requerimiento/:id"
+                        element={<VerRequerimiento></VerRequerimiento>}
                     ></Route>
                     <Route
                         path="/cotizacion"
                         element={<Cotizar></Cotizar>}
+                    ></Route>
+                    <Route
+                        path="/ver-cotizacion"
+                        element={<VerCotizacion></VerCotizacion>}
+                    ></Route>
+                    <Route
+                        path="/ver-cotizacion/:id"
+                        element={<VerCotizacion></VerCotizacion>}
+                    ></Route>
+                    <Route
+                        path="/editar-cotizacion"
+                        element={<Cotizar></Cotizar>}
+                    ></Route>
+                    <Route
+                        path="/editar-cotizacion/:id"
+                        element={<Cotizar></Cotizar>}
+                        // element={<EditarCotizacion></EditarCotizacion>}
                     ></Route>
                     <Route
                         path="/proyecto"

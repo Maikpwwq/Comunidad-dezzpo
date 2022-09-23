@@ -721,7 +721,7 @@ const Perfil = (props) => {
                     </Col>
                     {/* <Col className="col-2 h-100 fondoGris">SideContent</Col> */}
                 </Row>
-            </Container>
+            </Container> 
         </>
     )
 }

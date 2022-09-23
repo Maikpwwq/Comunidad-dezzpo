@@ -11,14 +11,14 @@ import Col from 'react-bootstrap/Col'
 const DatosContacto = (props) => {
     return (
         <>
-            <Col className="p-4">
+            <Col className="p-4 pb-0">
                 <Col className="datosContacto pt-0">
-                    <h2 className="headline-xl textBlanco">
+                    <h2 className="headline-l textBlanco">
                         {' '}
                         Ponte en Contacto{' '}
                     </h2>
                     <ul className="listaContacto pt-3 w-100 align-items-end">
-                        <Row className="border-top m-0 w-100 d-flex pt-2 pb-2">
+                        <Row className="border-top m-0 w-100 d-flex">
                             <IcoMoon
                                 iconSet={iconSet}
                                 icon="TelefonoContactoIcono"
@@ -28,7 +28,7 @@ const DatosContacto = (props) => {
                                     width: 'auto',
                                 }}
                             />
-                            <Col className="m-0 p-0 body-1 align-items-end">
+                            <Col className="m-0 p-0 body-1 align-items-end pt-2 pb-2">
                                 <li>
                                     {' '}
                                     +57{' '}
@@ -45,7 +45,7 @@ const DatosContacto = (props) => {
                                 {/* <li> +57 3196138057 - PBX </li> */}
                             </Col>
                         </Row>
-                        <Row className="border-top m-0 w-100 d-flex pt-2 pb-2">
+                        <Row className="border-top m-0 w-100 d-flex">
                             <IcoMoon
                                 iconSet={iconSet}
                                 icon="DireccionDomicilioIcono"
@@ -55,12 +55,12 @@ const DatosContacto = (props) => {
                                     width: 'auto',
                                 }}
                             />
-                            <Col className="m-0 p-0 body-1 align-items-end">
+                            <Col className="m-0 p-0 body-1 align-items-end pt-2 pb-2">
                                 <li> Dirección Cll 159 No. 8c-45 </li>
                                 <li> Piso 5 </li>
                             </Col>
                         </Row>
-                        <Row className="border-top m-0 w-100 d-flex pt-2">
+                        <Row className="border-top m-0 w-100 d-flex">
                             <Col className="m-0 p-0 pt-2 pb-2 body-1 align-items-end">
                                 <li>
                                     <IcoMoon
