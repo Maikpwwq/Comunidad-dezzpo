@@ -16,22 +16,14 @@ import CincoEstrellas from './CincoEstrellas'
 import Comentarios from '../../../private-app/components/Comentarios'
 import ChipsCategories from '../../components/ChipsCategories'
 import ListadoCategorias from '../../../app/components/ListadoCategorias'
-import SnackBarAlert from '../../../app/components/SnackBarAlert'
+import AdjuntarArchivos from './AdjuntarArchivos'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import { styled } from '@mui/material/styles'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
-const Input = styled('input')({
-    // display: 'none',
-    visibility: 'hidden',
-    position: 'absolute',
-})
 
 const Perfil = (props) => {
     const user = auth.currentUser || {}
@@ -45,12 +37,6 @@ const Perfil = (props) => {
     const [userRol, setUserRol] = useState({
         rol: selectRole ? selectRole : 2,
     })
-    // console.log(userRol.rol)
-    const [alert, setAlert] = useState({
-        open: false,
-        message: '',
-        severity: 'success',
-    })
     // Este es el id que se obtienen como parametro de busqueda o consulta de un perfil especifico
     const userId =
         state != undefined && state != null && state.id != undefined
@@ -63,20 +49,11 @@ const Perfil = (props) => {
     // console.log(userID)
     // console.log(userConsultId)
     const _firestore = firestore
-    const _storage = storage
     const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
     const usersComCalRef = collection(
         _firestore,
         'usersComerciantesCalificados'
     )
-
-    const userProResToFirestore = async (updateInfo, userID) => {
-        await setDoc(doc(usersProResRef, userID), updateInfo, { merge: true })
-    }
-
-    const userComCalToFirestore = async (updateInfo, userID) => {
-        await setDoc(doc(usersComCalRef, userID), updateInfo, { merge: true })
-    }
 
     const userFromFirestore = async (firestoreUserID) => {
         try {
@@ -122,184 +99,6 @@ const Perfil = (props) => {
         userIdentification: '',
         userDescription: '',
     })
-
-    const updateProfilePhoto = (event) => {
-        // event.preventDefault()
-        const file = event.target.files
-        const profilesRef = ref(_storage, `profiles/${userConsultId}`)
-        if (file[0] instanceof Blob) {
-            console.log(file[0])
-            try {
-                uploadBytes(profilesRef, file[0]).then((response) => {
-                    const { bucket, path_ } = response.ref._location
-                    const base = `gs://${bucket}/${path_}`
-                    handleAlert(
-                        'Se cargo una imagen de perfil al storage',
-                        'success'
-                    )
-                    // console.log(
-                    //     'Se cargo una imagen de perfil al storage',
-                    //     base
-                    // )
-                    const gsReference = ref(_storage, base)
-                    getDownloadURL(gsReference)
-                        .then((url) => {
-                            setUserInfo({
-                                ...userInfo,
-                                userPhotoUrl: url,
-                            })
-                            const photoInfo = { userPhotoUrl: url }
-                            if (userRol.rol === 1) {
-                                const userLoadRol = userProResToFirestore(
-                                    photoInfo,
-                                    userConsultId
-                                )
-                                userLoadRol
-                                    .then((docSnap) => {
-                                        console.log(
-                                            'Se actualiza URL imagen de perfil a firestore',
-                                            docSnap
-                                        )
-                                    })
-                                    .catch((error) => {
-                                        console.log(
-                                            'No se pudo actualizar la imagen de perfil en firestore',
-                                            error
-                                        )
-                                    })
-                            } else if (userRol.rol === 2) {
-                                const userLoadRol = userComCalToFirestore(
-                                    photoInfo,
-                                    userConsultId
-                                )
-                                userLoadRol
-                                    .then((docSnap) => {
-                                        console.log(
-                                            'Se actualiza URL imagen de perfil a firestore',
-                                            docSnap
-                                        )
-                                    })
-                                    .catch((error) => {
-                                        console.log(
-                                            'No se pudo actualizar la imagen de perfil en firestore',
-                                            error
-                                        )
-                                    })
-                            }
-                        })
-                        .catch((error) => {
-                            console.log(
-                                'No se encontro una URL en el storage',
-                                error
-                            )
-                        })
-                })
-            } catch (e) {
-                handleAlert(
-                    'La imagen de perfil no se cargo al storage',
-                    'error'
-                )
-                console.log('La imagen de perfil no se cargo al storage', e)
-            }
-        }
-    }
-
-    const updateGalleryPhoto = (event) => {
-        const file = event.target.files
-        const fileId = uuidv4()
-        const userGalleryRef = ref(
-            _storage,
-            `profiles/${userConsultId}/${fileId}`
-        )
-        if (file[0] instanceof Blob) {
-            console.log(file[0])
-            try {
-                uploadBytes(userGalleryRef, file[0]).then((response) => {
-                    const { bucket, path_ } = response.ref._location
-                    const base = `gs://${bucket}/${path_}`
-                    handleAlert(
-                        'Se cargo una imagen a la galleria del usuario',
-                        'success'
-                    )
-                    // console.log(
-                    //     'Se cargo una imagen a la galleria de usuario del storage',
-                    //     base
-                    // )
-                    const gsReference = ref(_storage, base)
-                    getDownloadURL(gsReference)
-                        .then((url) => {
-                            setUserInfo({
-                                ...userInfo,
-                                userGalleryUrl: [url],
-                            })
-                            const photoInfo = { userGalleryUrl: [url] }
-                            if (userRol.rol === 1) {
-                                const userLoadRol = userProResToFirestore(
-                                    photoInfo,
-                                    userConsultId
-                                )
-                                userLoadRol
-                                    .then((docSnap) => {
-                                        console.log(
-                                            'Se actualiza URL de imagen a la galeria de usuario del firestore',
-                                            docSnap
-                                        )
-                                    })
-                                    .catch((error) => {
-                                        console.log(
-                                            'No se pudo actualizar URL de imagen a la galeria de usuario del firestore',
-                                            error
-                                        )
-                                    })
-                            } else if (userRol.rol === 2) {
-                                const userLoadRol = userComCalToFirestore(
-                                    photoInfo,
-                                    userConsultId
-                                )
-                                userLoadRol
-                                    .then((docSnap) => {
-                                        console.log(
-                                            'Se actualiza URL de imagen a la galeria de usuario del firestore',
-                                            docSnap
-                                        )
-                                    })
-                                    .catch((error) => {
-                                        console.log(
-                                            'No se pudo actualizar URL de imagen a la galeria de usuario del firestore',
-                                            error
-                                        )
-                                    })
-                            }
-                        })
-                        .catch((error) => {
-                            console.log(
-                                'No se encontro una URL en el storage',
-                                error
-                            )
-                        })
-                })
-            } catch (e) {
-                handleAlert(
-                    'La imagen de perfil no se cargo al storage',
-                    'error'
-                )
-                console.log('La imagen de perfil no se cargo al storage', e)
-            }
-        }
-    }
-
-    const handleAlert = (message, severity) => {
-        setAlert({ ...alert, open: true, message: message, severity: severity })
-    }
-
-    const handleCloseAlert = (event, reason) => {
-        // console.log(reason, event)
-        if (reason === 'clickaway') {
-            return
-        } else {
-            setAlert({ ...alert, open: false, message: '' })
-        }
-    }
 
     useEffect(() => {
         // console.log(userRol, state)
@@ -427,14 +226,6 @@ const Perfil = (props) => {
             <Container fluid className="p-0">
                 <Row className="h-100 pt-4 pb-4">
                     <Col className="col" md={10} sm={12}>
-                        {alert.open && (
-                            <SnackBarAlert
-                                message={alert.message}
-                                onClose={handleCloseAlert}
-                                severity={alert.severity} // success, error, warning, info, default
-                                open={alert.open}
-                            />
-                        )}
                         <Row className="border-green_buttom perfil-banner m-0 w-100 d-flex">
                             <Col className="ms-4 pt-4 pb-4 align-items-start">
                                 <div
@@ -455,29 +246,15 @@ const Perfil = (props) => {
                                     />
 
                                     {!consult && (
-                                        <label
-                                            htmlFor="icon-button-file"
-                                            style={{
-                                                position: 'relative',
-                                                right: '50px',
-                                            }}
-                                        >
-                                            <Input
-                                                accept="image/*"
-                                                id="icon-button-file"
-                                                type="file"
-                                                onClick={updateProfilePhoto}
-                                            />
-                                            <Button
-                                                type="submit"
-                                                id="profilePhoto"
-                                                name="profilePhoto"
-                                                variant="contained"
-                                                component="span"
-                                            >
-                                                <PermMediaOutlinedIcon alt="+ Agregar foto de perfil" />
-                                            </Button>
-                                        </label>
+                                        <AdjuntarArchivos
+                                            name={'profilePhoto'}
+                                            multiple={false}
+                                            idPerson={userConsultId}
+                                            rol={userRol.rol}
+                                            route={`profiles/${userConsultId}`}
+                                            functionState={setUserInfo}
+                                            state={userInfo}
+                                        ></AdjuntarArchivos>
                                     )}
                                 </div>
                                 <Col
@@ -674,30 +451,15 @@ const Perfil = (props) => {
                                             }
                                         )}
                                         {!consult && (
-                                            <label
-                                                htmlFor="icon-button-file2"
-                                                style={{
-                                                    position: 'relative',
-                                                    right: '50px',
-                                                    width: 'auto',
-                                                }}
-                                            >
-                                                <Input
-                                                    accept="image/*"
-                                                    id="icon-button-file2"
-                                                    type="file"
-                                                    onClick={updateGalleryPhoto}
-                                                />
-                                                <Button
-                                                    type="submit"
-                                                    id="galleryPhoto"
-                                                    name="galleryPhoto"
-                                                    variant="contained"
-                                                    component="span"
-                                                >
-                                                    <PermMediaOutlinedIcon alt="+ Agregar foto a la galeria de usuario" />
-                                                </Button>
-                                            </label>
+                                            <AdjuntarArchivos
+                                                name={'galleryPhoto'}
+                                                multiple={true}
+                                                idPerson={userConsultId}
+                                                rol={userRol.rol}
+                                                route={`profiles/${userConsultId}`}
+                                                functionState={setUserInfo}
+                                                state={userInfo}
+                                            ></AdjuntarArchivos>
                                         )}
                                     </Row>
                                 </Col>
@@ -721,7 +483,7 @@ const Perfil = (props) => {
                     </Col>
                     {/* <Col className="col-2 h-100 fondoGris">SideContent</Col> */}
                 </Row>
-            </Container> 
+            </Container>
         </>
     )
 }
