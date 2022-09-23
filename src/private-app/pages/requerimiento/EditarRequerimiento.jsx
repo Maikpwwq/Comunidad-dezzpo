@@ -84,7 +84,7 @@ const EditarRequerimiento = () => {
 
     useEffect(() => {
         console.log(draftId)
-        if (draftId !== ' ' && draftId !== undefined) {
+        if (draftId && draftId !== ' ' && draftId !== undefined) {
             const snap = draftFromFirestore(draftId)
             snap.then((docSnap) => {
                 // docSnap.exists()
@@ -134,8 +134,15 @@ const EditarRequerimiento = () => {
         }
     }, [draftId])
 
+    const handleChange = (event) => {
+        setRequerimientoInfo({
+            ...requerimientoInfo,
+            [event.target.name]: event.target.value,
+        })
+    }
+
     // TODO: implementar arrow function para descargar archivos adjuntos
-    const handleDescargarAdjuntos = () => {}
+    const handleAdjuntos = () => {}
 
     return (
         <>
@@ -154,6 +161,7 @@ const EditarRequerimiento = () => {
                                     name="requerimientoTotal"
                                     label="Total"
                                     value={requerimientoInfo.requerimientoTotal}
+                                    onChange={handleChange}
                                     // defaultValue="@Ciudad"
                                 />
                                 {/* // id */}
@@ -161,183 +169,200 @@ const EditarRequerimiento = () => {
                                     Categoria servicio
                                 </p>
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoTitulo"
                                     name="requerimientoTitulo"
                                     label="Titulo"
                                     value={
                                         requerimientoInfo.requerimientoTitulo
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@Titulo"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoCategoria"
                                     name="requerimientoCategoria"
                                     label="Categoria"
                                     value={
                                         requerimientoInfo.requerimientoCategoria
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@Categoria"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoTipoProyecto"
                                     name="requerimientoTipoProyecto"
                                     label="Tipo Proyecto?"
                                     value={
                                         requerimientoInfo.requerimientoTipoProyecto
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@TipoProyecto"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoDescripcion"
                                     name="requerimientoDescripcion"
                                     label="Descripción"
                                     value={
                                         requerimientoInfo.requerimientoDescripcion
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@Descripción"
                                 />
-                                <TextField
-                                    className="w-100"
+                                {/* <TextField
+                                    className="w-100 mb-2"
                                     id="requerimientoPropietario"
                                     name="requerimientoPropietario"
                                     label="Propietario"
                                     value={
                                         requerimientoInfo.requerimientoPropietario
                                     }
-                                    // defaultValue="@PROPIETARIO"
-                                />
+                                    onChange={handleChange}
+                                /> */}
                                 <p className="p-description">Ubicacion</p>
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoCiudad"
                                     name="requerimientoCiudad"
                                     label="Ciudad"
                                     value={
                                         requerimientoInfo.requerimientoCiudad
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@Ciudad"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoDireccion"
                                     name="requerimientoDireccion"
                                     label="Dirección"
                                     value={
                                         requerimientoInfo.requerimientoDireccion
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@Direccion"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoCodigoPostal"
                                     name="requerimientoCodigoPostal"
                                     label="Codigo Postal"
                                     value={
                                         requerimientoInfo.requerimientoCodigoPostal
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@CodigoPostal"
                                 />
                             </Col>
                             <Col className="col" md={6} sm={12}>
                                 <p className="p-description">Programación</p>
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoCreated"
                                     name="requerimientoCreated"
                                     label="FECHA DE PUBLICACIÓN"
                                     value={
                                         requerimientoInfo.requerimientoCreated
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@Created"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoPrioridad"
                                     name="requerimientoPrioridad"
                                     label="Prioridad"
                                     value={
                                         requerimientoInfo.requerimientoPrioridad
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@PRIORIDAD"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoMejorFecha"
                                     name="requerimientoMejorFecha"
                                     label="Calendario asignado"
                                     value={
                                         requerimientoInfo.requerimientoMejorFecha
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@PROPIETARIO"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoMejorHora"
                                     name="requerimientoMejorHora"
                                     label="Disponibilidad de horario"
                                     value={
                                         requerimientoInfo.requerimientoMejorHora
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@PROPIETARIO"
                                 />
                                 <p className="p-description">
                                     Descripción Propiedad
                                 </p>
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoTipoPropiedad"
                                     name="requerimientoTipoPropiedad"
                                     label="Tipo propiedad"
                                     value={
                                         requerimientoInfo.requerimientoTipoPropiedad
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@TipoPropiedad"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoCantidadObra"
                                     name="requerimientoCantidadObra"
                                     label="Cantidad Obra"
                                     value={
                                         requerimientoInfo.requerimientoCantidadObra
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@CantidadObra"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoPlanos"
                                     name="requerimientoPlanos"
                                     label="Planos"
                                     value={
                                         requerimientoInfo.requerimientoPlanos
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@PLANOS"
                                 />
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-2"
                                     id="requerimientoPermisos"
                                     name="requerimientoPermisos"
                                     label="Permisos"
                                     value={
                                         requerimientoInfo.requerimientoPermisos
                                     }
+                                    onChange={handleChange}
                                     // defaultValue="@PERMISOS"
                                 />
+                                {/* TODO: Agregar el handleAdjuntos*/}
                                 <h4 className=".headline-l pt-4">
                                     Archivos adjuntos{' '}
                                 </h4>
                                 <Button
                                     className="btn btn-round btn-high"
-                                    onClick={handleDescargarAdjuntos}
+                                    onClick={handleAdjuntos}
                                 >
-                                    Descargar
+                                    Adjuntar
                                 </Button>
                             </Col>
                         </Row>
+                        {/* TODO: Cambiar esta tabla por la de crear nuevo proyecto */}
                         <TablaSubCategoriaPresupuesto
                             requerimientoCategorias={
                                 requerimientoInfo.requerimientoCategorias
@@ -353,7 +378,7 @@ const EditarRequerimiento = () => {
                                     className="btn btn-primary"
                                     onClick={handleEnviar}
                                 >
-                                    Enviar
+                                    Guardar cambios
                                 </Button>
                             </Col>
                         </Row>

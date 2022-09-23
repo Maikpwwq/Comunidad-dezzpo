@@ -153,11 +153,7 @@ export default function DraftCard({ props }) {
                             >
                                 Ver requerimiento
                             </Button>
-                            {draftApply.length < 4 && (
-                                <Button className="" onClick={handleAplicar}>
-                                    Aplicar
-                                </Button>
-                            )}
+
                             {/* TODO: mostrar solo al propietario que crea el requerimiento */}
                             {userRol.rol === 1 &&
                             draftPropietarioResidente === userID ? (
@@ -165,7 +161,17 @@ export default function DraftCard({ props }) {
                                     Editar
                                 </Button>
                             ) : (
-                                <></>
+                                <>
+                                    {userRol.rol === 2 &&
+                                        draftApply.length < 4 && (
+                                            <Button
+                                                className=""
+                                                onClick={handleAplicar}
+                                            >
+                                                Aplicar
+                                            </Button>
+                                        )}
+                                </>
                             )}
                             <IconButton
                                 aria-label="add to favorites"

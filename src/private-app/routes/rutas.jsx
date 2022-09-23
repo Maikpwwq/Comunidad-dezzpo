@@ -152,11 +152,12 @@ class Rutas extends React.Component {
                     ></Route>
                     <Route
                         path="/editar-cotizacion"
-                        element={<EditarCotizacion></EditarCotizacion>}
+                        element={<Cotizar></Cotizar>}
                     ></Route>
                     <Route
                         path="/editar-cotizacion/:id"
-                        element={<EditarCotizacion></EditarCotizacion>}
+                        element={<Cotizar></Cotizar>}
+                        // element={<EditarCotizacion></EditarCotizacion>}
                     ></Route>
                     <Route
                         path="/proyecto"
