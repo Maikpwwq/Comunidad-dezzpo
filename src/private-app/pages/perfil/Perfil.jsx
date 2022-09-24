@@ -16,7 +16,7 @@ import CincoEstrellas from './CincoEstrellas'
 import Comentarios from '../../../private-app/components/Comentarios'
 import ChipsCategories from '../../components/ChipsCategories'
 import ListadoCategorias from '../../../app/components/ListadoCategorias'
-import AdjuntarArchivos from './AdjuntarArchivos'
+import AdjuntarArchivos from '../../components/AdjuntarArchivos'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'

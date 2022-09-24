@@ -49,7 +49,7 @@ const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
     }
 
     return (
-        <Card className="card-categorie mb-4">
+        <Card className="card-categorie mb-4 me-4">
             {/* TODO: Categorias*/}
             <CardHeader
                 // avatar={

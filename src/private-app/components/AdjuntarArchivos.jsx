@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { firestore, auth, storage } from '../../../firebase/firebaseClient'
+import { firestore, auth, storage } from '../../firebase/firebaseClient'
 import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import PropTypes from 'prop-types'
 import { v4 as uuidv4 } from 'uuid'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import SnackBarAlert from '../../../app/components/SnackBarAlert'
+import SnackBarAlert from '../../app/components/SnackBarAlert'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
 const Input = styled('input')({
@@ -64,9 +64,9 @@ const AdjuntarArchivos = ({
 
     const updateGalleryPhoto = (event) => {
         const file = event.target.files
+        const fileId = uuidv4()
         const fileRoute =
             name == 'profilePhoto' ? `${route}` : `${route}/${fileId}`
-        const fileId = uuidv4()
         const userGalleryRef = ref(
             _storage,
             fileRoute

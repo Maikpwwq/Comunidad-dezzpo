@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { firestore, auth } from '../../../firebase/firebaseClient'
 import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
+import AdjuntarArchivos from '../../components/AdjuntarArchivos'
 
 import TablaSubCategoriaPresupuesto from './Tabla_SubCategoria_Presupuesto'
 import Row from 'react-bootstrap/Row'
@@ -360,6 +361,15 @@ const EditarRequerimiento = () => {
                                 >
                                     Adjuntar
                                 </Button>
+                                <AdjuntarArchivos
+                                    name={'draftAtachments'}
+                                    multiple={true}
+                                    idPerson={userID}
+                                    rol={userRol.rol}
+                                    route={`profiles/${userID}/draft`}
+                                    functionState={setRequerimientoInfo}
+                                    state={requerimientoInfo}
+                                ></AdjuntarArchivos>
                             </Col>
                         </Row>
                         {/* TODO: Cambiar esta tabla por la de crear nuevo proyecto */}
