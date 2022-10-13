@@ -219,7 +219,7 @@ export default function Paperbase() {
                     <Box
                         className="p-0"
                         component="main"
-                        sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
+                        sx={{ flex: 1, py: 6, px: 4, bgcolor: '#ffffff' }}
                     >
                         <Rutas />
                     </Box>

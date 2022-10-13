@@ -27,6 +27,33 @@
     border: 1.5px solid;
 }
 
+.css-1jux8lz-MuiInputBase-root-MuiFilledInput-root,
+.css-ym71rf-MuiInputBase-root-MuiOutlinedInput-root{
+    border-radius: 30px !important;
+}
+
 .css-16q9cs-MuiPaper-root-MuiAppBar-root{
     color: var(selected-border-green-color) !important;
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+    padding: 8px 12px !important;
+}
+
+.css-sa9qh9-MuiFormLabel-root-MuiInputLabel-root{
+    top: -10px !important;
+    font-size: 1.15rem !important;
+    font-weight: 500 !important;
+}
+
+.detail-pill{
+    background-color: var(--background-light-gray-color);
+    color: var(--content-text-light-gray-color);
+    border-radius: 15px;
+    min-height: 30px;
+    text-align: start;
+}
+
+.background-grey{
+    background-color: var(--background-category-card-grey-color);
 }

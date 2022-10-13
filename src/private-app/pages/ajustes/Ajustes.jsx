@@ -20,6 +20,7 @@ import TextField from '@mui/material/TextField'
 import FormGroup from '@mui/material/FormGroup'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Modal from '@mui/material/Modal'
+import Typography from '@mui/material/Typography'
 
 const Ajustes = (props) => {
     const user = auth.currentUser || {}
@@ -213,7 +214,13 @@ const Ajustes = (props) => {
         <>
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex align-items-start pb-4 pt-4">
-                    <Col className="col-10">
+                    <Typography
+                        variant="h6"
+                        className="p-description pb-4 pt-4 w-100"
+                    >
+                        Datos de contacto
+                    </Typography>
+                    <Col className="col-10 cardFrame">
                         {alert.open && (
                             <SnackBarAlert
                                 message={alert.message}
@@ -222,7 +229,7 @@ const Ajustes = (props) => {
                                 open={alert.open}
                             />
                         )}
-                        <Row className="p-0 info-user_backgound">
+                        <Row className="p-0 pt-4">
                             <FormGroup
                                 action=""
                                 style={{
@@ -231,23 +238,20 @@ const Ajustes = (props) => {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}
+                                className="pt-4"
                             >
-                                <div className="w-100">
-                                    <h3 className="p-description pb-4 pt-4">
-                                        Datos de contacto
-                                    </h3>
-                                </div>
-                                <hr />
                                 <TextField
+                                    style={{ borderRadius: '30px' }}
                                     id="userName"
                                     name="userName"
                                     label="Nombre de usuario"
                                     value={userEditInfo.userName}
                                     onChange={handleChange}
                                     // defaultValue="@NOMBRE USUARIO"
-                                    className="pb-4 pe-4"
+                                    className="mb-4 me-4 fondoBlanco"
                                 />
                                 <TextField
+                                    style={{ borderRadius: '30px' }}
                                     id="userMail"
                                     name="userMail"
                                     label="Correo de usuario"
@@ -255,9 +259,10 @@ const Ajustes = (props) => {
                                     // onChange={handleChange}
                                     // defaultValue="@CORREO USUARIO"
                                     variant="filled"
-                                    className="pb-4 pe-4"
+                                    className="mb-4 me-4"
                                 />
                                 <TextField
+                                    style={{ borderRadius: '30px' }}
                                     id="userJoined"
                                     name="userJoined"
                                     label="Activo desde"
@@ -265,42 +270,46 @@ const Ajustes = (props) => {
                                     // onChange={handleChange}
                                     // defaultValue="@SeUnioDesdeHace"
                                     variant="filled"
-                                    className="pb-4 pe-4"
+                                    className="mb-4 me-4"
                                 />
                                 {userRol.rol === 2 ? (
                                     <>
                                         <TextField
+                                            style={{ borderRadius: '30px' }}
                                             id="userProfession"
                                             name="userProfession"
                                             label="Profesión"
                                             value={userEditInfo.userProfession}
                                             onChange={handleChange}
                                             // defaultValue="@PROFESIÓN"
-                                            className="pb-4 pe-4"
+                                            className="mb-4 me-4 fondoBlanco"
                                         />
                                         <TextField
+                                            style={{ borderRadius: '30px' }}
                                             id="userExperience"
                                             name="userExperience"
                                             label="Experiencia"
                                             value={userEditInfo.userExperience}
                                             onChange={handleChange}
                                             // defaultValue="@TiempoExperiencia"
-                                            className="pb-4 pe-4"
+                                            className="mb-4 me-4"
                                         />
                                         <TextField
+                                            style={{ borderRadius: '30px' }}
                                             id="userRazonSocial"
                                             name="userRazonSocial"
                                             label="Razón Social"
                                             value={userEditInfo.userRazonSocial}
                                             onChange={handleChange}
                                             // defaultValue="Razón Social"
-                                            className="pb-4 pe-4"
+                                            className="mb-4 me-4 fondoBlanco"
                                         />
                                     </>
                                 ) : (
                                     <></>
                                 )}
                                 <TextField
+                                    style={{ borderRadius: '30px' }}
                                     id="userDirection"
                                     name="userDirection"
                                     label="Ubicación"
@@ -308,9 +317,10 @@ const Ajustes = (props) => {
                                     variant="filled"
                                     // onChange={handleChange}
                                     // defaultValue="ubicación"
-                                    className="pb-4 pe-4"
+                                    className="mb-4 me-4"
                                 />
                                 <TextField
+                                    style={{ borderRadius: '30px' }}
                                     id="userCiudad"
                                     name="userCiudad"
                                     label="Ciudad"
@@ -318,26 +328,28 @@ const Ajustes = (props) => {
                                     variant="filled"
                                     // onChange={handleChange}
                                     // defaultValue="ubicación"
-                                    className="pb-4 pe-4"
+                                    className="mb-4 me-4"
                                 />
                                 <TextField
+                                    style={{ borderRadius: '30px' }}
                                     id="userIdentification"
                                     name="userIdentification"
                                     label="Identificación"
                                     value={userEditInfo.userIdentification}
                                     onChange={handleChange}
                                     // defaultValue="Identificación"
-                                    className="pb-4 pe-4"
+                                    className="mb-4 me-4 fondoBlanco"
                                 />
 
                                 <TextField
+                                    style={{ borderRadius: '30px' }}
                                     id="userPhone"
                                     label="Celular"
                                     name="userPhone"
                                     value={userEditInfo.userPhone}
                                     onChange={handleChange}
                                     // defaultValue="Celular"
-                                    className="pb-4 pe-4"
+                                    className="mt-2 mb-4 me-4 fondoBlanco"
                                 />
                                 <Row className="pb-4 w-100">
                                     <Col className="col-6">
@@ -374,16 +386,16 @@ const Ajustes = (props) => {
                         </Row>
                     </Col>
                     <Col className="col-10">
-                        <hr />
                         <Row className="">
-                            <label
+                            <Typography
+                                variant="h6"
                                 htmlFor="ofertaServicios"
-                                className="p-description pb-4 w-100"
+                                className="p-description pb-4 pt-4 w-100"
                             >
                                 {userRol.rol === 2
                                     ? 'Servicios ofrecidos'
                                     : 'Presentación'}
-                            </label>
+                            </Typography>
                             <TextareaAutosize
                                 value={userEditInfo.userDescription}
                                 onChange={handleChange}
@@ -397,6 +409,7 @@ const Ajustes = (props) => {
                                 cols="30"
                                 minRows={4}
                                 className="w-100"
+                                style={{ borderRadius: '30px' }}
                             ></TextareaAutosize>
                             {userRol.rol === 2 ? (
                                 <Col className="pt-2">
@@ -427,11 +440,17 @@ const Ajustes = (props) => {
                         </Row>
                     </Col>
                     <Col className="col-10">
-                        <hr />
-                        <p className="p-description">Confirma tu identidad</p>
-                        <p className="body-1">
+                        <Typography
+                            variant="h6"
+                            htmlFor="ofertaServicios"
+                            className="p-description pb-4 pt-4 w-100"
+                        >
+                            Confirma tu identidad
+                        </Typography>
+
+                        <Typography variant="body1" className="body-1">
                             Adjunta tu documento de identificación para...
-                        </p>
+                        </Typography>
                     </Col>
                 </Row>
             </Container>

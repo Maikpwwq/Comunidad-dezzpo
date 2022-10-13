@@ -216,7 +216,7 @@ export default function Navigator(props) {
                                     // exact
                                 >
                                     <ListItemButton
-                                        className="w-auto p-auto"
+                                        className=""
                                         selected={active}
                                         sx={item}
                                     >
