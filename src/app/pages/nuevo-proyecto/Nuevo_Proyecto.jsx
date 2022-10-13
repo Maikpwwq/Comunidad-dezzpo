@@ -293,12 +293,12 @@ const NuevoProyecto = (props) => {
                                 <p className="body-1">
                                     Al seleccionar categorías podrás ir
                                     agregando uno a uno todos los servicios que
-                                    vas a solicitar. <br /> Luego en el
-                                    siguiente paso podrás modificar la cantidad
-                                    de obra que requieres.
+                                    vas a solicitar. Luego en el siguiente paso
+                                    podrás modificar la cantidad de obra que
+                                    requieres.
                                 </p>
                                 <Form.Select
-                                    className="casillaSeleccion"
+                                    className="casillaSeleccion m-auto"
                                     name="draftCategory"
                                     value={draftInfo.draftCategory}
                                     onChange={handleChange}

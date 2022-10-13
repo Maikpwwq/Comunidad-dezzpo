@@ -1,0 +1,32 @@
+.card-draft {
+    max-width: 600px !important;
+    min-height: 212px !important;
+    background-color: var(--background-category-card-grey-color) !important;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 30px !important;
+    border: white 1px solid !important;
+}
+
+.card-user {
+    max-width: 345px !important;
+    min-height: 212px !important;
+    background-color: var(--background-category-card-grey-color) !important;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 30px !important;
+    border: white 1px solid !important;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.body-1.w-auto.css-127v9yn-MuiButtonBase-root-MuiButton-root {
+    color: var(--content-text-white-color) !important;
+    background-color: var(--background-hover-green-color) !important;
+    border-radius: 30px !important;
+    margin: 0 !important;
+    font-weight: bold !important;
+    min-width: 125px;
+    white-space: pre-line;
+    border: 1.5px solid;
+}
+
+.css-16q9cs-MuiPaper-root-MuiAppBar-root{
+    color: var(selected-border-green-color) !important;
+}

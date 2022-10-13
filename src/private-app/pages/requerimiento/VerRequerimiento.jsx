@@ -147,6 +147,7 @@ const VerRequerimiento = () => {
         e.preventDefault()
         navigate('/app/contratar', {
             state: {
+                draftId: draftId,
                 quotationId: quotationId,
                 proponentId: proponentId,
             },
