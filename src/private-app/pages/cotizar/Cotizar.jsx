@@ -17,6 +17,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
+import Typography from '@mui/material/Typography'
 
 const Cotizar = (props) => {
     const user = auth.currentUser || {}
@@ -169,15 +170,21 @@ const Cotizar = (props) => {
         <>
             <Container
                 fluid
-                className="p-0 h-100 d-flex justify-content-center"
+                className="p-0 pt-4 pb-4 h-100 d-flex justify-content-center"
             >
-                <Col className="col-10 pb-4 pt-4">
-                    <label
-                        htmlFor="ofertaServiciosDescription"
-                        className="p-description pb-4 w-100"
+                <Col className="col-10 p-4 cardFrame">
+                    <Row className="m-0 w-100 pb-2 d-flex">
+                        <Typography variant="h5" className="w-auto pb-4">
+                            Detalles de la cotización
+                        </Typography>
+                    </Row>
+                    <Typography
+                        variant="h6"
+                        align="left"
+                        className="p-description pb-2 w-100"
                     >
-                        Descripción del servicio
-                    </label>
+                        Descripción del servicio:{' '}
+                    </Typography>
                     <TextareaAutosize
                         value={cotizacion.description}
                         onChange={handleChange}
@@ -186,14 +193,15 @@ const Cotizar = (props) => {
                         placeholder="Registra una descripción del servicio que ofreceras"
                         cols="10"
                         minRows={4}
-                        className="w-100"
+                        className="ps-3 information-pill w-100"
                     ></TextareaAutosize>
-                    <label
-                        htmlFor="ofertaServiciosAlcance"
-                        className="p-description pt-4 pb-2 w-100"
+                    <Typography
+                        variant="h6"
+                        align="left"
+                        className="p-description w-100 mt-3"
                     >
-                        Inlcuir alcance
-                    </label>
+                        Alcance del servicio:{' '}
+                    </Typography>
                     <TextareaAutosize
                         value={cotizacion.scope}
                         onChange={handleChange}
@@ -202,14 +210,15 @@ const Cotizar = (props) => {
                         placeholder="Registra una descripción del alcance para este proyecto"
                         cols="10"
                         minRows={2}
-                        className="w-100"
+                        className="ps-3 information-pill w-100"
                     ></TextareaAutosize>
-                    <label
-                        htmlFor="ofertaServiciosProcedimiento"
-                        className="p-description pt-4 pb-2 w-100"
+                    <Typography
+                        variant="h6"
+                        align="left"
+                        className="p-description w-100 mt-3"
                     >
-                        Procedimiento
-                    </label>
+                        Procedimiento a desarrollar:{' '}
+                    </Typography>
                     <TextareaAutosize
                         value={cotizacion.procedimiento}
                         onChange={handleChange}
@@ -218,14 +227,14 @@ const Cotizar = (props) => {
                         placeholder="Registra una descripción del procedimiento a desarrollar"
                         cols="10"
                         minRows={2}
-                        className="w-100"
+                        className="ps-3 information-pill w-100"
                     ></TextareaAutosize>
-                    <label
-                        htmlFor="ofertaServiciosValores"
-                        className="p-description pt-4 pb-2 w-100"
+                    <Typography
+                        variant="h6"
+                        className="p-description pt-3 w-100"
                     >
                         Tabla de valores
-                    </label>
+                    </Typography>
                     <Row className="m-0 w-100 d-flex">
                         <Table>
                             <TableHead>
@@ -398,12 +407,13 @@ const Cotizar = (props) => {
                         </Table>
                     </Row>
 
-                    <label
-                        htmlFor="ofertaServiciostiempoEjecucion"
-                        className="p-description pt-4 pb-2 w-100"
+                    <Typography
+                        variant="h6"
+                        align="left"
+                        className="p-description w-100"
                     >
-                        Tiempo Ejecución
-                    </label>
+                        Tiempo Ejecución:{' '}
+                    </Typography>
                     <TextareaAutosize
                         value={cotizacion.tiempoEjecucion}
                         onChange={handleChange}
@@ -412,14 +422,15 @@ const Cotizar = (props) => {
                         placeholder="Registra los Tiempos de Ejecución"
                         cols="10"
                         minRows={2}
-                        className="w-100"
+                        className="ps-3 information-pill w-100"
                     ></TextareaAutosize>
-                    <label
-                        htmlFor="ofertaServicioscondicionesNegocio"
-                        className="p-description pt-4 pb-2 w-100"
+                    <Typography
+                        variant="h6"
+                        align="left"
+                        className="p-description w-100 mt-3"
                     >
-                        Condiciones de Negociación
-                    </label>
+                        Condiciones de Negociación:{' '}
+                    </Typography>
                     <TextareaAutosize
                         value={cotizacion.condicionesNegocio}
                         onChange={handleChange}
@@ -428,14 +439,15 @@ const Cotizar = (props) => {
                         placeholder="Registra las condiciones para dar esta negociación"
                         cols="10"
                         minRows={2}
-                        className="w-100"
+                        className="ps-3 information-pill w-100"
                     ></TextareaAutosize>
-                    <label
-                        htmlFor="ofertaServiciosGarantía"
-                        className="p-description pt-4 pb-2 w-100"
+                    <Typography
+                        variant="h6"
+                        align="left"
+                        className="p-description w-100 mt-3"
                     >
-                        Garantía
-                    </label>
+                        Garantía:{' '}
+                    </Typography>
                     <TextareaAutosize
                         value={cotizacion.garantia}
                         onChange={handleChange}
@@ -444,9 +456,9 @@ const Cotizar = (props) => {
                         placeholder="Registra cuales seran las garantía para el proyecto"
                         cols="10"
                         minRows={2}
-                        className="w-100"
+                        className="ps-3 information-pill w-100"
                     ></TextareaAutosize>
-                    <Row className="pb-4 w-100">
+                    <Row className="pb-4 pt-4 w-100">
                         <Col className="">
                             <Button
                                 type="submit"

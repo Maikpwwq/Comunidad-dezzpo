@@ -16,6 +16,7 @@
     border: white 1px solid !important;
 }
 
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.btn.btn-primary.css-127v9yn-MuiButtonBase-root-MuiButton-root, 
 .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.body-1.w-auto.css-127v9yn-MuiButtonBase-root-MuiButton-root {
     color: var(--content-text-white-color) !important;
     background-color: var(--background-hover-green-color) !important;
@@ -48,7 +49,16 @@
 
 .detail-pill{
     background-color: var(--background-light-gray-color);
-    color: var(--content-text-light-gray-color);
+    color: var(--primary-titles-text-color);
+    border-radius: 15px;
+    min-height: 30px;
+    min-width: 120px;
+    text-align: start;
+}
+
+.information-pill{
+    background-color: var(--background-white-color);
+    color: var(--content-text-primary-color);
     border-radius: 15px;
     min-height: 30px;
     text-align: start;

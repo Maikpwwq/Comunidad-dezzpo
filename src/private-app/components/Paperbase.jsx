@@ -29,7 +29,7 @@ let theme = createTheme({
     palette: {
         primary: {
             light: '#63ccff',
-            main: '#009999', //#009be5
+            main: '#666666', //#009be5
             dark: '#006db3',
         },
     },

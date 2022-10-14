@@ -240,6 +240,108 @@ const Ajustes = (props) => {
                                 }}
                                 className="pt-4"
                             >
+                                <Row className="m-0 w-100 d-flex flex-row pb-4 pt-4">
+                                    <Col
+                                        className="mb-4"
+                                        sx={{
+                                            width: {
+                                                xs: '100%',
+                                                sm: '100%',
+                                                lg: '33%',
+                                                md: '50%',
+                                            },
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="subtitle1"
+                                            className="w-auto"
+                                        >
+                                            Correo de usuario
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            className="ps-3 pe-3 detail-pill w-auto"
+                                            name="userMail"
+                                        >
+                                            {userEditInfo.userMail}
+                                        </Typography>
+                                    </Col>
+                                    <Col
+                                        className="mb-4"
+                                        sx={{
+                                            width: {
+                                                xs: '100%',
+                                                sm: '100%',
+                                                lg: '33%',
+                                                md: '50%',
+                                            },
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="subtitle1"
+                                            className="w-auto"
+                                        >
+                                            Activo desde
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            className="ps-3 pe-3 detail-pill w-auto"
+                                            name="userJoined"
+                                        >
+                                            {userEditInfo.userJoined}
+                                        </Typography>
+                                    </Col>
+                                    <Col
+                                        className="mb-4"
+                                        sx={{
+                                            width: {
+                                                xs: '100%',
+                                                sm: '100%',
+                                                lg: '33%',
+                                                md: '50%',
+                                            },
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="subtitle1"
+                                            className="w-auto"
+                                        >
+                                            Ubicación
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            className="ps-3 pe-3 detail-pill w-auto"
+                                            name="userDirection"
+                                        >
+                                            {userEditInfo.userDirection}
+                                        </Typography>
+                                    </Col>
+                                    <Col
+                                        className="mb-4"
+                                        sx={{
+                                            width: {
+                                                xs: '100%',
+                                                sm: '100%',
+                                                lg: '33%',
+                                                md: '50%',
+                                            },
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="subtitle1"
+                                            className="w-auto"
+                                        >
+                                            Ciudad
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            className="ps-3 pe-3 detail-pill w-auto"
+                                            name="userCiudad"
+                                        >
+                                            {userEditInfo.userCiudad}
+                                        </Typography>
+                                    </Col>
+                                </Row>
                                 <TextField
                                     style={{ borderRadius: '30px' }}
                                     id="userName"
@@ -249,28 +351,6 @@ const Ajustes = (props) => {
                                     onChange={handleChange}
                                     // defaultValue="@NOMBRE USUARIO"
                                     className="mb-4 me-4 fondoBlanco"
-                                />
-                                <TextField
-                                    style={{ borderRadius: '30px' }}
-                                    id="userMail"
-                                    name="userMail"
-                                    label="Correo de usuario"
-                                    value={userEditInfo.userMail}
-                                    // onChange={handleChange}
-                                    // defaultValue="@CORREO USUARIO"
-                                    variant="filled"
-                                    className="mb-4 me-4"
-                                />
-                                <TextField
-                                    style={{ borderRadius: '30px' }}
-                                    id="userJoined"
-                                    name="userJoined"
-                                    label="Activo desde"
-                                    value={userEditInfo.userJoined}
-                                    // onChange={handleChange}
-                                    // defaultValue="@SeUnioDesdeHace"
-                                    variant="filled"
-                                    className="mb-4 me-4"
                                 />
                                 {userRol.rol === 2 ? (
                                     <>
@@ -292,7 +372,7 @@ const Ajustes = (props) => {
                                             value={userEditInfo.userExperience}
                                             onChange={handleChange}
                                             // defaultValue="@TiempoExperiencia"
-                                            className="mb-4 me-4"
+                                            className="mb-4 me-4 fondoBlanco"
                                         />
                                         <TextField
                                             style={{ borderRadius: '30px' }}
@@ -308,28 +388,6 @@ const Ajustes = (props) => {
                                 ) : (
                                     <></>
                                 )}
-                                <TextField
-                                    style={{ borderRadius: '30px' }}
-                                    id="userDirection"
-                                    name="userDirection"
-                                    label="Ubicación"
-                                    value={userEditInfo.userDirection}
-                                    variant="filled"
-                                    // onChange={handleChange}
-                                    // defaultValue="ubicación"
-                                    className="mb-4 me-4"
-                                />
-                                <TextField
-                                    style={{ borderRadius: '30px' }}
-                                    id="userCiudad"
-                                    name="userCiudad"
-                                    label="Ciudad"
-                                    value={userEditInfo.userCiudad}
-                                    variant="filled"
-                                    // onChange={handleChange}
-                                    // defaultValue="ubicación"
-                                    className="mb-4 me-4"
-                                />
                                 <TextField
                                     style={{ borderRadius: '30px' }}
                                     id="userIdentification"
