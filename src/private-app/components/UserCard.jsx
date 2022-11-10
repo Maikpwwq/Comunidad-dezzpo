@@ -82,7 +82,7 @@ export default function UserCard({ props }) {
     }, [userCategories])
 
     return (
-        <Card className="mb-4" sx={{ maxWidth: 345 }}>
+        <Card className="card-user mb-4" elevation={16}>
             {/* <CardMedia
                 component="img"
                 height="194"
@@ -90,8 +90,8 @@ export default function UserCard({ props }) {
                 // src="http://placeimg.com/260/194/arch"
                 alt="Paella dish"
             /> */}
-            {/* TODO: Categorias*/}
             <CardHeader
+                className="align-items-start"
                 avatar={
                     <Avatar
                         src={userPhotoUrl}
@@ -102,14 +102,23 @@ export default function UserCard({ props }) {
                     </Avatar>
                 }
                 action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
+                    <Typography
+                        variant="caption"
+                        display="block"
+                        gutterBottom
+                        color="text.secondary"
+                    >
+                        Se unio el <br />
+                        {userJoined}
+                    </Typography>
+                    // <IconButton aria-label="settings">
+                    //     <MoreVertIcon />
+                    // </IconButton>
                 }
                 title={userRazonSocial}
                 subheader={userProfession}
             ></CardHeader>
-            <CardContent>
+            <CardContent sx={{ textAlign: 'left' }} className="p-2">
                 <Typography
                     variant="body2"
                     color="text.secondary"
@@ -126,18 +135,32 @@ export default function UserCard({ props }) {
                     <></>
                 )}
                 <br />
-                <Typography>Experiencia: {userExperience}</Typography>
-                <Typography>Ubicacion: {userDirection}</Typography>
-                <Typography>Se unio el: {userJoined}</Typography>
+                <Typography variant="body1" color="text.secondary">
+                    Experiencia: {userExperience}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                    Ubicacion: {userDirection}
+                </Typography>
             </CardContent>
-            <CardActions disableSpacing>
-                <Button className="" onClick={handleVerSitio}>
+            <CardActions
+                className="d-flex p-0 pt-2 m-2 mt-0"
+                sx={{
+                    borderTop: 'solid 1.5px',
+                }}
+                disableSpacing
+            >
+                <Button className="body-1" onClick={handleVerSitio}>
                     Ver sitio
                 </Button>
-                <Button className="" onClick={handleCotizar}>
+                <Button
+                    style={{ paddingRight: '10px' }}
+                    className="body-1 w-auto"
+                    onClick={handleCotizar}
+                >
                     Cotizar
                 </Button>
                 <IconButton
+                    style={{ marginLeft: 'auto' }}
                     aria-label="add to favorites"
                     onClick={handleFavorite}
                 >

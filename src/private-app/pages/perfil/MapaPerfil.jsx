@@ -68,7 +68,11 @@ const MapaPerfil = ({ userInfo }) => {
                     <Col className="p-0">
                         <div
                             id="profile-map"
-                            style={{ height: '450px', width: '100%' }}
+                            style={{
+                                height: '450px',
+                                width: '100%',
+                                borderRadius: '15px',
+                            }}
                         >
                             {/* {clicks.map((latLng, i) => (
                                 <Marker key={i} position={latLng} />

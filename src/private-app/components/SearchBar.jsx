@@ -11,9 +11,9 @@ import MenuItem from '@mui/material/MenuItem'
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: alpha(theme.palette.common.white, 1),
     '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
+        backgroundColor: alpha(theme.palette.common.white, 0.5),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -82,7 +82,7 @@ const SearchBar = () => {
 
     return (
         <>
-            <Search>
+            <Search sx={{ maxWidth: '300px'}}>
                 <SearchIconWrapper>
                     {/* <SearchIcon /> */}
                     <IcoMoon

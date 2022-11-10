@@ -155,7 +155,7 @@ const Portal_Servicios = (props) => {
                     )}
                 </Row>
                 <Row className="m-0 w-100 d-flex">
-                    <Col className="pt-4 pb-4 p-0">
+                    <Col className="col-10 pt-4 pb-4 p-0" xs={12}>
                         <Col className="pb-2 p-0">
                             <h3 className="headline-l">
                                 Todos los profesionales

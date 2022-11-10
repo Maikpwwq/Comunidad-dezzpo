@@ -3,47 +3,55 @@
         position: inherit !important;
     }
 }
+
 @media screen and (min-width: 600px) and (max-width: 900px) {
     .user-stadistics {
         position: inherit !important;
     }
 }
-.info-user_backgound{
-    background: url(../img/FondoAgua@2x.png) no-repeat center; 
-    background-attachment: scroll;         
+
+.info-user_backgound {
+    background: url(../img/FondoAgua@2x.png) no-repeat center;
+    background-attachment: scroll;
     background-size: cover;
     height: auto;
     min-height: 350px;
 }
-.border-green_buttom{
+
+.border-green_bottom {
     border-bottom: solid;
     border-width: 3px;
-    border-left-color: var(--primary-green-text-color);
+    border-color: var(--primary-green-text-color);
 }
-.perfil-banner{
-    background: #e9ebe6 url(
-        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadPropietarios1.png?alt=media&token=d1a39c58-8790-4df3-8c1b-c86b94e64955
-    ) no-repeat center; 
-    background-attachment: scroll;         
+
+.perfil-banner {
+    background: #e9ebe6 url(https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadPropietarios1.png?alt=media&token=d1a39c58-8790-4df3-8c1b-c86b94e64955
+) no-repeat center;
+    background-attachment: scroll;
     background-size: 100% 100%;
     height: auto;
     min-height: 380px;
     width: 100%;
     margin-left: 0px;
 }
+
 .user-stadistics {
     position: relative;
     top: 100px;
     right: 40px;
 }
+
 .mapa-ubicacion {
-    background: #e9ebe6 url(
-        '../img/Bogota.png'
-    ) no-repeat center; 
-    background-attachment: scroll;         
+    background: #e9ebe6 url('../img/Bogota.png'
+        ) no-repeat center;
+    background-attachment: scroll;
     background-size: 100% 100%;
     height: auto;
     min-height: 330px;
     width: 100%;
     color: #e9ebe6;
+}
+
+.css-ryrseu-MuiRating-root {
+    color: var(--primary-green-text-color) !important;
 }

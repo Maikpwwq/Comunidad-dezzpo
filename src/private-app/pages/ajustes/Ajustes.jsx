@@ -1,15 +1,17 @@
 // Pagina de Usuario - Ajustes
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { auth, firestore } from '../../../firebase/firebaseClient'
-import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
-import { updateProfile } from 'firebase/auth'
+import { auth } from 'firebase/firebaseClient'
+
+import { sharingInformationService } from 'services/sharing-information'
+import readUserFromFirestore from 'services/readUserFromFirestore.service'
+import updateUserToFirestore from 'services/updateUserToFirestore.service'
 
 import '../../../../public/assets/cssPrivateApp/ajustes.css'
-import Ubicacion from '../../../app/pages/ubicacion/Ubicacion'
-import SnackBarAlert from '../../../app/components/SnackBarAlert'
+import Ubicacion from 'app/pages/ubicacion/Ubicacion'
+import SnackBarAlert from 'app/components/SnackBarAlert'
 import ChipsCategories from '../../components/ChipsCategories'
-import ListadoCategorias from '../../../app/components/ListadoCategorias'
+import ListadoCategorias from 'app/components/ListadoCategorias'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -20,11 +22,11 @@ import TextField from '@mui/material/TextField'
 import FormGroup from '@mui/material/FormGroup'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Modal from '@mui/material/Modal'
+import Typography from '@mui/material/Typography'
 
 const Ajustes = (props) => {
     const user = auth.currentUser || {}
     const userID = user.uid || ''
-    const _firestore = firestore
     const { state } = useLocation() || {}
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
@@ -40,38 +42,6 @@ const Ajustes = (props) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
-
-    const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
-    const usersComCalRef = collection(
-        _firestore,
-        'usersComerciantesCalificados'
-    )
-
-    const userProResToFirestore = async (updateInfo, userID) => {
-        await setDoc(doc(usersProResRef, userID), updateInfo, { merge: true })
-    }
-
-    const userComCalToFirestore = async (updateInfo, userID) => {
-        await setDoc(doc(usersComCalRef, userID), updateInfo, { merge: true })
-    }
-
-    const userFromFirestore = async (firestoreUserID) => {
-        try {
-            if (userRol.rol === 1) {
-                const userData = await getDocFromServer(
-                    doc(usersProResRef, firestoreUserID)
-                )
-                return userData
-            } else if (userRol.rol === 2) {
-                const userData = await getDocFromServer(
-                    doc(usersComCalRef, firestoreUserID)
-                )
-                return userData
-            }
-        } catch (err) {
-            console.log('Error getting user: ', err)
-        }
-    }
 
     const [userEditInfo, setUserEditInfo] = useState({
         userName: '',
@@ -96,8 +66,17 @@ const Ajustes = (props) => {
         userDescription: '',
     })
 
+    const userData = () => {
+        const firestoreUserID = userID
+        const userSelectedRol = userRol.rol
+        console.log(firestoreUserID, userSelectedRol)
+        readUserFromFirestore({
+            firestoreUserID,
+            userSelectedRol,
+        })
+    }
+
     useEffect(() => {
-        console.log(userRol.rol, user)
         if (user !== null && userRol.rol) {
             const {
                 uid,
@@ -108,11 +87,11 @@ const Ajustes = (props) => {
                 emailVerified,
                 // metadata,
             } = user
-            const userData = userFromFirestore(userID)
-            userData.then((docSnap) => {
-                // docSnap.exists()
-                if (docSnap) {
-                    const data = docSnap.data()
+            userData()
+            const productData = sharingInformationService.getSubject()
+            productData.subscribe((data) => {
+                if (!!data) {
+                    console.log('Detail load:', data)
                     setUserEditInfo({
                         ...userEditInfo,
                         userPhone: data.userPhone || phoneNumber,
@@ -134,7 +113,6 @@ const Ajustes = (props) => {
                         userIdentification: data.userIdentification,
                         userDescription: data.userDescription,
                     })
-                    console.log(user, userEditInfo)
                 } else {
                     console.log(
                         'No se encontro información relacionada con este usuario!'
@@ -164,56 +142,42 @@ const Ajustes = (props) => {
         })
     }
 
-    const handleSubmit = () => {
-        if (userRol.rol === 1) {
-            const snap = userProResToFirestore(userEditInfo, user.uid)
-            snap.then((docSnap) => {
-                handleAlert(
-                    'Se actualizó correctamente su información!',
-                    'success'
-                )
-                // console.log(docSnap)
-            })
-        } else if (userRol.rol === 2) {
-            const snap = userComCalToFirestore(userEditInfo, user.uid)
-            snap.then((docSnap) => {
-                handleAlert(
-                    'Se actualizó correctamente su información!',
-                    'success'
-                )
-                // console.log(docSnap)
-            })
-        }
-        sendInfo()
+    const snap = () => {
+        const firestoreUserID = userID
+        const userSelectedRol = userRol.rol
+        console.log(firestoreUserID, userSelectedRol, userEditInfo)
+        updateUserToFirestore({
+            firestoreUserID,
+            userSelectedRol,
+            userEditInfo,
+        })
     }
-    // Firebase Auth
-    const sendInfo = () => {
-        event.preventDefault()
-        // console.log('enviando datos...')
-        const profile = {
-            displayName: userEditInfo.userName,
-            phoneNumber: userEditInfo.userPhone,
-            photoURL: userEditInfo.userPhotoUrl,
-        }
-        if (user !== null) {
-            // console.log(auth)
-            updateProfile(user, profile)
-                .then((result) => {
-                    console.log(`Se actualizo el perfil de usuario ${result}`)
-                })
-                .catch((error) => {
-                    console.log(
-                        `Se produjo un error al actualizar el perfil de usuario ${error}`
-                    )
-                })
-        }
+
+    const handleSubmit = () => {
+        snap()
+        const userData = sharingInformationService.getSubject()
+        userData.subscribe((docSnap) => {
+            if (!!docSnap) {
+                console.log('Detail load:', docSnap)
+                handleAlert(
+                    'Se actualizó correctamente su información!',
+                    'success'
+                )
+            }
+        })
     }
 
     return (
         <>
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex align-items-start pb-4 pt-4">
-                    <Col className="col-10">
+                    <Typography
+                        variant="h6"
+                        className="p-description pb-4 pt-4 w-100"
+                    >
+                        Datos de contacto
+                    </Typography>
+                    <Col className="col-10 cardFrame">
                         {alert.open && (
                             <SnackBarAlert
                                 message={alert.message}
@@ -222,7 +186,7 @@ const Ajustes = (props) => {
                                 open={alert.open}
                             />
                         )}
-                        <Row className="p-0 info-user_backgound">
+                        <Row className="p-0 pt-4">
                             <FormGroup
                                 action=""
                                 style={{
@@ -231,113 +195,176 @@ const Ajustes = (props) => {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}
+                                className="pt-4"
                             >
-                                <div className="w-100">
-                                    <h3 className="p-description pb-4 pt-4">
-                                        Datos de contacto
-                                    </h3>
-                                </div>
-                                <hr />
+                                <Row className="m-0 w-100 d-flex flex-row pb-4 pt-4">
+                                    <Col
+                                        className="mb-4"
+                                        sx={{
+                                            width: {
+                                                xs: '100%',
+                                                sm: '100%',
+                                                lg: '33%',
+                                                md: '50%',
+                                            },
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="subtitle1"
+                                            className="w-auto"
+                                        >
+                                            Correo de usuario
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            className="ps-3 pe-3 detail-pill w-auto"
+                                            name="userMail"
+                                        >
+                                            {userEditInfo.userMail}
+                                        </Typography>
+                                    </Col>
+                                    <Col
+                                        className="mb-4"
+                                        sx={{
+                                            width: {
+                                                xs: '100%',
+                                                sm: '100%',
+                                                lg: '33%',
+                                                md: '50%',
+                                            },
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="subtitle1"
+                                            className="w-auto"
+                                        >
+                                            Activo desde
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            className="ps-3 pe-3 detail-pill w-auto"
+                                            name="userJoined"
+                                        >
+                                            {userEditInfo.userJoined}
+                                        </Typography>
+                                    </Col>
+                                    <Col
+                                        className="mb-4"
+                                        sx={{
+                                            width: {
+                                                xs: '100%',
+                                                sm: '100%',
+                                                lg: '33%',
+                                                md: '50%',
+                                            },
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="subtitle1"
+                                            className="w-auto"
+                                        >
+                                            Ubicación
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            className="ps-3 pe-3 detail-pill w-auto"
+                                            name="userDirection"
+                                        >
+                                            {userEditInfo.userDirection}
+                                        </Typography>
+                                    </Col>
+                                    <Col
+                                        className="mb-4"
+                                        sx={{
+                                            width: {
+                                                xs: '100%',
+                                                sm: '100%',
+                                                lg: '33%',
+                                                md: '50%',
+                                            },
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="subtitle1"
+                                            className="w-auto"
+                                        >
+                                            Ciudad
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            className="ps-3 pe-3 detail-pill w-auto"
+                                            name="userCiudad"
+                                        >
+                                            {userEditInfo.userCiudad}
+                                        </Typography>
+                                    </Col>
+                                </Row>
                                 <TextField
+                                    style={{ borderRadius: '30px' }}
                                     id="userName"
                                     name="userName"
                                     label="Nombre de usuario"
                                     value={userEditInfo.userName}
                                     onChange={handleChange}
                                     // defaultValue="@NOMBRE USUARIO"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userMail"
-                                    name="userMail"
-                                    label="Correo de usuario"
-                                    value={userEditInfo.userMail}
-                                    // onChange={handleChange}
-                                    // defaultValue="@CORREO USUARIO"
-                                    variant="filled"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userJoined"
-                                    name="userJoined"
-                                    label="Activo desde"
-                                    value={userEditInfo.userJoined}
-                                    // onChange={handleChange}
-                                    // defaultValue="@SeUnioDesdeHace"
-                                    variant="filled"
-                                    className="pb-4 pe-4"
+                                    className="mb-4 me-4 fondoBlanco"
                                 />
                                 {userRol.rol === 2 ? (
                                     <>
                                         <TextField
+                                            style={{ borderRadius: '30px' }}
                                             id="userProfession"
                                             name="userProfession"
                                             label="Profesión"
                                             value={userEditInfo.userProfession}
                                             onChange={handleChange}
                                             // defaultValue="@PROFESIÓN"
-                                            className="pb-4 pe-4"
+                                            className="mb-4 me-4 fondoBlanco"
                                         />
                                         <TextField
+                                            style={{ borderRadius: '30px' }}
                                             id="userExperience"
                                             name="userExperience"
                                             label="Experiencia"
                                             value={userEditInfo.userExperience}
                                             onChange={handleChange}
                                             // defaultValue="@TiempoExperiencia"
-                                            className="pb-4 pe-4"
+                                            className="mb-4 me-4 fondoBlanco"
                                         />
                                         <TextField
+                                            style={{ borderRadius: '30px' }}
                                             id="userRazonSocial"
                                             name="userRazonSocial"
                                             label="Razón Social"
                                             value={userEditInfo.userRazonSocial}
                                             onChange={handleChange}
                                             // defaultValue="Razón Social"
-                                            className="pb-4 pe-4"
+                                            className="mb-4 me-4 fondoBlanco"
                                         />
                                     </>
                                 ) : (
                                     <></>
                                 )}
                                 <TextField
-                                    id="userDirection"
-                                    name="userDirection"
-                                    label="Ubicación"
-                                    value={userEditInfo.userDirection}
-                                    variant="filled"
-                                    // onChange={handleChange}
-                                    // defaultValue="ubicación"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
-                                    id="userCiudad"
-                                    name="userCiudad"
-                                    label="Ciudad"
-                                    value={userEditInfo.userCiudad}
-                                    variant="filled"
-                                    // onChange={handleChange}
-                                    // defaultValue="ubicación"
-                                    className="pb-4 pe-4"
-                                />
-                                <TextField
+                                    style={{ borderRadius: '30px' }}
                                     id="userIdentification"
                                     name="userIdentification"
                                     label="Identificación"
                                     value={userEditInfo.userIdentification}
                                     onChange={handleChange}
                                     // defaultValue="Identificación"
-                                    className="pb-4 pe-4"
+                                    className="mb-4 me-4 fondoBlanco"
                                 />
 
                                 <TextField
+                                    style={{ borderRadius: '30px' }}
                                     id="userPhone"
                                     label="Celular"
                                     name="userPhone"
                                     value={userEditInfo.userPhone}
                                     onChange={handleChange}
                                     // defaultValue="Celular"
-                                    className="pb-4 pe-4"
+                                    className="mt-2 mb-4 me-4 fondoBlanco"
                                 />
                                 <Row className="pb-4 w-100">
                                     <Col className="col-6">
@@ -374,16 +401,16 @@ const Ajustes = (props) => {
                         </Row>
                     </Col>
                     <Col className="col-10">
-                        <hr />
                         <Row className="">
-                            <label
+                            <Typography
+                                variant="h6"
                                 htmlFor="ofertaServicios"
-                                className="p-description pb-4 w-100"
+                                className="p-description pb-4 pt-4 w-100"
                             >
                                 {userRol.rol === 2
                                     ? 'Servicios ofrecidos'
                                     : 'Presentación'}
-                            </label>
+                            </Typography>
                             <TextareaAutosize
                                 value={userEditInfo.userDescription}
                                 onChange={handleChange}
@@ -397,6 +424,7 @@ const Ajustes = (props) => {
                                 cols="30"
                                 minRows={4}
                                 className="w-100"
+                                style={{ borderRadius: '30px' }}
                             ></TextareaAutosize>
                             {userRol.rol === 2 ? (
                                 <Col className="pt-2">
@@ -427,11 +455,17 @@ const Ajustes = (props) => {
                         </Row>
                     </Col>
                     <Col className="col-10">
-                        <hr />
-                        <p className="p-description">Confirma tu identidad</p>
-                        <p className="body-1">
+                        <Typography
+                            variant="h6"
+                            htmlFor="ofertaServicios"
+                            className="p-description pb-4 pt-4 w-100"
+                        >
+                            Confirma tu identidad
+                        </Typography>
+
+                        <Typography variant="body1" className="body-1">
                             Adjunta tu documento de identificación para...
-                        </p>
+                        </Typography>
                     </Col>
                 </Row>
             </Container>

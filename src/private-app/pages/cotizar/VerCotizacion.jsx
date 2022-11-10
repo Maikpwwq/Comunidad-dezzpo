@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { firestore } from '../../../firebase/firebaseClient'
-import { collection, doc, getDocFromServer } from 'firebase/firestore'
+
+import readQuotationFromFirestore from 'services/readQuotationFromFirestore.service'
+import { sharingInformationService } from 'services/sharing-information'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -14,8 +15,6 @@ import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 
 const VerCotizacion = () => {
-    const _firestore = firestore
-    const quotationRef = collection(_firestore, 'quotation')
     const { state } = useLocation() || {}
     const { quotationId } = state || {}
 
@@ -31,35 +30,32 @@ const VerCotizacion = () => {
         valorSubtotal: 0,
     })
 
-    const quotationFromFirestore = async (quotationId) => {
-        const quotationData = await getDocFromServer(
-            doc(quotationRef, quotationId)
-        )
-        return quotationData
+    const fromQuotation = (docId) => {
+        readQuotationFromFirestore({
+            docId,
+        })
     }
 
     useEffect(() => {
         console.log(quotationId)
         if (quotationId !== ' ' && quotationId !== undefined) {
-            const snap = quotationFromFirestore(quotationId)
-            snap.then((docSnap) => {
-                if (docSnap) {
-                    const data = docSnap.data()
-                    console.log(data)
-                    if (data) {
-                        setQuotationInfo({
-                            ...quotationInfo,
-                            quotationId: data.quotationId,
-                            proponentId: data.proponentId,
-                            description: data.description,
-                            scope: data.scope,
-                            tiempoEjecucion: data.tiempoEjecucion,
-                            actividades: data.actividades,
-                            condicionesNegocio: data.condicionesNegocio,
-                            garantia: data.garantia,
-                            valorSubtotal: data.valorSubtotal,
-                        })
-                    }
+            fromQuotation(quotationId)
+            const quotationData = sharingInformationService.getSubject()
+            quotationData.subscribe((data) => {
+                if (!!data) {
+                    console.log('Detail load:', data)
+                    setQuotationInfo({
+                        ...quotationInfo,
+                        quotationId: data.quotationId,
+                        proponentId: data.proponentId,
+                        description: data.description,
+                        scope: data.scope,
+                        tiempoEjecucion: data.tiempoEjecucion,
+                        actividades: data.actividades,
+                        condicionesNegocio: data.condicionesNegocio,
+                        garantia: data.garantia,
+                        valorSubtotal: data.valorSubtotal,
+                    })
                 } else {
                     console.log('No such document!')
                 }
@@ -73,69 +69,57 @@ const VerCotizacion = () => {
                 fluid
                 className="m-0 p-0 h-100 d-flex justify-content-center"
             >
-                <Col className="col-10 pb-4 pt-4">
-                    <Typography variant="subtitle1" className="w-auto pb-4">
-                        A continuación podrás consultar los detalles de la
-                        cotización.
+                <Col className="col-8 pb-4 pt-4 align-items-start">
+                    <Row className="m-0 w-100 pb-2 d-flex">
+                        <Typography variant="h5" className="w-auto pb-4">
+                            Consulta los detalles de la cotización
+                        </Typography>
+                    </Row>
+                    <Typography variant="h6" className="p-description w-auto">
+                        Descripción del servicio:{' '}
                     </Typography>
-                    <Row className="m-0 w-100 pb-2 d-flex">
-                        <Typography
-                            variant="body1"
-                            className="p-description w-auto"
-                        >
-                            Descripción del servicio:
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            name="description"
-                            className="w-auto"
-                        >
-                            {quotationInfo.description}
-                        </Typography>
-                    </Row>
+                    <Typography
+                        variant="body1"
+                        name="description"
+                        className="detail-pill p-description w-100 p-1 ps-3 pe-3"
+                    >
+                        {quotationInfo.description}
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        className="p-description w-auto mt-3"
+                    >
+                        Alcance del servicio:{' '}
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        name="scope"
+                        className="detail-pill p-description w-100 p-1 ps-3 pe-3"
+                    >
+                        {quotationInfo.scope}
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        className="p-description w-auto mt-3"
+                    >
+                        Procedimiento a desarrollar:{' '}
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        name="procedimiento"
+                        className="detail-pill p-description w-100 p-1 ps-3 pe-3"
+                    >
+                        {quotationInfo.procedimiento}
+                    </Typography>
 
-                    <Row className="m-0 w-100 pb-2 d-flex">
+                    <Row className="m-0 w-100 p-0 pt-2 d-flex">
                         <Typography
-                            variant="body1"
-                            className="p-description w-auto"
-                        >
-                            Alcance del servicio:
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            name="scope"
-                            className="w-auto"
-                        >
-                            {quotationInfo.scope}
-                        </Typography>
-                    </Row>
-
-                    <Row className="m-0 w-100 pb-2 d-flex">
-                        <Typography
-                            variant="body1"
-                            className="p-description w-auto"
-                        >
-                            Procedimiento a desarrollar:
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            name="procedimiento"
-                            className="w-auto"
-                        >
-                            {quotationInfo.procedimiento}
-                        </Typography>
-                    </Row>
-
-                    <Row className="m-0 w-100 pb-2 d-flex">
-                        <Typography
-                            variant="body1"
-                            className="p-description pt-2 pb-2 w-100"
+                            variant="h6"
+                            className="p-description pt-3 w-100"
                         >
                             Tabla de valores
                         </Typography>
-                    </Row>
 
-                    <Row className="m-0 w-100 pb-2 d-flex">
                         <Table>
                             <TableHead>
                                 <TableRow
@@ -242,53 +226,44 @@ const VerCotizacion = () => {
                             </TableBody>
                         </Table>
                     </Row>
-                    <Row className="m-0 w-100 pb-2 d-flex">
-                        <Typography
-                            variant="body1"
-                            className="p-description w-auto"
-                        >
-                            Tiempo Ejecución:
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            name="tiempoEjecucion"
-                            className="w-auto"
-                        >
-                            {quotationInfo.tiempoEjecucion}
-                        </Typography>
-                    </Row>
+                    <Typography variant="h6" className="p-description w-auto">
+                        Tiempo Ejecución:{' '}
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        name="tiempoEjecucion"
+                        className="detail-pill p-description w-100 p-1 ps-3 pe-3"
+                    >
+                        {quotationInfo.tiempoEjecucion}
+                    </Typography>
 
-                    <Row className="m-0 w-100 pb-2 d-flex">
-                        <Typography
-                            variant="body1"
-                            className="p-description w-auto"
-                        >
-                            Condiciones de Negociación:
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            name="condicionesNegocio"
-                            className="w-auto"
-                        >
-                            {quotationInfo.condicionesNegocio}
-                        </Typography>
-                    </Row>
+                    <Typography
+                        variant="h6"
+                        className="p-description w-auto mt-3"
+                    >
+                        Condiciones de Negociación:{' '}
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        name="condicionesNegocio"
+                        className="detail-pill p-description w-100 p-1 ps-3 pe-3"
+                    >
+                        {quotationInfo.condicionesNegocio}
+                    </Typography>
 
-                    <Row className="m-0 w-100 pb-2 d-flex">
-                        <Typography
-                            variant="body1"
-                            className="p-description w-auto"
-                        >
-                            Garantía:
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            name="garantia"
-                            className="w-auto"
-                        >
-                            {quotationInfo.garantia}
-                        </Typography>
-                    </Row>
+                    <Typography
+                        variant="h6"
+                        className="p-description w-auto mt-3"
+                    >
+                        Garantía:{' '}
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        name="garantia"
+                        className="detail-pill p-description w-100 p-1 ps-3 pe-3"
+                    >
+                        {quotationInfo.garantia}
+                    </Typography>
                 </Col>
             </Container>
         </>

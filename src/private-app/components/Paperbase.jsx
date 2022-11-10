@@ -29,7 +29,7 @@ let theme = createTheme({
     palette: {
         primary: {
             light: '#63ccff',
-            main: '#009999', //#009be5
+            main: '#666666', //#009be5
             dark: '#006db3',
         },
     },
@@ -219,7 +219,7 @@ export default function Paperbase() {
                     <Box
                         className="p-0"
                         component="main"
-                        sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
+                        sx={{ flex: 1, py: 6, px: 4, bgcolor: '#ffffff' }}
                     >
                         <Rutas />
                     </Box>

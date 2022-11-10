@@ -10,6 +10,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
+import Paper from '@mui/material/Paper'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
@@ -42,23 +43,23 @@ export default function DraftCard({ props }) {
         draftPropietarioResidente,
         draftName,
         draftDescription,
-        draftRooms,
-        draftPlans,
-        draftPermissions,
-        draftProperty,
-        draftPostalCode,
+        // draftRooms,
+        // draftPlans,
+        // draftPermissions,
+        // draftProperty,
+        // draftPostalCode,
         draftTotal,
         draftProject,
         draftCategory,
         // draftSubCategory,
         draftCreated,
-        draftPriority,
-        draftCity,
-        draftDirection,
-        draftSize,
+        // draftPriority,
+        // draftCity,
+        // draftDirection,
+        // draftSize,
         // draftAtachments,
-        draftBestScheduleDate,
-        draftBestScheduleTime,
+        // draftBestScheduleDate,
+        // draftBestScheduleTime,
         draftApply,
     } = props
     console.log(props)
@@ -93,29 +94,22 @@ export default function DraftCard({ props }) {
     return (
         <>
             <Card
-                className="d-flex mb-2"
-                // lg={6}
-                // md={6}
-                // sm={10}
-                sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+                className="card-draft d-flex pt-2 pb-2 mb-4"
+                elevation={16}
+                sx={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    borderRadius: '20px',
+                }}
             >
-                {/* maxWidth: 345, */}
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                    {/* <CardMedia
-                        component="img"
-                        height="194"
-                        image="http://placeimg.com/260/194/arch"
-                        // src="http://placeimg.com/260/194/arch"
-                        alt="Paella dish"
-                        style={{ maxWidth: '345px' }}
-                    /> */}
                     <Box
                         className="w-100"
                         sx={{ display: 'flex', flexDirection: 'column' }}
                     >
-                        {/* TODO: Categorias*/}
-
                         <CardHeader
+                            className="align-items-start"
                             avatar={
                                 <Avatar
                                     // src={userPhotoUrl}
@@ -125,30 +119,40 @@ export default function DraftCard({ props }) {
                                     CD
                                 </Avatar>
                             }
-                            action={draftCreated}
-                            // action={
-                            //     <IconButton aria-label="settings">
-                            //         <MoreVertIcon />
-                            //     </IconButton>
-                            // }
-                            title={(draftCategory, draftName)}
-                            subheader={(draftProject, draftSize, draftRooms)}
+                            action={
+                                <Typography
+                                    variant="caption"
+                                    display="block"
+                                    gutterBottom
+                                    color="text.secondary"
+                                >
+                                    Publicado hace {draftCreated}
+                                </Typography>
+                            }
+                            title={draftPropietarioResidente}
+                            // subheader={}
                         ></CardHeader>
-                        <CardContent>
+                        <CardContent sx={{ textAlign: 'left' }} className="p-2">
+                            <Typography variant="h6">{draftName}</Typography>
+                            <Typography variant="subtitle1">
+                                {draftCategory}
+                            </Typography>
+                            <Typography variant="body1">
+                                $ {draftTotal}
+                            </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 {draftDescription}
                             </Typography>
-                            <br />
-                            <Typography variant="body2" color="text.secondary">
-                                Prioridad: {draftPriority}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                Presupuesto: {draftTotal}
-                            </Typography>
                         </CardContent>
-                        <CardActions className="d-flex" disableSpacing>
+                        <CardActions
+                            className="d-flex p-0 pt-2 m-2 mt-0"
+                            sx={{
+                                borderTop: 'solid 1.5px',
+                            }}
+                            disableSpacing
+                        >
                             <Button
-                                className=""
+                                className="body-1"
                                 onClick={handleVerRequerimiento}
                             >
                                 Ver requerimiento
@@ -157,7 +161,12 @@ export default function DraftCard({ props }) {
                             {/* TODO: mostrar solo al propietario que crea el requerimiento */}
                             {userRol.rol === 1 &&
                             draftPropietarioResidente === userID ? (
-                                <Button className="" onClick={handleEditar}>
+                                <Button
+                                    style={{ paddingRight: '10px' }}
+                                    className="body-1 w-auto"
+                                    // variant="primary"
+                                    onClick={handleEditar}
+                                >
                                     Editar
                                 </Button>
                             ) : (
@@ -165,7 +174,7 @@ export default function DraftCard({ props }) {
                                     {userRol.rol === 2 &&
                                         draftApply.length < 4 && (
                                             <Button
-                                                className=""
+                                                className="btn-round btn-high body-1 w-auto"
                                                 onClick={handleAplicar}
                                             >
                                                 Aplicar
@@ -174,6 +183,7 @@ export default function DraftCard({ props }) {
                                 </>
                             )}
                             <IconButton
+                                style={{ marginLeft: 'auto' }}
                                 aria-label="add to favorites"
                                 onClick={handleFavorite}
                             >
@@ -187,14 +197,14 @@ export default function DraftCard({ props }) {
                                 <ShareIcon />
                             </IconButton>
 
-                            <ExpandMore
+                            {/* <ExpandMore
                                 expand={expanded}
                                 onClick={handleExpandClick}
                                 aria-expanded={expanded}
                                 aria-label="show more"
                             >
                                 <ExpandMoreIcon />
-                            </ExpandMore>
+                            </ExpandMore> */}
                         </CardActions>
                     </Box>
                 </Box>
@@ -202,7 +212,8 @@ export default function DraftCard({ props }) {
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <CardContent>
-                            <Typography paragraph>
+                            More...
+                            {/* <Typography paragraph>
                                 Tipo propiedad: {draftProperty}
                             </Typography>
                             <Typography paragraph>
@@ -218,7 +229,7 @@ export default function DraftCard({ props }) {
                             </Typography>
                             <Typography paragraph>
                                 Requiere Permisos: {draftPermissions}
-                            </Typography>
+                            </Typography> */}
                         </CardContent>
                     </Collapse>
                 </Box>

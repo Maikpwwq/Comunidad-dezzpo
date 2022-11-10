@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { firestore, auth } from '../../../firebase/firebaseClient'
-import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
+import { auth } from '../../../firebase/firebaseClient'
+import AdjuntarArchivos from '../../components/AdjuntarArchivos'
+
+import readDraftFromFirestore from 'services/readUserFromFirestore.service'
+import readQuotationFromFirestore from 'services/readQuotationFromFirestore.service'
+import updateDraftToFirestore from 'services/updateDraftToFirestore.service'
+import { sharingInformationService } from 'services/sharing-information'
+
+import './detalle_requerimiento.css'
 
 import TablaSubCategoriaPresupuesto from './Tabla_SubCategoria_Presupuesto'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 const EditarRequerimiento = () => {
     const user = auth.currentUser || {}
@@ -17,10 +24,7 @@ const EditarRequerimiento = () => {
     const navigate = useNavigate()
     const { state } = useLocation() || {}
     const { draftId } = state || ' '
-    const _firestore = firestore
     // const _storage = storage
-    const draftRef = collection(_firestore, 'drafts')
-    const quotationRef = collection(_firestore, 'quotation')
 
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
@@ -55,80 +59,84 @@ const EditarRequerimiento = () => {
         requerimientoAplicaciones: '',
     })
 
-    const draftFromFirestore = async (projectID) => {
-        const draftData = await getDocFromServer(doc(draftRef, projectID))
-        // console.log(draftData)
-        return draftData
+    const fromDraft = (draftId) => {
+        readDraftFromFirestore({
+            draftId,
+        })
     }
 
-    const quotationFromFirestore = async (docId) => {
-        const quotationData = await getDocFromServer(doc(quotationRef, docId))
-        // console.log(quotationData)
-        return quotationData
+    const fromQuotation = (docId) => {
+        readQuotationFromFirestore({
+            docId,
+        })
     }
 
-    // TODO: draftToFirestore implementation
-    const draftToFirestore = async (updateInfo, docId) => {
-        const draftData = await setDoc(doc(draftRef, docId), updateInfo)
-        return draftData
+    const toDraft = (updateInfo, docId) => {
+        updateDraftToFirestore({
+            updateInfo,
+            docId,
+        })
     }
 
     const handleEnviar = () => {
-        const snap = draftToFirestore(
-            requerimientoInfo,
-            requerimientoInfo.requerimientoId
-        )
-        console.log(snap)
+        const updateInfo = requerimientoInfo
+        const docId = requerimientoInfo.requerimientoId
+        toDraft(updateInfo, docId)
+        const draftData = sharingInformationService.getSubject()
+        draftData.then((data) => {
+            if (!!data) {
+                console.log('Detail load:', data)
+            }
+        })
         navigate(-1)
     }
 
     useEffect(() => {
         console.log(draftId)
         if (draftId && draftId !== ' ' && draftId !== undefined) {
-            const snap = draftFromFirestore(draftId)
-            snap.then((docSnap) => {
-                // docSnap.exists()
-                // console.log(docSnap)
-                if (docSnap) {
-                    // docSnap._document.data...
-                    const data = docSnap.data()
-                    // console.log(data)
-                    if (data) {
-                        setRequerimientoInfo({
-                            ...requerimientoInfo,
-                            requerimientoTitulo: data.draftName,
-                            requerimientoCategoria: data.draftCategory,
-                            requerimientoTipoProyecto: data.draftProject,
-                            requerimientoDescripcion: data.draftDescription,
-                            requerimientoId: data.draftId,
-                            requerimientoTotal: data.draftTotal,
-                            requerimientoCategorias: data.draftSubCategory,
-                            requerimientoPropietario:
-                                data.draftPropietarioResidente,
-                            requerimientoCreated: data.draftCreated,
-                            requerimientoPrioridad: data.draftPriority,
-                            requerimientoTipoPropiedad: data.draftProperty,
-                            requerimientoCantidadObra: data.draftRooms,
-                            requerimientoPlanos: data.draftPlans,
-                            requerimientoPermisos: data.draftPermissions,
-                            requerimientoCiudad: data.draftCity,
-                            requerimientoDireccion: data.draftDirection,
-                            requerimientoCodigoPostal: data.draftPostalCode,
-                            requerimientoAdjuntos: data.draftAtachments,
-                            requerimientoMejorFecha: data.draftBestScheduleDate,
-                            requerimientoMejorHora: data.draftBestScheduleTime,
-                            requerimientoAplicaciones: data.draftApply,
-                        })
-                        // console.log(data, data.draftApply)
-                        const snap2 = quotationFromFirestore(data.draftApply[0])
-                        snap2.then((docQuotation) => {
-                            // console.log(docQuotation.data())
+            fromDraft(draftId)
+            const draftData = sharingInformationService.getSubject()
+            draftData.then((data) => {
+                if (!!data) {
+                    console.log('Detail load:', data)
+                    setRequerimientoInfo({
+                        ...requerimientoInfo,
+                        requerimientoTitulo: data.draftName,
+                        requerimientoCategoria: data.draftCategory,
+                        requerimientoTipoProyecto: data.draftProject,
+                        requerimientoDescripcion: data.draftDescription,
+                        requerimientoId: data.draftId,
+                        requerimientoTotal: data.draftTotal,
+                        requerimientoCategorias: data.draftSubCategory,
+                        requerimientoPropietario:
+                            data.draftPropietarioResidente,
+                        requerimientoCreated: data.draftCreated,
+                        requerimientoPrioridad: data.draftPriority,
+                        requerimientoTipoPropiedad: data.draftProperty,
+                        requerimientoCantidadObra: data.draftRooms,
+                        requerimientoPlanos: data.draftPlans,
+                        requerimientoPermisos: data.draftPermissions,
+                        requerimientoCiudad: data.draftCity,
+                        requerimientoDireccion: data.draftDirection,
+                        requerimientoCodigoPostal: data.draftPostalCode,
+                        requerimientoAdjuntos: data.draftAtachments,
+                        requerimientoMejorFecha: data.draftBestScheduleDate,
+                        requerimientoMejorHora: data.draftBestScheduleTime,
+                        requerimientoAplicaciones: data.draftApply,
+                    })
+                    // console.log(data, data.draftApply)
+                    const appliedQuotations = data.draftApply[0]
+                    fromQuotation(appliedQuotations)
+                    const quotationData = sharingInformationService.getSubject()
+                    quotationData.subscribe((data) => {
+                        if (!!data) {
+                            console.log('Detail load:', data)
                             setCotizacionesInfo({
                                 ...cotizacionesInfo,
-                                appliedQuotations: [docQuotation.data()],
+                                appliedQuotations: [data],
                             })
-                        })
-                    }
+                        }
+                    })
                 }
             })
         }
@@ -148,15 +156,25 @@ const EditarRequerimiento = () => {
         <>
             <Container fluid className="p-0">
                 <Row className="h-100 pt-4 pb-4">
-                    <Col className="col-10">
-                        <h4 className="headline-xl">Editar Requerimiento</h4>
-                        <Row className="p-0 pt-4 pb-4 w-100">
+                    <Col className="col-10 cardFrame">
+                        <Typography variant="h5" className="headline-xl p-4">
+                            Editar Requerimiento
+                        </Typography>
+                        <Row className="p-0 pt-4 pb-4 w-100 align-items-start">
                             <Col className="col" md={6} sm={12}>
-                                <p className="p-description">Presupuesto</p>
+                                <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    align="start"
+                                    className="p-description w-100"
+                                >
+                                    Presupuesto
+                                </Typography>
                                 {/* TODO: Estado Select aplicado aprovado contratacion
                                 liquidación */}
                                 <TextField
-                                    className="w-100"
+                                    className="w-100 mb-4 mt-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoTotal"
                                     name="requerimientoTotal"
                                     label="Total"
@@ -164,12 +182,17 @@ const EditarRequerimiento = () => {
                                     onChange={handleChange}
                                     // defaultValue="@Ciudad"
                                 />
-                                {/* // id */}
-                                <p className="p-description">
+                                <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    align="start"
+                                    className="p-description w-100"
+                                >
                                     Categoria servicio
-                                </p>
+                                </Typography>
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 mt-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoTitulo"
                                     name="requerimientoTitulo"
                                     label="Titulo"
@@ -180,7 +203,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@Titulo"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoCategoria"
                                     name="requerimientoCategoria"
                                     label="Categoria"
@@ -191,7 +215,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@Categoria"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoTipoProyecto"
                                     name="requerimientoTipoProyecto"
                                     label="Tipo Proyecto?"
@@ -202,7 +227,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@TipoProyecto"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoDescripcion"
                                     name="requerimientoDescripcion"
                                     label="Descripción"
@@ -213,7 +239,7 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@Descripción"
                                 />
                                 {/* <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4"
                                     id="requerimientoPropietario"
                                     name="requerimientoPropietario"
                                     label="Propietario"
@@ -222,9 +248,17 @@ const EditarRequerimiento = () => {
                                     }
                                     onChange={handleChange}
                                 /> */}
-                                <p className="p-description">Ubicacion</p>
+                                <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    align="start"
+                                    className="p-description w-100"
+                                >
+                                    Ubicacion
+                                </Typography>
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 mt-4  fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoCiudad"
                                     name="requerimientoCiudad"
                                     label="Ciudad"
@@ -235,7 +269,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@Ciudad"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoDireccion"
                                     name="requerimientoDireccion"
                                     label="Dirección"
@@ -246,7 +281,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@Direccion"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoCodigoPostal"
                                     name="requerimientoCodigoPostal"
                                     label="Codigo Postal"
@@ -258,12 +294,20 @@ const EditarRequerimiento = () => {
                                 />
                             </Col>
                             <Col className="col" md={6} sm={12}>
-                                <p className="p-description">Programación</p>
+                                <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    align="start"
+                                    className="p-description w-100"
+                                >
+                                    Programación
+                                </Typography>
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 mt-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoCreated"
                                     name="requerimientoCreated"
-                                    label="FECHA DE PUBLICACIÓN"
+                                    label="Fecha de publicación"
                                     value={
                                         requerimientoInfo.requerimientoCreated
                                     }
@@ -271,7 +315,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@Created"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoPrioridad"
                                     name="requerimientoPrioridad"
                                     label="Prioridad"
@@ -282,7 +327,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@PRIORIDAD"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoMejorFecha"
                                     name="requerimientoMejorFecha"
                                     label="Calendario asignado"
@@ -293,7 +339,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@PROPIETARIO"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoMejorHora"
                                     name="requerimientoMejorHora"
                                     label="Disponibilidad de horario"
@@ -303,11 +350,17 @@ const EditarRequerimiento = () => {
                                     onChange={handleChange}
                                     // defaultValue="@PROPIETARIO"
                                 />
-                                <p className="p-description">
+                                <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    align="start"
+                                    className="p-description w-100"
+                                >
                                     Descripción Propiedad
-                                </p>
+                                </Typography>
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 mt-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoTipoPropiedad"
                                     name="requerimientoTipoPropiedad"
                                     label="Tipo propiedad"
@@ -318,7 +371,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@TipoPropiedad"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoCantidadObra"
                                     name="requerimientoCantidadObra"
                                     label="Cantidad Obra"
@@ -329,7 +383,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@CantidadObra"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoPlanos"
                                     name="requerimientoPlanos"
                                     label="Planos"
@@ -340,7 +395,8 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@PLANOS"
                                 />
                                 <TextField
-                                    className="w-100 mb-2"
+                                    className="w-100 mb-4 fondoBlanco"
+                                    style={{ borderRadius: '15px' }}
                                     id="requerimientoPermisos"
                                     name="requerimientoPermisos"
                                     label="Permisos"
@@ -351,15 +407,27 @@ const EditarRequerimiento = () => {
                                     // defaultValue="@PERMISOS"
                                 />
                                 {/* TODO: Agregar el handleAdjuntos*/}
-                                <h4 className=".headline-l pt-4">
+                                <Typography
+                                    variant="h6"
+                                    className="p-description w-100 p-1"
+                                >
                                     Archivos adjuntos{' '}
-                                </h4>
+                                </Typography>
                                 <Button
                                     className="btn btn-round btn-high"
                                     onClick={handleAdjuntos}
                                 >
                                     Adjuntar
                                 </Button>
+                                <AdjuntarArchivos
+                                    name={'draftAtachments'}
+                                    multiple={true}
+                                    idPerson={userID}
+                                    rol={userRol.rol}
+                                    route={`profiles/${userID}/draft`}
+                                    functionState={setRequerimientoInfo}
+                                    state={requerimientoInfo}
+                                ></AdjuntarArchivos>
                             </Col>
                         </Row>
                         {/* TODO: Cambiar esta tabla por la de crear nuevo proyecto */}

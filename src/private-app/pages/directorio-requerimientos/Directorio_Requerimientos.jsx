@@ -55,7 +55,7 @@ const Directorio_Requerimientos = (props) => {
         <>
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex">
-                    <Col className="p-2">
+                    <Col className="p-2" lg={8} md={8} sm={10} xs={12}>
                         <h2 className="headline-xl">
                             Directorio Requerimientos
                             <Button className="body-1">
@@ -74,7 +74,6 @@ const Directorio_Requerimientos = (props) => {
                                     <DraftCard
                                         key={draft.id}
                                         props={draft}
-                                        className=""
                                     ></DraftCard>
                                 ))
                             ) : (

@@ -215,8 +215,16 @@ export default function Navigator(props) {
                                     to={route}
                                     // exact
                                 >
-                                    <ListItemButton selected={active} sx={item}>
-                                        <ListItemIcon>{icon}</ListItemIcon>
+                                    <ListItemButton
+                                        className=""
+                                        selected={active}
+                                        sx={item}
+                                    >
+                                        <ListItemIcon
+                                            style={{ color: '#00b0ab' }} // #009999
+                                        >
+                                            {icon}
+                                        </ListItemIcon>
                                         <ListItemText>{childId}</ListItemText>
                                     </ListItemButton>
                                 </ListItem>
@@ -244,7 +252,7 @@ export default function Navigator(props) {
                         // exact
                     >
                         <ListItemButton selected={false} sx={item}>
-                            <ListItemIcon>
+                            <ListItemIcon style={{ color: '#00b0ab' }}>
                                 <PhonelinkSetupIcon />
                             </ListItemIcon>
                             <ListItemText>Cerrar Sesion</ListItemText>

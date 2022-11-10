@@ -11,6 +11,7 @@ import {
 import DirectionalButton from '../../components/DirectionalButton/DirectionalButton'
 import ListadoCategorias from '../../components/ListadoCategorias'
 import ScrollToTopOnMount from '../../components/ScrollToTop'
+import AdjuntarArchivos from '../../../private-app/components/AdjuntarArchivos'
 import { v4 as uuidv4 } from 'uuid'
 import {
     collection,
@@ -93,7 +94,7 @@ const NuevoProyecto = (props) => {
         draftRooms: '',
         draftPlans: '',
         draftPermissions: '',
-        draftAtachments: 'Archivos',
+        draftAtachments: '',
         draftBestScheduleDate: '',
         draftBestScheduleTime: '',
         draftProperty: '',
@@ -288,16 +289,16 @@ const NuevoProyecto = (props) => {
                         )}
                         <ScrollToTopOnMount />
                         <Row className="w-100 m-0">
-                            <Col className="p-2" lg={8} md={10}>
+                            <Col className="p-4" lg={8} md={10}>
                                 <p className="body-1">
                                     Al seleccionar categorías podrás ir
                                     agregando uno a uno todos los servicios que
-                                    vas a solicitar. <br /> Luego en el
-                                    siguiente paso podrás modificar la cantidad
-                                    de obra que requieres.
+                                    vas a solicitar. Luego en el siguiente paso
+                                    podrás modificar la cantidad de obra que
+                                    requieres.
                                 </p>
                                 <Form.Select
-                                    className="casillaSeleccion"
+                                    className="casillaSeleccion m-auto"
                                     name="draftCategory"
                                     value={draftInfo.draftCategory}
                                     onChange={handleChange}
@@ -315,7 +316,7 @@ const NuevoProyecto = (props) => {
                             </Col>
                         </Row>
                         {/* setActiveStep */}
-                        <Row className="categorias w-100 m-0">
+                        <Row className="categorias w-100 m-0 p-4">
                             <Col className="p-0 pt-4 col-10 categorias-contenedor">
                                 <Row className="w-100 m-0">
                                     {categoriaInfo.data[categoriesIndex] ? (
@@ -392,7 +393,7 @@ const NuevoProyecto = (props) => {
                             md={10}
                             sm={12}
                         >
-                            <Form>
+                            <Form className="m-4">
                                 <p className="body-1">
                                     Crea una oferta. <br />
                                     Dejanos conocer un poco más hacerca del
@@ -658,7 +659,7 @@ const NuevoProyecto = (props) => {
                         >
                             <Form>
                                 <Form.Group
-                                    className="mb-3"
+                                    className="m-4"
                                     controlId="formNewProjectBestSchedule"
                                 >
                                     <Form.Label className="body-2">
@@ -686,26 +687,37 @@ const NuevoProyecto = (props) => {
                                     </Form.Text>
                                 </Form.Group>
                                 <Form.Group
-                                    className="mb-3"
+                                    className="m-4"
                                     controlId="formNewProjectPostalCode"
                                 >
                                     <Form.Label className="body-2">
                                         Registra la dirección donde se requiere
                                         el servicio.
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Registra la dirección"
-                                            name="draftDirection"
-                                            value={draftInfo.draftDirection}
-                                            onChange={handleChange}
-                                        />
-                                        <Button
-                                            className="body-2 pb-2 textVerde"
-                                            onClick={handleOpen}
+                                        <Row
+                                            className="w-100"
+                                            style={{
+                                                flexWrap: 'nowrap',
+                                                justifyContent: 'flex-start',
+                                            }}
+                                            sx={{
+                                                flexWrap: { sm: 'wrap' },
+                                            }}
                                         >
-                                            <AddLocationIcon />
-                                            {'Seleccionar en el mapa'}
-                                        </Button>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Registra la dirección"
+                                                name="draftDirection"
+                                                value={draftInfo.draftDirection}
+                                                onChange={handleChange}
+                                            />
+                                            <Button
+                                                className="body-2 pb-2 textVerde w-auto"
+                                                onClick={handleOpen}
+                                            >
+                                                <AddLocationIcon />
+                                                {'Seleccionar en el mapa'}
+                                            </Button>
+                                        </Row>
                                     </Form.Label>
                                 </Form.Group>
                                 {/* <Form.Group
@@ -736,19 +748,40 @@ const NuevoProyecto = (props) => {
                                     </Form.Text>
                                 </Form.Group> */}
                                 <Form.Group
-                                    className="mb-3"
+                                    className="m-4"
                                     controlId="formNewProjectAtachments"
                                 >
                                     <Form.Label className="body-2">
                                         Cargar fotos, imagenes y documentos
                                         relacionados.{' '}
                                     </Form.Label>
-                                    <Form.Control
+                                    <Row>
+                                        <Box className="cargarArchivos">
+                                            {/* TODO: Pasar un Id de usuario valido en este punto no esta registrado */}
+                                            <AdjuntarArchivos
+                                                name={'draftAtachments'}
+                                                multiple={true}
+                                                idPerson={user.uid}
+                                                rol={1}
+                                                route={`profiles/${user.uid}/draft`}
+                                                functionState={setDraftInfo}
+                                                state={draftInfo}
+                                            ></AdjuntarArchivos>
+                                        </Box>
+                                        <Form.Control
+                                            type="text"
+                                            filled
+                                            name="draftDirection"
+                                            value={draftInfo.draftAtachments}
+                                            className="w-50"
+                                        />
+                                    </Row>
+                                    {/* <Form.Control
                                         name="draftAtachments"
                                         // value={draftInfo.draftAtachments}
                                         // onChange={handleChange}
                                         type="file"
-                                    />
+                                    /> */}
                                 </Form.Group>
                                 <Modal
                                     open={open}
