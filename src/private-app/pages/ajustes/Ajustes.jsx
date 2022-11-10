@@ -1,15 +1,17 @@
 // Pagina de Usuario - Ajustes
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { auth, firestore } from '../../../firebase/firebaseClient'
-import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
-import { updateProfile } from 'firebase/auth'
+import { auth } from 'firebase/firebaseClient'
+
+import { sharingInformationService } from 'services/sharing-information'
+import readUserFromFirestore from 'services/readUserFromFirestore.service'
+import updateUserToFirestore from 'services/updateUserToFirestore.service'
 
 import '../../../../public/assets/cssPrivateApp/ajustes.css'
-import Ubicacion from '../../../app/pages/ubicacion/Ubicacion'
-import SnackBarAlert from '../../../app/components/SnackBarAlert'
+import Ubicacion from 'app/pages/ubicacion/Ubicacion'
+import SnackBarAlert from 'app/components/SnackBarAlert'
 import ChipsCategories from '../../components/ChipsCategories'
-import ListadoCategorias from '../../../app/components/ListadoCategorias'
+import ListadoCategorias from 'app/components/ListadoCategorias'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -25,7 +27,6 @@ import Typography from '@mui/material/Typography'
 const Ajustes = (props) => {
     const user = auth.currentUser || {}
     const userID = user.uid || ''
-    const _firestore = firestore
     const { state } = useLocation() || {}
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
@@ -41,38 +42,6 @@ const Ajustes = (props) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
-
-    const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
-    const usersComCalRef = collection(
-        _firestore,
-        'usersComerciantesCalificados'
-    )
-
-    const userProResToFirestore = async (updateInfo, userID) => {
-        await setDoc(doc(usersProResRef, userID), updateInfo, { merge: true })
-    }
-
-    const userComCalToFirestore = async (updateInfo, userID) => {
-        await setDoc(doc(usersComCalRef, userID), updateInfo, { merge: true })
-    }
-
-    const userFromFirestore = async (firestoreUserID) => {
-        try {
-            if (userRol.rol === 1) {
-                const userData = await getDocFromServer(
-                    doc(usersProResRef, firestoreUserID)
-                )
-                return userData
-            } else if (userRol.rol === 2) {
-                const userData = await getDocFromServer(
-                    doc(usersComCalRef, firestoreUserID)
-                )
-                return userData
-            }
-        } catch (err) {
-            console.log('Error getting user: ', err)
-        }
-    }
 
     const [userEditInfo, setUserEditInfo] = useState({
         userName: '',
@@ -97,8 +66,17 @@ const Ajustes = (props) => {
         userDescription: '',
     })
 
+    const userData = () => {
+        const firestoreUserID = userID
+        const userSelectedRol = userRol.rol
+        console.log(firestoreUserID, userSelectedRol)
+        readUserFromFirestore({
+            firestoreUserID,
+            userSelectedRol,
+        })
+    }
+
     useEffect(() => {
-        console.log(userRol.rol, user)
         if (user !== null && userRol.rol) {
             const {
                 uid,
@@ -109,11 +87,11 @@ const Ajustes = (props) => {
                 emailVerified,
                 // metadata,
             } = user
-            const userData = userFromFirestore(userID)
-            userData.then((docSnap) => {
-                // docSnap.exists()
-                if (docSnap) {
-                    const data = docSnap.data()
+            userData()
+            const productData = sharingInformationService.getSubject()
+            productData.subscribe((data) => {
+                if (!!data) {
+                    console.log('Detail load:', data)
                     setUserEditInfo({
                         ...userEditInfo,
                         userPhone: data.userPhone || phoneNumber,
@@ -135,7 +113,6 @@ const Ajustes = (props) => {
                         userIdentification: data.userIdentification,
                         userDescription: data.userDescription,
                     })
-                    console.log(user, userEditInfo)
                 } else {
                     console.log(
                         'No se encontro información relacionada con este usuario!'
@@ -165,49 +142,29 @@ const Ajustes = (props) => {
         })
     }
 
-    const handleSubmit = () => {
-        if (userRol.rol === 1) {
-            const snap = userProResToFirestore(userEditInfo, user.uid)
-            snap.then((docSnap) => {
-                handleAlert(
-                    'Se actualizó correctamente su información!',
-                    'success'
-                )
-                // console.log(docSnap)
-            })
-        } else if (userRol.rol === 2) {
-            const snap = userComCalToFirestore(userEditInfo, user.uid)
-            snap.then((docSnap) => {
-                handleAlert(
-                    'Se actualizó correctamente su información!',
-                    'success'
-                )
-                // console.log(docSnap)
-            })
-        }
-        sendInfo()
+    const snap = () => {
+        const firestoreUserID = userID
+        const userSelectedRol = userRol.rol
+        console.log(firestoreUserID, userSelectedRol, userEditInfo)
+        updateUserToFirestore({
+            firestoreUserID,
+            userSelectedRol,
+            userEditInfo,
+        })
     }
-    // Firebase Auth
-    const sendInfo = () => {
-        event.preventDefault()
-        // console.log('enviando datos...')
-        const profile = {
-            displayName: userEditInfo.userName,
-            phoneNumber: userEditInfo.userPhone,
-            photoURL: userEditInfo.userPhotoUrl,
-        }
-        if (user !== null) {
-            // console.log(auth)
-            updateProfile(user, profile)
-                .then((result) => {
-                    console.log(`Se actualizo el perfil de usuario ${result}`)
-                })
-                .catch((error) => {
-                    console.log(
-                        `Se produjo un error al actualizar el perfil de usuario ${error}`
-                    )
-                })
-        }
+
+    const handleSubmit = () => {
+        snap()
+        const userData = sharingInformationService.getSubject()
+        userData.subscribe((docSnap) => {
+            if (!!docSnap) {
+                console.log('Detail load:', docSnap)
+                handleAlert(
+                    'Se actualizó correctamente su información!',
+                    'success'
+                )
+            }
+        })
     }
 
     return (

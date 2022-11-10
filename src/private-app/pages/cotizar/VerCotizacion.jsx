@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { firestore } from '../../../firebase/firebaseClient'
-import { collection, doc, getDocFromServer } from 'firebase/firestore'
+
+import readQuotationFromFirestore from 'services/readQuotationFromFirestore.service'
+import { sharingInformationService } from 'services/sharing-information'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -14,8 +15,6 @@ import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 
 const VerCotizacion = () => {
-    const _firestore = firestore
-    const quotationRef = collection(_firestore, 'quotation')
     const { state } = useLocation() || {}
     const { quotationId } = state || {}
 
@@ -31,35 +30,32 @@ const VerCotizacion = () => {
         valorSubtotal: 0,
     })
 
-    const quotationFromFirestore = async (quotationId) => {
-        const quotationData = await getDocFromServer(
-            doc(quotationRef, quotationId)
-        )
-        return quotationData
+    const fromQuotation = (docId) => {
+        readQuotationFromFirestore({
+            docId,
+        })
     }
 
     useEffect(() => {
         console.log(quotationId)
         if (quotationId !== ' ' && quotationId !== undefined) {
-            const snap = quotationFromFirestore(quotationId)
-            snap.then((docSnap) => {
-                if (docSnap) {
-                    const data = docSnap.data()
-                    console.log(data)
-                    if (data) {
-                        setQuotationInfo({
-                            ...quotationInfo,
-                            quotationId: data.quotationId,
-                            proponentId: data.proponentId,
-                            description: data.description,
-                            scope: data.scope,
-                            tiempoEjecucion: data.tiempoEjecucion,
-                            actividades: data.actividades,
-                            condicionesNegocio: data.condicionesNegocio,
-                            garantia: data.garantia,
-                            valorSubtotal: data.valorSubtotal,
-                        })
-                    }
+            fromQuotation(quotationId)
+            const quotationData = sharingInformationService.getSubject()
+            quotationData.subscribe((data) => {
+                if (!!data) {
+                    console.log('Detail load:', data)
+                    setQuotationInfo({
+                        ...quotationInfo,
+                        quotationId: data.quotationId,
+                        proponentId: data.proponentId,
+                        description: data.description,
+                        scope: data.scope,
+                        tiempoEjecucion: data.tiempoEjecucion,
+                        actividades: data.actividades,
+                        condicionesNegocio: data.condicionesNegocio,
+                        garantia: data.garantia,
+                        valorSubtotal: data.valorSubtotal,
+                    })
                 } else {
                     console.log('No such document!')
                 }

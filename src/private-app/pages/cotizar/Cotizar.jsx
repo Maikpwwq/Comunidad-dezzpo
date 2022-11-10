@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import { collection, doc, setDoc, getDocFromServer } from 'firebase/firestore'
-import { firestore, auth } from '../../../firebase/firebaseClient'
+import { auth } from '../../../firebase/firebaseClient'
+
+import updateDraftToFirestore from 'services/updateDraftToFirestore.service'
+import updateQuotationToFirestore from 'services/updateQuotationToFirestore.service'
+import readQuotationFromFirestore from 'services/readQuotationFromFirestore.service'
+import { sharingInformationService } from 'services/sharing-information'
+
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
@@ -27,9 +32,6 @@ const Cotizar = (props) => {
     const { draftId, quotationId } = state || {}
     const quotationID = quotationId ? quotationId : uuidv4()
     console.log('quotationID', quotationID)
-    const _firestore = firestore
-    const quotationRef = collection(_firestore, 'quotation')
-    const draftRef = collection(_firestore, 'drafts')
 
     const [cotizacion, setCotizacion] = useState({
         quotationId: '',
@@ -81,11 +83,11 @@ const Cotizar = (props) => {
 
     useEffect(() => {
         if (quotationId && quotationId !== ' ' && quotationId !== undefined) {
-            const snap = quotationFromFirestore(quotationId)
-            snap.then((docSnap) => {
-                if (docSnap) {
-                    const data = docSnap.data()
-                    console.log(data)
+            fromQuotation(quotationId)
+            const quotationData = sharingInformationService.getSubject()
+            quotationData.subscribe((data) => {
+                if (!!data) {
+                    console.log('Detail load:', data)
                     setCotizacion({
                         ...cotizacion,
                         quotationId: data.quotationId,
@@ -145,24 +147,43 @@ const Cotizar = (props) => {
     }
     // console.log('actividades', cotizacion.actividades)
 
-    const quotationToFirestore = async (updateInfo, docId) => {
-        await setDoc(doc(quotationRef, docId), updateInfo)
+    const toDraft = (updateInfo, docId) => {
+        updateDraftToFirestore({
+            updateInfo,
+            docId,
+        })
     }
 
-    const draftToFirestore = async (updateInfo, projectID) => {
-        await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
+    const toQuotation = (updateInfo, docId) => {
+        updateQuotationToFirestore({
+            updateInfo,
+            docId,
+        })
     }
 
-    const quotationFromFirestore = async (docId) => {
-        const quotationData = await getDocFromServer(doc(quotationRef, docId))
-        return quotationData
+    const fromQuotation = (docId) => {
+        readQuotationFromFirestore({
+            docId,
+        })
     }
 
     const handleEnviar = () => {
-        quotationToFirestore(cotizacion, quotationID)
+        toQuotation(cotizacion, quotationID)
+        const quotationData = sharingInformationService.getSubject()
+        quotationData.subscribe((data) => {
+            if (!!data) {
+                console.log('Detail load:', data)
+            }
+        })
         const update = { draftApply: [quotationID] } // TODO: add just to five id's
         console.log(draftId)
-        draftToFirestore(update, draftId)
+        toDraft(update, draftId)
+        const draftData = sharingInformationService.getSubject()
+        draftData.subscribe((data) => {
+            if (!!data) {
+                console.log('Detail load:', data)
+            }
+        })
         navigate(-1)
     }
 

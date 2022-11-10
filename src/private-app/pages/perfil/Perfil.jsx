@@ -1,12 +1,11 @@
 // Pagina de Usuario - Perfil
 import React, { useState, useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
-import { auth, firestore, storage } from '../../../firebase/firebaseClient'
-import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { v4 as uuidv4 } from 'uuid'
+import { auth } from '../../../firebase/firebaseClient'
 import { format, formatDistance, subDays, parse, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
+import readUserFromFirestore from 'services/readUserFromFirestore.service'
+import { sharingInformationService } from 'services/sharing-information'
 
 import '../../../../public/assets/cssPrivateApp/perfil.css'
 // import ProfilePhoto from '../../../../public/assets/img/Profile.png'
@@ -23,7 +22,6 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 
@@ -50,31 +48,15 @@ const Perfil = (props) => {
     // console.log(userId, consult, userConsultId)
     // console.log(userID)
     // console.log(userConsultId)
-    const _firestore = firestore
-    const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
-    const usersComCalRef = collection(
-        _firestore,
-        'usersComerciantesCalificados'
-    )
 
-    const userFromFirestore = async (firestoreUserID) => {
-        try {
-            if (userRol.rol === 1) {
-                const userData = await getDocFromServer(
-                    doc(usersProResRef, firestoreUserID)
-                )
-                // console.log(userConsultId, userRol.rol)
-                return userData
-            } else if (userRol.rol === 2) {
-                const userData = await getDocFromServer(
-                    doc(usersComCalRef, firestoreUserID)
-                )
-                // console.log(userConsultId, userRol.rol)
-                return userData
-            }
-        } catch (err) {
-            console.log('Error getting user: ', err)
-        }
+    const userData = () => {
+        const firestoreUserID = userID
+        const userSelectedRol = userRol.rol
+        console.log(firestoreUserID, userSelectedRol)
+        readUserFromFirestore({
+            firestoreUserID,
+            userSelectedRol,
+        })
     }
 
     const [userInfo, setUserInfo] = useState({
@@ -121,18 +103,13 @@ const Perfil = (props) => {
                     emailVerified,
                     metadata,
                 } = user
-                // resolving promise data user
-                // console.log(userConsultId, userRol.rol, user)
-                const userData = userFromFirestore(userConsultId)
 
-                // userData.forEach((doc) => {
-                //     console.log(doc.id, " => ", doc.data())
-                // })
-                userData.then((docSnap) => {
-                    // docSnap.exists()
-                    if (docSnap) {
-                        // docSnap._document.data...
-                        const data = docSnap.data()
+                userData()
+
+                const productData = sharingInformationService.getSubject()
+                productData.subscribe((data) => {
+                    if (!!data) {
+                        console.log('Detail load:', data)
                         const creationTime = data.userJoined
                             ? data.userJoined
                             : metadata.creationTime
@@ -151,70 +128,66 @@ const Perfil = (props) => {
                             { addSuffix: true },
                             { locale: es }
                         )
-                        //console.log(distanceTime)
-                        if (data) {
-                            const chipsInfo = []
-                            if (data.userCategories) {
-                                data.userCategories.forEach((chip) => {
-                                    // console.log(chip)
-                                    ListadoCategorias.forEach((cat) => {
-                                        if (chip === cat.label) {
-                                            chipsInfo.push(cat)
-                                        }
-                                    })
+                        const chipsInfo = []
+                        if (data.userCategories) {
+                            data.userCategories.forEach((chip) => {
+                                // console.log(chip)
+                                ListadoCategorias.forEach((cat) => {
+                                    if (chip === cat.label) {
+                                        chipsInfo.push(cat)
+                                    }
                                 })
-                            }
-                            setUserInfo({
-                                ...userInfo,
-                                userChannelUrl: data.userChannelUrl
-                                    ? data.userChannelUrl
-                                    : '',
-                                userPhone: data.userPhone || phoneNumber,
-                                userPhotoUrl: data.userPhotoUrl || photoURL,
-                                userId: data.userId || uid,
-                                userMail: data.userMail || email,
-                                userName: data.userName || displayName,
-                                userGalleryUrl: data.userGalleryUrl || [],
-                                userJoined: distanceTime,
-                                userProfession: data.userProfession
-                                    ? data.userProfession
-                                    : '',
-                                userExperience: data.userExperience
-                                    ? data.userExperience
-                                    : '',
-                                userCategorie: data.userCategorie
-                                    ? data.userCategorie
-                                    : '',
-                                userClasification: data.userClasification
-                                    ? data.userClasification
-                                    : '',
-                                userCategories: data.userCategories
-                                    ? data.userCategories
-                                    : '',
-                                userCategoriesChips:
-                                    chipsInfo.length > 0 ? chipsInfo : [],
-                                userGrade: data.userGrade ? data.userGrade : '',
-                                userDirection: data.userDirection
-                                    ? data.userDirection
-                                    : '',
-                                userCiudad: data.userCiudad
-                                    ? data.userCiudad
-                                    : '',
-                                userCodigoPostal: data.userCodigoPostal
-                                    ? data.userCodigoPostal
-                                    : '',
-                                userRazonSocial: data.userRazonSocial
-                                    ? data.userRazonSocial
-                                    : '',
-                                userIdentification: data.userIdentification
-                                    ? data.userIdentification
-                                    : '',
-                                userDescription: data.userDescription
-                                    ? data.userDescription
-                                    : '',
                             })
-                            // chipsInfoAdapter(data.userCategories)
                         }
+                        setUserInfo({
+                            ...userInfo,
+                            userChannelUrl: data.userChannelUrl
+                                ? data.userChannelUrl
+                                : '',
+                            userPhone: data.userPhone || phoneNumber,
+                            userPhotoUrl: data.userPhotoUrl || photoURL,
+                            userId: data.userId || uid,
+                            userMail: data.userMail || email,
+                            userName: data.userName || displayName,
+                            userGalleryUrl: data.userGalleryUrl || [],
+                            userJoined: distanceTime,
+                            userProfession: data.userProfession
+                                ? data.userProfession
+                                : '',
+                            userExperience: data.userExperience
+                                ? data.userExperience
+                                : '',
+                            userCategorie: data.userCategorie
+                                ? data.userCategorie
+                                : '',
+                            userClasification: data.userClasification
+                                ? data.userClasification
+                                : '',
+                            userCategories: data.userCategories
+                                ? data.userCategories
+                                : '',
+                            userCategoriesChips:
+                                chipsInfo.length > 0 ? chipsInfo : [],
+                            userGrade: data.userGrade ? data.userGrade : '',
+                            userDirection: data.userDirection
+                                ? data.userDirection
+                                : '',
+                            userCiudad: data.userCiudad ? data.userCiudad : '',
+                            userCodigoPostal: data.userCodigoPostal
+                                ? data.userCodigoPostal
+                                : '',
+                            userRazonSocial: data.userRazonSocial
+                                ? data.userRazonSocial
+                                : '',
+                            userIdentification: data.userIdentification
+                                ? data.userIdentification
+                                : '',
+                            userDescription: data.userDescription
+                                ? data.userDescription
+                                : '',
+                        })
+                        // chipsInfoAdapter(data.userCategories)
+
                         isLoaded = true
                     } else {
                         console.log(

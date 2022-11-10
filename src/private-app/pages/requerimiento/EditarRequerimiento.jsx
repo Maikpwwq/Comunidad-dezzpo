@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { firestore, auth } from '../../../firebase/firebaseClient'
-import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
+import { auth } from '../../../firebase/firebaseClient'
 import AdjuntarArchivos from '../../components/AdjuntarArchivos'
+
+import readDraftFromFirestore from 'services/readUserFromFirestore.service'
+import readQuotationFromFirestore from 'services/readQuotationFromFirestore.service'
+import updateDraftToFirestore from 'services/updateDraftToFirestore.service'
+import { sharingInformationService } from 'services/sharing-information'
 
 import './detalle_requerimiento.css'
 
@@ -11,7 +15,6 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
@@ -21,10 +24,7 @@ const EditarRequerimiento = () => {
     const navigate = useNavigate()
     const { state } = useLocation() || {}
     const { draftId } = state || ' '
-    const _firestore = firestore
     // const _storage = storage
-    const draftRef = collection(_firestore, 'drafts')
-    const quotationRef = collection(_firestore, 'quotation')
 
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
@@ -59,80 +59,84 @@ const EditarRequerimiento = () => {
         requerimientoAplicaciones: '',
     })
 
-    const draftFromFirestore = async (projectID) => {
-        const draftData = await getDocFromServer(doc(draftRef, projectID))
-        // console.log(draftData)
-        return draftData
+    const fromDraft = (draftId) => {
+        readDraftFromFirestore({
+            draftId,
+        })
     }
 
-    const quotationFromFirestore = async (docId) => {
-        const quotationData = await getDocFromServer(doc(quotationRef, docId))
-        // console.log(quotationData)
-        return quotationData
+    const fromQuotation = (docId) => {
+        readQuotationFromFirestore({
+            docId,
+        })
     }
 
-    // TODO: draftToFirestore implementation
-    const draftToFirestore = async (updateInfo, docId) => {
-        const draftData = await setDoc(doc(draftRef, docId), updateInfo)
-        return draftData
+    const toDraft = (updateInfo, docId) => {
+        updateDraftToFirestore({
+            updateInfo,
+            docId,
+        })
     }
 
     const handleEnviar = () => {
-        const snap = draftToFirestore(
-            requerimientoInfo,
-            requerimientoInfo.requerimientoId
-        )
-        console.log(snap)
+        const updateInfo = requerimientoInfo
+        const docId = requerimientoInfo.requerimientoId
+        toDraft(updateInfo, docId)
+        const draftData = sharingInformationService.getSubject()
+        draftData.then((data) => {
+            if (!!data) {
+                console.log('Detail load:', data)
+            }
+        })
         navigate(-1)
     }
 
     useEffect(() => {
         console.log(draftId)
         if (draftId && draftId !== ' ' && draftId !== undefined) {
-            const snap = draftFromFirestore(draftId)
-            snap.then((docSnap) => {
-                // docSnap.exists()
-                // console.log(docSnap)
-                if (docSnap) {
-                    // docSnap._document.data...
-                    const data = docSnap.data()
-                    // console.log(data)
-                    if (data) {
-                        setRequerimientoInfo({
-                            ...requerimientoInfo,
-                            requerimientoTitulo: data.draftName,
-                            requerimientoCategoria: data.draftCategory,
-                            requerimientoTipoProyecto: data.draftProject,
-                            requerimientoDescripcion: data.draftDescription,
-                            requerimientoId: data.draftId,
-                            requerimientoTotal: data.draftTotal,
-                            requerimientoCategorias: data.draftSubCategory,
-                            requerimientoPropietario:
-                                data.draftPropietarioResidente,
-                            requerimientoCreated: data.draftCreated,
-                            requerimientoPrioridad: data.draftPriority,
-                            requerimientoTipoPropiedad: data.draftProperty,
-                            requerimientoCantidadObra: data.draftRooms,
-                            requerimientoPlanos: data.draftPlans,
-                            requerimientoPermisos: data.draftPermissions,
-                            requerimientoCiudad: data.draftCity,
-                            requerimientoDireccion: data.draftDirection,
-                            requerimientoCodigoPostal: data.draftPostalCode,
-                            requerimientoAdjuntos: data.draftAtachments,
-                            requerimientoMejorFecha: data.draftBestScheduleDate,
-                            requerimientoMejorHora: data.draftBestScheduleTime,
-                            requerimientoAplicaciones: data.draftApply,
-                        })
-                        // console.log(data, data.draftApply)
-                        const snap2 = quotationFromFirestore(data.draftApply[0])
-                        snap2.then((docQuotation) => {
-                            // console.log(docQuotation.data())
+            fromDraft(draftId)
+            const draftData = sharingInformationService.getSubject()
+            draftData.then((data) => {
+                if (!!data) {
+                    console.log('Detail load:', data)
+                    setRequerimientoInfo({
+                        ...requerimientoInfo,
+                        requerimientoTitulo: data.draftName,
+                        requerimientoCategoria: data.draftCategory,
+                        requerimientoTipoProyecto: data.draftProject,
+                        requerimientoDescripcion: data.draftDescription,
+                        requerimientoId: data.draftId,
+                        requerimientoTotal: data.draftTotal,
+                        requerimientoCategorias: data.draftSubCategory,
+                        requerimientoPropietario:
+                            data.draftPropietarioResidente,
+                        requerimientoCreated: data.draftCreated,
+                        requerimientoPrioridad: data.draftPriority,
+                        requerimientoTipoPropiedad: data.draftProperty,
+                        requerimientoCantidadObra: data.draftRooms,
+                        requerimientoPlanos: data.draftPlans,
+                        requerimientoPermisos: data.draftPermissions,
+                        requerimientoCiudad: data.draftCity,
+                        requerimientoDireccion: data.draftDirection,
+                        requerimientoCodigoPostal: data.draftPostalCode,
+                        requerimientoAdjuntos: data.draftAtachments,
+                        requerimientoMejorFecha: data.draftBestScheduleDate,
+                        requerimientoMejorHora: data.draftBestScheduleTime,
+                        requerimientoAplicaciones: data.draftApply,
+                    })
+                    // console.log(data, data.draftApply)
+                    const appliedQuotations = data.draftApply[0]
+                    fromQuotation(appliedQuotations)
+                    const quotationData = sharingInformationService.getSubject()
+                    quotationData.subscribe((data) => {
+                        if (!!data) {
+                            console.log('Detail load:', data)
                             setCotizacionesInfo({
                                 ...cotizacionesInfo,
-                                appliedQuotations: [docQuotation.data()],
+                                appliedQuotations: [data],
                             })
-                        })
-                    }
+                        }
+                    })
                 }
             })
         }

@@ -3,6 +3,10 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { firestore, auth } from '../../../firebase/firebaseClient'
 import { collection, doc, getDocFromServer } from 'firebase/firestore'
 
+import readDraftFromFirestore from 'services/readDraftFromFirestore.service'
+import readQuotationFromFirestore from 'services/readQuotationFromFirestore.service'
+import { sharingInformationService } from 'services/sharing-information'
+
 import './detalle_requerimiento.css'
 
 import TablaSubCategoriaPresupuesto from './Tabla_SubCategoria_Presupuesto'
@@ -62,65 +66,66 @@ const VerRequerimiento = () => {
         requerimientoAplicaciones: '',
     })
 
-    const draftFromFirestore = async (projectID) => {
-        const draftData = await getDocFromServer(doc(draftRef, projectID))
-        // console.log(draftData)
-        return draftData
+    const fromDraft = (draftId) => {
+        readDraftFromFirestore({
+            draftId,
+        })
     }
 
-    const quotationFromFirestore = async (docId) => {
-        const quotationData = await getDocFromServer(doc(quotationRef, docId))
-        // console.log(quotationData)
-        return quotationData
+    const fromQuotation = (docId) => {
+        readQuotationFromFirestore({
+            docId,
+        })
     }
 
     useEffect(() => {
         console.log(draftId)
         if (draftId !== ' ' && draftId !== undefined) {
-            const snap = draftFromFirestore(draftId)
-            snap.then((docSnap) => {
-                // docSnap.exists()
-                // console.log(docSnap)
-                if (docSnap) {
-                    // docSnap._document.data...
-                    const data = docSnap.data()
-                    // console.log(data)
-                    if (data) {
-                        setRequerimientoInfo({
-                            ...requerimientoInfo,
-                            requerimientoTitulo: data.draftName,
-                            requerimientoCategoria: data.draftCategory,
-                            requerimientoTipoProyecto: data.draftProject,
-                            requerimientoDescripcion: data.draftDescription,
-                            requerimientoId: data.draftId,
-                            requerimientoTotal: data.draftTotal,
-                            requerimientoCategorias: data.draftSubCategory,
-                            requerimientoPropietario:
-                                data.draftPropietarioResidente,
-                            requerimientoCreated: data.draftCreated,
-                            requerimientoPrioridad: data.draftPriority,
-                            requerimientoTipoPropiedad: data.draftProperty,
-                            requerimientoCantidadObra: data.draftRooms,
-                            requerimientoPlanos: data.draftPlans,
-                            requerimientoPermisos: data.draftPermissions,
-                            requerimientoCiudad: data.draftCity,
-                            requerimientoDireccion: data.draftDirection,
-                            requerimientoCodigoPostal: data.draftPostalCode,
-                            requerimientoAdjuntos: data.draftAtachments,
-                            requerimientoMejorFecha: data.draftBestScheduleDate,
-                            requerimientoMejorHora: data.draftBestScheduleTime,
-                            requerimientoAplicaciones: data.draftApply,
-                        })
-                        // console.log(data, data.draftApply)
-                        const snap2 = quotationFromFirestore(data.draftApply[0])
-                        snap2.then((docQuotation) => {
-                            // console.log(docQuotation.data())
+            fromDraft(draftId)
+            const draftData = sharingInformationService.getSubject()
+            draftData.subscribe((data) => {
+                if (!!data) {
+                    console.log(data)
+                    setRequerimientoInfo({
+                        ...requerimientoInfo,
+                        requerimientoTitulo: data.draftName,
+                        requerimientoCategoria: data.draftCategory,
+                        requerimientoTipoProyecto: data.draftProject,
+                        requerimientoDescripcion: data.draftDescription,
+                        requerimientoId: data.draftId,
+                        requerimientoTotal: data.draftTotal,
+                        requerimientoCategorias: data.draftSubCategory || [],
+                        requerimientoPropietario:
+                            data.draftPropietarioResidente,
+                        requerimientoCreated: data.draftCreated,
+                        requerimientoPrioridad: data.draftPriority,
+                        requerimientoTipoPropiedad: data.draftProperty,
+                        requerimientoCantidadObra: data.draftRooms,
+                        requerimientoPlanos: data.draftPlans,
+                        requerimientoPermisos: data.draftPermissions,
+                        requerimientoCiudad: data.draftCity,
+                        requerimientoDireccion: data.draftDirection,
+                        requerimientoCodigoPostal: data.draftPostalCode,
+                        requerimientoAdjuntos: data.draftAtachments,
+                        requerimientoMejorFecha: data.draftBestScheduleDate,
+                        requerimientoMejorHora: data.draftBestScheduleTime,
+                        requerimientoAplicaciones: data.draftApply
+                            ? data.draftApply
+                            : [],
+                    })
+                    // console.log(data, data.draftApply)
+                    const appliedQuotations = data.draftApply[0] || []
+                    fromQuotation(appliedQuotations)
+                    const quotationData = sharingInformationService.getSubject()
+                    quotationData.subscribe((data) => {
+                        if (!!data) {
+                            console.log('Detail load:', data)
                             setCotizacionesInfo({
                                 ...cotizacionesInfo,
-                                appliedQuotations: [docQuotation.data()],
+                                appliedQuotations: [data],
                             })
-                        })
-                    }
+                        }
+                    })
                 }
             })
         }
