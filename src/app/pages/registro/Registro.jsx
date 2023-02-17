@@ -1,11 +1,11 @@
 // Pagina de registro
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { sendbirdSelectors } from '@sendbird/uikit-react'
 import withSendbird from '@sendbird/uikit-react/withSendbird'
-import SendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
 import { NavLink, useNavigate } from 'react-router-dom'
 import SnackBarAlert from '../../components/SnackBarAlert'
-import { auth, firestore } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
+import { auth, firestore } from '@/firebase/firebaseClient' // src/firebase/firebaseClient
 import {
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
@@ -14,9 +14,9 @@ import {
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { format } from 'date-fns'
 
-import '../../../../public/assets/css/registro.css'
+import '@/assets/css/registro.css'
 //imagenes
-import LogoGmail from '../../../../public/assets/img/G.jpg'
+import LogoGmail from '@/assets/img/G.jpg'
 // react-bootrstrap
 import Paper from '@mui/material/Paper'
 import Row from 'react-bootstrap/Row'
@@ -536,7 +536,7 @@ Registro.propTypes = {
 
 export default withSendbird(Registro, (state) => ({
     // Mapping context state to props
-    connect: SendbirdSelectors.getConnect(state),
-    createChannel: SendbirdSelectors.getCreateGroupChannel(state),
-    sbSdk: SendbirdSelectors.getSdk(state),
+    connect: sendbirdSelectors.getConnect(state),
+    createChannel: sendbirdSelectors.getCreateGroupChannel(state),
+    sbSdk: sendbirdSelectors.getSdk(state),
 }))

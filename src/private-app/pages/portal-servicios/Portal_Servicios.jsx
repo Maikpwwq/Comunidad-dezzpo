@@ -1,8 +1,13 @@
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { firestore } from '../../../firebase/firebaseClient' // storage,
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { firestore } from '@/firebase/firebaseClient' // storage,
+import { collection } from 'firebase/firestore'
+
+import doSearchFromFirestore from '@/services/doSearchFromFirestore.service'
+import readUsersFromFirestore from '@/services/readUsersFromFirestore.service'
+import { sharingInformationService } from '@/services/sharing-information'
+
 // import { ref, getDownloadURL } from 'firebase/storage'
 import UserCard from '../../components/UserCard'
 // react-bootrstrap
@@ -27,45 +32,26 @@ const Portal_Servicios = (props) => {
     const [searchData, setSearchData] = useState({})
     const [usersData, setUsersData] = useState({})
 
-    const searchFromFirestore = async () => {
-        try {
-            // TODO: Refactor this query to search in categories from users profiles
-            const response = []
-            const queryRef = query(
-                usersComCalRef,
-                where('userCategories', 'array-contains-any', searchInput)
-            )
-            const searchUsers = await getDocs(queryRef)
-            searchUsers.forEach((DOC) => {
-                response.push(DOC.data())
-            })
-            return response
-        } catch (err) {
-            console.log(
-                'Error al obtener los datos de busqueda en la colleccion Comerciantes Calificados: ',
-                err
-            )
-        }
+    const FromUserComerciantes = () => {
+        const userSelectedRol = 2 // Solo comerciantes calificados
+        readUsersFromFirestore({
+            userSelectedRol,
+        })
     }
 
-    const usersFromFirestore = async () => {
-        try {
-            const userData = await getDocs(usersComCalRef)
-            return userData
-        } catch (err) {
-            console.log(
-                'Error al obtener los datos de la colleccion Comerciantes Calificados: ',
-                err
-            )
-        }
+    const userSearch = (searchInput) => {
+        doSearchFromFirestore({
+            searchInput,
+        })
     }
 
     useEffect(() => {
         if (typeof searchInput !== 'undefined') {
-            const multileSearch = searchFromFirestore()
-            multileSearch
-                .then((docSnap) => {
-                    if (docSnap && docSnap.length > 0) {
+            userSearch(searchInput)
+            const consultedData = sharingInformationService.getSubject()
+            consultedData
+                .subscribe((docSnap) => {
+                    if (docSnap) {
                         console.log('docSnap', docSnap)
                         setSearchData({
                             docSnap,
@@ -88,24 +74,19 @@ const Portal_Servicios = (props) => {
     console.log('SearchData', searchData)
 
     useEffect(() => {
-        usersFromFirestore()
-            .then((docSnap) => {
-                if (docSnap) {
-                    const data = docSnap.docs.map((element) => ({
-                        ...element.data(),
-                    }))
-                    setUsersData({
-                        data,
-                    })
-                } else {
-                    console.log(
-                        'No se encontro información en la colleccion usuarios!'
-                    )
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        FromUserComerciantes()
+        const userData = sharingInformationService.getSubject()
+        userData.subscribe((data) => {
+            if (data) {
+                setUsersData({
+                    data,
+                })
+            } else {
+                console.log(
+                    'No se encontro información sobre esta collección de usuarios!'
+                )
+            }
+        })
     }, [])
 
     const handleNewProject = () => {

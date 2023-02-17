@@ -1,6 +1,6 @@
 // Pagina de Comunidad Comerciantes
 import React from 'react'
-import '../../../../public/assets/css/comunidad_comerciantes.css'
+import '@/assets/css/comunidad_comerciantes.css'
 
 import Registro from '../../pages/registro/Registro'
 

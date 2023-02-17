@@ -1,6 +1,6 @@
 // Pagina de Usuario - CambiarClave
 import React, { useState } from 'react'
-import { auth } from '../../../firebase/firebaseClient'
+import { auth } from '@/firebase/firebaseClient'
 import { updatePassword } from 'firebase/auth'
 
 // react-bootrstrap

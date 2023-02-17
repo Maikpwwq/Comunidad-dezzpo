@@ -1,9 +1,9 @@
 // Pagina de Apendice de costos
 import React, { useState, useEffect } from 'react'
-import '../../../../public/assets/css/apendice_costos.css'
+import '@/assets/css/apendice_costos.css'
 import { Link } from 'react-router-dom'
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
-import { firestore } from '../../../firebase/firebaseClient'
+import { firestore } from '@/firebase/firebaseClient'
 // import AdministrarDB from './AdministrarDB' Usar para editar la base de datos firestore desde el XLSX
 import ApendiceJson from './apendice-costos.json'
 

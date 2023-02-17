@@ -1,10 +1,10 @@
 /* Menu de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react'
-import { NavLink, Redirect } from 'react-router-dom' // withRouter,
-import '../../../../public/assets/css/menu.css'
+import { NavLink } from 'react-router-dom' // withRouter, Redirect
+import '@/assets/css/menu.css'
 
 // images
-import LogoMenuComunidadDezzpo from '../../../../public/assets/img/IsologoFooter.png'
+import LogoMenuComunidadDezzpo from '@/assets/img/IsologoFooter.png'
 
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
@@ -312,7 +312,7 @@ const MenuComunidad = (props) => {
                                 </li> */}
                         </ul>
                     </nav>
-                    {false && <Redirect to="/"></Redirect>}
+                    {/* {false && <Redirect to="/"></Redirect>} */}
                 </Col>
             </Container>
         </>

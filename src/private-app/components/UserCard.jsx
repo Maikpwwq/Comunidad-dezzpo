@@ -36,7 +36,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 //     }),
 // }))
 
-export default function UserCard({ props }) {
+export default function UserCard({ props }) { 
     const navigate = useNavigate()
     const [chips, setChips] = React.useState([])
     const {

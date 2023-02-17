@@ -1,6 +1,6 @@
 /* Pagina de Ayuda & PQRS */
 import React from 'react'
-import '../../../../public/assets/css/ayuda_pqrs.css'
+import '@/assets/css/ayuda_pqrs.css'
 import { Link } from 'react-router-dom'
 
 // react-bootrstrap

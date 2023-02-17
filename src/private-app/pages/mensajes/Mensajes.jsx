@@ -1,21 +1,22 @@
 // Pagina de Usuario - Mensajes
 import React from 'react'
 import es from 'date-fns/locale/es'
-import { auth } from '../../../firebase/firebaseClient'
-import SendBirdApp from '@sendbird/uikit-react/App'
+import { auth } from '@/firebase/firebaseClient'
+import { App as SendBirdApp } from '@sendbird/uikit-react'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import TextareaAutosize from '@mui/material/TextareaAutosize'
+// import FormControl from '@mui/material/FormControl'
+// import InputLabel from '@mui/material/InputLabel'
+// import Select from '@mui/material/Select'
+// import MenuItem from '@mui/material/MenuItem'
+// import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 const Mensajes = (props) => {
     let userId = auth.currentUser.uid || undefined
-    let appId = process.env.REACT_APP_SENDBIRD_APPID
+    let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
+    // let appId = process.env.VITE_APP_SENDBIRD_APPID
 
     return (
         <>

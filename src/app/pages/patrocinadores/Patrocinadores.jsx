@@ -1,6 +1,6 @@
 // Pagina de nuestros patrocinadores
 import React from 'react'
-import '../../../../public/assets/css/patrocinadores.css'
+import '@/assets/css/patrocinadores.css'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { firestore, auth } from '../../../firebase/firebaseClient'
+import { firestore, auth } from '@/firebase/firebaseClient'
 import { collection, doc, getDocFromServer } from 'firebase/firestore'
 
-import readDraftFromFirestore from 'services/readDraftFromFirestore.service'
-import readQuotationFromFirestore from 'services/readQuotationFromFirestore.service'
-import { sharingInformationService } from 'services/sharing-information'
+import readDraftFromFirestore from '@/services/readDraftFromFirestore.service'
+import readQuotationFromFirestore from '@/services/readQuotationFromFirestore.service'
+import { sharingInformationService } from '@/services/sharing-information'
 
 import './detalle_requerimiento.css'
 

@@ -1,6 +1,6 @@
 // Pagina de Inicio
 import React from 'react'
-import '../../../../public/assets/css/home.css'
+import '@/assets/css/home.css'
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
 import NuestraComunidad from '../../components/nuestra-comunidad/NuestraComunidad'
 

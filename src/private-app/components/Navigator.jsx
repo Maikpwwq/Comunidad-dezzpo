@@ -4,8 +4,8 @@ import { auth } from '../../firebase/firebaseClient'
 import { signOut } from 'firebase/auth'
 
 //imagenes
-// import Avatar1 from '../../../public/assets/img/CategoriasPopulares.png'
-import LogoMenuComunidadDezzpo from '../../../public/assets/img/IsologoUserApp.png'
+// import Avatar1 from '@/assets/img/CategoriasPopulares.png'
+import LogoMenuComunidadDezzpo from '@/assets/img/IsologoUserApp.png'
 
 import SnackBarAlert from '../../app/components/SnackBarAlert'
 import Divider from '@mui/material/Divider'

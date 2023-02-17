@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import { auth } from '../../../firebase/firebaseClient'
+import { auth } from '@/firebase/firebaseClient'
 
-import updateDraftToFirestore from 'services/updateDraftToFirestore.service'
-import updateQuotationToFirestore from 'services/updateQuotationToFirestore.service'
-import readQuotationFromFirestore from 'services/readQuotationFromFirestore.service'
-import { sharingInformationService } from 'services/sharing-information'
+import updateDraftToFirestore from '@/services/updateDraftToFirestore.service'
+import updateQuotationToFirestore from '@/services/updateQuotationToFirestore.service'
+import readQuotationFromFirestore from '@/services/readQuotationFromFirestore.service'
+import { sharingInformationService } from '@/services/sharing-information'
 
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { auth } from '../../firebase/firebaseClient'
 import SearchBar from './SearchBar'
-import '../../../public/assets/cssPrivateApp/header.css'
+import '@/assets/cssPrivateApp/header.css'
 
 import NotificationBar from './NotificationBar'
 

@@ -11,7 +11,7 @@ import {
 import DirectionalButton from '../../components/DirectionalButton/DirectionalButton'
 import ListadoCategorias from '../../components/ListadoCategorias'
 import ScrollToTopOnMount from '../../components/ScrollToTop'
-import AdjuntarArchivos from '../../../private-app/components/AdjuntarArchivos'
+import AdjuntarArchivos from '@/private-app/components/AdjuntarArchivos'
 import { v4 as uuidv4 } from 'uuid'
 import {
     collection,
@@ -20,8 +20,8 @@ import {
     getDocFromServer,
     getDocs,
 } from 'firebase/firestore'
-import { firestore, auth } from '../../../firebase/firebaseClient'
-import '../../../../public/assets/css/nuevo_proyecto.css'
+import { firestore, auth } from '@/firebase/firebaseClient'
+import '@/assets/css/nuevo_proyecto.css'
 import Ubicacion from '../ubicacion/Ubicacion'
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
 import Registro from '../../pages/registro/Registro'

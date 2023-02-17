@@ -1,6 +1,6 @@
 // Pagina de Legal
 import React from 'react'
-import '../../../../public/assets/css/legal.css'
+import '@/assets/css/legal.css'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'

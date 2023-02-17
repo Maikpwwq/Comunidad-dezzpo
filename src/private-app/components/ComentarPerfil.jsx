@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import './comentarPerfil.css'
-import SendBirdApp from '@sendbird/uikit-react/App'
-import Channel from '@sendbird/uikit-react/Channel'
-import withSendBird from '@sendbird/uikit-react/withSendbird'
-import SendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
+import {
+    App as SendBirdApp,
+    Channel,
+    withSendBird,
+} from '@sendbird/uikit-react'
+
+// import SendbirdSelectors from '@sendbird/uikit-react/SendbirdSelectors'
 
 function ComentarPerfil(props) {
     const { channelUrl } = props
@@ -12,7 +15,7 @@ function ComentarPerfil(props) {
     const [showSettings, setShowSettings] = useState(false)
     // const { userId, accessToken, connect, createChannel, sdk } = props
     // var sb = new SendBirdApp({
-    //     appId: process.env.REACT_APP_SENDBIRD_APPID,
+    //     appId: process.env.VITE_APP_SENDBIRD_APPID,
     //     userId: userId,
     // })
     // console.log('sb', sb)
@@ -56,7 +59,7 @@ function ComentarPerfil(props) {
     //     }
     // }, [typeof createChannel == 'function' && sdk])
 
-    // var sb = new SendBirdApp({ appId: process.env.REACT_APP_SENDBIRD_APPID })
+    // var sb = new SendBirdApp({ appId: import.meta.env.VITE_APP_SENDBIRD_APPID })
     //Mark the Message as Delivered
     // SendBird.markAsDelivered(channelUrl);
     // sb.groupChannel.markAsDelivered(CHANNEL_URL); markAsRead(CHANNEL_URL);

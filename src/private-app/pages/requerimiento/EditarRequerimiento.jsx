@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { auth } from '../../../firebase/firebaseClient'
+import { auth } from '@/firebase/firebaseClient'
 import AdjuntarArchivos from '../../components/AdjuntarArchivos'
 
-import readDraftFromFirestore from 'services/readUserFromFirestore.service'
-import readQuotationFromFirestore from 'services/readQuotationFromFirestore.service'
-import updateDraftToFirestore from 'services/updateDraftToFirestore.service'
-import { sharingInformationService } from 'services/sharing-information'
+import readDraftFromFirestore from '@/services/readUserFromFirestore.service'
+import readQuotationFromFirestore from '@/services/readQuotationFromFirestore.service'
+import updateDraftToFirestore from '@/services/updateDraftToFirestore.service'
+import { sharingInformationService } from '@/services/sharing-information'
 
 import './detalle_requerimiento.css'
 

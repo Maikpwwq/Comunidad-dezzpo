@@ -1,15 +1,15 @@
 // Pagina de Blog
 import React from 'react'
-import '../../../../public/assets/css/blog.css'
+import '@/assets/css/blog.css'
 import { Link } from 'react-router-dom'
 
 // Imagenes
-import BlogEntrada1 from '../../../../public/assets/img/BlogEntrada1.png'
-import User1 from '../../../../public/assets/img/iconos/User1.svg'
-import BlogEntrada2 from '../../../../public/assets/img/BlogEntrada2.png'
-import User2 from '../../../../public/assets/img/iconos/User2.svg'
-import BlogEntrada3 from '../../../../public/assets/img/BlogEntrada3.png'
-import User3 from '../../../../public/assets/img/iconos/User3.svg'
+import BlogEntrada1 from '@/assets/img/BlogEntrada1.png'
+import User1 from '@/assets/img/iconos/User1.svg'
+import BlogEntrada2 from '@/assets/img/BlogEntrada2.png'
+import User2 from '@/assets/img/iconos/User2.svg'
+import BlogEntrada3 from '@/assets/img/BlogEntrada3.png'
+import User3 from '@/assets/img/iconos/User3.svg'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'

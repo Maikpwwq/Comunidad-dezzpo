@@ -1,7 +1,7 @@
 // Pagina de Comunidad Propietarios
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import '../../../../public/assets/css/comunidad_propietarios.css'
+import '@/assets/css/comunidad_propietarios.css'
 
 import Registro from '../../pages/registro/Registro'
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'

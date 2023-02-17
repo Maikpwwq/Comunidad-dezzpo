@@ -1,6 +1,6 @@
 // Pagina de Aplicar
 import React from 'react'
-import '../../../../public/assets/css/aplicar.css'
+import '@/assets/css/aplicar.css'
 
 const Aplicar = (props) => {
     return (

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import AutoComplete from 'react-google-autocomplete'
-import { Loader } from '@googlemaps/js-api-loader'
+// import { Loader } from '@googlemaps/js-api-loader'
 import { googleLoader } from '../../../google/GoogleMapsAdmin'
 // import Marker from '../../components/maps/Marker'
-import '../../../../public/assets/css/ubicacion.css'
+import '@/assets/css/ubicacion.css'
 
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -14,7 +14,7 @@ import Form from 'react-bootstrap/Form'
 import PropTypes from 'prop-types'
 
 const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
-    const googleApiKey = process.env.REACT_APP_GOOGLE_APIKEY
+    const googleApiKey = import.meta.env.VITE_APP_GOOGLE_APIKEY
     const [clicks, setClicks] = useState({
         lat: 4.624335,
         lng: -74.063644,

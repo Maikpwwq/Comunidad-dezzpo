@@ -1,11 +1,11 @@
 // Pagina de Contactenos
 import React from 'react'
-import '../../../../public/assets/css/contactenos.css'
+import '@/assets/css/contactenos.css'
 
 // Imagenes
-import ContactenosFranja from '../../../../public/assets/img/ContactenosFranja.png'
-import LogoPNG from '../../../../public/assets/img/LogoPNG.png'
-import SelectorContactenos from '../../../../public/assets/img/SelectorContactenos.png'
+import ContactenosFranja from '@/assets/img/ContactenosFranja.png'
+import LogoPNG from '@/assets/img/LogoPNG.png'
+import SelectorContactenos from '@/assets/img/SelectorContactenos.png'
 
 //
 import DatosContacto from '../../components/datos_contacto/DatosContacto'

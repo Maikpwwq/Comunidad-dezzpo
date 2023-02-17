@@ -1,6 +1,6 @@
 /* - Componente importancion de las paginas y distribucion de las rutas -  */
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom' // , Navigate
 import es from 'date-fns/locale/es'
 //Paginas
 import ApendiceCostos from '../pages/apendice-costos/Apendice_Costos'
@@ -40,9 +40,9 @@ class Rutas extends React.Component {
         return (
             <div>
                 <SendbirdProvider
-                    appId={process.env.REACT_APP_SENDBIRD_APPID} // Sendbird application ID.
-                    userId={process.env.REACT_APP_SENDBIRD_USERID} // user ID.
-                    accessToken={process.env.REACT_APP_SENDBIRD_APPTOKEN}
+                    appId={import.meta.env.VITE_APP_SENDBIRD_APPID} // Sendbird application ID.
+                    userId={import.meta.env.VITE_APP_SENDBIRD_USERID} // user ID.
+                    accessToken={import.meta.env.VITE_APP_SENDBIRD_APPTOKEN}
                     dateLocale={es}
                 >
                     {/* <Button variant="contained"> {name} </Button> */}

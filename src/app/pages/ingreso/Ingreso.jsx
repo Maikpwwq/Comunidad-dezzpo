@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import SnackBarAlert from '../../components/SnackBarAlert'
-import { auth } from '../../../firebase/firebaseClient' // src/firebase/firebaseClient
+import { auth } from '@/firebase/firebaseClient' // src/firebase/firebaseClient
 import {
     EmailAuthProvider,
     signInWithCredential,
@@ -12,10 +12,10 @@ import {
     signInWithPopup,
 } from 'firebase/auth'
 
-import '../../../../public/assets/css/ingreso.css'
+import '@/assets/css/ingreso.css'
 //imagenes
-import LogoGmail from '../../../../public/assets/img/G.jpg'
-import LogoComunidadDezzpo from '../../../../public/assets/img/IsologoFooter.png'
+import LogoGmail from '@/assets/img/G.jpg'
+import LogoComunidadDezzpo from '@/assets/img/IsologoFooter.png'
 
 // react-bootrstrap
 import Paper from '@mui/material/Paper'

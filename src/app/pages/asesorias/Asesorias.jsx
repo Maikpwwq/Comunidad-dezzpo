@@ -1,10 +1,10 @@
 // Pagina de Asesorias
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import '../../../../public/assets/css/asesorias.css'
+import '@/assets/css/asesorias.css'
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { Link, useNavigate } from 'react-router-dom'
-import { firestore } from '../../../firebase/firebaseClient'
+import { firestore } from '@/firebase/firebaseClient'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
