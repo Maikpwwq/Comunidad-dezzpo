@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import readQuotationFromFirestore from 'services/readQuotationFromFirestore.service'
-import { sharingInformationService } from 'services/sharing-information'
+import readQuotationFromFirestore from '@/services/readQuotationFromFirestore.service'
+import { sharingInformationService } from '@/services/sharing-information'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'

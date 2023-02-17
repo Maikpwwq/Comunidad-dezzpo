@@ -9,9 +9,9 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay, virtualize, bindKeyboard } from 'react-swipeable-views-utils'
 
-import PopularCerrajeria from '../../../../public/assets/img/Cerrajeria.png'
-import PopularCarpinteria from '../../../../public/assets/img/Carpinteria.png'
-import PopularPintura from '../../../../public/assets/img/Pintura.png'
+import PopularCerrajeria from '@/assets/img/Cerrajeria.png'
+import PopularCarpinteria from '@/assets/img/Carpinteria.png'
+import PopularPintura from '@/assets/img/Pintura.png'
 
 const AutoPlaySwipeableViews = bindKeyboard(autoPlay(SwipeableViews))
 

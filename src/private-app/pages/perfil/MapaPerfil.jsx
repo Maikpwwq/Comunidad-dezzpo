@@ -41,8 +41,8 @@ const MapaPerfil = ({ userInfo }) => {
                 })
                 geocoder.geocode({ location: latLng }).then((response) => {
                     if (response.results[0]) {
-                        const formattedAddress =
-                            response.results[0].formatted_address
+                        // const formattedAddress =
+                        //     response.results[0].formatted_address
                         if (userInfo.userId) {
                             console.log(userInfo.userId)
                             const infoGroup = `${

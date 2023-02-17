@@ -1,17 +1,17 @@
 // Pagina de Usuario - Ajustes
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { auth } from 'firebase/firebaseClient'
+import { auth } from '@/firebase/firebaseClient'
 
-import { sharingInformationService } from 'services/sharing-information'
-import readUserFromFirestore from 'services/readUserFromFirestore.service'
-import updateUserToFirestore from 'services/updateUserToFirestore.service'
+import { sharingInformationService } from '@/services/sharing-information'
+import readUserFromFirestore from '@/services/readUserFromFirestore.service'
+import updateUserToFirestore from '@/services/updateUserToFirestore.service'
 
-import '../../../../public/assets/cssPrivateApp/ajustes.css'
-import Ubicacion from 'app/pages/ubicacion/Ubicacion'
-import SnackBarAlert from 'app/components/SnackBarAlert'
+import '@/assets/cssPrivateApp/ajustes.css'
+import Ubicacion from '@/app/pages/ubicacion/Ubicacion'
+import SnackBarAlert from '@/app/components/SnackBarAlert'
 import ChipsCategories from '../../components/ChipsCategories'
-import ListadoCategorias from 'app/components/ListadoCategorias'
+import ListadoCategorias from '@/app/components/ListadoCategorias'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -156,15 +156,16 @@ const Ajustes = (props) => {
     const handleSubmit = () => {
         snap()
         const userData = sharingInformationService.getSubject()
-        userData.subscribe((docSnap) => {
-            if (!!docSnap) {
-                console.log('Detail load:', docSnap)
-                handleAlert(
-                    'Se actualizó correctamente su información!',
-                    'success'
-                )
-            }
-        })
+        userData
+        // userData.subscribe((docSnap) => {
+        //     if (!!docSnap) {
+        //         console.log('Detail load:', docSnap)
+        //         handleAlert(
+        //             'Se actualizó correctamente su información!',
+        //             'success'
+        //         )
+        //     }
+        // })
     }
 
     return (

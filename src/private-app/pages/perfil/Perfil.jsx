@@ -1,20 +1,20 @@
 // Pagina de Usuario - Perfil
 import React, { useState, useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
-import { auth } from '../../../firebase/firebaseClient'
+import { auth } from '@/firebase/firebaseClient'
 import { format, formatDistance, subDays, parse, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
-import readUserFromFirestore from 'services/readUserFromFirestore.service'
-import { sharingInformationService } from 'services/sharing-information'
+import readUserFromFirestore from '@/services/readUserFromFirestore.service'
+import { sharingInformationService } from '@/services/sharing-information'
 
-import '../../../../public/assets/cssPrivateApp/perfil.css'
-// import ProfilePhoto from '../../../../public/assets/img/Profile.png'
-// import Bogota from '../../../../public/assets/img/Bogota.png'
+import '@/assets/cssPrivateApp/perfil.css'
+// import ProfilePhoto from '@/assets/img/Profile.png'
+// import Bogota from '@/assets/img/Bogota.png'
 import MapaPerfil from './MapaPerfil'
 import CincoEstrellas from './CincoEstrellas'
-import Comentarios from '../../../private-app/components/Comentarios'
+import Comentarios from '@/private-app/components/Comentarios'
 import ChipsCategories from '../../components/ChipsCategories'
-import ListadoCategorias from '../../../app/components/ListadoCategorias'
+import ListadoCategorias from '@/app/components/ListadoCategorias'
 import AdjuntarArchivos from '../../components/AdjuntarArchivos'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -44,13 +44,13 @@ const Perfil = (props) => {
             : id
     const consult = userId !== null && userId !== undefined ? true : false
     const userConsultId = consult ? userId : userID
-    // console.log(userConsultId)
+    console.log(userConsultId)
     // console.log(userId, consult, userConsultId)
     // console.log(userID)
     // console.log(userConsultId)
 
     const userData = () => {
-        const firestoreUserID = userID
+        const firestoreUserID = userConsultId
         const userSelectedRol = userRol.rol
         console.log(firestoreUserID, userSelectedRol)
         readUserFromFirestore({
@@ -206,7 +206,10 @@ const Perfil = (props) => {
             <Container fluid className="p-0">
                 <Row className="h-100 pt-4 pb-4">
                     <Col className="col" md={10} sm={12}>
-                        <Row className="border-green_bottom m-0 w-100 d-flex flex-nowrap">
+                        <Row
+                            className="border-green_bottom m-0 w-100 d-flex flex-nowrap"
+                            sx={{ flexDirection: { sm: 'col' } }}
+                        >
                             {/* perfil-banner */}
                             <div
                                 className="d-flex flex-inline-row w-auto"
@@ -365,7 +368,7 @@ const Perfil = (props) => {
                             </Col>
                         </Row>
                         <Row className="m-0 w-100 d-flex align-items-start">
-                            <Col md={10} className="p-0">
+                            <Col className="p-0 col-10">
                                 <Typography
                                     variant="h5"
                                     className="textVerde headline-l pt-4 pb-4"
@@ -469,21 +472,14 @@ const Perfil = (props) => {
                                 >
                                     Comentarios
                                 </Typography>
-                                <Row className="p-0">
-                                    {userInfo.userChannelUrl && (
-                                        <Row className="p-0 m-0 w-100">
-                                            <Col className="p-0">
-                                                <Comentarios
-                                                    userID={userConsultId}
-                                                    channelUrl={
-                                                        userInfo.userChannelUrl
-                                                    }
-                                                    nickname={userInfo.userName}
-                                                />
-                                            </Col>
-                                        </Row>
-                                    )}
-                                </Row>
+
+                                {userInfo.userChannelUrl && (
+                                    <Comentarios
+                                        userID={userConsultId}
+                                        channelUrl={userInfo.userChannelUrl}
+                                        nickname={userInfo.userName}
+                                    />
+                                )}
                             </Col>
                         </Row>
                     </Col>

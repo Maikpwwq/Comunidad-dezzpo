@@ -1,7 +1,7 @@
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { firestore } from '../../../firebase/firebaseClient' // storage,
+import { firestore } from '@/firebase/firebaseClient' // storage,
 import { collection, getDocs, query, where } from 'firebase/firestore'
 
 import DraftCard from '../../components/DraftCard'

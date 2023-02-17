@@ -1,24 +1,26 @@
 import React from 'react'
 import es from 'date-fns/locale/es'
-import SendBirdApp from '@sendbird/uikit-react/App'
-import withSendBird from '@sendbird/uikit-react/withSendbird'
-import SendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
-import { v4 as uuidv4 } from 'uuid'
-import '@sendbird/uikit-react/dist/index.css'
+import PropTypes from 'prop-types'
+import {
+    withSendBird,
+    // App as SendBirdApp,
+    // sendbirdSelectors,
+} from '@sendbird/uikit-react'
+import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
+// import { v4 as uuidv4 } from 'uuid'
+// import '@sendbird/uikit-react/dist/index.css?inline'
 // Custom
 import ComentarPerfil from './ComentarPerfil'
 
 // import PlaceHolder, {
 //     PlaceHolderTypes,
 // } from '@sendbird/uikit-react/ui/PlaceHolder'
-import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
-// import withSendbird from '@sendbird/uikit-react/withSendbird'
 
 // import {
 //     useChannelList,
 //     ChannelListProvider,
 // } from '@sendbird/uikit-react/ChannelList/context'
-import ChannelList from '@sendbird/uikit-react/ChannelList'
+// import ChannelList from '@sendbird/uikit-react/ChannelList'
 // import { default as ChannelListUI } from '@sendbird/uikit-react/ChannelList/components/ChannelListUI'
 // import {
 //     ChannelListUI,
@@ -31,7 +33,7 @@ import ChannelList from '@sendbird/uikit-react/ChannelList'
 //     useCreateChannel,
 //     CreateChannelProvider,
 // } from '@sendbird/uikit-react/CreateChannel/context'
-import CreateChannel from '@sendbird/uikit-react/CreateChannel'
+// import CreateChannel from '@sendbird/uikit-react/CreateChannel'
 // import {
 //     CreateChannelUI,
 //     SelectChannelType,
@@ -42,7 +44,7 @@ import CreateChannel from '@sendbird/uikit-react/CreateChannel'
 //     useChannelSettings,
 //     ChannelSettingsProvider,
 // } from '@sendbird/uikit-react/ChannelSettings/context'
-import ChannelSettings from '@sendbird/uikit-react/ChannelSettings'
+// import ChannelSettings from '@sendbird/uikit-react/ChannelSettings'
 // import {
 //     ChannelSettingsUI,
 //     AdminPanel,
@@ -57,7 +59,7 @@ import ChannelSettings from '@sendbird/uikit-react/ChannelSettings'
 //     ChannelProvider,
 //     useChannel,
 // } from '@sendbird/uikit-react/Channel/context'
-import Channel from '@sendbird/uikit-react/Channel'
+// import Channel from '@sendbird/uikit-react/Channel'
 // import {
 //     ChannelUI,
 //     ChannelHeader,
@@ -83,37 +85,37 @@ import Channel from '@sendbird/uikit-react/Channel'
 //     width: 85vw;   // Add this line.
 // }
 
-import Avatar from '@mui/material/Avatar'
+// import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+// import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
-import IconButton from '@mui/material/IconButton'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import TextareaAutosize from '@mui/material/TextareaAutosize'
+// import IconButton from '@mui/material/IconButton'
+// import ListItem from '@mui/material/ListItem'
+// import ListItemButton from '@mui/material/ListItemButton'
+// import ListItemIcon from '@mui/material/ListItemIcon'
+// import ListItemText from '@mui/material/ListItemText'
+// import TextareaAutosize from '@mui/material/TextareaAutosize'
 
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import AddCommentIcon from '@mui/icons-material/AddComment'
+// import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+// import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+// import AddCommentIcon from '@mui/icons-material/AddComment'
 
 const Comentarios = (props) => {
-    const commentUserPhotoUrl = ''
-    const commentUserName = 'Nombre Usuario'
-    const commentDate = 'Hace x cantidad de tiempo'
-    const commentBody = 'Aqui va el cuerpo del comentario'
-    const commentsNumber = '4'
-    const iconUp = <ArrowUpwardIcon />
-    const iconDown = <ArrowDownwardIcon />
-    const iconComments = <AddCommentIcon />
+    // const commentUserPhotoUrl = ''
+    // const commentUserName = 'Nombre Usuario'
+    // const commentDate = 'Hace x cantidad de tiempo'
+    // const commentBody = 'Aqui va el cuerpo del comentario'
+    // const commentsNumber = '4'
+    // const iconUp = <ArrowUpwardIcon />
+    // const iconDown = <ArrowDownwardIcon />
+    // const iconComments = <AddCommentIcon />
 
     // Usuario principal de la aplicación
-    let userId = process.env.REACT_APP_SENDBIRD_USERID
-    // process.env.REACT_APP_SENDBIRD_APPTOKEN
-    let appId = process.env.REACT_APP_SENDBIRD_APPID
+    let userId = import.meta.env.VITE_APP_SENDBIRD_USERID
+    // process.env.VITE_APP_SENDBIRD_APPTOKEN
+    let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
     const { userID, channelUrl, nickname } = props
-    console.log(userID, channelUrl, nickname)
+    console.log(userID, channelUrl, nickname, userId)
     // user.updateMetaData or user.createMetaData
 
     {
@@ -190,6 +192,12 @@ const Comentarios = (props) => {
             </Container> */}
         </>
     )
+}
+
+Comentarios.propTypes = {
+    userID: PropTypes.string,
+    channelUrl: PropTypes.string,
+    nickname: PropTypes.string,
 }
 
 export default withSendBird(Comentarios)

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import '../../../../public/assets/css/categorias_servicios.css'
+import '@/assets/css/categorias_servicios.css'
 import ListadoCategorias from '../ListadoCategorias'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'

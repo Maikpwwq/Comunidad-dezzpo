@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
-import LocalCiudades from '../../../../../public/assets/img/LocalCiudades.png'
+import LocalCiudades from '@/assets/img/LocalCiudades.png'
 
 const BuscaEnTuCiudad = (props) => {
     return (

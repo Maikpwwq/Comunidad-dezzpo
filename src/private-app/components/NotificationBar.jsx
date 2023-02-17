@@ -1,10 +1,10 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { auth } from '../../firebase/firebaseClient'
-import '../../../public/assets/cssPrivateApp/header.css'
+import '@/assets/cssPrivateApp/header.css'
 
 //imagenes
-import LogoMenuComunidadDezzpo from '../../../public/assets/img/IsologoHeader.png'
+import LogoMenuComunidadDezzpo from '@/assets/img/IsologoHeader.png'
 
 import PropTypes from 'prop-types'
 import AppBar from '@mui/material/AppBar'

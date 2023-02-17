@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { collection, doc, setDoc } from 'firebase/firestore'
-import { firestore } from '../../../firebase/firebaseClient'
+import { firestore } from '@/firebase/firebaseClient'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'

@@ -1,10 +1,10 @@
 import * as React from 'react'
-import '../../../../public/assets/css/nuestra_comunidad.css'
+import '@/assets/css/nuestra_comunidad.css'
 import CategoriasServicios from '../../components/categorias-servicios/CategoriasServicios'
 import CategoriasSlider from './CategoriasSlider'
 import CategoriasPupulares from './CategoriasPupulares/CategoriasPupulares'
 //imagenes
-//import CategoriasPopulares from '../../../../public/assets/img/CategoriasPopulares.png'
+//import CategoriasPopulares from '@/assets/img/CategoriasPopulares.png'
 
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'

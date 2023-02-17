@@ -1,6 +1,9 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
+// import dotenv from 'dotenv'
+// dotenv.config()
+
 //Paginas
 import App from './app/App'
 import PrivateApp from './private-app/Private-App'

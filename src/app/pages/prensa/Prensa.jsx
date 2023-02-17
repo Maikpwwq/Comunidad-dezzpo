@@ -1,6 +1,6 @@
 // Pagina de Prensa
 import React from 'react'
-import '../../../../public/assets/css/prensa.css'
+import '@/assets/css/prensa.css'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'

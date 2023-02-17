@@ -1,10 +1,8 @@
 /* Footer de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react'
-import '../../../../public/assets/css/datos_contacto.css'
-import { Link, Redirect } from 'react-router-dom'
+import '@/assets/css/datos_contacto.css'
 import IcoMoon from 'react-icomoon'
-import iconSet from '../../../../public/assets/css/icomoon/selection.json'
-import Container from 'react-bootstrap/Container'
+import iconSet from '@/assets/css/icomoon/selection.json'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 

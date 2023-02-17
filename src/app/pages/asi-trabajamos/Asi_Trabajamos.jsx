@@ -1,6 +1,6 @@
 // Pagina de Asi Trabajamos
 import React from 'react'
-import '../../../../public/assets/css/asi_trabajamos.css'
+import '@/assets/css/asi_trabajamos.css'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'

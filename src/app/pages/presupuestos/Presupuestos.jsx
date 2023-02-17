@@ -1,6 +1,6 @@
 // Pagina de Presupuestos
 import React from 'react'
-import '../../../../public/assets/css/presupuestos.css'
+import '@/assets/css/presupuestos.css'
 
 import BuscadorNuevoProyecto from '../../components/buscador/BuscadorNuevoProyecto'
 

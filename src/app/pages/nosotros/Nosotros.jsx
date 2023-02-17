@@ -1,10 +1,10 @@
 // Pagina de Nosotros
 import React from 'react'
-import '../../../../public/assets/css/nosotros.css'
+import '@/assets/css/nosotros.css'
 import IcoMoon from 'react-icomoon'
-import iconSet from '../../../../public/assets/css/icomoon/selection.json'
+import iconSet from '@/assets/css/icomoon/selection.json'
 // Imagenes
-import RoadMap from '../../../../public/assets/img/RoadMap.svg'
+import RoadMap from '@/assets/img/RoadMap.svg'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../../../../public/assets/css/subCategoriesCard.css'
+import '@/assets/css/subCategoriesCard.css'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'

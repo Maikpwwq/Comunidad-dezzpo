@@ -1,6 +1,6 @@
 // Pagina de Profesionales Servicios
 import React from 'react'
-import '../../../../public/assets/css/profesionales_servicios.css'
+import '@/assets/css/profesionales_servicios.css'
 import NuestraComunidad from '../../components/nuestra-comunidad/NuestraComunidad'
 
 // react-bootrstrap

@@ -1,11 +1,11 @@
 /* Footer de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react'
-import '../../../../public/assets/css/footer.css'
-import { Link, Redirect } from 'react-router-dom'
+import '@/assets/css/footer.css'
+import { Link } from 'react-router-dom'
 import IcoMoon from 'react-icomoon'
-import iconSet from '../../../../public/assets/css/icomoon/selection.json'
+import iconSet from '@/assets/css/icomoon/selection.json'
 // images
-import LogoFooterComunidadDezzpo from '../../../../public/assets/img/IsologoFooter.png'
+import LogoFooterComunidadDezzpo from '@/assets/img/IsologoFooter.png'
 
 import DatosContacto from '../datos_contacto/DatosContacto'
 
