@@ -1,5 +1,3 @@
-console.log('process.env', import.meta.env.VITE_APP_FIREBASE_APIKEY)
-
 export const firebaseClientConfig = {
     apiKey: import.meta.env.VITE_APP_FIREBASE_APIKEY,
     authDomain: import.meta.env.VITE_APP_FIREBASE_AUTHDOMAIN,

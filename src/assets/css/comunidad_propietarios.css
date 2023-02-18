@@ -1,68 +1,71 @@
 /* height: 2650px; */
-.comunidadPropietariosTitulo{
+.comunidadPropietariosTitulo {
     /* background: #e9ebe6 url(../img/ComunidadPropietarios1.png) no-repeat center;  */
-    background: #e9ebe6 url(
-        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadPropietarios1.png?alt=media&token=d1a39c58-8790-4df3-8c1b-c86b94e64955
-    ) no-repeat center; 
-    background-attachment: scroll;         
+    background: #e9ebe6 url('/assets/img/ComunidadPropietarios1.png'
+        ) no-repeat center;
+    background-attachment: scroll;
     background-size: cover;
     height: auto;
     min-height: 630px;
     width: 100%;
     color: #e9ebe6;
 }
-.comunidadPropietariosRegistro{
-    background:  #13495e; 
+
+.comunidadPropietariosRegistro {
+    background: #13495e;
     min-height: 590px;
     width: 100%;
 }
-.comunidadPropietariosRegistro .row{
+
+.comunidadPropietariosRegistro .row {
     width: 100%;
     height: 100%;
     padding: 0;
 }
-.imagenRegistro{
+
+.imagenRegistro {
     /* background:  #13495e url(../img/ComunidadPropietarios3.png) no-repeat center;  */
-    background: #13495e url(
-        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadPropietarios3.png?alt=media&token=8fd478e0-8fc0-4f55-9725-662658443d1f
-    ) no-repeat center;
-    background-attachment: scroll;         
-    background-size: auto 100% ;
+    background: #13495e url('/assets/img/ComunidadPropietarios3.png'
+        ) no-repeat center;
+    background-attachment: scroll;
+    background-size: auto 100%;
     height: auto;
     width: 100%;
-} 
-.comunidadPropietariosBuscador{
+}
+
+.comunidadPropietariosBuscador {
     /* background: #e9ebe6 url(../img/ComunidadPropietarios2.png) no-repeat center;  */
-    background: #e9ebe6 url(
-        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadPropietarios2.png?alt=media&token=77783c5c-c270-414b-b60f-79d5f240d755
-    ) no-repeat center; 
-    background-attachment: scroll;         
+    background: #e9ebe6 url('/assets/img/ComunidadPropietarios2.png'
+        ) no-repeat center;
+    background-attachment: scroll;
     background-size: 100% 100%;
     height: auto;
     min-height: 480px;
     width: 100%;
     margin-left: 0px;
 }
-.comunidadPropietariosConsultar{
-    background: #e9ebe6 url(../img/Asesorias1.png) no-repeat center; 
-    background-attachment: scroll;         
+
+.comunidadPropietariosConsultar {
+    background: #e9ebe6 url('/assets/img/Asesorias1.png') no-repeat center;
+    background-attachment: scroll;
     background-size: 100% 100%;
     height: auto;
     width: 100%;
     margin-left: 0px;
 }
-.comunidadPropietariosConsultar h3{
+
+.comunidadPropietariosConsultar h3 {
     justify-content: space-around;
     display: flex;
     align-items: center;
     width: 100%;
 }
-.comunidadPropietariosListaVerificacion{
+
+.comunidadPropietariosListaVerificacion {
     /* background: #e9ebe6 url(../img/ComunidadPropietarios4.png) no-repeat center;  */
-    background: #e9ebe6 url(
-        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadPropietarios4.png?alt=media&token=2e76d72d-0c22-4991-8441-4a890dbd35f4
-    ) no-repeat center; 
-    background-attachment: scroll;         
+    background: #e9ebe6 url('/assets/img/ComunidadPropietarios4.png'
+        ) no-repeat center;
+    background-attachment: scroll;
     background-size: 100% 100%;
     height: auto;
     width: 100%;

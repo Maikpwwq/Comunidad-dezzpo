@@ -43,7 +43,7 @@ body {
 }
 
 .bannerComunidad {
-    background: url(../img/MainBanner.png) no-repeat center;
+    background: url('/assets/img/MainBanner.png') no-repeat center;
     /* background: #e9ebe6 url(https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Buscador-Dezzpo.png?alt=media&token=db72bbeb-29f7-4fa8-b995-6eced5b2f007
 ) no-repeat center; */
     background-size: auto 100%;
@@ -80,7 +80,7 @@ body {
 }
 
 .color-steps {
-    background: url(../img/ColorSteps.png) no-repeat bottom;
+    background: url('/assets/img/ColorSteps.png') no-repeat bottom;
     background-size: 100% 95%;
     background-attachment: scroll;
 }

@@ -1,65 +1,68 @@
 /* Pantallas de Moviles */
 @media screen and (max-width: 600px) {
-    .comunidadComerciantesBeneficios{
+    .comunidadComerciantesBeneficios {
         min-height: 480px !important;
         background-size: 100% 100% !important;
     }
 }
+
 /* Pantallas en tabletas */
 @media screen and (min-width: 600px) and (max-width: 900px) {
-    .comunidadComerciantesBeneficios{
+    .comunidadComerciantesBeneficios {
         background-size: auto !important;
     }
 }
-/* Pantallas de Ordenador */
-@media screen and (min-width: 900px) {
-   
-}
 
-.comunidadComerciantesTitulo{
+/* Pantallas de Ordenador */
+@media screen and (min-width: 900px) {}
+
+.comunidadComerciantesTitulo {
     /* background: #e9ebe6 url(../img/ComunidadComerciantes1.png) no-repeat center;  */
-    background: #e9ebe6 url(
-        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadComerciantes1.png?alt=media&token=65f7be0f-d611-4193-8e12-cc90873cfb08
-    ) no-repeat center; 
-    background-attachment: scroll;         
+    background: #e9ebe6 url('/assets/img/ComunidadComerciantes1.png'
+        ) no-repeat center;
+    background-attachment: scroll;
     background-size: 100% 100%;
     color: #e9ebe6;
     height: auto;
     min-height: 480px;
     width: 100%;
 }
+
 .pitchComerciantes h2 {
     font-size: 21px;
     text-align: center;
 }
-.comunidadComerciantesRegistro{
+
+.comunidadComerciantesRegistro {
     /* background: #e9ebe6 url(../img/ComunidadComerciantes2.png) no-repeat center;  */
-    background: #e9ebe6 url(
-        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadComerciantes2.png?alt=media&token=b6e76927-7f34-4f4d-9c9b-e9cf3cf6bba7
-    ) no-repeat center; 
-    background-attachment: scroll;         
+    background: #e9ebe6 url('/assets/img/ComunidadComerciantes2.png'
+        ) no-repeat center;
+    background-attachment: scroll;
     background-size: cover;
     height: auto;
     width: 100%;
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
 }
-.comunidadComerciantesBeneficios{
-    background: #009999  url(../img/ComunidadComerciantes3.png) no-repeat right; 
-    background-attachment: scroll;         
+
+.comunidadComerciantesBeneficios {
+    background: #009999 url('/assets/img/ComunidadComerciantes3.png') no-repeat right;
+    background-attachment: scroll;
     background-size: cover;
     color: #e9ebe6;
     min-height: 840px;
-    text-align: left;    
+    text-align: left;
 }
-.subrayar h2{
+
+.subrayar h2 {
     border-bottom-width: 3px;
     border-bottom-style: solid;
     font-size: 27px;
 }
-.comunidadComerciantesBeneficios2{
-    background: #e9ebe6 url(../img/Profesionales_servicios2.png) no-repeat center; 
-    background-attachment: scroll;         
+
+.comunidadComerciantesBeneficios2 {
+    background: #e9ebe6 url('/assets/img/Profesionales_servicios2.png') no-repeat center;
+    background-attachment: scroll;
     background-size: cover;
     height: auto;
     width: 100%;

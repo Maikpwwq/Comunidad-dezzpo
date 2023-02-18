@@ -29,7 +29,7 @@
 
 .nuevoProyectoBuscador {
     /* background: #e9ebe6 url(../img/ComunidadPropietarios2.png) no-repeat center;  */
-    background: #e9ebe6 url(https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/ComunidadPropietarios2.png?alt=media&token=77783c5c-c270-414b-b60f-79d5f240d755
+    background: #e9ebe6 url('/assets/img/ComunidadPropietarios2.png'
 ) no-repeat center;
     background-attachment: scroll;
     background-size: 100% 100%;
@@ -39,7 +39,7 @@
 }
 
 .nuevoProyectoBuscador2 {
-    background: #e9ebe6 url(../img/NuevoProyecto1.png) no-repeat center;
+    background: #e9ebe6 url('/assets/img/NuevoProyecto1.png') no-repeat center;
     background-attachment: scroll;
     background-size: cover;
     min-height: 530px;
@@ -48,7 +48,7 @@
 }
 
 .nuevoProyectoBuscador3 {
-    background: #e9ebe6 url(../img/NuevoProyecto2.png) no-repeat right;
+    background: #e9ebe6 url('/assets/img/NuevoProyecto2.png') no-repeat right;
     background-attachment: scroll;
     background-size: auto 100%;
     min-height: 550px;

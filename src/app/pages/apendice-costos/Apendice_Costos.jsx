@@ -6,6 +6,7 @@ import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 import { firestore } from '@/firebase/firebaseClient'
 // import AdministrarDB from './AdministrarDB' Usar para editar la base de datos firestore desde el XLSX
 import ApendiceJson from './apendice-costos.json'
+import TableCards from './tabla/tabla'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -198,6 +199,7 @@ const ApendiceCostos = () => {
             <Container fluid className="p-0">
                 {/* <AdministrarDB /> */}
                 <Row className="m-0 w-100 d-flex ps-4 pe-4">
+                    <TableCards dataTable={categoriaInfo} />
                     <Table
                         className=""
                         sx={{
