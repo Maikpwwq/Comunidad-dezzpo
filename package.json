@@ -1,7 +1,7 @@
 {
   "name": "comunidad-dezzpo",
   "version": "1.0.0",
-  "description": "Marketplace de la agremiación sin animo de lucro, que apoya instaladores de acabados y obra residencial",
+  "description": "Únete a la red profesional de Comunidad Dezzpo: brindamos soluciones de mantenimiento, remodelaciones, instalaciones y acabados inmobiliarios basados en experiencia, prevención y empatía. ¡Accede a información confiable y selecciona perfiles según estadísticas en nuestro marketplace!",
   "main": "index.js",
   "type": "module",
   "private": true,
