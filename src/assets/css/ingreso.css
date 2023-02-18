@@ -7,7 +7,7 @@
 }
 
 .imagenIngreso {
-    background: url(../img/IsologoFooter.png) no-repeat center;
+    background: url('/assets/img/logo/LOGO-11.png') no-repeat center;
     background-attachment: scroll;
     background-size: 50% auto;
     min-height: 565px;

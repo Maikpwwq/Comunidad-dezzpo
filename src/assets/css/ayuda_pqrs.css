@@ -1,45 +1,47 @@
 /* Pantallas de Moviles */
 @media screen and (max-width: 600px) {
-    .ayudaPqrsPreguntas{
-        background: #e9ebe6 url(../img/Ayuda&PQRS2Mobile.png) no-repeat center !important;       
+    .ayudaPqrsPreguntas {
+        background: #e9ebe6 url('/assets/img/Ayuda&PQRS2Mobile.png') no-repeat center !important;
         background-size: cover !important;
         padding-bottom: 300px !important;
     }
 }
+
 /* Pantallas en tabletas */
 @media screen and (min-width: 600px) and (max-width: 900px) {
-    .ayudaPqrsPreguntas{
-        background: #e9ebe6 url(../img/Ayuda&PQRS2.png) no-repeat center !important;    
+    .ayudaPqrsPreguntas {
+        background: #e9ebe6 url('/assets/img/Ayuda&PQRS2.png') no-repeat center !important;
         background-size: cover !important;
     }
 }
-/* Pantallas de Ordenador */
-@media screen and (min-width: 900px) {
-   
-}
 
-.ayudaPqrsTitulo{
+/* Pantallas de Ordenador */
+@media screen and (min-width: 900px) {}
+
+.ayudaPqrsTitulo {
     /* background: #e9ebe6 url(../img/Ayuda&PQRS1.png) no-repeat center;  */
-    background: #e9ebe6 url(
-        https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/Ayuda%26PQRS1.png?alt=media&token=3e631abd-4538-4e17-ae1f-e341072c796b
-    ) no-repeat center; 
-    background-attachment: scroll;         
+    background: #e9ebe6 url('/assets/img/Ayuda&PQRS1.png'
+        ) no-repeat center;
+    background-attachment: scroll;
     background-size: cover;
     min-height: 550px;
     height: auto;
     width: 100%;
 }
-.ayudaPqrsPreguntas{
-    background: #e9ebe6 url(../img/Ayuda&PQRS2.png) no-repeat center; 
-    background-attachment: scroll;         
+
+.ayudaPqrsPreguntas {
+    background: #e9ebe6 url('/assets/img/Ayuda&PQRS2.png') no-repeat center;
+    background-attachment: scroll;
     background-size: 100% 100%;
     min-height: 640px;
     height: auto;
-    width: 100%;    
+    width: 100%;
 }
+
 .ayudaPqrsPreguntas li a:link {
     color: black !important;
 }
+
 .ayudaPqrsPreguntas li a:visited {
     color: black !important;
 }

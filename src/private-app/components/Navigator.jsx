@@ -5,7 +5,7 @@ import { signOut } from 'firebase/auth'
 
 //imagenes
 // import Avatar1 from '@/assets/img/CategoriasPopulares.png'
-import LogoMenuComunidadDezzpo from '@/assets/img/IsologoUserApp.png'
+import LogoMenuComunidadDezzpo from '/assets/img/logo/IsoLogo-Dezzpo-Verde.png'
 
 import SnackBarAlert from '../../app/components/SnackBarAlert'
 import Divider from '@mui/material/Divider'

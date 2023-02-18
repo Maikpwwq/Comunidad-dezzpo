@@ -5,6 +5,11 @@
 
     .logo-comunidad-dezzpo {
         height: 45px !important;
+        width: 45px !important;
+    }
+
+    .isologo-comunidad-dezzpo {
+        height: 45px !important;
         width: 110px !important;
     }
 
@@ -84,10 +89,15 @@
     justify-content: space-evenly !important;
 }
 
-.logo-comunidad-dezzpo {
+.isologo-comunidad-dezzpo {
     height: 45px;
     width: 160px;
     padding: '5px 10px';
+}
+
+.logo-comunidad-dezzpo {
+    height: 45px !important;
+    width: 45px !important;
 }
 
 .mobile-menu {
