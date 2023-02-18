@@ -282,7 +282,7 @@ const Registro = (props) => {
                             md={6}
                             sm={12}
                         >
-                            <Box style={{ top: '21vh', position: 'relative' }}>
+                            <Box style={{ top: '16vh', position: 'relative' }}>
                                 <Typography className="text-white" variant="h4">
                                     Bienvenido a
                                 </Typography>
@@ -352,7 +352,7 @@ const Registro = (props) => {
                                                 {/* Bienvenido a todos los beneficios de
                                             dezzpo.{' '} */}
                                                 <NavLink
-                                                    className="body-2 btn-TEXT"
+                                                    className="body-2 btn-TEXT textVerde2"
                                                     to="/ingreso/"
                                                 >
                                                     {/* {'¿Ya tienes una cuenta?'} */}

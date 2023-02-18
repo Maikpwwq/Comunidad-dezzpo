@@ -9,6 +9,9 @@
 .textVerde {
     color: var(--primary-green-text-color) !important;
 }
+.textVerde2 {
+    color: var(--secondary-green-text-color) !important;
+}
 .textAzul {
     color: var(--primary-blue-light-color) !important;
 }
@@ -214,7 +217,7 @@
     font-family: var(--font-worksans-medium);
     font-size: 0.938rem;
     font-weight: 500; // 16px/22px
-    color: var(--secondary-green-text-color) !important;
+    color: var(--secondary-green-text-color);
     line-height: 1.375em !important;
     // text-transform: uppercase;
     // text-decoration: underline !important;

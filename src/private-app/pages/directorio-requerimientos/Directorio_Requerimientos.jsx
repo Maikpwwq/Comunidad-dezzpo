@@ -57,8 +57,8 @@ const Directorio_Requerimientos = (props) => {
                 <Row className="m-0 w-100 d-flex">
                     <Col className="p-2" lg={8} md={8} sm={10} xs={12}>
                         <h2 className="headline-xl">
-                            Directorio Requerimientos
-                            <Button className="body-1">
+                            Directorio Requerimientos{'  '}
+                            <Button className="body-1 btn-round btn-high">
                                 Aplica gratis a un requerimiento
                             </Button>
                         </h2>

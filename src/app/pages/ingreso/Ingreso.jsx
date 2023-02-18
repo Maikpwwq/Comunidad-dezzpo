@@ -180,12 +180,12 @@ const Ingreso = (props) => {
             <Container fluid className="p-0">
                 <Row className="ingresoFormulario  m-0 w-100">
                     <Col
-                        className="imagenIngreso d-flex align-items-start justify-content-center"
+                        className="imagenIngreso d-flex align-items-start justify-content-center" 
                         lg={6}
                         md={6}
                         sm={12}
                     >
-                        <Box style={{ top: '21vh', position: 'relative' }}>
+                        <Box style={{ top: '16vh', position: 'relative' }}>
                             <Typography className="text-white" variant="h4">
                                 Bienvenido a
                             </Typography>
@@ -242,7 +242,7 @@ const Ingreso = (props) => {
                                             <p className="body-1 pt-2 m-0">
                                                 {/* Eres nuevo, crea fácil una cuenta, */}
                                                 <NavLink
-                                                    className="body-2 btn-TEXT"
+                                                    className="body-2 btn-TEXT textVerde2"
                                                     to="/registro/"
                                                 >
                                                     {' Registrarme'}
@@ -250,7 +250,7 @@ const Ingreso = (props) => {
                                             </p>
                                             {/* TODO: Modal ingresar datos olvidaste la contaseña */}
                                             <Button
-                                                className="textGris btn-TEXT"
+                                                className="textBlanco btn-TEXT btn-round btn-high"
                                                 variant="primary"
                                                 onClick={
                                                     handleClickForgetPassword

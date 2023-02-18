@@ -4,7 +4,8 @@ import { NavLink } from 'react-router-dom' // withRouter, Redirect
 import '@/assets/css/menu.css'
 
 // images
-import LogoMenuComunidadDezzpo from '@/assets/img/IsologoFooter.png'
+import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'
+import IsoLogoMenuComunidadDezzpo from '/assets/img/logo/IsoLogo-Dezzpo-Verde.png'
 
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
@@ -35,11 +36,19 @@ const MenuComunidad = (props) => {
                                     <MenuIcon sx={{ fontSize: '30px' }} />
                                 </IconButton>
 
-                                <NavLink to="/" className="activo body-2 p-2">
+                                <NavLink
+                                    to="/"
+                                    className="activo body-2 p-2 d-flex flex-row"
+                                >
                                     <img
                                         src={LogoMenuComunidadDezzpo}
                                         alt="Logo Comunidad Dezzpo"
-                                        className="logo-comunidad-dezzpo"
+                                        className="logo-comunidad-dezzpo me-2"
+                                    />
+                                    <img
+                                        src={IsoLogoMenuComunidadDezzpo}
+                                        alt="IsoLogo Comunidad Dezzpo"
+                                        className="isologo-comunidad-dezzpo"
                                     />
                                 </NavLink>
                             </div>
