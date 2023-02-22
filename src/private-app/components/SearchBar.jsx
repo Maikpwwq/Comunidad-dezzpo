@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, NavLink } from 'react-router-dom'
 import { styled, alpha } from '@mui/material/styles'
 import IcoMoon from 'react-icomoon'
 import iconSet from '@/assets/css/icomoon/selection.json'
@@ -7,6 +7,10 @@ import ListadoCategorias from '@/app/components/ListadoCategorias'
 import SearchIcon from '@mui/icons-material/Search'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import Box from '@mui/material/Box'
+
+// images
+import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -82,44 +86,62 @@ const SearchBar = () => {
 
     return (
         <>
-            <Search sx={{ maxWidth: '300px'}}>
-                <SearchIconWrapper>
-                    {/* <SearchIcon /> */}
-                    <IcoMoon
-                        iconSet={iconSet}
-                        icon="LupaFomularioIcono"
-                        style={{
-                            height: '28px',
-                            marginRight: '8px',
-                            width: 'auto',
-                        }}
-                    />
-                </SearchIconWrapper>
-                <StyledSelect
-                    style={{ borderStyle: 'solid', borderWidth: '1px' }}
-                    className="w-100"
-                    id="search-select-category"
-                    name="searchInput"
-                    multiple
-                    // autoFocus={true}
-                    // onKeyDown={handleSearch}
-                    value={searchParams.searchInput}
-                    onChange={(e) => handleChange(e)}
-                    inputProps={{
-                        'aria-label': 'search', //Without label
-                    }}
-                    // 'Busqueda Local: Buscar por categoria'
+            <Box
+                sx={{
+                    display: 'flex',
+                    minWidth: '230px',
+                    alignItems: 'center',
+                }}
+            >
+                <NavLink
+                    to="/app/"
+                    className="activo body-2 p-2 d-flex flex-row"
                 >
-                    {ListadoCategorias.map((item) => {
-                        const { key, label } = item
-                        return (
-                            <MenuItem value={label} key={key}>
-                                {label}
-                            </MenuItem>
-                        )
-                    })}
-                </StyledSelect>
-            </Search>
+                    <img
+                        src={LogoMenuComunidadDezzpo}
+                        alt="Logo Comunidad Dezzpo"
+                        className="logo-comunidad-dezzpo me-2"
+                    />
+                </NavLink>
+                <Search sx={{ maxWidth: '300px', width: '100% !important' }}>
+                    <SearchIconWrapper>
+                        {/* <SearchIcon /> */}
+                        <IcoMoon
+                            iconSet={iconSet}
+                            icon="LupaFomularioIcono"
+                            style={{
+                                height: '28px',
+                                marginRight: '8px',
+                                width: 'auto',
+                            }}
+                        />
+                    </SearchIconWrapper>
+                    <StyledSelect
+                        style={{ borderStyle: 'solid', borderWidth: '1px' }}
+                        className="w-100"
+                        id="search-select-category"
+                        name="searchInput"
+                        multiple
+                        // autoFocus={true}
+                        // onKeyDown={handleSearch}
+                        value={searchParams.searchInput}
+                        onChange={(e) => handleChange(e)}
+                        inputProps={{
+                            'aria-label': 'search', //Without label
+                        }}
+                        // 'Busqueda Local: Buscar por categoria'
+                    >
+                        {ListadoCategorias.map((item) => {
+                            const { key, label } = item
+                            return (
+                                <MenuItem value={label} key={key}>
+                                    {label}
+                                </MenuItem>
+                            )
+                        })}
+                    </StyledSelect>
+                </Search>
+            </Box>
         </>
     )
 }

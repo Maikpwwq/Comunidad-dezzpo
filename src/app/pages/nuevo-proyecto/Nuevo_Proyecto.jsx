@@ -694,13 +694,16 @@ const NuevoProyecto = (props) => {
                                         Registra la dirección donde se requiere
                                         el servicio.
                                         <Row
-                                            className="w-100"
+                                            className="w-100 flex"
                                             style={{
-                                                flexWrap: 'nowrap',
                                                 justifyContent: 'flex-start',
                                             }}
                                             sx={{
-                                                flexWrap: { sm: 'wrap' },
+                                                flexWrap: {
+                                                    lg: 'nowrap',
+                                                    md: 'nowrap',
+                                                    sm: 'wrap',
+                                                },
                                             }}
                                         >
                                             <Form.Control
@@ -711,7 +714,7 @@ const NuevoProyecto = (props) => {
                                                 onChange={handleChange}
                                             />
                                             <Button
-                                                className="body-2 pb-2 textVerde w-auto"
+                                                className="body-2 ms-2 pb-2 textVerde w-auto"
                                                 onClick={handleOpen}
                                             >
                                                 <AddLocationIcon />

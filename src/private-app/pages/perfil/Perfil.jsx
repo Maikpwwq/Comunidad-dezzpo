@@ -35,7 +35,7 @@ const Perfil = (props) => {
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
     const [userRol, setUserRol] = useState({
-        rol: selectRole ? selectRole : 2,
+        rol: 2, // selectRole ? selectRole : 
     })
     // Este es el id que se obtienen como parametro de busqueda o consulta de un perfil especifico
     const userId =
