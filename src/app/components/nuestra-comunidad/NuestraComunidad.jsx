@@ -20,7 +20,7 @@ const NuestraComunidad = (props) => {
                             {' '}
                             Nuestra <strong>Comunidad</strong>{' '}
                         </h2>
-                        <p className="body-1">
+                        <p className="body-1 pb-4">
                             Tenemos una gran cantidad de profesionales que
                             quieren trabajar en su proyecto.
                         </p>

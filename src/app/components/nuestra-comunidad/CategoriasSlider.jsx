@@ -227,6 +227,7 @@ const CategoriasSlider = (props) => {
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
                 // slideRenderer={slideRenderer}
+                className="mb-2"
             >
                 {Categorias.map((categoria, index) => {
                     return (
@@ -236,21 +237,19 @@ const CategoriasSlider = (props) => {
                                 alt="Categorias Populares entre la Comunidad"
                                 height="170"
                                 style={{ width: '33%', padding: 0 }}
-                                maxwidth="300"
                             />
                             <img
                                 src={categoria[1]}
                                 alt="Categorias Populares entre la Comunidad"
                                 height="170"
                                 style={{ width: '33%', padding: 0 }}
-                                maxwidth="300"
+                                // width="300"
                             />
                             <img
                                 src={categoria[2]}
                                 alt="Categorias Populares entre la Comunidad"
                                 height="170"
                                 style={{ width: '33%', padding: 0 }}
-                                maxwidth="300"
                             />
                         </Row>
                     )

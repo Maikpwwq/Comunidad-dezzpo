@@ -120,11 +120,9 @@ const AsiTrabajamos = (props) => {
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosCalificaciones m-0 p-4 w-100 d-flex flex-column align-items-end">
                     <Col className="mt-4" lg={6} md={6} sm={12}>
-                        <span>
-                            <h2 className="headline-xl textBlanco">
-                                CALIFICACIONES
-                            </h2>
-                        </span>
+                        <h2 className="headline-xl textBlanco">
+                            CALIFICACIONES
+                        </h2>
                         <p className="body-1 textBlanco">
                             La valoración debe darse con base en los
                             <br />
@@ -134,7 +132,7 @@ const AsiTrabajamos = (props) => {
                         </p>
                         <br />
                         <br />
-                        <ul className="ps-0">
+                        <ul className="ps-0 body-2">
                             <li>
                                 Estado de observaciones generales y evaluacion
                                 del desempeño:
