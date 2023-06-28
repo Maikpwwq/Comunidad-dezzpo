@@ -105,13 +105,23 @@ const Registro = (props) => {
         } else console.log('no hay connect', typeof connect)
     }
 
-    const crearCanal = (userId) => {
+    const crearCanal = (userId, displayName) => {
         // console.log(sdk)
         if (typeof createChannel == 'function' && typeof sbSdk === 'object') {
-            if (typeof sbSdk.GroupChannelParams == 'function') {
-                const param = new sbSdk.GroupChannelParams()
+            // if (typeof sbSdk.GroupChannelParams == 'function') {
+            if (typeof sbSdk.OpenChannelParams == 'function') {
+                const param = new sbSdk.OpenChannelParams()
+                // Tranbsform display name
+                const TransformName = displayName
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .split(' ')
+                    .join('_')
+                param.channelUrl(`sendbird_open_channel_${TransformName}`)
+                param.customType('profesional calificado')
+                param.data(`Canal perfil profesional calificado ${displayName}`)
                 param.addUserIds([userId])
-                param.setName('Comentarios')
                 // console.log('param', param)
                 createChannel(param)
                     .then((channel) => {
@@ -146,12 +156,13 @@ const Registro = (props) => {
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         var user = userCredential.user
-                        conectarSB(user.uid)
-                        crearCanal(user.uid)
+                        const { uid, email, displayName } = user
+                        conectarSB(uid)
+                        crearCanal(uid, displayName)
                         const data = {
-                            userMail: user.email,
+                            userMail: email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
-                            userId: user.uid,
+                            userId: uid,
                             userChannelUrl: channelUrl || '',
                             createdDrafts: [],
                             // userName: user.displayName,
@@ -161,20 +172,20 @@ const Registro = (props) => {
                             if (draftInfo) {
                                 data.createdDrafts.push(draftInfo.draftId)
                             }
-                            userProResToFirestore(data, user.uid)
+                            userProResToFirestore(data, uid)
                         }
                         if (userSignupRol == 2) {
-                            userComCalToFirestore(data, user.uid)
+                            userComCalToFirestore(data, uid)
                         }
                         // userToFirestore(data, user.uid)
                         // localStorage.setItem('role', JSON.stringify(userSignupRol))
                         localStorage.role = JSON.stringify(userSignupRol)
-                        localStorage.userID = JSON.stringify(user.uid)
+                        localStorage.userID = JSON.stringify(uid)
                         handleAlert('Cuenta actualizada con éxito!', 'success')
                         if (draftInfo) {
                             setDraftInfo({
                                 ...draftInfo,
-                                draftPropietarioResidente: user.uid,
+                                draftPropietarioResidente: uid,
                             })
                             handleSave()
                         } else {
