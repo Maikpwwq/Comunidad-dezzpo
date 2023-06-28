@@ -27,7 +27,8 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 
 const Perfil = (props) => {
     const user = auth.currentUser || {}
-    const userID = user.uid || '' // Este es el id de la cuenta de Auth
+    const userAuthID = user.uid || '' // Este es el id de la cuenta de Auth
+    const userAuthName = user.displayName || '' // Este es el id de la cuenta de Auth
     let isLoaded = false
     let { id } = useParams() // Este es el id de la busqueda
     // console.log(id)
@@ -35,7 +36,7 @@ const Perfil = (props) => {
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
     const [userRol, setUserRol] = useState({
-        rol: 2, // selectRole ? selectRole : 
+        rol: 2, // selectRole ? selectRole :
     })
     // Este es el id que se obtienen como parametro de busqueda o consulta de un perfil especifico
     const userId =
@@ -43,10 +44,10 @@ const Perfil = (props) => {
             ? state.id
             : id
     const consult = userId !== null && userId !== undefined ? true : false
-    const userConsultId = consult ? userId : userID
+    const userConsultId = consult ? userId : userAuthID
     console.log(userConsultId)
     // console.log(userId, consult, userConsultId)
-    // console.log(userID)
+    // console.log(userAuthID)
     // console.log(userConsultId)
 
     const userData = () => {
@@ -108,7 +109,7 @@ const Perfil = (props) => {
 
                 const productData = sharingInformationService.getSubject()
                 productData.subscribe((data) => {
-                    if (!!data) {
+                    if (data) {
                         console.log('Detail load:', data)
                         const creationTime = data.userJoined
                             ? data.userJoined
@@ -475,9 +476,9 @@ const Perfil = (props) => {
 
                                 {userInfo.userChannelUrl && (
                                     <Comentarios
-                                        userID={userConsultId}
                                         channelUrl={userInfo.userChannelUrl}
-                                        nickname={userInfo.userName}
+                                        userID={userAuthID}
+                                        nickname={userAuthName}
                                     />
                                 )}
                             </Col>

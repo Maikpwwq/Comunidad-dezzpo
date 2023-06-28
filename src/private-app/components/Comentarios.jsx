@@ -103,7 +103,7 @@ import Container from '@mui/material/Container'
 
 // Usuario principal de la aplicación
 let userId = import.meta.env.VITE_APP_SENDBIRD_USERID
-let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
+// let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
 
 const Comentarios = (props) => {
@@ -117,12 +117,12 @@ const Comentarios = (props) => {
                 <Box sx={{ bgcolor: '#cfe8fc' }}>
                     <SendbirdProvider
                         appId={appId} // Sendbird application ID.
-                        userId={userID} // user ID.
-                        nickname={nickname}
+                        userId={userID} // user Auth ID.
+                        nickname={nickname} // user Auth Name.
                         // accessToken={accessToken}
                         dateLocale={es}
                     >
-                        <ComentarPerfil channelUrl={channelUrl} />
+                        <ComentarPerfil channelUrl={channelUrl} /> 
                         {/* <CreateChannel />
                         <ChannelList />
                         <Channel />

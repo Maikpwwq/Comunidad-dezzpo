@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import './comentarPerfil.css'
 import {
     App as SendBirdApp,
-    Channel,
+    // Channel,
+    OpenChannel,
     withSendBird,
 } from '@sendbird/uikit-react'
 
@@ -106,13 +107,14 @@ function ComentarPerfil(props) {
         <div className="comentar-perfil">
             <div className="comentar-perfil_container">
                 <div className="comentar-perfil_conversation-container">
-                    <Channel
+                    <OpenChannel channelUrl={currentChannelUrl} />
+                    {/* <Channel
                         channelUrl={currentChannelUrl}
                         replyType="QUOTE_REPLY"
                         onChatHeaderActionClick={() => {
                             setShowSettings(true)
                         }}
-                    />
+                    /> */}
                 </div>
                 {/* Modelo deseado de hilo de comentarios */}
                 {/* <Container fixed>
