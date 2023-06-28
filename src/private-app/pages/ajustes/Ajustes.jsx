@@ -33,7 +33,7 @@ const Ajustes = (props) => {
     const [userRol, setUserRol] = useState({
         rol: selectRole,
     })
-    console.log(userRol.rol)
+    // console.log(userRol.rol)
     const [alert, setAlert] = useState({
         open: false,
         message: '',
@@ -54,10 +54,10 @@ const Ajustes = (props) => {
         userJoined: '',
         userProfession: '',
         userExperience: '',
-        userCategorie: '',
-        userClasification: [],
-        userGrade: '',
-        userCategories: '',
+        // userCategorie: '',
+        // userClasification: [],
+        // userGrade: '',
+        userCategories: [],
         userDirection: '',
         userCiudad: '',
         userCodigoPostal: '',
@@ -69,7 +69,7 @@ const Ajustes = (props) => {
     const userData = () => {
         const firestoreUserID = userID
         const userSelectedRol = userRol.rol
-        console.log(firestoreUserID, userSelectedRol)
+        // console.log(firestoreUserID, userSelectedRol)
         readUserFromFirestore({
             firestoreUserID,
             userSelectedRol,
@@ -91,7 +91,7 @@ const Ajustes = (props) => {
             const productData = sharingInformationService.getSubject()
             productData.subscribe((data) => {
                 if (!!data) {
-                    console.log('Detail load:', data)
+                    // console.log('Detail load:', data)
                     setUserEditInfo({
                         ...userEditInfo,
                         userPhone: data.userPhone || phoneNumber,
@@ -102,9 +102,9 @@ const Ajustes = (props) => {
                         userJoined: data.userJoined,
                         userProfession: data.userProfession,
                         userExperience: data.userExperience,
-                        userCategorie: data.userCategorie,
-                        userClasification: data.userClasification,
-                        userGrade: data.userGrade,
+                        // userCategorie: data.userCategorie,
+                        // userClasification: data.userClasification,
+                        // userGrade: data.userGrade,
                         userCategories: data.userCategories,
                         userDirection: data.userDirection,
                         userCiudad: data.userCiudad,
@@ -146,7 +146,7 @@ const Ajustes = (props) => {
         const firestoreUserID = userID
         const userSelectedRol = userRol.rol
         console.log(firestoreUserID, userSelectedRol, userEditInfo)
-        updateUserToFirestore({
+        updateUserToFirestore({ 
             firestoreUserID,
             userSelectedRol,
             userEditInfo,

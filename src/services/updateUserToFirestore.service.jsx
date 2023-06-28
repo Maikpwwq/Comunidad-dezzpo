@@ -8,7 +8,7 @@ const updateUserToFirestore = (props) => {
     const user = auth.currentUser || {}
     const _firestore = firestore
 
-    const { firestoreUserID, userRol, userEditInfo } = props
+    const { firestoreUserID, userSelectedRol, userEditInfo } = props
 
     const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
     const usersComCalRef = collection(
@@ -26,7 +26,7 @@ const updateUserToFirestore = (props) => {
 
     const userToFirestore = async () => {
         try {
-            if (userRol === 1) {
+            if (userSelectedRol === 1) {
                 const snap = userProResToFirestore(
                     userEditInfo,
                     firestoreUserID
@@ -38,7 +38,7 @@ const updateUserToFirestore = (props) => {
                     // )
                     console.log(docSnap)
                 })
-            } else if (userRol === 2) {
+            } else if (userSelectedRol === 2) {
                 const snap = userComCalToFirestore(
                     userEditInfo,
                     firestoreUserID

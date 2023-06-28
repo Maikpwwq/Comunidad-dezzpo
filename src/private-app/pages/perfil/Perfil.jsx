@@ -45,7 +45,7 @@ const Perfil = (props) => {
             : id
     const consult = userId !== null && userId !== undefined ? true : false
     const userConsultId = consult ? userId : userAuthID
-    console.log(userConsultId)
+    // console.log(userConsultId)
     // console.log(userId, consult, userConsultId)
     // console.log(userAuthID)
     // console.log(userConsultId)
@@ -53,7 +53,7 @@ const Perfil = (props) => {
     const userData = () => {
         const firestoreUserID = userConsultId
         const userSelectedRol = userRol.rol
-        console.log(firestoreUserID, userSelectedRol)
+        // console.log(firestoreUserID, userSelectedRol)
         readUserFromFirestore({
             firestoreUserID,
             userSelectedRol,
@@ -72,9 +72,9 @@ const Perfil = (props) => {
         userJoined: '',
         userProfession: '',
         userExperience: '',
-        userCategorie: '',
-        userClasification: '',
-        userGrade: '',
+        // userCategorie: '',
+        // userClasification: '',
+        // userGrade: '',
         userCategories: [],
         userCategoriesChips: [],
         userDirection: '',
@@ -158,15 +158,15 @@ const Perfil = (props) => {
                             userExperience: data.userExperience
                                 ? data.userExperience
                                 : '',
-                            userCategorie: data.userCategorie
-                                ? data.userCategorie
-                                : '',
-                            userClasification: data.userClasification
-                                ? data.userClasification
-                                : '',
-                            userCategories: data.userCategories
-                                ? data.userCategories
-                                : '',
+                            // userCategorie: data.userCategorie
+                            //     ? data.userCategorie
+                            //     : '',
+                            // userClasification: data.userClasification
+                            //     ? data.userClasification
+                            //     : '',
+                            // userCategories: data.userCategories
+                            //     ? data.userCategories
+                            //     : '',
                             userCategoriesChips:
                                 chipsInfo.length > 0 ? chipsInfo : [],
                             userGrade: data.userGrade ? data.userGrade : '',

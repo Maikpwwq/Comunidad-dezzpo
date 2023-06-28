@@ -28,7 +28,7 @@ const MapaPerfil = ({ userInfo }) => {
         loader
             .load()
             .then((google) => {
-                console.log(latLng)
+                // console.log(latLng)
                 map = new google.maps.Map(
                     document.getElementById('profile-map'),
                     mapOptions
@@ -44,7 +44,7 @@ const MapaPerfil = ({ userInfo }) => {
                         // const formattedAddress =
                         //     response.results[0].formatted_address
                         if (userInfo.userId) {
-                            console.log(userInfo.userId)
+                            // console.log(userInfo.userId)
                             const infoGroup = `${
                                 userInfo.userRazonSocial || userInfo.userName
                             }, ${userInfo.userDirection}`
