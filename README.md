@@ -1,12 +1,8 @@
 # Comunidad-dezzpo Colombia
 
-Únase en comunidad para liderar el desarrollo social y sostenible de la expansión inmobiliaria.
+Únete a la red profesional de Comunidad Dezzpo: brindamos soluciones de mantenimiento, remodelaciones, instalaciones y acabados inmobiliarios basados en experiencia, prevención y empatía. ¡Accede a información confiable y selecciona perfiles según estadísticas en nuestro marketplace!
 
 ![Comunidad Dezzpo](/public/assets/img/Comunidad-Dezzpo.jpg)
-
-> Propietario contrata comerciantes calificados en mantenimiento general. 
-  Consulta perfiles y estadísticas de prestadores. 
-  Adquiere servicios periódico preventivos y correctivos para tu inmueble más rápido y simple que nunca.
 
 ## Web site
 

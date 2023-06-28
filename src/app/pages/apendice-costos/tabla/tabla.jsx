@@ -84,7 +84,7 @@ const TableCards = (props) => {
                 {dataCards !== undefined && (
                     <DataGrid
                         disableColumnSelector
-                        disableSelectionOnClick
+                        disableRowSelectionOnClick
                         autoHeight
                         pageSize={pageSize}
                         rowsPerPageOptions={[pageSize]}

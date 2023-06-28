@@ -10,8 +10,8 @@ import IsoLogoMenuComunidadDezzpo from '/assets/img/logo/IsoLogo-Dezzpo-Verde.pn
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-// import Menu from '@mui/material/Menu'
-// import MenuItem from '@mui/material/MenuItem'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -23,25 +23,12 @@ const MenuComunidad = (props) => {
     }  className= {this.getNavLinkClass("/")}
     */
 
-    const Close = () => {
-        const dropdownQuery = document.querySelectorAll('.menuContenedor')
-        dropdownQuery.forEach((menuContenedor) => {
-            console.log('dropdownQuery', menuContenedor)
-            // menuContenedor.style.display = `none `
-            // menuContenedor.style.position = `absolute`
-            // menuContenedor.style.left = `-9999px`
-        })
-        // const dropdownByClass = Array.from(document.getElementsByClassName('dropdownContenidos'))
-        // const menuContenedorById = document.getElementById('menuContenedor')
-        // menuContenedorById.style.display = `none `
-    }
-
     return (
         <>
             <Container fluid className="p-0">
                 <Col className="menuFijo w-100 p-0 m-0">
                     {/* Menu fijo */}
-                    <Col className="p-0 pt-2 pb-2 barraMenu">
+                    <Col className="p-0 barraMenu">
                         <Row className="m-0 ps-2 pe-4 d-flex w-100 menuVisible">
                             <div className="containerLogo container d-flex w-auto ms-0">
                                 <IconButton
@@ -94,9 +81,8 @@ const MenuComunidad = (props) => {
                             </Row>
                         </Row>
                     </Col>
-                    <nav className="menuContenedor col-10 pt-2 pb-2">
-                        {/* sm="collapseContents" */}
-                        <ul className="menuSecciones">
+                    <nav className="menuContenedor col-10">
+                        <ul className="menuSecciones" sm="collapseContents">
                             {/* <li className="botonSeccion">
                                     <NavLink
                                         exact
@@ -121,16 +107,13 @@ const MenuComunidad = (props) => {
                                     <NavLink
                                         to="/profesionales-servicios"
                                         className="p-2 pb-0"
-                                        onClick={Close}
                                     >
                                         {' '}
                                         Profesionales y servicios{' '}
                                     </NavLink>
-
                                     <NavLink
                                         to="/asesorias"
                                         className="p-2 pb-0"
-                                        onClick={Close}
                                     >
                                         Asesores en vivo
                                     </NavLink>

@@ -3,13 +3,37 @@ import PropTypes from 'prop-types'
 import './comentarPerfil.css'
 import {
     App as SendBirdApp,
-    Channel,
+    // Channel,
+    OpenChannel,
     withSendBird,
 } from '@sendbird/uikit-react'
 
 // import SendbirdSelectors from '@sendbird/uikit-react/SendbirdSelectors'
+// import TextareaAutosize from '@mui/material/TextareaAutosize'
+
+// import Avatar from '@mui/material/Avatar'
+// import Box from '@mui/material/Box'
+// import Button from '@mui/material/Button'
+// import Container from '@mui/material/Container'
+// import IconButton from '@mui/material/IconButton'
+// import ListItem from '@mui/material/ListItem'
+// import ListItemButton from '@mui/material/ListItemButton'
+// import ListItemIcon from '@mui/material/ListItemIcon'
+// import ListItemText from '@mui/material/ListItemText'
+// import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+// import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+// import AddCommentIcon from '@mui/icons-material/AddComment'
 
 function ComentarPerfil(props) {
+    // const commentUserPhotoUrl = ''
+    // const commentUserName = 'Nombre Usuario'
+    // const commentDate = 'Hace x cantidad de tiempo'
+    // const commentBody = 'Aqui va el cuerpo del comentario'
+    // const commentsNumber = '4'
+    // const iconUp = <ArrowUpwardIcon />
+    // const iconDown = <ArrowDownwardIcon />
+    // const iconComments = <AddCommentIcon />
+
     const { channelUrl } = props
     const [currentChannelUrl, setCurrentChannelUrl] = useState(channelUrl)
     const [showSettings, setShowSettings] = useState(false)
@@ -83,14 +107,54 @@ function ComentarPerfil(props) {
         <div className="comentar-perfil">
             <div className="comentar-perfil_container">
                 <div className="comentar-perfil_conversation-container">
-                    <Channel
+                    <OpenChannel channelUrl={currentChannelUrl} />
+                    {/* <Channel
                         channelUrl={currentChannelUrl}
                         replyType="QUOTE_REPLY"
                         onChatHeaderActionClick={() => {
                             setShowSettings(true)
                         }}
-                    />
+                    /> */}
                 </div>
+                {/* Modelo deseado de hilo de comentarios */}
+                {/* <Container fixed>
+                    <Box sx={{}}>
+                        <Box sx={{}}>
+                            <ListItem sx={{}}>
+                                <ListItemIcon>
+                                    <IconButton color="inherit" sx={{ p: 0.5 }}>
+                                        <Avatar
+                                            src={commentUserPhotoUrl}
+                                            alt="My Avatar"
+                                        />
+                                    </IconButton>
+                                </ListItemIcon>
+                                <ListItemText>{commentUserName}</ListItemText>
+                                <ListItemText>{commentDate}</ListItemText>
+                            </ListItem>
+                            <p>{commentBody}</p>
+                            <ListItem>
+                                <ListItemButton>
+                                    <ListItemIcon>{iconUp}</ListItemIcon>
+                                </ListItemButton>
+                                <ListItemButton>
+                                    <ListItemText>
+                                        {commentsNumber}
+                                    </ListItemText>
+                                </ListItemButton>
+                                <ListItemButton>
+                                    <ListItemIcon>{iconDown}</ListItemIcon>
+                                </ListItemButton>
+                                <ListItemButton>
+                                    <ListItemIcon>{iconComments}</ListItemIcon>
+                                    <ListItemText>Responder</ListItemText>
+                                </ListItemButton>
+                            </ListItem>
+                        </Box>
+                    </Box>
+                    <Button>Crear</Button>
+                    <Button>Editar</Button>
+                </Container> */}
             </div>
         </div>
     )

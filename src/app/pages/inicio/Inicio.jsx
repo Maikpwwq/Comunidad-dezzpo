@@ -71,7 +71,7 @@ const Inicio = (props) => {
 
     return (
         <>
-            <Container fluid className="p-0">
+            <Container fluid className="p-0 pt-4">
                 <Box sx={{ width: '100%', flexGrow: 1 }}>
                     <CustomSwipeableViews
                         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -99,11 +99,13 @@ const Inicio = (props) => {
                                     </Typography>
                                     <Typography
                                         variant="body2"
-                                        className="mb-2"
+                                        className="mb-4 mt-2"
                                     >
                                         {' '}
-                                        Hemos facilitado el servicio, haciendolo
-                                        más <br /> rapido y simple que nunca{' '}
+                                        ¡Descubre al instante el personal
+                                        profesional perfecto para <br />
+                                        cada proyecto en tu hogar con tan solo
+                                        un clic!{' '}
                                     </Typography>
                                     <Typography
                                         variant="subtitle1"
@@ -177,18 +179,22 @@ const Inicio = (props) => {
                 </Box>
             </Container>
             <Container fluid className="p-0">
-                <Row className="m-0 w-100 mensajeBanner">
+                <Row className="m-0 pt-4 w-100 mensajeBanner">
                     {/* Mensaje del Banner inferior*/}
                     <Col className="p-4" lg={7} md={8} sm={10}>
-                        <p className="m-0 body-2">
-                            Encuentra aqui un{' '}
-                            <strong> profesional Seguro y Confiable </strong>
-                            para cada trabajo. Desde iluminación y pequeños
-                            arreglos, hasta diseños de{' '}
+                        <Typography variant="body-2" className="m-0 body-2">
                             <strong>
-                                ingeniería y remodelaciones completas.
+                                Explora en Comunidad Dezzpo una red profesional
+                                confiable para todo tipo de trabajos, desde
+                                soluciones de mantenimiento e instalaciones
+                                pequeñas hasta acabados inmobiliarios y
+                                remodelaciones completas. Nuestro marketplace te
+                                ofrece la posibilidad de elegir contratistas
+                                especializados con estadísticas verificadas.
+                                ¡Únete ahora y comienza a hacer realidad tus
+                                proyectos!
                             </strong>
-                        </p>
+                        </Typography>
                     </Col>
                 </Row>
             </Container>
@@ -196,7 +202,7 @@ const Inicio = (props) => {
             <Container fluid className="p-0">
                 {/* Seccion de como funciona la comunidad */}
                 <Row id="comoFunciona" className="color-steps m-0">
-                    <Col className="col-lg-8 col-md-10 col-sm-12">
+                    <Col className="col-lg-8 col-md-10 col-sm-12 pt-4 pb-4">
                         <Typography variant="h3" className="pt-4 headline-l">
                             ¿Cómo funciona <br />
                             <strong>nuestra comunidad?</strong>

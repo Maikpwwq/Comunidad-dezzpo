@@ -26,17 +26,13 @@ const Nosotros = (props) => {
                                 HISTORIA
                             </h2>
                             <p className="body-2">
-                                La Comunidad Dezzpo Inc, un Marketplace de{' '}
-                                servicios publicitarios, para contratistas de{' '}
-                                mantenimiento inmobiliario.
-                                <br /> Aquí estamos cambiando la forma de
-                                contratar, comerciantes locales de reformas,
-                                maestros de construcción e instaladores
-                                independientes de acabados. <br />
-                                Consulta públicamente los perfiles y la
-                                reputación de los prestadores de servicios, tus
-                                proyectos y adecuaciones nunca han sido mejor
-                                asistidos. <br />
+                                Únete a la red profesional de Comunidad Dezzpo:
+                                brindamos soluciones de mantenimiento,
+                                remodelaciones, instalaciones y acabados
+                                inmobiliarios basados en experiencia, prevención
+                                y empatía. ¡Accede a información confiable y
+                                selecciona perfiles según estadísticas en
+                                nuestro marketplace!
                             </p>
                         </div>
                     </Col>
@@ -78,7 +74,7 @@ const Nosotros = (props) => {
                         <Row className="left w-100 p-4 d-flex flex-row justify-content-start">
                             <Col md={6} className="ps-4 pe-4">
                                 <p className="body-2 textBlanco ps-4 pe-4">
-                                    Dezzpo será en 2020 una marca colombiana
+                                    Dezzpo será en 2024 una marca colombiana
                                     posicionada, referente de consulta para la
                                     gestión en proyectos de mantenimiento,
                                     ofreciendo a la comunidad una propuesta de
