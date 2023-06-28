@@ -7,7 +7,7 @@ import { sharingInformationService } from '@/services/sharing-information'
 const readUserFromFirestore = (props) => {
     const _firestore = firestore
     const { firestoreUserID, userSelectedRol } = props
-    console.log('readUserFromFirestore', firestoreUserID, userSelectedRol)
+    // console.log('readUserFromFirestore', firestoreUserID, userSelectedRol)
 
     const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
     const usersComCalRef = collection(
