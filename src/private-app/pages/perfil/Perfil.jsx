@@ -110,9 +110,33 @@ const Perfil = (props) => {
                 const productData = sharingInformationService.getSubject()
                 productData.subscribe((data) => {
                     if (data) {
-                        console.log('Detail load:', data)
-                        const creationTime = data.userJoined
-                            ? data.userJoined
+                        const { user } = data
+                        const {
+                            userJoined,
+                            userCategories,
+                            userChannelUrl,
+                            userPhone,
+                            userPhotoUrl,
+                            userId,
+                            userMail,
+                            userName,
+                            userGalleryUrl,
+                            userProfession,
+                            userExperience,
+                            // userCategorie,
+                            // userClasification,
+                            // userCategoriesChips,
+                            userGrade,
+                            userDirection,
+                            userCiudad,
+                            userCodigoPostal,
+                            userRazonSocial,
+                            userIdentification,
+                            userDescription,
+                        } = user
+                        // console.log('Detail load:', data)
+                        const creationTime = userJoined
+                            ? userJoined
                             : metadata.creationTime
                         //console.log(creationTime)
                         const formatedTime = parse(
@@ -130,8 +154,8 @@ const Perfil = (props) => {
                             { locale: es }
                         )
                         const chipsInfo = []
-                        if (data.userCategories) {
-                            data.userCategories.forEach((chip) => {
+                        if (userCategories) {
+                            userCategories.forEach((chip) => {
                                 // console.log(chip)
                                 ListadoCategorias.forEach((cat) => {
                                     if (chip === cat.label) {
@@ -142,52 +166,50 @@ const Perfil = (props) => {
                         }
                         setUserInfo({
                             ...userInfo,
-                            userChannelUrl: data.userChannelUrl
-                                ? data.userChannelUrl
+                            userChannelUrl: userChannelUrl
+                                ? userChannelUrl
                                 : '',
-                            userPhone: data.userPhone || phoneNumber,
-                            userPhotoUrl: data.userPhotoUrl || photoURL,
-                            userId: data.userId || uid,
-                            userMail: data.userMail || email,
-                            userName: data.userName || displayName,
-                            userGalleryUrl: data.userGalleryUrl || [],
+                            userPhone: userPhone || phoneNumber,
+                            userPhotoUrl: userPhotoUrl || photoURL,
+                            userId: userId || uid,
+                            userMail: userMail || email,
+                            userName: userName || displayName,
+                            userGalleryUrl: userGalleryUrl || [],
                             userJoined: distanceTime,
-                            userProfession: data.userProfession
-                                ? data.userProfession
+                            userProfession: userProfession
+                                ? userProfession
                                 : '',
-                            userExperience: data.userExperience
-                                ? data.userExperience
+                            userExperience: userExperience
+                                ? userExperience
                                 : '',
-                            // userCategorie: data.userCategorie
-                            //     ? data.userCategorie
+                            // userCategorie: userCategorie
+                            //     ? userCategorie
                             //     : '',
-                            // userClasification: data.userClasification
-                            //     ? data.userClasification
+                            // userClasification: userClasification
+                            //     ? userClasification
                             //     : '',
-                            // userCategories: data.userCategories
-                            //     ? data.userCategories
+                            // userCategories: userCategories
+                            //     ? userCategories
                             //     : '',
                             userCategoriesChips:
                                 chipsInfo.length > 0 ? chipsInfo : [],
-                            userGrade: data.userGrade ? data.userGrade : '',
-                            userDirection: data.userDirection
-                                ? data.userDirection
+                            userGrade: userGrade ? userGrade : '',
+                            userDirection: userDirection ? userDirection : '',
+                            userCiudad: userCiudad ? userCiudad : '',
+                            userCodigoPostal: userCodigoPostal
+                                ? userCodigoPostal
                                 : '',
-                            userCiudad: data.userCiudad ? data.userCiudad : '',
-                            userCodigoPostal: data.userCodigoPostal
-                                ? data.userCodigoPostal
+                            userRazonSocial: userRazonSocial
+                                ? userRazonSocial
                                 : '',
-                            userRazonSocial: data.userRazonSocial
-                                ? data.userRazonSocial
+                            userIdentification: userIdentification
+                                ? userIdentification
                                 : '',
-                            userIdentification: data.userIdentification
-                                ? data.userIdentification
-                                : '',
-                            userDescription: data.userDescription
-                                ? data.userDescription
+                            userDescription: userDescription
+                                ? userDescription
                                 : '',
                         })
-                        // chipsInfoAdapter(data.userCategories)
+                        // chipsInfoAdapter(userCategories)
 
                         isLoaded = true
                     } else {

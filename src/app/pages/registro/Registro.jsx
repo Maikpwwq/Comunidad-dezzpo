@@ -1,10 +1,9 @@
 // Pagina de registro
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { sendbirdSelectors } from '@sendbird/uikit-react'
-import withSendbird from '@sendbird/uikit-react/withSendbird'
 import { NavLink, useNavigate } from 'react-router-dom'
-import SnackBarAlert from '../../components/SnackBarAlert'
+import SnackBarAlert from '@/app/components/SnackBarAlert'
+// import newOpenChannelSendbird from '@/services/newOpenChannelSendbird.service'
 import { auth, firestore } from '@/firebase/firebaseClient' // src/firebase/firebaseClient
 import {
     createUserWithEmailAndPassword,
@@ -40,17 +39,12 @@ const Registro = (props) => {
     const {
         showLogo,
         // draftId,
-        connect,
-        createChannel,
-        sbSdk,
         setDraftInfo,
         draftInfo,
         handleSave,
     } = props
     // sessionStorage.draftId = draftID
-    // useEffect(() => {
-    //     conectarSB()
-    // }, [connect])
+
     const [alert, setAlert] = useState({
         open: false,
         message: '',
@@ -67,10 +61,11 @@ const Registro = (props) => {
 
     const [send, setSend] = useState(false)
     const [step, setStep] = useState(1)
+    const [userSignupName, setName] = useState(undefined)
     const [userSignupEmail, setEmail] = useState(undefined)
     const [userSignupPassword, setPassword] = useState('')
     const [userSignupRol, setRol] = useState(undefined)
-    const [channelUrl, setChannelUrl] = useState(undefined)
+    // const [channelUrl, setChannelUrl] = useState(undefined)
 
     const navigate = useNavigate()
 
@@ -91,49 +86,6 @@ const Registro = (props) => {
         setRol(e)
         setStep(2)
         // console.log(e, userSignupRol)
-    }
-
-    const conectarSB = (userId) => {
-        if (typeof connect == 'function') {
-            connect(userId)
-                .then((user) => {
-                    console.log('user', user)
-                })
-                .catch((error) => {
-                    console.log('error', error)
-                })
-        } else console.log('no hay connect', typeof connect)
-    }
-
-    const crearCanal = (userId, displayName) => {
-        // console.log(sdk)
-        if (typeof createChannel == 'function' && typeof sbSdk === 'object') {
-            // if (typeof sbSdk.GroupChannelParams == 'function') {
-            if (typeof sbSdk.OpenChannelParams == 'function') {
-                const param = new sbSdk.OpenChannelParams()
-                // Tranbsform display name
-                const TransformName = displayName
-                    .toLowerCase()
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .split(' ')
-                    .join('_')
-                param.channelUrl(`sendbird_open_channel_${TransformName}`)
-                param.customType('profesional calificado')
-                param.data(`Canal perfil profesional calificado ${displayName}`)
-                param.addUserIds([userId])
-                // console.log('param', param)
-                createChannel(param)
-                    .then((channel) => {
-                        const { url, name, coverUrl, members } = channel
-                        setChannelUrl(url)
-                        console.log('channel', url, name, coverUrl, members)
-                    })
-                    .catch((error) => {
-                        console.log('error', error)
-                    })
-            }
-        } else console.log('no hay channel', typeof createChannel, typeof sbSdk)
     }
 
     const handleAlert = (message, severity) => {
@@ -157,17 +109,21 @@ const Registro = (props) => {
                     .then((userCredential) => {
                         var user = userCredential.user
                         const { uid, email, displayName } = user
-                        conectarSB(uid)
-                        crearCanal(uid, displayName)
+                        // Sendbird new open channel
+                        // newOpenChannelSendbird({
+                        //     uid,
+                        //     userSignupName,
+                        //     setChannelUrl,
+                        // })
                         const data = {
                             userMail: email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
                             userId: uid,
-                            userChannelUrl: channelUrl || '',
+                            userChannelUrl: '',
                             createdDrafts: [],
-                            // userName: user.displayName,
+                            userName: displayName || userSignupName,
                         }
-                        console.log(userSignupRol, channelUrl)
+                        console.log(userSignupRol)
                         if (userSignupRol == 1) {
                             if (draftInfo) {
                                 data.createdDrafts.push(draftInfo.draftId)
@@ -211,7 +167,7 @@ const Registro = (props) => {
 
     const handleGoogleProvider = (e) => {
         e.preventDefault()
-        if (userSignupRol && connect) {
+        if (userSignupRol) {
             const signUp = () => {
                 signInWithPopup(auth, googleProvider)
                     .then((result) => {
@@ -222,33 +178,38 @@ const Registro = (props) => {
                         const token = credential.accessToken
                         // The signed-in user info.
                         const user = result.user
-                        conectarSB(user.uid)
-                        crearCanal(user.uid)
+                        const { uid, email, displayName } = user
+                        // Sendbird new open channel
+                        // newOpenChannelSendbird({
+                        //     uid,
+                        //     userSignupName,
+                        //     setChannelUrl,
+                        // })
                         const data = {
-                            userMail: user.email,
+                            userMail: email,
                             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
-                            userId: user.uid,
-                            channelUrl: channelUrl || '',
+                            userId: uid,
+                            channelUrl: '',
                             createdDrafts: [],
-                            // userName: user.displayName,
+                            userName: displayName || userSignupName,
                         }
-                        // console.log(userSignupRol, channelUrl)
+                        console.log(userSignupRol)
                         if (userSignupRol == 1) {
                             if (draftInfo) {
                                 data.createdDrafts.push(draftInfo.draftId)
                             }
-                            userProResToFirestore(data, user.uid)
+                            userProResToFirestore(data, uid)
                         }
                         if (userSignupRol == 2) {
-                            userComCalToFirestore(data, user.uid)
+                            userComCalToFirestore(data, uid)
                         }
                         localStorage.role = JSON.stringify(userSignupRol) // localStorage.setItem('role', JSON.stringify(userSignupRol))
-                        localStorage.userID = JSON.stringify(user.uid)
+                        localStorage.userID = JSON.stringify(uid)
                         handleAlert('Cuenta actualizada con éxito!', 'success')
                         if (draftInfo) {
                             setDraftInfo({
                                 ...draftInfo,
-                                draftPropietarioResidente: user.uid,
+                                draftPropietarioResidente: uid,
                             })
                             handleSave()
                         } else {
@@ -262,17 +223,17 @@ const Registro = (props) => {
                         // The email of the user's account used.
                         // const email = error.customData.email
                         // The AuthCredential type that was used.
-                        const credential =
-                            GoogleAuthProvider.credentialFromError(error)
+                        // const credential =
+                        //     GoogleAuthProvider.credentialFromError(error)
                         // console.log(
                         //     'Error upgrading anonymous account',
                         //     errorMessage,
                         //     error
                         // )
                         if (errorCode === 'auth/wrong-password') {
-                            alert('Clave incorrecta.')
+                            handleAlert('Clave incorrecta!', 'error')
                         } else {
-                            alert(errorMessage)
+                            handleAlert(errorMessage, 'error')
                         }
                     })
             }
@@ -438,6 +399,11 @@ const Registro = (props) => {
                                                         type="text"
                                                         placeholder="elija su usuario"
                                                         name="username"
+                                                        onChange={(e) =>
+                                                            setName(
+                                                                e.target.value
+                                                            )
+                                                        }
                                                     />
                                                 </Form.Group>
                                                 <Form.Group
@@ -536,18 +502,10 @@ const Registro = (props) => {
 
 Registro.propTypes = {
     showLogo: PropTypes.bool,
-    connect: PropTypes.func.isRequired,
-    createChannel: PropTypes.func.isRequired,
-    sbSdk: PropTypes.object.isRequired,
     draftId: PropTypes.string,
     setDraftInfo: PropTypes.func,
     draftInfo: PropTypes.object,
     handleSave: PropTypes.func,
 }
 
-export default withSendbird(Registro, (state) => ({
-    // Mapping context state to props
-    connect: sendbirdSelectors.getConnect(state),
-    createChannel: sendbirdSelectors.getCreateGroupChannel(state),
-    sbSdk: sendbirdSelectors.getSdk(state),
-}))
+export default Registro

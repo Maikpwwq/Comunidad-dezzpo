@@ -6,11 +6,11 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
-
-import Navigator from './Navigator'
-import Content from './Content'
-import Header from './Header'
-import Rutas from '../routes/rutas'
+// import Providers from '@/private-app/Providers'
+import Navigator from '@/private-app/components/Navigator'
+import Content from '@/private-app/components/Content'
+import Header from '@/private-app/components/Header'
+import Rutas from '@/private-app/routes/rutas'
 
 function Copyright() {
     return (
@@ -221,7 +221,9 @@ export default function Paperbase() {
                         component="main"
                         sx={{ flex: 1, py: 6, px: 4, bgcolor: '#ffffff' }}
                     >
-                        <Rutas />
+                        {/* <Providers> */}
+                            <Rutas />
+                        {/* </Providers> */}
                     </Box>
                     <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
                         <Copyright />

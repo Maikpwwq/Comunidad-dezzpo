@@ -23,6 +23,7 @@ const VerCotizacion = () => {
         proponentId: '',
         description: '',
         scope: '',
+        procedimiento: '',
         tiempoEjecucion: '',
         actividades: [],
         condicionesNegocio: '',
@@ -42,19 +43,33 @@ const VerCotizacion = () => {
             fromQuotation(quotationId)
             const quotationData = sharingInformationService.getSubject()
             quotationData.subscribe((data) => {
-                if (!!data) {
+                if (data) {
                     console.log('Detail load:', data)
+                    const { quotation } = data
+                    const {
+                        quotationId,
+                        proponentId,
+                        description,
+                        scope,
+                        procedimiento,
+                        tiempoEjecucion,
+                        actividades,
+                        condicionesNegocio,
+                        garantia,
+                        valorSubtotal,
+                    } = quotation
                     setQuotationInfo({
                         ...quotationInfo,
-                        quotationId: data.quotationId,
-                        proponentId: data.proponentId,
-                        description: data.description,
-                        scope: data.scope,
-                        tiempoEjecucion: data.tiempoEjecucion,
-                        actividades: data.actividades,
-                        condicionesNegocio: data.condicionesNegocio,
-                        garantia: data.garantia,
-                        valorSubtotal: data.valorSubtotal,
+                        quotationId: quotationId,
+                        proponentId: proponentId,
+                        description: description,
+                        scope: scope,
+                        procedimiento: procedimiento,
+                        tiempoEjecucion: tiempoEjecucion,
+                        actividades: actividades,
+                        condicionesNegocio: condicionesNegocio,
+                        garantia: garantia,
+                        valorSubtotal: valorSubtotal,
                     })
                 } else {
                     console.log('No such document!')

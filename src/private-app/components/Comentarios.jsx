@@ -7,11 +7,10 @@ import {
 } from '@sendbird/uikit-react'
 import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
 // import { v4 as uuidv4 } from 'uuid'
-// import '@sendbird/uikit-react/dist/index.css?inline'
 import '@sendbird/uikit-react/dist/index.css'
 
 // Custom
-import ComentarPerfil from './ComentarPerfil'
+import ComentarPerfil from '@/private-app/components/ComentarPerfil'
 
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -102,13 +101,14 @@ import Container from '@mui/material/Container'
 // }
 
 // Usuario principal de la aplicación
-let userId = import.meta.env.VITE_APP_SENDBIRD_USERID
+// let userId = import.meta.env.VITE_APP_SENDBIRD_USERID
 // let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
 
 const Comentarios = (props) => {
-    const { userID, channelUrl, nickname } = props
-    console.log(userID, channelUrl, nickname, userId)
+    const { channelUrl, userID, nickname } = props // 
+    console.log(channelUrl)
+    // console.log(appId, userId)
     // user.updateMetaData or user.createMetaData
 
     return (
@@ -122,7 +122,7 @@ const Comentarios = (props) => {
                         // accessToken={accessToken}
                         dateLocale={es}
                     >
-                        <ComentarPerfil channelUrl={channelUrl} /> 
+                        <ComentarPerfil channelUrl={channelUrl} />
                         {/* <CreateChannel />
                         <ChannelList />
                         <Channel />

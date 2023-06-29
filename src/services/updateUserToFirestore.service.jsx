@@ -81,7 +81,7 @@ const updateUserToFirestore = (props) => {
     userToFirestore().then((data) => {
         if (data) {
             const res = data.data()
-            sharingInformationService.setSubject(res)
+            sharingInformationService.setSubject({ sendUser: res })
         }
     })
 }

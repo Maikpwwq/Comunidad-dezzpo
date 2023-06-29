@@ -17,7 +17,9 @@ const updateQuotationToFirestore = (props) => {
                 doc(quotationRef, docId),
                 updateInfo
             )
-            sharingInformationService.setSubject(quotationData)
+            sharingInformationService.setSubject({
+                sendQuotation: quotationData,
+            })
             return quotationData
         } catch (err) {
             console.log('Error getting draft: ', err)

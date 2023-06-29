@@ -22,9 +22,9 @@ const updateDraftToFirestore = (props) => {
     }
 
     draftToFirestore(updateInfo, docId).then((data) => {
-        if (!!data) {
+        if (data) {
             const res = data.data()
-            sharingInformationService.setSubject(res)
+            sharingInformationService.setSubject({ sendDraft: res })
         }
     })
 }

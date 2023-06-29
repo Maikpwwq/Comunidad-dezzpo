@@ -24,9 +24,10 @@ const readQuotationFromFirestore = (props) => {
 
     // var solution = () => {
     quotationFromFirestore(docId).then((data) => {
-        if (!!data) {
+        if (data) {
             const res = data.data()
-            sharingInformationService.setSubject(res)
+            console.log('quotationFromFirestore', data, res)
+            sharingInformationService.setSubject({ quotation: res })
         }
     })
 }

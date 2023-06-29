@@ -37,7 +37,7 @@ const readUsersFromFirestore = (props) => {
             const consult = data.docs.map((element) => ({
                 ...element.data(),
             }))
-            sharingInformationService.setSubject(consult)
+            sharingInformationService.setSubject({ users: consult })
         } else {
             console.log(
                 'No se encontro información sobre esta collección de usuarios!'

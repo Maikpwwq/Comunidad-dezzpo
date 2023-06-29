@@ -41,7 +41,7 @@ const doSearchFromFirestore = (props) => {
             const data = data.docs.map((element) => ({
                 ...element.data(),
             }))
-            sharingInformationService.setSubject(data)
+            sharingInformationService.setSubject({ search: data })
         } else {
             console.log(
                 'No se encontro información sobre esta collección de usuarios!'

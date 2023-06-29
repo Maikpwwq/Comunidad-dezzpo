@@ -38,6 +38,7 @@ const Cotizar = (props) => {
         proponentId: userID,
         description: '',
         scope: '',
+        procedimiento: '',
         tiempoEjecucion: '',
         actividades: [],
         condicionesNegocio: '',
@@ -86,20 +87,33 @@ const Cotizar = (props) => {
             fromQuotation(quotationId)
             const quotationData = sharingInformationService.getSubject()
             quotationData.subscribe((data) => {
-                if (!!data) {
-                    console.log('Detail load:', data)
+                if (data) {
+                    const { quotation } = data
+                    const {
+                        quotationId,
+                        proponentId,
+                        description,
+                        scope,
+                        procedimiento,
+                        tiempoEjecucion,
+                        actividades,
+                        condicionesNegocio,
+                        garantia,
+                        valorSubtotal,
+                    } = quotation
+                    // console.log('Detail load:', data)
                     setCotizacion({
                         ...cotizacion,
-                        quotationId: data.quotationId,
-                        proponentId: data.proponentId,
-                        description: data.description,
-                        scope: data.scope,
-                        procedimiento: data.procedimiento,
-                        tiempoEjecucion: data.tiempoEjecucion,
-                        actividades: data.actividades || [],
-                        condicionesNegocio: data.condicionesNegocio,
-                        garantia: data.garantia,
-                        valorSubtotal: data.valorSubtotal,
+                        quotationId: quotationId,
+                        proponentId: proponentId,
+                        description: description,
+                        scope: scope,
+                        procedimiento: procedimiento,
+                        tiempoEjecucion: tiempoEjecucion,
+                        actividades: actividades || [],
+                        condicionesNegocio: condicionesNegocio,
+                        garantia: garantia,
+                        valorSubtotal: valorSubtotal,
                     })
                 } else {
                     console.log(
@@ -171,8 +185,9 @@ const Cotizar = (props) => {
         toQuotation(cotizacion, quotationID)
         const quotationData = sharingInformationService.getSubject()
         quotationData.subscribe((data) => {
-            if (!!data) {
-                console.log('Detail load:', data)
+            if (data) {
+                const { sendQuotation } = data
+                console.log('Detail quotation:', sendQuotation)
             }
         })
         const update = { draftApply: [quotationID] } // TODO: add just to five id's
@@ -180,8 +195,9 @@ const Cotizar = (props) => {
         toDraft(update, draftId)
         const draftData = sharingInformationService.getSubject()
         draftData.subscribe((data) => {
-            if (!!data) {
-                console.log('Detail load:', data)
+            if (data) {
+                const { sendDraft } = data
+                console.log('Detail load:', sendDraft)
             }
         })
         navigate(-1)

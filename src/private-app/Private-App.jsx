@@ -1,8 +1,7 @@
 import React from 'react'
-import Paperbase from './components/Paperbase'
-
-import './Private-App.scss'
-import '../index.scss'
+import Paperbase from '@/private-app/components/Paperbase'
+import '@/private-app/Private-App.scss'
+import '@/index.scss'
 
 class PrivateApp extends React.Component {
     render() {

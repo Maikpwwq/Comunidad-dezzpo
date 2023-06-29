@@ -32,7 +32,7 @@ const Portal_Servicios = (props) => {
     const [searchData, setSearchData] = useState({})
     const [usersData, setUsersData] = useState({})
 
-    const FromUserComerciantes = () => {
+    const FromUsersComerciantes = () => {
         const userSelectedRol = 2 // Solo comerciantes calificados
         readUsersFromFirestore({
             userSelectedRol,
@@ -52,9 +52,10 @@ const Portal_Servicios = (props) => {
             consultedData
                 .subscribe((docSnap) => {
                     if (docSnap) {
-                        console.log('docSnap', docSnap)
+                        const { search } = docSnap
+                        console.log('docSnap', search)
                         setSearchData({
-                            docSnap,
+                            docSnap: search,
                         })
                     } else {
                         console.log(
@@ -74,13 +75,13 @@ const Portal_Servicios = (props) => {
     console.log('SearchData', searchData)
 
     useEffect(() => {
-        FromUserComerciantes()
+        FromUsersComerciantes()
         const userData = sharingInformationService.getSubject()
         userData.subscribe((data) => {
             if (data) {
-                setUsersData({
-                    data,
-                })
+                const { users } = data
+                console.log('FromUsersComerciantes', users)
+                setUsersData(users)
             } else {
                 console.log(
                     'No se encontro información sobre esta collección de usuarios!'
@@ -150,8 +151,8 @@ const Portal_Servicios = (props) => {
                         </p>
 
                         <Row className="m-0 w-100 d-flex">
-                            {usersData.data ? (
-                                usersData.data.map((user) => (
+                            {usersData && usersData.length > 0 ? (
+                                usersData.map((user) => (
                                     <UserCard
                                         key={user.id}
                                         props={user}

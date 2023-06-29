@@ -84,46 +84,73 @@ const VerRequerimiento = () => {
             fromDraft(draftId)
             const draftData = sharingInformationService.getSubject()
             draftData.subscribe((data) => {
-                if (!!data) {
-                    console.log(data)
+                if (data) {
+                    const { draft } = data
+                    const {
+                        draftName,
+                        draftCategory,
+                        draftProject,
+                        draftDescription,
+                        draftId,
+                        draftTotal,
+                        draftSubCategory,
+                        draftPropietarioResidente,
+                        draftCreated,
+                        draftPriority,
+                        draftProperty,
+                        draftRooms,
+                        draftPlans,
+                        draftPermissions,
+                        draftCity,
+                        draftDirection,
+                        draftPostalCode,
+                        draftAtachments,
+                        draftBestScheduleDate,
+                        draftBestScheduleTime,
+                        draftApply,
+                    } = draft
+                    console.log('readDraftFromFirestore')
                     setRequerimientoInfo({
                         ...requerimientoInfo,
-                        requerimientoTitulo: data.draftName,
-                        requerimientoCategoria: data.draftCategory,
-                        requerimientoTipoProyecto: data.draftProject,
-                        requerimientoDescripcion: data.draftDescription,
-                        requerimientoId: data.draftId,
-                        requerimientoTotal: data.draftTotal,
-                        requerimientoCategorias: data.draftSubCategory || [],
-                        requerimientoPropietario:
-                            data.draftPropietarioResidente,
-                        requerimientoCreated: data.draftCreated,
-                        requerimientoPrioridad: data.draftPriority,
-                        requerimientoTipoPropiedad: data.draftProperty,
-                        requerimientoCantidadObra: data.draftRooms,
-                        requerimientoPlanos: data.draftPlans,
-                        requerimientoPermisos: data.draftPermissions,
-                        requerimientoCiudad: data.draftCity,
-                        requerimientoDireccion: data.draftDirection,
-                        requerimientoCodigoPostal: data.draftPostalCode,
-                        requerimientoAdjuntos: data.draftAtachments,
-                        requerimientoMejorFecha: data.draftBestScheduleDate,
-                        requerimientoMejorHora: data.draftBestScheduleTime,
-                        requerimientoAplicaciones: data.draftApply
-                            ? data.draftApply
-                            : [],
+                        requerimientoTitulo: draftName,
+                        requerimientoCategoria: draftCategory,
+                        requerimientoTipoProyecto: draftProject,
+                        requerimientoDescripcion: draftDescription,
+                        requerimientoId: draftId,
+                        requerimientoTotal: draftTotal,
+                        requerimientoCategorias: draftSubCategory || [],
+                        requerimientoPropietario: draftPropietarioResidente,
+                        requerimientoCreated: draftCreated,
+                        requerimientoPrioridad: draftPriority,
+                        requerimientoTipoPropiedad: draftProperty,
+                        requerimientoCantidadObra: draftRooms,
+                        requerimientoPlanos: draftPlans,
+                        requerimientoPermisos: draftPermissions,
+                        requerimientoCiudad: draftCity,
+                        requerimientoDireccion: draftDirection,
+                        requerimientoCodigoPostal: draftPostalCode,
+                        requerimientoAdjuntos: draftAtachments,
+                        requerimientoMejorFecha: draftBestScheduleDate,
+                        requerimientoMejorHora: draftBestScheduleTime,
+                        requerimientoAplicaciones: draftApply ? draftApply : [],
                     })
-                    // console.log(data, data.draftApply)
-                    const appliedQuotations = data.draftApply[0] || []
+                    console.log('dataReq', data, data.draftApply)
+                    const appliedQuotations = draftApply[0] || []
                     fromQuotation(appliedQuotations)
                     const quotationData = sharingInformationService.getSubject()
                     quotationData.subscribe((data) => {
-                        if (!!data) {
-                            console.log('Detail load:', data)
-                            setCotizacionesInfo({
-                                ...cotizacionesInfo,
-                                appliedQuotations: [data],
-                            })
+                        if (data) {
+                            const { quotation } = data
+                            console.log(
+                                'readQuotationFromFirestore:',
+                                quotation
+                            )
+                            if (quotation.length > 0) {
+                                setCotizacionesInfo({
+                                    ...cotizacionesInfo,
+                                    appliedQuotations: [quotation],
+                                })
+                            }
                         }
                     })
                 }
@@ -457,6 +484,8 @@ const VerRequerimiento = () => {
                                     </TableHead>
                                     <TableBody>
                                         {cotizacionesInfo.appliedQuotations &&
+                                            cotizacionesInfo.appliedQuotations
+                                                .length > 0 &&
                                             cotizacionesInfo.appliedQuotations.map(
                                                 (item) => {
                                                     const {

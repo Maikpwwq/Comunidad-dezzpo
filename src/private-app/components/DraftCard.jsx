@@ -62,7 +62,7 @@ export default function DraftCard({ props }) {
         // draftBestScheduleTime,
         draftApply,
     } = props
-    console.log(props)
+    // console.log(props)
     const [expanded, setExpanded] = useState(false)
 
     const localRole = localStorage.getItem('role')

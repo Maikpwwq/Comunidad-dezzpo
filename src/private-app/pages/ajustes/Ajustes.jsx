@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { auth } from '@/firebase/firebaseClient'
-
+import newOpenChannelSendbird from '@/services/newOpenChannelSendbird.service'
 import { sharingInformationService } from '@/services/sharing-information'
 import readUserFromFirestore from '@/services/readUserFromFirestore.service'
 import updateUserToFirestore from '@/services/updateUserToFirestore.service'
@@ -10,7 +10,7 @@ import updateUserToFirestore from '@/services/updateUserToFirestore.service'
 import '@/assets/cssPrivateApp/ajustes.css'
 import Ubicacion from '@/app/pages/ubicacion/Ubicacion'
 import SnackBarAlert from '@/app/components/SnackBarAlert'
-import ChipsCategories from '../../components/ChipsCategories'
+import ChipsCategories from '@/private-app/components/ChipsCategories'
 import ListadoCategorias from '@/app/components/ListadoCategorias'
 
 // react-bootrstrap
@@ -26,7 +26,8 @@ import Typography from '@mui/material/Typography'
 
 const Ajustes = (props) => {
     const user = auth.currentUser || {}
-    const userID = user.uid || ''
+    const userAuthID = user.uid || ''
+    const userAuthName = user.displayName || ''
     const { state } = useLocation() || {}
     const localRole = localStorage.getItem('role')
     const selectRole = parseInt(JSON.parse(localRole))
@@ -54,6 +55,7 @@ const Ajustes = (props) => {
         userJoined: '',
         userProfession: '',
         userExperience: '',
+        userChannelUrl: '',
         // userCategorie: '',
         // userClasification: [],
         // userGrade: '',
@@ -67,7 +69,7 @@ const Ajustes = (props) => {
     })
 
     const userData = () => {
-        const firestoreUserID = userID
+        const firestoreUserID = userAuthID
         const userSelectedRol = userRol.rol
         // console.log(firestoreUserID, userSelectedRol)
         readUserFromFirestore({
@@ -87,31 +89,83 @@ const Ajustes = (props) => {
                 emailVerified,
                 // metadata,
             } = user
+            // Load and expose user data from firestore
             userData()
-            const productData = sharingInformationService.getSubject()
-            productData.subscribe((data) => {
-                if (!!data) {
-                    // console.log('Detail load:', data)
+            const userInformation = sharingInformationService.getSubject()
+            userInformation.subscribe((data) => {
+                if (data) {
+                    const { currentUser } = data
+                    console.log('readUserFromFirestore:', currentUser)
+                    const {
+                        userName,
+                        userPhone,
+                        userPhotoUrl,
+                        userJoined,
+                        userProfession,
+                        userExperience,
+                        userCategories,
+                        userDirection,
+                        userCiudad,
+                        userCodigoPostal,
+                        userRazonSocial,
+                        userIdentification,
+                        userDescription,
+                        userChannelUrl,
+                        // userCategorie,
+                        // userClasification,
+                        // userGrade,
+                    } = currentUser
+
+                    // Sendbird new open channel
+                    console.log('create new open channel', userChannelUrl)
+                    if (userChannelUrl === undefined || userChannelUrl === '') {
+                        console.log('create new open channel')
+                        newOpenChannelSendbird({
+                            userAuthID,
+                            userAuthName,
+                            //setChannelUrl,
+                            // userEditInfo,
+                            // setUserEditInfo,
+                        })
+                        // const currentURL =
+                        //     sharingInformationService.getSubject()
+                        // currentURL.subscribe((data) => {
+                        //     if (data) {
+                        //         const { channelURL } = data
+                        //         console.log(
+                        //             'newOpenChannelSendbird:',
+                        //             channelURL,
+                        //             data
+                        //         )
+                        //         setUserEditInfo({
+                        //             ...userEditInfo,
+                        //             userChannelUrl: channelURL,
+                        //         })
+                        //     }
+                        // })
+                    }
+
                     setUserEditInfo({
                         ...userEditInfo,
-                        userPhone: data.userPhone || phoneNumber,
-                        userPhotoUrl: data.userPhotoUrl || photoURL,
+                        userPhone: userPhone || phoneNumber,
+                        userPhotoUrl: userPhotoUrl || photoURL,
                         userId: uid,
                         userMail: email,
-                        userName: displayName,
-                        userJoined: data.userJoined,
-                        userProfession: data.userProfession,
-                        userExperience: data.userExperience,
-                        // userCategorie: data.userCategorie,
-                        // userClasification: data.userClasification,
-                        // userGrade: data.userGrade,
-                        userCategories: data.userCategories,
-                        userDirection: data.userDirection,
-                        userCiudad: data.userCiudad,
-                        userCodigoPostal: data.userCodigoPostal,
-                        userRazonSocial: data.userRazonSocial,
-                        userIdentification: data.userIdentification,
-                        userDescription: data.userDescription,
+                        userName: displayName || userName,
+                        userJoined: userJoined || '',
+                        userProfession: userProfession || '',
+                        userExperience: userExperience || '',
+                        userChannelUrl: userChannelUrl,
+                        // userCategorie: userCategorie,
+                        // userClasification: userClasification,
+                        // userGrade: userGrade,
+                        userCategories: userCategories || [],
+                        userDirection: userDirection || '',
+                        userCiudad: userCiudad || '',
+                        userCodigoPostal: userCodigoPostal || '',
+                        userRazonSocial: userRazonSocial || '',
+                        userIdentification: userIdentification || '',
+                        userDescription: userDescription || '',
                     })
                 } else {
                     console.log(
@@ -143,10 +197,10 @@ const Ajustes = (props) => {
     }
 
     const snap = () => {
-        const firestoreUserID = userID
+        const firestoreUserID = userAuthID
         const userSelectedRol = userRol.rol
         console.log(firestoreUserID, userSelectedRol, userEditInfo)
-        updateUserToFirestore({ 
+        updateUserToFirestore({
             firestoreUserID,
             userSelectedRol,
             userEditInfo,
