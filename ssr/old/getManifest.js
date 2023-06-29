@@ -1,5 +1,6 @@
-const path = require('path')
+// const path = require('path')
 import fs from 'fs'
+import * as path from 'path'
 
 const getManifest = () => {
     try {

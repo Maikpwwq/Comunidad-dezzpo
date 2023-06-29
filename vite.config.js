@@ -9,6 +9,9 @@ export default defineConfig(() => {
     return {
         plugins: [react()], //, ssr()
         // base: "/Comunidad-dezzpo/", // gh pages
+        // build: {
+        //     minify: false,
+        // },
         define: {},
         resolve: {
             alias: [

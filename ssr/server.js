@@ -1,64 +1,103 @@
-const path = require('path')
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import express from 'express'
-import dotenv from 'dotenv'
-import webpack from 'webpack'
-import helmet from 'helmet'
 
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpackHotMiddleware from 'webpack-hot-middleware'
-import webpackConfig from '../webpack.config'
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-import renderApp from './renderApp'
-import getManifest from './getManifest'
+const isTest = process.env.VITEST
 
-dotenv.config()
-const { ENV, PORT } = process.env
+process.env.MY_CUSTOM_SECRET = 'API_KEY_qwertyuiop'
 
-const app = express()
+export async function createServer(
+  root = process.cwd(),
+  isProd = process.env.NODE_ENV === 'production',
+  hmrPort,
+) {
+  const resolve = (p) => path.resolve(__dirname, p)
 
-if (ENV === 'development') {
-    console.log('Development config')
-    // const { publicPath } = webpackConfig.output;
-    const compiler = webpack(webpackConfig)
-    const serverConfig = { serverSideRender: true } // Dev middleware  publicPath: publicPath
-    app.use(webpackDevMiddleware(compiler, serverConfig))
-    app.use(webpackHotMiddleware(compiler))
-} else {
-    app.use((req, res, next) => {
-        if (!req.hashManifest) req.hashManifest = getManifest()
-        next()
+  const indexProd = isProd
+    ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8')
+    : ''
+
+  const app = express()
+
+  /**
+   * @type {import('vite').ViteDevServer}
+   */
+  let vite
+  if (!isProd) {
+    vite = await (
+      await import('vite')
+    ).createServer({
+      root,
+      logLevel: isTest ? 'error' : 'info',
+      server: {
+        middlewareMode: true,
+        watch: {
+          // During tests we edit the files too fast and sometimes chokidar
+          // misses change events, so enforce polling for consistency
+          usePolling: true,
+          interval: 100,
+        },
+        hmr: {
+          port: hmrPort,
+        },
+      },
+      appType: 'custom',
     })
-    app.use(express.static(path.join(__dirname, '/build')))
-    app.use(helmet())
-    // app.use(
-    //   helmet.contentSecurityPolicy({
-    //     directives: {
-    //       'default-src': ["'self'"],
-    //       'script-src': ["'self'", "'sha256-lKtLIbt/r08geDBLpzup7D3pTCavi4hfYSO45z98900='"],
-    //       'img-src': ["'self'", 'http://dummyimage.com'],
-    //       'style-src-elem': ["'self'", 'https://fonts.googleapis.com'],
-    //       'font-src': ['https://fonts.gstatic.com'],
-    //       'upgradeInsecureRequest': [],
-    //       'media-src': ['*'],
-    //     },
-    //   }),
-    // );
-    // app.use(
-    //   helmet({
-    //     contentSecurityPolicy: false,
-    //   }),
-    // );
-    app.use(helmet.permittedCrossDomainPolicies())
-    app.disable('x-powered-by')
-    // app.set("x-powered-by", false);
-}
-renderApp(app)
+    // use vite's connect instance as middleware
+    app.use(vite.middlewares)
+  } else {
+    app.use((await import('compression')).default())
+    app.use(
+      (await import('serve-static')).default(resolve('dist/client'), {
+        index: false,
+      }),
+    )
+  }
 
-app.listen(PORT, (err, res) => {
-    if (err) console.log(err)
-    else {
-        console.log(
-            `Server running on mode ${ENV}, on url http://localhost:${PORT}`
-        )
+  app.use('*', async (req, res) => {
+    try {
+      const url = req.originalUrl
+
+      let template, render
+      if (!isProd) {
+        // always read fresh template in dev
+        template = fs.readFileSync(resolve('index.html'), 'utf-8')
+        template = await vite.transformIndexHtml(url, template)
+        render = (await vite.ssrLoadModule('/src/entry-server.jsx')).render
+      } else {
+        template = indexProd
+        // @ts-ignore
+        render = (await import('./dist/server/entry-server.js')).render
+      }
+
+      const context = {}
+      const appHtml = render(url, context)
+
+      if (context.url) {
+        // Somewhere a `<Redirect>` was rendered
+        return res.redirect(301, context.url)
+      }
+
+      const html = template.replace(`<!--app-html-->`, appHtml)
+
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+    } catch (e) {
+      !isProd && vite.ssrFixStacktrace(e)
+      console.log(e.stack)
+      res.status(500).end(e.stack)
     }
-})
+  })
+
+  return { app, vite }
+}
+
+if (!isTest) {
+  createServer().then(({ app }) =>
+    app.listen(5173, () => {
+      console.log('http://localhost:5173')
+    }),
+  )
+}
