@@ -1,8 +1,8 @@
 /* Pantallas de Moviles */
 @media screen and (max-width: 600px) {
-
     .presupuestosMensajeBuscador {
-        background: #e9ebe6 url('/assets/img/BackgoundHexagonal.png') no-repeat center !important;
+        background: #e9ebe6 url('/assets/img/BackgoundHexagonal.png') no-repeat
+            center !important;
         background-size: 100% 100% !important;
         justify-content: center !important;
     }
@@ -11,7 +11,8 @@
 /* Pantallas en tabletas */
 @media screen and (min-width: 600px) and (max-width: 900px) {
     .presupuestosMensajeBuscador {
-        background: #e9ebe6 url('/assets/img/BackgoundHexagonal.png') no-repeat center !important;
+        background: #e9ebe6 url('/assets/img/BackgoundHexagonal.png') no-repeat
+            center !important;
         background-size: 100% 100% !important;
         justify-content: center !important;
     }

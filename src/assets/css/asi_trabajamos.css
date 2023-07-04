@@ -2,23 +2,26 @@
 @media screen and (max-width: 600px) {
     .asiTrabajamosVinculate {
         /* background: #e9ebe6 url(../img/AsiTrabajamos3Mobile.png) no-repeat center !important;        */
-        background: #e9ebe6 url('/assets/img/AsiTrabajamos3Mobile.png'
-            ) no-repeat center !important;
+        background: #e9ebe6 url('/assets/img/AsiTrabajamos3Mobile.png')
+            no-repeat center !important;
         background-size: cover !important;
     }
 
     .asiTrabajamosPropietario {
-        background: #e9ebe6 url('/assets/img/BackgoundHexagonal.png') no-repeat center !important;
+        background: #e9ebe6 url('/assets/img/BackgoundHexagonal.png') no-repeat
+            center !important;
         background-size: 100% 100% !important;
     }
 
     .asiTrabajamosCertificaciones {
-        background: #e9ebe6 url('/assets/img/AsiTrabajamos5Mobile.png') no-repeat center !important;
+        background: #e9ebe6 url('/assets/img/AsiTrabajamos5Mobile.png')
+            no-repeat center !important;
         background-size: 100% 100% !important;
     }
 
     .asiTrabajamosCalificaciones {
-        background: #e9ebe6 url('/assets/img/AsiTrabajamos6Mobile.png') no-repeat center !important;
+        background: #e9ebe6 url('/assets/img/AsiTrabajamos6Mobile.png')
+            no-repeat center !important;
         background-size: 100% 100% !important;
     }
 
@@ -36,17 +39,20 @@
 /* Pantallas en tabletas */
 @media screen and (min-width: 600px) and (max-width: 900px) {
     .asiTrabajamosCertificaciones {
-        background: #e9ebe6 url('/assets/img/AsiTrabajamos5Mobile.png') no-repeat center !important;
+        background: #e9ebe6 url('/assets/img/AsiTrabajamos5Mobile.png')
+            no-repeat center !important;
         background-size: 100% 100% !important;
     }
 
     .asiTrabajamosPropietario {
-        background: #e9ebe6 url('/assets/img/BackgoundHexagonal.png') no-repeat center !important;
+        background: #e9ebe6 url('/assets/img/BackgoundHexagonal.png') no-repeat
+            center !important;
         background-size: 100% 100% !important;
     }
 
     .asiTrabajamosCalificaciones {
-        background: #e9ebe6 url('/assets/img/AsiTrabajamos6Mobile.png') no-repeat center !important;
+        background: #e9ebe6 url('/assets/img/AsiTrabajamos6Mobile.png')
+            no-repeat center !important;
         background-size: 100% 100% !important;
     }
 
@@ -68,16 +74,14 @@
 
 .asiTrabajamosRegistro {
     /* background: #e9ebe6 url(../img/Buscador-Dezzpo.png) no-repeat center;  */
-    background: #e9ebe6 url('/assets/img/Buscador-Dezzpo.png'
-        ) no-repeat center;
+    background: #e9ebe6 url('/assets/img/Buscador-Dezzpo.png') no-repeat center;
     background-attachment: scroll;
     background-size: 100% auto;
 }
 
 .asiTrabajamosChat {
     /* background: #e9ebe6 url(../img/AsiTrabajamos2.png) no-repeat center;  */
-    background: #e9ebe6 url('/assets/img/AsiTrabajamos2.png'
-        ) no-repeat center;
+    background: #e9ebe6 url('/assets/img/AsiTrabajamos2.png') no-repeat center;
     background-attachment: scroll;
     background-size: cover;
     height: auto;

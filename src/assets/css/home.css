@@ -1,6 +1,5 @@
 /* Pantallas de Moviles */
 @media screen and (max-width: 600px) {
-
     #contenedorBanner {
         flex-direction: column !important;
     }
@@ -20,7 +19,6 @@
 
 /* Pantallas en tabletas */
 @media screen and (max-width: 1200px) {
-
     /* .bannerComunidad {
         background-size: auto 100% !important;   
     } */
@@ -29,9 +27,9 @@
     }
 }
 
-
 /* Pantallas de Ordenador */
-@media screen and (min-width: 1200px) {}
+@media screen and (min-width: 1200px) {
+}
 
 .MuiMobileStepper-dots {
     display: none !important;
@@ -54,7 +52,7 @@ body {
     background-attachment: scroll;
     align-items: center;
     align-content: center;
-    font-family: "lato Regular", Helvetica, sans-serif;
+    font-family: 'lato Regular', Helvetica, sans-serif;
     font-size: 21px;
 }
 
@@ -101,7 +99,6 @@ body {
 #comoFunciona .comunidadTitulo {
     width: 90% !important;
     text-align: left;
-
 }
 
 #comoFunciona p {
@@ -119,11 +116,14 @@ body {
     align-content: center;
 }
 
-.nuevoProyecto {}
+.nuevoProyecto {
+}
 
-.seleccionaPerfiles {}
+.seleccionaPerfiles {
+}
 
-.calificaServicio {}
+.calificaServicio {
+}
 
 .comoCard {
     background-color: var(--background-tooltip-color);
@@ -150,8 +150,11 @@ body {
     align-content: center;
 }
 
-.buscarOfertas {}
+.buscarOfertas {
+}
 
-.cargaPresupuesto {}
+.cargaPresupuesto {
+}
 
-.calificaPropietario {}
+.calificaPropietario {
+}

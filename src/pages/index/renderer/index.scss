@@ -1,0 +1,552 @@
+@import './variable';
+/* npm install --save node-sass */
+/* make the customizations */
+// $theme-colors: ();
+
+/* then import bootstrap to set changes */
+// @import '#bootstrap/scss/bootstrap';
+
+.textVerde {
+    color: var(--primary-green-text-color) !important;
+}
+.textVerde2 {
+    color: var(--secondary-green-text-color) !important;
+}
+.textAzul {
+    color: var(--primary-blue-light-color) !important;
+}
+.textBlanco {
+    color: var(--primary-light-gray-text-color) !important;
+}
+.textBlack {
+    color: var(--primary-black-text-color) !important;
+}
+.textGris {
+    color: var(--content-text-color) !important;
+}
+.fondoCrema {
+    background-color: var(--background-light-grey-color) !important;
+}
+.fondoCafe {
+    background-color: var(--background-light-gray-color) !important;
+}
+.fondoNegro {
+    background-color: var(--background-smoke-color) !important;
+}
+.fondoGris {
+    background-color: var(--background-gray-color) !important;
+}
+.fondoVerde {
+    background-color: var(--primary-green-text-color) !important;
+}
+.fondoAzul {
+    background-color: var(--background-blue-color) !important;
+}
+.fondoBlanco {
+    background-color: var(--background-white-color) !important;
+}
+/* **************************************************** */
+/* Declaracion de typografias Titulos - Subtitulos - Encabezados */
+/* **************************************************** */
+.dezzpo-svg {
+    // Isotipo COMUNIDAD DEZZPO
+    font-family: var(--font-marquisette-bold);
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--logo-comunidad-dezzpo-color);
+    margin-left: 10px;
+}
+// h1
+.headline-xxl {
+    // Oculta uso en posicionamiento SEO.
+    font-family: var(--font-helvetica-semibold);
+    font-size: 40px/48px;
+    font-weight: 600;
+    color: var(---primary-black-text-color);
+}
+//h2
+.headline-xl {
+    // Título secciones principales y Modal
+    font-family: var(--font-helvetica-semibold) !important;
+    font-size: 2.2rem !important; // 32px/46px
+    font-weight: 800 !important;
+    color: var(--primary-titles-text-color);
+    line-height: 1.5em !important;
+}
+//h3
+.headline-l {
+    // Nombre del trámite
+    font-family: var(--font-helvetica-semibold) !important;
+    font-size: 1.5rem !important; // 24px/26px
+    font-weight: 600 !important;
+    color: var(--primary-titles-text-color);
+    line-height: 1.25em !important;
+}
+
+.headline-m {
+    // Titulo de la Seccion
+    font-family: var(--font-helvetica-semibold);
+    font-size: 20px; // 20px/30px
+    font-weight: 600;
+    color: var(--primary-black-text-color);
+    line-height: 30px !important;
+}
+
+.headline-s {
+    // Titulo subsección y Titulo Tablas
+    font-family: var(--font-helvetica-medium);
+    font-size: 1.125rem; // 18px/27px
+    font-weight: 600;
+    color: var(--primary-black-text-color);
+    line-height: 1.25em !important;
+}
+
+.headline-xs {
+    // Jerarquía para trámites
+    font-family: var(--font-helvetica-semibold);
+    font-size: 1.125rem; // 16px/24px
+    font-weight: 600;
+    color: var(--primary-black-text-color);
+    line-height: 1.25em !important;
+}
+
+.subtitle {
+    // Subtitulo Principal
+    font-family: var(--font-helvetica-semibold);
+    font-size: 1.125rem; // 18px/27px
+    font-weight: 600;
+    color: var(--primary-black-text-color);
+    line-height: 1.25em !important;
+}
+
+.field {
+    font-family: var(--font-worksans-semibold);
+    font-size: 16px/22px;
+}
+
+.caption {
+    font-family: var(--font-worksans-semibold);
+    font-size: 14px/18px;
+}
+
+.tituloTabla {
+    // Titulo Tabla
+    text-align: left;
+    font: normal normal normal 24px/36px var(--font-helvetica-semibold);
+    letter-spacing: 0px;
+    color: var(--primary-black-text-color);
+    opacity: 1;
+}
+
+.table-head {
+    // Encabezados de tablas
+    font-family: var(--font-worksans-semibold);
+    font-size: 16px/21px;
+}
+
+.table-head-s {
+    // Encabezados de tablas Secundarias
+    font-family: var(--font-helvetica-semibold);
+    font-size: 14px/21px;
+}
+
+.headerTitle {
+    text-align: left;
+    padding-left: 15px;
+    padding-top: 22px;
+    padding-bottom: 22px;
+    font: normal normal bold 16px/23px var(--font-worksans-medium);
+    letter-spacing: 0px;
+    color: var(--primary-black-text-color);
+    opacity: 1;
+
+    &:hover {
+        color: var(--primary-black-text-color);
+    }
+}
+
+.tituloSticker {
+    text-align: center;
+    font: normal normal 600 16px/9px var(--font-helvetica-semibold);
+    letter-spacing: 0px;
+    color: var(--primary-black-text-color);
+    opacity: 1;
+}
+
+/* **************************************************** */
+/* Declaracion de typografias Textos descriptivos - Cuerpo de documentos */
+/* **************************************************** */
+.p-description {
+    // Texto descriptivo de la sección hasta 150 caracteres.
+    font-family: var(--font-helvetica-semibold);
+    color: var(--content-text-color);
+    font-size: x-large;
+}
+
+.body-1 {
+    // Descripción del tramite
+    font: normal normal normal 16px/24px var(--font-worksans-regular);
+    font-size: 1rem;
+    color: var(--content-text-color);
+    line-height: 1.5em !important;
+    opacity: 1;
+}
+
+.body-2 {
+    // Cuerpo del documento
+    font: normal normal normal 14px/21px var(--font-worksans-semibold);
+    font-size: 1rem;
+    color: var(--content-text-color);
+    line-height: 1.5em !important;
+    opacity: 1;
+}
+
+.descripcionSticker {
+    text-align: center;
+    font: normal normal normal 16px/24px var(--font-worksans-regular);
+    letter-spacing: 0px;
+    color: var(--primary-dark-blue-text-color);
+    opacity: 1;
+}
+
+/* **************************************************** */
+/* Declaracion de typografias Botones */
+/* **************************************************** */
+.btn-TEXT {
+    // Botón action – MAYUSCULA
+    font-family: var(--font-worksans-medium);
+    font-size: 0.938rem;
+    font-weight: 500; // 16px/22px
+    color: var(--secondary-green-text-color);
+    line-height: 1.375em !important;
+    // text-transform: uppercase;
+    // text-decoration: underline !important;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--primary-light-gray-text-color) !important;
+    }
+}
+.btn {
+    position: relative !important;
+
+    &.btn-round {
+        border-radius: 30px !important;
+        margin: 0 !important;
+        min-width: 162px;
+        // padding: 0.535em 1rem;
+        white-space: pre-line;
+        border: 1.5px solid;
+
+        &.btn-high {
+            // Botón Contenido Activo
+            &:disabled {
+                color: var(--content-text-white-color);
+                pointer-events: none;
+                background-color: var(--background-gray-color) !important;
+                border-color: var(--selected-border-gray-color) !important;
+            }
+            font-weight: bold;
+            color: var(--content-text-white-color);
+            background-color: var(--background-hover-green-color);
+
+            &:hover {
+                background-color: var(--selected-border-green-color);
+            }
+
+            &.inactive {
+                color: var(--content-text-white-color);
+                background-color: var(--background-gray-color) !important;
+                border-color: var(--selected-border-gray-color) !important;
+                cursor: default !important;
+            }
+        }
+
+        &.btn-middle {
+            // Botón Border Activo
+            color: var(--secondary-green-text-color);
+            border: 2px solid var(--selected-border-green-color);
+            background-color: var(--background-tooltip-color) !important;
+            font-weight: bold;
+
+            &:hover {
+                color: var(--content-text-white-color);
+                background-color: var(--selected-border-green-color) !important;
+            }
+
+            &.espaced {
+                margin-left: 36px !important;
+            }
+        }
+
+        // &-high {
+
+        // }
+    }
+
+    &.btn-low {
+        // Botón de Texto Activo
+        color: var(--secondary-blue-text-color);
+        vertical-align: baseline;
+
+        &:hover {
+            color: var(--selected-hover-dark-blue-color);
+        }
+
+        &.limpiar {
+            margin-left: 36px !important;
+        }
+    }
+
+    // Orange: https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnAlertOrange.png?alt=media&token=6e2ee576-1e9c-4dfd-bf3a-7e9f41b47b40
+    // Avanzar: https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnAvanzarBlue.png?alt=media&token=f718d05d-e40b-4bb0-8403-6cf37faa2d17
+    // Blog: https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnBlogComunidad.png?alt=media&token=796f8d43-5c97-4f53-a319-7e5e82d8fba2
+    // Green: https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnLightGreen.png?alt=media&token=51cf293c-3014-4fbd-b3cd-b726029d1b9f
+    // MainBlue: https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnMainBlue.png?alt=media&token=56749efe-5089-4737-8a07-37b78fa90b8c
+    // Siguiente: https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnSiguienteBlue.png?alt=media&token=2eed4755-bb79-41dc-8b0a-87899acaa40c
+    // Vinculate: https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnVinculateGray.png?alt=media&token=2701f7b7-a907-4af3-b653-0c387be54508
+    // Red: https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnWarningRed.png?alt=media&token=ca4d567f-420e-4129-9286-0cac964e4687
+
+    &.btn-orange {
+        background: url('https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnAlertOrange.png?alt=media&token=6e2ee576-1e9c-4dfd-bf3a-7e9f41b47b40')
+            center / cover no-repeat;
+        background-attachment: scroll;
+        width: 190px;
+        min-height: 39px;
+        background-color: transparent;
+        border: none;
+    }
+    &.btn-avanzar {
+        background: url('https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnAvanzarBlue.png?alt=media&token=f718d05d-e40b-4bb0-8403-6cf37faa2d17')
+            center / cover no-repeat;
+        background-attachment: scroll;
+        width: 204px;
+        min-height: 39px;
+        background-color: transparent;
+        border: none;
+        padding-left: 52px;
+    }
+    &.btn-blog {
+        background: url('https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnBlogComunidad.png?alt=media&token=796f8d43-5c97-4f53-a319-7e5e82d8fba2')
+            center / cover no-repeat;
+        background-attachment: scroll;
+        width: 230px;
+        min-height: 39px;
+        background-color: transparent;
+        border: none;
+        padding-left: 45px;
+    }
+    &.btn-green {
+        background: url('https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnLightGreen.png?alt=media&token=51cf293c-3014-4fbd-b3cd-b726029d1b9f')
+            center / cover no-repeat;
+        background-attachment: scroll;
+        width: 160px;
+        min-height: 39px;
+        background-color: transparent;
+        border: none;
+    }
+    &.btn-main {
+        background: url('https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnMainBlue.png?alt=media&token=56749efe-5089-4737-8a07-37b78fa90b8c')
+            center / cover no-repeat;
+        background-attachment: scroll;
+        width: 190px;
+        min-height: 39px;
+        background-color: transparent;
+        border: none;
+    }
+    &.btn-buscador {
+        background: rgb(24, 177, 167);
+        background: linear-gradient(
+            -90deg,
+            rgba(24, 177, 167, 1) 35%,
+            rgba(0, 153, 204, 1) 100%
+        );
+        // background-color: var(--background-main-green-color) !important;
+        border: none;
+        width: 190px;
+        min-height: 39px;
+        font-weight: bold;
+        &:hover {
+            color: var(--content-text-white-color) !important;
+        }
+    }
+    &.btn-siguiente {
+        background: url('https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnSiguienteBlue.png?alt=media&token=2eed4755-bb79-41dc-8b0a-87899acaa40c')
+            center / cover no-repeat;
+        background-attachment: scroll;
+        width: 190px;
+        min-height: 39px;
+        background-color: transparent;
+        border: none;
+        padding-left: 45px;
+    }
+    &.btn-vinculate {
+        background: url('https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnVinculateGray.png?alt=media&token=2701f7b7-a907-4af3-b653-0c387be54508')
+            center / cover no-repeat;
+        background-attachment: scroll;
+        width: 190px;
+        min-height: 39px;
+        background-color: transparent;
+        border: none;
+        padding-right: 45px;
+    }
+    &.btn-red {
+        background: url('https://firebasestorage.googleapis.com/v0/b/app-comunidad-dezzpo.appspot.com/o/site%2Fbtn-icons%2FBtnWarningRed.png?alt=media&token=ca4d567f-420e-4129-9286-0cac964e4687')
+            center / cover no-repeat;
+        background-attachment: scroll;
+        width: 190px;
+        min-height: 39px;
+        background-color: transparent;
+        border: none;
+        padding-left: 45px;
+    }
+}
+
+/* **************************************************** */
+/* Declaracion de Contenedores */
+/* **************************************************** */
+
+main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+body {
+    font-family: 'lato Regular', Helvetica, sans-serif;
+    font-size: 21px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 0;
+    padding: 0 0;
+    position: relative;
+}
+.router-output {
+    position: relative;
+    z-index: -1;
+    top: 0px;
+}
+.pageContainer {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    // top: 80px;
+    // position: relative;
+    margin-bottom: 84px;
+    display: flex;
+    flex-direction: column;
+}
+.left {
+    float: left;
+    align-items: flex-start;
+}
+.right {
+    float: right;
+    align-items: flex-end;
+}
+.center {
+    text-align: center !important;
+    align-items: center !important;
+}
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.col ul a {
+    // color: var(--primary-light-gray-text-color);
+    text-decoration: none;
+}
+.col ul a:link {
+    // color: var(--primary-light-gray-text-color);
+}
+.col ul a:visited {
+    // color: var(--primary-light-gray-text-color);
+}
+.col ul a:hover {
+    // text-decoration: underline;
+    text-decoration: none !important;
+    color: var(--primary-light-gray-text-color);
+}
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.row ul {
+    list-style: none;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-left: 60px;
+    text-align: left;
+    color: #1ec7e6;
+    padding: 3px 6px;
+    margin: 6px 3px;
+}
+.row a {
+    // color: var(--primary-light-gray-text-color);
+    text-decoration: none;
+}
+.row a:link {
+    // color: var(--primary-light-gray-text-color);
+}
+.row a:visited {
+    // color: var(--primary-light-gray-text-color);
+}
+.row a:hover {
+    text-decoration: none !important;
+    // color: var(--primary-light-gray-text-color);
+}
+.opacidadNegro {
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 0.5rem;
+    padding: 1.5em;
+    margin-top: 0;
+    align-items: center;
+    color: #e9ebe6;
+}
+.opacidadNegro p {
+    text-align: center;
+    margin-top: 0px;
+    color: #e9ebe6;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+.opacidadBlanco {
+    background-color: rgba(233, 235, 230, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    // height: 300px;
+    // width: 480px;
+    font-size: 21px;
+    text-align: center;
+    padding-left: 0px;
+    align-items: center;
+}
+.cardFrame {
+    box-shadow: 0px 16px 16px 0px rgba(0, 0, 0, 0.2);
+    background-color: var(--background-category-card-grey-color);
+    border-radius: 50px;
+}
+
+.arrow-back {
+    background-color: var(--background-nav-bar-active-color) !important;
+    border-radius: 15px 0 0 15px !important;
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+}
+
+.arrow-next {
+    background-color: var(--background-light-gray-color) !important;
+    border-radius: 0 15px 15px 0 !important;
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+}

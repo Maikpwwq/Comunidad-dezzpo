@@ -1,0 +1,20 @@
+.container-btns {
+    max-width: 180px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: white 1px solid !important;
+}
+
+.arrow-back {
+    background-color: var(--background-nav-bar-active-color) !important;
+    border-radius: 15px 0 0 15px !important;
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+}
+
+.arrow-next {
+    background-color: var(--background-light-gray-color) !important;
+    border-radius: 0 15px 15px 0 !important;
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+}
