@@ -3,6 +3,7 @@ export { Page }
 import React, { useState, useEffect } from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { auth } from '#@/firebase/firebaseClient'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 import { AdjuntarArchivos } from '#@/pages/app/components/AdjuntarArchivos'
 
 import readDraftFromFirestore from '#@/services/readUserFromFirestore.service'
@@ -10,7 +11,7 @@ import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.s
 import updateDraftToFirestore from '#@/services/updateDraftToFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
-import './detalle_requerimiento.css'
+import '../detalle_requerimiento.css'
 
 import { TablaSubCategoriaPresupuesto } from '../Tabla_SubCategoria_Presupuesto'
 import Row from 'react-bootstrap/Row'
@@ -23,10 +24,9 @@ import Typography from '@mui/material/Typography'
 const Page = (props) => {
     const user = auth.currentUser || {}
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
-    // const navigate = useNavigate()
-    const { state } = props
-    const { draftId } = state || ' '
     // const _storage = storage
+    const pageContext = usePageContext()
+    const { draftId } = pageContext.routeParams
 
     let selectRole
     useEffect(() => {

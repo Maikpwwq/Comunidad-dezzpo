@@ -2,8 +2,8 @@
 
 // Parameters available at:
 //  - `pageContext.routeParams.id`
-// export default '/app/perfil/@id'
+// export default '/app/portal-servicios/@searchInput'
 
 // Parameters available at:
 //  - `pageContext.routeParams['*']`
-export default '/app/perfil/*'
+export default '/app/portal-servicios/*'

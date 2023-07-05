@@ -16,7 +16,6 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import PropTypes from 'prop-types'
 
 const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
-    // const navigate = useNavigate()
     const { categoriaProfesional, tipoProyecto } = data || {}
     // const { paramCategoriaProfesional, paramTipoProyecto } = useParams()
 
@@ -44,7 +43,9 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
     }
 
     const handleClick = () => {
-        navigate('/nuevo-proyecto', { state: projectData })
+        navigate(
+            `/nuevo-proyecto/${projectData.categoriaProfesional}/${projectData.tipoProyecto}`
+        )
         // console.log(projectData)
         // setDraftInfo(projectData)
     }

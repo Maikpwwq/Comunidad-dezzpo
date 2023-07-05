@@ -25,6 +25,8 @@ import { Page as Registro } from '#P/index/registro/index.page'
 import { Page as SubCategorias } from '#P/index/sub-categorias/index.page'
 import { PasoAPaso } from '#P/index/components/paso_a_paso/Paso_A_Paso'
 import { TablaSubCategoriaCantidades } from './Tabla_SubCategoria_Cantidades'
+import { usePageContext } from '#@/pages/index/renderer/usePageContext'
+
 // react-bootrstrap
 import Box from '@mui/material/Box'
 import Row from 'react-bootstrap/Row'
@@ -39,19 +41,16 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
-const Page = (pageContext) => {
+const Page = () => {
     const draftID = uuidv4()
     const user = auth.currentUser || {}
     const userID = user.uid ? true : false
-    // const navigate = useNavigate()
-    const { state } = {}
-    const { categoriaProfesional, tipoProyecto } = state || {} // auth
-    // const { paramCategoriaProfesional, paramTipoProyecto } = useParams()
+    const pageContext = usePageContext()
+    console.log('nuevo-proyecto', pageContext.routeParams['*'])
     const { paramCategoriaProfesional, paramTipoProyecto } =
-        pageContext.routeParams
-    const draftCategory =
-        categoriaProfesional || paramCategoriaProfesional || ''
-    const draftProject = tipoProyecto || paramTipoProyecto || ''
+        pageContext.routeParams['*']
+    const draftCategory = paramCategoriaProfesional || ''
+    const draftProject = paramTipoProyecto || ''
     // console.log(
     //     'A',
     //     draftCategory,
@@ -283,7 +282,7 @@ const Page = (pageContext) => {
                                     xs={12}
                                 >
                                     <BuscadorNuevoProyecto
-                                        data={state}
+                                        data={pageContext.routeParams}
                                         setDraftInfo={setDraftInfo}
                                         draftInfo={draftInfo}
                                     ></BuscadorNuevoProyecto>

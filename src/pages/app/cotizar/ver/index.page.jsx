@@ -1,7 +1,7 @@
 export { Page }
 
 import React, { useState, useEffect } from 'react'
-
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
@@ -15,9 +15,9 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 
-const Page = ({ state }) => {
-    // const { state } = {}
-    const { quotationId } = state || {}
+const Page = () => {
+    const pageContext = usePageContext()
+    const { quotationId } = pageContext.routeParams
 
     const [quotationInfo, setQuotationInfo] = useState({
         quotationId: '',

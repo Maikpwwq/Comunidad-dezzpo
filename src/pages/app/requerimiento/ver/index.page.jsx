@@ -4,12 +4,13 @@ import React, { useState, useEffect } from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { firestore, auth } from '#@/firebase/firebaseClient'
 import { collection, doc, getDocFromServer } from 'firebase/firestore'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
 import readDraftFromFirestore from '#@/services/readDraftFromFirestore.service'
 import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
-import './detalle_requerimiento.css'
+import '../detalle_requerimiento.css'
 
 import { TablaSubCategoriaPresupuesto } from '../Tabla_SubCategoria_Presupuesto'
 import Row from 'react-bootstrap/Row'
@@ -24,12 +25,13 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 
-const Page = ({ state }) => {
+const Page = () => {
     const user = auth.currentUser || {}
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
-    // const { state } = {}
     // const navigate = useNavigate()
-    const { draftId } = state || ' '
+    const pageContext = usePageContext()
+    const { draftId } = pageContext.routeParams
+
     const _firestore = firestore
     // const _storage = storage
     const draftRef = collection(_firestore, 'drafts')
@@ -169,19 +171,11 @@ const Page = ({ state }) => {
 
     const handleSeeQuotation = (e, quotationId) => {
         e.preventDefault()
-        navigate('/app/ver-cotizacion', {
-            state: {
-                quotationId: quotationId,
-            },
-        })
+        navigate(`/app/ver-cotizacion/${quotationId}`)
     }
     const handleEditQuotation = (e, quotationId) => {
         e.preventDefault()
-        navigate('/app/editar-cotizacion', {
-            state: {
-                quotationId: quotationId,
-            },
-        })
+        navigate(`/app/editar-cotizacion/${quotationId}`)
     }
     const handleHire = (e, quotationId, proponentId) => {
         e.preventDefault()
@@ -195,9 +189,8 @@ const Page = ({ state }) => {
     }
 
     const handleCotizar = () => {
-        navigate('/app/cotizacion', {
-            state: { draftId: requerimientoInfo.requerimientoId },
-        })
+        const draftParamId = requerimientoInfo.requerimientoId
+        navigate(`/app/cotizacion/${draftParamId}`)
     }
 
     return (

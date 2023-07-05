@@ -37,6 +37,7 @@ const ExpandMore = styled((props) => {
 export { DraftCard }
 
 function DraftCard({ props }) {
+    console.log('DraftCard', props)
     const user = auth.currentUser || {}
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
     const {
@@ -82,17 +83,13 @@ function DraftCard({ props }) {
     }
     const handleVerRequerimiento = () => {
         console.log(draftId)
-        navigate('/app/ver-requerimiento', { state: { draftId: draftId } })
+        navigate(`/app/ver-requerimiento/${draftId}`)
     }
     const handleAplicar = () => {
-        navigate('/app/cotizacion', {
-            state: { draftId: draftId },
-        })
+        navigate(`/app/cotizacion/${draftId}`)
     }
     const handleEditar = () => {
-        navigate('/app/editar-requerimiento', {
-            state: { draftId: draftId },
-        })
+        navigate(`/app/editar-requerimiento/${draftId}`)
     }
     const handleFavorite = () => {}
     const handleShare = () => {}

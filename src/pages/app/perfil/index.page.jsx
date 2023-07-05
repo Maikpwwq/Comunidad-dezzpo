@@ -17,6 +17,7 @@ import { Component as Comentarios } from '#@/pages/app/components/Comentarios'
 import { ChipsCategories } from '#@/pages/app/components/ChipsCategories'
 import { ListadoCategorias } from '#@/pages/index/components/ListadoCategorias'
 import { AdjuntarArchivos } from '#@/pages/app/components/AdjuntarArchivos'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -26,15 +27,31 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 
-const Page = (pageContext) => {
-    const user = auth.currentUser || {}
-    const userAuthID = user.uid || '' // Este es el id de la cuenta de Auth
-    const userAuthName = user.displayName || '' // Este es el id de la cuenta de Auth
+const Page = () => {
+
+    const [authUser, setAuthUser ] = useState({
+
+    })
+    useEffect(() => {
+        const myData = sharingInformationService.getSubject()
+        myData.subscribe((data) => {
+            if (data) {
+                const { authUser } = data
+                setAuthUser(authUser)
+                console.log('perfilPage', authUser)
+            }
+        })
+    }, [])
+    
+    console.log('Perfil user', authUser)
+    // const user = auth?.currentUser
+    const userAuthID = authUser?.uid || '' // Este es el id de la cuenta de Auth
+    const userAuthName = authUser?.displayName || '' // Este es el id de la cuenta de Auth
     let isLoaded = false
-    // let { id } = useParams() // Este es el id de la busqueda
-    let { id } = pageContext.routeParams
-    // console.log(id)
-    const { state } = {}
+    const pageContext = usePageContext()
+    let id = pageContext.routeParams['*']
+    console.log('routeParamsPerfil', pageContext.routeParams['*'])
+    // const { state } = {}
     let selectRole
     useEffect(() => {
         // Perform localStorage action
@@ -45,10 +62,10 @@ const Page = (pageContext) => {
         rol: 2, // selectRole ? selectRole :
     })
     // Este es el id que se obtienen como parametro de busqueda o consulta de un perfil especifico
-    const userId =
-        state != undefined && state != null && state.id != undefined
-            ? state.id
-            : id
+    const userId = id
+    // state != undefined && state != null && state.id != undefined
+    //     ? state.id
+    //     : id
     const consult = userId !== null && userId !== undefined ? true : false
     const userConsultId = consult ? userId : userAuthID
     // console.log(userConsultId)
@@ -99,8 +116,8 @@ const Page = (pageContext) => {
     useEffect(() => {
         // console.log(userRol, state)
         if (!isLoaded) {
-            if (user !== null && !isNaN(userRol.rol) && userRol.rol !== '') {
-                // console.log(user)
+            if (authUser !== null && !isNaN(userRol.rol) && userRol.rol !== '') {
+                // console.log(authUser)
                 const {
                     uid,
                     email,
@@ -109,14 +126,15 @@ const Page = (pageContext) => {
                     photoURL,
                     emailVerified,
                     metadata,
-                } = user
+                } = authUser
 
                 userData()
 
                 const productData = sharingInformationService.getSubject()
                 productData.subscribe((data) => {
                     if (data) {
-                        const { user } = data
+                        console.log('perfilPage', data)
+                        const { currentUser } = data
                         const {
                             userJoined,
                             userCategories,
@@ -139,7 +157,7 @@ const Page = (pageContext) => {
                             userRazonSocial,
                             userIdentification,
                             userDescription,
-                        } = user
+                        } = currentUser
                         // console.log('Detail load:', data)
                         const creationTime = userJoined
                             ? userJoined
@@ -507,6 +525,9 @@ const Page = (pageContext) => {
                                         channelUrl={userInfo.userChannelUrl}
                                         userID={userAuthID}
                                         nickname={userAuthName}
+                                        // ID y Nombre del perfil que comenta
+                                        // userID={userInfo.userId} no
+                                        // nickname={userInfo.userName} no
                                     />
                                 )}
                             </Col>

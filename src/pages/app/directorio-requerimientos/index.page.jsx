@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import { firestore } from '#@/firebase/firebaseClient' // storage,
 import { collection, getDocs, query, where } from 'firebase/firestore'
 
-import DraftCard from '../../components/DraftCard'
+import { DraftCard } from '#@/pages/app/components/DraftCard'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -34,6 +34,7 @@ const Page = (props) => {
         draftsFromFirestore()
             .then((docSnap) => {
                 if (docSnap) {
+                    console.log('draftsFromFirestore', docSnap)
                     const data = docSnap.docs.map((element) => ({
                         ...element.data(),
                     }))

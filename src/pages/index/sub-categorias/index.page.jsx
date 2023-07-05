@@ -29,7 +29,6 @@ const Page = ({ props, setCategoriaInfo, categoriaInfo }) => {
 
     const handleSeleccionar = (e) => {
         e.preventDefault()
-        // navigate('/app/perfil', { state: { id: userId } })
         // navigate(`/app/perfil/${userId}`)
         // console.log(e, selected)
         setSelected(!selected)

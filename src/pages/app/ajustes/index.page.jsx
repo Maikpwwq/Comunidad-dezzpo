@@ -3,6 +3,7 @@ export { Page }
 // Pagina de Usuario - Ajustes
 import React, { useState, useEffect } from 'react'
 import { auth } from '#@/firebase/firebaseClient'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 import { Service as newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 import readUserFromFirestore from '#@/services/readUserFromFirestore.service'
@@ -26,11 +27,13 @@ import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
 
 const Page = (props) => {
+    console.log('auth', auth)
+    const pageContext = usePageContext()
+    let id = pageContext.routeParams['*']
+    console.log('routeParamsPerfil', pageContext.routeParams['*'])
     const user = auth.currentUser || {}
-    const userAuthID = user.uid || ''
+    const userAuthID = user.uid || id
     const userAuthName = user.displayName || ''
-    const { state } = {}
-
     let selectRole
     useEffect(() => {
         // Perform localStorage action

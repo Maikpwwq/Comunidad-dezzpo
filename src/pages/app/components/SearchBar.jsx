@@ -81,10 +81,7 @@ const SearchBar = () => {
         // Detectar tecla 'Enter' if (event.key === 'Enter')
         // if (event.keyCode === 13) {
         // console.log(event, searchParams)
-        navigate('/app/portal-servicios', {
-            state: { searchInput: multipleSearch },
-        })
-        // }
+        navigate(`/app/portal-servicios/${multipleSearch}`) // searchInput
     }
 
     return (
@@ -97,7 +94,7 @@ const SearchBar = () => {
                 }}
             >
                 <Link
-                    href="/app/"
+                    href="/app/portal-servicios"
                     className="activo body-2 p-2 d-flex flex-row"
                 >
                     <img

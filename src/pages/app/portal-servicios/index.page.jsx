@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { firestore } from '#@/firebase/firebaseClient' // storage,
 import { collection } from 'firebase/firestore'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
 import doSearchFromFirestore from '#@/services/doSearchFromFirestore.service'
 import readUsersFromFirestore from '#@/services/readUsersFromFirestore.service'
@@ -19,10 +20,10 @@ import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 
 const Page = (props) => {
-    // const navigate = useNavigate()
-    const { state } = props
-    const { searchInput } = state || ' '
-    // console.log(state.searchInput)
+    const pageContext = usePageContext()
+    console.log('portal-servicios', pageContext.routeParams['*'])
+    const { searchInput } = pageContext.routeParams['*']
+
     // const _storage = storage
     const _firestore = firestore
 
@@ -74,7 +75,7 @@ const Page = (props) => {
         }
     }, [searchInput])
 
-    console.log('SearchData', searchData)
+    // console.log('SearchData', searchData)
 
     useEffect(() => {
         FromUsersComerciantes()
@@ -82,7 +83,7 @@ const Page = (props) => {
         userData.subscribe((data) => {
             if (data) {
                 const { users } = data
-                console.log('FromUsersComerciantes', users)
+                // console.log('FromUsersComerciantes', users)
                 setUsersData(users)
             } else {
                 console.log(
@@ -93,7 +94,7 @@ const Page = (props) => {
     }, [])
 
     const handleNewProject = () => {
-        navigate('/nuevo-proyecto', { state: { auth: true } })
+        navigate('/nuevo-proyecto')
     }
 
     return (

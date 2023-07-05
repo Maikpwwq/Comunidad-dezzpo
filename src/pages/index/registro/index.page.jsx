@@ -148,7 +148,7 @@ const Page = (props) => {
                             })
                             handleSave()
                         } else {
-                            navigate('/app/ajustes')
+                            navigate(`/app/ajustes/${uid}`)
                         }
                     })
                     .catch((err) => {
@@ -216,7 +216,7 @@ const Page = (props) => {
                             })
                             handleSave()
                         } else {
-                            navigate('/app/ajustes')
+                            navigate(`/app/ajustes/${uid}`)
                         }
                     })
                     .catch((error) => {

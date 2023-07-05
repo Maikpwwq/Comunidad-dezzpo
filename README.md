@@ -42,5 +42,4 @@ _LinkedIn:_
 
 **Agradecimientos a Bictia ❤️ MisionTic 2022 ❤️ Red Tecnoparque Sena**
 
-
 npx prettier . --write

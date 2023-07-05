@@ -66,9 +66,9 @@ const Page = (props) => {
     }
 
     const onSuccess = (user) => {
-        const {uid} = user
+        const { uid } = user
         // console.log('Account successfully upgraded', user)
-        console.log("onLoginSuccess", userSignupRol, uid)
+        console.log('onLoginSuccess', userSignupRol, uid)
         localStorage.role = JSON.stringify(userSignupRol)
         localStorage.userID = JSON.stringify(uid)
         handleAlert('Cuenta autorizada con éxito.', 'success')
