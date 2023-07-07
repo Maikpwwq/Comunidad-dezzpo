@@ -2,7 +2,7 @@ export { Header }
 
 import React, { useState } from 'react'
 import { Link } from '#@/pages/app/renderer/Link'
-import { auth } from '../../../firebase/firebaseClient'
+import { auth } from '#@/firebase/firebaseClient'
 import { SearchBar } from './SearchBar'
 import '#@/assets/cssPrivateApp/header.css'
 
@@ -17,7 +17,10 @@ import Toolbar from '@mui/material/Toolbar'
 
 function Header(props) {
     const { onDrawerToggle } = props
-    const user = auth.currentUser || {}
+    const user = auth?.currentUser || {}
+    const userId = user?.uid
+    const isAuth = user? true : false
+    const perfilRoute = `perfil/${userId}`
     const [tab, setTab] = useState(0)
 
     return (
@@ -41,7 +44,7 @@ function Header(props) {
                             <SearchBar></SearchBar>
                         </Grid>
                         <Grid item xs>
-                            {user.uid ? (
+                            {isAuth ? (
                                 <Tabs
                                     value={tab}
                                     textColor="inherit"
@@ -50,7 +53,7 @@ function Header(props) {
                                     <Tab
                                         label="Ver tu perfil"
                                         component={Link}
-                                        href="perfil"
+                                        href={perfilRoute}
                                         onClick={() => setTab(0)}
                                     />
                                     <Tab

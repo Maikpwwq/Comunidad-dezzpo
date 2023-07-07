@@ -2,11 +2,12 @@ export { Page }
 
 // Pagina de Usuario - Perfil
 import React, { useState, useEffect } from 'react'
-import { auth } from '#@/firebase/firebaseClient'
+import PropTypes from 'prop-types'
+import { sharingInformationService } from '#@/services/sharing-information'
 import { format, formatDistance, subDays, parse, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
 import readUserFromFirestore from '#@/services/readUserFromFirestore.service'
-import { sharingInformationService } from '#@/services/sharing-information'
+import { auth } from '#@/firebase/firebaseClient'
 
 import '#@/assets/cssPrivateApp/perfil.css'
 // import ProfilePhoto from '#@/assets/img/Profile.png'
@@ -28,29 +29,24 @@ import Typography from '@mui/material/Typography'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 
 const Page = () => {
-
-    const [authUser, setAuthUser ] = useState({
-
-    })
-    useEffect(() => {
-        const myData = sharingInformationService.getSubject()
-        myData.subscribe((data) => {
-            if (data) {
-                const { authUser } = data
-                setAuthUser(authUser)
-                console.log('perfilPage', authUser)
-            }
-        })
-    }, [])
-    
-    console.log('Perfil user', authUser)
-    // const user = auth?.currentUser
-    const userAuthID = authUser?.uid || '' // Este es el id de la cuenta de Auth
-    const userAuthName = authUser?.displayName || '' // Este es el id de la cuenta de Auth
-    let isLoaded = false
     const pageContext = usePageContext()
+    // const { userAuth } = props
+    // const [authUser, setAuthUser ] = useState({
+
+    // })
+    // TODO bring before render userAuth
+    // const userAuth = pageContext.pageProps.userAuth
+    const userAuth = auth?.currentUser
+    // const urlPath = pageContext.urlPathname
+    console.log('Perfil user', pageContext.pageProps)
+    // const user = auth?.currentUser
+    const userAuthID = userAuth? userAuth.uid : '' // Este es el id de la cuenta de Auth
+    const userAuthName = userAuth? userAuth.displayName : '' // Este es el id de la cuenta de Auth
+    let isLoaded = false
+   
     let id = pageContext.routeParams['*']
     console.log('routeParamsPerfil', pageContext.routeParams['*'])
+
     // const { state } = {}
     let selectRole
     useEffect(() => {
@@ -113,23 +109,57 @@ const Page = () => {
         },
     })
 
+    const determineDistanceTime = (metadata) => {
+        const creationTime = metadata.creationTime
+                        //console.log(creationTime)
+                        const formatedTime = parse(
+                            creationTime,
+                            'dd-MM-yyyy',
+                            new Date()
+                        )
+                        // const formatedTime = parseISO(creationTime)
+                        // const formatedTime = new Date(creationTime)
+                        //console.log(creationTime, formatedTime)
+                        const distanceTime = formatDistance(
+                            formatedTime,
+                            new Date(),
+                            { addSuffix: true },
+                            { locale: es }
+                        )
+                        return distanceTime
+    }
+
+    const LoadAuthData = () => {
+
+        const {
+            uid,
+            email,
+            displayName,
+            phoneNumber,
+            photoURL,
+            emailVerified,
+            metadata,
+        } = userAuth
+
+        const distanceTime = determineDistanceTime(metadata)
+
+        setUserInfo({
+            ...userInfo,
+            userPhone: phoneNumber,
+            userPhotoUrl: photoURL,
+            userId: uid,
+            userMail: email,
+            userName: displayName,
+            userJoined: distanceTime,
+        })
+    }
+
     useEffect(() => {
         // console.log(userRol, state)
         if (!isLoaded) {
-            if (authUser !== null && !isNaN(userRol.rol) && userRol.rol !== '') {
-                // console.log(authUser)
-                const {
-                    uid,
-                    email,
-                    displayName,
-                    phoneNumber,
-                    photoURL,
-                    emailVerified,
-                    metadata,
-                } = authUser
-
+            if (!isNaN(userRol.rol) &&
+            userRol.rol !== '') {
                 userData()
-
                 const productData = sharingInformationService.getSubject()
                 productData.subscribe((data) => {
                     if (data) {
@@ -159,24 +189,7 @@ const Page = () => {
                             userDescription,
                         } = currentUser
                         // console.log('Detail load:', data)
-                        const creationTime = userJoined
-                            ? userJoined
-                            : metadata.creationTime
-                        //console.log(creationTime)
-                        const formatedTime = parse(
-                            creationTime,
-                            'dd-MM-yyyy',
-                            new Date()
-                        )
-                        // const formatedTime = parseISO(creationTime)
-                        // const formatedTime = new Date(creationTime)
-                        //console.log(creationTime, formatedTime)
-                        const distanceTime = formatDistance(
-                            formatedTime,
-                            new Date(),
-                            { addSuffix: true },
-                            { locale: es }
-                        )
+                        
                         const chipsInfo = []
                         if (userCategories) {
                             userCategories.forEach((chip) => {
@@ -193,13 +206,19 @@ const Page = () => {
                             userChannelUrl: userChannelUrl
                                 ? userChannelUrl
                                 : '',
-                            userPhone: userPhone || phoneNumber,
-                            userPhotoUrl: userPhotoUrl || photoURL,
-                            userId: userId || uid,
-                            userMail: userMail || email,
-                            userName: userName || displayName,
+                            userPhone: userPhone ? userPhone
+                            : '',
+                            userPhotoUrl: userPhotoUrl ? userPhotoUrl
+                            : '',
+                            userId: userId ? userId
+                            : '',
+                            userMail: userMail ? userMail
+                            : '',
+                            userName: userName ? userName
+                            : '',
                             userGalleryUrl: userGalleryUrl || [],
-                            userJoined: distanceTime,
+                            userJoined: userJoined ? userJoined
+                            : '',
                             userProfession: userProfession
                                 ? userProfession
                                 : '',
@@ -242,6 +261,13 @@ const Page = () => {
                         )
                     }
                 })
+                if (
+                    userAuth !== null &&
+                    userAuth !== undefined
+                ) {
+                    console.log("authUser", userAuth )
+                    LoadAuthData(userAuth)
+                }
             }
         }
     }, [])
@@ -538,4 +564,8 @@ const Page = () => {
             </Container>
         </>
     )
+}
+
+Page.propTypes = {
+    userAuth: PropTypes.object,
 }

@@ -214,8 +214,6 @@ const Page = (props) => {
                             <Col
                                 className="comunidadTitulo m-4 w-auto"
                                 md={3}
-                                sm={10}
-                                xs={10}
                             >
                                 <h4 className="headline-s">Propietarios</h4>
                             </Col>

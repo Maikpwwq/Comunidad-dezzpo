@@ -4,7 +4,10 @@
         flex-direction: column !important;
     }
 
-    .comoComerciantes,
+    .comoComerciantes {
+        flex-direction: column !important;
+    }
+
     .comoPropietarios {
         flex-direction: column !important;
     }
@@ -108,7 +111,7 @@ body {
 
 .comoPropietarios {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-evenly;
     text-align: left;
     width: 100%;

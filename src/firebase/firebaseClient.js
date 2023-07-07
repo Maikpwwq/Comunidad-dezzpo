@@ -49,7 +49,7 @@ onAuthStateChanged(auth, (user) => {
     // Check for user status
     if (user) {
         sharingInformationService.setSubject({ authUser: user })
-        console.log(user)
+        console.log('onAuthStateChanged', user)
         // let displayName = user.displayName
         // let email = user.email
         // var emailVerified = user.emailVerified

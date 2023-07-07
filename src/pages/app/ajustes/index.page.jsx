@@ -3,6 +3,8 @@ export { Page }
 // Pagina de Usuario - Ajustes
 import React, { useState, useEffect } from 'react'
 import { auth } from '#@/firebase/firebaseClient'
+import { format, formatDistance, subDays, parse, parseISO } from 'date-fns'
+import { es } from 'date-fns/locale'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 import { Service as newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
 import { sharingInformationService } from '#@/services/sharing-information'
@@ -27,13 +29,13 @@ import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
 
 const Page = (props) => {
-    console.log('auth', auth)
+    console.log('auth', auth.currentUser)
     const pageContext = usePageContext()
     let id = pageContext.routeParams['*']
     console.log('routeParamsPerfil', pageContext.routeParams['*'])
-    const user = auth.currentUser || {}
-    const userAuthID = user.uid || id
-    const userAuthName = user.displayName || ''
+    const userAuth = auth?.currentUser || {}
+    const userAuthID = userAuth?.uid || id
+    const userAuthName = userAuth?.displayName || ''
     let selectRole
     useEffect(() => {
         // Perform localStorage action
@@ -81,24 +83,61 @@ const Page = (props) => {
     const userData = () => {
         const firestoreUserID = userAuthID
         const userSelectedRol = userRol.rol
-        // console.log(firestoreUserID, userSelectedRol)
+        console.log("readUserFromFirestore", firestoreUserID, userSelectedRol)
         readUserFromFirestore({
             firestoreUserID,
             userSelectedRol,
         })
     }
 
+    const determineDistanceTime = (metadata) => {
+        const creationTime = metadata.creationTime
+                        //console.log(creationTime)
+                        const formatedTime = parse(
+                            creationTime,
+                            'dd-MM-yyyy',
+                            new Date()
+                        )
+                        // const formatedTime = parseISO(creationTime)
+                        // const formatedTime = new Date(creationTime)
+                        //console.log(creationTime, formatedTime)
+                        const distanceTime = formatDistance(
+                            formatedTime,
+                            new Date(),
+                            { addSuffix: true },
+                            { locale: es }
+                        )
+                        return distanceTime
+    }
+
+    const LoadAuthData = () => {
+
+        const {
+            uid,
+            email,
+            displayName,
+            phoneNumber,
+            photoURL,
+            emailVerified,
+            metadata,
+        } = userAuth
+
+        const distanceTime = determineDistanceTime(metadata)
+
+        setUserEditInfo({
+            ...userEditInfo,
+            userPhone: phoneNumber,
+            userPhotoUrl: photoURL,
+            userId: uid,
+            userMail: email,
+            userName: displayName,
+            userJoined: distanceTime,
+        })
+    }
+
     useEffect(() => {
-        if (user !== null && userRol.rol) {
-            const {
-                uid,
-                email,
-                displayName,
-                phoneNumber,
-                photoURL,
-                emailVerified,
-                // metadata,
-            } = user
+        if (!isNaN(userRol.rol) &&
+            userRol.rol !== '') {
             // Load and expose user data from firestore
             userData()
             const userInformation = sharingInformationService.getSubject()
@@ -157,11 +196,11 @@ const Page = (props) => {
 
                     setUserEditInfo({
                         ...userEditInfo,
-                        userPhone: userPhone || phoneNumber,
-                        userPhotoUrl: userPhotoUrl || photoURL,
-                        userId: uid,
-                        userMail: email,
-                        userName: displayName || userName,
+                        userPhone: userPhone || '',
+                        userPhotoUrl: userPhotoUrl || '',
+                        // userId: uid,
+                        // userMail: email,
+                        userName: userName || '',
                         userJoined: userJoined || '',
                         userProfession: userProfession || '',
                         userExperience: userExperience || '',
@@ -176,15 +215,22 @@ const Page = (props) => {
                         userRazonSocial: userRazonSocial || '',
                         userIdentification: userIdentification || '',
                         userDescription: userDescription || '',
-                    })
+                    })                
                 } else {
                     console.log(
                         'No se encontro información relacionada con este usuario!'
                     )
                 }
             })
+            if (
+                userAuth !== null &&
+                userAuth !== undefined
+            ) {
+                console.log("authUser", userAuth )
+                LoadAuthData(userAuth)
+            }
         }
-    }, [user])
+    }, [userAuth])
 
     const handleAlert = (message, severity) => {
         setAlert({ ...alert, open: true, message: message, severity: severity })
