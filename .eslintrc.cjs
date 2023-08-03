@@ -13,5 +13,7 @@ module.exports = {
         'plugin:react/recommended',
         'plugin:react/jsx-runtime',
         'plugin:react-hooks/recommended',
+        'plugin:@typescript-eslint/recommended'
     ],
+    parser: '@typescript-eslint/parser'
 }
