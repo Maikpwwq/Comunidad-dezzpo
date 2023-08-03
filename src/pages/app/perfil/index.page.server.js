@@ -8,14 +8,17 @@ async function onBeforeRender(pageContext) {
     const defaultUserAuth = auth?.currentUser
 
     const userAuth = defaultUserAuth ? defaultUserAuth : sharedUserAuth
-    console.log('userAuth', userAuth)
+    console.log('userAuth', defaultUserAuth, sharedUserAuth)
 
     // We make `userAuth` available as `pageContext.pageProps.userAuth`
     const pageProps = { userAuth }
 
-    return {
+    return {   
+       // E.g. redirect `/app/perfil/wrong/url` to `/app/perfil/`
         pageContext: {
             pageProps,
+            // redirectTo: '/app/perfil/',
+            // precedence: 2,
         },
     }
 }

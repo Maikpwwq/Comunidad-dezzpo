@@ -1,7 +1,10 @@
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     .form-check-input,
     #formBasicCheckboxRecordar {
         width: 10% !important;
+    }
+    .ingresoFormulario {
+        flex-direction: column !important;
     }
 }
 
@@ -11,7 +14,7 @@
     background-size: 50% auto;
     min-height: 565px;
     height: auto;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .ingresoFormulario {
@@ -26,6 +29,7 @@
     width: 100%;
     /* color: #e9ebe6;     */
     position: relative;
+    flex-wrap: nowrap;
 }
 
 .ingresarFormulario {
@@ -35,7 +39,7 @@
     justify-content: center;
     text-align: left;
     min-height: 480px;
-    width: 60%;
+    /* width: 60%; */
     /* background: rgba(19, 73, 94, 0.9); */
     margin-top: 20px;
     margin-right: 1em;

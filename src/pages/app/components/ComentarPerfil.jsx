@@ -5,7 +5,7 @@ import {
     // App as SendBirdApp,
     // Channel,
     OpenChannel,
-    // withSendBird,
+    withSendBird,
 } from '@sendbird/uikit-react'
 
 // import SendbirdSelectors from '@sendbird/uikit-react/SendbirdSelectors'

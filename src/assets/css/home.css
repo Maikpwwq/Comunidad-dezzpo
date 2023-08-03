@@ -143,7 +143,7 @@ body {
 
 .comoComerciantes {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-evenly;
     text-align: left;
     /* border-top: #1ec7e6;

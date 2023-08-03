@@ -103,13 +103,13 @@ function Navigator(props) {
                       {
                           id: 'Portal de servicios',
                           icon: <HomeIcon />,
-                          route: 'portal-servicios',
+                          route: 'portal-servicios/',
                           active: 'portal-servicios' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Directorio de Requerimientos',
                           icon: <HomeIcon />,
-                          route: 'directorio-requerimientos',
+                          route: 'directorio-requerimientos/',
                           active: 'directorio-requerimientos' === activeUrl[1] ? true : false,
                       },
                       {
@@ -232,7 +232,10 @@ function Navigator(props) {
                             </ListItemText>
                         </ListItem>
                         {children.map(
-                            ({ id: childId, icon, route, active }) => (
+                            ({ id: childId, icon, route, active }) => {
+                                // const hrefRoute = route.split('/').splice(1, 1).toString
+                                // console.log('navRoute', route)
+                            return (
                                 <ListItem
                                     disablePadding
                                     button
@@ -240,7 +243,7 @@ function Navigator(props) {
                                     key={childId}
                                     component={Link}
                                     href={route}
-                                    // exact
+                                    exact
                                 >
                                     <ListItemButton
                                         className=""
@@ -255,7 +258,7 @@ function Navigator(props) {
                                         <ListItemText>{childId}</ListItemText>
                                     </ListItemButton>
                                 </ListItem>
-                            )
+                            )}
                         )}
 
                         <Divider sx={{ mt: 2 }} />

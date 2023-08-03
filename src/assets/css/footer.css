@@ -50,7 +50,7 @@
 .siguenosRedes {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    /* width: 25%; */
     padding-right: 48px;
     padding-left: 48px;
     margin-top: -15px;

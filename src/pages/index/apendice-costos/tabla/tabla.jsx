@@ -9,10 +9,11 @@ import Stack from '@mui/material/Stack'
 
 const TableCards = (props) => {
     const { dataTable } = props
-    let array = []
+    
     const [dataCards, setDataCards] = useState()
 
     useEffect(() => {
+        let array = []
         if (dataTable.length > 0) {
             dataTable.map((categoria) => {
                 if (categoria.subCategoria !== undefined) {
@@ -24,7 +25,7 @@ const TableCards = (props) => {
                 console.log('dataTable', dataTable, array)
             }
         }
-    }, [array, dataCards, dataTable])
+    }, [ dataCards, dataTable])
 
     const pageSize = 5
 

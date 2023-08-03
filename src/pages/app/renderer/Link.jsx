@@ -9,6 +9,7 @@ Link.propTypes = {
 }
 function Link(props) {
     const pageContext = usePageContext()
+    console.log('function Link', pageContext.urlPathname, props.href) // .split('/')[3]
     const className = [
         props.className,
         pageContext.urlPathname === props.href && 'is-active',

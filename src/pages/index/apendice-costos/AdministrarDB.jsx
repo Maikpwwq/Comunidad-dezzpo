@@ -20,8 +20,6 @@ const Input = styled('input')({
 
 XLSX.set_fs(fs)
 
-export { AdministrarDB }
-
 const AdministrarDB = () => {
     const [excelInfo, setExcelInfo] = useState({})
     const _firestore = firestore

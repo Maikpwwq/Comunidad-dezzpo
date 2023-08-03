@@ -42,10 +42,10 @@ const Page = () => {
     // const user = auth?.currentUser
     const userAuthID = userAuth? userAuth.uid : '' // Este es el id de la cuenta de Auth
     const userAuthName = userAuth? userAuth.displayName : '' // Este es el id de la cuenta de Auth
-    let isLoaded = false
+    const [isLoaded, setIsLoaded] =  useState(false)
    
-    let id = pageContext.routeParams['*']
-    console.log('routeParamsPerfil', pageContext.routeParams['*'])
+    let id = pageContext.routeParams.id
+    console.log('routeParamsPerfil', id)
 
     // const { state } = {}
     let selectRole
@@ -129,7 +129,7 @@ const Page = () => {
                         return distanceTime
     }
 
-    const LoadAuthData = () => {
+    const LoadAuthData = (userAuth) => {
 
         const {
             uid,
@@ -137,11 +137,11 @@ const Page = () => {
             displayName,
             phoneNumber,
             photoURL,
-            emailVerified,
-            metadata,
+            //emailVerified,
+            // metadata,
         } = userAuth
 
-        const distanceTime = determineDistanceTime(metadata)
+        // const distanceTime = determineDistanceTime(metadata)
 
         setUserInfo({
             ...userInfo,
@@ -150,8 +150,105 @@ const Page = () => {
             userId: uid,
             userMail: email,
             userName: displayName,
-            userJoined: distanceTime,
+            // userJoined: distanceTime,
         })
+    }
+
+    const LoadCurrentData = (currentUser) => {
+        const {
+            userJoined,
+            userCategories,
+            userChannelUrl,
+            userPhone,
+            userPhotoUrl,
+            userId,
+            userMail,
+            userName,
+            userGalleryUrl,
+            userProfession,
+            userExperience,
+            // userCategorie,
+            // userClasification,
+            // userCategoriesChips,
+            userGrade,
+            userDirection,
+            userCiudad,
+            userCodigoPostal,
+            userRazonSocial,
+            userIdentification,
+            userDescription,
+        } = currentUser
+        // console.log('Detail load:', data)
+        let chipsInfo = []
+        if (userCategories) {
+            const chipsCategories = (userCategories) =>{
+                const chipsInfo = []
+                userCategories.forEach((chip) => {
+                    // console.log(chip)
+                    ListadoCategorias.forEach((cat) => {
+                        if (chip === cat.label) {
+                            chipsInfo.push(cat)
+                        }
+                    })
+                })
+                return chipsInfo
+            }
+        
+            chipsInfo = chipsCategories(userCategories)
+        }
+        setUserInfo({
+            ...userInfo,
+            userChannelUrl: userChannelUrl
+                ? userChannelUrl
+                : '',
+            userPhone: userPhone ? userPhone
+            : '',
+            userPhotoUrl: userPhotoUrl ? userPhotoUrl
+            : '',
+            userId: userId ? userId
+            : '',
+            userMail: userMail ? userMail
+            : '',
+            userName: userName ? userName
+            : '',
+            userGalleryUrl: userGalleryUrl || [],
+            userJoined: userJoined ? userJoined
+            : '',
+            userProfession: userProfession
+                ? userProfession
+                : '',
+            userExperience: userExperience
+                ? userExperience
+                : '',
+            // userCategorie: userCategorie
+            //     ? userCategorie
+            //     : '',
+            // userClasification: userClasification
+            //     ? userClasification
+            //     : '',
+            // userCategories: userCategories
+            //     ? userCategories
+            //     : '',
+            userCategoriesChips:
+                chipsInfo, // .length > 0 ? chipsInfo : []
+            userGrade: userGrade ? userGrade : '',
+            userDirection: userDirection ? userDirection : '',
+            userCiudad: userCiudad ? userCiudad : '',
+            userCodigoPostal: userCodigoPostal
+                ? userCodigoPostal
+                : '',
+            userRazonSocial: userRazonSocial
+                ? userRazonSocial
+                : '',
+            userIdentification: userIdentification
+                ? userIdentification
+                : '',
+            userDescription: userDescription
+                ? userDescription
+                : '',
+        })
+        // chipsInfoAdapter(userCategories)
+
     }
 
     useEffect(() => {
@@ -164,110 +261,27 @@ const Page = () => {
                 productData.subscribe((data) => {
                     if (data) {
                         console.log('perfilPage', data)
-                        const { currentUser } = data
-                        const {
-                            userJoined,
-                            userCategories,
-                            userChannelUrl,
-                            userPhone,
-                            userPhotoUrl,
-                            userId,
-                            userMail,
-                            userName,
-                            userGalleryUrl,
-                            userProfession,
-                            userExperience,
-                            // userCategorie,
-                            // userClasification,
-                            // userCategoriesChips,
-                            userGrade,
-                            userDirection,
-                            userCiudad,
-                            userCodigoPostal,
-                            userRazonSocial,
-                            userIdentification,
-                            userDescription,
-                        } = currentUser
-                        // console.log('Detail load:', data)
-                        
-                        const chipsInfo = []
-                        if (userCategories) {
-                            userCategories.forEach((chip) => {
-                                // console.log(chip)
-                                ListadoCategorias.forEach((cat) => {
-                                    if (chip === cat.label) {
-                                        chipsInfo.push(cat)
-                                    }
-                                })
-                            })
+                        const { currentUser, authUser } = data
+                        if (currentUser){
+                            LoadCurrentData(currentUser)
+                            setIsLoaded(true)
+                        } else if (authUser){ 
+                            LoadAuthData(authUser)
+                            setIsLoaded(true)
                         }
-                        setUserInfo({
-                            ...userInfo,
-                            userChannelUrl: userChannelUrl
-                                ? userChannelUrl
-                                : '',
-                            userPhone: userPhone ? userPhone
-                            : '',
-                            userPhotoUrl: userPhotoUrl ? userPhotoUrl
-                            : '',
-                            userId: userId ? userId
-                            : '',
-                            userMail: userMail ? userMail
-                            : '',
-                            userName: userName ? userName
-                            : '',
-                            userGalleryUrl: userGalleryUrl || [],
-                            userJoined: userJoined ? userJoined
-                            : '',
-                            userProfession: userProfession
-                                ? userProfession
-                                : '',
-                            userExperience: userExperience
-                                ? userExperience
-                                : '',
-                            // userCategorie: userCategorie
-                            //     ? userCategorie
-                            //     : '',
-                            // userClasification: userClasification
-                            //     ? userClasification
-                            //     : '',
-                            // userCategories: userCategories
-                            //     ? userCategories
-                            //     : '',
-                            userCategoriesChips:
-                                chipsInfo.length > 0 ? chipsInfo : [],
-                            userGrade: userGrade ? userGrade : '',
-                            userDirection: userDirection ? userDirection : '',
-                            userCiudad: userCiudad ? userCiudad : '',
-                            userCodigoPostal: userCodigoPostal
-                                ? userCodigoPostal
-                                : '',
-                            userRazonSocial: userRazonSocial
-                                ? userRazonSocial
-                                : '',
-                            userIdentification: userIdentification
-                                ? userIdentification
-                                : '',
-                            userDescription: userDescription
-                                ? userDescription
-                                : '',
-                        })
-                        // chipsInfoAdapter(userCategories)
-
-                        isLoaded = true
                     } else {
                         console.log(
                             'No se encontro información relacionada con este usuario!'
                         )
                     }
                 })
-                if (
-                    userAuth !== null &&
-                    userAuth !== undefined
-                ) {
-                    console.log("authUser", userAuth )
-                    LoadAuthData(userAuth)
-                }
+                // if (
+                //     userAuth !== null &&
+                //     userAuth !== undefined
+                // ) {
+                //     console.log("authUser", userAuth )
+                //     LoadAuthData(userAuth)
+                // }
             }
         }
     }, [])
