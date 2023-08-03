@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs'
+import { Subject } from 'rxjs' // Observable, 
 
 export class SubjectManager {
     subject$ = new Subject()

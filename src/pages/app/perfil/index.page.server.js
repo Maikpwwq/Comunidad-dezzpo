@@ -8,7 +8,7 @@ async function onBeforeRender(pageContext) {
     const defaultUserAuth = auth?.currentUser
 
     const userAuth = defaultUserAuth ? defaultUserAuth : sharedUserAuth
-    console.log('userAuth', defaultUserAuth, sharedUserAuth)
+    console.log('userAuth', defaultUserAuth, sharedUserAuth, pageContext)
 
     // We make `userAuth` available as `pageContext.pageProps.userAuth`
     const pageProps = { userAuth }

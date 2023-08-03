@@ -5,8 +5,8 @@
  * @version   1.2.6
  */
 /*jslint browser: true */
-/*global XDomainRequest, MutationObserver, window */
-;(function () {
+/*global XDomainRequest */
+(function () {
     'use strict'
     if (typeof window !== 'undefined' && window.addEventListener) {
         var cache = Object.create(null) // holds xhr objects to prevent multiple requests
@@ -43,7 +43,9 @@
                             debouncedCheck,
                             false
                         )
-                    } catch (ignore) {}
+                    } catch (ignore) {
+                        return
+                    }
                 }
             } else {
                 document.documentElement.addEventListener(
