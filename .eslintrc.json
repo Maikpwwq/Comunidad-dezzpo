@@ -2,17 +2,21 @@
   "rules": {
     "prettier/prettier": "error",
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-vars": "error",
+    "react-refresh/only-export-components": "warn"
   },
+  "reportUnusedDisableDirectives": true,
+  "ignorePatterns": ["dist/*"],
   "env": {
     "es6": true,
     "browser": true,
+    "es2020": true,
     "node": true,
     "jest": true
   },
   "parserOptions": {
     "parser": "@babel/eslint-parser",
-    "ecmaVersion": 2018,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -21,6 +25,7 @@
   "extends": [    
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:prettier/recommended"
   ],
   "globals": {
@@ -29,7 +34,8 @@
   },
   "plugins": [
     "react",
-    "prettier"
+    "prettier",
+    "react-refresh"
   ],
   "settings": {
     "react": {

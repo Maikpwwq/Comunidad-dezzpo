@@ -5,8 +5,10 @@ import sendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
 // import useSendbirdStateContext from '@sendbird/uikit-react/useSendbirdStateContext'
 import withSendbird from '@sendbird/uikit-react/withSendbird'
 
-// import { sharingInformationService } from '@/services/sharing-information'
+// import { sharingInformationService } from '#@/services/sharing-information'
 // let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
+
+export { newSendbirdOpenChannel }
 
 async function newOpenChannelSendbird(props) {
     console.log('crearCanal props', props)
@@ -103,11 +105,12 @@ newOpenChannelSendbird.propTypes = {
 // Replace withSendbird by useSendbirdStateContext component useState hook pattern
 // https://sendbird.com/docs/uikit/v3/react/core-components/usesendbirdstatecontext
 
-export default withSendbird(newOpenChannelSendbird, (state) => ({
-    // Mapping context state to props
-    connect: sendbirdSelectors.getConnect(state),
-    createChannel: sendbirdSelectors.getCreateOpenChannel(state),
-    sbSdk: sendbirdSelectors.getSdk(state),
-}))
+const newSendbirdOpenChannel = () =>
+    withSendbird(newOpenChannelSendbird, (state) => ({
+        // Mapping context state to props
+        connect: sendbirdSelectors.getConnect(state),
+        createChannel: sendbirdSelectors.getCreateOpenChannel(state),
+        sbSdk: sendbirdSelectors.getSdk(state),
+    }))
 
 // export default newOpenChannelSendbird

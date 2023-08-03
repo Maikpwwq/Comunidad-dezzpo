@@ -1,8 +1,8 @@
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { updateProfile } from 'firebase/auth'
-import { firestore, auth } from '@/firebase/firebaseClient'
+import { firestore, auth } from '#@/firebase/firebaseClient'
 
-import { sharingInformationService } from '@/services/sharing-information'
+import { sharingInformationService } from '#@/services/sharing-information'
 
 const updateUserToFirestore = (props) => {
     const user = auth.currentUser || {}

@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs'
 export class SubjectManager {
     subject$ = new Subject()
 
-    getSubject () {
+    getSubject() {
         return this.subject$.asObservable()
     }
 
