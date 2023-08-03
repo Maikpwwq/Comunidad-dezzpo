@@ -1,3 +1,5 @@
+export { CategoriasSlider }
+
 import * as React from 'react'
 import Button from '@mui/material/Button'
 import { useTheme } from '@mui/material/styles'
@@ -203,7 +205,7 @@ export { CategoriasSlider }
 const CategoriasSlider = () => {
     const theme = useTheme()
     const classes = styles(theme)
-    const maxSteps = 2
+    const maxSteps = Categorias.length
     const [activeStep, setActiveStep] = React.useState(0)
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -262,7 +264,7 @@ const CategoriasSlider = () => {
                 // variant=
                 sx={classes.stepper}
                 className="pb-4 mb-4"
-                // steps={maxSteps}
+                steps={maxSteps}
                 // position="static"
                 activeStep={activeStep}
                 nextButton={

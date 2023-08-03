@@ -1,9 +1,10 @@
+export { Page }
+
 // Pagina de Aplicar
 import React from 'react'
 import '#@/assets/css/aplicar.css'
 
-export { Aplicar }
-const Aplicar = () => {
+const Page = (props) => {
     return (
         <>
             <div>Aplicar</div>

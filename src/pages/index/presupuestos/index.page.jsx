@@ -1,8 +1,10 @@
+export { Page }
+
 // Pagina de Presupuestos
 import React from 'react'
 import '#@/assets/css/presupuestos.css'
 
-import { BuscadorNuevoProyecto } from '#@/pages/index/components/buscador/BuscadorNuevoProyecto'
+import { BuscadorNuevoProyecto } from '#P/index/components/buscador/BuscadorNuevoProyecto'
 
 // react-bootrstrap
 import { Row, Col, Container } from 'react-bootstrap'
@@ -10,9 +12,7 @@ import { Row, Col, Container } from 'react-bootstrap'
 // import Col from 'react-bootstrap/Col'
 // import Container from 'react-bootstrap/Container'
 
-export { Presupuestos }
-
-const Presupuestos = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0">

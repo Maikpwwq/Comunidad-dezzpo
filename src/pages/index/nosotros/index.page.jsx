@@ -1,3 +1,5 @@
+export { Page }
+
 // Pagina de Nosotros
 import React from 'react'
 import '#@/assets/css/nosotros.css'
@@ -13,9 +15,7 @@ import { Row, Col, Container, Button } from 'react-bootstrap'
 // import Container from 'react-bootstrap/Container'
 // import Button from 'react-bootstrap/Button'
 
-export { Nosotros }
-
-const Nosotros = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0">

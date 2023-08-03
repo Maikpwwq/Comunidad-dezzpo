@@ -1,20 +1,19 @@
-export { Biblioteca }
+export { Page }
 
 // Pagina de Usuario - Biblioteca
 import React from 'react'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-const Biblioteca = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">

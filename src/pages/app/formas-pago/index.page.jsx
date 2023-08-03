@@ -1,13 +1,12 @@
-export { FormasPago }
+export { Page }
 
 // Pagina de Usuario - FormasPago
 import React from 'react'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
@@ -19,7 +18,7 @@ import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-const FormasPago = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">

@@ -1,8 +1,10 @@
+export { Page }
+
 // Pagina de Comunidad Comerciantes
 import React from 'react'
 import '#@/assets/css/comunidad_comerciantes.css'
 
-import { Registro } from '#@/pages/index/registro/index.page'
+import { Page as Registro } from '../registro/index.page'
 
 // react-bootrstrap
 import { Row, Col, Container } from 'react-bootstrap'
@@ -10,12 +12,10 @@ import { Row, Col, Container } from 'react-bootstrap'
 // import Col from 'react-bootstrap/Col'
 // import Container from 'react-bootstrap/Container'
 
-export { ComunidadComerciantes }
-
-const ComunidadComerciantes = () => {
-    // let checkStyle = {
-    //     width: '30px',
-    // }
+const Page = (props) => {
+    let checkStyle = {
+        width: '30px',
+    }
 
     return (
         <>

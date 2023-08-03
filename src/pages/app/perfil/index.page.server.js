@@ -1,23 +1,18 @@
-// /pages/app/perfil/index.page.server.js
-// Environment: server
+import { sharingInformationService } from '#@/services/sharing-information'
+import { auth } from '#@/firebase/firebaseClient'
 
-// import fetch from 'node-fetch'
+export { onBeforeRender }
 
-export async function onBeforeRender(pageContext) {
-    // The route parameter of `/perfil/@id` is available at `pageContext.routeParams`
-    const { id } = pageContext.routeParams
+async function onBeforeRender(pageContext) {
+    const sharedUserAuth = await getUserAuth()
+    const defaultUserAuth = auth?.currentUser
 
-    // TODO: Save Auth info
+    const userAuth = defaultUserAuth ? defaultUserAuth : sharedUserAuth
+    console.log('userAuth', userAuth)
 
-    // `.page.server.js` files always run in Node.js; we could use SQL/ORM queries here.
-    // const response = await fetch(`https://swapi.dev/api/films/${movieId}`)
-    // let movie = await response.json()
+    // We make `userAuth` available as `pageContext.pageProps.userAuth`
+    const pageProps = { userAuth }
 
-    // Our render and hydrate functions we defined earlier pass `pageContext.pageProps` to
-    // the root React component `Page`; this is where we define `pageProps`.
-    const pageProps = {} // movie
-
-    // We make `pageProps` available as `pageContext.pageProps`
     return {
         pageContext: {
             pageProps,
@@ -25,8 +20,16 @@ export async function onBeforeRender(pageContext) {
     }
 }
 
-// By default `pageContext` is available only on the server. But our hydrate function
-// we defined earlier runs in the browser and needs `pageContext.pageProps`; we use
-// `passToClient` to tell `vite-plugin-ssr` to serialize and make `pageContext.pageProps`
-// available to the browser.
-export const passToClient = ['pageProps']
+async function getUserAuth() {
+    const myData = sharingInformationService.getSubject()
+    let userAuth
+    myData.subscribe((data) => {
+        if (data) {
+            const { authUser } = data
+            userAuth = authUser
+            // setAuthUser(authUser)
+            console.log('perfilPage', authUser)
+        }
+    })
+    return userAuth
+}

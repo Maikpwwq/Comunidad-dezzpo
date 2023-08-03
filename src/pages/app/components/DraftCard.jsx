@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
-import { auth } from '#@/firebase/firebaseClient' // firestore,
+import { firestore, auth } from '../../../firebase/firebaseClient'
 import PropTypes from 'prop-types'
 
 import Box from '@mui/material/Box'
@@ -36,6 +36,7 @@ import Collapse from '@mui/material/Collapse'
 export { DraftCard }
 
 function DraftCard({ props }) {
+    console.log('DraftCard', props)
     const user = auth.currentUser || {}
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
     const {
@@ -65,10 +66,14 @@ function DraftCard({ props }) {
     // console.log(props)
     const [expanded] = useState(false) // , setExpanded
 
-    const localRole = localStorage.getItem('role')
-    const selectRole = parseInt(JSON.parse(localRole))
-    const [userRol] = useState({
-        // , setUserRol
+    let selectRole
+    useEffect(() => {
+        // Perform localStorage action
+        const localRole = localStorage.getItem('role')
+        selectRole = parseInt(JSON.parse(localRole))
+    }, [])
+
+    const [userRol, setUserRol] = useState({
         rol: selectRole ? selectRole : 2,
     })
 
@@ -77,17 +82,13 @@ function DraftCard({ props }) {
     // }
     const handleVerRequerimiento = () => {
         console.log(draftId)
-        navigate('/app/ver-requerimiento', { state: { draftId: draftId } })
+        navigate(`/app/ver-requerimiento/${draftId}`)
     }
     const handleAplicar = () => {
-        navigate('/app/cotizacion', {
-            state: { draftId: draftId },
-        })
+        navigate(`/app/cotizacion/${draftId}`)
     }
     const handleEditar = () => {
-        navigate('/app/editar-requerimiento', {
-            state: { draftId: draftId },
-        })
+        navigate(`/app/editar-requerimiento/${draftId}`)
     }
     const handleFavorite = () => {}
     const handleShare = () => {}

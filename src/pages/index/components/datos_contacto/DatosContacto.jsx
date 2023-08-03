@@ -1,11 +1,12 @@
+export { DatosContacto }
+
 /* Footer de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react'
 import '#@/assets/css/datos_contacto.css'
 import IcoMoon from 'react-icomoon'
 import iconSet from '#@/assets/css/icomoon/selection.json'
-import { Row, Col } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 export { DatosContacto }
 

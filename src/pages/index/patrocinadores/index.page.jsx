@@ -1,3 +1,5 @@
+export { Page }
+
 // Pagina de nuestros patrocinadores
 import React from 'react'
 import '#@/assets/css/patrocinadores.css'
@@ -8,9 +10,7 @@ import { Row, Col, Container } from 'react-bootstrap'
 // import Col from 'react-bootstrap/Col'
 // import Container from 'react-bootstrap/Container'
 
-export { Patrocinadores }
-
-const Patrocinadores = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0">

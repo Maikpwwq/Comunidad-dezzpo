@@ -1,16 +1,15 @@
-export { InvitarAmigos }
+export { Page }
 
 // Pagina de Usuario - InvitarAmigos
 import React from 'react'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
 
-const InvitarAmigos = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">

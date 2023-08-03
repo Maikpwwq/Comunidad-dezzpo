@@ -1,5 +1,4 @@
 @media screen and (max-width: 600px) {
-
     .form-check-input,
     #formBasicCheckboxRecordar {
         width: 10% !important;
@@ -18,7 +17,11 @@
 .ingresoFormulario {
     /* background: #13495e;      */
     background: rgb(24, 177, 167);
-    background: linear-gradient(45deg, rgba(24, 177, 167, 1) 35%, rgba(0, 153, 204, 1) 100%);
+    background: linear-gradient(
+        45deg,
+        rgba(24, 177, 167, 1) 35%,
+        rgba(0, 153, 204, 1) 100%
+    );
     min-height: 540px;
     width: 100%;
     /* color: #e9ebe6;     */
@@ -48,7 +51,6 @@
     text-align: center;
     width: 100%;
     background-color: var(--background-light-gray-color);
-
 }
 
 #formBasicCheckboxRecordar {
@@ -56,7 +58,7 @@
     margin: 0 0;
 }
 
-.body-1.btn-round.btn-middle.w-auto.d-flex.flex-row.align-items-center.justify-content-center.btn.btn-primary{
+.body-1.btn-round.btn-middle.w-auto.d-flex.flex-row.align-items-center.justify-content-center.btn.btn-primary {
     border: none;
     font-weight: bold;
 }

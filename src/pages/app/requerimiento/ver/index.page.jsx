@@ -1,10 +1,10 @@
-export { VerRequerimiento }
+export { Page }
 
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { navigate } from 'vite-plugin-ssr/client/router'
-import { auth } from '#@/firebase/firebaseClient' // firestore,
-// import { collection } from 'firebase/firestore' // , doc, getDocFromServer
+import { firestore, auth } from '#@/firebase/firebaseClient'
+import { collection, doc, getDocFromServer } from 'firebase/firestore'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
 import readDraftFromFirestore from '#@/services/readDraftFromFirestore.service'
 import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.service'
@@ -12,11 +12,10 @@ import { sharingInformationService } from '#@/services/sharing-information'
 
 import '../detalle_requerimiento.css'
 
-import { TablaSubCategoriaPresupuesto } from '#@/pages/app/requerimiento/Tabla_SubCategoria_Presupuesto'
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+import { TablaSubCategoriaPresupuesto } from '../Tabla_SubCategoria_Presupuesto'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
 // import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
@@ -26,19 +25,24 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 
-const VerRequerimiento = ({ state }) => {
+const Page = () => {
     const user = auth.currentUser || {}
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
-    // const { state } = {}
     // const navigate = useNavigate()
-    const { draftId } = state || ' '
-    // const _firestore = firestore
+    const pageContext = usePageContext()
+    const { draftId } = pageContext.routeParams
+
+    const _firestore = firestore
     // const _storage = storage
     // const draftRef = collection(_firestore, 'drafts')
     // const quotationRef = collection(_firestore, 'quotation')
 
-    const localRole = localStorage.getItem('role')
-    const selectRole = parseInt(JSON.parse(localRole))
+    let selectRole
+    useEffect(() => {
+        // Perform localStorage action
+        const localRole = localStorage.getItem('role')
+        selectRole = parseInt(JSON.parse(localRole))
+    }, [])
     const [userRol, setUserRol] = useState({
         rol: selectRole ? selectRole : 2,
     })
@@ -167,19 +171,11 @@ const VerRequerimiento = ({ state }) => {
 
     const handleSeeQuotation = (e, quotationId) => {
         e.preventDefault()
-        navigate('/app/ver-cotizacion', {
-            state: {
-                quotationId: quotationId,
-            },
-        })
+        navigate(`/app/ver-cotizacion/${quotationId}`)
     }
     const handleEditQuotation = (e, quotationId) => {
         e.preventDefault()
-        navigate('/app/editar-cotizacion', {
-            state: {
-                quotationId: quotationId,
-            },
-        })
+        navigate(`/app/editar-cotizacion/${quotationId}`)
     }
     const handleHire = (e, quotationId, proponentId) => {
         e.preventDefault()
@@ -193,9 +189,8 @@ const VerRequerimiento = ({ state }) => {
     }
 
     const handleCotizar = () => {
-        navigate('/app/cotizacion', {
-            state: { draftId: requerimientoInfo.requerimientoId },
-        })
+        const draftParamId = requerimientoInfo.requerimientoId
+        navigate(`/app/cotizacion/${draftParamId}`)
     }
 
     return (
@@ -579,8 +574,4 @@ const VerRequerimiento = ({ state }) => {
             </Container>
         </>
     )
-}
-
-VerRequerimiento.propTypes = {
-    state: PropTypes.any,
 }

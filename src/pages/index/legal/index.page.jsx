@@ -1,3 +1,5 @@
+export { Page }
+
 // Pagina de Legal
 import React from 'react'
 import '#@/assets/css/legal.css'
@@ -8,9 +10,7 @@ import { Row, Col, Container } from 'react-bootstrap'
 // import Col from 'react-bootstrap/Col'
 // import Container from 'react-bootstrap/Container'
 
-export { Legal }
-
-const Legal = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0">

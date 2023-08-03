@@ -1,14 +1,16 @@
+export { NuestraComunidad }
+
 import * as React from 'react'
 import '#@/assets/css/nuestra_comunidad.css'
-import { CategoriasSlider } from '#@/pages/index/components/nuestra-comunidad/CategoriasSlider'
-// import { CategoriasServicios } from '#@/pages/index/components/categorias-servicios/CategoriasServicios'
-// import { CategoriasPupulares } from '#@/pages/index/components/nuestra-comunidad/CategoriasPupulares/CategoriasPupulares'
+import { CategoriasSlider } from './CategoriasSlider'
+// import { CategoriasServicios } from '../categorias-servicios/CategoriasServicios'
+// import { CategoriasPupulares } from './CategoriasPupulares/CategoriasPupulares'
 //imagenes
 //import CategoriasPopulares from '#@/assets/img/CategoriasPopulares.png'
 
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
-// import { BuscaEnTuCiudad } from '#@/pages/index/components/nuestra-comunidad/busca-en-tu-ciudad/BuscaEnTuCiudad'
+import { BuscaEnTuCiudad } from './busca-en-tu-ciudad/BuscaEnTuCiudad'
 
 export { NuestraComunidad }
 

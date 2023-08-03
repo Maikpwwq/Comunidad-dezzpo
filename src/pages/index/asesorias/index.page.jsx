@@ -1,9 +1,11 @@
+export { Page }
+
 // Pagina de Asesorias
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import '#@/assets/css/asesorias.css'
 import { collection, doc, setDoc } from 'firebase/firestore'
-import { Link } from '#@/renderer/Link'
+import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { firestore } from '#@/firebase/firebaseClient'
 
@@ -15,9 +17,7 @@ import { Row, Col, Container, Button, Form } from 'react-bootstrap'
 // import Button from 'react-bootstrap/Button'
 // import Form from 'react-bootstrap/Form'
 
-export { Asesorias }
-
-const Asesorias = () => {
+const Page = (props) => {
     // const navigate = useNavigate()
     const _firestore = firestore
     const draftID = uuidv4()

@@ -172,10 +172,11 @@ ComentarPerfil.propTypes = {
     // sdk: PropTypes.object.isRequired,
 }
 
-// const ComentProfile = () =>
-//     withSendBird(ComentarPerfil, (state) => ({
-//         // Mapping context state to props
-//         connect: SendbirdSelectors.getConnect(state),
-//         createChannel: SendbirdSelectors.getCreateGroupChannel(state),
-//         sdk: SendbirdSelectors.getSdk(state),
-//     }))
+const Component = withSendBird(ComentarPerfil, (state) => ({
+    // Mapping context state to props
+    // connect: SendbirdSelectors.getConnect(state),
+    // createChannel: SendbirdSelectors.getCreateGroupChannel(state),
+    // sdk: SendbirdSelectors.getSdk(state),
+}))
+
+export { Component }

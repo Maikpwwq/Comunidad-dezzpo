@@ -2,25 +2,25 @@ export { PageShell }
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { childrenPropType } from './PropTypeValues'
 import { LayoutPaperbase } from '#@/pages/app/components/LayoutPaperbase'
 import { PageContextProvider } from './usePageContext'
+import { childrenPropType } from './PropTypeValues'
 import '#@/pages/app/renderer/Private-App.scss'
-import '#@/index.scss'
+import '#R/index.scss'
+
+PageShell.propTypes = {
+    pageContext: PropTypes.any,
+    children: childrenPropType,
+}
 
 function PageShell({ children, pageContext }) {
-    const Layout = LayoutPaperbase || pageContext.exports.Layout
+    // const Layout = LayoutPaperbase || pageContext.exports.Layout
 
     return (
         <React.StrictMode>
             <PageContextProvider pageContext={pageContext}>
-                <Layout>{children}</Layout>
+                <LayoutPaperbase>{children}</LayoutPaperbase>
             </PageContextProvider>
         </React.StrictMode>
     )
-}
-
-PageShell.propTypes = {
-    children: childrenPropType,
-    pageContext: PropTypes.any,
 }

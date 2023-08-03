@@ -1,3 +1,5 @@
+export { Marker }
+
 import React, { useState, useEffect } from 'react'
 
 export { Marker }

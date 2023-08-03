@@ -1,9 +1,11 @@
 /* eslint-disable prettier/prettier */
+export { Page }
+
 // Pagina de Ingreso
 import React, { useState } from 'react'
-import { Link } from '#@/renderer/Link'
+import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
-import { SnackBarAlert } from '#@/pages/index/components/SnackBarAlert'
+import { SnackBarAlert } from '#P/index/components/SnackBarAlert'
 import { auth } from '#@/firebase/firebaseClient' // src/firebase/firebaseClient
 import {
     EmailAuthProvider,
@@ -16,24 +18,21 @@ import {
 import '#@/assets/css/ingreso.css'
 //imagenes
 import LogoGmail from '#@/assets/img/G.jpg'
-// import LogoComunidadDezzpo from '#@/assets/img/IsologoFooter.png'
+import LogoComunidadDezzpo from '#@/assets/img/IsologoFooter.png'
 
 // react-bootrstrap
-import { Row, Col, Container, Button, Form } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
-// import Button from 'react-bootstrap/Button'
-// import Form from 'react-bootstrap/Form'
 import Paper from '@mui/material/Paper'
+import Row from 'react-bootstrap/Row'
 import Box from '@mui/material/Box'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import Typography from '@mui/material/Typography'
 
-export { Ingreso }
-
-const Ingreso = () => {
+const Page = (props) => {
     const googleProvider = new GoogleAuthProvider()
     // const navigate = useNavigate()
     const [alert, setAlert] = useState({
@@ -66,6 +65,16 @@ const Ingreso = () => {
         // console.log(e, userSignupRol)
     }
 
+    const onSuccess = (user) => {
+        const { uid } = user
+        // console.log('Account successfully upgraded', user)
+        console.log('onLoginSuccess', userSignupRol, uid)
+        localStorage.role = JSON.stringify(userSignupRol)
+        localStorage.userID = JSON.stringify(uid)
+        handleAlert('Cuenta autorizada con éxito.', 'success')
+        navigate(`/app/perfil/${uid}`)
+    }
+
     const handleClick = (e) => {
         e.preventDefault()
         if (userSignupRol > 0) {
@@ -79,14 +88,9 @@ const Ingreso = () => {
                     .then((userCredential) => {
                         var user = userCredential.user
                         // console.log('Anonymous account successfully upgraded', user)
-                        // console.log(JSON.stringify(userSignupRol))
                         // localStorage.setItem('role', JSON.stringify(userSignupRol))
-                        console.log(userSignupRol)
-                        localStorage.role = JSON.stringify(userSignupRol)
-                        localStorage.userID = JSON.stringify(user.uid)
                         // navigate('/app/perfil', { state: { role: userSignupRol } })
-                        handleAlert('Cuenta autorizada con éxito.', 'success')
-                        navigate('/app/perfil')
+                        onSuccess(user)
                     })
                     .catch((err) => {
                         // console.log('Error upgrading anonymous account', err)
@@ -119,11 +123,7 @@ const Ingreso = () => {
                         const token = credential.accessToken
                         // The signed-in user info.
                         const user = result.user
-                        // console.log('Account successfully upgraded', user)
-                        localStorage.role = JSON.stringify(userSignupRol)
-                        localStorage.userID = JSON.stringify(user.uid)
-                        handleAlert('Cuenta autorizada con éxito.', 'success')
-                        navigate('/app/perfil')
+                        onSuccess(user)
                     })
                     .catch((error) => {
                         // Handle Errors here.
@@ -174,16 +174,17 @@ const Ingreso = () => {
             })
     }
 
-    // let checkStyle = {
-    //     width: '30px',
-    // }
+    let checkStyle = {
+        width: '30px',
+    }
+    //
 
     return (
         <>
             <Container fluid className="p-0">
                 <Row className="ingresoFormulario  m-0 w-100">
                     <Col
-                        className="imagenIngreso d-flex align-items-start justify-content-center" 
+                        className="imagenIngreso d-flex align-items-start justify-content-center"
                         lg={6}
                         md={6}
                         sm={12}

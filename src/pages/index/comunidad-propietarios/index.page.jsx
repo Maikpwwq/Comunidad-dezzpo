@@ -1,10 +1,12 @@
+export { Page }
+
 // Pagina de Comunidad Propietarios
 import React from 'react'
-import { Link } from '#@/renderer/Link'
+import { Link } from '#R/Link'
 import '#@/assets/css/comunidad_propietarios.css'
 
-import { Registro } from '#@/pages/index/registro/index.page'
-import { BuscadorNuevoProyecto } from '#@/pages/index/components/buscador/BuscadorNuevoProyecto'
+import { Page as Registro } from '../registro/index.page'
+import { BuscadorNuevoProyecto } from '../components/buscador/BuscadorNuevoProyecto'
 
 // react-bootrstrap
 import { Row, Col, Container, Button } from 'react-bootstrap'
@@ -13,12 +15,10 @@ import { Row, Col, Container, Button } from 'react-bootstrap'
 // import Container from 'react-bootstrap/Container'
 // import Button from 'react-bootstrap/Button'
 
-export { ComunidadPropietarios }
-
-const ComunidadPropietarios = () => {
-    // let checkStyle = {
-    //     width: '30px',
-    // }
+const Page = (props) => {
+    let checkStyle = {
+        width: '30px',
+    }
 
     return (
         <>

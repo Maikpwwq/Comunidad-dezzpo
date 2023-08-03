@@ -1,9 +1,7 @@
-.asesoriasTitulo{
+.asesoriasTitulo {
     /* background: #e9ebe6 url(../img/Asesorias2.png) no-repeat center;  */
-    background: #e9ebe6 url(
-        '/assets/img/Asesorias2.png'
-    ) no-repeat center;
-    background-attachment: scroll;         
+    background: #e9ebe6 url('/assets/img/Asesorias2.png') no-repeat center;
+    background-attachment: scroll;
     background-size: cover;
     min-height: 550px;
     height: auto;
@@ -13,30 +11,30 @@
     flex-direction: column;
     text-align: left;
     float: left;
-}    
-.asesoriaMessage{
+}
+.asesoriaMessage {
     font-size: 21px;
 }
 .pageContainer {
     top: 110px;
 }
-.asesoriasPreguntas{
-    background: #e9ebe6 url(../img/Asesorias1.png) no-repeat center; 
-    background-attachment: scroll;         
+.asesoriasPreguntas {
+    background: #e9ebe6 url(../img/Asesorias1.png) no-repeat center;
+    background-attachment: scroll;
     background-size: 100% 100%;
     min-height: 750px;
     height: auto;
     width: 100%;
-    display: flex;    
+    display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: space-around;
 }
-.chatAsesor{
+.chatAsesor {
     color: #333333;
-    font-size: 27px;   
+    font-size: 27px;
 }
-.asesoriasBlog{
+.asesoriasBlog {
     background-color: #333333;
     /* height: 210px; */
     width: 100%;

@@ -1,9 +1,10 @@
-export { Cotizar }
+export { Page }
 
 import React, { useEffect, useState } from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { v4 as uuidv4 } from 'uuid'
 import { auth } from '#@/firebase/firebaseClient'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
 import updateDraftToFirestore from '#@/services/updateDraftToFirestore.service'
 import updateQuotationToFirestore from '#@/services/updateQuotationToFirestore.service'
@@ -27,13 +28,12 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 // import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import Typography from '@mui/material/Typography'
 
-const Cotizar = () => {
+const Page = (props) => {
     const user = auth.currentUser || {}
     const userID = user.uid || ''
-    const { state } = {}
-    // const navigate = useNavigate()
-    const { draftId, quotationId } = state || {}
-    const quotationID = quotationId ? quotationId : uuidv4()
+    const pageContext = usePageContext()
+    const { draftId } = pageContext.routeParams // , quotationId
+    const quotationID = uuidv4() // quotationId ? quotationId :
     console.log('quotationID', quotationID)
 
     const [cotizacion, setCotizacion] = useState({
@@ -515,4 +515,4 @@ const Cotizar = () => {
     )
 }
 
-Cotizar.propTypes = {}
+Page.propTypes = {}

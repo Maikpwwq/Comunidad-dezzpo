@@ -14,7 +14,11 @@
     flex-direction: row;
     width: 100%;
     background: rgb(24, 177, 167);
-    background: linear-gradient(45deg, rgba(24, 177, 167, 1) 35%, rgba(0, 153, 204, 1) 100%);
+    background: linear-gradient(
+        45deg,
+        rgba(24, 177, 167, 1) 35%,
+        rgba(0, 153, 204, 1) 100%
+    );
 }
 
 .registrateImagen {
@@ -61,23 +65,23 @@
 }
 
 /* '#2594c2' */
-.btn-group>.btn-check:checked+.btn,
-.btn-group>.btn-check:focus+.btn,
-.btn-group>.btn:hover,
-.btn-group>.btn:focus,
-.btn-group>.btn:active,
-.btn-group>.btn.active,
-.btn-group-vertical>.btn-check:checked+.btn,
-.btn-group-vertical>.btn-check:focus+.btn,
-.btn-group-vertical>.btn:hover,
-.btn-group-vertical>.btn:focus,
-.btn-group-vertical>.btn:active,
-.btn-group-vertical>.btn.active {
-    background: #2594c2
+.btn-group > .btn-check:checked + .btn,
+.btn-group > .btn-check:focus + .btn,
+.btn-group > .btn:hover,
+.btn-group > .btn:focus,
+.btn-group > .btn:active,
+.btn-group > .btn.active,
+.btn-group-vertical > .btn-check:checked + .btn,
+.btn-group-vertical > .btn-check:focus + .btn,
+.btn-group-vertical > .btn:hover,
+.btn-group-vertical > .btn:focus,
+.btn-group-vertical > .btn:active,
+.btn-group-vertical > .btn.active {
+    background: #2594c2;
 }
 
 .body-1.select-rol.textBlanco.d-flex.flex-row.align-items-center.justify-content-center.btn.btn-primary:hover {
-    background: #2594c2
+    background: #2594c2;
 }
 
 .body-1.btn-round.btn-middle.w-auto.select-rol.d-flex.flex-row.align-items-center.justify-content-center.btn.btn-primary {

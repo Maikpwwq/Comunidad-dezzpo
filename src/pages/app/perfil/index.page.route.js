@@ -2,4 +2,8 @@
 
 // Parameters available at:
 //  - `pageContext.routeParams.id`
-export default '/perfil/@id'
+// export default '/app/perfil/@id'
+
+// Parameters available at:
+//  - `pageContext.routeParams['*']`
+export default '/app/perfil/*'

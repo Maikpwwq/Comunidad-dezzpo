@@ -1,19 +1,18 @@
-export { Certificaciones }
+export { Page }
 
 // Pagina de Usuario - Certificaciones
 import React from 'react'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 
-const Certificaciones = () => {
-    const [certificationDate] = React.useState(256)
+const Page = (props) => {
+    const [certificationDate, setCertificationDate] = React.useState(256)
     let certificationHour = '12:00'
     let certificationService = 'Servicio de prueba'
 

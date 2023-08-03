@@ -1,10 +1,12 @@
+export { Page }
+
 // Pagina de registro
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from '#@/renderer/Link'
+import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { SnackBarAlert } from '#@/pages/index/components/SnackBarAlert'
-// import {newSendbirdOpenChannel} from '#@/services/newSendbirdOpenChannel.service'
+// import newOpenChannelSendbird from '#@/services/newOpenChannelSendbird.service'
 import { auth, firestore } from '#@/firebase/firebaseClient' // src/firebase/firebaseClient
 import {
     createUserWithEmailAndPassword,
@@ -45,9 +47,7 @@ import Typography from '@mui/material/Typography'
 //     },
 // })
 
-export { Registro }
-
-const Registro = (props) => {
+const Page = (props) => {
     const {
         showLogo,
         // draftId,
@@ -157,7 +157,7 @@ const Registro = (props) => {
                             })
                             handleSave()
                         } else {
-                            navigate('/app/ajustes')
+                            navigate(`/app/ajustes/${uid}`)
                         }
                     })
                     .catch((err) => {
@@ -225,7 +225,7 @@ const Registro = (props) => {
                             })
                             handleSave()
                         } else {
-                            navigate('/app/ajustes')
+                            navigate(`/app/ajustes/${uid}`)
                         }
                     })
                     .catch((error) => {
@@ -512,7 +512,7 @@ const Registro = (props) => {
     )
 }
 
-Registro.propTypes = {
+Page.propTypes = {
     showLogo: PropTypes.bool,
     draftId: PropTypes.string,
     setDraftInfo: PropTypes.func,

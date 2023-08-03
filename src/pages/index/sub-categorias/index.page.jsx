@@ -1,3 +1,5 @@
+export { Page }
+
 import React, { useState } from 'react'
 import '#@/assets/css/subCategoriesCard.css'
 // import { navigate } from 'vite-plugin-ssr/client/router'
@@ -15,9 +17,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import Typography from '@mui/material/Typography'
 import PropTypes from 'prop-types'
 
-export { SubCategorias }
-
-const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
+const Page = ({ props, setCategoriaInfo, categoriaInfo }) => {
     const [selected, setSelected] = useState(true)
     const {
         subCategoria,
@@ -29,7 +29,6 @@ const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
 
     const handleSeleccionar = (e) => {
         e.preventDefault()
-        // navigate('/app/perfil', { state: { id: userId } })
         // navigate(`/app/perfil/${userId}`)
         // console.log(e, selected)
         setSelected(!selected)
@@ -104,7 +103,7 @@ const SubCategorias = ({ props, setCategoriaInfo, categoriaInfo }) => {
     )
 }
 
-SubCategorias.propTypes = {
+Page.propTypes = {
     subCategoria: PropTypes.string,
     subCategoriaDescription: PropTypes.string,
     subCategoriaPrecio: PropTypes.string,

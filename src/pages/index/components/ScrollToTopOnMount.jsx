@@ -1,7 +1,9 @@
+export { ScrollToTopOnMount }
+
 import { useLayoutEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
-export default function ScrollToTopOnMount() {
+function ScrollToTopOnMount() {
     const history = useHistory()
 
     useLayoutEffect(() => {

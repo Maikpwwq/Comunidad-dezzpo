@@ -1,14 +1,13 @@
-export { VerCotizacion }
+export { Page }
 
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
-import { Row, Col, Container } from 'react-bootstrap'
-// import Container from 'react-bootstrap/Container'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
@@ -16,9 +15,9 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 
-const VerCotizacion = ({ state }) => {
-    // const { state } = {}
-    const { quotationId } = state || {}
+const Page = () => {
+    const pageContext = usePageContext()
+    const { quotationId } = pageContext.routeParams
 
     const [quotationInfo, setQuotationInfo] = useState({
         quotationId: '',
@@ -285,8 +284,4 @@ const VerCotizacion = ({ state }) => {
             </Container>
         </>
     )
-}
-
-VerCotizacion.propTypes = {
-    state: PropTypes.object,
 }

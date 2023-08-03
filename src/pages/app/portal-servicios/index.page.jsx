@@ -1,10 +1,11 @@
-export { Portal_Servicios }
+export { Page }
 
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
-// import { firestore } from '#@/firebase/firebaseClient' // storage,
-// import { collection } from 'firebase/firestore'
+import { firestore } from '#@/firebase/firebaseClient' // storage,
+import { collection } from 'firebase/firestore'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
 import doSearchFromFirestore from '#@/services/doSearchFromFirestore.service'
 import readUsersFromFirestore from '#@/services/readUsersFromFirestore.service'
@@ -13,25 +14,24 @@ import { sharingInformationService } from '#@/services/sharing-information'
 // import { ref, getDownloadURL } from 'firebase/storage'
 import { UserCard } from '#@/pages/app/components/UserCard'
 // react-bootrstrap
-import { Row, Col, Container, Button } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
-// import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
-const Portal_Servicios = ({ state }) => {
-    // const navigate = useNavigate()
-    // const { state } = {}
-    const { searchInput } = state || ' '
-    // console.log(state.searchInput)
+const Page = (props) => {
+    const pageContext = usePageContext()
+    console.log('portal-servicios', pageContext.routeParams['*'])
+    const { searchInput } = pageContext.routeParams['*']
+
     // const _storage = storage
-    // const _firestore = firestore
+    const _firestore = firestore
 
     // const usersRef = collection(_firestore, 'users')
-    // const usersComCalRef = collection(
-    //     _firestore,
-    //     'usersComerciantesCalificados'
-    // )
+    const usersComCalRef = collection(
+        _firestore,
+        'usersComerciantesCalificados'
+    )
     const [searchData, setSearchData] = useState({})
     const [usersData, setUsersData] = useState({})
 
@@ -75,7 +75,7 @@ const Portal_Servicios = ({ state }) => {
         }
     }, [searchInput])
 
-    console.log('SearchData', searchData)
+    // console.log('SearchData', searchData)
 
     useEffect(() => {
         FromUsersComerciantes()
@@ -83,7 +83,7 @@ const Portal_Servicios = ({ state }) => {
         userData.subscribe((data) => {
             if (data) {
                 const { users } = data
-                console.log('FromUsersComerciantes', users)
+                // console.log('FromUsersComerciantes', users)
                 setUsersData(users)
             } else {
                 console.log(
@@ -94,7 +94,7 @@ const Portal_Servicios = ({ state }) => {
     }, [])
 
     const handleNewProject = () => {
-        navigate('/nuevo-proyecto', { state: { auth: true } })
+        navigate('/nuevo-proyecto')
     }
 
     return (

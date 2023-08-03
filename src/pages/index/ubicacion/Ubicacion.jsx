@@ -1,8 +1,9 @@
+export { Ubicacion }
 import React, { useState, useEffect } from 'react'
 import AutoComplete from 'react-google-autocomplete'
 // import { Loader } from '@googlemaps/js-api-loader'
 import { googleLoader } from '#@/google/GoogleMapsAdmin'
-// import Marker from '../../components/maps/Marker'
+// import Marker from '#P/index/components/maps/Marker'
 import '#@/assets/css/ubicacion.css'
 
 import { Row, Col, Container, Button, Form } from 'react-bootstrap'

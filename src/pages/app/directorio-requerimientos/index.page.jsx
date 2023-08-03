@@ -1,9 +1,9 @@
-export { DirectorioRequerimientos }
+export { Page }
 
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
 import { firestore } from '#@/firebase/firebaseClient' // storage,
-import { collection, getDocs } from 'firebase/firestore' // , query, where
+import { collection, getDocs, query, where } from 'firebase/firestore'
 
 import { DraftCard } from '#@/pages/app/components/DraftCard'
 
@@ -14,7 +14,7 @@ import { Row, Col, Container, Button } from 'react-bootstrap'
 // import Container from 'react-bootstrap/Container'
 // import Button from 'react-bootstrap/Button'
 
-const DirectorioRequerimientos = () => {
+const Page = (props) => {
     const _firestore = firestore
     const draftRef = collection(_firestore, 'drafts')
     const [draftsData, setDraftsData] = useState({})
@@ -35,6 +35,7 @@ const DirectorioRequerimientos = () => {
         draftsFromFirestore()
             .then((docSnap) => {
                 if (docSnap) {
+                    console.log('draftsFromFirestore', docSnap)
                     const data = docSnap.docs.map((element) => ({
                         ...element.data(),
                     }))

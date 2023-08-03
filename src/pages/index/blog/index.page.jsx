@@ -1,7 +1,9 @@
+export { Page }
+
 // Pagina de Blog
 import React from 'react'
 import '#@/assets/css/blog.css'
-import { Link } from '#@/renderer/Link'
+import { Link } from '#R/Link'
 
 // Imagenes
 import BlogEntrada1 from '#@/assets/img/BlogEntrada1.png'
@@ -19,7 +21,7 @@ import { Row, Col, Container } from 'react-bootstrap'
 
 export { Blog }
 
-const Blog = (props) => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0">

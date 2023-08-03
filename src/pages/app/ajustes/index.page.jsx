@@ -1,9 +1,12 @@
-export { Ajustes }
+export { Page }
 
 // Pagina de Usuario - Ajustes
 import React, { useState, useEffect } from 'react'
 import { auth } from '#@/firebase/firebaseClient'
-import { newSendbirdOpenChannel } from '#@/services/newOpenChannelSendbird.service'
+import { format, formatDistance, subDays, parse, parseISO } from 'date-fns'
+import { es } from 'date-fns/locale'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
+import { Service as newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 import readUserFromFirestore from '#@/services/readUserFromFirestore.service'
 import updateUserToFirestore from '#@/services/updateUserToFirestore.service'
@@ -15,10 +18,9 @@ import { ChipsCategories } from '#@/pages/app/components/ChipsCategories'
 import { ListadoCategorias } from '#@/pages/index/components/ListadoCategorias'
 
 // react-bootrstrap
-// import Row from 'react-bootstrap/Row'
-import { Row, Col, Container } from 'react-bootstrap'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import FormGroup from '@mui/material/FormGroup'
@@ -26,13 +28,22 @@ import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
 
-const Ajustes = () => {
-    const user = auth.currentUser || {}
-    const userAuthID = user.uid || ''
-    const userAuthName = user.displayName || ''
-    const localRole = localStorage.getItem('role')
-    const selectRole = parseInt(JSON.parse(localRole))
-    const [userRol] = useState({
+const Page = (props) => {
+    console.log('auth', auth.currentUser)
+    const pageContext = usePageContext()
+    let id = pageContext.routeParams['*']
+    console.log('routeParamsPerfil', pageContext.routeParams['*'])
+    const userAuth = auth?.currentUser || {}
+    const userAuthID = userAuth?.uid || id
+    const userAuthName = userAuth?.displayName || ''
+    let selectRole
+    useEffect(() => {
+        // Perform localStorage action
+        const localRole = localStorage.getItem('role')
+        selectRole = parseInt(JSON.parse(localRole))
+    }, [])
+
+    const [userRol, setUserRol] = useState({
         rol: selectRole,
     })
     // console.log(userRol.rol)
@@ -69,26 +80,64 @@ const Ajustes = () => {
         userDescription: '',
     })
 
+    const userData = () => {
+        const firestoreUserID = userAuthID
+        const userSelectedRol = userRol.rol
+        console.log("readUserFromFirestore", firestoreUserID, userSelectedRol)
+        readUserFromFirestore({
+            firestoreUserID,
+            userSelectedRol,
+        })
+    }
+
+    const determineDistanceTime = (metadata) => {
+        const creationTime = metadata.creationTime
+                        //console.log(creationTime)
+                        const formatedTime = parse(
+                            creationTime,
+                            'dd-MM-yyyy',
+                            new Date()
+                        )
+                        // const formatedTime = parseISO(creationTime)
+                        // const formatedTime = new Date(creationTime)
+                        //console.log(creationTime, formatedTime)
+                        const distanceTime = formatDistance(
+                            formatedTime,
+                            new Date(),
+                            { addSuffix: true },
+                            { locale: es }
+                        )
+                        return distanceTime
+    }
+
+    const LoadAuthData = () => {
+
+        const {
+            uid,
+            email,
+            displayName,
+            phoneNumber,
+            photoURL,
+            emailVerified,
+            metadata,
+        } = userAuth
+
+        const distanceTime = determineDistanceTime(metadata)
+
+        setUserEditInfo({
+            ...userEditInfo,
+            userPhone: phoneNumber,
+            userPhotoUrl: photoURL,
+            userId: uid,
+            userMail: email,
+            userName: displayName,
+            userJoined: distanceTime,
+        })
+    }
+
     useEffect(() => {
-        if (user !== null && userRol.rol) {
-            const {
-                uid,
-                email,
-                displayName,
-                phoneNumber,
-                photoURL,
-                // emailVerified,
-                // metadata,
-            } = user
-            const userData = () => {
-                const firestoreUserID = userAuthID
-                const userSelectedRol = userRol.rol
-                // console.log(firestoreUserID, userSelectedRol)
-                readUserFromFirestore({
-                    firestoreUserID,
-                    userSelectedRol,
-                })
-            }
+        if (!isNaN(userRol.rol) &&
+            userRol.rol !== '') {
             // Load and expose user data from firestore
             userData()
             const userInformation = sharingInformationService.getSubject()
@@ -120,7 +169,7 @@ const Ajustes = () => {
                     console.log('create new open channel', userChannelUrl)
                     if (userChannelUrl === undefined || userChannelUrl === '') {
                         console.log('create new open channel')
-                        newSendbirdOpenChannel({
+                        newOpenChannelSendbird({
                             userAuthID,
                             userAuthName,
                             //setChannelUrl,
@@ -147,11 +196,11 @@ const Ajustes = () => {
 
                     setUserEditInfo({
                         ...userEditInfo,
-                        userPhone: userPhone || phoneNumber,
-                        userPhotoUrl: userPhotoUrl || photoURL,
-                        userId: uid,
-                        userMail: email,
-                        userName: displayName || userName,
+                        userPhone: userPhone || '',
+                        userPhotoUrl: userPhotoUrl || '',
+                        // userId: uid,
+                        // userMail: email,
+                        userName: userName || '',
                         userJoined: userJoined || '',
                         userProfession: userProfession || '',
                         userExperience: userExperience || '',
@@ -166,19 +215,26 @@ const Ajustes = () => {
                         userRazonSocial: userRazonSocial || '',
                         userIdentification: userIdentification || '',
                         userDescription: userDescription || '',
-                    })
+                    })                
                 } else {
                     console.log(
                         'No se encontro información relacionada con este usuario!'
                     )
                 }
             })
+            if (
+                userAuth !== null &&
+                userAuth !== undefined
+            ) {
+                console.log("authUser", userAuth )
+                LoadAuthData(userAuth)
+            }
         }
-    }, [user, userAuthID, userAuthName, userEditInfo, userRol.rol])
+    }, [userAuth])
 
-    // const handleAlert = (message, severity) => {
-    //     setAlert({ ...alert, open: true, message: message, severity: severity })
-    // }
+    const handleAlert = (message, severity) => {
+        setAlert({ ...alert, open: true, message: message, severity: severity })
+    }
 
     const handleCloseAlert = (event, reason) => {
         // console.log(reason, event)

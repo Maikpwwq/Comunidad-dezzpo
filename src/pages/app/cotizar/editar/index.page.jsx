@@ -1,12 +1,15 @@
-export { EditarCotizacion }
+export { Page }
 
-import React from 'react' //, { useState, useEffect }
-// import { firestore, storage } from '#@/firebase/firebaseClient'
-// import { collection, doc, getDocFromServer } from 'firebase/firestore'
+import React, { useState, useEffect } from 'react'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
+import { firestore, storage } from '#@/firebase/firebaseClient'
+import { collection, doc, getDocFromServer } from 'firebase/firestore'
 
 import Container from 'react-bootstrap/Container'
 
-const EditarCotizacion = () => {
+const Page = () => {
+    const pageContext = usePageContext()
+    // pageContext.routeParams
     return (
         <>
             <Container fluid className="p-0">

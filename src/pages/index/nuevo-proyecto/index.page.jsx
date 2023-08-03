@@ -1,8 +1,14 @@
+export { Page }
+
 // Pagina de NuevoProyecto
 import React, { useState, useEffect } from 'react'
-// import PropTypes from 'prop-types'
-// import { Link } from '#@/renderer/Link'
+import PropTypes from 'prop-types'
+import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
+import { DirectionalButton } from '#P/index/components/DirectionalButton/DirectionalButton'
+import { ListadoCategorias } from '#P/index/components/ListadoCategorias'
+// import ScrollToTopOnMount from '#P/index/components/ScrollToTop'
+import { AdjuntarArchivos } from '#@/pages/app/components/AdjuntarArchivos'
 import { v4 as uuidv4 } from 'uuid'
 import {
     collection,
@@ -13,16 +19,14 @@ import {
 } from 'firebase/firestore'
 import { firestore, auth } from '#@/firebase/firebaseClient'
 import '#@/assets/css/nuevo_proyecto.css'
-import { DirectionalButton } from '#@/pages/index/components/DirectionalButton/DirectionalButton'
-import { ListadoCategorias } from '#@/pages/index/components/ListadoCategorias'
-// import ScrollToTopOnMount from '../../components/ScrollToTop'
-import { AdjuntarArchivos } from '#@/pages/app/components/AdjuntarArchivos'
-import { Ubicacion } from '#@/pages/index/ubicacion/Ubicacion'
-import { BuscadorNuevoProyecto } from '#@/pages/index/components/buscador/BuscadorNuevoProyecto'
-import { Registro } from '#@/pages/index/registro/index.page'
-import { SubCategorias } from '#@/pages/index/sub-categorias/index.page'
-import { PasoAPaso } from '#@/pages/index/components/paso_a_paso/Paso_A_Paso'
-import { TablaSubCategoriaCantidades } from '#@/pages/index/nuevo-proyecto/Tabla_SubCategoria_Cantidades'
+import { Ubicacion } from '#P/index/ubicacion/Ubicacion'
+import { BuscadorNuevoProyecto } from '#P/index/components/buscador/BuscadorNuevoProyecto'
+import { Page as Registro } from '#P/index/registro/index.page'
+import { Page as SubCategorias } from '#P/index/sub-categorias/index.page'
+import { PasoAPaso } from '#P/index/components/paso_a_paso/Paso_A_Paso'
+import { TablaSubCategoriaCantidades } from './Tabla_SubCategoria_Cantidades'
+import { usePageContext } from '#@/pages/index/renderer/usePageContext'
+
 // react-bootrstrap
 import { Row, Col, Container, Button, Form } from 'react-bootstrap'
 // import Row from 'react-bootstrap/Row'
@@ -38,21 +42,16 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
-export { NuevoProyecto }
-
-const NuevoProyecto = (pageContext) => {
+const Page = () => {
     const draftID = uuidv4()
     const user = auth.currentUser || {}
     const userID = user.uid ? true : false
-    // const navigate = useNavigate()
-    const { state } = {}
-    const { categoriaProfesional, tipoProyecto } = state || {} // auth
-    // const { paramCategoriaProfesional, paramTipoProyecto } = useParams()
+    const pageContext = usePageContext()
+    console.log('nuevo-proyecto', pageContext.routeParams['*'])
     const { paramCategoriaProfesional, paramTipoProyecto } =
-        pageContext.routeParams
-    const draftCategory =
-        categoriaProfesional || paramCategoriaProfesional || ''
-    const draftProject = tipoProyecto || paramTipoProyecto || ''
+        pageContext.routeParams['*']
+    const draftCategory = paramCategoriaProfesional || ''
+    const draftProject = paramTipoProyecto || ''
     // console.log(
     //     'A',
     //     draftCategory,
@@ -60,7 +59,11 @@ const NuevoProyecto = (pageContext) => {
     //     paramCategoriaProfesional
     // )
     // console.log('B', draftProject, tipoProyecto, paramTipoProyecto)
-    // const requerimiento = localStorage.requerimiento || undefined
+    let requerimiento
+    useEffect(() => {
+        // Perform localStorage action
+        requerimiento = localStorage.requerimiento || undefined
+    }, [])
     // console.log('requerimiento-local', requerimiento)
     // console.log(requerimiento.draftId)
     const [hideRegister] = useState(userID) // , setHideRegister
@@ -280,7 +283,7 @@ const NuevoProyecto = (pageContext) => {
                                     xs={12}
                                 >
                                     <BuscadorNuevoProyecto
-                                        data={state}
+                                        data={pageContext.routeParams}
                                         setDraftInfo={setDraftInfo}
                                         draftInfo={draftInfo}
                                     ></BuscadorNuevoProyecto>
@@ -865,6 +868,6 @@ const NuevoProyecto = (pageContext) => {
     )
 }
 
-NuevoProyecto.propTypes = {
+Page.propTypes = {
     // classes: PropTypes.object.isRequired,
 }

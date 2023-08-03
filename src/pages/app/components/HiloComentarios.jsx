@@ -1,4 +1,4 @@
-<Row className="m-0 w-100 d-flex pt-3">
+;<Row className="m-0 w-100 d-flex pt-3">
     Titulo: xxxxx
     <Col md={10}>
         HILO DE CONVERSACIÓN

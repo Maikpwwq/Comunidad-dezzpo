@@ -1,8 +1,9 @@
 import * as React from 'react'
+import { Link } from '#@/pages/app/renderer/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
-import { signOut } from 'firebase/auth'
-import { Link } from '#@/renderer/Link'
 import { auth } from '#@/firebase/firebaseClient'
+import { signOut } from 'firebase/auth'
+import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
 //imagenes
 // import Avatar1 from '#@/assets/img/CategoriasPopulares.png'
@@ -50,11 +51,16 @@ const itemCategory = {
 export { Navigator }
 
 function Navigator(props) {
+    const pageContext = usePageContext()
+    const urlPath = pageContext.urlPathname
+    const activeUrl = urlPath.slice(1).split('/')
+    // console.log("Navigator urlPath", activeUrl[1])
     const { ...other } = props
-    const user = auth.currentUser || {}
-    const userID = user.uid || false // Este es el id de la cuenta de Auth
-    const userPhotoUrl = user.photoURL || ''
-    const userName = user.displayName || ''
+    const user = auth?.currentUser || {}
+    const isAuth = user? true : false
+    const userID = user?.uid || '' // Este es el id de la cuenta de Auth
+    const userPhotoUrl = user?.photoURL || ''
+    const userName = user?.displayName || ''
     // const navigate = useNavigate()
     const handleSignout = () => {
         signOut(auth)
@@ -83,7 +89,7 @@ function Navigator(props) {
         }
     }
 
-    const categories = userID
+    const categories = isAuth
         ? [
               {
                   id: 'Inicio',
@@ -91,43 +97,50 @@ function Navigator(props) {
                       {
                           id: 'Mi cuenta',
                           icon: <PeopleIcon />,
-                          route: 'perfil',
-                          active: true,
+                          route: `perfil/${userID}`,
+                          active: 'perfil' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Portal de servicios',
                           icon: <HomeIcon />,
                           route: 'portal-servicios',
+                          active: 'portal-servicios' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Directorio de Requerimientos',
                           icon: <HomeIcon />,
                           route: 'directorio-requerimientos',
+                          active: 'directorio-requerimientos' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Notificaciones',
                           icon: <NotificationsIcon />,
                           route: 'notificaciones',
+                          active: 'notificaciones' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Suscripciones',
                           icon: <TimerIcon />,
                           route: 'suscripciones',
+                          active: 'suscripciones' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Biblioteca',
                           icon: <DnsRoundedIcon />,
                           route: 'biblioteca',
+                          active: 'biblioteca' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Invitar a un Amigo',
                           icon: <PublicIcon />,
                           route: 'invitar-amigos',
+                          active: 'invitar-amigos' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Ajustes',
                           icon: <SettingsEthernetIcon />,
-                          route: 'ajustes',
+                          route: `ajustes/${userID}`,
+                          active: 'ajustes' === activeUrl[1] ? true : false,
                       },
                   ],
               },
@@ -138,16 +151,19 @@ function Navigator(props) {
                           id: 'Privacidad',
                           icon: <SettingsIcon />,
                           route: 'configuracion-privacidad',
+                          active: 'configuracion-privacidad' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Formas de Pago',
                           icon: <SettingsInputComponentIcon />,
                           route: 'formas-pago',
+                          active: 'formas-pago' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Cambiar Clave',
                           icon: <PhonelinkSetupIcon />,
                           route: 'cambiar-clave',
+                          active: 'cambiar-clave' === activeUrl[1] ? true : false,
                       },
                   ],
               },
@@ -160,19 +176,27 @@ function Navigator(props) {
                           id: 'Portal de servicios',
                           icon: <HomeIcon />,
                           route: 'portal-servicios',
+                          active: 'portal-servicios' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Directorio de Requerimientos',
                           icon: <HomeIcon />,
                           route: 'directorio-requerimientos',
+                          active: 'directorio-requerimientos' === activeUrl[1] ? true : false,
                       },
+                      {
+                        id: 'Suscripciones',
+                        icon: <TimerIcon />,
+                        route: 'suscripciones',
+                        active: 'suscripciones' === activeUrl[1] ? true : false,
+                    },
                   ],
               },
           ]
 
     return (
-        <Drawer variant="permanent" {...other}>
-            <List disablePadding>
+        <Drawer open={true} variant="permanent" {...other}>
+            <List disablePadding >
                 <ListItem
                     sx={{
                         ...item,
@@ -245,7 +269,7 @@ function Navigator(props) {
                         )}
                     </Box>
                 ))}
-                {userID ? (
+                {isAuth ? (
                     <ListItem
                         disablePadding
                         button

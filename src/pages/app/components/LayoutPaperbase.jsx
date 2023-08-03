@@ -178,8 +178,8 @@ function LayoutPaperbase({ children }) {
 
     const user = auth.currentUser || {}
 
-    const localRole = localStorage.getItem('role')
-    console.log(JSON.parse(localRole))
+    // const localRole = localStorage.getItem('role')
+    // console.log(JSON.parse(localRole))
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen)

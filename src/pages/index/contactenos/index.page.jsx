@@ -1,3 +1,5 @@
+export { Page }
+
 // Pagina de Contactenos
 import React from 'react'
 import '#@/assets/css/contactenos.css'
@@ -7,8 +9,7 @@ import ContactenosFranja from '#@/assets/img/ContactenosFranja.png'
 import LogoPNG from '#@/assets/img/LogoPNG.png'
 import SelectorContactenos from '#@/assets/img/SelectorContactenos.png'
 
-//
-import { DatosContacto } from '#@/pages/index/components/datos_contacto/DatosContacto'
+import { DatosContacto } from '#P/index/components/datos_contacto/DatosContacto'
 
 // react-bootrstrap
 import { Row, Col, Container, Button } from 'react-bootstrap'
@@ -17,9 +18,7 @@ import { Row, Col, Container, Button } from 'react-bootstrap'
 // import Container from 'react-bootstrap/Container'
 // import Button from 'react-bootstrap/Button'
 
-export { Contactenos }
-
-const Contactenos = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0">

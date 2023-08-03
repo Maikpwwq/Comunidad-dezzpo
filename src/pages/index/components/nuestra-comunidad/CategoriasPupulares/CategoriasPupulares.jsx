@@ -1,3 +1,5 @@
+export { CategoriasPupulares }
+
 import React from 'react'
 import styled from 'styled-components'
 import Col from 'react-bootstrap/Col'
@@ -35,3 +37,8 @@ const CategoriasPupulares = () => {
         </CategoriasPupularesStyle>
     )
 }
+<<<<<<< HEAD
+=======
+
+export const CategoriasPupularesStyle = styled.div``
+>>>>>>> 683a84b51693e3185790a6e04e0773207234a7a9

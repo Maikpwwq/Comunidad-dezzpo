@@ -1,7 +1,7 @@
-export { Proyecto }
+export { Page }
 import React from 'react'
 
-const Proyecto = () => {
+const Page = (props) => {
     return (
         <>
             {/* TODO - Proyecto */}
@@ -10,4 +10,4 @@ const Proyecto = () => {
     )
 }
 
-Proyecto.propTypes = {}
+Page.propTypes = {}

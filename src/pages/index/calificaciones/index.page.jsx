@@ -1,10 +1,10 @@
+export { Page }
+
 // Pagina de Calificaciones
 import React from 'react'
 import '#@/assets/css/calificaciones.css'
 
-export { Calificaciones }
-
-const Calificaciones = () => {
+const Page = (props) => {
     return (
         <>
             <div>Calificaciones</div>

@@ -1,10 +1,12 @@
+export { Page }
+
 // Pagina de Inicio
 import React from 'react'
 import '#@/assets/css/home.css'
-import { BuscadorNuevoProyecto } from '#@/pages/index/components/buscador/BuscadorNuevoProyecto'
-import { NuestraComunidad } from '#@/pages/index/components/nuestra-comunidad/NuestraComunidad'
+import { BuscadorNuevoProyecto } from '../components/buscador/BuscadorNuevoProyecto'
+import { NuestraComunidad } from '../components/nuestra-comunidad/NuestraComunidad'
 
-import Subscribe from './Subscribe'
+import { Subscribe } from './Subscribe'
 // imagenes
 
 // react-bootrstrap
@@ -52,9 +54,7 @@ const styles = (theme) => ({
 //     </div>
 // )
 
-export { Inicio }
-
-const Inicio = (props) => {
+const Page = (props) => {
     const theme = useTheme()
     const classes = styles(theme)
     // const { imagenes } = [{ numero: 1 }, { numero: 2 }, { numero: 3 }]
@@ -147,7 +147,7 @@ const Inicio = (props) => {
                         // variant=
                         sx={classes.stepper}
                         className="pb-4 mb-4"
-                        // steps={maxSteps}
+                        steps={maxSteps}
                         // position="static"
                         activeStep={activeStep}
                         nextButton={
@@ -215,8 +215,6 @@ const Inicio = (props) => {
                             <Col
                                 className="comunidadTitulo m-4 w-auto"
                                 md={3}
-                                sm={10}
-                                xs={10}
                             >
                                 <h4 className="headline-s">Propietarios</h4>
                             </Col>

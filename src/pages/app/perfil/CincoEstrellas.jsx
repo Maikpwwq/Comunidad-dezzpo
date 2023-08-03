@@ -1,3 +1,5 @@
+export { CincoEstrellas }
+
 import React, { useState } from 'react'
 
 import { Row } from 'react-bootstrap'

@@ -1,6 +1,8 @@
+export { MenuComunidad }
+
 /* Menu de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react'
-import { Link } from '#@/renderer/Link'
+import { Link } from '#R/Link'
 import '#@/assets/css/menu.css'
 
 // images
@@ -18,9 +20,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import MenuIcon from '@mui/icons-material/Menu'
 import LoginIcon from '@mui/icons-material/Login'
 
-export { MenuComunidad }
-
-const MenuComunidad = () => {
+const MenuComunidad = (props) => {
     /* getLinkClass = (path) => {
         return this.props.location.pathname === path ? 'active' : '';
     }  className= {this.getLinkClass("/")}
@@ -58,18 +58,16 @@ const MenuComunidad = () => {
                                     href="/"
                                     className="activo body-2 p-2 d-flex flex-row"
                                 >
-                                    <>
-                                        <img
-                                            src={LogoMenuComunidadDezzpo}
-                                            alt="Logo Comunidad Dezzpo"
-                                            className="logo-comunidad-dezzpo me-2"
-                                        />
-                                        <img
-                                            src={IsoLogoMenuComunidadDezzpo}
-                                            alt="IsoLogo Comunidad Dezzpo"
-                                            className="isologo-comunidad-dezzpo"
-                                        />
-                                    </>
+                                    <img
+                                        src={LogoMenuComunidadDezzpo}
+                                        alt="Logo Comunidad Dezzpo"
+                                        className="logo-comunidad-dezzpo me-2"
+                                    />
+                                    <img
+                                        src={IsoLogoMenuComunidadDezzpo}
+                                        alt="IsoLogo Comunidad Dezzpo"
+                                        className="isologo-comunidad-dezzpo"
+                                    />
                                 </Link>
                             </div>
                             <Row className="w-auto">
@@ -86,8 +84,8 @@ const MenuComunidad = () => {
                                 href="/app/apendice-costos"
                                 className="botonLink body-2"
                             >
-                                
-                                Apendice Costos
+                                {' '}
+                                Apendice Costos{' '}
                             </Link> */}
 
                                 <Link
@@ -108,15 +106,15 @@ const MenuComunidad = () => {
                                         href="/"
                                         className="activo body-2"
                                     >
-                                        
-                                        Home
+                                        {' '}
+                                        Home{' '}
                                     </Link>
                                 </li> */}
                             {/* seleccion asi trabajamos*/}
                             <div className="dropdown">
                                 {/* <li className="botonSeccion"></li> */}
                                 <Link
-                                    href="/asi-trabajamos"
+                                    href="asi-trabajamos"
                                     className="botonLink body-2"
                                 >
                                     Asi trabajamos
@@ -128,7 +126,8 @@ const MenuComunidad = () => {
                                         className="p-2 pb-0"
                                         onClick={Close}
                                     >
-                                        Profesionales y servicios
+                                        {' '}
+                                        Profesionales y servicios{' '}
                                     </Link>
 
                                     <Link
@@ -231,7 +230,8 @@ const MenuComunidad = () => {
                                         href="/profesionales-servicios"
                                         className="p-2 pb-0"
                                     >
-                                        Profesionales y servicios
+                                        {' '}
+                                        Profesionales y servicios{' '}
                                     </Link>
                                     <Link
                                         href="/contactenos"
@@ -279,7 +279,8 @@ const MenuComunidad = () => {
                                         href="/profesionales-servicios"
                                         className="p-2 pb-0"
                                     >
-                                        Profesionales y servicios
+                                        {' '}
+                                        Profesionales y servicios{' '}
                                     </Link>
                                     <Link
                                         href="/contactenos"
@@ -302,36 +303,39 @@ const MenuComunidad = () => {
                                 href="/presupuestos"
                                 className="botonLink body-2"
                             >
-                                Presupuestos
+                                {' '}
+                                Presupuestos{' '}
                             </Link>
                             {/* <li className="botonSeccion">
                                     <Link
                                         href="/profesionales-servicios"
                                         className="botonLink body-2"
                                     >
-                                        
-                                        Profesionales y servicios
+                                        {' '}
+                                        Profesionales y servicios{' '}
                                     </Link>
                                 </li> */}
                             <Link
                                 href="/asesorias"
                                 className="botonLink body-2"
                             >
-                                Asesorias
+                                {' '}
+                                Asesorias{' '}
                             </Link>
                             <Link
                                 href="/apendice-costos"
                                 className="botonLink body-2"
                             >
-                                Apendice de costos
+                                {' '}
+                                Apendice de costos{' '}
                             </Link>
                             {/* <li className="botonSeccion">
                                     <Link
                                         href="/ingreso"
                                         className="botonLink body-2"
                                     >
-                                        
-                                        Ingresar
+                                        {' '}
+                                        Ingresar{' '}
                                     </Link>
                                 </li> */}
                         </ul>

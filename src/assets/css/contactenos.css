@@ -1,26 +1,26 @@
-.mainTitulo{
+.mainTitulo {
     font-size: 40px;
     margin: auto 30px;
 }
-.mainTitulo h1{
+.mainTitulo h1 {
     margin: auto 0%;
 }
-.contactenosMensaje{
+.contactenosMensaje {
     background-color: #e9ebe6;
     min-height: 690px;
     height: auto;
     width: 100%;
 }
-.formContacto{
+.formContacto {
     width: 100%;
     min-height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: center;    
+    align-items: center;
     padding: 30px 30px;
 }
-.formContacto form{
+.formContacto form {
     width: 100%;
     min-height: 330px;
     display: flex;
@@ -28,33 +28,33 @@
     justify-content: space-evenly;
     align-items: center;
 }
-.formContacto input{
+.formContacto input {
     width: 100%;
     border-width: 3px;
     border-style: solid;
     border-color: #009999;
 }
-.formContacto textarea{
+.formContacto textarea {
     width: 100%;
     border-width: 3px;
     border-style: solid;
     border-color: #009999;
 }
-.borderBlue{
+.borderBlue {
     border-style: solid;
     border-width: 3px;
     border-color: #009999;
 }
-.datosContacto{
+.datosContacto {
     display: flex;
     flex-direction: column;
     margin-top: -15px;
 }
-.listaContacto{
+.listaContacto {
     margin-top: -21px;
     text-align: left;
 }
-.listaContacto li{
+.listaContacto li {
     color: #009999;
     list-style-type: none;
 }

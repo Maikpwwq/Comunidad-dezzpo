@@ -1,13 +1,12 @@
-export { ConfiguracionPrivacidad }
+export { Page }
 
 // Pagina de Usuario - ConfiguracionPrivacidad
 import React from 'react'
 
 // react-booTableRowsTableRowap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
@@ -15,7 +14,7 @@ import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-const ConfiguracionPrivacidad = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">

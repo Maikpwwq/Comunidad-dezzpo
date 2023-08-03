@@ -1,3 +1,5 @@
+export { Subscribe }
+
 import React from 'react'
 import { firestore } from '#@/firebase/firebaseClient'
 import { collection, doc, setDoc } from 'firebase/firestore'
@@ -156,5 +158,3 @@ function Subscribe() {
 Subscribe.propTypes = {
     //classes: PropTypes.object.isRequired,
 }
-
-export default Subscribe

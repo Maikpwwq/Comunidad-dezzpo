@@ -1,6 +1,8 @@
+export { CategoriasServicios }
+
 import * as React from 'react'
 import '#@/assets/css/categorias_servicios.css'
-import { ListadoCategorias } from '#@/pages/index/components/ListadoCategorias'
+import { ListadoCategorias } from '../ListadoCategorias'
 // react-bootrstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // import Row from 'react-bootstrap/Row'

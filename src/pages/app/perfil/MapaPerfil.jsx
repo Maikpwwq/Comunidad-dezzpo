@@ -1,10 +1,10 @@
+export { MapaPerfil }
 import React, { useState, useEffect } from 'react'
 // import { Loader } from '@googlemaps/js-api-loader'
 import { googleLoader } from '#@/google/GoogleMapsAdmin'
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import PropTypes from 'prop-types'
 
 export { MapaPerfil }

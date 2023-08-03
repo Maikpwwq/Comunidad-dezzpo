@@ -1,3 +1,5 @@
+export { Page }
+
 // Pagina de Asi Trabajamos
 import React from 'react'
 import '#@/assets/css/asi_trabajamos.css'
@@ -9,9 +11,7 @@ import { Row, Col, Container, Button } from 'react-bootstrap'
 // import Button from 'react-bootstrap/Button'
 // import Container from 'react-bootstrap/Container'
 
-export { AsiTrabajamos }
-
-const AsiTrabajamos = () => {
+const Page = (props) => {
     return (
         <>
             <div className="asiTrabajamosRegistro">

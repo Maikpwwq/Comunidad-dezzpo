@@ -1,7 +1,8 @@
+export { Page }
 // Pagina de Profesionales Servicios
 import React from 'react'
 import '#@/assets/css/profesionales_servicios.css'
-import { NuestraComunidad } from '#@/pages/index/components/nuestra-comunidad/NuestraComunidad'
+import { NuestraComunidad } from '#P/index/components/nuestra-comunidad/NuestraComunidad'
 
 // react-bootrstrap
 import { Row, Col, Container } from 'react-bootstrap'
@@ -9,11 +10,9 @@ import { Row, Col, Container } from 'react-bootstrap'
 // import Col from 'react-bootstrap/Col'
 // import Container from 'react-bootstrap/Container'
 
-// import { Link } from '#@/renderer/Link'
+// import { Link } from '#R/Link'
 
-export { ProfesionalesServicios }
-
-const ProfesionalesServicios = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0">

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
 
-import { ChipsCategories } from '#@/pages/app/components/ChipsCategories'
+import { ChipsCategories } from './ChipsCategories'
 import { ListadoCategorias } from '#@/pages/index/components/ListadoCategorias'
 
 import PropTypes from 'prop-types'
@@ -58,7 +58,6 @@ function UserCard({ props }) {
     // }
 
     const handleVerSitio = () => {
-        // navigate('/app/perfil', { state: { id: userId } })
         navigate(`/app/perfil/${userId}`)
     }
     const handleCotizar = () => {

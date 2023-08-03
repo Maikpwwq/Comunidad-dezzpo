@@ -1,4 +1,4 @@
-export { Calificaciones }
+export { Page }
 
 // Pagina de Usuario - Notificaciones
 import React, { useState } from 'react'
@@ -17,7 +17,7 @@ import FormLabel from '@mui/material/FormLabel'
 // import Select from '@mui/material/Select'
 // import MenuItem from '@mui/material/MenuItem'
 
-const Calificaciones = () => {
+const Page = (props) => {
     const [rate, setRate] = useState({
         gestion: 0,
         calidad: 0,

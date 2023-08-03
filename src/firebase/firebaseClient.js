@@ -9,6 +9,8 @@ import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 // import { getAnalytics } from 'firebase/analytics'
 
+import { sharingInformationService } from '#@/services/sharing-information'
+
 let firebaseApp
 // Instancia de Firebase
 if (getApps().length < 1) {
@@ -26,10 +28,11 @@ const firebaseApp = !fb.apps.length
     : fb.app()
 */
 export { firebaseApp }
+// export { currentUser }
 
 export const auth = getAuth(firebaseApp)
-export const currentUser = auth.currentUser
-// console.log(currentUser)
+export const currentUser = auth?.currentUser
+console.log(currentUser)
 
 export const firestore = getFirestore(firebaseApp)
 // firestore.settings({ timestampsInSnapshots: true })
@@ -41,17 +44,18 @@ export const storage = getStorage(firebaseApp)
 // export const db = getDatabase(firebaseApp)
 
 // console.log(db.ref().child('tienda'));
-
-// onAuthStateChanged(auth, (user) => {
-//     // Check for user status
-//     if (user) {
-//         console.log(user)
-//         // let displayName = user.displayName
-//         // let email = user.email
-//         // var emailVerified = user.emailVerified
-//         // var uid = user.uid
-//     } else {
-//         // El Usuario no ha iniciado su sesion
-//         console.log('no hay un usuario registrado')
-//     }
-// })
+// let currentUser
+onAuthStateChanged(auth, (user) => {
+    // Check for user status
+    if (user) {
+        sharingInformationService.setSubject({ authUser: user })
+        console.log('onAuthStateChanged', user)
+        // let displayName = user.displayName
+        // let email = user.email
+        // var emailVerified = user.emailVerified
+        // var uid = user.uid
+    } else {
+        // El Usuario no ha iniciado su sesion
+        console.log('no hay un usuario registrado')
+    }
+})

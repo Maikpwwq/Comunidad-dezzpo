@@ -43,4 +43,6 @@ Providers.propTypes = {
     children: PropTypes.any,
 }
 
-// export default withSendBird(Providers)
+const Component = withSendBird(Providers)
+
+export { Component }

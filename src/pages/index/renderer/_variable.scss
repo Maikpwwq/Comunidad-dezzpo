@@ -1,0 +1,192 @@
+/* **************************************************** */
+/* Declaracion de variables globales */
+/* **************************************************** */
+/* **************************************************** */
+/* Colores Oficiales COMUNIDAD DEZZPO */
+/* **************************************************** */
+:root {
+    // var(--content-text-light-gray-color)
+    --logo-comunidad-dezzpo-color: #209da1;
+    /* Colores de titulos y textos */
+    --primary-black-text-color: #000000;
+    --primary-titles-text-color: #4d4d4d;
+    --primary-green-text-color: #149ba1;
+    --primary-blue-light-color: #1ec7e6;
+    --secondary-green-text-color: #00b0ab;
+    --primary-light-green-text-color: #3eb288;
+    --primary-dark-blue-text-color: #004884;
+    --primary-light-gray-text-color: #e9ebe6;
+    --secondary-blue-text-color: #3d8ab5;
+    --secondary-red-text-color: #c24a75;
+    --content-text-color: #4b4b4b;
+    --content-text-blue-color: #122038;
+    --content-text-light-gray-color: #bababa;
+    --content-text-white-color: #ffffff;
+    /* Colores de fondo */
+    --background-main-green-color: #00b0ab;
+    --background-hover-green-color: #009999;
+    --background-hover-purple-color: #662483;
+    --background-lemon-green-color: #92b901;
+    --background-smoke-color: rgba(0, 0, 0, 0.8);
+    --background-yellow-color: #deaf06;
+    --background-light-yellow-color: #ffc071;
+    --background-dark-purple-color: #662382;
+    --background-blue-color3: #3d8ab5;
+    --background-blue-color2: #006699;
+    --background-blue-color: #009be5;
+    --background-blue-light-color: #08ceff;
+    --background-blue-clear-color: #80bdff;
+    --background-dark-blue-color: #004884;
+    --background-dark-blue-color2: #13495e;
+    --background-nav-bar-sigmi-color: #f6f8f9;
+    --background-nav-bar-active-color: #f2f2f2;
+    --background-light-grey-color: #e9ebe6;
+    --background-light-gray-color: #e6e6e6;
+    --background-category-card-grey-color: #ededed;
+    --background-gray-color: #bababa;
+    --background-appbar-header-color: #666666;
+    --background-dark-gray-color: #333333;
+    --background-dark-grey-color: #575856;
+    --background-middle-btn: #a5a5a5;
+    --background-white-color: #ffffff;
+    --background-tooltip-color: #f2f2f2;
+    /* Colores de bordes */
+    --selected-border-gray-color: #bababa;
+    --selected-border-light-gray-color: #cccccc;
+    --selected-border-green-color: #00b0ab;
+    --selected-border-blue-color: #3d8ab5;
+    --selected-border-dark-blue-color: #004884;
+    --selected-border-blue-light-color: #ced4da;
+    --selected-etiqueta-border-blue-light-color: #f2f2f2;
+    /* Color de hover y sombras */
+    --selected-shadow-border-blue-light-color: #e6effd;
+    --selected-hover-color: #e6effd;
+    --selected-hover-dark-blue-color: #004884;
+    /* Alertas y notificaciones */
+    --success-alert-color: #069169;
+    --error-alert-color: #a80521;
+    --error-alert-color2: #d11f3e;
+    --warning-alert-color: #ffab00;
+    /* Modulo Notificaciones */
+    --notificaciones-identificado-color: #656565;
+    --notificaciones-identificado-background-color: #f2f2f2;
+    --notificaciones-estandarizado-color: #976b23;
+    --notificaciones-estandarizado-background-color: #ffefca;
+    --notificaciones-evaluado-color: #635c9a;
+    --notificaciones-evaluado-background-color: #e0dcff;
+    --notificaciones-publicado-color: #1e7559;
+    --notificaciones-publicado-background-color: #c5e4dc;
+}
+
+// No usar estan fuera de la paleta de colores
+$more: #f6f8f9; // Background
+$more2: #ebebeb; // Background 2
+$more3: #2778c4; // Swal2 Cancel
+$more4: #00000029; // Box Shadow
+$more5: #d11f3e; // Notification Error background
+$more6: #333; // Dropdown color
+$more7: #cecece; // Input and Select placeholder
+$more8: #80bdff; // .p Input text boder color
+$more9: #06916933; // State background
+$more10: #e8e8e8; // Tabs border
+$more11: #ced4da; // border form items
+$more11: #212529; // Text form items
+// #Search gray red
+
+/* **************************************************** */
+/* Declaracion de fuentes de texto */
+/* **************************************************** */
+@font-face {
+    font-family: Marquisette-Bold;
+    font-weight: 800;
+    font-style: normal;
+    src: url('#@/fonts/Marquisette/Marquisette_BTN_Bold.ttf');
+}
+@font-face {
+    font-family: Helvetica-Regular;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/Helvetica/Helvetica-Regular.ttf');
+}
+@font-face {
+    font-family: Helvetica-Medium;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/Helvetica/Helvetica-Medium.ttf');
+}
+@font-face {
+    font-family: Helvetica-Bold;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/Helvetica/Helvetica-Bold.ttf');
+}
+@font-face {
+    font-family: Helvetica-SemiBold;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/Helvetica/Helvetica-SemiBold.ttf');
+}
+@font-face {
+    font-family: WorkSans-Regular;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/work-sans/WorkSans-Regular.ttf');
+}
+@font-face {
+    font-family: WorkSans-Medium;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/work-sans/WorkSans-Medium.ttf');
+}
+@font-face {
+    font-family: WorkSans-Bold;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/work-sans/WorkSans-Bold.ttf');
+}
+@font-face {
+    font-family: WorkSans-SemiBold;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/work-sans/WorkSans-SemiBold.ttf');
+}
+@font-face {
+    font-family: Coolvetica-Regular;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/Coolvetica/Coolvetica-Regular.ttf');
+}
+@font-face {
+    font-family: Coolvetica-Medium;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/Coolvetica/Coolvetica-Medium.ttf');
+}
+@font-face {
+    font-family: Coolvetica-Bold;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/Coolvetica/Coolvetica-Bold.ttf');
+}
+@font-face {
+    font-family: Coolvetica-SemiBold;
+    font-weight: 600;
+    font-style: normal;
+    src: url('#@/fonts/Coolvetica/Coolvetica-SemiBold.ttf');
+}
+
+:root {
+    --font-marquisette-bold: Marquisette-Bold, sans-serif;
+    --font-helvetica-regular: Helvetica-Regular, sans-serif;
+    --font-helvetica-medium: Helvetica-Medium, sans-serif;
+    --font-helvetica-bold: Helvetica-Bold, sans-serif;
+    --font-helvetica-semibold: Helvetica-SemiBold, sans-serif;
+    --font-worksans-regular: WorkSans-Regular, sans-serif;
+    --font-worksans-medium: WorkSans-Medium, sans-serif;
+    --font-worksans-bold: WorkSans-Bold, sans-serif;
+    --font-worksans-semibold: WorkSans-SemiBold, sans-serif;
+    --font-coolvetica-regular: Coolvetica-Regular, sans-serif;
+    --font-coolvetica-medium: Coolvetica-Medium, sans-serif;
+    --font-coolvetica-bold: Coolvetica-Bold, sans-serif;
+    --font-coolvetica-semibold: Coolvetica-Small, sans-serif;
+}

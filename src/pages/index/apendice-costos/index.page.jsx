@@ -1,12 +1,14 @@
+export { Page }
+
 // Pagina de Apendice de costos
 import React, { useState, useEffect } from 'react'
 import '#@/assets/css/apendice_costos.css'
-import { Link } from '#@/renderer/Link'
-import { collection, doc, getDocs } from 'firebase/firestore' //, setDoc
+import { Link } from '#R/Link'
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 import { firestore } from '#@/firebase/firebaseClient'
-// import AdministrarDB from './AdministrarDB' Usar para editar la base de datos firestore desde el XLSX
+// import {AdministrarDB} from './AdministrarDB' Usar para editar la base de datos firestore desde el XLSX
 import ApendiceJson from './apendice-costos.json'
-import TableCards from './tabla/tabla'
+import { TableCards } from './tabla/tabla'
 
 // react-bootrstrap
 import { Row, Col, Container } from 'react-bootstrap'
@@ -19,9 +21,7 @@ import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-export { ApendiceCostos }
-
-const ApendiceCostos = () => {
+const Page = () => {
     const [categoriaInfo, setCategoriaInfo] = useState([])
     const _firestore = firestore
     const categoriaRef = collection(_firestore, 'categoriasServicios')

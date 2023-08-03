@@ -1,4 +1,4 @@
-export { Contratar }
+export { Page }
 
 import React from 'react' // , { useState, useEffect }
 // import { firestore, storage } from '#@/firebase/firebaseClient'
@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 
 import Container from 'react-bootstrap/Container'
 
-const Contratar = ({ draftId, quotationId, proponentId }) => {
+const Page = ({ draftId, quotationId, proponentId }) => {
     return (
         <>
             <Container fluid className="p-0">
@@ -19,7 +19,7 @@ const Contratar = ({ draftId, quotationId, proponentId }) => {
     )
 }
 
-Contratar.propTypes = {
+Page.propTypes = {
     draftId: PropTypes.string,
     quotationId: PropTypes.string,
     proponentId: PropTypes.string,

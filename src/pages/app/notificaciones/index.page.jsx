@@ -1,16 +1,15 @@
-export { Notificaciones }
+export { Page }
 
 // Pagina de Usuario - Notificaciones
 import React from 'react'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 
-const Notificaciones = () => {
+const Page = (props) => {
     return (
         <>
             <Container fluid className="p-0 h-100">

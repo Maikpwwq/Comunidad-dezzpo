@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Link } from '#@/renderer/Link'
+import { Link } from '#@/pages/app/renderer/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { styled, alpha } from '@mui/material/styles'
 import IcoMoon from 'react-icomoon'
 import iconSet from '#@/assets/css/icomoon/selection.json'
 import { ListadoCategorias } from '#@/pages/index/components/ListadoCategorias'
-// import SearchIcon from '@mui/icons-material/Search'
+import SearchIcon from '@mui/icons-material/Search'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'
@@ -53,6 +53,8 @@ const StyledSelect = styled(Select)(({ theme }) => ({
     },
 }))
 
+export { SearchBar }
+
 const SearchBar = () => {
     // const navigate = useNavigate()
     const [searchParams, setSearchParams] = useState({
@@ -79,10 +81,7 @@ const SearchBar = () => {
         // Detectar tecla 'Enter' if (event.key === 'Enter')
         // if (event.keyCode === 13) {
         // console.log(event, searchParams)
-        navigate('/app/portal-servicios', {
-            state: { searchInput: multipleSearch },
-        })
-        // }
+        navigate(`/app/portal-servicios/${multipleSearch}`) // searchInput
     }
 
     return (
@@ -95,13 +94,15 @@ const SearchBar = () => {
                 }}
             >
                 <Link
-                    href="/app/"
+                    // href="/app/portal-servicios"
                     className="activo body-2 p-2 d-flex flex-row"
                 >
                     <img
                         src={LogoMenuComunidadDezzpo}
                         alt="Logo Comunidad Dezzpo"
                         className="logo-comunidad-dezzpo me-2"
+                        height="55px"
+                        width="55px"
                     />
                 </Link>
                 <Search sx={{ maxWidth: '300px', width: '100% !important' }}>
@@ -146,5 +147,3 @@ const SearchBar = () => {
         </>
     )
 }
-
-export default SearchBar

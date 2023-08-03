@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+export { AdjuntarArchivos }
+
+import React, { useState, useEffect } from 'react'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { collection, doc, setDoc } from 'firebase/firestore' // getDocFromServer
+import { firestore, auth, storage } from '../../../firebase/firebaseClient'
+import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import PropTypes from 'prop-types'
 import { v4 as uuidv4 } from 'uuid'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import { firestore, storage } from '#@/firebase/firebaseClient' // auth,
 import { SnackBarAlert } from '#@/pages/index/components/SnackBarAlert'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 

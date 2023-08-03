@@ -1,10 +1,10 @@
 .icon {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
 }
 
 /* ==========================================
@@ -16,21 +16,21 @@ Single-colored icons can be modified like so:
 ========================================== */
 
 .icon-GooglePlay {
-  width: 3.353515625em;
+    width: 3.353515625em;
 }
 
 .icon-AppStore {
-  width: 3.369140625em;
+    width: 3.369140625em;
 }
 
 .icon-FacebookSocialIcono {
-  width: 1.001953125em;
+    width: 1.001953125em;
 }
 
 .icon-IntagramSocialIcono {
-  width: 1.0009765625em;
+    width: 1.0009765625em;
 }
 
 .icon-TwitterSocialIcono {
-  width: 1.0009765625em;
+    width: 1.0009765625em;
 }

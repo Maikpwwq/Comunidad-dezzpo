@@ -1,4 +1,4 @@
-export { CambiarClave }
+export { Page }
 
 // Pagina de Usuario - CambiarClave
 import React, { useState } from 'react'
@@ -6,15 +6,14 @@ import { auth } from '#@/firebase/firebaseClient'
 import { updatePassword } from 'firebase/auth'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 
-const CambiarClave = () => {
+const Page = (props) => {
     const [newPassword, setNewPassword] = useState({
         newPassword: 'Ingresa tu nueva clave',
         againNewPassword: 'Repite la nueva clave',

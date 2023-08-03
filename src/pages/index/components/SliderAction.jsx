@@ -1,9 +1,9 @@
+export { SliderAction }
+
 import React from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import Button from 'react-bootstrap/Button'
 import Box from '@mui/material/Box'
-
-export { SliderAction }
 
 const SliderAction = () => {
     const handleClick = () => {
