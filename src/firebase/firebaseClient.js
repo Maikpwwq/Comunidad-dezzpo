@@ -3,7 +3,7 @@ import { getApps, initializeApp } from 'firebase/app'
 // import * as fb from 'firebase/compat/app'
 
 // Productos de Firebase
-import { getAuth } from 'firebase/auth' // , onAuthStateChanged, authStateReady
+import { getAuth, onAuthStateChanged } from 'firebase/auth' // , authStateReady
 import { getFirestore } from 'firebase/firestore'
 // import { getDatabase } from 'firebase/database'
 import { getStorage } from 'firebase/storage'

@@ -18,7 +18,7 @@ async function render(pageContext) {
     } else {
         // SSR / HTML-only
         const { Page, pageProps } = pageContext
-        console.log('pageIndexContextServer', pageContext, Page, pageProps)
+        console.log('pageIndexContextServer', Page, pageProps)
         const page = (
             <PageShell pageContext={pageContext}>
                 <Page {...pageProps} />

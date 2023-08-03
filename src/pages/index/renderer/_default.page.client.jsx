@@ -13,7 +13,7 @@ let root
 // This render() hook only supports SSR, see https://vite-plugin-ssr.com/render-modes for how to modify render() to support SPA
 async function render(pageContext) {
     const { Page, pageProps } = pageContext
-    console.log('pageContextClient', pageContext, Page, pageProps)
+    console.log('pageContextClient', Page, pageProps)
     // if (!Page) throw new Error('Client-side render() hook expects pageContext.Page to be defined')
     const page = (
         <PageShell pageContext={pageContext}>
