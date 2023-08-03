@@ -3377,8 +3377,8 @@ packages:
       warning: 4.0.3
     dev: false
 
-  /@sendbird/chat@4.9.6:
-    resolution: {integrity: sha512-ijg3W7ewFgnhxPUKvpLL3S+Z6oGaBZRvUvJq2fwJhHhB3zE0iqDZnJ+PvutfRvzAWio8w30pEZe1xyo3dAuhUw==}
+  /@sendbird/chat@4.9.7:
+    resolution: {integrity: sha512-VNipPeJT7B6hD/OBDi6IjcGW+Y8fJHNkVUkvFk0BUkkZLY1eefUmtrv2CWWbJ0hxfGFWe+wRVEjsdWDXqLN/DA==}
     peerDependencies:
       '@react-native-async-storage/async-storage': ^1.17.6
     peerDependenciesMeta:
@@ -3392,8 +3392,8 @@ packages:
       react: ^16.8.6 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.6 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@sendbird/chat': 4.9.6
-      '@sendbird/uikit-tools': 0.0.1-alpha.40(@sendbird/chat@4.9.6)(react@18.2.0)
+      '@sendbird/chat': 4.9.7
+      '@sendbird/uikit-tools': 0.0.1-alpha.40(@sendbird/chat@4.9.7)(react@18.2.0)
       css-vars-ponyfill: 2.4.8
       date-fns: 2.30.0
       dompurify: 3.0.5
@@ -3404,13 +3404,13 @@ packages:
       - '@react-native-async-storage/async-storage'
     dev: false
 
-  /@sendbird/uikit-tools@0.0.1-alpha.40(@sendbird/chat@4.9.6)(react@18.2.0):
+  /@sendbird/uikit-tools@0.0.1-alpha.40(@sendbird/chat@4.9.7)(react@18.2.0):
     resolution: {integrity: sha512-Ld23LpXxN6XJayNayD/wcOa6mRKvR2cy1Qk+QHt9SLO/z3K1uglPI+x89JHOmaPzu3vbUkosM7iTjFJ0ab6LeQ==}
     peerDependencies:
       '@sendbird/chat': ^4.9.2
       react: '>=16.8.6'
     dependencies:
-      '@sendbird/chat': 4.9.6
+      '@sendbird/chat': 4.9.7
       react: 18.2.0
     dev: false
 
