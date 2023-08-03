@@ -19,8 +19,6 @@ import { Row, Col, Container } from 'react-bootstrap'
 // import Col from 'react-bootstrap/Col'
 // import Container from 'react-bootstrap/Container'
 
-export { Blog }
-
 const Page = (props) => {
     return (
         <>

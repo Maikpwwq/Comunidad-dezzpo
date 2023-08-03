@@ -7,8 +7,6 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import PropTypes from 'prop-types'
 
-export { MapaPerfil }
-
 const MapaPerfil = ({ userInfo }) => {
     // , setLatLng
     const [latLng] = useState({

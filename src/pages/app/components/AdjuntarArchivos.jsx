@@ -18,8 +18,6 @@ const Input = styled('input')({
     position: 'absolute',
 })
 
-export { AdjuntarArchivos }
-
 const AdjuntarArchivos = ({
     name,
     multiple,

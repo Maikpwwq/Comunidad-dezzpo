@@ -200,8 +200,6 @@ const styles = (theme) => ({
     },
 })
 
-export { CategoriasSlider }
-
 const CategoriasSlider = () => {
     const theme = useTheme()
     const classes = styles(theme)

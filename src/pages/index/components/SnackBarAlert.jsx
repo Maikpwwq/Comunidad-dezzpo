@@ -13,8 +13,6 @@ import Alert from '@mui/material/Alert'
 //     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 // }
 
-export { SnackBarAlert }
-
 const SnackBarAlert = ({ message, onClose, severity }) => {
     return (
         <Snackbar open={open} autoHideDuration={6000} onClose={onClose}>

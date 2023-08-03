@@ -8,8 +8,6 @@ import iconSet from '#@/assets/css/icomoon/selection.json'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-export { DatosContacto }
-
 const DatosContacto = () => {
     return (
         <>

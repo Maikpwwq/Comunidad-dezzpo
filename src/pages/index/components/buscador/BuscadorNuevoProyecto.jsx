@@ -1,20 +1,6 @@
 export { BuscadorNuevoProyecto }
 
 import React, { useEffect, useState } from 'react'
-<<<<<<< HEAD
-// import { Link } from '#@/renderer/Link'
-import { navigate } from 'vite-plugin-ssr/client/router'
-import { ListadoCategorias } from '#@/pages/index/components/ListadoCategorias'
-import '#@/assets/css/buscador_nuevos_proyectos.css'
-// import IcoMoon from 'react-icomoon'
-// import iconSet from '#@/assets/css/icomoon/selection.json'
-import { Col, Container, Form, Button } from 'react-bootstrap'
-// import Container from 'react-bootstrap/Container'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Form from 'react-bootstrap/Form'
-// import Button from 'react-bootstrap/Button'
-=======
 import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { ListadoCategorias } from '../ListadoCategorias'
@@ -26,11 +12,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
->>>>>>> 683a84b51693e3185790a6e04e0773207234a7a9
 import InputGroup from 'react-bootstrap/InputGroup'
 import PropTypes from 'prop-types'
-
-export { BuscadorNuevoProyecto }
 
 const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
     const { categoriaProfesional, tipoProyecto } = data || {}

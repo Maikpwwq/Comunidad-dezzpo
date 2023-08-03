@@ -8,8 +8,6 @@ import withSendBird from '@sendbird/uikit-react/withSendbird'
 // import { sharingInformationService } from '#@/services/sharing-information'
 // let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
-export { newSendbirdOpenChannel }
-
 async function newOpenChannelSendbird(props) {
     console.log('crearCanal props', props)
     // const globalStore = useSendbirdStateContext()

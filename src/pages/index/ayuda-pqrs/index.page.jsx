@@ -11,13 +11,7 @@ import { Row, Col, Container, Button } from 'react-bootstrap'
 // import Container from 'react-bootstrap/Container'
 // import Button from 'react-bootstrap/Button'
 
-<<<<<<< HEAD
-export { AyudaPQRS }
-
-const AyudaPQRS = () => {
-=======
 const Page = (props) => {
->>>>>>> 683a84b51693e3185790a6e04e0773207234a7a9
     const handleClickChat = () => {}
     return (
         <>

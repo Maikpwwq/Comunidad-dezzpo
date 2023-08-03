@@ -15,8 +15,6 @@ import { Component as ComentarPerfil } from '#@/pages/app/components/ComentarPer
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
-export { Commentation }
-
 /* Place Holder */
 
 // import PlaceHolder, {

@@ -10,8 +10,6 @@ import { Row, Col, Container } from 'react-bootstrap'
 
 import LocalCiudades from '#@/assets/img/LocalCiudades.png'
 
-export { BuscaEnTuCiudad }
-
 const BuscaEnTuCiudad = () => {
     return (
         <>

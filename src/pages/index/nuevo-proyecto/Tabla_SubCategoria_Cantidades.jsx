@@ -14,8 +14,6 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-export { TablaSubCategoriaCantidades }
-
 const TablaSubCategoriaCantidades = (props) => {
     const { categoriaInfo, setDraftInfo, draftInfo } = props
 

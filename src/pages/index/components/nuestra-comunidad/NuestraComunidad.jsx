@@ -12,8 +12,6 @@ import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import { BuscaEnTuCiudad } from './busca-en-tu-ciudad/BuscaEnTuCiudad'
 
-export { NuestraComunidad }
-
 const NuestraComunidad = () => {
     return (
         <>

@@ -1,18 +1,9 @@
-<<<<<<< HEAD
-export { EditarRequerimiento }
-
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { navigate } from 'vite-plugin-ssr/client/router'
-import { auth } from '#@/firebase/firebaseClient'
-=======
 export { Page }
 
 import React, { useState, useEffect } from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { auth } from '#@/firebase/firebaseClient'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
->>>>>>> 683a84b51693e3185790a6e04e0773207234a7a9
 import { AdjuntarArchivos } from '#@/pages/app/components/AdjuntarArchivos'
 
 import readDraftFromFirestore from '#@/services/readUserFromFirestore.service'
@@ -22,34 +13,17 @@ import { sharingInformationService } from '#@/services/sharing-information'
 
 import '../detalle_requerimiento.css'
 
-<<<<<<< HEAD
-import { TablaSubCategoriaPresupuesto } from '#@/pages/app/requerimiento/Tabla_SubCategoria_Presupuesto'
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
-=======
 import { TablaSubCategoriaPresupuesto } from '../Tabla_SubCategoria_Presupuesto'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
->>>>>>> 683a84b51693e3185790a6e04e0773207234a7a9
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-<<<<<<< HEAD
-const EditarRequerimiento = ({ state }) => {
-    const user = auth.currentUser || {}
-    const userID = user.uid || '' // Este es el id de la cuenta de Auth
-    // const navigate = useNavigate()
-    // const { state } =  {}
-    const { draftId } = state || ' '
-=======
 const Page = (props) => {
     const user = auth.currentUser || {}
     const userID = user.uid || '' // Este es el id de la cuenta de Auth
->>>>>>> 683a84b51693e3185790a6e04e0773207234a7a9
     // const _storage = storage
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams
@@ -516,10 +490,3 @@ const Page = (props) => {
         </>
     )
 }
-<<<<<<< HEAD
-
-EditarRequerimiento.propTypes = {
-    state: PropTypes.any,
-}
-=======
->>>>>>> 683a84b51693e3185790a6e04e0773207234a7a9

@@ -11,8 +11,6 @@ const ListItem = styled('li')(({ theme }) => ({
     margin: theme.spacing(0.5),
 }))
 
-export { ChipsCategories }
-
 // TODO - Refactor this component to use a props.serCategories from user profile
 const ChipsCategories = (props) => {
     const {

@@ -9,8 +9,6 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import PropTypes from 'prop-types'
 import './directional_button.css'
 
-export { DirectionalButton }
-
 const DirectionalButton = ({ handleNext, handleBack }) => {
     return (
         <>

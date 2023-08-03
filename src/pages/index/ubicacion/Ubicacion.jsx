@@ -14,8 +14,6 @@ import { Row, Col, Container, Button, Form } from 'react-bootstrap'
 // import Form from 'react-bootstrap/Form'
 import PropTypes from 'prop-types'
 
-export { Ubicacion }
-
 const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
     const googleApiKey = import.meta.env.VITE_APP_GOOGLE_APIKEY
     const [clicks, setClicks] = useState({

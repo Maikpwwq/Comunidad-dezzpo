@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-import React from 'react' // , { useState, useEffect }
-=======
 export { PasoAPaso }
 
 import React, { useState, useEffect } from 'react'
->>>>>>> 683a84b51693e3185790a6e04e0773207234a7a9
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material/styles'
 import Stack from '@mui/material/Stack'
@@ -18,8 +14,6 @@ import CategoryIcon from '@mui/icons-material/Category'
 import BuildCircleIcon from '@mui/icons-material/BuildCircle'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
 import LoginIcon from '@mui/icons-material/Login'
-
-export { PasoAPaso }
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {

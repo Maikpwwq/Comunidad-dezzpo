@@ -16,8 +16,6 @@ import { Row, Col, Container } from 'react-bootstrap'
 // import Row from 'react-bootstrap/Row'
 // import Col from 'react-bootstrap/Col'
 
-export { FooterComunidad }
-
 const FooterComunidad = () => {
     return (
         <>

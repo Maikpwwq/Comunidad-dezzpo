@@ -11,8 +11,6 @@ import { Row } from 'react-bootstrap'
 import Rating from '@mui/material/Rating'
 // import Typography from '@mui/material/Typography'
 
-export { CincoEstrellas }
-
 const CincoEstrellas = () => {
     const [value] = useState(4.5) // , setValue
 
