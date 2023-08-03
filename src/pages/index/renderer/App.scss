@@ -1,0 +1,11 @@
+.asisteme {
+    background-color: var(--background-dark-purple-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 5;
+    top: 0;
+    /* background: var(--background-hover-green-color); var(--background-main-green-color); */
+}

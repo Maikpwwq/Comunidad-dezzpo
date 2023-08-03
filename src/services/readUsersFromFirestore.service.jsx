@@ -1,8 +1,8 @@
 import { collection, getDocs } from 'firebase/firestore'
-import { firestore } from '@/firebase/firebaseClient'
+import { firestore } from '#@/firebase/firebaseClient'
 import PropTypes from 'prop-types'
 
-import { sharingInformationService } from '@/services/sharing-information'
+import { sharingInformationService } from '#@/services/sharing-information'
 
 const readUsersFromFirestore = (props) => {
     const _firestore = firestore
@@ -37,7 +37,7 @@ const readUsersFromFirestore = (props) => {
             const consult = data.docs.map((element) => ({
                 ...element.data(),
             }))
-            sharingInformationService.setSubject(consult)
+            sharingInformationService.setSubject({ users: consult })
         } else {
             console.log(
                 'No se encontro información sobre esta collección de usuarios!'

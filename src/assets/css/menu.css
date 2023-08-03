@@ -52,12 +52,12 @@
         /* position:fixed; */
     }
 
-    .menuContenedor{
+    .menuContenedor {
         display: none !important;
         left: 0 !important;
     }
 
-    .menuFijo:hover .menuContenedor{
+    .menuFijo:hover .menuContenedor {
         display: flex !important;
         flex-direction: column;
     }
@@ -72,7 +72,7 @@
         width: 100%;
         z-index: 9;
         background-color: var(--background-main-green-color);
-        color: var(--primary-light-gray-text-color);
+        /* color: var(--primary-light-gray-text-color); */
     }
 
     .dropdownContenidos {
@@ -96,9 +96,11 @@
     }
 }
 
-@media screen and (min-width: 600px) and (max-width: 900px) {}
+@media screen and (min-width: 600px) and (max-width: 900px) {
+}
 
-@media screen and (min-width: 900px) {}
+@media screen and (min-width: 900px) {
+}
 
 .containerLogo {
     justify-content: space-evenly !important;
@@ -135,7 +137,7 @@
 .barraMenu {
     display: inline-flex;
     position: relative;
-    font-family: "lato Regular", Helvetica, sans-serif;
+    font-family: 'lato Regular', Helvetica, sans-serif;
     color: var(--primary-light-gray-text-color);
     background-color: #2d2d2d;
     /* #e9ebe6 #333333 */
@@ -153,7 +155,7 @@
     justify-content: space-between;
     margin: 0 auto;
     /* background-color: var(--background-main-green-color); */
-    color: var(--primary-light-gray-text-color);
+    /* color: var(--primary-light-gray-text-color); */
 }
 
 .menuSecciones {
@@ -183,11 +185,11 @@
 }
 
 .menuContenedor ul a:visited {
-    color: white;
+    color: black !important;
 }
 
 .menuContenedor a:visited {
-    color: white;
+    color: black !important;
 }
 
 .dropdownContenidos a {
@@ -288,4 +290,5 @@
 
 .menuVisible {
     flex-wrap: nowrap !important;
+    width: 100%;
 }

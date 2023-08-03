@@ -1,21 +1,19 @@
 /* Pantallas de Moviles */
 @media screen and (max-width: 600px) {
-
-    .contratistasReformas{
-        flex-direction: column!important;
+    .contratistasReformas {
+        flex-direction: column !important;
     }
 }
 /* Pantallas en tabletas */
 @media screen and (min-width: 600px) and (max-width: 900px) {
-
 }
 /* Pantallas de Ordenador */
 @media screen and (min-width: 900px) {
-   
 }
 
-#categoriasServicios{
-    background: #333333 url(../img/Profesionales_servicios2.png) no-repeat center;
+#categoriasServicios {
+    background: #333333 url(../img/Profesionales_servicios2.png) no-repeat
+        center;
     background-size: 100% 100%;
     background-attachment: scroll;
     width: 100%;
@@ -37,7 +35,6 @@
     overflow-x: auto;
 }
 .contratistasReformas ul {
-
 }
 .contratistasReformas li {
     list-style-type: none;

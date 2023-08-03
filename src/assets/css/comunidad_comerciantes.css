@@ -14,12 +14,13 @@
 }
 
 /* Pantallas de Ordenador */
-@media screen and (min-width: 900px) {}
+@media screen and (min-width: 900px) {
+}
 
 .comunidadComerciantesTitulo {
     /* background: #e9ebe6 url(../img/ComunidadComerciantes1.png) no-repeat center;  */
-    background: #e9ebe6 url('/assets/img/ComunidadComerciantes1.png'
-        ) no-repeat center;
+    background: #e9ebe6 url('/assets/img/ComunidadComerciantes1.png') no-repeat
+        center;
     background-attachment: scroll;
     background-size: 100% 100%;
     color: #e9ebe6;
@@ -35,8 +36,8 @@
 
 .comunidadComerciantesRegistro {
     /* background: #e9ebe6 url(../img/ComunidadComerciantes2.png) no-repeat center;  */
-    background: #e9ebe6 url('/assets/img/ComunidadComerciantes2.png'
-        ) no-repeat center;
+    background: #e9ebe6 url('/assets/img/ComunidadComerciantes2.png') no-repeat
+        center;
     background-attachment: scroll;
     background-size: cover;
     height: auto;
@@ -46,7 +47,8 @@
 }
 
 .comunidadComerciantesBeneficios {
-    background: #009999 url('/assets/img/ComunidadComerciantes3.png') no-repeat right;
+    background: #009999 url('/assets/img/ComunidadComerciantes3.png') no-repeat
+        right;
     background-attachment: scroll;
     background-size: cover;
     color: #e9ebe6;
@@ -61,7 +63,8 @@
 }
 
 .comunidadComerciantesBeneficios2 {
-    background: #e9ebe6 url('/assets/img/Profesionales_servicios2.png') no-repeat center;
+    background: #e9ebe6 url('/assets/img/Profesionales_servicios2.png')
+        no-repeat center;
     background-attachment: scroll;
     background-size: cover;
     height: auto;

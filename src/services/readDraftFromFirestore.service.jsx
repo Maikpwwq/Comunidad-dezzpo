@@ -1,8 +1,8 @@
 import { collection, doc, getDocFromServer } from 'firebase/firestore'
-import { firestore } from '@/firebase/firebaseClient'
+import { firestore } from '#@/firebase/firebaseClient'
 import PropTypes from 'prop-types'
 
-import { sharingInformationService } from '@/services/sharing-information'
+import { sharingInformationService } from '#@/services/sharing-information'
 
 const readDraftFromFirestore = (props) => {
     const _firestore = firestore
@@ -21,9 +21,9 @@ const readDraftFromFirestore = (props) => {
     }
 
     draftFromFirestore(draftId).then((data) => {
-        if (!!data) {
+        if (data) {
             const res = data.data()
-            sharingInformationService.setSubject(res)
+            sharingInformationService.setSubject({ draft: res })
         }
     })
 }

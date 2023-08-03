@@ -1,8 +1,8 @@
 import { collection, doc, setDoc } from 'firebase/firestore'
-import { firestore } from '@/firebase/firebaseClient'
+import { firestore } from '#@/firebase/firebaseClient'
 import PropTypes from 'prop-types'
 
-import { sharingInformationService } from '@/services/sharing-information'
+import { sharingInformationService } from '#@/services/sharing-information'
 
 const updateQuotationToFirestore = (props) => {
     const _firestore = firestore
@@ -17,7 +17,9 @@ const updateQuotationToFirestore = (props) => {
                 doc(quotationRef, docId),
                 updateInfo
             )
-            sharingInformationService.setSubject(quotationData)
+            sharingInformationService.setSubject({
+                sendQuotation: quotationData,
+            })
             return quotationData
         } catch (err) {
             console.log('Error getting draft: ', err)

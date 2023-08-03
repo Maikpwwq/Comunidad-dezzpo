@@ -1,8 +1,8 @@
 import { collection, getDocs, query, where } from 'firebase/firestore'
-import { firestore } from '@/firebase/firebaseClient'
+import { firestore } from '#@/firebase/firebaseClient'
 import PropTypes from 'prop-types'
 
-import { sharingInformationService } from '@/services/sharing-information'
+import { sharingInformationService } from '#@/services/sharing-information'
 
 const doSearchFromFirestore = (props) => {
     const _firestore = firestore
@@ -41,7 +41,7 @@ const doSearchFromFirestore = (props) => {
             const data = data.docs.map((element) => ({
                 ...element.data(),
             }))
-            sharingInformationService.setSubject(data)
+            sharingInformationService.setSubject({ search: data })
         } else {
             console.log(
                 'No se encontro información sobre esta collección de usuarios!'

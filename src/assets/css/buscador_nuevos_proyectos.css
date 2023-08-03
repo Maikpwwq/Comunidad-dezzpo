@@ -1,22 +1,20 @@
-.contenerdorFormulario{
+.contenerdorFormulario {
     display: flex;
-    flex-direction: column;    
-    padding: 100px 0;    
+    flex-direction: column;
+    padding: 100px 0;
     background-color: var(--background-white-color);
     border-radius: 45px;
     box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.2);
 }
-.casillaSeleccion.form-select { 
+.casillaSeleccion.form-select {
     background-color: var(--background-light-gray-color) !important;
 }
 
-#seleccionarProfesional{
-
+#seleccionarProfesional {
 }
 #seleccionarServicio {
-
 }
-.animacionBoton{
+.animacionBoton {
     animation-name: botonAnimado;
     animation-duration: 3s;
     animation-delay: 1s;
@@ -27,10 +25,16 @@
     font-weight: bold;
     padding: 3px 6px;
     margin: 6px 3px;
-    background-color: #92B901;
+    background-color: #92b901;
 }
 
-@keyframes botonAnimado{
-    0%   {background-color:#1ec7e6; left:-50px;}
-    100% {background-color:#92B901; left:0px; }
+@keyframes botonAnimado {
+    0% {
+        background-color: #1ec7e6;
+        left: -50px;
+    }
+    100% {
+        background-color: #92b901;
+        left: 0px;
+    }
 }

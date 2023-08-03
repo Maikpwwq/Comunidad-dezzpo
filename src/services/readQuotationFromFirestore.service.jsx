@@ -1,8 +1,8 @@
 import { collection, doc, getDocFromServer } from 'firebase/firestore'
-import { firestore } from '@/firebase/firebaseClient'
+import { firestore } from '#@/firebase/firebaseClient'
 import PropTypes from 'prop-types'
 
-import { sharingInformationService } from '@/services/sharing-information'
+import { sharingInformationService } from '#@/services/sharing-information'
 
 const readQuotationFromFirestore = (props) => {
     const _firestore = firestore
@@ -24,9 +24,10 @@ const readQuotationFromFirestore = (props) => {
 
     // var solution = () => {
     quotationFromFirestore(docId).then((data) => {
-        if (!!data) {
+        if (data) {
             const res = data.data()
-            sharingInformationService.setSubject(res)
+            console.log('quotationFromFirestore', data, res)
+            sharingInformationService.setSubject({ quotation: res })
         }
     })
 }

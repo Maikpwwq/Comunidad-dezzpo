@@ -1,8 +1,8 @@
 /* height: 2650px; */
 .comunidadPropietariosTitulo {
     /* background: #e9ebe6 url(../img/ComunidadPropietarios1.png) no-repeat center;  */
-    background: #e9ebe6 url('/assets/img/ComunidadPropietarios1.png'
-        ) no-repeat center;
+    background: #e9ebe6 url('/assets/img/ComunidadPropietarios1.png') no-repeat
+        center;
     background-attachment: scroll;
     background-size: cover;
     height: auto;
@@ -25,8 +25,8 @@
 
 .imagenRegistro {
     /* background:  #13495e url(../img/ComunidadPropietarios3.png) no-repeat center;  */
-    background: #13495e url('/assets/img/ComunidadPropietarios3.png'
-        ) no-repeat center;
+    background: #13495e url('/assets/img/ComunidadPropietarios3.png') no-repeat
+        center;
     background-attachment: scroll;
     background-size: auto 100%;
     height: auto;
@@ -35,8 +35,8 @@
 
 .comunidadPropietariosBuscador {
     /* background: #e9ebe6 url(../img/ComunidadPropietarios2.png) no-repeat center;  */
-    background: #e9ebe6 url('/assets/img/ComunidadPropietarios2.png'
-        ) no-repeat center;
+    background: #e9ebe6 url('/assets/img/ComunidadPropietarios2.png') no-repeat
+        center;
     background-attachment: scroll;
     background-size: 100% 100%;
     height: auto;
@@ -63,8 +63,8 @@
 
 .comunidadPropietariosListaVerificacion {
     /* background: #e9ebe6 url(../img/ComunidadPropietarios4.png) no-repeat center;  */
-    background: #e9ebe6 url('/assets/img/ComunidadPropietarios4.png'
-        ) no-repeat center;
+    background: #e9ebe6 url('/assets/img/ComunidadPropietarios4.png') no-repeat
+        center;
     background-attachment: scroll;
     background-size: 100% 100%;
     height: auto;
