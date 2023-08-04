@@ -1,9 +1,22 @@
 // This file isn't processed by Vite, see https://github.com/brillout/vite-plugin-ssr/issues/562
 //  - Consequently, the server needs be manually restarted when changing this file
 
-const express = require('express')
-const compression = require('compression')
-const { renderPage } = require('vite-plugin-ssr/server')
+// const express = require('express')
+// const compression = require('compression')
+// const { renderPage } = require('vite-plugin-ssr/server')
+import express from 'express'
+import compression from 'compression'
+import { renderPage } from 'vite-plugin-ssr/server'
+
+import sirv from 'sirv'
+import * as vite from 'vite'
+
+//
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+//
 
 const isProduction = process.env.NODE_ENV === 'production'
 const root = `${__dirname}/..`
@@ -19,13 +32,13 @@ async function startServer() {
     if (isProduction) {
         // In production, we need to serve our static assets ourselves.
         // (In dev, Vite's middleware serves our static assets.)
-        const sirv = require('sirv')
+        // const sirv = require('sirv')
         app.use(sirv(`${root}/dist/client`))
     } else {
         // We instantiate Vite's development server and integrate its middleware to our server.
         // ⚠️ We instantiate it only in development. (It isn't needed in production and it
         // would unnecessarily bloat our server in production.)
-        const vite = require('vite')
+        // const vite = require('vite')
         const viteDevMiddleware = (
             await vite.createServer({
                 root,

@@ -2,8 +2,7 @@ export { CincoEstrellas }
 
 import React, { useState } from 'react'
 
-import { Row } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
+import Row from 'react-bootstrap/Row'
 // import Icon from '@mui/material/Icon'
 // import StarIcon from '@mui/icons-material/Star'
 // import StarOutlineIcon from '@mui/icons-material/StarOutline'

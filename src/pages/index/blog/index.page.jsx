@@ -14,10 +14,10 @@ import BlogEntrada3 from '#@/assets/img/BlogEntrada3.png'
 import User3 from '#@/assets/img/iconos/User3.svg'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+// import { Row, Col, Container } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 
 const Page = (props) => {
     return (

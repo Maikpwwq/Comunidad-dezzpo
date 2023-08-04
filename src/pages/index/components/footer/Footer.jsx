@@ -11,10 +11,10 @@ import LogoFooterComunidadDezzpo from '#@/assets/img/IsologoFooter.png'
 
 import { DatosContacto } from '../datos_contacto/DatosContacto'
 
-import { Row, Col, Container } from 'react-bootstrap'
-// import Container from 'react-bootstrap/Container'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
+// import { Row, Col, Container } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 const FooterComunidad = () => {
     return (

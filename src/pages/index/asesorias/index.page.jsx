@@ -10,12 +10,12 @@ import { navigate } from 'vite-plugin-ssr/client/router'
 import { firestore } from '#@/firebase/firebaseClient'
 
 // react-bootrstrap
-import { Row, Col, Container, Button, Form } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
-// import Button from 'react-bootstrap/Button'
-// import Form from 'react-bootstrap/Form'
+// import { Row, Col, Container, Button, Form } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 const Page = (props) => {
     // const navigate = useNavigate()

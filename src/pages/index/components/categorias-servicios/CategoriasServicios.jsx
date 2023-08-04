@@ -4,10 +4,10 @@ import * as React from 'react'
 import '#@/assets/css/categorias_servicios.css'
 import { ListadoCategorias } from '../ListadoCategorias'
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+// import { Row, Col, Container } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 
 export { CategoriasServicios }
 

@@ -20,7 +20,7 @@ export default (pageContext) => {
     console.log( 'routeParams', id)
 
     return {
-      precedence: -1,
+      precedence: 99,
       // Make `id` available as pageContext.routeParams.id
       routeParams: { id }
     }
