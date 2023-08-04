@@ -2,7 +2,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import ssr from 'vite-plugin-ssr/plugin'
-import { cjsInterop } from 'vite-plugin-cjs-interop'
+// import { cjsInterop } from 'vite-plugin-cjs-interop'
 import vercel from 'vite-plugin-vercel'
 import vercelSsr from '@magne4000/vite-plugin-vercel-ssr'
 import * as path from 'path'
