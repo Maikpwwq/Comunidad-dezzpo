@@ -5,11 +5,11 @@ import React from 'react'
 import '#@/assets/css/asi_trabajamos.css'
 
 // react-bootrstrap
-import { Row, Col, Container, Button } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Button from 'react-bootstrap/Button'
-// import Container from 'react-bootstrap/Container'
+// import { Row, Col, Container, Button } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
 
 const Page = (props) => {
     return (

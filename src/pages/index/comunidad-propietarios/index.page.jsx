@@ -9,11 +9,11 @@ import { Page as Registro } from '../registro/index.page'
 import { BuscadorNuevoProyecto } from '../components/buscador/BuscadorNuevoProyecto'
 
 // react-bootrstrap
-import { Row, Col, Container, Button } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
-// import Button from 'react-bootstrap/Button'
+// import { Row, Col, Container, Button } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
 const Page = (props) => {
     let checkStyle = {

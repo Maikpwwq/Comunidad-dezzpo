@@ -21,22 +21,22 @@ import '#@/assets/css/registro.css'
 import LogoGmail from '#@/assets/img/G.jpg'
 // react-bootrstrap
 import Paper from '@mui/material/Paper'
-import {
-    Row,
-    Col,
-    Container,
-    Button,
-    Form,
-    ToggleButtonGroup,
-    ToggleButton,
-} from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
-// import Button from 'react-bootstrap/Button'
-// import Form from 'react-bootstrap/Form'
-// import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-// import ToggleButton from 'react-bootstrap/ToggleButton'
+// import {
+//     Row,
+//     Col,
+//     Container,
+//     Button,
+//     Form,
+//     ToggleButtonGroup,
+//     ToggleButton,
+// } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+import ToggleButton from 'react-bootstrap/ToggleButton'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 

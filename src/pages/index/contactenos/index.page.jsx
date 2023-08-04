@@ -12,11 +12,11 @@ import SelectorContactenos from '#@/assets/img/SelectorContactenos.png'
 import { DatosContacto } from '#P/index/components/datos_contacto/DatosContacto'
 
 // react-bootrstrap
-import { Row, Col, Container, Button } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
-// import Button from 'react-bootstrap/Button'
+// import { Row, Col, Container, Button } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
 const Page = (props) => {
     return (

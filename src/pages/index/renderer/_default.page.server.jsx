@@ -8,10 +8,17 @@ import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr/server'
 // import logoUrl from './logo.svg'
 // <link rel="icon" href="${logoUrl}" />
 
+// import createEmotionCache from './createEmotionCache';
+// import createEmotionServer from '@emotion/server/create-instance';
+
 async function render(pageContext) {
+    // const cache = createEmotionCache();
+    // const { extractCriticalToChunks, constructStyleTagsFromChunks } =
+    //     createEmotionServer(cache);
     // This render() hook only supports SSR, see https://vite-plugin-ssr.com/render-modes for how to modify render() to support SPA
     // if (!Page) throw new Error('My render() hook expects pageContext.Page to be defined')
     let pageHtml
+    // let emotionCss
     if (!pageContext.Page) {
         // SPA
         pageHtml = ''
@@ -24,7 +31,12 @@ async function render(pageContext) {
                 <Page {...pageProps} />
             </PageShell>
         )
+
         pageHtml = renderToString(page)
+
+        // Grab the CSS from emotion
+        // const emotionChunks = extractCriticalToChunks(pageHtml);
+        // emotionCss = constructStyleTagsFromChunks(emotionChunks);
     }
 
     // See https://vite-plugin-ssr.com/head
@@ -34,10 +46,12 @@ async function render(pageContext) {
         (documentProps && documentProps.description) ||
         'Explora en Comunidad Dezzpo una red profesional confiable para todo tipo de trabajos, desde soluciones de mantenimiento e instalaciones pequeñas hasta acabados inmobiliarios y remodelaciones completas. Nuestro marketplace te ofrece la posibilidad de elegir contratistas especializados con estadísticas verificadas. ¡Únete ahora y comienza a hacer realidad tus proyectos!'
 
+    // ${emotionCss}
     const documentHtml = escapeInject`<!DOCTYPE html>
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
+        
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="author" content="Michael Arias Fajardo" />
         <meta name="description" content="${desc}" />
@@ -158,7 +172,7 @@ async function render(pageContext) {
         />
         <meta property="og:url" content="#" />
         <meta property="og:site_name" content="${title}" />
-        <meta
+        <meta      
             property="og:image"
             type="image/png"
             content="/assets/img/logo/logo-Comunidad-Dezzpo.png"

@@ -3,10 +3,10 @@ import * as React from 'react'
 import './busca_en_tu_ciudad.css'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+// import { Row, Col, Container } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 
 import LocalCiudades from '#@/assets/img/LocalCiudades.png'
 

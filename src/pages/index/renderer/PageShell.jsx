@@ -6,6 +6,7 @@ import { PageContextProvider } from './usePageContext'
 // import { Link } from './Link'
 import { childrenPropType } from './PropTypeValues'
 import { LayoutPaperbase } from '#P/index/components/LayoutPaperbase'
+// import createEmotionCache from './createEmotionCache';
 
 import './App.scss'
 import './index.scss'
@@ -18,24 +19,27 @@ PageShell.propTypes = {
 }
 function PageShell({ pageContext, children }) {
     // const Layout = LayoutPaperbase || pageContext.exports.Layout
+    //const cache = createEmotionCache();
 
     return (
         <React.StrictMode>
+          {/* <CacheProvider value={cache}> */}
             <PageContextProvider pageContext={pageContext}>
                 <LayoutPaperbase>{children}</LayoutPaperbase>
                 {/* <Layout>
-          <Sidebar>
-            <Logo />
-            <Link className="navitem" href="/">
-              Home
-            </Link>
-            <Link className="navitem" href="/about">
-              About
-            </Link>
-          </Sidebar>
-          <Content>{children}</Content>
-        </Layout> */}
+                  <Sidebar>
+                    <Logo />
+                    <Link className="navitem" href="/">
+                      Home
+                    </Link>
+                    <Link className="navitem" href="/about">
+                      About
+                    </Link>
+                  </Sidebar>
+                  <Content>{children}</Content>
+                </Layout> */}
             </PageContextProvider>
+          {/* </CacheProvider> */}
         </React.StrictMode>
     )
 }

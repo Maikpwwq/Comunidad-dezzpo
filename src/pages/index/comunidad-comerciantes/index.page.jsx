@@ -7,10 +7,10 @@ import '#@/assets/css/comunidad_comerciantes.css'
 import { Page as Registro } from '../registro/index.page'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+// import { Row, Col, Container } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 
 const Page = (props) => {
     let checkStyle = {

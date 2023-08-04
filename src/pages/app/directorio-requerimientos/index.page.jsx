@@ -8,11 +8,11 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import { DraftCard } from '#@/pages/app/components/DraftCard'
 
 // react-bootrstrap
-import { Row, Col, Container, Button } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
-// import Button from 'react-bootstrap/Button'
+// import { Row, Col, Container, Button } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
 const Page = (props) => {
     const _firestore = firestore

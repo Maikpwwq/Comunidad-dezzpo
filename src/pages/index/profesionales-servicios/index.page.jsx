@@ -5,10 +5,10 @@ import '#@/assets/css/profesionales_servicios.css'
 import { NuestraComunidad } from '#P/index/components/nuestra-comunidad/NuestraComunidad'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+// import { Row, Col, Container } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
 
 // import { Link } from '#R/Link'
 
