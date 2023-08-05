@@ -3,9 +3,10 @@ export { AdministrarDB }
 import React, { useState } from 'react'
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { firestore } from '#@/firebase/firebaseClient'
+// import { Row, Button } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+// import Col from 'react-bootstrap/Col'
 import { styled } from '@mui/material/styles'
 
 import * as XLSX from 'xlsx/xlsx.mjs'

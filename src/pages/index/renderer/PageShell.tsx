@@ -1,10 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
+// import { childrenPropType } from './PropTypeValues'
+import type { PageContext } from './types'
 // import logo from './logo.svg'
 // import './PageShell.css'
 import { PageContextProvider } from './usePageContext'
 // import { Link } from './Link'
-import { childrenPropType } from './PropTypeValues'
 import { LayoutPaperbase } from '#P/index/components/LayoutPaperbase'
 // import createEmotionCache from './createEmotionCache';
 
@@ -13,11 +14,12 @@ import './index.scss'
 
 export { PageShell }
 
-PageShell.propTypes = {
-    pageContext: PropTypes.any,
-    children: childrenPropType,
-}
-function PageShell({ pageContext, children }) {
+// PageShell.propTypes = {
+//     pageContext: PropTypes.any,
+//     children: childrenPropType,
+// }
+
+function PageShell({ pageContext, children }: { children: React.ReactNode; pageContext: PageContext }) {
     // const Layout = LayoutPaperbase || pageContext.exports.Layout
     //const cache = createEmotionCache();
 

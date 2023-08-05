@@ -4,10 +4,11 @@ export { Page }
 import React, { useState } from 'react'
 
 // react-bootrstrap
-import { Row, Col, Container } from 'react-bootstrap'
-// import Row from 'react-bootstrap/Row'
-// import Col from 'react-bootstrap/Col'
-// import Container from 'react-bootstrap/Container'
+// import { Row, Col, Container } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+// import { Button, TextareaAutosize, Rating, FormLabel } from '@mui/material'
 import Button from '@mui/material/Button'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Rating from '@mui/material/Rating'
@@ -17,7 +18,7 @@ import FormLabel from '@mui/material/FormLabel'
 // import Select from '@mui/material/Select'
 // import MenuItem from '@mui/material/MenuItem'
 
-const Page = (props) => {
+const Page = () => {
     const [rate, setRate] = useState({
         gestion: 0,
         calidad: 0,

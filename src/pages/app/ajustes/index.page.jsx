@@ -3,7 +3,7 @@ export { Page }
 // Pagina de Usuario - Ajustes
 import React, { useState, useEffect } from 'react'
 import { auth } from '#@/firebase/firebaseClient'
-import { format, formatDistance, subDays, parse, parseISO } from 'date-fns'
+import { formatDistance, parse } from 'date-fns' // parseISO, format, subDays
 import { es } from 'date-fns/locale'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 import { Service as newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
@@ -21,6 +21,7 @@ import { ListadoCategorias } from '#@/pages/index/components/ListadoCategorias'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+// import {Button} from '@mui/material'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import FormGroup from '@mui/material/FormGroup'
@@ -28,7 +29,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
 
-const Page = (props) => {
+const Page = () => {
     console.log('auth', auth.currentUser)
     const pageContext = usePageContext()
     let id = pageContext.routeParams['*']

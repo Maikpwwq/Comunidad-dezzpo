@@ -2,7 +2,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import ssr from 'vite-plugin-ssr/plugin'
-// import { cjsInterop } from 'vite-plugin-cjs-interop'
+import { cjsInterop } from 'vite-plugin-cjs-interop'
 import vercel from 'vite-plugin-vercel'
 import vercelSsr from '@magne4000/vite-plugin-vercel-ssr'
 import * as path from 'path'
@@ -15,19 +15,32 @@ export default defineConfig(async ({ command, mode }) => {
             ssr({
                 // Use the default pre-render config:
                 prerender: true,
-                noExternals: [
-                    '@mui/material',
-                    '@emotion/styled',
-                    'react-bootstrap',
+                ...(process.env.NODE_ENV === 'production'
+                    ? {
+                          noExternal: [
+                              '@mui/material',
+                              '@mui/utils',
+                              '@mui/base',
+                              '@mui/icons-material',
+                              '@mui/x-data-grid',
+                              '@emotion/react',
+                              '@emotion/styled',
+                              'react-bootstrap',
+                              '@types/react',
+                              '@types/react',
+                              '@types/react',
+                          ],
+                      }
+                    : { noExternal: [] }),
+            }),
+
+            cjsInterop({
+                // List of CJS dependencies that require interop
+                dependencies: [
+                    '@mui/material/*',
+                    'react-bootstrap/cjs/*',
                 ],
             }),
-            // cjsInterop({
-            //     // List of CJS dependencies that require interop
-            //     dependencies: [
-            //         '@mui/material/*',
-            //         'react-bootstrap/cjs/*',
-            //     ],
-            // }),
             vercel(),
             vercelSsr(),
         ],

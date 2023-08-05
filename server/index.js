@@ -8,18 +8,10 @@ import express from 'express'
 import compression from 'compression'
 import { renderPage } from 'vite-plugin-ssr/server'
 
-import sirv from 'sirv'
-import * as vite from 'vite'
-
-//
-import path from 'path';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-//
+import { root } from './root'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const root = `${__dirname}/..`
+
 
 startServer()
 
@@ -33,12 +25,14 @@ async function startServer() {
         // In production, we need to serve our static assets ourselves.
         // (In dev, Vite's middleware serves our static assets.)
         // const sirv = require('sirv')
+        const sirv =  (await import('sirv')).default
         app.use(sirv(`${root}/dist/client`))
     } else {
         // We instantiate Vite's development server and integrate its middleware to our server.
         // ⚠️ We instantiate it only in development. (It isn't needed in production and it
         // would unnecessarily bloat our server in production.)
         // const vite = require('vite')
+        const vite = await import('vite')
         const viteDevMiddleware = (
             await vite.createServer({
                 root,

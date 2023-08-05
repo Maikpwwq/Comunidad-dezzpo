@@ -15,6 +15,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import { useTheme } from '@mui/material/styles'
+// import {Button, Box} from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import MobileStepper from '@mui/material/MobileStepper'
@@ -26,7 +27,7 @@ import { Typography } from '@mui/material'
 
 const CustomSwipeableViews = bindKeyboard(SwipeableViews)
 
-const styles = (theme) => ({
+const styles = () => ({
     stepper: {
         position: 'relative',
         bottom: '-25px',
@@ -54,7 +55,7 @@ const styles = (theme) => ({
 //     </div>
 // )
 
-const Page = (props) => {
+const Page = () => {
     const theme = useTheme()
     const classes = styles(theme)
     // const { imagenes } = [{ numero: 1 }, { numero: 2 }, { numero: 3 }]

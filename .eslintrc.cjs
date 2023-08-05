@@ -1,5 +1,11 @@
 module.exports = {
     rules: {
+        "no-restricted-imports": [
+            "error",
+            {
+              "patterns": ["@mui/*/*/*"]
+            }
+        ],
         'react-refresh/only-export-components': 'warn',
     },
     reportUnusedDisableDirectives: true,
