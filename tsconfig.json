@@ -2,7 +2,8 @@
   // "extends": "@tsconfig/vite-react/tsconfig.json",
   "compilerOptions": {
     "esModuleInterop": true,
-    "moduleResolution": "Bundler",
+    "moduleResolution": "Node",
+    "types": ["vite/client"],
     "composite": true,
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -19,4 +20,11 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
+  "ts-node": {
+    "transpileOnly": true,
+    "esm": true,
+    "compilerOptions": {
+      "moduleResolution": "Node16"
+    }
+  }
 }

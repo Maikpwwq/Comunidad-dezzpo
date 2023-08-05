@@ -1,7 +1,10 @@
-today = new Date()
-todayFormat = format(today, 'yyyy-MM-dd')
+import { format, subDays } from 'date-fns'
 
-filtros = [
+
+const today = new Date()
+const todayFormat = format(today, 'yyyy-MM-dd')
+
+const filtros = [
     {
         label: 'Últimos 7 días',
         startAt: format(subDays(today, 7), 'yyyy-MM-dd'),
