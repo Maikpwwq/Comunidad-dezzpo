@@ -8,7 +8,7 @@ import express from 'express'
 import compression from 'compression'
 import { renderPage } from 'vite-plugin-ssr/server'
 
-import { root } from './root'
+import { root } from './root.js'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -55,7 +55,7 @@ async function startServer() {
         const pageContext = await renderPage(pageContextInit)
         const { httpResponse } = pageContext
         if (!httpResponse) return next()
-        const { body, statusCode, contentType, earlyHints } = httpResponse
+        const { body, statusCode, contentType, earlyHints } = httpResponse // ,headers ("Content-Type", contentType);
         if (res.writeEarlyHints)
             res.writeEarlyHints({
                 link: earlyHints.map((e) => e.earlyHintLink),
