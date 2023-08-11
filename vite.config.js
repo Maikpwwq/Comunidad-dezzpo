@@ -3,8 +3,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import ssr from 'vite-plugin-ssr/plugin'
 import { cjsInterop } from 'vite-plugin-cjs-interop'
-import vercel from 'vite-plugin-vercel'
-import vercelSsr from '@magne4000/vite-plugin-vercel-ssr'
+// import vercel from 'vite-plugin-vercel'
+// import vercelSsr from '@magne4000/vite-plugin-vercel-ssr'
 import * as path from 'path'
 
 export default defineConfig(async ({ command, mode }) => {
@@ -18,17 +18,17 @@ export default defineConfig(async ({ command, mode }) => {
                 ...(process.env.NODE_ENV === 'production'
                     ? {
                           noExternal: [
-                              '@mui/material',
-                              '@mui/utils',
-                              '@mui/base',
-                              '@mui/icons-material',
-                              '@mui/x-data-grid',
-                              '@emotion/react',
-                              '@emotion/styled',
-                              'react-bootstrap',
-                              '@types/react',
-                              '@types/react',
-                              '@types/react',
+                            '@mui/material',
+                            //   '@mui/utils',
+                            //   '@mui/base',
+                            //   '@mui/icons-material',
+                            //   '@mui/x-data-grid',
+                            //   '@emotion/react',
+                            //   '@emotion/styled',
+                            //   'react-bootstrap',
+                            //   '@types/react',
+                            //   '@types/react',
+                            //   '@types/react',
                           ],
                       }
                     : { noExternal: [] }),
@@ -41,8 +41,8 @@ export default defineConfig(async ({ command, mode }) => {
                     'react-bootstrap/cjs/*',
                 ],
             }),
-            vercel(),
-            vercelSsr(),
+            // vercel(),
+            // vercelSsr(),
         ],
         resolve: {
             // Prefix your path aliases with a special character, most commonly #
