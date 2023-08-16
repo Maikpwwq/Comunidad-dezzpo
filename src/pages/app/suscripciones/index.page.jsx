@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
 
-const Page = (props) => {
+const Page = () => {
     return (
         <>
             <Container fluid className="p-0">
@@ -17,17 +17,15 @@ const Page = (props) => {
                     <Col className="col-10">
                         <Row className="pt-4 m-0 w-100 d-flex">
                             <h2 className="headline-xl">
-                                El plan de beneficios con la membresía incluye{' '}
+                                El plan de beneficios con la membresía incluye
                             </h2>
                             <Col md={8}>
                                 <p className="body-1">
-                                    {' '}
-                                    Como Propietario{' '}
+                                    Como Propietario
                                     <span>
-                                        {' '}
                                         Adquiere nuestro servicio de afiliacion
-                                        + plus{' '}
-                                    </span>{' '}
+                                        + plus
+                                    </span>
                                 </p>
                                 <ul>
                                     <li>Servicio 24 horas para urgencias</li>
@@ -44,12 +42,8 @@ const Page = (props) => {
                         <Row className="m-0 pt-4 w-100 d-flex">
                             <Col md={8}>
                                 <p className="body-1">
-                                    {' '}
-                                    Como Comerciante Calificado{' '}
-                                    <span>
-                                        {' '}
-                                        Adquiere Un Membresia Pagada
-                                    </span>{' '}
+                                    Como Comerciante Calificado
+                                    <span>Adquiere Un Membresia Pagada</span>
                                 </p>
                                 <div>
                                     <ul>

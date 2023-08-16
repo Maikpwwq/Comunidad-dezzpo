@@ -1,5 +1,5 @@
 import React from 'react'
-import es from 'date-fns/locale/es'
+// import es from 'date-fns/locale/es'
 import PropTypes from 'prop-types'
 import {
     withSendBird,
@@ -10,10 +10,12 @@ import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
 import '@sendbird/uikit-react/dist/index.css'
 
 // Custom
-import { Component as ComentarPerfil } from '#@/pages/app/components/ComentarPerfil'
+import { ComentarPerfil } from '#@/pages/app/components/ComentarPerfil'
 
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+
+export { Comentarios }
 
 /* Place Holder */
 
@@ -120,7 +122,7 @@ const Comentarios = (props) => {
                         userId={userID} // user Auth ID.
                         nickname={nickname} // user Auth Name.
                         // accessToken={accessToken}
-                        dateLocale={es}
+                        // dateLocale={es}
                     >
                         <ComentarPerfil channelUrl={channelUrl} />
                         {/* <CreateChannel />
@@ -141,6 +143,6 @@ Comentarios.propTypes = {
     nickname: PropTypes.string,
 }
 
-const Component = withSendBird(Comentarios)
+// const Component = withSendBird(Comentarios)
 
-export { Component }
+// export { Component }

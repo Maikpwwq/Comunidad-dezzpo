@@ -3,7 +3,7 @@ export { Page }
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
 import { firestore } from '#@/firebase/firebaseClient' // storage,
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore' // , query, where
 
 import { DraftCard } from '#@/pages/app/components/DraftCard'
 
@@ -14,24 +14,23 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 
-const Page = (props) => {
+const Page = () => {
     const _firestore = firestore
     const draftRef = collection(_firestore, 'drafts')
     const [draftsData, setDraftsData] = useState({})
 
-    const draftsFromFirestore = async () => {
-        try {
-            const draftData = await getDocs(draftRef)
-            return draftData
-        } catch (err) {
-            console.log(
-                'Error al obtener los datos de la colleccion users: ',
-                err
-            )
-        }
-    }
-
     useEffect(() => {
+        const draftsFromFirestore = async () => {
+            try {
+                const draftData = await getDocs(draftRef)
+                return draftData
+            } catch (err) {
+                console.log(
+                    'Error al obtener los datos de la colleccion users: ',
+                    err
+                )
+            }
+        }
         draftsFromFirestore()
             .then((docSnap) => {
                 if (docSnap) {
@@ -52,7 +51,7 @@ const Page = (props) => {
             .catch((error) => {
                 console.log(error)
             })
-    }, [draftsFromFirestore])
+    }, [draftRef])
 
     return (
         <>

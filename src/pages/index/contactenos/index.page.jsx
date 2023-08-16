@@ -25,8 +25,7 @@ const Page = (props) => {
                 <Row className="m-0 w-100">
                     <Col className="m-4">
                         <h2 className="mainTitulo headline-xl textVerde">
-                            {' '}
-                            CONTÁCTENOS{' '}
+                            CONTÁCTENOS
                         </h2>
                     </Col>
                 </Row>

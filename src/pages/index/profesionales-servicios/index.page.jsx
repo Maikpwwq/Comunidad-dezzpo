@@ -38,8 +38,7 @@ const Page = (props) => {
                                 comentarios de otros Propietarios
                             </p>
                             <span className="p-description textBlanco">
-                                {' '}
-                                Busca Profesionales en tu zona{' '}
+                                Busca Profesionales en tu zona
                             </span>
                         </Col>
                     </Col>

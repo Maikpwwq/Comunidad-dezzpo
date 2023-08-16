@@ -2,7 +2,7 @@ export { Page }
 
 // Pagina de Usuario - Mensajes
 import React from 'react'
-import es from 'date-fns/locale/es'
+// import es from 'date-fns/locale/es'
 import { auth } from '#@/firebase/firebaseClient'
 import { App as SendBirdApp } from '@sendbird/uikit-react'
 // react-bootrstrap
@@ -31,11 +31,11 @@ const Page = (props) => {
                         style={{ height: '50vh' }}
                     >
                         <h2 className="headline-xl">Mensajes</h2>
-                        <SendBirdApp
+                        {/* <SendBirdApp
                             appId={appId} // Sendbird application ID.
                             userId={userId} // user ID.
-                            dateLocale={es}
-                        />
+                            // dateLocale={es}
+                        /> */}
                         {/* <FormControl
                             fullWidth
                             style={{
@@ -60,7 +60,7 @@ const Page = (props) => {
                                     Nuevos Mensajes
                                 </MenuItem>
                                 <MenuItem value="inquietudesPropietarios">
-                                    Consultar inquietudes de los propietarios{' '}
+                                    Consultar inquietudes de los propietarios
                                 </MenuItem>
                                 <MenuItem value="AsesoriaProfesional">
                                     Asesorias con un profesional
@@ -76,7 +76,7 @@ const Page = (props) => {
                                 placeholder="Nuevos Mensajes"
                             ></TextareaAutosize>
                             <label for="inquietudesPropietarios ">
-                                Consultar inquietudes de los propietarios{' '}
+                                Consultar inquietudes de los propietarios
                             </label>
                             <TextareaAutosize
                                 maxRows={3}

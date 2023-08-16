@@ -144,7 +144,7 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                         <Form action="busquedaCiudad">
                             <h3 className="headline-l textBlanco">
                                 Ingresa tu ubicación
-                            </h3>{' '}
+                            </h3>
                             <p className="body-1 textBlanco">
                                 Podras consultar con mejor precision los costos
                                 y tiempos de entrega.

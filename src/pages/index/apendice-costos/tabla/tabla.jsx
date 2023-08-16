@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack'
 
 const TableCards = (props) => {
     const { dataTable } = props
-    
+
     const [dataCards, setDataCards] = useState()
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const TableCards = (props) => {
                 console.log('dataTable', dataTable, array)
             }
         }
-    }, [ dataCards, dataTable])
+    }, [dataCards, dataTable])
 
     const pageSize = 5
 
@@ -83,7 +83,7 @@ const TableCards = (props) => {
                     </Stack>
                 }
             >
-                {' '}
+                <span></span>
                 {dataCards !== undefined && (
                     <DataGrid
                         disableColumnSelector

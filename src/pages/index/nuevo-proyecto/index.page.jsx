@@ -261,7 +261,6 @@ const Page = () => {
                                 >
                                     <Col className="opacidadNegro p-0">
                                         <p className="headline-l textBlanco m-4 p-0">
-                                            {' '}
                                             Con ayuda de la comunidad haz
                                             realidad la casa que deseas.
                                             Encuentra un profesional Seguro y
@@ -306,7 +305,7 @@ const Page = () => {
                                     value={draftInfo.draftCategory}
                                     onChange={handleChange}
                                 >
-                                    <option>seleccionar categoria</option>{' '}
+                                    <option>seleccionar categoria</option>
                                     {ListadoCategorias.map((categoria) => {
                                         const { label, key } = categoria
                                         return (
@@ -508,18 +507,18 @@ const Page = () => {
                                                 </option>
                                                 <option value="Colonial">
                                                     Propiedad Colonial (1800 -
-                                                    1920){' '}
+                                                    1920)
                                                 </option>
                                                 <option value="SubUrbana">
                                                     Propiedad suburbana
-                                                    (1920-1960){' '}
+                                                    (1920-1960)
                                                 </option>
                                                 <option value="Moderna">
                                                     Propiedad moderna
-                                                    (1960-presente){' '}
+                                                    (1960-presente)
                                                 </option>
                                                 <option value="Otra">
-                                                    Otra{' '}
+                                                    Otra
                                                 </option>
                                             </Form.Select>
                                         </Form.Group>
@@ -650,7 +649,7 @@ const Page = () => {
                             variant="h3"
                             className="p-description w-100 center"
                         >
-                            {/* Cómo, dónde y cuándo{' '} */}
+                            {/* Cómo, dónde y cuándo */}
                             Programa la visita
                         </Typography>
                         <Col
@@ -744,7 +743,7 @@ const Page = () => {
                                     <Form.Text className="text-muted">
                                         Nos permitira validar comerciantes
                                         profesionales activos en la zona o bien
-                                        registra tu dirección.{' '}
+                                        registra tu dirección.
                                         <Button
                                             className="body-2"
                                             onClick={handleOpen}
@@ -759,7 +758,7 @@ const Page = () => {
                                 >
                                     <Form.Label className="body-2">
                                         Cargar fotos, imagenes y documentos
-                                        relacionados.{' '}
+                                        relacionados.
                                     </Form.Label>
                                     <Row>
                                         <Box className="cargarArchivos">
@@ -845,7 +844,7 @@ const Page = () => {
                                 contactaran para aplicar con una cotización a tu
                                 proyecto. <br />
                                 Para garantizar la mejor respuesta asegúrate que
-                                tus datos son exactos, solo compartiremos tu{' '}
+                                tus datos son exactos, solo compartiremos tu
                                 <br /> numero con los comerciantes calificados
                                 interesados, por favor responde a su llamada.
                             </p>

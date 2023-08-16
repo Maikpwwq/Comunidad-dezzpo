@@ -84,8 +84,8 @@ const MenuComunidad = (props) => {
                                 href="/app/apendice-costos"
                                 className="botonLink body-2"
                             >
-                                {' '}
-                                Apendice Costos{' '}
+                                
+                                Apendice Costos
                             </Link> */}
 
                                 <Link
@@ -106,8 +106,8 @@ const MenuComunidad = (props) => {
                                         href="/"
                                         className="activo body-2"
                                     >
-                                        {' '}
-                                        Home{' '}
+                                        
+                                        Home
                                     </Link>
                                 </li> */}
                             {/* seleccion asi trabajamos*/}
@@ -126,8 +126,7 @@ const MenuComunidad = (props) => {
                                         className="p-2 pb-0"
                                         onClick={Close}
                                     >
-                                        {' '}
-                                        Profesionales y servicios{' '}
+                                        Profesionales y servicios
                                     </Link>
 
                                     <Link
@@ -230,8 +229,7 @@ const MenuComunidad = (props) => {
                                         href="/profesionales-servicios"
                                         className="p-2 pb-0"
                                     >
-                                        {' '}
-                                        Profesionales y servicios{' '}
+                                        Profesionales y servicios
                                     </Link>
                                     <Link
                                         href="/contactenos"
@@ -279,8 +277,7 @@ const MenuComunidad = (props) => {
                                         href="/profesionales-servicios"
                                         className="p-2 pb-0"
                                     >
-                                        {' '}
-                                        Profesionales y servicios{' '}
+                                        Profesionales y servicios
                                     </Link>
                                     <Link
                                         href="/contactenos"
@@ -303,39 +300,36 @@ const MenuComunidad = (props) => {
                                 href="/presupuestos"
                                 className="botonLink body-2"
                             >
-                                {' '}
-                                Presupuestos{' '}
+                                Presupuestos
                             </Link>
                             {/* <li className="botonSeccion">
                                     <Link
                                         href="/profesionales-servicios"
                                         className="botonLink body-2"
                                     >
-                                        {' '}
-                                        Profesionales y servicios{' '}
+                                        
+                                        Profesionales y servicios
                                     </Link>
                                 </li> */}
                             <Link
                                 href="/asesorias"
                                 className="botonLink body-2"
                             >
-                                {' '}
-                                Asesorias{' '}
+                                Asesorias
                             </Link>
                             <Link
                                 href="/apendice-costos"
                                 className="botonLink body-2"
                             >
-                                {' '}
-                                Apendice de costos{' '}
+                                Apendice de costos
                             </Link>
                             {/* <li className="botonSeccion">
                                     <Link
                                         href="/ingreso"
                                         className="botonLink body-2"
                                     >
-                                        {' '}
-                                        Ingresar{' '}
+                                        
+                                        Ingresar
                                     </Link>
                                 </li> */}
                         </ul>

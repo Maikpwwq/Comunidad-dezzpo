@@ -27,7 +27,6 @@ const Page = (props) => {
                     <Col className="align-items-start" md={8} sm={12} lg={6}>
                         <Col className="col-12 opacidadNegro mt-4 mb-4">
                             <span className="">
-                                {' '}
                                 <p className="p-description">
                                     Somos un Marketplace de servicios,
                                     promocionamos contratistas de adecuaciones y
@@ -51,7 +50,6 @@ const Page = (props) => {
                 <Row className="comunidadPropietariosRegistro m-0 d-flex flex-column">
                     <Col className="m-0" style={{ 'padding-left': '0px' }}>
                         <h2 className="textBlanco headline-xl">
-                            {' '}
                             COMUNIDAD PROPIETARIOS
                         </h2>
 
@@ -99,7 +97,7 @@ const Page = (props) => {
                         <Col className="col-12 m-4">
                             <Row className="w-100">
                                 <h3 className=".headline-l">
-                                    Planea con nosotros el proyecto{' '}
+                                    Planea con nosotros el proyecto
                                     <Button className="btn btn-round btn-high btn-green body-1">
                                         <Link href="/blog">Nuestro Blog</Link>
                                     </Button>
@@ -154,7 +152,7 @@ const Page = (props) => {
                                 <Row className="w-100">
                                     <Col>
                                         <h3 className=".headline-l">
-                                            Observa cambios{' '}
+                                            Observa cambios
                                             <Button className="btn btn-round btn-high btn-green body-1">
                                                 <Link href="/blog">
                                                     Proyectos <br />
@@ -172,7 +170,7 @@ const Page = (props) => {
                                 <Row className="w-100">
                                     <Col>
                                         <h3 className=".headline-l">
-                                            ¿Requieres de asesoria?{' '}
+                                            ¿Requieres de asesoria?
                                             <Button className="btn btn-round btn-high btn-green body-1">
                                                 <Link href="/asesorias">
                                                     Pregunta a un <br />
@@ -190,7 +188,7 @@ const Page = (props) => {
                                 <Row className="w-100">
                                     <Col>
                                         <h3 className=".headline-l">
-                                            Presupuestos{' '}
+                                            Presupuestos
                                             <Button className="btn btn-round btn-high btn-green body-1">
                                                 <Link href="/nuevo-proyecto">
                                                     Comenzar <br />
@@ -221,12 +219,10 @@ const Page = (props) => {
                         <ul className="body-1">
                             <li> - Verifica Adecuadamente La Identidad. </li>
                             <li>
-                                {' '}
                                 - Que el personal cuente con los elementos de
-                                protección personal requeridos.{' '}
+                                protección personal requeridos.
                             </li>
                             <li>
-                                {' '}
                                 - Recuerda verificar los certificados tecnicos y
                                 de afiliación propios de cada labor. <br />
                                 <strong>
@@ -235,9 +231,8 @@ const Page = (props) => {
                                 </strong>
                             </li>
                             <li>
-                                {' '}
                                 - Diligenciar y firmar debidamente el contrato
-                                de prestación de servicios.{' '}
+                                de prestación de servicios.
                             </li>
                             <li>
                                 - Las obras que afectan a terceros de la
@@ -246,22 +241,21 @@ const Page = (props) => {
                                 Sin embargo ten en cuenta que además es
                                 necesario un permiso de obra que concede la
                                 curaduria urbana, al presentar el proyecto
-                                firmado por un arquitecto.{' '}
+                                firmado por un arquitecto.
                             </li>
                             <li>
-                                {' '}
                                 - Cuando hallas elegido el profesional
                                 comerciante calificado para tu proyecto,
                                 descarga y utiliza el contrato de adquicisión,
                                 esto para resolver discrepancias concretas
-                                durante el desarrollo del servicio.{' '}
+                                durante el desarrollo del servicio.
                             </li>
                             <li>
                                 - Comun mente en el desarrolllo del servicio
                                 surgen imprevistos, estos no son posibles de
                                 planear al diseñar, reserva un 5% del
                                 presupuesto en caso de que alguna eventualidad
-                                se presente.{' '}
+                                se presente.
                             </li>
                             <li>
                                 - Expon claramente cualquier aspecto de la
@@ -270,7 +264,7 @@ const Page = (props) => {
                                 <strong>
                                     -- tiempos de permanencia, color, marca,
                                     tiempos de secado, etc --
-                                </strong>{' '}
+                                </strong>
                             </li>
                             <li>
                                 - Si el proyecto tiene un inpacto energetico y/o
@@ -278,7 +272,6 @@ const Page = (props) => {
                                 ofrece ayudas y subvenciones institucionales
                             </li>
                             <span className=".headline-l textVerde">
-                                {' '}
                                 - Se resuelve la encuesta de satisfacción del
                                 servicio
                             </span>

@@ -43,8 +43,7 @@ const Page = (props) => {
                 <Row className="asiTrabajamosVinculate m-0 w-100 d-flex justify-content-end">
                     <Col className="col d-flex center" lg={4} md={8} sm={12}>
                         <span className="headline-xl opacidadNegro p-4">
-                            {' '}
-                            PERFIL COMERCIANTE{' '}
+                            PERFIL COMERCIANTE
                         </span>
                         <div className="pt-4">
                             <Button className="btn btn-vinculate">
@@ -89,8 +88,7 @@ const Page = (props) => {
                             xs={12}
                         >
                             <span className="pt-4 p-0 mt-4 textBlanco certificacion-titulo headline-xl">
-                                {' '}
-                                CERTIFICACIÓN{' '}
+                                CERTIFICACIÓN
                             </span>
                         </Col>
                         <Col className="p-0 w-100 d-flex flex-column align-items-start">

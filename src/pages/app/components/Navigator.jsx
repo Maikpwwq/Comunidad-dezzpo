@@ -57,7 +57,7 @@ function Navigator(props) {
     // console.log("Navigator urlPath", activeUrl[1])
     const { ...other } = props
     const user = auth?.currentUser || {}
-    const isAuth = user? true : false
+    const isAuth = user ? true : false
     const userID = user?.uid || '' // Este es el id de la cuenta de Auth
     const userPhotoUrl = user?.photoURL || ''
     const userName = user?.displayName || ''
@@ -104,25 +104,33 @@ function Navigator(props) {
                           id: 'Portal de servicios',
                           icon: <HomeIcon />,
                           route: 'portal-servicios/',
-                          active: 'portal-servicios' === activeUrl[1] ? true : false,
+                          active:
+                              'portal-servicios' === activeUrl[1]
+                                  ? true
+                                  : false,
                       },
                       {
                           id: 'Directorio de Requerimientos',
                           icon: <HomeIcon />,
                           route: 'directorio-requerimientos/',
-                          active: 'directorio-requerimientos' === activeUrl[1] ? true : false,
+                          active:
+                              'directorio-requerimientos' === activeUrl[1]
+                                  ? true
+                                  : false,
                       },
                       {
                           id: 'Notificaciones',
                           icon: <NotificationsIcon />,
                           route: 'notificaciones',
-                          active: 'notificaciones' === activeUrl[1] ? true : false,
+                          active:
+                              'notificaciones' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Suscripciones',
                           icon: <TimerIcon />,
                           route: 'suscripciones',
-                          active: 'suscripciones' === activeUrl[1] ? true : false,
+                          active:
+                              'suscripciones' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Biblioteca',
@@ -134,7 +142,8 @@ function Navigator(props) {
                           id: 'Invitar a un Amigo',
                           icon: <PublicIcon />,
                           route: 'invitar-amigos',
-                          active: 'invitar-amigos' === activeUrl[1] ? true : false,
+                          active:
+                              'invitar-amigos' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Ajustes',
@@ -151,7 +160,10 @@ function Navigator(props) {
                           id: 'Privacidad',
                           icon: <SettingsIcon />,
                           route: 'configuracion-privacidad',
-                          active: 'configuracion-privacidad' === activeUrl[1] ? true : false,
+                          active:
+                              'configuracion-privacidad' === activeUrl[1]
+                                  ? true
+                                  : false,
                       },
                       {
                           id: 'Formas de Pago',
@@ -163,7 +175,8 @@ function Navigator(props) {
                           id: 'Cambiar Clave',
                           icon: <PhonelinkSetupIcon />,
                           route: 'cambiar-clave',
-                          active: 'cambiar-clave' === activeUrl[1] ? true : false,
+                          active:
+                              'cambiar-clave' === activeUrl[1] ? true : false,
                       },
                   ],
               },
@@ -176,27 +189,34 @@ function Navigator(props) {
                           id: 'Portal de servicios',
                           icon: <HomeIcon />,
                           route: 'portal-servicios',
-                          active: 'portal-servicios' === activeUrl[1] ? true : false,
+                          active:
+                              'portal-servicios' === activeUrl[1]
+                                  ? true
+                                  : false,
                       },
                       {
                           id: 'Directorio de Requerimientos',
                           icon: <HomeIcon />,
                           route: 'directorio-requerimientos',
-                          active: 'directorio-requerimientos' === activeUrl[1] ? true : false,
+                          active:
+                              'directorio-requerimientos' === activeUrl[1]
+                                  ? true
+                                  : false,
                       },
                       {
-                        id: 'Suscripciones',
-                        icon: <TimerIcon />,
-                        route: 'suscripciones',
-                        active: 'suscripciones' === activeUrl[1] ? true : false,
-                    },
+                          id: 'Suscripciones',
+                          icon: <TimerIcon />,
+                          route: 'suscripciones',
+                          active:
+                              'suscripciones' === activeUrl[1] ? true : false,
+                      },
                   ],
               },
           ]
 
     return (
         <Drawer open={true} variant="permanent" {...other}>
-            <List disablePadding >
+            <List disablePadding>
                 <ListItem
                     sx={{
                         ...item,
@@ -235,30 +255,33 @@ function Navigator(props) {
                             ({ id: childId, icon, route, active }) => {
                                 // const hrefRoute = route.split('/').splice(1, 1).toString
                                 // console.log('navRoute', route)
-                            return (
-                                <ListItem
-                                    disablePadding
-                                    button
-                                    // activeClassName="Mui-selected"
-                                    key={childId}
-                                    component={Link}
-                                    href={route}
-                                    exact
-                                >
-                                    <ListItemButton
-                                        className=""
-                                        selected={active}
-                                        sx={item}
+                                return (
+                                    <ListItem
+                                        disablePadding
+                                        button
+                                        // activeClassName="Mui-selected"
+                                        key={childId}
+                                        component={Link}
+                                        href={route}
+                                        exact
                                     >
-                                        <ListItemIcon
-                                            style={{ color: '#00b0ab' }} // #009999
+                                        <ListItemButton
+                                            className=""
+                                            selected={active}
+                                            sx={item}
                                         >
-                                            {icon}
-                                        </ListItemIcon>
-                                        <ListItemText>{childId}</ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-                            )}
+                                            <ListItemIcon
+                                                style={{ color: '#00b0ab' }} // #009999
+                                            >
+                                                {icon}
+                                            </ListItemIcon>
+                                            <ListItemText>
+                                                {childId}
+                                            </ListItemText>
+                                        </ListItemButton>
+                                    </ListItem>
+                                )
+                            }
                         )}
 
                         <Divider sx={{ mt: 2 }} />

@@ -1,6 +1,11 @@
 export { render }
 // See https://vite-plugin-ssr.com/data-fetching
-export const passToClient = ['pageProps', 'urlPathname', 'routeParams', 'redirectTo']
+export const passToClient = [
+    'pageProps',
+    'urlPathname',
+    'routeParams',
+    'redirectTo',
+]
 
 import { renderToString } from 'react-dom/server'
 import { PageShell } from './PageShell'
@@ -22,11 +27,11 @@ async function render(pageContext: PageContextServer) {
 
         if (redirectTo) {
             return {
-              pageContext: {
-                redirectTo
-              }
+                pageContext: {
+                    redirectTo,
+                },
             }
-          }
+        }
 
         const page = (
             <PageShell pageContext={pageContext}>

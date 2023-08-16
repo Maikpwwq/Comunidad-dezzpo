@@ -35,7 +35,7 @@ const Page = () => {
                             <p className="body-1">
                                 Al ejecutar un nuevo proyecto siempre edite e
                                 imprima prímero los documentos anexos, como lo
-                                son cotizaciones y contratos{' '}
+                                son cotizaciones y contratos.
                             </p>
                         </Row>
                         <Row className="w-100">
@@ -58,14 +58,14 @@ const Page = () => {
                                         <TableRow>
                                             <TableCell>
                                                 FORMATO DE REQUERIMIENTOS DEL
-                                                CLIENTE{' '}
+                                                CLIENTE
                                             </TableCell>
                                             <TableCell>Pdf</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>
                                                 FORMATO DE COTIZACIÓN DE
-                                                SERVICIOS{' '}
+                                                SERVICIOS
                                             </TableCell>
                                             <TableCell>Pdf</TableCell>
                                         </TableRow>
@@ -99,14 +99,14 @@ const Page = () => {
                                             <TableCell>
                                                 MANUAL DE PROCEDIMIENTOS DE
                                                 MANTENIMIENTO CORRECTIVO Y
-                                                PREVENTIVO{' '}
+                                                PREVENTIVO
                                             </TableCell>
                                             <TableCell>Pdf</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>
                                                 Reglamentaciones del Sistema de
-                                                salud y seguridad en el trabajo{' '}
+                                                salud y seguridad en el trabajo
                                             </TableCell>
                                             <TableCell>Pdf</TableCell>
                                         </TableRow>
@@ -129,8 +129,7 @@ const Page = () => {
                         <Row className="p-4" md={10}>
                             <span>
                                 <h2 className="headline-xl">
-                                    {' '}
-                                    Libreta de direcciones{' '}
+                                    Libreta de direcciones
                                 </h2>
                             </span>
                             <span>Tiendas</span>

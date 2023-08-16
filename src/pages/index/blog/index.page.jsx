@@ -25,8 +25,7 @@ const Page = (props) => {
             <Container fluid className="p-0">
                 <Row className="blogTitulo m-0 w-100">
                     <Col>
-                        {' '}
-                        <h2 className="headline-xl textBlanco">BLOG</h2>{' '}
+                        <h2 className="headline-xl textBlanco">BLOG</h2>
                     </Col>
                 </Row>
             </Container>
@@ -116,11 +115,10 @@ const Page = (props) => {
                                     <span> ACREDITADO </span>
                                 </Col>
                                 <Col>
-                                    {' '}
                                     <p className="body-1">
                                         Pasaron años antes de que me decidiera,
                                         ahora los problemas de humedad ya son
-                                        cosas del pasado{' '}
+                                        cosas del pasado
                                     </p>
                                 </Col>
                                 <Col>

@@ -144,7 +144,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                                     value={projectData.categoriaProfesional}
                                     onChange={handleChange}
                                 >
-                                    <option>seleccionar categoria</option>{' '}
+                                    <option>seleccionar categoria</option>
                                     {ListadoCategorias.map((categoria) => {
                                         const { label, key } = categoria
                                         return (

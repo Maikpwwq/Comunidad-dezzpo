@@ -18,14 +18,14 @@ import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-const Page = (props) => {
+const Page = () => {
     return (
         <>
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100">
                     <Col className="col-10 d-flex align-items-start justify-content-between">
                         <Row className="p-4" md={10}>
-                            <h2 className="headline-xl">Formas de Pago</h2>{' '}
+                            <h2 className="headline-xl">Formas de Pago</h2>
                             <FormControl fullWidth>
                                 <InputLabel forHtml="addMetodoPago">
                                     Adicionar metodo
@@ -55,7 +55,7 @@ const Page = (props) => {
                         </Row>
                         <Row className="p-4" md={10}>
                             <span>
-                                <h2 className="headline-xl">Tickets de pago</h2>{' '}
+                                <h2 className="headline-xl">Tickets de pago</h2>
                             </span>
                             <Col className="col-10 p-4">
                                 <Table>

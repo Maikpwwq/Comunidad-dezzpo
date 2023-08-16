@@ -27,7 +27,6 @@ const FirebaseMethods = () => {
     //     _storage,
     //     'gs://app-comunidad-dezzpo.appspot.com/'
     // )
-
     // const addFirestore = async (updateInfo, userID) => {
     //     await addDoc(doc(usersRef, userID), updateInfo)
     // }
@@ -43,7 +42,6 @@ const FirebaseMethods = () => {
     // const fromFirestore = async (userID) => {
     //     await getDoc(doc(usersRef, userID))
     // }
-
     // const saveChanges = (profile) => {
     //     updateProfile(user, profile)
     //         .then((result) => {

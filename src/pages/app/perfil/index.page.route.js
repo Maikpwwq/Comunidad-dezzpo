@@ -17,11 +17,11 @@ export default (pageContext) => {
     // }
 
     const id = pageContext.urlPathname.split('/')[3]
-    console.log( 'routeParams', id)
+    console.log('routeParams', id)
 
     return {
-      precedence: 99,
-      // Make `id` available as pageContext.routeParams.id
-      routeParams: { id }
+        precedence: 99,
+        // Make `id` available as pageContext.routeParams.id
+        routeParams: { id },
     }
-  }
+}

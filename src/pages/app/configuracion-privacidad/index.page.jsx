@@ -14,7 +14,7 @@ import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-const Page = (props) => {
+const Page = () => {
     return (
         <>
             <Container fluid className="p-0 h-100">
@@ -37,7 +37,7 @@ const Page = (props) => {
                                         <TableRow>
                                             <TableCell>
                                                 Quien puede ver las
-                                                publicaciones de tu perfil{' '}
+                                                publicaciones de tu perfil
                                             </TableCell>
                                             <TableCell>Publico</TableCell>
                                             <TableCell>
@@ -47,7 +47,7 @@ const Page = (props) => {
                                         <TableRow>
                                             <TableCell>
                                                 Quien puede responder a tus
-                                                solicitudes{' '}
+                                                solicitudes
                                             </TableCell>
                                             <TableCell>Publico</TableCell>
                                             <TableCell>
@@ -57,7 +57,7 @@ const Page = (props) => {
                                         <TableRow>
                                             <TableCell>
                                                 Quien puede ver tu lista de
-                                                amigos{' '}
+                                                amigos
                                             </TableCell>
                                             <TableCell>Publico</TableCell>
                                             <TableCell>
@@ -68,7 +68,7 @@ const Page = (props) => {
                                             <TableCell>
                                                 Quien puede buscarte con el
                                                 numero de telefono que
-                                                proporcionaste{' '}
+                                                proporcionaste
                                             </TableCell>
                                             <TableCell>Publico</TableCell>
                                             <TableCell>
@@ -79,7 +79,7 @@ const Page = (props) => {
                                             <TableCell>
                                                 Quien puede buscarte con el
                                                 correo elecTableRowonico que
-                                                proporcionaste{' '}
+                                                proporcionaste
                                             </TableCell>
                                             <TableCell>Publico</TableCell>
                                             <TableCell>

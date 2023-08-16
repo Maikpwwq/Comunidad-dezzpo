@@ -7,11 +7,11 @@
 import express from 'express'
 import compression from 'compression'
 import { renderPage } from 'vite-plugin-ssr/server'
-
 import { root } from './root.js'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
+Error.stackTraceLimit = Infinity
 
 startServer()
 
@@ -25,7 +25,7 @@ async function startServer() {
         // In production, we need to serve our static assets ourselves.
         // (In dev, Vite's middleware serves our static assets.)
         // const sirv = require('sirv')
-        const sirv =  (await import('sirv')).default
+        const sirv = (await import('sirv')).default
         app.use(sirv(`${root}/dist/client`))
     } else {
         // We instantiate Vite's development server and integrate its middleware to our server.
@@ -55,12 +55,13 @@ async function startServer() {
         const pageContext = await renderPage(pageContextInit)
         const { httpResponse } = pageContext
         if (!httpResponse) return next()
-        const { body, statusCode, contentType, earlyHints } = httpResponse // ,headers ("Content-Type", contentType);
+        const { body, statusCode, earlyHints, headers } = httpResponse // replace ("Content-Type", contentType); deprecated by headers
         if (res.writeEarlyHints)
             res.writeEarlyHints({
                 link: earlyHints.map((e) => e.earlyHintLink),
             })
-        res.status(statusCode).type(contentType).send(body)
+        headers.forEach(([name, value]) => res.setHeader(name, value))
+        res.status(statusCode).send(body)
     })
 
     const port = process.env.PORT || 3000

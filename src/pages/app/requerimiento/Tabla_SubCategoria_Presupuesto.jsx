@@ -16,9 +16,8 @@ const TablaSubCategoriaPresupuesto = (props) => {
     return (
         <>
             <Col className="ms-4 p-4">
-                {' '}
                 <p className="p-description">
-                    Compara precios de los mejores profesionales calificados{' '}
+                    Compara precios de los mejores profesionales calificados
                 </p>
                 <Table
                     sx={{
@@ -38,55 +37,51 @@ const TablaSubCategoriaPresupuesto = (props) => {
                     </TableHead>
                     <TableBody>
                         {requerimientoCategorias.length > 0 &&
-                            requerimientoCategorias.map(
-                                (selection) => {
-                                    const {
-                                        subCategoria,
-                                        subCategoriaCantidad,
-                                        subCategoriaDescription,
-                                        // subCategoriaPhotoUrl,
-                                        subCategoriaCantidades,
-                                        subCategoriaPrecioFinal,
-                                        subCategoriaPrecio,
-                                    } = selection
-                                    return (
-                                        <TableRow key={subCategoria}>
-                                            {console.log(
-                                                'this load changes',
-                                                requerimientoCategorias
-                                            )}
-                                            <TableCell>
-                                                {subCategoria}
-                                            </TableCell>
-                                            <TableCell>
-                                                {subCategoriaCantidad}
-                                            </TableCell>
-                                            <TableCell>
-                                                {subCategoriaDescription}
-                                            </TableCell>
-                                            <TableCell>
-                                                {parseInt(
-                                                    subCategoriaPrecio
-                                                ).toLocaleString('es-CO', {
-                                                    style: 'currency',
-                                                    currency: 'COP',
-                                                })}
-                                            </TableCell>
-                                            <TableCell>
-                                                {subCategoriaCantidades}
-                                            </TableCell>
-                                            <TableCell>
-                                                {parseInt(
-                                                    subCategoriaPrecioFinal
-                                                ).toLocaleString('es-CO', {
-                                                    style: 'currency',
-                                                    currency: 'COP',
-                                                })}
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                }
-                            )}
+                            requerimientoCategorias.map((selection) => {
+                                const {
+                                    subCategoria,
+                                    subCategoriaCantidad,
+                                    subCategoriaDescription,
+                                    // subCategoriaPhotoUrl,
+                                    subCategoriaCantidades,
+                                    subCategoriaPrecioFinal,
+                                    subCategoriaPrecio,
+                                } = selection
+                                return (
+                                    <TableRow key={subCategoria}>
+                                        {console.log(
+                                            'this load changes',
+                                            requerimientoCategorias
+                                        )}
+                                        <TableCell>{subCategoria}</TableCell>
+                                        <TableCell>
+                                            {subCategoriaCantidad}
+                                        </TableCell>
+                                        <TableCell>
+                                            {subCategoriaDescription}
+                                        </TableCell>
+                                        <TableCell>
+                                            {parseInt(
+                                                subCategoriaPrecio
+                                            ).toLocaleString('es-CO', {
+                                                style: 'currency',
+                                                currency: 'COP',
+                                            })}
+                                        </TableCell>
+                                        <TableCell>
+                                            {subCategoriaCantidades}
+                                        </TableCell>
+                                        <TableCell>
+                                            {parseInt(
+                                                subCategoriaPrecioFinal
+                                            ).toLocaleString('es-CO', {
+                                                style: 'currency',
+                                                currency: 'COP',
+                                            })}
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            })}
                         <TableRow>
                             <TableCell></TableCell>
                             <TableCell></TableCell>

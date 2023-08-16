@@ -4,7 +4,7 @@ export { Page }
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { sharingInformationService } from '#@/services/sharing-information'
-import { formatDistance, parse } from 'date-fns'// format, , subDays, parseISO
+import { formatDistance, parse } from 'date-fns' // format, , subDays, parseISO
 import { es } from 'date-fns/locale'
 import readUserFromFirestore from '#@/services/readUserFromFirestore.service'
 import { auth } from '#@/firebase/firebaseClient'
@@ -14,7 +14,7 @@ import '#@/assets/cssPrivateApp/perfil.css'
 // import Bogota from '#@/assets/img/Bogota.png'
 import { MapaPerfil } from './MapaPerfil'
 import { CincoEstrellas } from './CincoEstrellas'
-import { Component as Comentarios } from '#@/pages/app/components/Comentarios'
+import { Comentarios } from '#@/pages/app/components/Comentarios'
 import { ChipsCategories } from '#@/pages/app/components/ChipsCategories'
 import { ListadoCategorias } from '#@/pages/index/components/ListadoCategorias'
 import { AdjuntarArchivos } from '#@/pages/app/components/AdjuntarArchivos'
@@ -41,10 +41,10 @@ const Page = () => {
     // const urlPath = pageContext.urlPathname
     console.log('Perfil user', pageContext.pageProps)
     // const user = auth?.currentUser
-    const userAuthID = userAuth? userAuth.uid : '' // Este es el id de la cuenta de Auth
-    const userAuthName = userAuth? userAuth.displayName : '' // Este es el id de la cuenta de Auth
-    const [isLoaded, setIsLoaded] =  useState(false)
-   
+    const userAuthID = userAuth ? userAuth.uid : '' // Este es el id de la cuenta de Auth
+    const userAuthName = userAuth ? userAuth.displayName : '' // Este es el id de la cuenta de Auth
+    const [isLoaded, setIsLoaded] = useState(false)
+
     let id = pageContext.routeParams.id
     console.log('routeParamsPerfil', id)
 
@@ -112,26 +112,21 @@ const Page = () => {
 
     const determineDistanceTime = (metadata) => {
         const creationTime = metadata.creationTime
-                        //console.log(creationTime)
-                        const formatedTime = parse(
-                            creationTime,
-                            'dd-MM-yyyy',
-                            new Date()
-                        )
-                        // const formatedTime = parseISO(creationTime)
-                        // const formatedTime = new Date(creationTime)
-                        //console.log(creationTime, formatedTime)
-                        const distanceTime = formatDistance(
-                            formatedTime,
-                            new Date(),
-                            { addSuffix: true },
-                            { locale: es }
-                        )
-                        return distanceTime
+        //console.log(creationTime)
+        const formatedTime = parse(creationTime, 'dd-MM-yyyy', new Date())
+        // const formatedTime = parseISO(creationTime)
+        // const formatedTime = new Date(creationTime)
+        //console.log(creationTime, formatedTime)
+        const distanceTime = formatDistance(
+            formatedTime,
+            new Date(),
+            { addSuffix: true },
+            { locale: es }
+        )
+        return distanceTime
     }
 
     const LoadAuthData = (userAuth) => {
-
         const {
             uid,
             email,
@@ -182,7 +177,7 @@ const Page = () => {
         // console.log('Detail load:', data)
         let chipsInfo = []
         if (userCategories) {
-            const chipsCategories = (userCategories) =>{
+            const chipsCategories = (userCategories) => {
                 const chipsInfo = []
                 userCategories.forEach((chip) => {
                     // console.log(chip)
@@ -194,33 +189,21 @@ const Page = () => {
                 })
                 return chipsInfo
             }
-        
+
             chipsInfo = chipsCategories(userCategories)
         }
         setUserInfo({
             ...userInfo,
-            userChannelUrl: userChannelUrl
-                ? userChannelUrl
-                : '',
-            userPhone: userPhone ? userPhone
-            : '',
-            userPhotoUrl: userPhotoUrl ? userPhotoUrl
-            : '',
-            userId: userId ? userId
-            : '',
-            userMail: userMail ? userMail
-            : '',
-            userName: userName ? userName
-            : '',
+            userChannelUrl: userChannelUrl ? userChannelUrl : '',
+            userPhone: userPhone ? userPhone : '',
+            userPhotoUrl: userPhotoUrl ? userPhotoUrl : '',
+            userId: userId ? userId : '',
+            userMail: userMail ? userMail : '',
+            userName: userName ? userName : '',
             userGalleryUrl: userGalleryUrl || [],
-            userJoined: userJoined ? userJoined
-            : '',
-            userProfession: userProfession
-                ? userProfession
-                : '',
-            userExperience: userExperience
-                ? userExperience
-                : '',
+            userJoined: userJoined ? userJoined : '',
+            userProfession: userProfession ? userProfession : '',
+            userExperience: userExperience ? userExperience : '',
             // userCategorie: userCategorie
             //     ? userCategorie
             //     : '',
@@ -230,43 +213,32 @@ const Page = () => {
             // userCategories: userCategories
             //     ? userCategories
             //     : '',
-            userCategoriesChips:
-                chipsInfo, // .length > 0 ? chipsInfo : []
+            userCategoriesChips: chipsInfo, // .length > 0 ? chipsInfo : []
             userGrade: userGrade ? userGrade : '',
             userDirection: userDirection ? userDirection : '',
             userCiudad: userCiudad ? userCiudad : '',
-            userCodigoPostal: userCodigoPostal
-                ? userCodigoPostal
-                : '',
-            userRazonSocial: userRazonSocial
-                ? userRazonSocial
-                : '',
-            userIdentification: userIdentification
-                ? userIdentification
-                : '',
-            userDescription: userDescription
-                ? userDescription
-                : '',
+            userCodigoPostal: userCodigoPostal ? userCodigoPostal : '',
+            userRazonSocial: userRazonSocial ? userRazonSocial : '',
+            userIdentification: userIdentification ? userIdentification : '',
+            userDescription: userDescription ? userDescription : '',
         })
         // chipsInfoAdapter(userCategories)
-
     }
 
     useEffect(() => {
         // console.log(userRol, state)
         if (!isLoaded) {
-            if (!isNaN(userRol.rol) &&
-            userRol.rol !== '') {
+            if (!isNaN(userRol.rol) && userRol.rol !== '') {
                 userData()
                 const productData = sharingInformationService.getSubject()
                 productData.subscribe((data) => {
                     if (data) {
                         console.log('perfilPage', data)
                         const { currentUser, authUser } = data
-                        if (currentUser){
+                        if (currentUser) {
                             LoadCurrentData(currentUser)
                             setIsLoaded(true)
-                        } else if (authUser){ 
+                        } else if (authUser) {
                             LoadAuthData(authUser)
                             setIsLoaded(true)
                         }

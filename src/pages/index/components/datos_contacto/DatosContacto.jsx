@@ -13,10 +13,7 @@ const DatosContacto = () => {
         <>
             <Col className="p-4 pb-0">
                 <Col className="datosContacto pt-0">
-                    <h2 className="headline-l textBlanco">
-                        {' '}
-                        Ponte en Contacto{' '}
-                    </h2>
+                    <h2 className="headline-l textBlanco">Ponte en Contacto</h2>
                     <ul className="listaContacto pt-3 w-100 align-items-end">
                         <Row className="border-top m-0 w-100 d-flex">
                             <IcoMoon
@@ -30,8 +27,7 @@ const DatosContacto = () => {
                             />
                             <Col className="m-0 p-0 body-1 align-items-end pt-2 pb-2">
                                 <li>
-                                    {' '}
-                                    +57{' '}
+                                    +57
                                     <a
                                         className="chat-with-us body-1"
                                         href="https://api.whatsapp.com/send?phone=573196138057"
@@ -39,8 +35,8 @@ const DatosContacto = () => {
                                         rel="noopener noreferrer"
                                     >
                                         3196138057
-                                    </a>{' '}
-                                    - Office{' '}
+                                    </a>
+                                    - Office
                                 </li>
                                 {/* <li> +57 3196138057 - PBX </li> */}
                             </Col>
@@ -77,8 +73,7 @@ const DatosContacto = () => {
                                         href="mailto:comunidad.dezzpo@gmail.com"
                                         title="Correo Comunidad Dezzpo"
                                     >
-                                        {' '}
-                                        comunidad.dezzpo@gmail.com{' '}
+                                        comunidad.dezzpo@gmail.com
                                     </a>
                                 </li>
                             </Col>

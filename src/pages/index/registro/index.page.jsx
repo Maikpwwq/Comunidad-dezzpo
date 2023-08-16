@@ -334,7 +334,7 @@ const Page = (props) => {
                                             </ToggleButtonGroup>
                                             <p className="body-1 pt-2">
                                                 {/* Bienvenido a todos los beneficios de
-                                            dezzpo.{' '} */}
+                                            dezzpo. */}
                                                 <Link
                                                     className="body-2 btn-TEXT textVerde2"
                                                     href="/ingreso/"

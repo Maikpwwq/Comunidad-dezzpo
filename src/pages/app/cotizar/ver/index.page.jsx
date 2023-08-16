@@ -92,7 +92,7 @@ const Page = () => {
                         </Typography>
                     </Row>
                     <Typography variant="h6" className="p-description w-auto">
-                        Descripción del servicio:{' '}
+                        Descripción del servicio:
                     </Typography>
                     <Typography
                         variant="body1"
@@ -105,7 +105,7 @@ const Page = () => {
                         variant="h6"
                         className="p-description w-auto mt-3"
                     >
-                        Alcance del servicio:{' '}
+                        Alcance del servicio:
                     </Typography>
                     <Typography
                         variant="body1"
@@ -118,7 +118,7 @@ const Page = () => {
                         variant="h6"
                         className="p-description w-auto mt-3"
                     >
-                        Procedimiento a desarrollar:{' '}
+                        Procedimiento a desarrollar:
                     </Typography>
                     <Typography
                         variant="body1"
@@ -243,7 +243,7 @@ const Page = () => {
                         </Table>
                     </Row>
                     <Typography variant="h6" className="p-description w-auto">
-                        Tiempo Ejecución:{' '}
+                        Tiempo Ejecución:
                     </Typography>
                     <Typography
                         variant="body1"
@@ -257,7 +257,7 @@ const Page = () => {
                         variant="h6"
                         className="p-description w-auto mt-3"
                     >
-                        Condiciones de Negociación:{' '}
+                        Condiciones de Negociación:
                     </Typography>
                     <Typography
                         variant="body1"
@@ -271,7 +271,7 @@ const Page = () => {
                         variant="h6"
                         className="p-description w-auto mt-3"
                     >
-                        Garantía:{' '}
+                        Garantía:
                     </Typography>
                     <Typography
                         variant="body1"

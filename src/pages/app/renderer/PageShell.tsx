@@ -15,7 +15,13 @@ import '#R/index.scss'
 //     children: childrenPropType,
 // }
 
-function PageShell({ children, pageContext }: { children: React.ReactNode; pageContext: PageContext }) {
+function PageShell({
+    children,
+    pageContext,
+}: {
+    children: React.ReactNode
+    pageContext: PageContext
+}) {
     // const Layout = LayoutPaperbase || pageContext.exports.Layout
 
     return (

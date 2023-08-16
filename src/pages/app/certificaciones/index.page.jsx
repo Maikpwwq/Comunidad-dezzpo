@@ -43,10 +43,9 @@ const Page = () => {
                                 aumentan las posibilidades laborales, al
                                 permitir brindar mayor confianza a los
                                 propietarios, y acceder facilmente a proyectos
-                                de mayor complejidad{' '}
+                                de mayor complejidad
                             </p>
                             <span>
-                                {' '}
                                 <h4 className="headline-m">
                                     ¿Listo para solicitar una? Programa una
                                     visita

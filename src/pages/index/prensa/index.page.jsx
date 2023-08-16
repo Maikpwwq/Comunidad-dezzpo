@@ -17,10 +17,9 @@ const Page = (props) => {
                 <Row className="pageContainer">
                     <Col className="prensaMensaje">
                         <span className="tituloDocumento">
-                            {' '}
                             <h3 className="headline-l">
                                 Consulta por titulo de documento
-                            </h3>{' '}
+                            </h3>
                         </span>
                         <ul className="body-2">
                             <li>Estudios</li>

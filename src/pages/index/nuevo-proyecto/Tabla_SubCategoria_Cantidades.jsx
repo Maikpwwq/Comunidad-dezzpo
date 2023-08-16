@@ -59,9 +59,8 @@ const TablaSubCategoriaCantidades = (props) => {
     return (
         <>
             <Col className="w-100">
-                {' '}
                 <p className="p-description">
-                    Compara precios de los mejores profesionales calificados{' '}
+                    Compara precios de los mejores profesionales calificados
                 </p>
                 {/* TODO: on small view, show table display:grid, and make ms-0 ps-2  */}
                 <Table

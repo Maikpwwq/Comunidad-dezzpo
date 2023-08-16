@@ -69,8 +69,8 @@ const MenuComunidad = (props) => {
                                 to="/app/apendice-costos"
                                 className="botonNavLink body-2"
                             >
-                                {' '}
-                                Apendice Costos{' '}
+                                
+                                Apendice Costos
                             </NavLink> */}
 
                                 <NavLink
@@ -90,8 +90,8 @@ const MenuComunidad = (props) => {
                                         to="/"
                                         className="activo body-2"
                                     >
-                                        {' '}
-                                        Home{' '}
+                                        
+                                        Home
                                     </NavLink>
                                 </li> */}
                             {/* seleccion asi trabajamos*/}
@@ -109,8 +109,7 @@ const MenuComunidad = (props) => {
                                         to="/profesionales-servicios"
                                         className="p-2 pb-0"
                                     >
-                                        {' '}
-                                        Profesionales y servicios{' '}
+                                        Profesionales y servicios
                                     </NavLink>
                                     <NavLink
                                         to="/asesorias"
@@ -191,7 +190,7 @@ const MenuComunidad = (props) => {
                                     to="/comunidad-comerciantes"
                                     className="botonNavLink body-2"
                                 >
-                                    Comunidad de comerciantes{' '}
+                                    Comunidad de comerciantes
                                     <ArrowDropDownIcon />
                                 </NavLink>
                                 <div className="dropdownContenidos body-1 p-0">
@@ -214,8 +213,7 @@ const MenuComunidad = (props) => {
                                         to="/profesionales-servicios"
                                         className="p-2 pb-0"
                                     >
-                                        {' '}
-                                        Profesionales y servicios{' '}
+                                        Profesionales y servicios
                                     </NavLink>
                                     <NavLink
                                         to="/contactenos"
@@ -263,8 +261,7 @@ const MenuComunidad = (props) => {
                                         to="/profesionales-servicios"
                                         className="p-2 pb-0"
                                     >
-                                        {' '}
-                                        Profesionales y servicios{' '}
+                                        Profesionales y servicios
                                     </NavLink>
                                     <NavLink
                                         to="/contactenos"
@@ -287,39 +284,36 @@ const MenuComunidad = (props) => {
                                 to="/presupuestos"
                                 className="botonNavLink body-2"
                             >
-                                {' '}
-                                Presupuestos{' '}
+                                Presupuestos
                             </NavLink>
                             {/* <li className="botonSeccion">
                                     <NavLink
                                         to="/profesionales-servicios"
                                         className="botonNavLink body-2"
                                     >
-                                        {' '}
-                                        Profesionales y servicios{' '}
+                                        
+                                        Profesionales y servicios
                                     </NavLink>
                                 </li> */}
                             <NavLink
                                 to="/asesorias"
                                 className="botonNavLink body-2"
                             >
-                                {' '}
-                                Asesorias{' '}
+                                Asesorias
                             </NavLink>
                             <NavLink
                                 to="/apendice-costos"
                                 className="botonNavLink body-2"
                             >
-                                {' '}
-                                Apendice de costos{' '}
+                                Apendice de costos
                             </NavLink>
                             {/* <li className="botonSeccion">
                                     <NavLink
                                         to="/ingreso"
                                         className="botonNavLink body-2"
                                     >
-                                        {' '}
-                                        Ingresar{' '}
+                                        
+                                        Ingresar
                                     </NavLink>
                                 </li> */}
                         </ul>

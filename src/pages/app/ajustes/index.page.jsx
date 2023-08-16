@@ -6,7 +6,7 @@ import { auth } from '#@/firebase/firebaseClient'
 import { formatDistance, parse } from 'date-fns' // parseISO, format, subDays
 import { es } from 'date-fns/locale'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
-import { Service as newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
+import { newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 import readUserFromFirestore from '#@/services/readUserFromFirestore.service'
 import updateUserToFirestore from '#@/services/updateUserToFirestore.service'
@@ -84,7 +84,7 @@ const Page = () => {
     const userData = () => {
         const firestoreUserID = userAuthID
         const userSelectedRol = userRol.rol
-        console.log("readUserFromFirestore", firestoreUserID, userSelectedRol)
+        console.log('readUserFromFirestore', firestoreUserID, userSelectedRol)
         readUserFromFirestore({
             firestoreUserID,
             userSelectedRol,
@@ -93,26 +93,21 @@ const Page = () => {
 
     const determineDistanceTime = (metadata) => {
         const creationTime = metadata.creationTime
-                        //console.log(creationTime)
-                        const formatedTime = parse(
-                            creationTime,
-                            'dd-MM-yyyy',
-                            new Date()
-                        )
-                        // const formatedTime = parseISO(creationTime)
-                        // const formatedTime = new Date(creationTime)
-                        //console.log(creationTime, formatedTime)
-                        const distanceTime = formatDistance(
-                            formatedTime,
-                            new Date(),
-                            { addSuffix: true },
-                            { locale: es }
-                        )
-                        return distanceTime
+        //console.log(creationTime)
+        const formatedTime = parse(creationTime, 'dd-MM-yyyy', new Date())
+        // const formatedTime = parseISO(creationTime)
+        // const formatedTime = new Date(creationTime)
+        //console.log(creationTime, formatedTime)
+        const distanceTime = formatDistance(
+            formatedTime,
+            new Date(),
+            { addSuffix: true },
+            { locale: es }
+        )
+        return distanceTime
     }
 
     const LoadAuthData = () => {
-
         const {
             uid,
             email,
@@ -137,8 +132,7 @@ const Page = () => {
     }
 
     useEffect(() => {
-        if (!isNaN(userRol.rol) &&
-            userRol.rol !== '') {
+        if (!isNaN(userRol.rol) && userRol.rol !== '') {
             // Load and expose user data from firestore
             userData()
             const userInformation = sharingInformationService.getSubject()
@@ -216,18 +210,15 @@ const Page = () => {
                         userRazonSocial: userRazonSocial || '',
                         userIdentification: userIdentification || '',
                         userDescription: userDescription || '',
-                    })                
+                    })
                 } else {
                     console.log(
                         'No se encontro información relacionada con este usuario!'
                     )
                 }
             })
-            if (
-                userAuth !== null &&
-                userAuth !== undefined
-            ) {
-                console.log("authUser", userAuth )
+            if (userAuth !== null && userAuth !== undefined) {
+                console.log('authUser', userAuth)
                 LoadAuthData(userAuth)
             }
         }

@@ -242,7 +242,7 @@ const Page = () => {
                                         name="requerimientoTitulo"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Titulo:{' '}
+                                        Titulo:
                                         {requerimientoInfo.requerimientoTitulo}
                                     </Typography>
                                     <Typography
@@ -250,7 +250,7 @@ const Page = () => {
                                         name="requerimientoCategoria"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Categoria:{' '}
+                                        Categoria:
                                         {
                                             requerimientoInfo.requerimientoCategoria
                                         }
@@ -260,7 +260,7 @@ const Page = () => {
                                         name="requerimientoTipoProyecto"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Tipo Proyecto:{' '}
+                                        Tipo Proyecto:
                                         {
                                             requerimientoInfo.requerimientoTipoProyecto
                                         }
@@ -270,7 +270,7 @@ const Page = () => {
                                         name="requerimientoDescripcion"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Descripción:{' '}
+                                        Descripción:
                                         {
                                             requerimientoInfo.requerimientoDescripcion
                                         }
@@ -280,7 +280,7 @@ const Page = () => {
                                         name="requerimientoPropietario"
                                         className="w-100 detail-pill ps-3"
                                     >
-                                        Propietario:{' '}
+                                        Propietario:
                                         {
                                             requerimientoInfo.requerimientoPropietario
                                         }
@@ -300,7 +300,7 @@ const Page = () => {
                                         name="requerimientoCiudad"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Ciudad:{' '}
+                                        Ciudad:
                                         {requerimientoInfo.requerimientoCiudad}
                                     </Typography>
                                     <Typography
@@ -308,7 +308,7 @@ const Page = () => {
                                         name="requerimientoDireccion"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Dirección:{' '}
+                                        Dirección:
                                         {
                                             requerimientoInfo.requerimientoDireccion
                                         }
@@ -318,7 +318,7 @@ const Page = () => {
                                         name="requerimientoCodigoPostal"
                                         className="w-100 detail-pill ps-3"
                                     >
-                                        Codigo Postal:{' '}
+                                        Codigo Postal:
                                         {
                                             requerimientoInfo.requerimientoCodigoPostal
                                         }
@@ -340,7 +340,7 @@ const Page = () => {
                                         name="requerimientoCreated"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        FECHA DE PUBLICACIÓN:{' '}
+                                        FECHA DE PUBLICACIÓN:
                                         {requerimientoInfo.requerimientoCreated}
                                     </Typography>
                                     <Typography
@@ -348,7 +348,7 @@ const Page = () => {
                                         name="requerimientoPrioridad"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Prioridad:{' '}
+                                        Prioridad:
                                         {
                                             requerimientoInfo.requerimientoPrioridad
                                         }
@@ -358,7 +358,7 @@ const Page = () => {
                                         name="requerimientoMejorFecha"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Calendario asignado:{' '}
+                                        Calendario asignado:
                                         {
                                             requerimientoInfo.requerimientoMejorFecha
                                         }
@@ -368,7 +368,7 @@ const Page = () => {
                                         name="requerimientoMejorHora"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Disponibilidad de horario:{' '}
+                                        Disponibilidad de horario:
                                         {
                                             requerimientoInfo.requerimientoMejorHora
                                         }
@@ -388,7 +388,7 @@ const Page = () => {
                                         name="requerimientoTipoPropiedad"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Tipo propiedad:{' '}
+                                        Tipo propiedad:
                                         {
                                             requerimientoInfo.requerimientoTipoPropiedad
                                         }
@@ -398,7 +398,7 @@ const Page = () => {
                                         name="requerimientoCantidadObra"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Cantidad Obra:{' '}
+                                        Cantidad Obra:
                                         {
                                             requerimientoInfo.requerimientoCantidadObra
                                         }
@@ -408,7 +408,7 @@ const Page = () => {
                                         name="requerimientoPlanos"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
-                                        Planos:{' '}
+                                        Planos:
                                         {requerimientoInfo.requerimientoPlanos}
                                     </Typography>
                                     <Typography
@@ -416,7 +416,7 @@ const Page = () => {
                                         name="requerimientoPermisos"
                                         className="w-100 detail-pill ps-3"
                                     >
-                                        Permisos:{' '}
+                                        Permisos:
                                         {
                                             requerimientoInfo.requerimientoPermisos
                                         }
@@ -427,7 +427,7 @@ const Page = () => {
                                         variant="h6"
                                         className="p-description w-100 p-1"
                                     >
-                                        Archivos adjuntos{' '}
+                                        Archivos adjuntos
                                     </Typography>
                                     <Button
                                         className="btn btn-round btn-high"
@@ -449,7 +449,7 @@ const Page = () => {
                         <Row>
                             <Col>
                                 <p className="headline-l">
-                                    COTIZACIONES{' '}
+                                    COTIZACIONES
                                     {requerimientoInfo.requerimientoAplicaciones
                                         .length < 4 && (
                                         <Button
@@ -497,7 +497,6 @@ const Page = () => {
                                                         <TableRow
                                                             key={quotationId}
                                                         >
-                                                            {' '}
                                                             <TableCell>
                                                                 {proponentId}
                                                             </TableCell>
@@ -560,7 +559,7 @@ const Page = () => {
                                                                 ) : (
                                                                     <></>
                                                                 )}
-                                                            </TableCell>{' '}
+                                                            </TableCell>
                                                         </TableRow>
                                                     )
                                                 }
