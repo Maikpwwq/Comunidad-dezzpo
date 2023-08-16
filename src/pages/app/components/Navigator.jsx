@@ -263,7 +263,7 @@ function Navigator(props) {
                                         key={childId}
                                         component={Link}
                                         href={route}
-                                        exact
+                                        // exact
                                     >
                                         <ListItemButton
                                             className=""

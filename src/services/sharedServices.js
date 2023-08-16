@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs'
-import readUserFromFirestore from './readUserFromFirestore'
+import { readUserFromFirestore } from './readUserFromFirestore.service'
 
 const getUser = new Observable((subscriber) => {
     const response = readUserFromFirestore()

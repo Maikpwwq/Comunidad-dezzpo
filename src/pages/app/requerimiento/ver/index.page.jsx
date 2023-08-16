@@ -6,8 +6,8 @@ import { firestore, auth } from '#@/firebase/firebaseClient'
 import { collection, doc, getDocFromServer } from 'firebase/firestore'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
-import readDraftFromFirestore from '#@/services/readDraftFromFirestore.service'
-import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.service'
+import { readDraftFromFirestore } from '#@/services/readDraftFromFirestore.service'
+import { readQuotationFromFirestore } from '#@/services/readQuotationFromFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
 import '../detalle_requerimiento.css'

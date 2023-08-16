@@ -6,9 +6,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { auth } from '#@/firebase/firebaseClient'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
-import updateDraftToFirestore from '#@/services/updateDraftToFirestore.service'
-import updateQuotationToFirestore from '#@/services/updateQuotationToFirestore.service'
-import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.service'
+import { updateDraftToFirestore } from '#@/services/updateDraftToFirestore.service'
+import { updateQuotationToFirestore } from '#@/services/updateQuotationToFirestore.service'
+import { readQuotationFromFirestore } from '#@/services/readQuotationFromFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
 // import { Row, Col, Container } from 'react-bootstrap'

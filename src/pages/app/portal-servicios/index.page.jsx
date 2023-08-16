@@ -7,8 +7,8 @@ import { firestore } from '#@/firebase/firebaseClient' // storage,
 import { collection } from 'firebase/firestore'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
-import doSearchFromFirestore from '#@/services/doSearchFromFirestore.service'
-import readUsersFromFirestore from '#@/services/readUsersFromFirestore.service'
+import { doSearchFromFirestore } from '#@/services/doSearchFromFirestore.service'
+import { readUsersFromFirestore } from '#@/services/readUsersFromFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
 // import { ref, getDownloadURL } from 'firebase/storage'

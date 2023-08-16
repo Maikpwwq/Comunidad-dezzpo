@@ -10,7 +10,7 @@ import withSendBird from '@sendbird/uikit-react/withSendbird'
 
 export { newOpenChannelSendbird }
 
-async function newOpenChannelSendbird(props) {
+const newOpenChannelSendbird = async(props) => {
     console.log('crearCanal props', props)
     // const globalStore = useSendbirdStateContext()
     // const sbSdk = sendbirdSelectors.getSdk(globalStore)

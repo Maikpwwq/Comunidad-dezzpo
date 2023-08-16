@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 
 import { sharingInformationService } from '#@/services/sharing-information'
 
+export { readUserFromFirestore }
+
 const readUserFromFirestore = (props) => {
     const _firestore = firestore
     const { firestoreUserID, userSelectedRol } = props
@@ -46,4 +48,3 @@ readUserFromFirestore.propTypes = {
     userSelectedRol: PropTypes.number.isRequired,
 }
 
-export default readUserFromFirestore

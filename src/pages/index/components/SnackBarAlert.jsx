@@ -13,7 +13,7 @@ import Alert from '@mui/material/Alert'
 //     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 // }
 
-const SnackBarAlert = ({ message, onClose, severity }) => {
+const SnackBarAlert = ({ message, onClose, severity, open }) => {
     return (
         <Snackbar open={open} autoHideDuration={6000} onClose={onClose}>
             <Alert
@@ -31,4 +31,5 @@ SnackBarAlert.propTypes = {
     message: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
     severity: PropTypes.string.isRequired,
+    open: PropTypes.bool.isRequired,
 }

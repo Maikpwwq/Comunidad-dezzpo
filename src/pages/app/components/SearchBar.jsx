@@ -94,7 +94,7 @@ const SearchBar = () => {
                 }}
             >
                 <Link
-                    // href="/app/portal-servicios"
+                    href="/app/portal-servicios"
                     className="activo body-2 p-2 d-flex flex-row"
                 >
                     <img
