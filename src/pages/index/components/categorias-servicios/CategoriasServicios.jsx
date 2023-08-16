@@ -26,7 +26,7 @@ const CategoriasServicios = () => {
                             <h2 className="headline-xl">
                                 Nuestro comerciantes y servicios
                             </h2>
-                        </div>{' '}
+                        </div>
                         <br />
                         <Row className="contratistasReformas">
                             <Col className="col-md-3 p-0" sm="12">

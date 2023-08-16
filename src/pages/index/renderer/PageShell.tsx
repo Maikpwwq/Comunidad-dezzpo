@@ -19,13 +19,19 @@ export { PageShell }
 //     children: childrenPropType,
 // }
 
-function PageShell({ pageContext, children }: { children: React.ReactNode; pageContext: PageContext }) {
+function PageShell({
+    children,
+    pageContext,
+}: {
+    children: React.ReactNode
+    pageContext: PageContext
+}) {
     // const Layout = LayoutPaperbase || pageContext.exports.Layout
     //const cache = createEmotionCache();
 
     return (
         <React.StrictMode>
-          {/* <CacheProvider value={cache}> */}
+            {/* <CacheProvider value={cache}> */}
             <PageContextProvider pageContext={pageContext}>
                 <LayoutPaperbase>{children}</LayoutPaperbase>
                 {/* <Layout>
@@ -41,7 +47,7 @@ function PageShell({ pageContext, children }: { children: React.ReactNode; pageC
                   <Content>{children}</Content>
                 </Layout> */}
             </PageContextProvider>
-          {/* </CacheProvider> */}
+            {/* </CacheProvider> */}
         </React.StrictMode>
     )
 }

@@ -14,20 +14,19 @@ const CategoriasPupulares = () => {
             {/* CategoriasPupulares */}
             <Col className="categoriasPopulares mt-4 p-4">
                 <h3 className=".headline-l">
-                    {' '}
                     o encuentralos dentro de las categorías populares:
                 </h3>
                 <ul className="body-2 textBlanco pt-4">
                     <li>
-                        Pintor y decorador; Pintura y decoracion de interiores.{' '}
+                        Pintor y decorador; Pintura y decoracion de interiores.
                     </li>
                     <li>
                         Electricista; Instalación y validación de acometidas
-                        electricas.{' '}
+                        electricas.
                     </li>
                     <li>
                         Instaladores de techos y cubiertas; mantenimiento de
-                        cubiertas.{' '}
+                        cubiertas.
                     </li>
                     <li>Maestro; Construcciones y ampliaciones. </li>
                     <li>Plomero; reparacion de fugas. </li>
@@ -37,8 +36,3 @@ const CategoriasPupulares = () => {
         </CategoriasPupularesStyle>
     )
 }
-<<<<<<< HEAD
-=======
-
-export const CategoriasPupularesStyle = styled.div``
->>>>>>> 683a84b51693e3185790a6e04e0773207234a7a9

@@ -5,7 +5,7 @@
         <div className="">
             {/*Desplegar hilo conversaciones*/}
             <p className="body-1">
-                Publicado el 23/05/2019 a las10:30 am, por @Nombre usuario{' '}
+                Publicado el 23/05/2019 a las10:30 am, por @Nombre usuario
             </p>
         </div>
     </Col>

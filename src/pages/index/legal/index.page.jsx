@@ -32,7 +32,7 @@ const Page = (props) => {
                     <Col className="m-4">
                         <h3 className="headline-l textBlanco">
                             Terminos y condiciones
-                            <br /> Comercientes Calificados{' '}
+                            <br /> Comercientes Calificados
                         </h3>
                         <br />
                         <a

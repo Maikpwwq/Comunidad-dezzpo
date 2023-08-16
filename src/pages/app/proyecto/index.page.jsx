@@ -1,7 +1,7 @@
 export { Page }
 import React from 'react'
 
-const Page = (props) => {
+const Page = () => {
     return (
         <>
             {/* TODO - Proyecto */}

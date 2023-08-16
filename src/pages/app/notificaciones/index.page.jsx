@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 
-const Page = (props) => {
+const Page = () => {
     return (
         <>
             <Container fluid className="p-0 h-100">

@@ -445,7 +445,7 @@ const Page = (props) => {
                                     variant="h6"
                                     className="p-description w-100 p-1"
                                 >
-                                    Archivos adjuntos{' '}
+                                    Archivos adjuntos
                                 </Typography>
                                 <Button
                                     className="btn btn-round btn-high"

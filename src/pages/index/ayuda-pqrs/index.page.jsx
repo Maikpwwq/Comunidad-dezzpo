@@ -114,7 +114,7 @@ const Page = (props) => {
                                 <li>
                                     <a href="#">
                                         ¿como solicitar y realizar
-                                        calificaciónes?{' '}
+                                        calificaciónes?
                                     </a>
                                 </li>
                                 <li>

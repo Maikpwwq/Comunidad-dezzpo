@@ -13,8 +13,8 @@ async function onBeforeRender(pageContext) {
     // We make `userAuth` available as `pageContext.pageProps.userAuth`
     const pageProps = { userAuth }
 
-    return {   
-       // E.g. redirect `/app/perfil/wrong/url` to `/app/perfil/`
+    return {
+        // E.g. redirect `/app/perfil/wrong/url` to `/app/perfil/`
         pageContext: {
             pageProps,
             // redirectTo: '/app/perfil/',

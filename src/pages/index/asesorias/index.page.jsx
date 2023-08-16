@@ -198,11 +198,11 @@ const Page = (props) => {
                         <Col className="m-4" md={6} sm={10}>
                             <p className="body-2 textBlanco">
                                 Postulando una pregunta, estas creando una
-                                cuenta gratuita y accediento a aceptar nuestra{' '}
+                                cuenta gratuita y accediento a aceptar nuestra
                                 <br />
                                 <Link href="/legal">
                                     politica de privacidad
-                                </Link>{' '}
+                                </Link>
                                 y los <Link href="/legal">terminos de uso</Link>
                             </p>
                             <h3 className=".headline-l">

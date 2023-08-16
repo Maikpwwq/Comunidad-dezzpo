@@ -97,7 +97,6 @@ const Page = () => {
                             >
                                 {/* Mensaje del Banner izquierda */}
                                 <Box className="slogan p-0">
-                                    {' '}
                                     <Typography variant="h2">
                                         <strong>Bienvenido</strong>
                                     </Typography>
@@ -105,11 +104,10 @@ const Page = () => {
                                         variant="body2"
                                         className="mb-4 mt-2"
                                     >
-                                        {' '}
                                         ¡Descubre al instante el personal
                                         profesional perfecto para <br />
                                         cada proyecto en tu hogar con tan solo
-                                        un clic!{' '}
+                                        un clic!
                                     </Typography>
                                     <Typography
                                         variant="subtitle1"
@@ -119,9 +117,8 @@ const Page = () => {
                                                 'transparent !important',
                                         }}
                                     >
-                                        {' '}
-                                        Unete a la Comunidad{' '}
-                                    </Typography>{' '}
+                                        Unete a la Comunidad
+                                    </Typography>
                                 </Box>
                             </Col>
                             {/* Formulario nuevo proyecto */}
@@ -213,10 +210,7 @@ const Page = () => {
                         </Typography>
                         {/* Propietarios */}
                         <Col className="comoPropietarios">
-                            <Col
-                                className="comunidadTitulo m-4 w-auto"
-                                md={3}
-                            >
+                            <Col className="comunidadTitulo m-4 w-auto" md={3}>
                                 <h4 className="headline-s">Propietarios</h4>
                             </Col>
                             <Row className="ms-1 me-1 w-100">
@@ -233,8 +227,8 @@ const Page = () => {
                                         1
                                     </Typography>
                                     <p className="body-1 p-4 d-inline-block">
-                                        Crea una nueva{' '}
-                                        <strong className="pb-4">oferta</strong>{' '}
+                                        Crea una nueva
+                                        <strong className="pb-4">oferta</strong>
                                         gratis.
                                         {/* Describe tu proyecto <br /> */}
                                     </p>
@@ -252,10 +246,10 @@ const Page = () => {
                                         2
                                     </Typography>
                                     <p className="body-1 p-4 d-inline-block">
-                                        Consigue hasta cuatro{' '}
+                                        Consigue hasta cuatro
                                         <strong className="pb-4">
                                             cotizaciones
-                                        </strong>{' '}
+                                        </strong>
                                         y selecciona el perfil adecuado para el
                                         servicio.
                                         {/* El profesional se pondrá en contacto con
@@ -278,7 +272,7 @@ const Page = () => {
                                         Califica y comenta.
                                         {/* <strong className="pb-4">
                                             
-                                        </strong>{' '}
+                                        </strong>
                                         Finalizo el proyecto, <br />
                                         Dejanos conocer tu experiencia. <br /> */}
                                     </p>
@@ -308,10 +302,10 @@ const Page = () => {
                                     <p className="body-1 p-4 d-inline-block">
                                         Observa las oferta indicadas para ti.
                                         <br />
-                                        Filtra requerimientos por ubicación y{' '}
+                                        Filtra requerimientos por ubicación y
                                         <strong className="pb-4">
                                             postulate.
-                                        </strong>{' '}
+                                        </strong>
                                     </p>
                                 </Col>
                                 <Col
@@ -327,13 +321,13 @@ const Page = () => {
                                         2
                                     </Typography>
                                     <p className="body-1 p-4 d-inline-block">
-                                        Diligencia el{' '}
+                                        Diligencia el
                                         <strong className="pb-4">
                                             presupuesto.
-                                        </strong>{' '}
-                                        Haz una{' '}
+                                        </strong>
+                                        Haz una
                                         <strong className="pb-4">
-                                            cotizacion{' '}
+                                            cotizacion
                                         </strong>
                                         detallada con los datos suministrados.
                                         {/* en caso de ser escogido por el
@@ -357,9 +351,9 @@ const Page = () => {
                                     <p className="body-1 p-4 d-inline-block">
                                         Califica y comenta. <br />
                                         Finalizó el proyecto, <br />
-                                        Dejanos conocer tu{' '}
+                                        Dejanos conocer tu
                                         <strong className="pb-4">
-                                            experiencia.{' '}
+                                            experiencia.
                                         </strong>
                                         <br />
                                     </p>

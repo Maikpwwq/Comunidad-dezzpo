@@ -19,8 +19,7 @@ const NuestraComunidad = () => {
                 <Col id="popularCategorias" className="m-4 p-4">
                     <Col className="w-80">
                         <h2 className="headline-xl">
-                            {' '}
-                            Nuestra <strong>Comunidad</strong>{' '}
+                            Nuestra <strong>Comunidad</strong>
                         </h2>
                         <p className="body-1 pb-4">
                             Tenemos una gran cantidad de profesionales que

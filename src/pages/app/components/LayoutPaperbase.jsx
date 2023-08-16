@@ -22,13 +22,11 @@ function Copyright() {
             <Link color="inherit" href="#">
                 COMUNIDAD DEZZPO INC.
                 <br /> - Todos los derechos reservados -
-            </Link>{' '}
+            </Link>
             {new Date().getFullYear()}.
         </Typography>
     )
 }
-
-
 
 const drawerWidth = 256
 
@@ -50,28 +48,28 @@ function LayoutPaperbase({ children }) {
             <Box sx={{ display: 'flex', minHeight: '100vh' }}>
                 <CssBaseline />
                 {/* {user.uid && ( */}
-                    <Box
-                        component="nav"
-                        sx={{
-                            width: { sm: drawerWidth },
-                            flexShrink: { sm: 0 },
-                        }}
-                    >
-                        {isSmUp ? null : (
-                            <Navigator
-                                PaperProps={{ style: { width: drawerWidth } }}
-                                variant="temporary"
-                                open={mobileOpen}
-                                onClose={handleDrawerToggle}
-                            />
-                        )}
-
+                <Box
+                    component="nav"
+                    sx={{
+                        width: { sm: drawerWidth },
+                        flexShrink: { sm: 0 },
+                    }}
+                >
+                    {isSmUp ? null : (
                         <Navigator
                             PaperProps={{ style: { width: drawerWidth } }}
-                            sx={{ display: { sm: 'block', xs: 'none' } }}
+                            variant="temporary"
+                            open={mobileOpen}
+                            onClose={handleDrawerToggle}
                         />
-                    </Box>
-                 {/* )} */}
+                    )}
+
+                    <Navigator
+                        PaperProps={{ style: { width: drawerWidth } }}
+                        sx={{ display: { sm: 'block', xs: 'none' } }}
+                    />
+                </Box>
+                {/* )} */}
 
                 <Box
                     sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}

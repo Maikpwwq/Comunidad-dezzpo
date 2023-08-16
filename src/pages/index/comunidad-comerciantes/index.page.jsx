@@ -24,15 +24,13 @@ const Page = (props) => {
                     <Col className="col-md-8 col-lg-6 align-items-start">
                         <Col className="opacidadNegro">
                             <span className="pitchComerciantes">
-                                {' '}
                                 <h2 className="headline-xl textBlanco">
                                     ¿TE FALTA GESTIÓN?, DÉJANOS REPRESENTAR TU
                                     TRABAJO GARANTIZAMOS UNA NOTABLE MEJORA EN
-                                    INGRESOS Y OPORTUNIDADES DE CRECIMIENTO{' '}
+                                    INGRESOS Y OPORTUNIDADES DE CRECIMIENTO
                                 </h2>
                             </span>
                             <p className="body-2">
-                                {' '}
                                 Propietarios y proyectos listos para contactar,
                                 trabajo cuando lo necesitas, con cada plan de
                                 afiliacion, obtendras al menos la misma cantidad
@@ -40,8 +38,7 @@ const Page = (props) => {
                                 conozcan lo que tienes para ofrecer.
                             </p>
                             <h3 className=".headline-l textVerde">
-                                {' '}
-                                Solicita Tu Membresia Ahora{' '}
+                                Solicita Tu Membresia Ahora
                             </h3>
                         </Col>
                     </Col>
@@ -52,7 +49,6 @@ const Page = (props) => {
                 <Row className="comunidadComerciantesRegistro p-4 m-0">
                     <Col className="" md={6} lg={6}>
                         <h2 className="headline-xl center">
-                            {' '}
                             COMUNIDAD COMERCIANTES
                         </h2>
                     </Col>
@@ -88,13 +84,13 @@ const Page = (props) => {
                             <p>
                                 Aumenta tu influencia con el respaldo de la
                                 comunidad, Gestiona tus estadisticas, la
-                                Calificaciones es valorada segun tres aspectos:{' '}
+                                Calificaciones es valorada segun tres aspectos:
                                 <br />
                                 <br />
                                 <strong>
                                     `{'>'}` Gestion `{'>'}` Calidad `{'>'}`
                                     Oportunidad del servicio.
-                                </strong>{' '}
+                                </strong>
                                 <br />
                                 <br />
                                 Avisos instantaneos por email de nuevos
@@ -112,8 +108,8 @@ const Page = (props) => {
                                 recomendar a la comunidad y, ayuda así la
                                 Transformación digital inmobiliaria.
                                 <br />
-                                Invita tus amigos a que se registren al programa{' '}
-                                compartiendo tu código único, envía el{' '}
+                                Invita tus amigos a que se registren al programa
+                                compartiendo tu código único, envía el
                                 <strong>Link</strong> a tus contactos, acumula
                                 puntos, obtén descuentos y llévate premios.
                                 <br />

@@ -16,8 +16,6 @@ async function render(pageContext: PageContextServer) {
     // const cache = createEmotionCache();
     // const { extractCriticalToChunks, constructStyleTagsFromChunks } =
     //     createEmotionServer(cache);
-    // This render() hook only supports SSR, see https://vite-plugin-ssr.com/render-modes for how to modify render() to support SPA
-    // if (!Page) throw new Error('My render() hook expects pageContext.Page to be defined')
     let pageHtml
     // let emotionCss
     if (!pageContext.Page) {
@@ -26,6 +24,8 @@ async function render(pageContext: PageContextServer) {
     } else {
         // SSR / HTML-only
         const { Page, pageProps } = pageContext
+        // This render() hook only supports SSR, see https://vite-plugin-ssr.com/render-modes for how to modify render() to support SPA
+        // if (!Page) throw new Error('My render() hook expects pageContext.Page to be defined')
         console.log('pageIndexContextServer', Page, pageProps)
         const page = (
             <PageShell pageContext={pageContext}>

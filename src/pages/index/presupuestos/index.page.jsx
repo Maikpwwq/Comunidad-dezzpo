@@ -20,9 +20,8 @@ const Page = (props) => {
                     <Col className="align-items-end" lg={4} md={6} sm={10}>
                         <Col className="opacidadNegro textBlanco">
                             <p className="p-description">
-                                {' '}
-                                Solicitalo online, en menos tiempo, totalmente{' '}
-                                gratuito y sin compromiso.{' '}
+                                Solicitalo online, en menos tiempo, totalmente
+                                gratuito y sin compromiso.
                             </p>
                             <p className="body-1">
                                 Contamos con los mejores precios del mercado de

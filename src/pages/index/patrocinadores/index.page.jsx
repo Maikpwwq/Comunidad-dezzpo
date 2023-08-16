@@ -18,10 +18,9 @@ const Page = (props) => {
                     <Col className="col-10">
                         <div className="patrocinadoresMensaje">
                             <span className="tituloDocumento">
-                                {' '}
                                 <h2 className="headline-xl">
                                     Estos son algunos de nuestros patrocinadores
-                                </h2>{' '}
+                                </h2>
                             </span>
                             <ul className="p-description">
                                 <li>Bictia</li>

@@ -223,7 +223,7 @@ const Page = (props) => {
                         align="left"
                         className="p-description pb-2 w-100"
                     >
-                        Descripción del servicio:{' '}
+                        Descripción del servicio:
                     </Typography>
                     <TextareaAutosize
                         value={cotizacion.description}
@@ -240,7 +240,7 @@ const Page = (props) => {
                         align="left"
                         className="p-description w-100 mt-3"
                     >
-                        Alcance del servicio:{' '}
+                        Alcance del servicio:
                     </Typography>
                     <TextareaAutosize
                         value={cotizacion.scope}
@@ -257,7 +257,7 @@ const Page = (props) => {
                         align="left"
                         className="p-description w-100 mt-3"
                     >
-                        Procedimiento a desarrollar:{' '}
+                        Procedimiento a desarrollar:
                     </Typography>
                     <TextareaAutosize
                         value={cotizacion.procedimiento}
@@ -430,7 +430,6 @@ const Page = (props) => {
                                     )}
                                 <TableRow>
                                     <TableCell>
-                                        {' '}
                                         <AddCircleIcon
                                             onClick={handleNewTableRow}
                                         />
@@ -452,7 +451,7 @@ const Page = (props) => {
                         align="left"
                         className="p-description w-100"
                     >
-                        Tiempo Ejecución:{' '}
+                        Tiempo Ejecución:
                     </Typography>
                     <TextareaAutosize
                         value={cotizacion.tiempoEjecucion}
@@ -469,7 +468,7 @@ const Page = (props) => {
                         align="left"
                         className="p-description w-100 mt-3"
                     >
-                        Condiciones de Negociación:{' '}
+                        Condiciones de Negociación:
                     </Typography>
                     <TextareaAutosize
                         value={cotizacion.condicionesNegocio}
@@ -486,7 +485,7 @@ const Page = (props) => {
                         align="left"
                         className="p-description w-100 mt-3"
                     >
-                        Garantía:{' '}
+                        Garantía:
                     </Typography>
                     <TextareaAutosize
                         value={cotizacion.garantia}

@@ -223,7 +223,7 @@ function DraftCard({ props }) {
                                 CodigoPostal: {draftPostalCode}
                             </Typography>
                             <Typography paragraph>
-                                Programar mejor: {draftBestScheduleDate},{' '}
+                                Programar mejor: {draftBestScheduleDate},
                                 {draftBestScheduleTime}
                             </Typography>
                             <Typography paragraph>

@@ -147,7 +147,6 @@ const Page = (props) => {
                             </h3>
                         </Col>
                         <p className="body-2">
-                            {' '}
                             Directorio de comerciantes calificados, contratistas
                             independientes y empresas del sector. <br />
                             Encuentra todo lo mejor en asisitencia técnica!

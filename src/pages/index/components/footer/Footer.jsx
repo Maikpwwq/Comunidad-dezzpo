@@ -36,62 +36,50 @@ const FooterComunidad = () => {
                                 >
                                     <ul className="body-1">
                                         <li>
-                                            {' '}
-                                            &#10095;{' '}
+                                            &#10095;
                                             <Link href="/legal" title="legal">
-                                                {' '}
                                                 Legal
                                             </Link>
                                         </li>
                                         <li>
-                                            {' '}
-                                            &#10095;{' '}
+                                            &#10095;
                                             <Link
                                                 href="/ayuda-pqrs"
                                                 title="Ayuda"
                                             >
-                                                {' '}
                                                 Ayuda
                                             </Link>
                                         </li>
                                         <li>
-                                            {' '}
-                                            &#10095;{' '}
+                                            &#10095;
                                             <Link
                                                 href="/patrocinadores"
                                                 title="Patrocinadores"
                                             >
-                                                {' '}
                                                 Patrocinadores
                                             </Link>
                                         </li>
                                         <li>
-                                            {' '}
-                                            &#10095;{' '}
+                                            &#10095;
                                             <Link href="/blog" title="Blog">
-                                                {' '}
                                                 Blog
                                             </Link>
                                         </li>
                                         <li>
-                                            {' '}
-                                            &#10095;{' '}
+                                            &#10095;
                                             <Link
                                                 href="/contactenos"
                                                 title="Contactenos"
                                             >
-                                                {' '}
                                                 Contactenos
                                             </Link>
                                         </li>
                                         <li>
-                                            {' '}
-                                            &#10095;{' '}
+                                            &#10095;
                                             <Link
                                                 href="/mapa-del-sitio"
                                                 title="Mapa del Sitio"
                                             >
-                                                {' '}
                                                 Mapa del Sitio
                                             </Link>
                                         </li>
@@ -115,12 +103,10 @@ const FooterComunidad = () => {
                                         />
                                     </Container>
                                     <h2 className="headline-l textBlanco ps-4">
-                                        {' '}
-                                        Siguenos{' '}
+                                        Siguenos
                                     </h2>
                                     <Container className="p-0 ps-4">
                                         <ul className="listaFooter w-100 body-1 row justify-content-start">
-                                            {' '}
                                             &#10095;
                                             {/* siguenos Instagram */}
                                             <li className="w-auto d-flex align-items-center">
@@ -192,8 +178,7 @@ const FooterComunidad = () => {
                         {/* parte inferior*/}
                         <Row className="footerInferior pt-2 w-100">
                             <p className="mb-2 body-1 textBlanco">
-                                {' '}
-                                © 2021 - Todos los derechos reservados -{' '}
+                                © 2021 - Todos los derechos reservados -
                                 <span className="dezzpo-svg textBlanco">
                                     COMUNIDAD DEZZPO INC.
                                 </span>

@@ -1,7 +1,9 @@
 import React from 'react'
-import es from 'date-fns/locale/es'
+// import es from 'date-fns/locale/es'
 import { withSendBird, App as SendBirdApp } from '@sendbird/uikit-react'
 import '@sendbird/uikit-react/dist/index.css'
+
+export { SendbirdDefaultChat }
 
 let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
@@ -21,7 +23,7 @@ const SendbirdDefaultChat = () => {
                 userId={userInfo.userId} // user ID.
                 nickname={userInfo.userName}
                 accessToken={accessToken}
-                dateLocale={es}
+                // dateLocale={es}
             >
                 User will be created if it is not present in the server
             </SendBirdApp>
@@ -29,6 +31,6 @@ const SendbirdDefaultChat = () => {
     )
 }
 
-const Component = withSendBird(SendbirdDefaultChat)
+// const Component = withSendBird(SendbirdDefaultChat)
 
-export { Component }
+// export { Component }

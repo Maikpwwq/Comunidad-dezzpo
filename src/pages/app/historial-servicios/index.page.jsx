@@ -13,7 +13,7 @@ import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-const Page = (props) => {
+const Page = () => {
     return (
         <>
             <Container fluid className="p-0 h-100">

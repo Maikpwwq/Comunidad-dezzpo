@@ -19,7 +19,7 @@ function Header(props) {
     const { onDrawerToggle } = props
     const user = auth?.currentUser || {}
     const userId = user?.uid
-    const isAuth = user? true : false
+    const isAuth = user ? true : false
     const perfilRoute = `perfil/${userId}`
     const [tab, setTab] = useState(0)
 

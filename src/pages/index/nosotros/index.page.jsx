@@ -111,7 +111,7 @@ const Page = (props) => {
                         </span>
                         <p className="body-2">
                             Propendemos por mitigar el impacto ambiental.
-                            Nuestro proposito es asegurar la creacion de valor y{' '}
+                            Nuestro proposito es asegurar la creacion de valor y
                             <br />
                             perdurarción en el tiempo. Usamos controles,
                             tecnicas y productos de calidad, alcanzando con

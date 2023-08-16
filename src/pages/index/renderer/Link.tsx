@@ -8,7 +8,11 @@ export { Link }
 //     href: PropTypes.string.isRequired,
 // }
 
-function Link(props: { href?: string; className?: string; children: React.ReactNode }) {
+function Link(props: {
+    href?: string
+    className?: string
+    children: React.ReactNode
+}) {
     const pageContext = usePageContext()
     const className = [
         props.className,
