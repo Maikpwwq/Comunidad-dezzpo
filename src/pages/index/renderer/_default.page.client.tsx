@@ -9,12 +9,13 @@ export const hydrationCanBeAborted = true
 import { hydrateRoot, createRoot, Root } from 'react-dom/client'
 import { PageShell } from './PageShell'
 import type { PageContextClient } from './types'
+import React from 'react'
 
 let root: Root
 // This render() hook only supports SSR, see https://vite-plugin-ssr.com/render-modes for how to modify render() to support SPA
 async function render(pageContext: PageContextClient) {
     const { Page, pageProps } = pageContext
-    console.log('pageContextClient', Page, pageProps)
+    // console.log('pageContextClient', Page, pageProps)
     // if (!Page) throw new Error('Client-side render() hook expects pageContext.Page to be defined')
     const page = (
         <PageShell pageContext={pageContext}>

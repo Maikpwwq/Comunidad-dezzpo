@@ -19,6 +19,7 @@ if (isProd) {
             '@mui/icons-material',
             '@mui/material',
             '@mui/utils',
+            '@mui/x-data-grid',
             'react-bootstrap',
             'date-fns',
             '@sendbird/uikit-react',

@@ -5,10 +5,12 @@ import {
     // App as SendBirdApp,
     // Channel,
     OpenChannel,
-    withSendBird,
+    // withSendBird,
 } from '@sendbird/uikit-react'
 
-// import SendbirdSelectors from '@sendbird/uikit-react/SendbirdSelectors'
+// import sendbirdSelectors from '@sendbird/uikit-react/SendbirdSelectors'
+// import useSendbirdStateContext from '@sendbird/uikit-react/useSendbirdStateContext'
+
 // import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 // import Avatar from '@mui/material/Avatar'
@@ -36,6 +38,11 @@ function ComentarPerfil(props) {
     // const iconUp = <ArrowUpwardIcon />
     // const iconDown = <ArrowDownwardIcon />
     // const iconComments = <AddCommentIcon />
+    
+    // const globalStore = useSendbirdStateContext()
+    // const sbSdk = sendbirdSelectors.getSdk(globalStore)
+    // const connect = sendbirdSelectors.getConnect(globalStore)
+    // const createChannel = sendbirdSelectors.getCreateOpenChannel(globalStore)
 
     const { channelUrl } = props
     const [currentChannelUrl] = useState(channelUrl) //, setCurrentChannelUrl

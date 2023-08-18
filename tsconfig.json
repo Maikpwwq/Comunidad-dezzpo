@@ -4,7 +4,7 @@
         "esModuleInterop": true,
         "moduleResolution": "Node",
         "types": ["vite/client"],
-        "module": "ESNext", // "module": "ESNext",
+        "module": "ES2020", // "module": "ESNext",
         "target": "ES2020", // "target": "ESNext",
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "skipLibCheck": true,
@@ -19,7 +19,7 @@
         // "isolatedModules": true,
         // "noEmit": true,
     },
-    // "include": ["src"],
+    "include": ["node_modules/@sendbird/uikit-react/index.d.ts"], // https://www.npmjs.com/package/@sendbird/uikit-react
     "ts-node": {
         "transpileOnly": true,
         "esm": true,

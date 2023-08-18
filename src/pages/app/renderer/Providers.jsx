@@ -4,7 +4,8 @@ import { auth } from '#@/firebase/firebaseClient'
 // TODO: activate @tanstack/react-query
 // import { QueryClient, QueryClientProvider } from '@tanstack/react-query' // Hydrate,
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { SendbirdProvider } from '@sendbird/uikit-react' // withSendBird,
+// import { SendbirdProvider } from '@sendbird/uikit-react' // withSendBird,
+import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
 import '@sendbird/uikit-react/dist/index.css'
 // import es from 'date-fns/locale/es'
 
@@ -13,7 +14,7 @@ export { Providers }
 let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
 let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
-const Providers = (props) => {
+const Providers = ({ children }) => {
     // const { children } = props
     const user = auth.currentUser || {}
     const userAuthID = user.uid || '' // Este es el id de la cuenta de Auth
@@ -30,10 +31,10 @@ const Providers = (props) => {
                 nickname={userAuthName} // user Auth Name.
                 accessToken={accessToken}
                 // dateLocale={es}
-                {...props}
+                // {...props}
             >
                 {/* <Hydrate state={pageProps.dehydratedState}></Hydrate> */}
-                {/* {children} */}
+                {children}
                 {/* <ReactQueryDevtools initialIsOpen /> */}
             </SendbirdProvider>
             {/* </QueryClientProvider> */}
@@ -44,7 +45,3 @@ const Providers = (props) => {
 Providers.propTypes = {
     children: PropTypes.any,
 }
-
-// const Component = withSendBird(Providers)
-
-// export { Component }

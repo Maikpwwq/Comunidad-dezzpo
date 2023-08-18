@@ -2,30 +2,30 @@ import React from 'react'
 import PropTypes from 'prop-types'
 // import { sendbirdSelectors } from '@sendbird/uikit-react'
 import sendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
-// import useSendbirdStateContext from '@sendbird/uikit-react/useSendbirdStateContext'
-import withSendBird from '@sendbird/uikit-react/withSendbird'
+import useSendbirdStateContext from '@sendbird/uikit-react/useSendbirdStateContext'
+// import withSendBird from '@sendbird/uikit-react/withSendbird'
 
 // import { sharingInformationService } from '#@/services/sharing-information'
 // let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
 export { newOpenChannelSendbird }
 
-const newOpenChannelSendbird = async(props) => {
-    console.log('crearCanal props', props)
-    // const globalStore = useSendbirdStateContext()
-    // const sbSdk = sendbirdSelectors.getSdk(globalStore)
-    // const connect = sendbirdSelectors.getConnect(globalStore)
-    // const createChannel = sendbirdSelectors.getCreateOpenChannel(globalStore)
+const newOpenChannelSendbird = async({uid, displayName}) => {
+    console.log('crearCanal props', uid, displayName)
+    const globalStore = useSendbirdStateContext()
+    const sbSdk = sendbirdSelectors.getSdk(globalStore)
+    const connect = sendbirdSelectors.getConnect(globalStore)
+    const createChannel = sendbirdSelectors.getCreateOpenChannel(globalStore)
 
-    const {
-        uid,
-        displayName,
+    // const {
+    //     uid,
+    //     displayName,
         // userEditInfo,
         // setUserEditInfo,
-        connect,
-        createChannel,
-        sbSdk,
-    } = props //
+        // connect,
+        // createChannel,
+        // sbSdk,
+    // } = props //
 
     // Transform display name
     const TransformName = displayName
@@ -66,6 +66,7 @@ const newOpenChannelSendbird = async(props) => {
     if (typeof createChannel == 'function' && typeof sbSdk === 'object') {
         // if (typeof sbSdk.GroupChannelParams == 'function') {
         if (typeof sbSdk.OpenChannelParams == 'function') {
+            // https://sendbird.com/docs/chat/uikit/v3/react/core-components/sendbirdselectors
             const param = new sbSdk.OpenChannelParams()
             param.name(displayName)
             param.channelUrl(`sendbird_open_channel_${TransformName}`)
@@ -97,9 +98,9 @@ newOpenChannelSendbird.propTypes = {
     // setChannelUrl: PropTypes.func.isRequired,
     // setUserEditInfo: PropTypes.func.isRequired,
     // userEditInfo: PropTypes.object.isRequired,
-    connect: PropTypes.func.isRequired,
-    createChannel: PropTypes.func.isRequired,
-    sbSdk: PropTypes.object.isRequired,
+    // connect: PropTypes.func.isRequired,
+    // createChannel: PropTypes.func.isRequired,
+    // sbSdk: PropTypes.object.isRequired,
 }
 
 // Replace withSendbird by useSendbirdStateContext component useState hook pattern

@@ -4,9 +4,9 @@ export { Page }
 import React, { useState, useEffect } from 'react'
 import { auth } from '#@/firebase/firebaseClient'
 import { formatDistance, parse } from 'date-fns' // parseISO, format, subDays
-import { es } from 'date-fns/locale'
+import es from 'date-fns/locale/es'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
-import { newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
+// import { newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 import {readUserFromFirestore} from '#@/services/readUserFromFirestore.service'
 import {updateUserToFirestore} from '#@/services/updateUserToFirestore.service'
@@ -164,13 +164,13 @@ const Page = () => {
                     console.log('create new open channel', userChannelUrl)
                     if (userChannelUrl === undefined || userChannelUrl === '') {
                         console.log('create new open channel')
-                        newOpenChannelSendbird({
-                            userAuthID,
-                            userAuthName,
-                            //setChannelUrl,
-                            // userEditInfo,
-                            // setUserEditInfo,
-                        })
+                        // newOpenChannelSendbird({
+                        //     userAuthID,
+                        //     userAuthName,
+                        //     //setChannelUrl,
+                        //     // userEditInfo,
+                        //     // setUserEditInfo,
+                        // })
                         // const currentURL =
                         //     sharingInformationService.getSubject()
                         // currentURL.subscribe((data) => {

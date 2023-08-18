@@ -1,6 +1,6 @@
 import React from 'react'
 // import es from 'date-fns/locale/es'
-import { withSendBird, App as SendBirdApp } from '@sendbird/uikit-react'
+import { App as SendBirdApp } from '@sendbird/uikit-react' // withSendBird, 
 import '@sendbird/uikit-react/dist/index.css'
 
 export { SendbirdDefaultChat }
