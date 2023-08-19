@@ -151,6 +151,9 @@ devDependencies:
   '@tsconfig/vite-react':
     specifier: ^2.0.0
     version: 2.0.0
+  '@types/google.maps':
+    specifier: ^3.53.6
+    version: 3.53.6
   '@types/react':
     specifier: ^18.2.20
     version: 18.2.20
@@ -3699,6 +3702,10 @@ packages:
       '@types/qs': 6.9.7
       '@types/serve-static': 1.15.2
     dev: false
+
+  /@types/google.maps@3.53.6:
+    resolution: {integrity: sha512-zDU8c7K0YR1Ob7Wn0qCSQvICIuxilZH9KFIDHK6JO/5QzqEMv8e4+9bmyoDEktA9vPNmwP++zzg65h9y53iZ6Q==}
+    dev: true
 
   /@types/http-errors@2.0.1:
     resolution: {integrity: sha512-/K3ds8TRAfBvi5vfjuz8y6+GiAYBZ0x4tXv1Av6CWBWn0IlADc+ZX9pMq7oU0fNQPnBwIZl3rmeLp6SBApbxSQ==}
