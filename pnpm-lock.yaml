@@ -47,6 +47,12 @@ dependencies:
   '@types/node':
     specifier: ^20.5.1
     version: 20.5.1
+  '@types/react-swipeable-views':
+    specifier: ^0.13.2
+    version: 0.13.2
+  '@types/react-swipeable-views-utils':
+    specifier: ^0.13.4
+    version: 0.13.4
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.4.0
     version: 6.4.0(@typescript-eslint/parser@6.4.0)(eslint@8.47.0)(typescript@5.1.6)
@@ -2864,6 +2870,12 @@ packages:
     resolution: {integrity: sha512-OqJWZOnA++XaUjuwXmlp+HuTYkK7BgB5VzHLtE6r1galQxn3ndSbmoowXFH5M2skEXc956zab0sVFq9nf+kZcA==}
     dev: false
 
+  /@material-ui/types@4.1.1:
+    resolution: {integrity: sha512-AN+GZNXytX9yxGi0JOfxHrRTbhFybjUJ05rnsBVjcB+16e466Z0Xe5IxawuOayVZgTBNDxmPKo5j4V6OnMtaSQ==}
+    dependencies:
+      '@types/react': 18.2.20
+    dev: false
+
   /@mui/base@5.0.0-beta.11(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-FdKZGPd8qmC3ZNke7CNhzcEgToc02M6WYZc9hcBsNQ17bgAd3s9F//1bDDYgMVBYxDM71V0sv/hBHlOY4I1ZVA==}
     engines: {node: '>=12.0.0'}
@@ -3750,6 +3762,20 @@ packages:
 
   /@types/react-is@18.2.1:
     resolution: {integrity: sha512-wyUkmaaSZEzFZivD8F2ftSyAfk6L+DfFliVj/mYdOXbVjRcS87fQJLTnhk6dRZPuJjI+9g6RZJO4PNCngUrmyw==}
+    dependencies:
+      '@types/react': 18.2.20
+    dev: false
+
+  /@types/react-swipeable-views-utils@0.13.4:
+    resolution: {integrity: sha512-v0nDk6mMIPAu/kaEnqQpDz2Z7O8ewqy2in7xwobcAAkUKKsdw3MSWFW1BkQ+dPgTrBnj/KXUzx3ZIS6UYviwyA==}
+    dependencies:
+      '@material-ui/types': 4.1.1
+      '@types/react': 18.2.20
+      '@types/react-swipeable-views': 0.13.2
+    dev: false
+
+  /@types/react-swipeable-views@0.13.2:
+    resolution: {integrity: sha512-FiszBm9M0JicAgzO/IwDqpfHQRUEjPZA88UexYsVD6qHJBf5LrbGjR5Mw4+yZbf8ZxJneNqOsZbe4WGjOYG7iQ==}
     dependencies:
       '@types/react': 18.2.20
     dev: false

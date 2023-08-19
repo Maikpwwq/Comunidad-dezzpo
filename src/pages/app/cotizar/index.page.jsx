@@ -29,8 +29,8 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import Typography from '@mui/material/Typography'
 
 const Page = (props) => {
-    const user = auth.currentUser || {}
-    const userID = user.uid || ''
+    const user = auth?.currentUser || {}
+    const userID = user?.uid || ''
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams // , quotationId
     const quotationID = uuidv4() // quotationId ? quotationId :

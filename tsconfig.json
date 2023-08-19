@@ -8,18 +8,25 @@
         "target": "ES2020", // "target": "ESNext",
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "skipLibCheck": true,
-        "jsx": "react-jsx"
+        "jsx": "react-jsx",
+        "strict": true
         // "useDefineForClassFields": true,
         // "allowJs": false,
         // "composite": true,
         // "allowSyntheticDefaultImports": true,
-        // "strict": true,
         // "forceConsistentCasingInFileNames": true,
         // "resolveJsonModule": true,
         // "isolatedModules": true,
         // "noEmit": true,
     },
-    "include": ["node_modules/@sendbird/uikit-react/index.d.ts"], // https://www.npmjs.com/package/@sendbird/uikit-react
+    // "exclude": ["/node_modules/"],
+    "include": [
+        "node_modules/@sendbird/uikit-react/index.d.ts"
+        // "./src/**/*.ts",
+        // "./src/**/*.tsx",
+        // "./src/**/*.jsx",
+        // "./src/**/*.js",
+    ], // https://www.npmjs.com/package/@sendbird/uikit-react
     "ts-node": {
         "transpileOnly": true,
         "esm": true,

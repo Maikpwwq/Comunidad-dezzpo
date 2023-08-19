@@ -2,7 +2,7 @@ export { AdjuntarArchivos }
 
 import React, { useState, useEffect } from 'react'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { firestore, auth, storage } from '../../../firebase/firebaseClient'
+import { firestore, auth, storage } from '#@/firebase/firebaseClient'
 import { collection, doc, getDocFromServer, setDoc } from 'firebase/firestore'
 import PropTypes from 'prop-types'
 import { v4 as uuidv4 } from 'uuid'

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+export {WindowResizeComponent};
 function WindowResizeComponent() {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -30,5 +31,3 @@ function WindowResizeComponent() {
     </div>
   );
 }
-
-export default WindowResizeComponent;

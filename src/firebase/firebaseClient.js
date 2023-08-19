@@ -27,17 +27,17 @@ const firebaseApp = !fb.apps.length
     ? fb.initializeApp(firebaseClientConfig)
     : fb.app()
 */
-export { firebaseApp }
+export { firebaseApp, auth, currentUser, firestore, storage }
 // export { currentUser }
 
-export const auth = getAuth(firebaseApp)
-export const currentUser = auth?.currentUser
+const auth = getAuth(firebaseApp)
+const currentUser = auth?.currentUser
 console.log(currentUser)
 
-export const firestore = getFirestore(firebaseApp)
+const firestore = getFirestore(firebaseApp)
 // firestore.settings({ timestampsInSnapshots: true })
 
-export const storage = getStorage(firebaseApp)
+const storage = getStorage(firebaseApp)
 
 // export const analytics = getAnalytics(firebaseApp)
 

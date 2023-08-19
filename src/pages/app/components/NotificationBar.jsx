@@ -28,8 +28,8 @@ export { NotificationBar }
 
 function NotificationBar(props) {
     const { onDrawerToggle } = props
-    const user = auth.currentUser || {}
-    const userPhotoUrl = user.photoURL || ''
+    const user = auth?.currentUser || {}
+    const userPhotoUrl = user?.photoURL || ''
     // const navigate = useNavigate()
 
     const handleHelp = () => {

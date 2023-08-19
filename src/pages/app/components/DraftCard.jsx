@@ -37,8 +37,8 @@ export { DraftCard }
 
 function DraftCard({ props }) {
     console.log('DraftCard', props)
-    const user = auth.currentUser || {}
-    const userID = user.uid || '' // Este es el id de la cuenta de Auth
+    const user = auth?.currentUser || {}
+    const userID = user?.uid || '' // Este es el id de la cuenta de Auth
     const {
         draftId,
         draftPropietarioResidente,

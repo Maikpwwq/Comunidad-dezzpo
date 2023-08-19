@@ -30,7 +30,7 @@ import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
 
 const Page = () => {
-    console.log('auth', auth.currentUser)
+    console.log('auth', auth?.currentUser)
     const pageContext = usePageContext()
     let id = pageContext.routeParams['*']
     console.log('routeParamsPerfil', pageContext.routeParams['*'])

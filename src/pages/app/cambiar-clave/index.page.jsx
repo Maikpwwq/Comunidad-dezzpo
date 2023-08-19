@@ -28,15 +28,17 @@ const Page = () => {
         })
     }
 
-    updatePassword(auth.currentUser, newPassword.newPassword)
-        .then((result) => {
-            console.log(`Se actulizo la contraseña ${result}`)
-        })
-        .catch((error) => {
-            console.log(
-                `Se produjo un error al actulizar la contraseña ${error}`
-            )
-        })
+    const handleClick = () => {
+        updatePassword(auth?.currentUser, newPassword.newPassword)
+            .then((result) => {
+                console.log(`Se actulizo la contraseña ${result}`)
+            })
+            .catch((error) => {
+                console.log(
+                    `Se produjo un error al actulizar la contraseña ${error}`
+                )
+            })
+    }
 
     return (
         <>
@@ -76,7 +78,7 @@ const Page = () => {
                                 // defaultValue="Repite la nueva clave"
                                 variant="standard"
                             />
-                            <Button type="submit" onClick={updatePassword}>
+                            <Button type="submit" onClick={handleClick}>
                                 Establecer
                             </Button>
                         </Box>

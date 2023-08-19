@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { auth } from '#@/firebase/firebaseClient'
 // TODO: activate @tanstack/react-query
 // import { QueryClient, QueryClientProvider } from '@tanstack/react-query' // Hydrate,
@@ -14,11 +14,11 @@ export { Providers }
 let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
 let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
-const Providers = ({ children }) => {
+const Providers = ({ children } : { children: React.ReactNode}) => {
     // const { children } = props
-    const user = auth.currentUser || {}
-    const userAuthID = user.uid || '' // Este es el id de la cuenta de Auth
-    const userAuthName = user.displayName || '' // Este es el id de la cuenta de Auth
+    const user = auth?.currentUser || {}
+    const userAuthID = user?.uid || '' // Este es el id de la cuenta de Auth
+    const userAuthName = user?.displayName || '' // Este es el id de la cuenta de Auth
     // const queryClient = new QueryClient()
     // const [queryClient] = useState(() => new QueryClient())
 
@@ -42,6 +42,6 @@ const Providers = ({ children }) => {
     )
 }
 
-Providers.propTypes = {
-    children: PropTypes.any,
-}
+// Providers.propTypes = {
+//     children: PropTypes.any,
+// }

@@ -29,7 +29,7 @@ const NuestraComunidad = () => {
                     </Col>
                 </Col>
             </Container>
-            .{/* seccion de categorias y servicios */}
+            {/* seccion de categorias y servicios */}
             {/* <CategoriasPupulares />
             <CategoriasServicios />
             <BuscaEnTuCiudad /> */}

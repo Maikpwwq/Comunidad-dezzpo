@@ -26,8 +26,8 @@ import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 
 const Page = () => {
-    const user = auth.currentUser || {}
-    const userID = user.uid || '' // Este es el id de la cuenta de Auth
+    const user = auth?.currentUser || {}
+    const userID = user?.uid || '' // Este es el id de la cuenta de Auth
     // const navigate = useNavigate()
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams

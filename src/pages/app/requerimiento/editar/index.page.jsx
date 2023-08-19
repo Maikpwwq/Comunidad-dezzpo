@@ -21,9 +21,9 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-const Page = (props) => {
-    const user = auth.currentUser || {}
-    const userID = user.uid || '' // Este es el id de la cuenta de Auth
+const Page = () => {
+    const user = auth?.currentUser || {}
+    const userID = user?.uid || '' // Este es el id de la cuenta de Auth
     // const _storage = storage
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams

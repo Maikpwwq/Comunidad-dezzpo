@@ -224,7 +224,7 @@ const Page = () => {
                         </TableHead>
                         <TableBody>
                             {categoriaInfo.map((categoria) => {
-                                if (categoria.subCategoria === undefined) {
+                                if (categoria?.subCategoria === undefined) {
                                     const { subSistema } = categoria
                                     return (
                                         <>

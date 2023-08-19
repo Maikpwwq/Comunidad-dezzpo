@@ -16,7 +16,7 @@ const TableCards = (props) => {
         let array = []
         if (dataTable.length > 0) {
             dataTable.map((categoria) => {
-                if (categoria.subCategoria !== undefined) {
+                if (categoria?.subCategoria !== undefined) {
                     array.push(categoria)
                 }
             })

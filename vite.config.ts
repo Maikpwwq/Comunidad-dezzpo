@@ -23,6 +23,11 @@ if (isProd) {
             'react-bootstrap',
             'date-fns',
             '@sendbird/uikit-react',
+            'react-swipeable-views',
+            'react-swipeable-views-utils',
+            'react-google-autocomplete',
+            'react-icomoon',
+            'firebase',
         ]
     )
 }
@@ -48,9 +53,7 @@ export default defineConfig(async ({ command, mode }) => {
             // vercel(),
             // vercelSsr(),
         ],
-        ssr: {
-            noExternal,
-        },
+        ssr: { noExternal },
         build: {
             chunkSizeWarningLimit: 900,
             rollupOptions: {

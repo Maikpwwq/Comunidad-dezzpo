@@ -6,8 +6,6 @@ import Col from 'react-bootstrap/Col'
 
 const CategoriasPupularesStyle = styled.div``
 
-export { CategoriasPupulares }
-
 const CategoriasPupulares = () => {
     return (
         <CategoriasPupularesStyle>
