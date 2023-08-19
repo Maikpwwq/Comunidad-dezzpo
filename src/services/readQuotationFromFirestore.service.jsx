@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 
 import { sharingInformationService } from '#@/services/sharing-information'
 
+export { readQuotationFromFirestore }
+
 const readQuotationFromFirestore = (props) => {
     const _firestore = firestore
     const { docId } = props
@@ -36,4 +38,3 @@ readQuotationFromFirestore.propTypes = {
     docId: PropTypes.string.isRequired,
 }
 
-export default readQuotationFromFirestore

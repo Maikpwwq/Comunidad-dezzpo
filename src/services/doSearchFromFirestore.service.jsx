@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 
 import { sharingInformationService } from '#@/services/sharing-information'
 
+export { doSearchFromFirestore }
+
 const doSearchFromFirestore = (props) => {
     const _firestore = firestore
     const { searchInput } = props
@@ -54,4 +56,3 @@ doSearchFromFirestore.propTypes = {
     searchInput: PropTypes.string.isRequired,
 }
 
-export default doSearchFromFirestore

@@ -13,7 +13,7 @@ import { Navigator } from '#@/pages/app/components/Navigator'
 import { Header } from '#@/pages/app/components/Header'
 import { theme } from '#@/pages/app/components/theme.tsx'
 
-export { LayoutPaperbase }
+export { LayoutAppPaperbase }
 
 function Copyright() {
     return (
@@ -30,11 +30,11 @@ function Copyright() {
 
 const drawerWidth = 256
 
-function LayoutPaperbase({ children }) {
+function LayoutAppPaperbase({ children }) {
     const [mobileOpen, setMobileOpen] = React.useState(false)
     const isSmUp = useMediaQuery(theme.breakpoints.up('sm'))
 
-    const user = auth.currentUser || {}
+    // const user = auth?.currentUser || {}
 
     // const localRole = localStorage.getItem('role')
     // console.log(JSON.parse(localRole))
@@ -93,6 +93,6 @@ function LayoutPaperbase({ children }) {
     )
 }
 
-LayoutPaperbase.propTypes = {
+LayoutAppPaperbase.propTypes = {
     children: PropTypes.any,
 }

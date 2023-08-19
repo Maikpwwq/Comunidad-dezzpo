@@ -3,8 +3,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import ssr from 'vite-plugin-ssr/plugin'
 // import { cjsInterop } from 'vite-plugin-cjs-interop'
-// import vercel from 'vite-plugin-vercel'
-// import vercelSsr from '@magne4000/vite-plugin-vercel-ssr'
+import vercel from 'vite-plugin-vercel'
+import vercelSsr from '@magne4000/vite-plugin-vercel-ssr'
 
 import * as path from 'path'
 
@@ -19,9 +19,21 @@ if (isProd) {
             '@mui/icons-material',
             '@mui/material',
             '@mui/utils',
+            '@mui/x-data-grid',
+            '@emotion/react',
+            '@emotion/styled',
             'react-bootstrap',
             'date-fns',
             '@sendbird/uikit-react',
+            'react-swipeable-views',
+            'react-swipeable-views-utils',
+            'react-google-autocomplete',
+            'react-icomoon',
+            'firebase',
+            'rxjs',
+            'prop-types',
+            'uuid',
+            '@googlemaps/js-api-loader',
         ]
     )
 }
@@ -44,12 +56,10 @@ export default defineConfig(async ({ command, mode }) => {
             //         'react-bootstrap/cjs/*',
             //     ],
             // }),
-            // vercel(),
-            // vercelSsr(),
+            vercel(),
+            vercelSsr(),
         ],
-        ssr: {
-            noExternal,
-        },
+        ssr: { noExternal },
         build: {
             chunkSizeWarningLimit: 900,
             rollupOptions: {

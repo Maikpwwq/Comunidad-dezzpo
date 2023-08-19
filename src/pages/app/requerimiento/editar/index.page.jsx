@@ -6,9 +6,9 @@ import { auth } from '#@/firebase/firebaseClient'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 import { AdjuntarArchivos } from '#@/pages/app/components/AdjuntarArchivos'
 
-import readDraftFromFirestore from '#@/services/readUserFromFirestore.service'
-import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.service'
-import updateDraftToFirestore from '#@/services/updateDraftToFirestore.service'
+import { readDraftFromFirestore } from '#@/services/readDraftFromFirestore.service'
+import { readQuotationFromFirestore } from '#@/services/readQuotationFromFirestore.service'
+import { updateDraftToFirestore } from '#@/services/updateDraftToFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
 import '../detalle_requerimiento.css'
@@ -21,9 +21,9 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-const Page = (props) => {
-    const user = auth.currentUser || {}
-    const userID = user.uid || '' // Este es el id de la cuenta de Auth
+const Page = () => {
+    const user = auth?.currentUser || {}
+    const userID = user?.uid || '' // Este es el id de la cuenta de Auth
     // const _storage = storage
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams

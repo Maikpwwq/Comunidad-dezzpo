@@ -5,8 +5,8 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { sharingInformationService } from '#@/services/sharing-information'
 import { formatDistance, parse } from 'date-fns' // format, , subDays, parseISO
-import { es } from 'date-fns/locale'
-import readUserFromFirestore from '#@/services/readUserFromFirestore.service'
+import es from 'date-fns/locale/es'
+import { readUserFromFirestore } from '#@/services/readUserFromFirestore.service'
 import { auth } from '#@/firebase/firebaseClient'
 
 import '#@/assets/cssPrivateApp/perfil.css'
@@ -45,7 +45,7 @@ const Page = () => {
     const userAuthName = userAuth ? userAuth.displayName : '' // Este es el id de la cuenta de Auth
     const [isLoaded, setIsLoaded] = useState(false)
 
-    let id = pageContext.routeParams.id
+    let id = pageContext.routeParams['*'] // pageContext.routeParams.id
     console.log('routeParamsPerfil', id)
 
     // const { state } = {}

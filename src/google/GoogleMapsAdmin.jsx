@@ -1,6 +1,9 @@
 // import React from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
 
+// import pkg from '@googlemaps/js-api-loader';
+// const { Loader } = pkg;
+
 const googleApiKey = import.meta.env.VITE_APP_GOOGLE_APIKEY
 export const googleLoader = new Loader({
     apiKey: googleApiKey,

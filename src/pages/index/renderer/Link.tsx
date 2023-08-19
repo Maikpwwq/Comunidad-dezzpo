@@ -3,11 +3,6 @@ import { usePageContext } from './usePageContext'
 
 export { Link }
 
-// Link.propTypes = {
-//     className: PropTypes.string,
-//     href: PropTypes.string.isRequired,
-// }
-
 function Link(props: {
     href?: string
     className?: string

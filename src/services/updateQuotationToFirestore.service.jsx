@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 
 import { sharingInformationService } from '#@/services/sharing-information'
 
+export { updateQuotationToFirestore }
+
 const updateQuotationToFirestore = (props) => {
     const _firestore = firestore
     const { firestoreUserID, userRol } = props
@@ -34,7 +36,6 @@ const updateQuotationToFirestore = (props) => {
         }
     })
     // }
-    return userFromFirestore
     // if (solution !== undefined) {
     //     return solution
     // }
@@ -44,5 +45,3 @@ updateQuotationToFirestore.propTypes = {
     firestoreUserID: PropTypes.string.isRequired,
     userRol: PropTypes.number.isRequired,
 }
-
-export default updateQuotationToFirestore

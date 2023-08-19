@@ -1,4 +1,4 @@
-export { Page }
+export { SubCategorias }
 
 import React, { useState } from 'react'
 import '#@/assets/css/subCategoriesCard.css'
@@ -17,7 +17,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import Typography from '@mui/material/Typography'
 import PropTypes from 'prop-types'
 
-const Page = ({ props, setCategoriaInfo, categoriaInfo }) => {
+const SubCategorias = ({ item, setCategoriaInfo, categoriaInfo }) => {
     const [selected, setSelected] = useState(true)
     const {
         subCategoria,
@@ -25,7 +25,7 @@ const Page = ({ props, setCategoriaInfo, categoriaInfo }) => {
         subCategoriaPrecio,
         // subCategoriaPhotoUrl,
         subCategoriaCantidad,
-    } = props
+    } = item
 
     const handleSeleccionar = (e) => {
         e.preventDefault()
@@ -34,15 +34,15 @@ const Page = ({ props, setCategoriaInfo, categoriaInfo }) => {
         setSelected(!selected)
         if (selected) {
             const previewSelected = categoriaInfo.selected
-            previewSelected.push(props)
-            // const selectedCategories = new Array(previewSelected, props)
+            previewSelected.push(item)
+            // const selectedCategories = new Array(previewSelected, item)
             setCategoriaInfo({ ...categoriaInfo, selected: previewSelected })
             // console.log(categoriaInfo)
         } else {
             const previewSelected = categoriaInfo.selected
-            const deleteSelected = previewSelected.indexOf(props)
+            const deleteSelected = previewSelected.indexOf(item)
             previewSelected.splice(deleteSelected, 1)
-            // const selectedCategories = new Array(previewSelected, props)
+            // const selectedCategories = new Array(previewSelected, item)
             setCategoriaInfo({ ...categoriaInfo, selected: previewSelected })
             // console.log(categoriaInfo)
         }
@@ -103,13 +103,13 @@ const Page = ({ props, setCategoriaInfo, categoriaInfo }) => {
     )
 }
 
-Page.propTypes = {
-    subCategoria: PropTypes.string,
-    subCategoriaDescription: PropTypes.string,
-    subCategoriaPrecio: PropTypes.string,
-    subCategoriaPhotoUrl: PropTypes.string,
-    subCategoriaCantidad: PropTypes.string,
-    props: PropTypes.object,
-    setCategoriaInfo: PropTypes.func,
-    categoriaInfo: PropTypes.object,
+SubCategorias.propTypes = {
+    // subCategoria: PropTypes.string,
+    // subCategoriaDescription: PropTypes.string,
+    // subCategoriaPrecio: PropTypes.string,
+    // subCategoriaPhotoUrl: PropTypes.string,
+    // subCategoriaCantidad: PropTypes.string,
+    item: PropTypes.object.isRequired,
+    setCategoriaInfo: PropTypes.func.isRequired,
+    categoriaInfo: PropTypes.object.isRequired,
 }

@@ -1,11 +1,11 @@
 import React from 'react'
 // import es from 'date-fns/locale/es'
 import PropTypes from 'prop-types'
-import {
-    withSendBird,
-    // sendbirdSelectors,
-} from '@sendbird/uikit-react'
-import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
+// import {
+//     withSendBird,
+//     sendbirdSelectors,
+// } from '@sendbird/uikit-react'
+// import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
 // import { v4 as uuidv4 } from 'uuid'
 import '@sendbird/uikit-react/dist/index.css'
 
@@ -117,19 +117,19 @@ const Comentarios = (props) => {
         <>
             <Container fixed className="p-2">
                 <Box sx={{ bgcolor: '#cfe8fc' }}>
-                    <SendbirdProvider
+                    {/* <SendbirdProvider
                         appId={appId} // Sendbird application ID.
                         userId={userID} // user Auth ID.
                         nickname={nickname} // user Auth Name.
                         // accessToken={accessToken}
                         // dateLocale={es}
-                    >
+                    > */}
                         <ComentarPerfil channelUrl={channelUrl} />
                         {/* <CreateChannel />
                         <ChannelList />
                         <Channel />
                         <ChannelSettings /> */}
-                    </SendbirdProvider>
+                    {/* </SendbirdProvider> */}
                     {/* <SendbirdDefaultChat /> */}
                 </Box>
             </Container>

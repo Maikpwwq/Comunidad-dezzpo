@@ -6,8 +6,8 @@ import { firestore, auth } from '#@/firebase/firebaseClient'
 import { collection, doc, getDocFromServer } from 'firebase/firestore'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
-import readDraftFromFirestore from '#@/services/readDraftFromFirestore.service'
-import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.service'
+import { readDraftFromFirestore } from '#@/services/readDraftFromFirestore.service'
+import { readQuotationFromFirestore } from '#@/services/readQuotationFromFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
 import '../detalle_requerimiento.css'
@@ -26,8 +26,8 @@ import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 
 const Page = () => {
-    const user = auth.currentUser || {}
-    const userID = user.uid || '' // Este es el id de la cuenta de Auth
+    const user = auth?.currentUser || {}
+    const userID = user?.uid || '' // Este es el id de la cuenta de Auth
     // const navigate = useNavigate()
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams

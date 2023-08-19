@@ -2,9 +2,9 @@ export { Page }
 
 // Pagina de Usuario - Mensajes
 import React from 'react'
-// import es from 'date-fns/locale/es'
+import es from 'date-fns/locale/es'
 import { auth } from '#@/firebase/firebaseClient'
-import { App as SendBirdApp } from '@sendbird/uikit-react'
+// import { App as SendBirdApp } from '@sendbird/uikit-react'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -15,8 +15,8 @@ import Container from 'react-bootstrap/Container'
 // import MenuItem from '@mui/material/MenuItem'
 // import TextareaAutosize from '@mui/material/TextareaAutosize'
 
-const Page = (props) => {
-    let userId = auth.currentUser.uid || undefined
+const Page = () => {
+    let userId = auth?.currentUser?.uid || undefined
     let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
     // let appId = process.env.VITE_APP_SENDBIRD_APPID
 
@@ -34,7 +34,7 @@ const Page = (props) => {
                         {/* <SendBirdApp
                             appId={appId} // Sendbird application ID.
                             userId={userId} // user ID.
-                            // dateLocale={es}
+                            dateLocale={es}
                         /> */}
                         {/* <FormControl
                             fullWidth

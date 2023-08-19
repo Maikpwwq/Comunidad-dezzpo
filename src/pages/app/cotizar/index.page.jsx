@@ -6,9 +6,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { auth } from '#@/firebase/firebaseClient'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
 
-import updateDraftToFirestore from '#@/services/updateDraftToFirestore.service'
-import updateQuotationToFirestore from '#@/services/updateQuotationToFirestore.service'
-import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.service'
+import { updateDraftToFirestore } from '#@/services/updateDraftToFirestore.service'
+import { updateQuotationToFirestore } from '#@/services/updateQuotationToFirestore.service'
+import { readQuotationFromFirestore } from '#@/services/readQuotationFromFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
 // import { Row, Col, Container } from 'react-bootstrap'
@@ -29,8 +29,8 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import Typography from '@mui/material/Typography'
 
 const Page = (props) => {
-    const user = auth.currentUser || {}
-    const userID = user.uid || ''
+    const user = auth?.currentUser || {}
+    const userID = user?.uid || ''
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams // , quotationId
     const quotationID = uuidv4() // quotationId ? quotationId :

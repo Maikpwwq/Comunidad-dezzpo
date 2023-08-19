@@ -82,7 +82,7 @@ const TablaSubCategoriaCantidades = (props) => {
                     </TableHead>
                     <TableBody>
                         {categoriaInfo.selected.length > 0 &&
-                            categoriaInfo.selected.map(
+                            categoriaInfo?.selected.map(
                                 (selection, index, array) => {
                                     const {
                                         subCategoria,

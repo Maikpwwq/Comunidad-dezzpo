@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 export { Page }
 
 // Pagina de Ingreso

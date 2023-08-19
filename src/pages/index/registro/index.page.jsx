@@ -14,7 +14,7 @@ import {
     signInWithPopup,
 } from 'firebase/auth'
 import { collection, doc, setDoc } from 'firebase/firestore'
-import { format } from 'date-fns'
+import format from 'date-fns/format'
 
 import '#@/assets/css/registro.css'
 //imagenes

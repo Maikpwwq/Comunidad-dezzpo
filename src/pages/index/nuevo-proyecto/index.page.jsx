@@ -22,7 +22,7 @@ import '#@/assets/css/nuevo_proyecto.css'
 import { Ubicacion } from '#P/index/ubicacion/Ubicacion'
 import { BuscadorNuevoProyecto } from '#P/index/components/buscador/BuscadorNuevoProyecto'
 import { Page as Registro } from '#P/index/registro/index.page'
-import { Page as SubCategorias } from '#P/index/sub-categorias/index.page'
+import { SubCategorias } from '#P/index/components/sub-categorias/SubCategorias'
 import { PasoAPaso } from '#P/index/components/paso_a_paso/Paso_A_Paso'
 import { TablaSubCategoriaCantidades } from './Tabla_SubCategoria_Cantidades'
 import { usePageContext } from '#@/pages/index/renderer/usePageContext'
@@ -44,8 +44,8 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
 const Page = () => {
     const draftID = uuidv4()
-    const user = auth.currentUser || {}
-    const userID = user.uid ? true : false
+    const user = auth?.currentUser || {}
+    const userID = user?.uid ? true : false
     const pageContext = usePageContext()
     console.log('nuevo-proyecto', pageContext.routeParams['*'])
     const { paramCategoriaProfesional, paramTipoProyecto } =
@@ -194,7 +194,7 @@ const Page = () => {
                 console.log(error)
             })
         //} categoriaProfesional
-    }, [draftInfo])
+    }, [draftInfo, categoriaInfo, categoriasFromFirestore])
 
     const handleShowMore = () => {
         setShowMore(!showMore)
@@ -321,27 +321,27 @@ const Page = () => {
                         <Row className="categorias w-100 m-0 p-4">
                             <Col className="p-0 pt-4 col-10 categorias-contenedor">
                                 <Row className="w-100 m-0">
-                                    {categoriaInfo.data[categoriesIndex] ? (
-                                        categoriaInfo.data[categoriesIndex].map(
+                                    {categoriaInfo?.data[categoriesIndex] && (
+                                        categoriaInfo?.data[categoriesIndex].map(
                                             (item, index) => {
                                                 return (
                                                     <>
-                                                        <SubCategorias
-                                                            key={index}
-                                                            props={item}
-                                                            setCategoriaInfo={
-                                                                setCategoriaInfo
-                                                            }
-                                                            categoriaInfo={
-                                                                categoriaInfo
-                                                            }
-                                                        />
+                                                        {!item && item.subCategoria &&
+                                                            (<SubCategorias
+                                                                key={index}
+                                                                item={item}
+                                                                setCategoriaInfo={
+                                                                    setCategoriaInfo
+                                                                }
+                                                                categoriaInfo={
+                                                                    categoriaInfo
+                                                                }
+                                                            />)
+                                                        }
                                                     </>
                                                 )
                                             }
                                         )
-                                    ) : (
-                                        <></>
                                     )}
                                 </Row>
                                 <DirectionalButton

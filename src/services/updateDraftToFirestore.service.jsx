@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 
 import { sharingInformationService } from '#@/services/sharing-information'
 
+export { updateDraftToFirestore }
+
 const updateDraftToFirestore = (props) => {
     const _firestore = firestore
     const { updateInfo, docId } = props
@@ -34,4 +36,3 @@ updateDraftToFirestore.propTypes = {
     updateInfo: PropTypes.object.isRequired,
 }
 
-export default updateDraftToFirestore

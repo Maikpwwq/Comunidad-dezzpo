@@ -2,7 +2,7 @@ export { Page }
 
 import React, { useState, useEffect } from 'react'
 import { usePageContext } from '#@/pages/app/renderer/usePageContext'
-import readQuotationFromFirestore from '#@/services/readQuotationFromFirestore.service'
+import { readQuotationFromFirestore } from '#@/services/readQuotationFromFirestore.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 
 import Container from 'react-bootstrap/Container'

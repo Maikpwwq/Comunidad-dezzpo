@@ -4,8 +4,10 @@ import { firestore, auth } from '#@/firebase/firebaseClient'
 
 import { sharingInformationService } from '#@/services/sharing-information'
 
+export {updateUserToFirestore}
+
 const updateUserToFirestore = (props) => {
-    const user = auth.currentUser || {}
+    const user = auth?.currentUser || {}
     const _firestore = firestore
 
     const { firestoreUserID, userSelectedRol, userEditInfo } = props
@@ -85,5 +87,3 @@ const updateUserToFirestore = (props) => {
         }
     })
 }
-
-export default updateUserToFirestore
