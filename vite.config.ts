@@ -79,25 +79,10 @@ export default defineConfig(async ({ command, mode }) => {
             alias: [
                 { find: '#@', replacement: path.resolve(__dirname, 'src') },
                 {
-                    find: '#P',
-                    replacement: path.resolve(__dirname, 'src/pages'),
-                },
-                {
                     find: '#R',
                     replacement: path.resolve(
                         __dirname,
-                        'src/pages/index/renderer'
-                    ),
-                },
-                {
-                    find: '#PP',
-                    replacement: path.resolve(__dirname, 'src/pages/app'),
-                },
-                {
-                    find: '#PR',
-                    replacement: path.resolve(
-                        __dirname,
-                        'src/pages/app/renderer'
+                        'src/index/renderer'
                     ),
                 },
             ],
