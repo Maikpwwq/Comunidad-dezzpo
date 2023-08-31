@@ -1,19 +1,19 @@
 {
     // "extends": "@tsconfig/vite-react/tsconfig.json",
     "compilerOptions": {
-        "esModuleInterop": true,
-        "moduleResolution": "Node",
-        "types": ["vite/client"],
-        "module": "ES2020", // "module": "ESNext",
+        "strict": true,
+        "module": "ESNext", // "module": "ESNext",
         "target": "ES2020", // "target": "ESNext",
+        "moduleResolution": "Node",
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
-        "skipLibCheck": true,
+        "types": ["vite/client"],
         "jsx": "react-jsx",
-        "strict": true
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
         // "useDefineForClassFields": true,
         // "allowJs": false,
         // "composite": true,
-        // "allowSyntheticDefaultImports": true,
         // "forceConsistentCasingInFileNames": true,
         // "resolveJsonModule": true,
         // "isolatedModules": true,
@@ -28,10 +28,11 @@
         // "./src/**/*.js",
     ], // https://www.npmjs.com/package/@sendbird/uikit-react
     "ts-node": {
+        "experimentalSpecifierResolution": "node",
         "transpileOnly": true,
         "esm": true,
-        "compilerOptions": {
-            "moduleResolution": "Node16"
-        }
+        // "compilerOptions": {
+        //     "moduleResolution": "Node16"
+        // }
     }
 }
