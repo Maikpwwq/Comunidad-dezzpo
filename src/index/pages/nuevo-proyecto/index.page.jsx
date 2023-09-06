@@ -47,9 +47,11 @@ const Page = () => {
     const user = auth?.currentUser || {}
     const userID = user?.uid ? true : false
     const pageContext = usePageContext()
-    console.log('nuevo-proyecto', pageContext.routeParams['*'])
-    const { paramCategoriaProfesional, paramTipoProyecto } =
-        pageContext.routeParams['*']
+    const paramCategoriaProfesional =pageContext.routeParams.paramCategoriaProfesional
+    const paramTipoProyecto = pageContext.routeParams.paramTipoProyecto       
+    // const { paramCategoriaProfesional, paramTipoProyecto } =
+    //     pageContext.routeParams['*']
+    console.log('nuevo-proyecto', paramCategoriaProfesional, paramTipoProyecto)
     const draftCategory = paramCategoriaProfesional || ''
     const draftProject = paramTipoProyecto || ''
     // console.log(
@@ -59,11 +61,11 @@ const Page = () => {
     //     paramCategoriaProfesional
     // )
     // console.log('B', draftProject, tipoProyecto, paramTipoProyecto)
-    let requerimiento
-    useEffect(() => {
-        // Perform localStorage action
-        requerimiento = localStorage.requerimiento || undefined
-    }, [])
+    // let requerimiento
+    // useEffect(() => {
+    //     // Perform localStorage action
+    //     requerimiento = localStorage.requerimiento || undefined
+    // }, [])
     // console.log('requerimiento-local', requerimiento)
     // console.log(requerimiento.draftId)
     const [hideRegister] = useState(userID) // , setHideRegister
@@ -126,24 +128,25 @@ const Page = () => {
         await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
     }
 
-    const categoriasFromFirestore = async () => {
-        try {
-            // 'aPTAljOeD48FbniBg6Lw' main document categories
-            const subCategoriaRef = collection(
-                doc(categoriaRef, 'aPTAljOeD48FbniBg6Lw'),
-                draftInfo.draftCategory
-            )
-            const categoriaData = await getDocs(subCategoriaRef)
-            return categoriaData
-        } catch (err) {
-            console.log(
-                'Error al obtener los datos de la colleccion categorias: ',
-                err
-            )
-        }
-    }
+
 
     useEffect(() => {
+        const categoriasFromFirestore = async () => {
+            try {
+                // 'aPTAljOeD48FbniBg6Lw' main document categories
+                const subCategoriaRef = collection(
+                    doc(categoriaRef, 'aPTAljOeD48FbniBg6Lw'),
+                    draftInfo.draftCategory
+                )
+                const categoriaData = await getDocs(subCategoriaRef)
+                return categoriaData
+            } catch (err) {
+                console.log(
+                    'Error al obtener los datos de la colleccion categorias: ',
+                    err
+                )
+            }
+        }
         // draftInfo.draftCategory
         // if (categoriaProfesional ) {
         categoriasFromFirestore()
@@ -194,7 +197,7 @@ const Page = () => {
                 console.log(error)
             })
         //} categoriaProfesional
-    }, [draftInfo, categoriaInfo, categoriasFromFirestore])
+    }, [draftInfo.draftCategory, categoriaInfo, categoriaRef])
 
     const handleShowMore = () => {
         setShowMore(!showMore)
