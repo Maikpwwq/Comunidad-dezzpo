@@ -56,7 +56,7 @@ function Navigator(props) {
     const activeUrl = urlPath.slice(1).split('/')
     // console.log("Navigator urlPath", activeUrl[1])
     const { ...other } = props
-    const user = auth?.currentUser || {}
+    const user = auth?.currentUser || undefined
     const isAuth = user ? true : false
     const userID = user?.uid || '' // Este es el id de la cuenta de Auth
     const userPhotoUrl = user?.photoURL || ''
