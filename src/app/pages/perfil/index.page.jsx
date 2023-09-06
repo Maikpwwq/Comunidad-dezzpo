@@ -13,8 +13,8 @@ import { auth } from '#@/firebase/firebaseClient'
 import '#@/assets/cssPrivateApp/perfil.css'
 // import ProfilePhoto from '#@/assets/img/Profile.png'
 // import Bogota from '#@/assets/img/Bogota.png'
-import { MapaPerfil } from './MapaPerfil'
-import { CincoEstrellas } from './CincoEstrellas'
+import { MapaPerfil } from '#@/app/components/MapaPerfil'
+import { CincoEstrellas } from '#@/app/components/CincoEstrellas'
 import { Comentarios } from '#@/app/components/Comentarios'
 import { ChipsCategories } from '#@/app/components/ChipsCategories'
 import { ListadoCategorias } from '#@/index/components/ListadoCategorias'
@@ -40,13 +40,13 @@ const Page = () => {
     // const userAuth = pageContext.pageProps.userAuth
     const userAuth = auth?.currentUser
     // const urlPath = pageContext.urlPathname
-    console.log('Perfil user', pageContext.pageProps)
+    console.log('Perfil user', pageContext) // .user
     // const user = auth?.currentUser
     const userAuthID = userAuth ? userAuth.uid : '' // Este es el id de la cuenta de Auth
     const userAuthName = userAuth ? userAuth.displayName : '' // Este es el id de la cuenta de Auth
     const [isLoaded, setIsLoaded] = useState(false)
 
-    let id = pageContext.routeParams['*'] // pageContext.routeParams.id
+    let id = pageContext.routeParams.id // ['*']
     console.log('routeParamsPerfil', id)
 
     // const { state } = {}

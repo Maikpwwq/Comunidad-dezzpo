@@ -9,6 +9,8 @@ import compression from 'compression'
 import { renderPage } from 'vite-plugin-ssr/server'
 import { root } from './root'
 
+// import { auth } from '../src/firebase/firebaseClient'
+
 const isProduction = process.env.NODE_ENV === 'production'
 
 Error.stackTraceLimit = Infinity
@@ -49,8 +51,10 @@ async function startServer() {
     // Vite-plugin-ssr middleware. It should always be our last middleware (because it's a
     // catch-all middleware superseding any middleware placed after it).
     app.get('*', async (req, res, next) => {
+        // const user = auth?.currentUser
         const pageContextInit = {
             urlOriginal: req.originalUrl,
+            // user
         }
         const pageContext = await renderPage(pageContextInit)
         const { httpResponse } = pageContext

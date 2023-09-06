@@ -254,7 +254,7 @@ function Navigator(props) {
                         {children.map(
                             ({ id: childId, icon, route, active }) => {
                                 // const hrefRoute = route.split('/').splice(1, 1).toString
-                                // console.log('navRoute', route)
+                                console.log('navRoute', route)
                                 return (
                                     <ListItem
                                         disablePadding

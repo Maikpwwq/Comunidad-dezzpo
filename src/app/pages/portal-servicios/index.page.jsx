@@ -22,8 +22,9 @@ import Button from 'react-bootstrap/Button'
 
 const Page = (props) => {
     const pageContext = usePageContext()
-    console.log('portal-servicios', pageContext.routeParams['*'])
-    const { searchInput } = pageContext.routeParams['*']
+    const searchInput = pageContext.routeParams.searchInput // ['*']
+    console.log('portal-servicios', searchInput)
+    
 
     // const _storage = storage
     const _firestore = firestore
@@ -70,9 +71,9 @@ const Page = (props) => {
                         })
                     }
                 })
-                .catch((error) => {
-                    console.log(error)
-                })
+                // .catch((error) => {
+                //     console.log(error)
+                // })
         }
     }, [searchInput])
 

@@ -6,7 +6,7 @@
 
 // Parameters available at:
 //  - `pageContext.routeParams['*']`
-export default '/app/perfil/*'
+// export default '/app/perfil/*'
 
 // export default (pageContext) => {
 //     if (!pageContext.urlPathname.startsWith('/app/perfil')) return false
@@ -25,3 +25,23 @@ export default '/app/perfil/*'
 //         routeParams: { id },
 //     }
 // }
+
+import { resolveRoute } from 'vite-plugin-ssr/routing'
+
+export default (pageContext) => {
+    {
+        const result = resolveRoute(
+            '/app/perfil/@id',
+            pageContext.urlPathname
+        )
+        if (result.match) {
+            return result
+        }
+    }
+
+    const result = resolveRoute(
+        '/app/perfil/',
+        pageContext.urlPathname
+    )
+    return result
+}

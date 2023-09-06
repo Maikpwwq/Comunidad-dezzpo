@@ -34,8 +34,8 @@ import Typography from '@mui/material/Typography'
 const Page = () => {
     console.log('auth', auth?.currentUser)
     const pageContext = usePageContext()
-    let id = pageContext.routeParams['*']
-    console.log('routeParamsPerfil', pageContext.routeParams['*'])
+    let id = pageContext.routeParams.id // ['*']
+    console.log('routeParamsPerfil', id)
     const userAuth = auth?.currentUser || {}
     const userAuthID = userAuth?.uid || id
     const userAuthName = userAuth?.displayName || ''

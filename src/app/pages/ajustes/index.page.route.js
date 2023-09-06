@@ -6,4 +6,24 @@
 
 // Parameters available at:
 //  - `pageContext.routeParams['*']`
-export default '/app/ajustes/*'
+// export default '/app/ajustes/*'
+
+import { resolveRoute } from 'vite-plugin-ssr/routing'
+
+export default (pageContext) => {
+    {
+        const result = resolveRoute(
+            '/app/ajustes/@id',
+            pageContext.urlPathname
+        )
+        if (result.match) {
+            return result
+        }
+    }
+
+    const result = resolveRoute(
+        '/app/ajustes/',
+        pageContext.urlPathname
+    )
+    return result
+}
