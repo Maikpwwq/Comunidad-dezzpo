@@ -17,7 +17,7 @@ import Toolbar from '@mui/material/Toolbar'
 
 function Header(props) {
     const { onDrawerToggle } = props
-    const user = auth?.currentUser || {}
+    const user = auth?.currentUser || undefined
     const userId = user?.uid
     const isAuth = user ? true : false
     const perfilRoute = `perfil/${userId}`
