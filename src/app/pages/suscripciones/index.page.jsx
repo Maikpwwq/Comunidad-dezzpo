@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
 const Page = () => {
     return (
@@ -17,18 +18,18 @@ const Page = () => {
                 <Row>
                     <Col className="col-10">
                         <Row className="pt-4 m-0 w-100 d-flex">
-                            <h2 className="headline-xl">
+                            <h2 className="headline-xl mb-5">
                                 El plan de beneficios con la membresía incluye
                             </h2>
                             <Col md={8}>
-                                <p className="body-1">
-                                    Como Propietario
-                                    <span>
+                                <Typography  variant="h3" className="p-description">
+                                    Como Propietario {' '}
+                                </Typography>
+                                <span className="subtitle">
                                         Adquiere nuestro servicio de afiliacion
                                         + plus
                                     </span>
-                                </p>
-                                <ul>
+                                <ul className="body-1">
                                     <li>Servicio 24 horas para urgencias</li>
                                     <li>Todos los servicios disponibles</li>
                                     <li>Prioridad al solicitar presupuestos</li>
@@ -36,18 +37,24 @@ const Page = () => {
                                 </ul>
                             </Col>
                             <Col md={4}>
-                                <Button>SOLICITAR</Button>
+                                <Button><a
+                                        className="chat-with-us body-1"
+                                        href="https://api.whatsapp.com/send?phone=573196138057"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        SOLICITAR
+                                    </a></Button>
                             </Col>
                         </Row>
 
                         <Row className="m-0 pt-4 w-100 d-flex">
                             <Col md={8}>
-                                <p className="body-1">
-                                    Como Comerciante Calificado
-                                    <span>Adquiere Un Membresia Pagada</span>
-                                </p>
-                                <div>
-                                    <ul>
+                                <Typography  variant="h3" className="p-description">
+                                    Como Comerciante Calificado{' '}
+                                </Typography>
+                                <span className="subtitle">Adquiere Un Membresia Pagada</span>
+                                    <ul className="body-1">
                                         <li>
                                             Ficha personalizado del perfil, con
                                             proyectos, opiniones, fotos...
@@ -97,10 +104,17 @@ const Page = () => {
                                             estes conectado con la comunidad
                                         </li>
                                     </ul>
-                                </div>
+                              
                             </Col>
                             <Col md={4}>
-                                <Button>SOLICITAR</Button>
+                            <Button><a
+                                        className="chat-with-us body-1"
+                                        href="https://api.whatsapp.com/send?phone=573196138057"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        SOLICITAR
+                                    </a></Button>
                             </Col>
                         </Row>
                     </Col>

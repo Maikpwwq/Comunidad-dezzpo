@@ -179,21 +179,21 @@ const Page = (props) => {
                     <Row className="headline-l">
                         <ul>
                             <li>
-                                <span className="text-black">484</span>
+                                <span className="text-black">48</span>
                                 <br />
                                 USUARIOS
                             </li>
                             <li>
-                                <span className="text-black">2018</span>
+                                <span className="text-black">2021</span>
                                 <br /> ACTIVO DESDE
                             </li>
                             <li>
-                                <span className="text-black">84</span>
+                                <span className="text-black">33</span>
                                 <br />
                                 CLIENTES FELICES
                             </li>
                             <li>
-                                <span className="text-black">206</span>
+                                <span className="text-black">62</span>
                                 <br />
                                 PROYECTOS
                             </li>
