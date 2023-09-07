@@ -21,7 +21,7 @@ const TableCards = (props) => {
                 }
             })
             if (array.length > 0) {
-                setDataCards(...dataCards, array)
+                setDataCards(array) // ...dataCards, 
                 console.log('dataTable', dataTable, array)
             }
         }
