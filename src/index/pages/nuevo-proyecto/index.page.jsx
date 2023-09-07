@@ -51,16 +51,7 @@ const Page = () => {
     const paramTipoProyecto = pageContext.routeParams.paramTipoProyecto       
     // const { paramCategoriaProfesional, paramTipoProyecto } =
     //     pageContext.routeParams['*']
-    console.log('nuevo-proyecto', paramCategoriaProfesional, paramTipoProyecto)
-    const draftCategory = paramCategoriaProfesional || ''
-    const draftProject = paramTipoProyecto || ''
-    // console.log(
-    //     'A',
-    //     draftCategory,
-    //     categoriaProfesional,
-    //     paramCategoriaProfesional
-    // )
-    // console.log('B', draftProject, tipoProyecto, paramTipoProyecto)
+    // console.log('nuevo-proyecto', paramCategoriaProfesional, paramTipoProyecto)
     // let requerimiento
     // useEffect(() => {
     //     // Perform localStorage action
@@ -83,9 +74,9 @@ const Page = () => {
     })
     const [activeStep, setActiveStep] = useState(0)
     const [draftInfo, setDraftInfo] = useState({
-        draftCategory: draftCategory,
+        draftCategory: paramCategoriaProfesional,
         draftSubCategory: '',
-        draftProject: draftProject,
+        draftProject: paramTipoProyecto,
         draftId: draftID,
         draftTotal: 0,
         draftName: '',
@@ -147,57 +138,55 @@ const Page = () => {
                 )
             }
         }
-        // draftInfo.draftCategory
-        // if (categoriaProfesional ) {
-        categoriasFromFirestore()
-            .then((docSnap) => {
-                if (docSnap) {
-                    const data = docSnap.docs.map((element) => ({
-                        ...element.data(),
-                    }))
-                    // TODO: Pasar la data por hojas que agrupen hasta seis subCategorias
-                    if (data.length > 0) {
-                        console.log(
-                            data
-                            //     draftInfo.draftCategory,
-                            //     categoriaProfesional
-                        )
-                        let i = 0
-                        let j = 0
-                        let response = [[], [], [], [], [], []]
-                        data.map((element) => {
-                            if (i < 6) {
-                                if (!response[j]) {
-                                    response[j] = []
+        if (!!draftInfo.draftProject && !!draftInfo.draftCategory ) {
+            categoriasFromFirestore().then((docSnap) => {
+                    if (docSnap) {
+                        const data = docSnap.docs.map((element) => ({
+                            ...element.data(),
+                        }))
+                        // TODO: Pasar la data por hojas que agrupen hasta seis subCategorias
+                        if (data.length > 0) {
+                            console.log(
+                                data
+                                //     draftInfo.draftCategory,
+                                //     categoriaProfesional
+                            )
+                            let i = 0
+                            let j = 0
+                            let response = [[], [], [], [], [], []]
+                            data.map((element) => {
+                                if (i < 6) {
+                                    if (!response[j]) {
+                                        response[j] = []
+                                    }
+                                    response[j].push(element)
+                                    i++
+                                } else {
+                                    j++
+                                    i = 0
                                 }
-                                response[j].push(element)
-                                i++
-                            } else {
-                                j++
-                                i = 0
-                            }
-                        })
-                        console.log(response)
-                        if (response.length > 0) {
-                            setCategoriaInfo({
-                                ...categoriaInfo,
-                                data: response,
-                                subCatLength: data.length / 6,
                             })
-                            // console.log(categoriaInfo)
+                            console.log(response)
+                            if (response.length > 0) {
+                                setCategoriaInfo({
+                                    ...categoriaInfo,
+                                    data: response,
+                                    subCatLength: data.length / 6,
+                                })
+                                console.log(categoriaInfo)
+                            }
                         }
+                    } else {
+                        console.log(
+                            'No se encontro información en la colleccion proyectos!'
+                        )
                     }
-                } else {
-                    console.log(
-                        'No se encontro información en la colleccion proyectos!'
-                    )
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        //} categoriaProfesional
-    }, [draftInfo.draftCategory, categoriaInfo, categoriaRef])
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+            } 
+    }, [categoriaInfo, categoriaRef, draftInfo.draftCategory, draftInfo.draftProject])
 
     const handleShowMore = () => {
         setShowMore(!showMore)
@@ -254,8 +243,8 @@ const Page = () => {
                 {/* <div className="pasos-fixed"></div> */}
                 {activeStep == 0 && (
                     <Col>
-                        {(draftInfo.draftProject === '' ||
-                            draftInfo.draftCategory === '') && (
+                        {(draftInfo.draftProject === undefined ||
+                            draftInfo.draftCategory === undefined ) && (
                             <Row className="nuevoProyectoBuscador">
                                 <Col
                                     className="align-items-start p-4 m-4"
@@ -293,6 +282,8 @@ const Page = () => {
                             </Row>
                         )}
                         {/* <ScrollToTopOnMount /> */}
+                        {(!!draftInfo.draftProject && !!draftInfo.draftCategory ) && (
+                                <>
                         <Row className="w-100 m-0">
                             <Col className="p-4" lg={8} md={10}>
                                 <p className="body-1">
@@ -320,7 +311,6 @@ const Page = () => {
                                 </Form.Select>
                             </Col>
                         </Row>
-                        {/* setActiveStep */}
                         <Row className="categorias w-100 m-0 p-4">
                             <Col className="p-0 pt-4 col-10 categorias-contenedor">
                                 <Row className="w-100 m-0">
@@ -353,6 +343,7 @@ const Page = () => {
                                 />
                             </Col>
                         </Row>
+                        
                         <Col className="col-10">
                             <Row className="pt-4 pb-4 w-100 justify-content-center">
                                 <Button
@@ -375,6 +366,7 @@ const Page = () => {
                                 </Button>
                             </Row>
                         </Col>
+                        </>)}
                     </Col>
                 )}
                 {activeStep == 1 && (

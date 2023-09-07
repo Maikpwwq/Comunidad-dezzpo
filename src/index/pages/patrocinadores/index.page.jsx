@@ -23,8 +23,18 @@ const Page = (props) => {
                                 </h2>
                             </span>
                             <ul className="p-description">
-                                <li>Bictia</li>
-                                <li>Mintic / MisionTic2022</li>
+                                <li><a href="https://bictia.com/" target="_blank"
+                            rel="noopener noreferrer">
+                                Bictia
+                                    </a></li>
+                                <li><a href="https://talentodigital.mintic.gov.co/734/w3-article-159508.html" target="_blank"
+                            rel="noopener noreferrer">
+                                Mintic / MisionTic2022
+                                    </a></li>
+                                <li><a href="https://redtecnoparque.com/" target="_blank"
+                            rel="noopener noreferrer">
+                                Sena / Red Tecnoparque
+                                    </a></li>
                             </ul>
                         </div>
                     </Col>

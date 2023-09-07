@@ -4,10 +4,10 @@ export { Page }
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import '#@/assets/css/asesorias.css'
-import { collection, doc, setDoc } from 'firebase/firestore'
 import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
-import { firestore } from '#@/firebase/firebaseClient'
+import { updateAsesoriaToFirestore } from '#@/services/updateAsesoriaToFirestore.service'
+// import { sharingInformationService } from '#@/services/sharing-information'
 
 // react-bootrstrap
 // import { Row, Col, Container, Button, Form } from 'react-bootstrap'
@@ -19,18 +19,12 @@ import Form from 'react-bootstrap/Form'
 
 const Page = (props) => {
     // const navigate = useNavigate()
-    const _firestore = firestore
-    const draftID = uuidv4()
-    const asesoriaRef = collection(_firestore, 'asesorias')
+    const asesoriaID = uuidv4()
     const [asesoriaInfo, setAsesoriaInfo] = useState({
         asesoriaTitulo: '',
         asesoriaDescription: '',
         asesoriaSelect: '',
     })
-
-    const asesoriaToFirestore = async (updateInfo, projectID) => {
-        await setDoc(doc(asesoriaRef, projectID), updateInfo)
-    }
 
     const handleClickChat = () => {}
 
@@ -38,11 +32,29 @@ const Page = (props) => {
         navigate('/blog')
     }
 
-    const handleClick = () => {
-        const snap = asesoriaToFirestore(asesoriaInfo, draftID)
-        snap.then((docSnap) => {
-            console.log(docSnap)
+    const toAsesoria = async (updateInfo, docId) => {
+        console.log('updateAsesoriaToFirestore', updateInfo, docId)
+        await updateAsesoriaToFirestore({
+            updateInfo, docId
         })
+    }
+
+    const handleClick = () => {
+        console.log('asesoriaInfo', asesoriaInfo)
+        toAsesoria(asesoriaInfo, asesoriaID)
+            .then((data) => {
+                if (data) {
+                    const res = data.data()
+                    console.log(data, res)
+                }
+            })
+        // const asesoriaData = sharingInformationService.getSubject()
+        // asesoriaData.subscribe((data) => {
+        //     if (data) {
+        //         const { sendAsesoria } = data
+        //         console.log('Asesoria Detail load:', sendAsesoria)
+        //     }
+        // })
     }
 
     const handleChange = (event) => {
@@ -53,7 +65,6 @@ const Page = (props) => {
         })
     }
 
-    console.log(asesoriaInfo)
 
     return (
         <>

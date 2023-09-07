@@ -3,7 +3,7 @@ export { MenuComunidad }
 /* Menu de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react'
 import { Link } from '#R/Link'
-import '#@/assets/css/menu.css'
+import '#@/assets/css/menu.css' 
 
 // images
 import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'

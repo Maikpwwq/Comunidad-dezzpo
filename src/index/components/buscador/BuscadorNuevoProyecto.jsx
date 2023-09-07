@@ -20,8 +20,8 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
     // const { paramCategoriaProfesional, paramTipoProyecto } = useParams()
 
     const [projectData, setProjectData] = useState({
-        categoriaProfesional: categoriaProfesional || '', // || paramCategoriaProfesional
-        tipoProyecto: tipoProyecto || '', // || paramTipoProyecto
+        categoriaProfesional: categoriaProfesional, // || paramCategoriaProfesional
+        tipoProyecto: tipoProyecto, // || paramTipoProyecto
     })
 
     useEffect(() => {
