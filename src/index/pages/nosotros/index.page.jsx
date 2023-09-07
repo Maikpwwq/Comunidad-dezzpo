@@ -6,7 +6,8 @@ import '#@/assets/css/nosotros.css'
 import IcoMoon from 'react-icomoon'
 import iconSet from '#@/assets/css/icomoon/selection.json'
 // Imagenes
-import RoadMap from '#@/assets/img/RoadMap.svg'
+import RoadMap2 from '#@/assets/img/RoadMap2.png'
+import Hitos from '#@/assets/img/Hitos.png'
 
 // react-bootrstrap
 // import { Row, Col, Container, Button } from 'react-bootstrap'
@@ -14,6 +15,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
+import Typography from '@mui/material/Typography'
 
 const Page = (props) => {
     return (
@@ -179,15 +181,21 @@ const Page = (props) => {
             <Container fluid className="p-0">
                 <Row className="nosotrosHitos m-0">
                     <Col className="p-0">
-                        <Col className="p-0 w-100">
-                            <h2 className="headline-xl">
-                                ROAD MAP <br /> HITOS
-                            </h2>
+                        <Col className="p-0 w-100 mb-5">
+                            <Typography variant='h3' className="headline-xl pt-5 pb-5">
+                                HITOS
+                            </Typography>
                             <Row className="w-100">
-                                <img src={RoadMap} alt="ROAD MAP" />
+                                <img src={Hitos} style={{ width: 'auto', }} alt="Mapa de Hitos" />
+                            </Row>
+                            <Typography variant='h3' className="headline-xl pt-5 pb-5">
+                                ROAD MAP
+                            </Typography>
+                            <Row className="w-100">
+                                <img src={RoadMap2}  style={{ width: 'auto', }}  alt="ROAD MAP V2" />
                             </Row>
                         </Col>
-                        <Col className="">
+                        <Col className="mb-5">
                             <p className="p-description">
                                 Pronto estaremos disponibles en: <br />
                             </p>

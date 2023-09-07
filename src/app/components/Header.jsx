@@ -7,6 +7,7 @@ import { SearchBar } from './SearchBar'
 import '#@/assets/cssPrivateApp/header.css'
 
 import { NotificationBar } from './NotificationBar'
+import { navigate } from 'vite-plugin-ssr/client/router'
 
 import PropTypes from 'prop-types'
 import AppBar from '@mui/material/AppBar'
@@ -22,6 +23,14 @@ function Header(props) {
     const isAuth = user ? true : false
     const perfilRoute = `perfil/${userId}`
     const [tab, setTab] = useState(0)
+
+    const signup = () => {
+        navigate('/registro')
+    }
+
+    const login = () => {
+        navigate('/ingreso')
+    }
 
     return (
         <>
@@ -82,7 +91,27 @@ function Header(props) {
                                     />
                                 </Tabs>
                             ) : (
-                                <></>
+                                <>
+                                    {/* TODO implement nav to login */}
+                                    <Tabs
+                                        value={tab}
+                                        textColor="inherit"
+                                        // style={{ 'overflow-x': 'auto' }}
+                                    >
+                                        <Tab
+                                            label="Iniciar Sesión"
+                                            // component={Link}
+                                            // href={}
+                                            onClick={login}
+                                        />
+                                         <Tab
+                                            label="Registrarse"
+                                            // component={Link}
+                                            // href={}
+                                            onClick={signup}
+                                        />
+                                    </Tabs>
+                                </>
                             )}
                         </Grid>
                     </Grid>
