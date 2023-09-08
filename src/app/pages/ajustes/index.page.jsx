@@ -3,7 +3,7 @@ export { Page }
 export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - Ajustes
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { auth } from '#@/firebase/firebaseClient'
 import { formatDistance, parse } from 'date-fns' // parseISO, format, subDays
 import es from 'date-fns/locale/es'
@@ -36,19 +36,15 @@ const Page = () => {
     const pageContext = usePageContext()
     let id = pageContext.routeParams.id // ['*']
     console.log('routeParamsPerfil', id)
-    const userAuth = auth?.currentUser || {}
+    const userAuth = useMemo(() => auth.currentUser , [] )
     const userAuthID = userAuth?.uid || id
     const userAuthName = userAuth?.displayName || ''
-    let selectRole
-    useEffect(() => {
-        // Perform localStorage action
-        const localRole = localStorage.getItem('role')
-        selectRole = parseInt(JSON.parse(localRole))
-    }, [])
+    const [isLoaded, setIsLoaded] = useState(false)
 
     const [userRol, setUserRol] = useState({
-        rol: selectRole,
+        rol: null,
     })
+
     // console.log(userRol.rol)
     const [alert, setAlert] = useState({
         open: false,
@@ -83,16 +79,6 @@ const Page = () => {
         userDescription: '',
     })
 
-    const userData = () => {
-        const firestoreUserID = userAuthID
-        const userSelectedRol = userRol.rol
-        console.log('readUserFromFirestore', firestoreUserID, userSelectedRol)
-        readUserFromFirestore({
-            firestoreUserID,
-            userSelectedRol,
-        })
-    }
-
     const determineDistanceTime = (metadata) => {
         const creationTime = metadata.creationTime
         //console.log(creationTime)
@@ -109,122 +95,157 @@ const Page = () => {
         return distanceTime
     }
 
-    const LoadAuthData = () => {
-        const {
-            uid,
-            email,
-            displayName,
-            phoneNumber,
-            photoURL,
-            emailVerified,
-            metadata,
-        } = userAuth
-
-        const distanceTime = determineDistanceTime(metadata)
-
-        setUserEditInfo({
-            ...userEditInfo,
-            userPhone: phoneNumber,
-            userPhotoUrl: photoURL,
-            userId: uid,
-            userMail: email,
-            userName: displayName,
-            userJoined: distanceTime,
-        })
-    }
 
     useEffect(() => {
-        if (!isNaN(userRol.rol) && userRol.rol !== '') {
-            // Load and expose user data from firestore
-            userData()
-            const userInformation = sharingInformationService.getSubject()
-            userInformation.subscribe((data) => {
-                if (data) {
-                    const { currentUser } = data
-                    console.log('readUserFromFirestore:', currentUser)
-                    const {
-                        userName,
-                        userPhone,
-                        userPhotoUrl,
-                        userJoined,
-                        userProfession,
-                        userExperience,
-                        userCategories,
-                        userDirection,
-                        userCiudad,
-                        userCodigoPostal,
-                        userRazonSocial,
-                        userIdentification,
-                        userDescription,
-                        userChannelUrl,
-                        // userCategorie,
-                        // userClasification,
-                        // userGrade,
-                    } = currentUser
+        const LoadAuthData = () => {
+            const {
+                uid,
+                email,
+                displayName,
+                phoneNumber,
+                photoURL,
+                emailVerified,
+                metadata,
+            } = userAuth
 
-                    // Sendbird new open channel
-                    console.log('create new open channel', userChannelUrl)
-                    if (userChannelUrl === undefined || userChannelUrl === '') {
-                        console.log('create new open channel')
-                        // newOpenChannelSendbird({
-                        //     userAuthID,
-                        //     userAuthName,
-                        //     //setChannelUrl,
-                        //     // userEditInfo,
-                        //     // setUserEditInfo,
-                        // })
-                        // const currentURL =
-                        //     sharingInformationService.getSubject()
-                        // currentURL.subscribe((data) => {
-                        //     if (data) {
-                        //         const { channelURL } = data
-                        //         console.log(
-                        //             'newOpenChannelSendbird:',
-                        //             channelURL,
-                        //             data
-                        //         )
-                        //         setUserEditInfo({
-                        //             ...userEditInfo,
-                        //             userChannelUrl: channelURL,
-                        //         })
-                        //     }
-                        // })
-                    }
+            let distanceTime
+            if (metadata) {
+                distanceTime = determineDistanceTime(metadata)
+            }
+            
 
-                    setUserEditInfo({
-                        ...userEditInfo,
-                        userPhone: userPhone || '',
-                        userPhotoUrl: userPhotoUrl || '',
-                        // userId: uid,
-                        // userMail: email,
-                        userName: userName || '',
-                        userJoined: userJoined || '',
-                        userProfession: userProfession || '',
-                        userExperience: userExperience || '',
-                        userChannelUrl: userChannelUrl,
-                        // userCategorie: userCategorie,
-                        // userClasification: userClasification,
-                        // userGrade: userGrade,
-                        userCategories: userCategories || [],
-                        userDirection: userDirection || '',
-                        userCiudad: userCiudad || '',
-                        userCodigoPostal: userCodigoPostal || '',
-                        userRazonSocial: userRazonSocial || '',
-                        userIdentification: userIdentification || '',
-                        userDescription: userDescription || '',
-                    })
-                } else {
-                    console.log(
-                        'No se encontro información relacionada con este usuario!'
-                    )
-                }
+            setUserEditInfo({
+                ...userEditInfo,
+                userPhone: phoneNumber,
+                userPhotoUrl: photoURL,
+                userId: uid,
+                userMail: email,
+                userName: displayName,
+                userJoined: distanceTime,
             })
-            if (userAuth !== null && userAuth !== undefined) {
-                console.log('authUser', userAuth)
-                LoadAuthData(userAuth)
+        }
+
+        const LoadCurrentData = (currentUser) => {
+            const {
+                userName,
+                userPhone,
+                userPhotoUrl,
+                userJoined,
+                userProfession,
+                userExperience,
+                userCategories,
+                userDirection,
+                userCiudad,
+                userCodigoPostal,
+                userRazonSocial,
+                userIdentification,
+                userDescription,
+                userChannelUrl,
+                // userCategorie,
+                // userClasification,
+                // userGrade,
+            } = currentUser
+
+            // Sendbird new open channel
+            console.log('create new open channel', userChannelUrl)
+            if (userChannelUrl === undefined || userChannelUrl === '') {
+                console.log('create new open channel')
+                // newOpenChannelSendbird({
+                //     userAuthID,
+                //     userAuthName,
+                //     //setChannelUrl,
+                //     // userEditInfo,
+                //     // setUserEditInfo,
+                // })
+                // const currentURL =
+                //     sharingInformationService.getSubject()
+                // currentURL.subscribe((data) => {
+                //     if (data) {
+                //         const { channelURL } = data
+                //         console.log(
+                //             'newOpenChannelSendbird:',
+                //             channelURL,
+                //             data
+                //         )
+                //         setUserEditInfo({
+                //             ...userEditInfo,
+                //             userChannelUrl: channelURL,
+                //         })
+                //     }
+                // })
+            }
+
+            setUserEditInfo({
+                ...userEditInfo,
+                userPhone: userPhone || '',
+                userPhotoUrl: userPhotoUrl || '',
+                // userId: uid,
+                // userMail: email,
+                userName: userName || '',
+                userJoined: userJoined || '',
+                userProfession: userProfession || '',
+                userExperience: userExperience || '',
+                userChannelUrl: userChannelUrl,
+                // userCategorie: userCategorie,
+                // userClasification: userClasification,
+                // userGrade: userGrade,
+                userCategories: userCategories || [],
+                userDirection: userDirection || '',
+                userCiudad: userCiudad || '',
+                userCodigoPostal: userCodigoPostal || '',
+                userRazonSocial: userRazonSocial || '',
+                userIdentification: userIdentification || '',
+                userDescription: userDescription || '',
+            })
+        }
+
+        const userData = () => {
+            const firestoreUserID = userAuthID
+            const userSelectedRol = userRol.rol
+            console.log('readUserFromFirestore', firestoreUserID, userSelectedRol)
+            readUserFromFirestore({
+                firestoreUserID,
+                userSelectedRol,
+            })
+        }
+
+        // Perform localStorage action
+        const localRole = localStorage.getItem('role')
+        const selectRole = parseInt(JSON.parse(localRole))
+        setUserRol({ rol: selectRole}) // ...userRol , 
+        console.log('selectRole', selectRole, userRol.rol)
+
+        if (!isLoaded) {
+            if (!isNaN(userRol.rol) && userRol.rol !== undefined) {
+                // Load and expose user data from firestore
+                userData()
+                const userInformation = sharingInformationService.getSubject()
+                userInformation.subscribe((data) => {
+                    if (data) {
+                        const { currentUser, authUser } = data
+                        console.log('readUserFromFirestore:', currentUser)
+                        if (currentUser){
+                            LoadCurrentData(currentUser)
+                            setIsLoaded(true)
+                        }
+                        if (authUser) {
+                            LoadAuthData(authUser)
+                            setIsLoaded(true)
+                        }
+                    } else {
+                        console.log(
+                            'No se encontro información relacionada con este usuario!'
+                        )
+                    }
+                })
+                if (userAuth !== null && userAuth !== undefined) {
+                    console.log('authUser', userAuth)
+                    LoadAuthData(userAuth)
+                    setIsLoaded(true)
+                }
             }
         }
-    }, [userAuth])
+    }, [userAuth, userAuthID, userEditInfo, userRol.rol, isLoaded])
 
     const handleAlert = (message, severity) => {
         setAlert({ ...alert, open: true, message: message, severity: severity })
@@ -258,18 +279,20 @@ const Page = () => {
     }
 
     const handleSubmit = () => {
-        snap()
-        const userData = sharingInformationService.getSubject()
-        userData
-        // userData.subscribe((docSnap) => {
-        //     if (!!docSnap) {
-        //         console.log('Detail load:', docSnap)
-        //         handleAlert(
-        //             'Se actualizó correctamente su información!',
-        //             'success'
-        //         )
-        //     }
-        // })
+        try { 
+            snap()
+            const userData = sharingInformationService.getSubject()
+            userData
+            handleAlert(
+                'Se actualizó correctamente su información!',
+                'success'
+            )       
+        } catch ( err ){
+            handleAlert(
+                'No se actualizó correctamente su información, intente de nuevo!',
+                'error'
+            )
+        }
     }
 
     return (

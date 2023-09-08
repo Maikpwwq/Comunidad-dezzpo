@@ -1,0 +1,3 @@
+export {categories}
+
+const categories = {} 

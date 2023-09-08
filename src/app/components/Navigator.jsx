@@ -4,6 +4,9 @@ import { navigate } from 'vite-plugin-ssr/client/router'
 import { auth } from '#@/firebase/firebaseClient'
 import { signOut } from 'firebase/auth'
 import { usePageContext } from '#R/usePageContext'
+import { sharingInformationService } from '#@/services/sharing-information'
+
+// import categories from '#@/app/components/categories'
 
 //imagenes
 // import Avatar1 from '#@/assets/img/CategoriasPopulares.png'
@@ -56,11 +59,29 @@ function Navigator(props) {
     const activeUrl = urlPath.slice(1).split('/')
     // console.log("Navigator urlPath", activeUrl[1])
     const { ...other } = props
-    const user = auth?.currentUser || undefined
-    const isAuth = user ? true : false
-    const userID = user?.uid || '' // Este es el id de la cuenta de Auth
-    const userPhotoUrl = user?.photoURL || ''
-    const userName = user?.displayName || ''
+    const userAuth = React.useMemo(() => auth?.currentUser , [] )
+    console.log("Navigator user", userAuth)
+
+    const [ isAuth, setIsAuth ] = React.useState(userAuth ? true : false)
+
+    // const userData = sharingInformationService.getSubject()
+    // userData.subscribe((data) => {
+    //     if (data) {
+    //         console.log('perfilPage', data)
+    //         const { currentUser, authUser } = data
+    //         if (currentUser || authUser) {
+    //             setIsAuth(true)
+    //         } 
+    //     } else {
+    //         console.log(
+    //             'No se encontro información relacionada con este usuario!'
+    //         )
+    //     }
+    // })
+    
+    const userID = userAuth?.uid || '' // Este es el id de la cuenta de Auth
+    const userPhotoUrl = userAuth?.photoURL || ''
+    const userName = userAuth?.displayName || ''
     // const navigate = useNavigate()
     const handleSignout = () => {
         signOut(auth)

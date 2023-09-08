@@ -29,6 +29,7 @@
 import { resolveRoute } from 'vite-plugin-ssr/routing'
 
 export default (pageContext) => {
+
     {
         const result = resolveRoute(
             '/app/perfil/@id',
@@ -43,5 +44,7 @@ export default (pageContext) => {
         '/app/perfil/',
         pageContext.urlPathname
     )
+    result.precedence = -1
+    // console.log('result', result)
     return result
 }
