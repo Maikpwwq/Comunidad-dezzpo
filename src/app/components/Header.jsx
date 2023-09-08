@@ -1,6 +1,6 @@
 export { Header }
 
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Link } from '#R/Link'
 import { auth } from '#@/firebase/firebaseClient'
 import { SearchBar } from './SearchBar'
@@ -18,9 +18,11 @@ import Toolbar from '@mui/material/Toolbar'
 
 function Header(props) {
     const { onDrawerToggle } = props
-    const user = auth?.currentUser || undefined
-    const userId = user?.uid
-    const isAuth = user ? true : false
+    const userAuth = useMemo(() => auth?.currentUser , [] )
+    console.log("Navigator user", userAuth)
+    const [ isAuth, setIsAuth ] = React.useState(userAuth ? true : false)
+    const userId = userAuth?.uid
+
     const perfilRoute = `perfil/${userId}`
     const [tab, setTab] = useState(0)
 

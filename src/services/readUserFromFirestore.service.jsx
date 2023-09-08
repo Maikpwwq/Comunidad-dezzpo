@@ -32,6 +32,7 @@ const readUserFromFirestore = (props) => {
             }
         } catch (err) {
             console.log('Error getting user: ', err)
+            throw new Error ('No se puede llamar un documento con una ruta vacia.')
         }
     }
     // var solution = () => {
