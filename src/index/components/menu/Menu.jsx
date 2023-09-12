@@ -19,6 +19,8 @@ import IconButton from '@mui/material/IconButton'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import MenuIcon from '@mui/icons-material/Menu'
 import LoginIcon from '@mui/icons-material/Login'
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import PriceChangeIcon from '@mui/icons-material/PriceChange';
 
 const MenuComunidad = (props) => {
     /* getLinkClass = (path) => {
@@ -75,6 +77,7 @@ const MenuComunidad = (props) => {
                                     href="/app/portal-servicios"
                                     className="body-2 btn-menu-comunidad"
                                 >
+                                    <StorefrontIcon className="me-1"/> 
                                     <strong>
                                         Directorio <br /> Comerciantes
                                     </strong>
@@ -90,9 +93,9 @@ const MenuComunidad = (props) => {
 
                                 <Link
                                     href="/ingreso"
-                                    className="body-2 btn-menu-comunidad"
+                                    className="body-2 btn-menu-comunidad ms-2 me-5"
                                 >
-                                    <LoginIcon /> <strong>Ingresar </strong>
+                                    <LoginIcon className="me-1"/> <strong>Ingresar </strong>
                                 </Link>
                             </Row>
                         </Row>
@@ -111,7 +114,7 @@ const MenuComunidad = (props) => {
                                     </Link>
                                 </li> */}
                             {/* seleccion asi trabajamos*/}
-                            <div className="dropdown">
+                            <div className="dropdown" style={{ minWidth: '118px'}}>
                                 {/* <li className="botonSeccion"></li> */}
                                 <Link
                                     href="asi-trabajamos"
@@ -163,7 +166,7 @@ const MenuComunidad = (props) => {
                                 </div>
                             </div>
                             {/* seleccion nosotros */}
-                            <div className="dropdown">
+                            <div className="dropdown ms-4">
                                 <Link
                                     href="/nosotros"
                                     className="botonLink body-2"
@@ -201,7 +204,7 @@ const MenuComunidad = (props) => {
                                 </div>
                             </div>
                             {/* seleccion Comunidad de Comerciantes*/}
-                            <div className="dropdown">
+                            <div className="dropdown ms-4">
                                 <Link
                                     href="/comunidad-comerciantes"
                                     className="botonLink body-2"
@@ -249,7 +252,7 @@ const MenuComunidad = (props) => {
                                 </div>
                             </div>
                             {/* seleccion Comunidad de Propietarios*/}
-                            <div className="dropdown">
+                            <div className="dropdown ms-4">
                                 <Link
                                     href="/comunidad-propietarios"
                                     className="botonLink body-2"
@@ -298,7 +301,7 @@ const MenuComunidad = (props) => {
                             </div>
                             <Link
                                 href="/presupuestos"
-                                className="botonLink body-2"
+                                className="botonLink body-2 ms-4"
                             >
                                 Presupuestos
                             </Link>
@@ -313,15 +316,16 @@ const MenuComunidad = (props) => {
                                 </li> */}
                             <Link
                                 href="/asesorias"
-                                className="botonLink body-2"
+                                className="botonLink body-2 ms-4"
                             >
                                 Asesorias
                             </Link>
                             <Link
                                 href="/apendice-costos"
-                                className="botonLink body-2"
+                                className="botonLink body-2 ms-4"
+                                style={{ maxWidth: '150px'}}
                             >
-                                Apendice de costos
+                                Apendice de costos <PriceChangeIcon className="ms-1"/> 
                             </Link>
                             {/* <li className="botonSeccion">
                                     <Link

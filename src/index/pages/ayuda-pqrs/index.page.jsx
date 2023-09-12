@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
+import ChatIcon from '@mui/icons-material/Chat';
 
 const Page = (props) => {
     const handleClickChat = () => {}
@@ -168,7 +169,7 @@ const Page = (props) => {
                                 <br />
                                 COMUNÍCATE CON
                                 <br />
-                                UN ASESOR
+                                UN ASESOR <ChatIcon className="ms-1"/> 
                             </p>
                             <br />
                             <Button

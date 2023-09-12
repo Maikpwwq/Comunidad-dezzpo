@@ -216,13 +216,13 @@ const Page = (props) => {
                                     </Typography>
                                     {step === 1 && (
                                         <>
-                                            <Form.Label className="mb-0 pt-2 body-1">
+                                            <Form.Label className="mb-0 pt-4 body-1">
                                                 Primero, elige tu rol
                                             </Form.Label>
                                             <ToggleButtonGroup
                                                 type="checkbox" // 'radio'
                                                 name="userRol"
-                                                className="mb-2 mt-2 align-items-center"
+                                                className="mb-5 mt-2 align-items-center"
                                                 vertical="true"
                                                 onChange={handleSelectRol}
                                             >
@@ -265,7 +265,7 @@ const Page = (props) => {
                                     )}
                                     {step === 2 && (
                                         <>
-                                            <Form.Label className="mb-0 body-1">
+                                            <Form.Label className="mb-0 body-1 pt-4">
                                                 {userSignupRol == 1
                                                     ? 'Soy propietario/residente'
                                                     : 'Soy comerciante calificado'}
@@ -377,7 +377,7 @@ const Page = (props) => {
                                     />
                                 </Form.Group> */}
                                             </Col>
-                                            <Col className="pt-3 pb-2">
+                                            <Col className="pt-4 pb-2">
                                                 <Button
                                                     className="btn-buscador btn-round btn-high body-1"
                                                     variant="primary"

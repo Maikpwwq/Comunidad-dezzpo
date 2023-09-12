@@ -23,16 +23,30 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import HomeIcon from '@mui/icons-material/Home'
-import PeopleIcon from '@mui/icons-material/People'
-import DnsRoundedIcon from '@mui/icons-material/DnsRounded'
+import StoreIcon from '@mui/icons-material/Store';
+import PersonIcon from '@mui/icons-material/Person';
+// import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
 import NotificationsIcon from '@mui/icons-material/Notifications'
-import PublicIcon from '@mui/icons-material/Public'
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet'
-import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent'
-import TimerIcon from '@mui/icons-material/Timer'
-import SettingsIcon from '@mui/icons-material/Settings'
-import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup'
+import LoyaltyIcon from '@mui/icons-material/Loyalty';
+import CardMembershipIcon from '@mui/icons-material/CardMembership';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import TuneIcon from '@mui/icons-material/Tune';
+import PaymentIcon from '@mui/icons-material/Payment';
+import LockResetIcon from '@mui/icons-material/LockReset';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+
+// import HomeIcon from '@mui/icons-material/Home'
+// import PeopleIcon from '@mui/icons-material/People'
+// import DnsRoundedIcon from '@mui/icons-material/DnsRounded'
+// import PublicIcon from '@mui/icons-material/Public'
+// import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet'
+// import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent'
+// import TimerIcon from '@mui/icons-material/Timer'
+// import SettingsIcon from '@mui/icons-material/Settings'
+// import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup'
+
 // const match = useMatch('/')
 // console.log(match)
 
@@ -117,13 +131,13 @@ function Navigator(props) {
                   children: [
                       {
                           id: 'Mi cuenta',
-                          icon: <PeopleIcon />,
+                          icon: <PersonIcon />,
                           route: `perfil/${userID}`,
                           active: 'perfil' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Portal de servicios',
-                          icon: <HomeIcon />,
+                          icon: <StoreIcon />,
                           route: 'portal-servicios/',
                           active:
                               'portal-servicios' === activeUrl[1]
@@ -132,7 +146,7 @@ function Navigator(props) {
                       },
                       {
                           id: 'Directorio de Requerimientos',
-                          icon: <HomeIcon />,
+                          icon: <DriveFileMoveIcon />,
                           route: 'directorio-requerimientos/',
                           active:
                               'directorio-requerimientos' === activeUrl[1]
@@ -148,27 +162,27 @@ function Navigator(props) {
                       },
                       {
                           id: 'Suscripciones',
-                          icon: <TimerIcon />,
+                          icon: <LoyaltyIcon />,
                           route: 'suscripciones',
                           active:
                               'suscripciones' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Biblioteca',
-                          icon: <DnsRoundedIcon />,
+                          icon: <CollectionsBookmarkIcon />,
                           route: 'biblioteca',
                           active: 'biblioteca' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Invitar a un Amigo',
-                          icon: <PublicIcon />,
+                          icon: <CardMembershipIcon />,
                           route: 'invitar-amigos',
                           active:
                               'invitar-amigos' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Ajustes',
-                          icon: <SettingsEthernetIcon />,
+                          icon: <ManageAccountsIcon />,
                           route: `ajustes/${userID}`,
                           active: 'ajustes' === activeUrl[1] ? true : false,
                       },
@@ -179,7 +193,7 @@ function Navigator(props) {
                   children: [
                       {
                           id: 'Privacidad',
-                          icon: <SettingsIcon />,
+                          icon: <TuneIcon />,
                           route: 'configuracion-privacidad',
                           active:
                               'configuracion-privacidad' === activeUrl[1]
@@ -188,13 +202,13 @@ function Navigator(props) {
                       },
                       {
                           id: 'Formas de Pago',
-                          icon: <SettingsInputComponentIcon />,
+                          icon: <PaymentIcon />,
                           route: 'formas-pago',
                           active: 'formas-pago' === activeUrl[1] ? true : false,
                       },
                       {
                           id: 'Cambiar Clave',
-                          icon: <PhonelinkSetupIcon />,
+                          icon: <LockResetIcon />,
                           route: 'cambiar-clave',
                           active:
                               'cambiar-clave' === activeUrl[1] ? true : false,
@@ -208,7 +222,7 @@ function Navigator(props) {
                   children: [
                       {
                           id: 'Portal de servicios',
-                          icon: <HomeIcon />,
+                          icon: <StoreIcon />,
                           route: 'portal-servicios',
                           active:
                               'portal-servicios' === activeUrl[1]
@@ -217,7 +231,7 @@ function Navigator(props) {
                       },
                       {
                           id: 'Directorio de Requerimientos',
-                          icon: <HomeIcon />,
+                          icon: <DriveFileMoveIcon />,
                           route: 'directorio-requerimientos',
                           active:
                               'directorio-requerimientos' === activeUrl[1]
@@ -226,7 +240,7 @@ function Navigator(props) {
                       },
                       {
                           id: 'Suscripciones',
-                          icon: <TimerIcon />,
+                          icon: <LoyaltyIcon />,
                           route: 'suscripciones',
                           active:
                               'suscripciones' === activeUrl[1] ? true : false,
@@ -327,7 +341,7 @@ function Navigator(props) {
                     >
                         <ListItemButton selected={false} sx={item}>
                             <ListItemIcon style={{ color: '#00b0ab' }}>
-                                <PhonelinkSetupIcon />
+                                <LogoutIcon />
                             </ListItemIcon>
                             <ListItemText>Cerrar Sesion</ListItemText>
                         </ListItemButton>
