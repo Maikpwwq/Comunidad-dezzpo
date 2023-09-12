@@ -228,7 +228,7 @@ const Page = () => {
                                     </Typography>
                                     <p className="body-1 p-4 d-inline-block">
                                         Crea una nueva
-                                        <strong className="pb-4">oferta</strong>
+                                        <strong className="pb-4 ms-1 me-1">oferta</strong>
                                         gratis.
                                         {/* Describe tu proyecto <br /> */}
                                     </p>
@@ -247,7 +247,7 @@ const Page = () => {
                                     </Typography>
                                     <p className="body-1 p-4 d-inline-block">
                                         Consigue hasta cuatro
-                                        <strong className="pb-4">
+                                        <strong className="pb-4 ms-1 me-1">
                                             cotizaciones
                                         </strong>
                                         y selecciona el perfil adecuado para el
@@ -303,7 +303,7 @@ const Page = () => {
                                         Observa las oferta indicadas para ti.
                                         <br />
                                         Filtra requerimientos por ubicación y
-                                        <strong className="pb-4">
+                                        <strong className="pb-4 ms-1 me-1">
                                             postulate.
                                         </strong>
                                     </p>
@@ -322,11 +322,11 @@ const Page = () => {
                                     </Typography>
                                     <p className="body-1 p-4 d-inline-block">
                                         Diligencia el
-                                        <strong className="pb-4">
+                                        <strong className="pb-4 ms-1 me-1">
                                             presupuesto.
                                         </strong>
                                         Haz una
-                                        <strong className="pb-4">
+                                        <strong className="pb-4 ms-1 me-1">
                                             cotizacion
                                         </strong>
                                         detallada con los datos suministrados.
@@ -352,7 +352,7 @@ const Page = () => {
                                         Califica y comenta. <br />
                                         Finalizó el proyecto, <br />
                                         Dejanos conocer tu
-                                        <strong className="pb-4">
+                                        <strong className="pb-4 ms-1 me-1">
                                             experiencia.
                                         </strong>
                                         <br />

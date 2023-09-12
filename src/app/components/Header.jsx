@@ -16,6 +16,14 @@ import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import Toolbar from '@mui/material/Toolbar'
 
+import PersonIcon from '@mui/icons-material/Person'
+import MessageIcon from '@mui/icons-material/Message'
+import StarRateIcon from '@mui/icons-material/StarRate'
+import HowToRegIcon from '@mui/icons-material/HowToReg'
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory'
+import LoginIcon from '@mui/icons-material/Login'
+import PersonAddIcon from '@mui/icons-material/PersonAdd'
+
 function Header(props) {
     const { onDrawerToggle } = props
     const userAuth = useMemo(() => auth?.currentUser , [] )
@@ -62,31 +70,31 @@ function Header(props) {
                                     // style={{ 'overflow-x': 'auto' }}
                                 >
                                     <Tab
-                                        label="Ver tu perfil"
+                                        label={<><PersonIcon  className="ms-1"/>Ver tu perfil</>} 
                                         component={Link}
                                         href={perfilRoute}
                                         onClick={() => setTab(0)}
                                     />
                                     <Tab
-                                        label="Calificaciones"
+                                        label={<><StarRateIcon  className="ms-1"/>Calificaciones</>}
                                         component={Link}
                                         href="calificaciones"
                                         onClick={() => setTab(1)}
                                     />
                                     <Tab
-                                        label="Mensajes"
+                                        label={<><MessageIcon  className="ms-1"/>Mensajes</>}
                                         component={Link}
                                         href="mensajes"
                                         onClick={() => setTab(2)}
                                     />
                                     <Tab
-                                        label="Historial de servicio"
+                                        label={<><WorkHistoryIcon  className="ms-1"/>Historial de servicio</>}
                                         component={Link}
                                         href="historial-servicios"
                                         onClick={() => setTab(3)}
                                     />
                                     <Tab
-                                        label="Certificaciones"
+                                        label={<><HowToRegIcon  className="ms-1"/>Certificaciones</>}
                                         component={Link}
                                         href="certificaciones"
                                         onClick={() => setTab(4)}
@@ -101,13 +109,13 @@ function Header(props) {
                                         // style={{ 'overflow-x': 'auto' }}
                                     >
                                         <Tab
-                                            label="Iniciar Sesión"
+                                            label={<><LoginIcon  className="ms-1"/>Iniciar Sesión</>}
                                             // component={Link}
                                             // href={}
                                             onClick={login}
                                         />
                                          <Tab
-                                            label="Registrarse"
+                                            label={<><PersonAddIcon  className="ms-1"/>Registrarse</>}
                                             // component={Link}
                                             // href={}
                                             onClick={signup}

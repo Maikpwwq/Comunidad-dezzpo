@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
+import ChatIcon from '@mui/icons-material/Chat';
 
 const Page = (props) => {
     return (
@@ -23,7 +24,7 @@ const Page = (props) => {
                         <span className="chatAsesor headline-xl">
                             Contacta Con Un Asesor
                             <br />
-                            en Tiempo Real En Nuestro Chat
+                            en Tiempo Real En Nuestro Chat <ChatIcon className="ms-1"/> 
                         </span>
                         <br />
                         <Button className="btn btn-round btn-high btn-avanzar">

@@ -39,6 +39,7 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import DownloadIcon from '@mui/icons-material/Download';
 
 // const styles = () => ({
 //     selectRolBtn: {
@@ -299,12 +300,12 @@ const Page = (props) => {
                                     </Typography>
                                     {step == 1 ? (
                                         <>
-                                            <Form.Label className="mb-0 pt-2 body-1">
+                                            <Form.Label className="mb-0 pt-4 body-1">
                                                 Primero, elige tu rol
                                             </Form.Label>
                                             <ToggleButtonGroup
                                                 name="userRol"
-                                                className="mb-2 mt-2 align-items-center"
+                                                className="mb-5 mt-2 align-items-center"
                                                 vertical="true"
                                                 orientation="vertical"
                                                 // exclusive
@@ -332,21 +333,10 @@ const Page = (props) => {
                                                     Soy comerciante calificado
                                                 </ToggleButton>
                                             </ToggleButtonGroup>
-                                            <p className="body-1 pt-2">
-                                                {/* Bienvenido a todos los beneficios de
-                                            dezzpo. */}
-                                                <Link
-                                                    className="body-2 btn-TEXT textVerde2"
-                                                    href="/ingreso/"
-                                                >
-                                                    {/* {'¿Ya tienes una cuenta?'} */}
-                                                    {'Ingresar'}
-                                                </Link>
-                                            </p>
                                         </>
                                     ) : (
                                         <>
-                                            <Form.Label className="mb-0 body-1">
+                                            <Form.Label className="mb-0 body-1 pt-4">
                                                 {userSignupRol == 1
                                                     ? 'Soy propietario/residente'
                                                     : 'Soy comerciante calificado'}
@@ -481,7 +471,17 @@ const Page = (props) => {
                                     />
                                 </Form.Group> */}
                                             </Col>
-                                            <Col className="pt-3 pb-3">
+                                            <Col className="pt-4 pb-3">
+                                                    {/* Aviso tratamiento de datos personales. */}
+                                                    <a
+                                                        href="https://drive.google.com/file/d/1R3uRi3zZ0MmjN3VoUp3GvLGvZ3bCaT6e/view?usp=sharing"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        <h3 className="body-2 btn-TEXT textVerde2">
+                                                            Aviso tratamiento de datos personales <DownloadIcon fontSize='small'/>.
+                                                        </h3>
+                                                    </a>
                                                 <Button
                                                     className="btn-buscador btn-round btn-high body-1"
                                                     variant="primary"
@@ -502,6 +502,16 @@ const Page = (props) => {
                                             )}
                                         </>
                                     )}
+                                    <p className="body-1 pt-2">
+                                        {/* Bienvenido a todos los beneficios de dezzpo. */}
+                                        <Link
+                                                    className="body-2 btn-TEXT textVerde2"
+                                                    href="/ingreso/"
+                                        >
+                                                    {/* {'¿Ya tienes una cuenta?'} */}
+                                                    {'Ingresar'}
+                                        </Link>
+                                    </p>
                                 </Col>
                             </Form>
                         </Paper>

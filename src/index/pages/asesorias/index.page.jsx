@@ -16,6 +16,8 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import ChatIcon from '@mui/icons-material/Chat';
+// <ChatIcon className="ms-1"/> 
 
 const Page = (props) => {
     // const navigate = useNavigate()
@@ -181,17 +183,17 @@ const Page = (props) => {
                             </Form>
                         </Col>
                         <Col className="col pt-4 pb-4" md={6} sm={12}>
-                            <span className="chatAsesor headline-xl">
+                            <span className="chatAsesor headline-xl mb-4">
                                 Contacta Con Un Asesor
                                 <br />
-                                en Tiempo Real En Nuestro Chat
+                                en Tiempo Real En Nuestro Chat <ChatIcon className="ms-1"/> 
                             </span>
                             <Button
                                 className="btn btn-round btn-high btn-avanzar"
                                 onClick={handleClickChat}
                             >
                                 <a
-                                    className="body-1 ps-3"
+                                    className="body-1 ps-3 textBlanco"
                                     href="https://api.whatsapp.com/send?phone=573196138057"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -210,11 +212,10 @@ const Page = (props) => {
                             <p className="body-2 textBlanco">
                                 Postulando una pregunta, estas creando una
                                 cuenta gratuita y accediento a aceptar nuestra
-                                <br />
-                                <Link href="/legal">
+                                <Link href="/legal" className="ms-1 me-1">
                                     politica de privacidad
                                 </Link>
-                                y los <Link href="/legal">terminos de uso</Link>
+                                y los <Link href="/legal">terminos de uso.</Link>
                             </p>
                             <h3 className=".headline-l">
                                 Historial de preguntas de la comunidad
