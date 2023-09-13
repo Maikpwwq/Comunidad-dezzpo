@@ -4,7 +4,9 @@ import react from '@vitejs/plugin-react-swc'
 import ssr from 'vite-plugin-ssr/plugin'
 // import { cjsInterop } from 'vite-plugin-cjs-interop'
 import vercel from 'vite-plugin-vercel'
-import vercelSsr from '@magne4000/vite-plugin-vercel-ssr'
+// https://github.com/magne4000/vite-plugin-vercel#usage-with-vite-plugin-ssr
+// import vercelSsr from '@vite-plugin-vercel/vike' 
+// vercelSsr(),
 
 import * as path from 'path'
 
@@ -57,7 +59,6 @@ export default defineConfig(async ({ command, mode }) => {
             //     ],
             // }),
             vercel(),
-            vercelSsr(),
         ],
         ssr: { noExternal },
         build: {

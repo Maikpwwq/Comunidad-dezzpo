@@ -296,9 +296,11 @@ function Navigator(props) {
                                         button
                                         // activeClassName="Mui-selected"
                                         key={childId}
-                                        component={Link}
+                                        // component={Link}
+                                        component={a}
                                         href={route}
                                         // exact
+
                                     >
                                         <ListItemButton
                                             className=""
