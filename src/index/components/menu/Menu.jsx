@@ -4,6 +4,7 @@ export { MenuComunidad }
 import React from 'react'
 import { Link } from '#R/Link'
 import '#@/assets/css/menu.css' 
+import { MenuLinks } from '#@/index/components/menu/MenuLinks.ts'
 
 // images
 import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'
@@ -29,16 +30,16 @@ const MenuComunidad = (props) => {
     */
 
     const Close = () => {
-        const dropdownQuery = document.querySelectorAll('.menuContenedor')
-        dropdownQuery.forEach((menuContenedor) => {
-            console.log('dropdownQuery', menuContenedor)
-            // menuContenedor.style.display = `none `
-            // menuContenedor.style.position = `absolute`
-            // menuContenedor.style.left = `-9999px`
+        const dropdownQuery = document.querySelectorAll('.menuMobile')
+        dropdownQuery.forEach((menuMobile) => {
+            console.log('dropdownQuery', menuMobile)
+            // menuMobile.style.display = `none !important`
+            menuMobile.style.position = `absolute`
+            menuMobile.style.left = `-9999px`
         })
         // const dropdownByClass = Array.from(document.getElementsByClassName('dropdownContenidos'))
-        // const menuContenedorById = document.getElementById('menuContenedor')
-        // menuContenedorById.style.display = `none `
+        // const menuMobileById = document.getElementById('menuMobile')
+        // menuMobileById.style.display = `none `
     }
 
     return (
@@ -63,37 +64,31 @@ const MenuComunidad = (props) => {
                                     <img
                                         src={LogoMenuComunidadDezzpo}
                                         alt="Logo Comunidad Dezzpo"
-                                        className="logo-comunidad-dezzpo me-2"
+                                        className="logo-comunidad-dezzpo"
                                     />
                                     <img
                                         src={IsoLogoMenuComunidadDezzpo}
                                         alt="IsoLogo Comunidad Dezzpo"
-                                        className="isologo-comunidad-dezzpo"
+                                        className="isologo-comunidad-dezzpo ps-3"
                                     />
                                 </Link>
                             </div>
                             <Row className="w-auto">
                                 <Link
                                     href="/app/portal-servicios"
-                                    className="body-2 btn-menu-comunidad"
+                                    className="body-2 btn-menu-comunidad me-0"
                                 >
                                     <StorefrontIcon className="me-1"/> 
                                     <strong>
                                         Directorio <br /> Comerciantes
                                     </strong>
                                 </Link>
-
-                                {/* <Link
-                                href="/app/apendice-costos"
-                                className="botonLink body-2"
-                            >
-                                
-                                Apendice Costos
-                            </Link> */}
-
                                 <Link
                                     href="/ingreso"
-                                    className="body-2 btn-menu-comunidad ms-2 me-5"
+                                    className="body-2 btn-menu-comunidad ms-2"
+                                    // sx={{ me: {
+                                    //     sm: 2, md: 5, lg: 5
+                                    // } }} 
                                 >
                                     <LoginIcon className="me-1"/> <strong>Ingresar </strong>
                                 </Link>
@@ -103,217 +98,41 @@ const MenuComunidad = (props) => {
                     <nav className="menuContenedor col-10 pt-2 pb-2">
                         {/* sm="collapseContents" */}
                         <ul className="menuSecciones">
-                            {/* <li className="botonSeccion">
-                                    <Link
-                                        exact
-                                        href="/"
-                                        className="activo body-2"
-                                    >
-                                        
-                                        Home
-                                    </Link>
-                                </li> */}
-                            {/* seleccion asi trabajamos*/}
-                            <div className="dropdown" style={{ minWidth: '118px'}}>
-                                {/* <li className="botonSeccion"></li> */}
-                                <Link
-                                    href="asi-trabajamos"
-                                    className="botonLink body-2"
-                                >
-                                    Asi trabajamos
-                                    <ArrowDropDownIcon />
-                                </Link>
-                                <div className="dropdownContenidos body-1 p-0">
-                                    <Link
-                                        href="/profesionales-servicios"
-                                        className="p-2 pb-0"
-                                        onClick={Close}
-                                    >
-                                        Profesionales y servicios
-                                    </Link>
-
-                                    <Link
-                                        href="/asesorias"
-                                        className="p-2 pb-0"
-                                        onClick={Close}
-                                    >
-                                        Asesores en vivo
-                                    </Link>
-                                    <Link
-                                        href="/comunidad-comerciantes"
-                                        className="p-2 pb-0"
-                                    >
-                                        Perfil Comerciante
-                                    </Link>
-                                    <Link
-                                        href="/comunidad-propietarios"
-                                        className="p-2 pb-0"
-                                    >
-                                        Perfil Propietario
-                                    </Link>
-                                    <Link href="/ingreso" className="p-2 pb-0">
-                                        Ingresar
-                                    </Link>
-                                    <Link href="/registro" className="p-2 pb-0">
-                                        Registrarse
-                                    </Link>
-                                    <Link
-                                        href="/asi-trabajamos"
-                                        className="p-2"
-                                    >
-                                        Calificaciones
-                                    </Link>
-                                </div>
-                            </div>
-                            {/* seleccion nosotros */}
-                            <div className="dropdown ms-4">
-                                <Link
-                                    href="/nosotros"
-                                    className="botonLink body-2"
-                                >
-                                    Nosotros <ArrowDropDownIcon />
-                                </Link>
-                                <div className="dropdownContenidos body-1 p-0">
-                                    <Link
-                                        href="/nosotros/#Acerca-de-nosotros"
-                                        className="p-2 pb-0"
-                                    >
-                                        Acerca de nosotros
-                                    </Link>
-                                    <Link
-                                        href="/nosotros/#equipo-dezzpo"
-                                        className="p-2 pb-0"
-                                    >
-                                        Equipo dezzpo
-                                    </Link>
-                                    <Link href="/blog" className="p-2 pb-0">
-                                        Programa de afiliados
-                                    </Link>
-                                    <Link href="/prensa" className="p-2 pb-0">
-                                        Prensa
-                                    </Link>
-                                    <Link
-                                        href="/patrocinadores"
-                                        className="p-2 pb-0"
-                                    >
-                                        Patrocinadores
-                                    </Link>
-                                    <Link href="/legal" className="p-2">
-                                        Legal
-                                    </Link>
-                                </div>
-                            </div>
-                            {/* seleccion Comunidad de Comerciantes*/}
-                            <div className="dropdown ms-4">
-                                <Link
-                                    href="/comunidad-comerciantes"
-                                    className="botonLink body-2"
-                                >
-                                    Comunidad de comerciantes
-                                    <ArrowDropDownIcon />
-                                </Link>
-                                <div className="dropdownContenidos body-1 p-0">
-                                    <Link href="/ingreso" className="p-2 pb-0">
-                                        Tu cuenta
-                                    </Link>
-                                    <Link
-                                        href="/asesorias"
-                                        className="p-2 pb-0"
-                                    >
-                                        Asesores en vivo
-                                    </Link>
-                                    <Link
-                                        href="/asi-trabajamos"
-                                        className="p-2 pb-0"
-                                    >
-                                        Asi funciona
-                                    </Link>
-                                    <Link
-                                        href="/profesionales-servicios"
-                                        className="p-2 pb-0"
-                                    >
-                                        Profesionales y servicios
-                                    </Link>
-                                    <Link
-                                        href="/contactenos"
-                                        className="p-2 pb-0"
-                                    >
-                                        contactanos
-                                    </Link>
-                                    <Link
-                                        href="/ayuda-pqrs"
-                                        className="p-2 pb-0"
-                                    >
-                                        Ayuda & Pqrs
-                                    </Link>
-                                    <Link href="/legal" className="p-2">
-                                        Terminos y condiciones
-                                    </Link>
-                                </div>
-                            </div>
-                            {/* seleccion Comunidad de Propietarios*/}
-                            <div className="dropdown ms-4">
-                                <Link
-                                    href="/comunidad-propietarios"
-                                    className="botonLink body-2"
-                                >
-                                    Comunidad de propietarios
-                                    <ArrowDropDownIcon />
-                                </Link>
-                                <div className="dropdownContenidos body-1 p-0">
-                                    <Link
-                                        href="/nuevo-proyecto"
-                                        className="p-2 pb-0"
-                                    >
-                                        Crea un nuevo proyecto
-                                    </Link>
-                                    <Link href="/blog" className="p-2 pb-0">
-                                        Testimonio de propietarios
-                                    </Link>
-                                    <Link
-                                        href="/asi-trabajamos"
-                                        className="p-2 pb-0"
-                                    >
-                                        Asi funciona
-                                    </Link>
-                                    <Link
-                                        href="/profesionales-servicios"
-                                        className="p-2 pb-0"
-                                    >
-                                        Profesionales y servicios
-                                    </Link>
-                                    <Link
-                                        href="/contactenos"
-                                        className="p-2 pb-0"
-                                    >
-                                        contactanos
-                                    </Link>
-                                    <Link
-                                        href="/ayuda-pqrs"
-                                        className="p-2 pb-0"
-                                    >
-                                        Ayuda & Pqrs
-                                    </Link>
-                                    <Link href="/legal" className="p-2">
-                                        Terminos y condiciones
-                                    </Link>
-                                </div>
-                            </div>
+                             {!!MenuLinks && MenuLinks.map((item, index)=>{
+                                const { name, href, dropdownContents } = item;
+                                return (
+                                    <div key={index} className="dropdown ms-4" style={{ minWidth: '118px'}}>
+                                        <Link
+                                            href={href}
+                                            className="botonLink body-2"
+                                        >
+                                            {name}
+                                            <ArrowDropDownIcon />
+                                        </Link>
+                                        <div className="dropdownContenidos body-1 p-0">
+                                        { !! dropdownContents && dropdownContents.map((content, index)=>{  
+                                            const { name, href } = content
+                                            return (
+                                                <Link
+                                                    key={index}
+                                                    href={href}
+                                                    className="p-2 pb-0"
+                                                    onClick={Close}
+                                                >
+                                                    {name}
+                                                </Link>
+                                            )
+                                        })}
+                                        </div>
+                                    </div>
+                                )
+                            })}
                             <Link
                                 href="/presupuestos"
                                 className="botonLink body-2 ms-4"
                             >
                                 Presupuestos
                             </Link>
-                            {/* <li className="botonSeccion">
-                                    <Link
-                                        href="/profesionales-servicios"
-                                        className="botonLink body-2"
-                                    >
-                                        
-                                        Profesionales y servicios
-                                    </Link>
-                                </li> */}
                             <Link
                                 href="/asesorias"
                                 className="botonLink body-2 ms-4"
@@ -327,22 +146,63 @@ const MenuComunidad = (props) => {
                             >
                                 Apendice de costos <PriceChangeIcon className="ms-1"/> 
                             </Link>
-                            {/* <li className="botonSeccion">
-                                    <Link
-                                        href="/ingreso"
-                                        className="botonLink body-2"
-                                    >
-                                        
-                                        Ingresar
-                                    </Link>
-                                </li> */}
                         </ul>
                     </nav>
-                    {/* {false && <Redirect href="/"></Redirect>} */}
+                    <nav className="menuMobile col-10 pt-2 pb-2">
+                        {/* sm="collapseContents" */}
+                        <ul className="menuMobileSecciones">
+                             {!!MenuLinks && MenuLinks.map((item, index)=>{
+                                const { name, href, dropdownContents } = item;
+                                return (
+                                    <div key={index} className="dropdown ms-4" style={{ minWidth: '118px'}}>
+                                        <Link
+                                            href={href}
+                                            className="botonLink body-2"
+                                        >
+                                            {name}
+                                            <ArrowDropDownIcon />
+                                        </Link>
+                                        <div className="dropdownContenidos body-1 p-0">
+                                        { !! dropdownContents && dropdownContents.map((content, index)=>{  
+                                            const { name, href } = content
+                                            return (
+                                                <Link
+                                                    key={index}
+                                                    href={href}
+                                                    className="p-2 pb-0"
+                                                    onClick={Close}
+                                                >
+                                                    {name}
+                                                </Link>
+                                            )
+                                        })}
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                            <Link
+                                href="/presupuestos"
+                                className="botonLink body-2 ms-4"
+                            >
+                                Presupuestos
+                            </Link>
+                            <Link
+                                href="/asesorias"
+                                className="botonLink body-2 ms-4"
+                            >
+                                Asesorias
+                            </Link>
+                            <Link
+                                href="/apendice-costos"
+                                className="botonLink body-2 ms-4"
+                                style={{ maxWidth: '150px'}}
+                            >
+                                Apendice de costos <PriceChangeIcon className="ms-1"/> 
+                            </Link>
+                        </ul>
+                    </nav>
                 </Col>
             </Container>
         </>
     )
 }
-
-// MenuComunidad = withRouter(MenuComunidad);

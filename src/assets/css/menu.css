@@ -3,9 +3,9 @@
         visibility: visible !important;
     }
 
-    /* .menuFijo:hover .menuSecciones {
-        display: block !important
-    } */
+    .btn-menu-comunidad {
+        margin-right: 0 !important;
+    }
 
     .logo-comunidad-dezzpo {
         height: 45px !important;
@@ -35,7 +35,16 @@
         justify-content: center;
     }
 
-    .menuFijo:hover .menuContenedor {
+    .menuMobile {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 0 auto;
+        position: absolute;
+        left: 0;
+    }
+
+    .menuFijo:hover .menuMobile {
         position: fixed;
         height: 100%;
         z-index: 15;
@@ -45,25 +54,25 @@
         align-items: start;
     }
 
-    .menuFijo:hover .menuSecciones {
-        display: flex !important;
-        flex-direction: column;
-        /* position:fixed; */
+    .menuMobileSecciones, .menuMobile {
+        display: none;
     }
 
-    .menuContenedor {
-        display: none !important;
+    .menuFijo:hover .menuMobile, .menuFijo:hover .menuMobileSecciones {
+        display: flex !important;
+        flex-direction: column;
+        position: absolute !important;
         left: 0 !important;
     }
 
-    .menuFijo:hover .menuContenedor {
-        display: flex !important;
-        flex-direction: column;
+    .menuSecciones, .menuContenedor {
+        display: none !important;
     }
 
-    .menuSecciones {
-        display: none !important;
+    .menuMobileSecciones {
         flex-direction: column;
+        justify-content: center;
+        align-items: baseline;
         overflow: visible;
         list-style-type: none;
         padding: 0 0;
@@ -177,6 +186,11 @@
     height: auto;
 }
 
+.menuMobileSecciones, .menuMobile {
+    display: none;
+    height: auto;
+}
+
 .dropdown {
     transition: background-color 0.3s;
     max-width: 150px;
@@ -197,6 +211,14 @@
 }
 
 .menuContenedor a:visited {
+    color: black !important;
+}
+
+.menuMobile ul a:visited {
+    color: black !important;
+}
+
+.menuMobile a:visited {
     color: black !important;
 }
 
@@ -294,6 +316,7 @@
     font-size: 0.9rem !important;
     font-weight: bold !important;
     border-radius: 30px;
+    margin-right: 48px;
 }
 
 .menuVisible {
