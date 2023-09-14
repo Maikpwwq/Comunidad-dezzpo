@@ -106,6 +106,7 @@ const ChipsCategories = (props) => {
                     listStyle: 'none',
                     p: 0.5,
                     m: 0,
+                    width: '100% !important',
                 }}
                 component="ul"
             >

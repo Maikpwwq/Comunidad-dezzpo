@@ -30,6 +30,10 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 
+import MailIcon from '@mui/icons-material/Mail';
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+// import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+
 const Page = () => {
     const pageContext = usePageContext()
     // const { userAuth } = props
@@ -274,27 +278,29 @@ const Page = () => {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="h-100 pt-4 pb-4">
-                    <Col className="col" md={10} sm={12}>
+                {/* <Row className="h-100 pt-4 pb-4"></Row> */}
+                    <Col className="col-12 w-100 fondoVerde" >
                         <Row
                             className="border-green_bottom m-0 w-100 d-flex flex-nowrap"
                             sx={{ flexDirection: { sm: 'col' } }}
                         >
                             {/* perfil-banner */}
                             <div
-                                className="d-flex flex-inline-row w-auto"
+                                className="d-flex flex-inline-row w-auto position-relative"
                                 style={{
                                     justifyContent: 'center',
                                     alignItems: 'baseline',
+                                    top: '1.8rem',
                                 }}
                             >
                                 <img
                                     src={userInfo.userPhotoUrl}
                                     alt="imagen de perfil"
-                                    height="150px"
-                                    width="150px"
+                                    height="184px"
+                                    width="184px"
                                     style={{
                                         borderRadius: '50%',
+                                        border: '8px solid var(--background-light-gray-color)',
                                     }}
                                 />
 
@@ -311,51 +317,55 @@ const Page = () => {
                                 )}
                             </div>
 
-                            <Box
+                            
+                        </Row>
+                    </Col>
+                    <Col className="col mx-auto pt-4" md={10} sm={12}>
+                        <Box
                                 className="m-2 w-auto"
                                 style={{
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
-                                    backgroundColor: '#ececec',
+                                    // backgroundColor: '#ececec',
                                 }}
                                 action=""
                             >
-                                <Typography variant="h4" id="userRazonSocial">
+                                <Typography variant="h3" id="userRazonSocial" sx={{maxWidth: '480px'}} className='textGris fw-bold'>
                                     {userInfo.userRazonSocial}
                                 </Typography>
-                                <Typography variant="h5" id="userProfession">
+                                <Typography variant="h5" id="userProfession" className='textGris fw-light'>
                                     {userInfo.userProfession}
                                 </Typography>
-                                <Typography variant="h6" id="userExperience">
+                                <Typography variant="body-2" id="userExperience" className='textGris fw-lighter'>
                                     Experiencia: {userInfo.userExperience}
                                 </Typography>
                                 <CincoEstrellas />
-                                <span>
+                                <span className='textGris fs-6 fw-lighter'>
                                     {userInfo.userVotes.votes} Personas votaron
                                 </span>
                             </Box>
-                        </Row>
                         {/* p-description textBlanco fondoVerde */}
-                        <Row className="pt-4 m-0 w-100 d-flex align-items-start">
-                            <Col md={5} className="pt-4 pb-4">
+                        <Row className="p-0 m-0 w-100 d-flex align-items-start">
+                            <Col md={10} className="pt-4 pb-4">
                                 <Typography
-                                    variant="h6"
-                                    className="textVerde p-description"
-                                    align="center"
+                                    variant="h5"
+                                    className="textVerde headline-l pb-4"
+                                    align="left"
                                 >
                                     Datos de contacto
                                 </Typography>
                                 <Box
                                     style={{
                                         display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'start',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-evenly'
                                     }}
                                     action=""
                                     className="p-4 cardFrame"
                                 >
-                                    <Typography
+                                    {/* <Typography
                                         variant="subtitle1"
                                         className=""
                                     >
@@ -367,85 +377,64 @@ const Page = () => {
                                         name="userName"
                                     >
                                         {userInfo.userName}
-                                    </Typography>
+                                    </Typography> */}
 
-                                    <Typography
-                                        variant="subtitle1"
-                                        className=""
-                                    >
-                                        Activo desde
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        className="ps-3 pe-3 detail-pill"
-                                        name="userJoined"
-                                    >
-                                        {userInfo.userJoined}
-                                    </Typography>
-
-                                    <Typography
-                                        variant="subtitle1"
-                                        className=""
-                                    >
-                                        Ubicación
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        className="ps-3 pe-3 detail-pill"
-                                        name="userDirection"
-                                    >
-                                        {userInfo.userDirection}
-                                    </Typography>
-
-                                    <Typography
+                                    {/* <Typography
                                         variant="subtitle1"
                                         className=""
                                     >
                                         Correo de usuario
-                                    </Typography>
+                                    </Typography> */}
+                                    
                                     <Typography
                                         variant="body2"
                                         className="ps-3 pe-3 detail-pill"
                                         name="userMail"
                                     >
-                                        {userInfo.userMail}
+                                        <MailIcon fontSize='large'/> {userInfo.userMail}
                                     </Typography>
 
-                                    <Typography
+                                    {/* <Typography
                                         variant="subtitle1"
                                         className=""
                                     >
                                         Celular
-                                    </Typography>
+                                    </Typography> */}
+                                    
                                     <Typography
                                         variant="body2"
                                         className="ps-3 pe-3 detail-pill"
                                         name="userPhone"
                                     >
-                                        {userInfo.userPhone}
+                                        <PhoneIphoneIcon fontSize='large'/> {userInfo.userPhone}
                                     </Typography>
                                 </Box>
                             </Col>
-                            <Col md={7}>
-                                <Typography
-                                    variant="h5"
-                                    className="textVerde headline-l"
-                                    align="left"
-                                >
-                                    Ubicación
-                                </Typography>
-                                <MapaPerfil userInfo={userInfo} />
-                            </Col>
                         </Row>
-                        <Row className="m-0 w-100 d-flex align-items-start">
+                        <Row className="p-0 m-0 w-100 d-flex align-items-start">
                             <Col className="p-0 col-10">
+                                <Row className="m-0 d-flex w-100 justify-content-start">
                                 <Typography
                                     variant="h5"
-                                    className="textVerde headline-l pt-4 pb-4"
+                                    className="textVerde headline-l w-auto pt-4 pb-4"
                                     align="left"
                                 >
                                     Acerca de mi
                                 </Typography>
+                                <Typography
+                                        variant="subtitle1"
+                                        className="w-auto"
+                                    >
+                                        Activo desde
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        className="ps-3 pe-3 w-auto"
+                                        name="userJoined"
+                                    >
+                                        {userInfo.userJoined}
+                                    </Typography>
+                                    </Row>
                                 <Typography
                                     className="body-1"
                                     style={{
@@ -454,9 +443,13 @@ const Page = () => {
                                 >
                                     {userInfo.userDescription}
                                 </Typography>
-                                <Button>
+                                <Button className='p-4'>
                                     <PictureAsPdfIcon /> Portafolio de servicios
                                 </Button>
+                            </Col>
+                        </Row>
+                        <Row className="p-0 m-0 w-100 d-flex align-items-start">
+                            <Col md={10} className="pt-4 pb-4">
                                 {userRol.rol === 2 && (
                                     <>
                                         <Typography
@@ -491,7 +484,7 @@ const Page = () => {
                             </Col>
                         </Row>
                         <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                            <Col className="col-10 p-0">
+                            <Col className="col-10 pt-4 pb-4">
                                 <Typography
                                     variant="h5"
                                     className="textVerde headline-l pt-4 pb-4 w-100"
@@ -499,7 +492,7 @@ const Page = () => {
                                 >
                                     Portafolio
                                 </Typography>
-                                <Row className="w-100">
+                                <Row className="w-100 pb-4">
                                     {userInfo.userGalleryUrl.map(
                                         (imagen, index) => {
                                             // console.log(imagen)
@@ -535,6 +528,32 @@ const Page = () => {
                                     )}
                                 </Row>
 
+                                <Col className='col-12'>
+                                    <Row className="m-0 d-flex w-100 justify-content-start">
+                                        <Typography
+                                            variant="h5"
+                                            className="textVerde headline-l w-auto pt-4 pb-4"
+                                            align="left"
+                                        >
+                                            Ubicación
+                                        </Typography>
+                                        {/* <Typography
+                                            variant="subtitle1"
+                                            className="w-auto"
+                                        >
+                                            Ubicación
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            className="ps-3 pe-3 w-auto"
+                                            name="userDirection"
+                                        >
+                                            {userInfo.userDirection}
+                                        </Typography> */}
+                                    </Row>
+                                    <MapaPerfil userInfo={userInfo} />
+                                </Col>
+
                                 <Typography
                                     variant="h5"
                                     align="left"
@@ -557,7 +576,7 @@ const Page = () => {
                         </Row>
                     </Col>
                     {/* <Col className="col-2 h-100 fondoGris">SideContent</Col> */}
-                </Row>
+                
             </Container>
         </>
     )

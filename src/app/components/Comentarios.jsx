@@ -116,7 +116,7 @@ const Comentarios = (props) => {
     return (
         <>
             <Container fixed className="p-2">
-                <Box sx={{ bgcolor: '#cfe8fc' }}>
+                <Box sx={{ bgcolor: '#cfe8fc' }} className="p-4 cardFrame">
                     {/* <SendbirdProvider
                         appId={appId} // Sendbird application ID.
                         userId={userID} // user Auth ID.

@@ -71,7 +71,7 @@ const MapaPerfil = ({ userInfo }) => {
                         <div
                             id="profile-map"
                             style={{
-                                height: '450px',
+                                height: '270px',
                                 width: '100%',
                                 borderRadius: '15px',
                             }}
