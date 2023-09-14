@@ -6,7 +6,6 @@ import ssr from 'vite-plugin-ssr/plugin'
 import vercel from 'vite-plugin-vercel'
 // https://github.com/magne4000/vite-plugin-vercel#usage-with-vite-plugin-ssr
 // import vercelSsr from '@vite-plugin-vercel/vike' 
-// vercelSsr(),
 
 import * as path from 'path'
 
@@ -59,6 +58,7 @@ export default defineConfig(async ({ command, mode }) => {
             //     ],
             // }),
             vercel(),
+            // vercelSsr(),
         ],
         ssr: { noExternal },
         build: {

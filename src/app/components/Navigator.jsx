@@ -296,8 +296,8 @@ function Navigator(props) {
                                         button
                                         // activeClassName="Mui-selected"
                                         key={childId}
-                                        // component={Link}
-                                        component={a}
+                                        component={Link}
+                                        // component={a}
                                         href={route}
                                         // exact
 
