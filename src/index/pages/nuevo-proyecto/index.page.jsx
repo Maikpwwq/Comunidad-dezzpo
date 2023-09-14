@@ -61,6 +61,7 @@ const Page = () => {
     // console.log(requerimiento.draftId)
     const [hideRegister] = useState(userID) // , setHideRegister
     const [showMore, setShowMore] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
     const _firestore = firestore
 
     const categoriaRef = collection(_firestore, 'categoriasServicios')
@@ -138,6 +139,7 @@ const Page = () => {
                 )
             }
         }
+        if  (!isLoaded) {
         if (!!draftInfo.draftProject && !!draftInfo.draftCategory ) {
             categoriasFromFirestore().then((docSnap) => {
                     if (docSnap) {
@@ -146,11 +148,11 @@ const Page = () => {
                         }))
                         // TODO: Pasar la data por hojas que agrupen hasta seis subCategorias
                         if (data.length > 0) {
-                            console.log(
-                                data
+                            // console.log(
+                            //     data
                                 //     draftInfo.draftCategory,
                                 //     categoriaProfesional
-                            )
+                            // )
                             let i = 0
                             let j = 0
                             let response = [[], [], [], [], [], []]
@@ -166,14 +168,15 @@ const Page = () => {
                                     i = 0
                                 }
                             })
-                            console.log(response)
-                            if (response.length > 0) {
+                            // console.log(response[0])
+                            if (response[0].length > 0) {
                                 setCategoriaInfo({
                                     ...categoriaInfo,
                                     data: response,
-                                    subCatLength: data.length / 6,
+                                    subCatLength: ( data.length -1 ) / 6,
                                 })
-                                console.log(categoriaInfo)
+                                // console.log(categoriaInfo)
+                                setIsLoaded(true)
                             }
                         }
                     } else {
@@ -186,7 +189,8 @@ const Page = () => {
                     console.log(error)
                 })
             } 
-    }, [categoriaInfo, categoriaRef, draftInfo.draftCategory, draftInfo.draftProject])
+        }
+    }, [categoriaInfo, isLoaded, categoriaRef, draftInfo.draftCategory, draftInfo.draftProject])
 
     const handleShowMore = () => {
         setShowMore(!showMore)
@@ -197,7 +201,7 @@ const Page = () => {
         // console.log(draftInfo)
         const snap = draftToFirestore(draftInfo, draftInfo.draftId)
         // setHideRegister(true)
-        snap.then((docSnap) => {
+        snap.then(() => {
             // console.log(docSnap)
             navigate('/app/directorio-requerimientos')
         })
@@ -220,6 +224,9 @@ const Page = () => {
             ...draftInfo,
             [event.target.name]: event.target.value,
         })
+        if ( event.target.name === "draftCategory"){
+            setIsLoaded(false)
+        }
     }
 
     const handleComeBack = () => {
@@ -314,12 +321,13 @@ const Page = () => {
                         <Row className="categorias w-100 m-0 p-4">
                             <Col className="p-0 pt-4 col-10 categorias-contenedor">
                                 <Row className="w-100 m-0">
-                                    {categoriaInfo?.data[categoriesIndex] && (
-                                        categoriaInfo?.data[categoriesIndex].map(
+                                    {categoriaInfo.data[categoriesIndex] && (
+                                        categoriaInfo.data[categoriesIndex].map(
                                             (item, index) => {
+                                                // console.log("SubCategorias", item, index)
                                                 return (
                                                     <>
-                                                        {!item && item.subCategoria &&
+                                                        { item.subCategoria &&
                                                             (<SubCategorias
                                                                 key={index}
                                                                 item={item}
@@ -379,7 +387,7 @@ const Page = () => {
                         />
                         <Typography
                             variant="h3"
-                            className="p-description w-100 center"
+                            className="p-description w-100 center mt-4 mb-4"
                         >
                             Elije tus ajustes
                         </Typography>

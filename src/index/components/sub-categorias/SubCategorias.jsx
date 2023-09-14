@@ -27,6 +27,8 @@ const SubCategorias = ({ item, setCategoriaInfo, categoriaInfo }) => {
         subCategoriaCantidad,
     } = item
 
+    console.log(subCategoria,subCategoriaDescription)
+
     const handleSeleccionar = (e) => {
         e.preventDefault()
         // navigate(`/app/perfil/${userId}`)
