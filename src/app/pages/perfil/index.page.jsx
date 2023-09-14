@@ -165,7 +165,7 @@ const Page = () => {
                 userIdentification,
                 userDescription,
             } = currentUser
-            // console.log('Detail load:', data)
+            console.log('Detail load:', currentUser)
             let chipsInfo = []
             if (userCategories) {
                 const chipsCategories = (userCategories) => {
@@ -218,7 +218,8 @@ const Page = () => {
 
         const userData = () => {
             const firestoreUserID = userConsultId
-            const userSelectedRol = userRol.rol
+            const userConsultRol = 2
+            const userSelectedRol = userConsultRol // userRol.rol
             // console.log(firestoreUserID, userSelectedRol)
             readUserFromFirestore({
                 firestoreUserID,
@@ -256,14 +257,14 @@ const Page = () => {
                         )
                     }
                 })
-                if (
-                    userAuth !== null &&
-                    userAuth !== undefined
-                ) {
-                    console.log("authUser", userAuth )
-                    LoadAuthData(userAuth)
-                    setIsLoaded(true)
-                }
+                // if (
+                //     userAuth !== null &&
+                //     userAuth !== undefined
+                // ) {
+                //     console.log("authUser", userAuth )
+                //     LoadAuthData(userAuth)
+                //     setIsLoaded(true)
+                // }
             }
         }
     }, [isLoaded, userConsultId, userInfo, userRol.rol, userAuth])

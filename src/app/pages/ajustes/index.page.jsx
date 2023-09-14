@@ -228,21 +228,21 @@ const Page = () => {
                             LoadCurrentData(currentUser)
                             setIsLoaded(true)
                         }
-                        if (authUser) {
-                            LoadAuthData(authUser)
-                            setIsLoaded(true)
-                        }
+                        // if (authUser) {
+                        //     LoadAuthData(authUser)
+                        //     setIsLoaded(true)
+                        // }
                     } else {
                         console.log(
                             'No se encontro información relacionada con este usuario!'
                         )
                     }
                 })
-                if (userAuth !== null && userAuth !== undefined) {
-                    console.log('authUser', userAuth)
-                    LoadAuthData(userAuth)
-                    setIsLoaded(true)
-                }
+                // if (userAuth !== null && userAuth !== undefined) {
+                //     console.log('authUser', userAuth)
+                //     LoadAuthData(userAuth)
+                //     setIsLoaded(true)
+                // }
             }
         }
     }, [userAuth, userAuthID, userEditInfo, userRol.rol, isLoaded])
