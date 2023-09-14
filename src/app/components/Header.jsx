@@ -1,10 +1,12 @@
 export { Header }
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { Link } from '#R/Link'
 import { auth } from '#@/firebase/firebaseClient'
 import { SearchBar } from './SearchBar'
 import '#@/assets/cssPrivateApp/header.css'
+
+import { sharingInformationService } from '#@/services/sharing-information'
 
 import { NotificationBar } from './NotificationBar'
 import { navigate } from 'vite-plugin-ssr/client/router'
@@ -27,13 +29,40 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd'
 function Header(props) {
     const { onDrawerToggle } = props
     const userAuth = useMemo(() => auth?.currentUser , [] )
-    console.log("Navigator user", userAuth)
-    const [ isAuth, setIsAuth ] = React.useState(userAuth ? true : false)
-    const userId = userAuth?.uid
-
-    const perfilRoute = `perfil/${userId}`
     const [tab, setTab] = useState(0)
+    const [ isAuth, setIsAuth ] = useState(userAuth ? true : false)
+    const [ userAuthInfo, setUserAuthInfo ] = useState({
+        userId : userAuth?.uid || "",  // Este es el id de la cuenta de Auth
+        userPhotoUrl : userAuth?.photoURL || "",
+        userName : userAuth?.displayName || ""
+    })
+    const perfilRoute = `perfil/${userAuthInfo.userId}`
 
+    useEffect(() => {  
+        const userData = sharingInformationService.getSubject()
+        userData.subscribe((data) => {
+            if (data) {
+                const { currentUser, authUser } = data
+                console.log('Header', currentUser, authUser)
+                if (authUser) { // currentUser || 
+                    const { uid, displayName, photoURL } = authUser
+                    setUserAuthInfo({
+                        ...userAuthInfo,
+                        userId: uid,
+                        userPhotoUrl: photoURL,
+                        userName: displayName,
+                    })
+                    setIsAuth(true)
+                } 
+            } else {
+                console.log(
+                    'No se encontro información relacionada con este usuario!'
+                )
+            }
+        })
+    }, [userAuthInfo]) 
+ 
+    
     const signup = () => {
         navigate('/registro')
     }

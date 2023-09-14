@@ -32,10 +32,10 @@ import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
 
 const Page = () => {
-    console.log('auth', auth?.currentUser)
+    // console.log('auth', auth?.currentUser)
     const pageContext = usePageContext()
     let id = pageContext.routeParams.id // ['*']
-    console.log('routeParamsPerfil', id)
+    // console.log('routeParamsPerfil', id)
     const userAuth = useMemo(() => auth.currentUser , [] )
     const userAuthID = userAuth?.uid || id
     const userAuthName = userAuth?.displayName || ''
@@ -127,7 +127,9 @@ const Page = () => {
 
         const LoadCurrentData = (currentUser) => {
             const {
+                userId,
                 userName,
+                userMail,
                 userPhone,
                 userPhotoUrl,
                 userJoined,
@@ -147,7 +149,7 @@ const Page = () => {
             } = currentUser
 
             // Sendbird new open channel
-            console.log('create new open channel', userChannelUrl)
+            // console.log('create new open channel', userChannelUrl)
             if (userChannelUrl === undefined || userChannelUrl === '') {
                 console.log('create new open channel')
                 // newOpenChannelSendbird({
@@ -179,8 +181,8 @@ const Page = () => {
                 ...userEditInfo,
                 userPhone: userPhone || '',
                 userPhotoUrl: userPhotoUrl || '',
-                // userId: uid,
-                // userMail: email,
+                userId: userId,
+                userMail: userMail,
                 userName: userName || '',
                 userJoined: userJoined || '',
                 userProfession: userProfession || '',
@@ -202,32 +204,41 @@ const Page = () => {
         const userData = () => {
             const firestoreUserID = userAuthID
             const userSelectedRol = userRol.rol
-            console.log('readUserFromFirestore', firestoreUserID, userSelectedRol)
+            // console.log('readUserFromFirestore', firestoreUserID, userSelectedRol)
             readUserFromFirestore({
                 firestoreUserID,
                 userSelectedRol,
             })
         }
 
-        // Perform localStorage action
-        const localRole = localStorage.getItem('role')
-        const selectRole = parseInt(JSON.parse(localRole))
-        setUserRol({ rol: selectRole}) // ...userRol , 
-        console.log('selectRole', selectRole, userRol.rol)
-
         if (!isLoaded) {
+
+            // Perform localStorage action
+            const localRole = localStorage.getItem('role')
+            const selectRole = parseInt(JSON.parse(localRole))
+            setUserRol({ rol: selectRole}) // ...userRol , 
+            // console.log('selectRole', selectRole, userRol.rol)
+
             if (!isNaN(userRol.rol) && userRol.rol !== undefined) {
                 // Load and expose user data from firestore
                 userData()
+
                 const userInformation = sharingInformationService.getSubject()
                 userInformation.subscribe((data) => {
                     if (data) {
                         const { currentUser, authUser } = data
-                        console.log('readUserFromFirestore:', currentUser)
+                        console.log('ajustesPage:', currentUser, authUser)
                         if (currentUser){
                             LoadCurrentData(currentUser)
                             setIsLoaded(true)
                         }
+
+                        // if (userAuth !== null && userAuth !== undefined) {
+                        //     console.log('authUser', userAuth)
+                        //     LoadAuthData(userAuth)
+                        //     // setIsLoaded(true)
+                        // }
+
                         // if (authUser) {
                         //     LoadAuthData(authUser)
                         //     setIsLoaded(true)
@@ -238,11 +249,6 @@ const Page = () => {
                         )
                     }
                 })
-                // if (userAuth !== null && userAuth !== undefined) {
-                //     console.log('authUser', userAuth)
-                //     LoadAuthData(userAuth)
-                //     setIsLoaded(true)
-                // }
             }
         }
     }, [userAuth, userAuthID, userEditInfo, userRol.rol, isLoaded])
