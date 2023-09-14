@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { auth } from '#@/firebase/firebaseClient'
@@ -73,29 +73,39 @@ function Navigator(props) {
     const activeUrl = urlPath.slice(1).split('/')
     // console.log("Navigator urlPath", activeUrl[1])
     const { ...other } = props
-    const userAuth = React.useMemo(() => auth?.currentUser , [] )
-    console.log("Navigator user", userAuth)
+    const userAuth = useMemo(() => auth?.currentUser , [] )
+    const [open, setOpen] = useState(false)
+    const [ isAuth, setIsAuth ] = useState(userAuth ? true : false )
+    const [ userAuthInfo, setUserAuthInfo ] = useState({
+        userId : userAuth?.uid || "",  // Este es el id de la cuenta de Auth
+        userPhotoUrl : userAuth?.photoURL || "",
+        userName : userAuth?.displayName || ""
+    })
 
-    const [ isAuth, setIsAuth ] = React.useState(userAuth ? true : false)
+    useEffect(() => {  
+        const userData = sharingInformationService.getSubject()
+        userData.subscribe((data) => {
+            if (data) {
+                const { currentUser, authUser } = data
+                console.log('Navigation', currentUser, authUser)
+                if (authUser) { // currentUser || 
+                    const { uid, displayName, photoURL } = authUser
+                    setUserAuthInfo({
+                        ...userAuthInfo,
+                        userId: uid,
+                        userPhotoUrl: photoURL,
+                        userName: displayName,
+                    })
+                    setIsAuth(true)
+                } 
+            } else {
+                console.log(
+                    'No se encontro información relacionada con este usuario!'
+                )
+            }
+        })
+    }, [userAuthInfo])     
 
-    // const userData = sharingInformationService.getSubject()
-    // userData.subscribe((data) => {
-    //     if (data) {
-    //         console.log('perfilPage', data)
-    //         const { currentUser, authUser } = data
-    //         if (currentUser || authUser) {
-    //             setIsAuth(true)
-    //         } 
-    //     } else {
-    //         console.log(
-    //             'No se encontro información relacionada con este usuario!'
-    //         )
-    //     }
-    // })
-    
-    const userID = userAuth?.uid || '' // Este es el id de la cuenta de Auth
-    const userPhotoUrl = userAuth?.photoURL || ''
-    const userName = userAuth?.displayName || ''
     // const navigate = useNavigate()
     const handleSignout = () => {
         signOut(auth)
@@ -107,8 +117,6 @@ function Navigator(props) {
                 console.log(error)
             })
     }
-
-    const [open, setOpen] = React.useState(false)
 
     const handleClick = () => {
         setOpen(true)
@@ -132,7 +140,7 @@ function Navigator(props) {
                       {
                           id: 'Mi cuenta',
                           icon: <PersonIcon />,
-                          route: `perfil/${userID}`,
+                          route: `perfil/${userAuthInfo.userId}`,
                           active: 'perfil' === activeUrl[1] ? true : false,
                       },
                       {
@@ -183,7 +191,7 @@ function Navigator(props) {
                       {
                           id: 'Ajustes',
                           icon: <ManageAccountsIcon />,
-                          route: `ajustes/${userID}`,
+                          route: `ajustes/${userAuthInfo.userId}`,
                           active: 'ajustes' === activeUrl[1] ? true : false,
                       },
                   ],
@@ -273,10 +281,10 @@ function Navigator(props) {
                 <ListItem sx={{ ...item, ...itemCategory }}>
                     <ListItemIcon>
                         <IconButton color="inherit" sx={{ p: 0.5 }}>
-                            <Avatar src={userPhotoUrl} alt="My Avatar" />
+                            <Avatar src={userAuthInfo.userPhotoUrl} alt="My Avatar" />
                         </IconButton>
                     </ListItemIcon>
-                    <ListItemText>Bienvenido {userName}!</ListItemText>
+                    <ListItemText>Bienvenido {userAuthInfo.userName}!</ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (
                     <Box key={id} sx={{ bgcolor: '#575856' }}>

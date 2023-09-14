@@ -165,7 +165,7 @@ const Page = () => {
                 userIdentification,
                 userDescription,
             } = currentUser
-            console.log('Detail load:', currentUser)
+            // console.log('Detail load:', currentUser)
             let chipsInfo = []
             if (userCategories) {
                 const chipsCategories = (userCategories) => {
@@ -231,7 +231,7 @@ const Page = () => {
         const localRole = localStorage.getItem('role')
         const selectRole = parseInt(JSON.parse(localRole))
         setUserRol({ rol: selectRole})
-        console.log('selectRole', selectRole, userRol.rol)
+        // console.log('selectRole', selectRole, userRol.rol)
 
         // console.log(userRol, state)
         if (!isLoaded) {
@@ -502,7 +502,7 @@ const Page = () => {
                                 <Row className="w-100">
                                     {userInfo.userGalleryUrl.map(
                                         (imagen, index) => {
-                                            console.log(imagen)
+                                            // console.log(imagen)
                                             return (
                                                 <Box
                                                     key={index}
@@ -514,7 +514,7 @@ const Page = () => {
                                                         display: 'block',
                                                         maxWidth: 400,
                                                         overflow: 'hidden',
-                                                        width: '100%',
+                                                        width: 'auto !important',
                                                         borderRadius: '5%',
                                                     }}
                                                     className="p-2"
