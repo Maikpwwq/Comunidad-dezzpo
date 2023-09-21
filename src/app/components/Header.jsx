@@ -36,7 +36,8 @@ function Header(props) {
         userPhotoUrl : userAuth?.photoURL || "",
         userName : userAuth?.displayName || ""
     })
-    const perfilRoute = `perfil/${userAuthInfo.userId}`
+
+    const perfilRoute = `/app/perfil/${userAuthInfo.userId}`
 
     useEffect(() => {  
         const userData = sharingInformationService.getSubject()
@@ -61,15 +62,59 @@ function Header(props) {
             }
         })
     }, [userAuthInfo]) 
- 
-    
-    const signup = () => {
-        navigate('/registro')
+
+    const handleNav = (route, tab) => {
+        console.log("handleHeaderNav", route, tab)
+        setTab(tab)
+        navigate(`${route}`)
     }
 
-    const login = () => {
-        navigate('/ingreso')
-    }
+    const headerLinks = isAuth
+    ? [ 
+        {
+            id: 'Ver tu perfil',
+            tab: 0,
+            icon: <PersonIcon className="ms-1"/>,
+            route: perfilRoute,
+        },
+        {
+            id: 'Calificaciones',
+            tab: 1,
+            icon: <StarRateIcon className="ms-1"/>,
+            route: "/app/calificaciones",
+        },
+        {
+            id: 'Mensajes',
+            tab: 2,
+            icon: <MessageIcon className="ms-1"/>,
+            route: "/app/mensajes",
+        },
+        {
+            id: 'Historial de servicio',
+            tab: 3,
+            icon: <WorkHistoryIcon className="ms-1"/>,
+            route: "/app/historial-servicios",
+        },
+        {
+            id: 'Certificaciones',
+            tab: 4,
+            icon: <HowToRegIcon className="ms-1"/>,
+            route: "/app/certificaciones",
+        },
+    ] : [
+        {
+            id: 'Iniciar Sesión',
+            tab: 0,
+            icon: <LoginIcon className="ms-1"/>,
+            route: "/ingreso",
+        },
+        {
+            id: 'Registrarse',
+            tab: 1,
+            icon: <PersonAddIcon className="ms-1"/>,
+            route: "/registro",
+        },
+    ]
 
     return (
         <>
@@ -92,66 +137,23 @@ function Header(props) {
                             <SearchBar></SearchBar>
                         </Grid>
                         <Grid item xs>
-                            {isAuth ? (
-                                <Tabs
+                            <Tabs
                                     value={tab}
                                     textColor="inherit"
                                     // style={{ 'overflow-x': 'auto' }}
-                                >
+                            >
+                                { headerLinks.map(({ id, tab, icon, route }) => (
                                     <Tab
-                                        label={<><PersonIcon  className="ms-1"/>Ver tu perfil</>} 
+                                        key={id}
+                                        label={<>{icon}{id}</>} 
                                         component={Link}
-                                        href={perfilRoute}
-                                        onClick={() => setTab(0)}
+                                        href={route}
+                                        onClick={() => handleNav(route, tab)}
                                     />
-                                    <Tab
-                                        label={<><StarRateIcon  className="ms-1"/>Calificaciones</>}
-                                        component={Link}
-                                        href="calificaciones"
-                                        onClick={() => setTab(1)}
-                                    />
-                                    <Tab
-                                        label={<><MessageIcon  className="ms-1"/>Mensajes</>}
-                                        component={Link}
-                                        href="mensajes"
-                                        onClick={() => setTab(2)}
-                                    />
-                                    <Tab
-                                        label={<><WorkHistoryIcon  className="ms-1"/>Historial de servicio</>}
-                                        component={Link}
-                                        href="historial-servicios"
-                                        onClick={() => setTab(3)}
-                                    />
-                                    <Tab
-                                        label={<><HowToRegIcon  className="ms-1"/>Certificaciones</>}
-                                        component={Link}
-                                        href="certificaciones"
-                                        onClick={() => setTab(4)}
-                                    />
-                                </Tabs>
-                            ) : (
-                                <>
-                                    {/* TODO implement nav to login */}
-                                    <Tabs
-                                        value={tab}
-                                        textColor="inherit"
-                                        // style={{ 'overflow-x': 'auto' }}
-                                    >
-                                        <Tab
-                                            label={<><LoginIcon  className="ms-1"/>Iniciar Sesión</>}
-                                            // component={Link}
-                                            // href={}
-                                            onClick={login}
-                                        />
-                                         <Tab
-                                            label={<><PersonAddIcon  className="ms-1"/>Registrarse</>}
-                                            // component={Link}
-                                            // href={}
-                                            onClick={signup}
-                                        />
-                                    </Tabs>
-                                </>
-                            )}
+                                    ))
+                                } 
+                            </Tabs>
+                           
                         </Grid>
                     </Grid>
                 </Toolbar>

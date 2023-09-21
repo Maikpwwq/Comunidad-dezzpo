@@ -122,6 +122,11 @@ function Navigator(props) {
         setOpen(true)
     }
 
+    const handleNav = (route) => {
+        console.log("handleNav", route)
+        navigate(`/app/${route}`)
+    }
+
     const handleClose = (event, reason) => {
         console.log(reason, event)
         if (reason === 'clickaway') {
@@ -304,9 +309,9 @@ function Navigator(props) {
                                         button
                                         // activeClassName="Mui-selected"
                                         key={childId}
-                                        component={Link}
-                                        // component={a}
-                                        href={route}
+                                        // component={Link}
+                                        // href={route}
+                                        onClick={() => handleNav(route)}
                                         // exact
 
                                     >
