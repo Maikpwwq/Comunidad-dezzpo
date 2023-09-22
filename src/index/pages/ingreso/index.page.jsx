@@ -1,11 +1,13 @@
 export { Page }
 
 // Pagina de Ingreso
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { SnackBarAlert } from '#@/index/components/SnackBarAlert'
 import { auth } from '#@/firebase/firebaseClient' // src/firebase/firebaseClient
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
+
 import {
     EmailAuthProvider,
     signInWithCredential,
@@ -32,6 +34,9 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import Typography from '@mui/material/Typography'
 
 const Page = (props) => {
+
+    const { currentUser, updateUser } = useContext(UserAuthContext)
+
     const googleProvider = new GoogleAuthProvider()
     // const navigate = useNavigate()
     const [alert, setAlert] = useState({
@@ -59,17 +64,27 @@ const Page = (props) => {
     }
 
     const handleSelectRol = (e) => {
-        setRol(e)
+        setRol(e[0])
+        console.log('handleSelectRol', e, userSignupRol)
         setStep(2)
-        // console.log(e, userSignupRol)
     }
 
     const onSuccess = (user) => {
-        const { uid } = user
+        const { uid, displayName } = user
+
+        updateUser({
+            displayName: displayName,
+            userId: uid,
+            isAuth: true,    
+            updated: false,
+            rol: userSignupRol,
+        })
+
         // console.log('Account successfully upgraded', user)
-        console.log('onLoginSuccess', userSignupRol, uid)
+        // console.log('onLoginSuccess', userSignupRol, uid)
         localStorage.role = JSON.stringify(userSignupRol)
         localStorage.userID = JSON.stringify(uid)
+        // localStorage.setItem('role', JSON.stringify(userSignupRol))
         handleAlert('Cuenta autorizada con éxito.', 'success')
         navigate(`/app/perfil/${uid}`)
     }
@@ -87,8 +102,6 @@ const Page = (props) => {
                     .then((userCredential) => {
                         var user = userCredential.user
                         // console.log('Anonymous account successfully upgraded', user)
-                        // localStorage.setItem('role', JSON.stringify(userSignupRol))
-                        // navigate('/app/perfil', { state: { role: userSignupRol } })
                         onSuccess(user)
                     })
                     .catch((err) => {

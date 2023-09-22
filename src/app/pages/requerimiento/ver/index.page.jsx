@@ -32,6 +32,7 @@ const Page = () => {
     // const navigate = useNavigate()
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams
+    const [isLoaded, setIsLoaded] = useState(false)
 
     const _firestore = firestore
     // const _storage = storage
@@ -88,13 +89,10 @@ const Page = () => {
     }
 
     useEffect(() => {
+        if (!isLoaded) { 
         console.log(draftId)
-        if (draftId !== ' ' && draftId !== undefined) {
-            fromDraft(draftId)
-            const draftData = sharingInformationService.getSubject()
-            draftData.subscribe((data) => {
-                if (data) {
-                    const { draft } = data
+        const LoadDraftData = (data) => {
+            const { draft } = data
                     const {
                         draftName,
                         draftCategory,
@@ -143,13 +141,21 @@ const Page = () => {
                         requerimientoMejorHora: draftBestScheduleTime,
                         requerimientoAplicaciones: draftApply ? draftApply : [],
                     })
+
                     console.log('dataReq', data, data.draftApply)
                     const appliedQuotations = draftApply[0] || []
                     fromQuotation(appliedQuotations)
+        }
+        if (draftId !== ' ' && draftId !== undefined) {
+            fromDraft(draftId)
+            const draftData = sharingInformationService.getSubject()
+            draftData.subscribe((data) => {
+                if (data) {
+                    LoadDraftData(data)
                     const quotationData = sharingInformationService.getSubject()
-                    quotationData.subscribe((data) => {
-                        if (data) {
-                            const { quotation } = data
+                    quotationData.subscribe((data2) => {
+                        if (data2) {
+                            const { quotation } = data2
                             console.log(
                                 'readQuotationFromFirestore:',
                                 quotation
@@ -159,11 +165,13 @@ const Page = () => {
                                     ...cotizacionesInfo,
                                     appliedQuotations: [quotation],
                                 })
+                                setIsLoaded(true)
                             }
                         }
                     })
                 }
             })
+        }
         }
     }, [draftId, cotizacionesInfo, requerimientoInfo])
 

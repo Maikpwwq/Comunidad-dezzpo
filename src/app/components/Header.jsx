@@ -1,11 +1,11 @@
 export { Header }
 
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useContext, useMemo, useEffect } from 'react'
 import { Link } from '#R/Link'
 import { auth } from '#@/firebase/firebaseClient'
 import { SearchBar } from './SearchBar'
 import '#@/assets/cssPrivateApp/header.css'
-
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 import { sharingInformationService } from '#@/services/sharing-information'
 
 import { NotificationBar } from './NotificationBar'
@@ -27,14 +27,15 @@ import LoginIcon from '@mui/icons-material/Login'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 
 function Header(props) {
+    const { currentUser, updateUser } = useContext(UserAuthContext)
     const { onDrawerToggle } = props
     const userAuth = useMemo(() => auth?.currentUser , [] )
     const [tab, setTab] = useState(0)
-    const [ isAuth, setIsAuth ] = useState(userAuth ? true : false)
+    const [ isAuth, setIsAuth ] = useState(currentUser.isAuth)
     const [ userAuthInfo, setUserAuthInfo ] = useState({
-        userId : userAuth?.uid || "",  // Este es el id de la cuenta de Auth
+        userId : currentUser.userId || "",  // Este es el id de la cuenta de Auth
         userPhotoUrl : userAuth?.photoURL || "",
-        userName : userAuth?.displayName || ""
+        userName : currentUser.displayName || ""
     })
 
     const perfilRoute = `/app/perfil/${userAuthInfo.userId}`
@@ -52,6 +53,12 @@ function Header(props) {
                         userId: uid,
                         userPhotoUrl: photoURL,
                         userName: displayName,
+                    })                
+                    updateUser({
+                        displayName: displayName,
+                        userId: uid,
+                        isAuth: true,    
+                        updated: true,
                     })
                     setIsAuth(true)
                 } 

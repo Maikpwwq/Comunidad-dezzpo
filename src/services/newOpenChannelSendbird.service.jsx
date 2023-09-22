@@ -83,7 +83,7 @@ const newOpenChannelSendbird = async({uid, displayName}) => {
                     // })
                     // setChannelUrl(url)
                     console.log('channel', url, name, coverUrl, members)
-                    // sharingInformationService.setSubject({ channelURL: url })
+                    sharingInformationService.setSubject({ channelURL: url })
                 })
                 .catch((error) => {
                     console.log('error', error)
@@ -95,7 +95,7 @@ const newOpenChannelSendbird = async({uid, displayName}) => {
 newOpenChannelSendbird.propTypes = {
     uid: PropTypes.string.isRequired,
     displayName: PropTypes.string.isRequired,
-    // setChannelUrl: PropTypes.func.isRequired,
+    // setChannelUrl: PropTypes.func,
     // setUserEditInfo: PropTypes.func.isRequired,
     // userEditInfo: PropTypes.object.isRequired,
     // connect: PropTypes.func.isRequired,

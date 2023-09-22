@@ -2,13 +2,15 @@ export { Page }
 export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - Perfil
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useContext, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { sharingInformationService } from '#@/services/sharing-information'
 import { formatDistance, parse } from 'date-fns' // format, , subDays, parseISO
 import es from 'date-fns/locale/es'
 import { readUserFromFirestore } from '#@/services/readUserFromFirestore.service'
 import { auth } from '#@/firebase/firebaseClient'
+// import { UserAuthContext } from '#@/providers/UserAuthProvider'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 import '#@/assets/cssPrivateApp/perfil.css'
 // import ProfilePhoto from '#@/assets/img/Profile.png'
@@ -35,6 +37,9 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 // import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 const Page = () => {
+
+    const { currentUser } = useContext(UserAuthContext)
+
     const pageContext = usePageContext()
     // const { userAuth } = props
     // const [authUser, setAuthUser ] = useState({
@@ -46,8 +51,8 @@ const Page = () => {
     // const urlPath = pageContext.urlPathname
     // console.log('Perfil user', pageContext) // .user
     // const user = auth?.currentUser
-    const userAuthID = userAuth ? userAuth.uid : '' // Este es el id de la cuenta de Auth
-    const userAuthName = userAuth ? userAuth.displayName : '' // Este es el id de la cuenta de Auth
+    const userAuthID = currentUser.userId || "" // Este es el id de la cuenta de Auth
+    const userAuthName = currentUser.displayName || "" // Este es el id de la cuenta de Auth
     const [isLoaded, setIsLoaded] = useState(false)
 
     let id = pageContext.routeParams.id // ['*']
@@ -231,14 +236,14 @@ const Page = () => {
             })
         }
 
-        // Perform localStorage action
-        const localRole = localStorage.getItem('role')
-        const selectRole = parseInt(JSON.parse(localRole))
-        setUserRol({ rol: selectRole})
-        // console.log('selectRole', selectRole, userRol.rol)
-
-        // console.log(userRol, state)
         if (!isLoaded) {
+            // Perform localStorage action
+            const localRole = localStorage.getItem('role')
+            const selectRole = parseInt(JSON.parse(localRole))
+            setUserRol({ rol: selectRole})
+            // console.log('selectRole', selectRole, userRol.rol)
+
+            // console.log(userRol, state)
             if (!isNaN(userRol.rol) && userRol.rol !== undefined ) {
                 userData()
                 const productData = sharingInformationService.getSubject()
