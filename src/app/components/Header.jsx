@@ -1,11 +1,11 @@
 export { Header }
 
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useContext, useMemo, useEffect } from 'react'
 import { Link } from '#R/Link'
 import { auth } from '#@/firebase/firebaseClient'
 import { SearchBar } from './SearchBar'
 import '#@/assets/cssPrivateApp/header.css'
-
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 import { sharingInformationService } from '#@/services/sharing-information'
 
 import { NotificationBar } from './NotificationBar'
@@ -27,16 +27,18 @@ import LoginIcon from '@mui/icons-material/Login'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 
 function Header(props) {
+    const { currentUser, updateUser } = useContext(UserAuthContext)
     const { onDrawerToggle } = props
     const userAuth = useMemo(() => auth?.currentUser , [] )
     const [tab, setTab] = useState(0)
-    const [ isAuth, setIsAuth ] = useState(userAuth ? true : false)
+    const [ isAuth, setIsAuth ] = useState(currentUser.isAuth)
     const [ userAuthInfo, setUserAuthInfo ] = useState({
-        userId : userAuth?.uid || "",  // Este es el id de la cuenta de Auth
+        userId : currentUser.userId || "",  // Este es el id de la cuenta de Auth
         userPhotoUrl : userAuth?.photoURL || "",
-        userName : userAuth?.displayName || ""
+        userName : currentUser.displayName || ""
     })
-    const perfilRoute = `perfil/${userAuthInfo.userId}`
+
+    const perfilRoute = `/app/perfil/${userAuthInfo.userId}`
 
     useEffect(() => {  
         const userData = sharingInformationService.getSubject()
@@ -51,6 +53,12 @@ function Header(props) {
                         userId: uid,
                         userPhotoUrl: photoURL,
                         userName: displayName,
+                    })                
+                    updateUser({
+                        displayName: displayName,
+                        userId: uid,
+                        isAuth: true,    
+                        updated: true,
                     })
                     setIsAuth(true)
                 } 
@@ -61,15 +69,59 @@ function Header(props) {
             }
         })
     }, [userAuthInfo]) 
- 
-    
-    const signup = () => {
-        navigate('/registro')
+
+    const handleNav = (route, tab) => {
+        console.log("handleHeaderNav", route, tab)
+        setTab(tab)
+        navigate(`${route}`)
     }
 
-    const login = () => {
-        navigate('/ingreso')
-    }
+    const headerLinks = isAuth
+    ? [ 
+        {
+            id: 'Ver tu perfil',
+            tab: 0,
+            icon: <PersonIcon className="ms-1"/>,
+            route: perfilRoute,
+        },
+        {
+            id: 'Calificaciones',
+            tab: 1,
+            icon: <StarRateIcon className="ms-1"/>,
+            route: "/app/calificaciones",
+        },
+        {
+            id: 'Mensajes',
+            tab: 2,
+            icon: <MessageIcon className="ms-1"/>,
+            route: "/app/mensajes",
+        },
+        {
+            id: 'Historial de servicio',
+            tab: 3,
+            icon: <WorkHistoryIcon className="ms-1"/>,
+            route: "/app/historial-servicios",
+        },
+        {
+            id: 'Certificaciones',
+            tab: 4,
+            icon: <HowToRegIcon className="ms-1"/>,
+            route: "/app/certificaciones",
+        },
+    ] : [
+        {
+            id: 'Iniciar Sesión',
+            tab: 0,
+            icon: <LoginIcon className="ms-1"/>,
+            route: "/ingreso",
+        },
+        {
+            id: 'Registrarse',
+            tab: 1,
+            icon: <PersonAddIcon className="ms-1"/>,
+            route: "/registro",
+        },
+    ]
 
     return (
         <>
@@ -92,66 +144,23 @@ function Header(props) {
                             <SearchBar></SearchBar>
                         </Grid>
                         <Grid item xs>
-                            {isAuth ? (
-                                <Tabs
+                            <Tabs
                                     value={tab}
                                     textColor="inherit"
                                     // style={{ 'overflow-x': 'auto' }}
-                                >
+                            >
+                                { headerLinks.map(({ id, tab, icon, route }) => (
                                     <Tab
-                                        label={<><PersonIcon  className="ms-1"/>Ver tu perfil</>} 
+                                        key={id}
+                                        label={<>{icon}{id}</>} 
                                         component={Link}
-                                        href={perfilRoute}
-                                        onClick={() => setTab(0)}
+                                        href={route}
+                                        onClick={() => handleNav(route, tab)}
                                     />
-                                    <Tab
-                                        label={<><StarRateIcon  className="ms-1"/>Calificaciones</>}
-                                        component={Link}
-                                        href="calificaciones"
-                                        onClick={() => setTab(1)}
-                                    />
-                                    <Tab
-                                        label={<><MessageIcon  className="ms-1"/>Mensajes</>}
-                                        component={Link}
-                                        href="mensajes"
-                                        onClick={() => setTab(2)}
-                                    />
-                                    <Tab
-                                        label={<><WorkHistoryIcon  className="ms-1"/>Historial de servicio</>}
-                                        component={Link}
-                                        href="historial-servicios"
-                                        onClick={() => setTab(3)}
-                                    />
-                                    <Tab
-                                        label={<><HowToRegIcon  className="ms-1"/>Certificaciones</>}
-                                        component={Link}
-                                        href="certificaciones"
-                                        onClick={() => setTab(4)}
-                                    />
-                                </Tabs>
-                            ) : (
-                                <>
-                                    {/* TODO implement nav to login */}
-                                    <Tabs
-                                        value={tab}
-                                        textColor="inherit"
-                                        // style={{ 'overflow-x': 'auto' }}
-                                    >
-                                        <Tab
-                                            label={<><LoginIcon  className="ms-1"/>Iniciar Sesión</>}
-                                            // component={Link}
-                                            // href={}
-                                            onClick={login}
-                                        />
-                                         <Tab
-                                            label={<><PersonAddIcon  className="ms-1"/>Registrarse</>}
-                                            // component={Link}
-                                            // href={}
-                                            onClick={signup}
-                                        />
-                                    </Tabs>
-                                </>
-                            )}
+                                    ))
+                                } 
+                            </Tabs>
+                           
                         </Grid>
                     </Grid>
                 </Toolbar>

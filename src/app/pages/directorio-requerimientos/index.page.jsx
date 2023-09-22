@@ -19,39 +19,43 @@ const Page = () => {
     const _firestore = firestore
     const draftRef = collection(_firestore, 'drafts')
     const [draftsData, setDraftsData] = useState({})
+    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
-        const draftsFromFirestore = async () => {
-            try {
-                const draftData = await getDocs(draftRef)
-                return draftData
-            } catch (err) {
-                console.log(
-                    'Error al obtener los datos de la colleccion users: ',
-                    err
-                )
-            }
-        }
-        draftsFromFirestore()
-            .then((docSnap) => {
-                if (docSnap) {
-                    console.log('draftsFromFirestore', docSnap)
-                    const data = docSnap.docs.map((element) => ({
-                        ...element.data(),
-                    }))
-                    console.log(data)
-                    setDraftsData({
-                        data,
-                    })
-                } else {
+        if (!isLoaded) { 
+            const draftsFromFirestore = async () => {
+                try {
+                    const draftData = await getDocs(draftRef)
+                    return draftData
+                } catch (err) {
                     console.log(
-                        'No se encontro información en la colleccion proyectos!'
+                        'Error al obtener los datos de la colleccion users: ',
+                        err
                     )
                 }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+            }
+            draftsFromFirestore()
+                .then((docSnap) => {
+                    if (docSnap) {
+                        console.log('draftsFromFirestore', docSnap)
+                        const data = docSnap.docs.map((element) => ({
+                            ...element.data(),
+                        }))
+                        console.log(data)
+                        setDraftsData({
+                            data,
+                        })
+                        setIsLoaded(true)
+                    } else {
+                        console.log(
+                            'No se encontro información en la colleccion proyectos!'
+                        )
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     }, [draftRef])
 
     return (

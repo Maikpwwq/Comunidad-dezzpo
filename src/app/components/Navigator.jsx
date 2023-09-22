@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useContext, useState, useMemo } from 'react'
 import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { auth } from '#@/firebase/firebaseClient'
 import { signOut } from 'firebase/auth'
 import { usePageContext } from '#R/usePageContext'
 import { sharingInformationService } from '#@/services/sharing-information'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 // import categories from '#@/app/components/categories'
 
@@ -68,6 +69,7 @@ const itemCategory = {
 export { Navigator }
 
 function Navigator(props) {
+    const { currentUser, updateUser, clearAuthUser } = useContext(UserAuthContext)
     const pageContext = usePageContext()
     const urlPath = pageContext.urlPathname
     const activeUrl = urlPath.slice(1).split('/')
@@ -75,11 +77,11 @@ function Navigator(props) {
     const { ...other } = props
     const userAuth = useMemo(() => auth?.currentUser , [] )
     const [open, setOpen] = useState(false)
-    const [ isAuth, setIsAuth ] = useState(userAuth ? true : false )
+    const [ isAuth, setIsAuth ] = useState(currentUser.isAuth)
     const [ userAuthInfo, setUserAuthInfo ] = useState({
-        userId : userAuth?.uid || "",  // Este es el id de la cuenta de Auth
+        userId : currentUser.userId || "",  // Este es el id de la cuenta de Auth
         userPhotoUrl : userAuth?.photoURL || "",
-        userName : userAuth?.displayName || ""
+        userName : currentUser.displayName || ""
     })
 
     useEffect(() => {  
@@ -95,6 +97,12 @@ function Navigator(props) {
                         userId: uid,
                         userPhotoUrl: photoURL,
                         userName: displayName,
+                    })
+                    updateUser({
+                        displayName: displayName,
+                        userId: uid,
+                        isAuth: true,    
+                        updated: true,
                     })
                     setIsAuth(true)
                 } 
@@ -122,11 +130,17 @@ function Navigator(props) {
         setOpen(true)
     }
 
+    const handleNav = (route) => {
+        console.log("handleNav", route)
+        navigate(`/app/${route}`)
+    }
+
     const handleClose = (event, reason) => {
         console.log(reason, event)
         if (reason === 'clickaway') {
             return
         } else {
+            clearAuthUser()
             navigate('/')
             setOpen(false)
         }
@@ -297,16 +311,16 @@ function Navigator(props) {
                         {children.map(
                             ({ id: childId, icon, route, active }) => {
                                 // const hrefRoute = route.split('/').splice(1, 1).toString
-                                console.log('navRoute', route)
+                                // console.log('navRoute', route)
                                 return (
                                     <ListItem
                                         disablePadding
                                         button
                                         // activeClassName="Mui-selected"
                                         key={childId}
-                                        component={Link}
-                                        // component={a}
-                                        href={route}
+                                        // component={Link}
+                                        // href={route}
+                                        onClick={() => handleNav(route)}
                                         // exact
 
                                     >

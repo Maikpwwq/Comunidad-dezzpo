@@ -1,12 +1,13 @@
 export { Page }
 
 // Pagina de registro
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { SnackBarAlert } from '#@/index/components/SnackBarAlert'
-// import newOpenChannelSendbird from '#@/services/newOpenChannelSendbird.service'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
+// import { newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
 import { auth, firestore } from '#@/firebase/firebaseClient' // src/firebase/firebaseClient
 import {
     createUserWithEmailAndPassword,
@@ -58,6 +59,8 @@ const Page = (props) => {
     } = props
     // sessionStorage.draftId = draftID
 
+    const { currentUser, updateUser } = useContext(UserAuthContext) 
+
     const [alert, setAlert] = useState({
         open: false,
         message: '',
@@ -78,7 +81,7 @@ const Page = (props) => {
     const [userSignupEmail, setEmail] = useState(undefined)
     const [userSignupPassword, setPassword] = useState('')
     const [userSignupRol, setRol] = useState(undefined)
-    // const [channelUrl, setChannelUrl] = useState(undefined)
+    // const [channelUrl, setChannelUrl] = useState(null)
 
     // const navigate = useNavigate()
 
@@ -96,9 +99,9 @@ const Page = (props) => {
     }
 
     const handleSelectRol = (e) => {
-        setRol(e)
-        setStep(2)
-        // console.log(e, userSignupRol)
+        setRol(e[0])
+        console.log('handleSelectRol', e, userSignupRol)
+        setStep(2)        
     }
 
     const handleAlert = (message, severity) => {
@@ -114,6 +117,54 @@ const Page = (props) => {
         }
     }
 
+    const onSuccess = (user) => {
+        const { uid, email, displayName } = user
+        console.log('onSigninSuccess', userSignupRol, uid)
+  
+        updateUser({
+            displayName: displayName,
+            userId: uid,
+            isAuth: true,    
+            updated: false,
+            rol: userSignupRol[0],
+        })
+
+        // Sendbird new open channel
+        // newOpenChannelSendbird(uid, displayName, setChannelUrl)
+
+        const data = {
+                            userMail: email,
+                            userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
+                            userId: uid,
+                            userChannelUrl: '',
+                            createdDrafts: [],
+                            userName: displayName || userSignupName,
+        }
+
+        if (userSignupRol == 1) {
+            if (draftInfo) {
+                data.createdDrafts.push(draftInfo.draftId)
+            }
+            userProResToFirestore(data, uid)
+        }
+        if (userSignupRol == 2) {
+            userComCalToFirestore(data, uid)
+        }
+        localStorage.role = JSON.stringify(userSignupRol) // localStorage.setItem('role', JSON.stringify(userSignupRol))
+        localStorage.userID = JSON.stringify(uid)
+        handleAlert('Cuenta actualizada con éxito!', 'success')
+        if (draftInfo) {
+            setDraftInfo({
+                ...draftInfo,
+                draftPropietarioResidente: uid,
+            })
+            handleSave()
+        } else {
+            navigate(`/app/ajustes/${uid}`)
+        }
+    }
+
+
     const handleClick = (e) => {
         e.preventDefault()
         if (userSignupRol) {
@@ -121,45 +172,7 @@ const Page = (props) => {
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         var user = userCredential.user
-                        const { uid, email, displayName } = user
-                        // Sendbird new open channel
-                        // newSendbirdOpenChannel({
-                        //     uid,
-                        //     userSignupName,
-                        //     setChannelUrl,
-                        // })
-                        const data = {
-                            userMail: email,
-                            userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
-                            userId: uid,
-                            userChannelUrl: '',
-                            createdDrafts: [],
-                            userName: displayName || userSignupName,
-                        }
-                        console.log(userSignupRol)
-                        if (userSignupRol == 1) {
-                            if (draftInfo) {
-                                data.createdDrafts.push(draftInfo.draftId)
-                            }
-                            userProResToFirestore(data, uid)
-                        }
-                        if (userSignupRol == 2) {
-                            userComCalToFirestore(data, uid)
-                        }
-                        // userToFirestore(data, user.uid)
-                        // localStorage.setItem('role', JSON.stringify(userSignupRol))
-                        localStorage.role = JSON.stringify(userSignupRol)
-                        localStorage.userID = JSON.stringify(uid)
-                        handleAlert('Cuenta actualizada con éxito!', 'success')
-                        if (draftInfo) {
-                            setDraftInfo({
-                                ...draftInfo,
-                                draftPropietarioResidente: uid,
-                            })
-                            handleSave()
-                        } else {
-                            navigate(`/app/ajustes/${uid}`)
-                        }
+                        onSuccess(user)
                     })
                     .catch((err) => {
                         // console.log('Error upgrading anonymous account', err)
@@ -191,43 +204,7 @@ const Page = (props) => {
                         const token = credential.accessToken
                         // The signed-in user info.
                         const user = result.user
-                        const { uid, email, displayName } = user
-                        // Sendbird new open channel
-                        // newSendbirdOpenChannel({
-                        //     uid,
-                        //     userSignupName,
-                        //     setChannelUrl,
-                        // })
-                        const data = {
-                            userMail: email,
-                            userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
-                            userId: uid,
-                            channelUrl: '',
-                            createdDrafts: [],
-                            userName: displayName || userSignupName,
-                        }
-                        console.log(userSignupRol)
-                        if (userSignupRol == 1) {
-                            if (draftInfo) {
-                                data.createdDrafts.push(draftInfo.draftId)
-                            }
-                            userProResToFirestore(data, uid)
-                        }
-                        if (userSignupRol == 2) {
-                            userComCalToFirestore(data, uid)
-                        }
-                        localStorage.role = JSON.stringify(userSignupRol) // localStorage.setItem('role', JSON.stringify(userSignupRol))
-                        localStorage.userID = JSON.stringify(uid)
-                        handleAlert('Cuenta actualizada con éxito!', 'success')
-                        if (draftInfo) {
-                            setDraftInfo({
-                                ...draftInfo,
-                                draftPropietarioResidente: uid,
-                            })
-                            handleSave()
-                        } else {
-                            navigate(`/app/ajustes/${uid}`)
-                        }
+                        onSuccess(user)
                     })
                     .catch((error) => {
                         // Handle Errors here.

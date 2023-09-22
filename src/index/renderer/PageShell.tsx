@@ -6,6 +6,7 @@ import { PageContextProvider } from './usePageContext'
 // import { Link } from './Link'
 import { LayoutPaperbase } from '#@/index/components/LayoutPaperbase'
 // import createEmotionCache from './createEmotionCache';
+import { UserAuthProvider } from '#@/providers/UserAuthProvider'
 
 import './App.scss'
 import './index.scss'
@@ -19,15 +20,17 @@ function PageShell({
     children: React.ReactNode
     pageContext: PageContext
 }) {
-    const Layout =  pageContext.exports.Layout || LayoutPaperbase;
+    const Layout = pageContext.exports.Layout || LayoutPaperbase
     //const cache = createEmotionCache();
 
     return (
         <React.StrictMode>
             {/* <CacheProvider value={cache}> */}
-            <PageContextProvider pageContext={pageContext}>
-                <Layout>{children}</Layout>
-            </PageContextProvider>
+            <UserAuthProvider>
+                <PageContextProvider pageContext={pageContext}>
+                    <Layout>{children}</Layout>
+                </PageContextProvider>
+            </UserAuthProvider>
             {/* </CacheProvider> */}
         </React.StrictMode>
     )

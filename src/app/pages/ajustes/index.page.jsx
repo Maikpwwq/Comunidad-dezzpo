@@ -3,7 +3,7 @@ export { Page }
 export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - Ajustes
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useContext, useEffect, useMemo } from 'react'
 import { auth } from '#@/firebase/firebaseClient'
 import { formatDistance, parse } from 'date-fns' // parseISO, format, subDays
 import es from 'date-fns/locale/es'
@@ -30,19 +30,21 @@ import FormGroup from '@mui/material/FormGroup'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 const Page = () => {
+    const { currentUser } = useContext(UserAuthContext)
     // console.log('auth', auth?.currentUser)
     const pageContext = usePageContext()
     let id = pageContext.routeParams.id // ['*']
     // console.log('routeParamsPerfil', id)
     const userAuth = useMemo(() => auth.currentUser , [] )
-    const userAuthID = userAuth?.uid || id
-    const userAuthName = userAuth?.displayName || ''
+    const userAuthID = currentUser.userId || id
+    const userAuthName = currentUser.displayName || ''
     const [isLoaded, setIsLoaded] = useState(false)
 
     const [userRol, setUserRol] = useState({
-        rol: null,
+        rol: currentUser.rol,
     })
 
     // console.log(userRol.rol)
@@ -132,6 +134,7 @@ const Page = () => {
                 userMail,
                 userPhone,
                 userPhotoUrl,
+                userGalleryUrl,
                 userJoined,
                 userProfession,
                 userExperience,
@@ -151,36 +154,38 @@ const Page = () => {
             // Sendbird new open channel
             // console.log('create new open channel', userChannelUrl)
             if (userChannelUrl === undefined || userChannelUrl === '') {
-                console.log('create new open channel')
-                // newOpenChannelSendbird({
-                //     userAuthID,
-                //     userAuthName,
-                //     //setChannelUrl,
-                //     // userEditInfo,
-                //     // setUserEditInfo,
-                // })
-                // const currentURL =
-                //     sharingInformationService.getSubject()
-                // currentURL.subscribe((data) => {
-                //     if (data) {
-                //         const { channelURL } = data
-                //         console.log(
-                //             'newOpenChannelSendbird:',
-                //             channelURL,
-                //             data
-                //         )
-                //         setUserEditInfo({
-                //             ...userEditInfo,
-                //             userChannelUrl: channelURL,
-                //         })
-                //     }
-                // })
+                // Sendbird new open channel
+                console.log('Ajustes creando nuevo open channel')
+                newOpenChannelSendbird(
+                    userAuthID,
+                    userAuthName, 
+                    // setChannelUrl,
+                    // userEditInfo,
+                    // setUserEditInfo,
+                )
+                
+                const currentURL = sharingInformationService.getSubject()
+                currentURL.subscribe((data) => {
+                    if (data) {
+                        const { channelURL } = data
+                        console.log(
+                            'newOpenChannelSendbird:',
+                            channelURL,
+                            data
+                        )
+                        setUserEditInfo({
+                            ...userEditInfo,
+                            userChannelUrl: channelURL,
+                        })
+                    }
+                })
             }
 
             setUserEditInfo({
                 ...userEditInfo,
                 userPhone: userPhone || '',
                 userPhotoUrl: userPhotoUrl || '',
+                userGalleryUrl: userGalleryUrl || [],
                 userId: userId,
                 userMail: userMail,
                 userName: userName || '',
@@ -204,7 +209,7 @@ const Page = () => {
         const userData = () => {
             const firestoreUserID = userAuthID
             const userSelectedRol = userRol.rol
-            // console.log('readUserFromFirestore', firestoreUserID, userSelectedRol)
+            console.log('readUserFromFirestore', firestoreUserID, userSelectedRol)
             readUserFromFirestore({
                 firestoreUserID,
                 userSelectedRol,
@@ -217,7 +222,7 @@ const Page = () => {
             const localRole = localStorage.getItem('role')
             const selectRole = parseInt(JSON.parse(localRole))
             setUserRol({ rol: selectRole}) // ...userRol , 
-            // console.log('selectRole', selectRole, userRol.rol)
+            console.log('selectRole', selectRole, userRol.rol)
 
             if (!isNaN(userRol.rol) && userRol.rol !== undefined) {
                 // Load and expose user data from firestore

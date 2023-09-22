@@ -2,7 +2,8 @@ export { Page }
 export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - InvitarAmigos
-import React from 'react'
+import React, {useContext} from 'react'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
@@ -11,6 +12,13 @@ import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
 
 const Page = (props) => {
+    const { currentUser } = useContext(UserAuthContext)
+    const copyReferedLink = () => {
+        const referenced = `www.dezzpo.com/app/perfil/${currentUser.userId}`
+        // document.execCommand("copy")
+        navigator.clipboard.writeText(referenced)
+    }
+
     return (
         <>
             <Container fluid className="p-0 h-100">
@@ -34,7 +42,7 @@ const Page = (props) => {
                             </p>
                         </Col>
 
-                        <Button>Copiar tu Link</Button>
+                        <Button onClick={copyReferedLink}>Copiar tu Link</Button>
                     </Col>
                 </Row>
             </Container>

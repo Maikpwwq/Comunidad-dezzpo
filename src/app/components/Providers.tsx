@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 // import PropTypes from 'prop-types'
 import { auth } from '#@/firebase/firebaseClient'
 // TODO: activate @tanstack/react-query
@@ -7,6 +7,8 @@ import { auth } from '#@/firebase/firebaseClient'
 // import { SendbirdProvider } from '@sendbird/uikit-react' // withSendBird,
 import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
 import '@sendbird/uikit-react/dist/index.css'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
+
 // import es from 'date-fns/locale/es'
 
 export { Providers }
@@ -15,12 +17,13 @@ let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
 let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
 const Providers = ({ children } : { children: React.ReactNode}) => {
+    const { currentUser } = useContext(UserAuthContext)
     // const { children } = props
-    const user = auth?.currentUser || {}
-    const userAuthID = user?.uid || '' // Este es el id de la cuenta de Auth
-    const userAuthName = user?.displayName || '' // Este es el id de la cuenta de Auth
+    const userAuthID = currentUser.userId || '' // Este es el id de la cuenta de Auth
+    const userAuthName = currentUser.displayName || '' // Este es el id de la cuenta de Auth
     // const queryClient = new QueryClient()
     // const [queryClient] = useState(() => new QueryClient())
+    console.log('SendbirdProvider', userAuthID, userAuthName, appId, accessToken)
 
     return (
         <>

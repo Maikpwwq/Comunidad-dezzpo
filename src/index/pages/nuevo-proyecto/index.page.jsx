@@ -1,7 +1,7 @@
 export { Page }
 
 // Pagina de NuevoProyecto
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
@@ -26,6 +26,7 @@ import { SubCategorias } from '#@/index/components/sub-categorias/SubCategorias'
 import { PasoAPaso } from '#@/index/components/paso_a_paso/Paso_A_Paso'
 import { TablaSubCategoriaCantidades } from './Tabla_SubCategoria_Cantidades'
 import { usePageContext } from '#R/usePageContext'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 // react-bootrstrap
 // import { Row, Col, Container, Button, Form } from 'react-bootstrap'
@@ -44,8 +45,10 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
 const Page = () => {
     const draftID = uuidv4()
+    const { currentUser } = useContext(UserAuthContext)
+
     const user = auth?.currentUser || {}
-    const userID = user?.uid ? true : false
+    const userID = currentUser.uid ? true : false
     const pageContext = usePageContext()
     const paramCategoriaProfesional =pageContext.routeParams.paramCategoriaProfesional
     const paramTipoProyecto = pageContext.routeParams.paramTipoProyecto       

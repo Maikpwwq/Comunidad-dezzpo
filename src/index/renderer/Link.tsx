@@ -9,7 +9,7 @@ function Link(props: {
     children: React.ReactNode
 }) {
     const pageContext = usePageContext()
-    console.log('function Link', pageContext.urlPathname, props.href) // .split('/')[3]
+    // console.log('function Link', pageContext.urlPathname, props.href) // .split('/')[3]
     const className = [
         props.className,
         pageContext.urlPathname === props.href && 'is-active',

@@ -46,6 +46,7 @@ function ComentarPerfil(props) {
 
     const { channelUrl } = props
     const [currentChannelUrl] = useState(channelUrl) //, setCurrentChannelUrl
+    console.log('currentChannelUrl', currentChannelUrl)
     // const [showSettings, setShowSettings] = useState(false)
     // const { userId, accessToken, connect, createChannel, sdk } = props
     // var sb = new SendBirdApp({
