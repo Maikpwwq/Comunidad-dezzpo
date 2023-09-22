@@ -30,6 +30,7 @@ const MenuComunidad = (props) => {
     */
 
     const Close = () => {
+        // TODO: handle mobile display none
         // const dropdownQuery = document.querySelectorAll('.menuMobile')
         // dropdownQuery.forEach((menuMobile) => {
         //     console.log('dropdownQuery', menuMobile)
