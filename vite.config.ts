@@ -1,10 +1,8 @@
-// import react from "@vitejs/plugin-react"; babel to SWC
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react-swc' // SWC instead babel
 import ssr from 'vite-plugin-ssr/plugin'
 // import { cjsInterop } from 'vite-plugin-cjs-interop'
 import vercel from 'vite-plugin-vercel'
-// https://github.com/magne4000/vite-plugin-vercel#usage-with-vite-plugin-ssr
 // import vercelSsr from '@vite-plugin-vercel/vike' 
 
 import * as path from 'path'
@@ -58,7 +56,6 @@ export default defineConfig(async ({ command, mode }) => {
             //     ],
             // }),
             vercel(),
-            // vercelSsr(),
         ],
         ssr: { noExternal },
         build: {

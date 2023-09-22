@@ -16,14 +16,21 @@ export { Providers }
 let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
 let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
-const Providers = ({ children } : { children: React.ReactNode}) => {
+// : { children: React.ReactNode}
+const Providers = ({ children }) => {
     const { currentUser } = useContext(UserAuthContext)
     // const { children } = props
     const userAuthID = currentUser.userId || '' // Este es el id de la cuenta de Auth
     const userAuthName = currentUser.displayName || '' // Este es el id de la cuenta de Auth
     // const queryClient = new QueryClient()
     // const [queryClient] = useState(() => new QueryClient())
-    console.log('SendbirdProvider', userAuthID, userAuthName, appId, accessToken)
+    console.log(
+        'SendbirdProvider',
+        userAuthID,
+        userAuthName,
+        appId,
+        accessToken
+    )
 
     return (
         <>

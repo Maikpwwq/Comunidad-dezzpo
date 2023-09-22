@@ -15,7 +15,6 @@ const Page = (props) => {
     const { currentUser } = useContext(UserAuthContext)
     const copyReferedLink = () => {
         const referenced = `www.dezzpo.com/app/perfil/${currentUser.userId}`
-        // document.execCommand("copy")
         navigator.clipboard.writeText(referenced)
     }
 
