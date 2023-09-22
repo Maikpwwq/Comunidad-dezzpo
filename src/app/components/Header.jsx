@@ -30,6 +30,7 @@ function Header(props) {
     const { currentUser, updateUser } = useContext(UserAuthContext)
     const { onDrawerToggle } = props
     const userAuth = useMemo(() => auth?.currentUser , [] )
+    const [isLoaded, setIsLoaded] = useState(false)
     const [tab, setTab] = useState(0)
     const [ isAuth, setIsAuth ] = useState(currentUser.isAuth)
     const [ userAuthInfo, setUserAuthInfo ] = useState({
@@ -41,6 +42,7 @@ function Header(props) {
     const perfilRoute = `/app/perfil/${userAuthInfo.userId}`
 
     useEffect(() => {  
+        if (!isLoaded) {
         const userData = sharingInformationService.getSubject()
         userData.subscribe((data) => {
             if (data) {
@@ -61,6 +63,7 @@ function Header(props) {
                         updated: true,
                     })
                     setIsAuth(true)
+                    setIsLoaded(true)
                 } 
             } else {
                 console.log(
@@ -68,7 +71,8 @@ function Header(props) {
                 )
             }
         })
-    }, [userAuthInfo]) 
+    }
+    }, [userAuthInfo, updateUser, isLoaded]) 
 
     const handleNav = (route, tab) => {
         console.log("handleHeaderNav", route, tab)

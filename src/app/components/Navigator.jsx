@@ -76,6 +76,7 @@ function Navigator(props) {
     // console.log("Navigator urlPath", activeUrl[1])
     const { ...other } = props
     const userAuth = useMemo(() => auth?.currentUser , [] )
+    const [isLoaded, setIsLoaded] = useState(false)
     const [open, setOpen] = useState(false)
     const [ isAuth, setIsAuth ] = useState(currentUser.isAuth)
     const [ userAuthInfo, setUserAuthInfo ] = useState({
@@ -85,6 +86,7 @@ function Navigator(props) {
     })
 
     useEffect(() => {  
+        if (!isLoaded) {
         const userData = sharingInformationService.getSubject()
         userData.subscribe((data) => {
             if (data) {
@@ -105,6 +107,7 @@ function Navigator(props) {
                         updated: true,
                     })
                     setIsAuth(true)
+                    setIsLoaded(true)
                 } 
             } else {
                 console.log(
@@ -112,7 +115,8 @@ function Navigator(props) {
                 )
             }
         })
-    }, [userAuthInfo])     
+    }
+    }, [userAuthInfo, updateUser, isLoaded])     
 
     // const navigate = useNavigate()
     const handleSignout = () => {
