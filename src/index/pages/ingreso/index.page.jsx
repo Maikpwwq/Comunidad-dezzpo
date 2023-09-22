@@ -65,7 +65,7 @@ const Page = (props) => {
 
     const handleSelectRol = (e) => {
         setRol(e[0])
-        console.log('handleSelectRol', e, userSignupRol)
+        // console.log('handleSelectRol', e, userSignupRol)
         setStep(2)
     }
 

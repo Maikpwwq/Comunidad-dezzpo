@@ -13,7 +13,7 @@ import { auth } from '#@/firebase/firebaseClient'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 import '#@/assets/cssPrivateApp/perfil.css'
-// import ProfilePhoto from '#@/assets/img/Profile.png'
+import ProfilePhoto from '#@/assets/img/Profile.png'
 // import Bogota from '#@/assets/img/Bogota.png'
 import { MapaPerfil } from '#@/app/components/MapaPerfil'
 import { CincoEstrellas } from '#@/app/components/CincoEstrellas'
@@ -79,7 +79,7 @@ const Page = () => {
         userMail: '',
         userPhone: '',
         userChannelUrl: undefined,
-        userPhotoUrl: '',
+        userPhotoUrl: ProfilePhoto,
         userGalleryUrl: [],
         userCreatedDrafts: [],
         userId: '',
@@ -196,7 +196,7 @@ const Page = () => {
                 ...userInfo,
                 userChannelUrl: userChannelUrl ? userChannelUrl : '',
                 userPhone: userPhone ? userPhone : '',
-                userPhotoUrl: userPhotoUrl ? userPhotoUrl : '',
+                userPhotoUrl: userPhotoUrl ? userPhotoUrl : ProfilePhoto,
                 userId: userId ? userId : '',
                 userMail: userMail,
                 userName: userName ? userName : '',

@@ -17,11 +17,14 @@ import Container from 'react-bootstrap/Container'
 // import TextareaAutosize from '@mui/material/TextareaAutosize'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
+let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
+let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
+
 const Page = () => {
     const { currentUser } = useContext(UserAuthContext)
-    let userId = currentUser.userId || undefined
-    let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
-    // let appId = process.env.VITE_APP_SENDBIRD_APPID
+    let userId = currentUser.userId || ""
+    let displayName = currentUser.displayName || ""
+    console.log('Mensajes', userId, displayName, appId, accessToken)
 
     return (
         <>
@@ -36,8 +39,10 @@ const Page = () => {
                         <h2 className="headline-xl">Mensajes</h2>
                         {/* <SendBirdApp
                             appId={appId} // Sendbird application ID.
-                            userId={userId} // user ID.
-                            dateLocale={es}
+                            userId={userId} // user Auth ID.
+                            nickname={displayName} // user Auth displayName.
+                            accessToken={accessToken}
+                            // dateLocale={es}
                         /> */}
                         {/* <FormControl
                             fullWidth

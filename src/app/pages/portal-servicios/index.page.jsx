@@ -23,9 +23,9 @@ import Button from 'react-bootstrap/Button'
 const Page = (props) => {
     const pageContext = usePageContext()
     const searchInput = pageContext.routeParams.searchInput // ['*']
+    const [isLoaded, setIsLoaded] = useState(false)
     console.log('portal-servicios', searchInput)
     
-
     // const _storage = storage
     const _firestore = firestore
 
@@ -51,6 +51,7 @@ const Page = (props) => {
     }
 
     useEffect(() => {
+        if (!isLoaded) {
         if (typeof searchInput !== 'undefined') {
             userSearch(searchInput)
             const consultedData = sharingInformationService.getSubject()
@@ -62,6 +63,7 @@ const Page = (props) => {
                         setSearchData({
                             docSnap: search,
                         })
+                        setIsLoaded(true)
                     } else {
                         console.log(
                             'No se encontro información para la busqueda en la colleccion usuarios!'
@@ -75,7 +77,8 @@ const Page = (props) => {
                 //     console.log(error)
                 // })
         }
-    }, [searchInput])
+    }
+    }, [searchInput, isLoaded])
 
     // console.log('SearchData', searchData)
 
