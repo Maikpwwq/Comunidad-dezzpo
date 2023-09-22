@@ -16,7 +16,7 @@ const Page = (props) => {
     const copyReferedLink = () => {
         const referenced = `www.dezzpo.com/app/perfil/${currentUser.userId}`
         // document.execCommand("copy")
-        navigator.clipboard.writeText(referenced)
+        // navigator.clipboard.writeText(referenced)
     }
 
     return (

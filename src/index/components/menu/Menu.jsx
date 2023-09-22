@@ -30,13 +30,13 @@ const MenuComunidad = (props) => {
     */
 
     const Close = () => {
-        const dropdownQuery = document.querySelectorAll('.menuMobile')
-        dropdownQuery.forEach((menuMobile) => {
-            console.log('dropdownQuery', menuMobile)
-            // menuMobile.style.display = `none !important`
-            menuMobile.style.position = `absolute`
-            menuMobile.style.left = `-9999px`
-        })
+        // const dropdownQuery = document.querySelectorAll('.menuMobile')
+        // dropdownQuery.forEach((menuMobile) => {
+        //     console.log('dropdownQuery', menuMobile)
+        //     // menuMobile.style.display = `none !important`
+        //     menuMobile.style.position = `absolute`
+        //     menuMobile.style.left = `-9999px`
+        // })
         // const dropdownByClass = Array.from(document.getElementsByClassName('dropdownContenidos'))
         // const menuMobileById = document.getElementById('menuMobile')
         // menuMobileById.style.display = `none `
