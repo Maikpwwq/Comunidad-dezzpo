@@ -50,8 +50,8 @@ const Page = () => {
     // const urlPath = pageContext.urlPathname
     // console.log('Perfil user', pageContext) // .user
     // const user = auth?.currentUser
-    const userAuthID = currentUser.userId || '' // Este es el id de la cuenta de Auth
-    const userAuthName = currentUser.displayName || '' // Este es el id de la cuenta de Auth
+    const userAuthID = currentUser?.userId  // Este es el id de la cuenta de Auth
+    const userAuthName = currentUser?.displayName  // Este es el id de la cuenta de Auth
     const [isLoaded, setIsLoaded] = useState(false)
 
     let id = pageContext.routeParams.id // ['*']

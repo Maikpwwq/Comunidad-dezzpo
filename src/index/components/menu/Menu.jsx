@@ -63,7 +63,7 @@ const MenuComunidad = (props) => {
                                     onClick={handleOpenMenu}
                                 >
                                     <MenuIcon sx={{ fontSize: '30px' }} />
-                                </IconButton>
+                                </IconButton> 
 
                                 <Link
                                     href="/"

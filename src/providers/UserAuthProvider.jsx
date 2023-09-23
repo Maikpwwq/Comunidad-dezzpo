@@ -7,6 +7,7 @@ export const UserAuthContext = createContext()
 const initialValue = {
     userId: null,
     displayName: null,
+    mobileOpen: false,
     isAuth: false,
     updated: false,
     rol: null,
@@ -28,6 +29,13 @@ const UserAuthProvider = ({ children }) => {
             ...newData,
         }))
     }
+    const updateMobileMenu = (bool) => {
+        // console.log('updateIsAuth', bool)
+        setCurrentUser((currentUser) => ({
+            ...currentUser,
+            mobileOpen: bool,
+        }))
+    }
     const updateIsAuth = (bool) => {
         // console.log('updateIsAuth', bool)
         setCurrentUser((currentUser) => ({
@@ -45,6 +53,7 @@ const UserAuthProvider = ({ children }) => {
                 currentUser,
                 updateRol,
                 updateIsAuth,
+                updateMobileMenu,
                 updateUser,
                 clearAuthUser,
             }}

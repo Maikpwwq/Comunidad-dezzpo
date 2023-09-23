@@ -29,7 +29,6 @@ import PersonIcon from '@mui/icons-material/Person'
 // import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove'
 import NotificationsIcon from '@mui/icons-material/Notifications'
-import LoyaltyIcon from '@mui/icons-material/Loyalty'
 import CardMembershipIcon from '@mui/icons-material/CardMembership'
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark'
 import TuneIcon from '@mui/icons-material/Tune'
@@ -37,6 +36,8 @@ import PaymentIcon from '@mui/icons-material/Payment'
 import LockResetIcon from '@mui/icons-material/LockReset'
 import LogoutIcon from '@mui/icons-material/Logout'
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
+import LoyaltyIcon from '@mui/icons-material/Loyalty'
+import HowToRegIcon from '@mui/icons-material/HowToReg'
 
 // import HomeIcon from '@mui/icons-material/Home'
 // import PeopleIcon from '@mui/icons-material/People'
@@ -80,6 +81,7 @@ function Navigator(props) {
     const [isLoaded, setIsLoaded] = useState(false)
     const [open, setOpen] = useState(false)
     const [isAuth, setIsAuth] = useState(currentUser.isAuth)
+    const [rolAuth, setRolAuth] = useState(currentUser.rol)
     const [userAuthInfo, setUserAuthInfo] = useState({
         userId: currentUser.userId || '', // Este es el id de la cuenta de Auth
         userPhotoUrl: userAuth?.photoURL || '',
@@ -87,6 +89,17 @@ function Navigator(props) {
     })
 
     useEffect(() => {
+        // Perform localStorage action
+        const localRole = localStorage.getItem('role')
+        const selectRole = parseInt(JSON.parse(localRole))
+        setRolAuth(selectRole)
+    }, [])
+
+    useEffect(() => {
+        if ( !rolAuth ){ 
+            console.log('rolAuth', rolAuth) 
+            setIsAuth(false) 
+        }
         if (!isLoaded) {
             const userData = sharingInformationService.getSubject()
             userData.subscribe((data) => {
@@ -107,6 +120,7 @@ function Navigator(props) {
                             userId: uid,
                             isAuth: true,
                             updated: true,
+                            rol: rolAuth,
                         })
                         setIsAuth(true)
                         setIsLoaded(true)
@@ -118,7 +132,7 @@ function Navigator(props) {
                 }
             })
         }
-    }, [userAuthInfo, updateUser, isLoaded])
+    }, [userAuthInfo, updateUser, isLoaded, rolAuth])
 
     // const navigate = useNavigate()
     const handleSignout = () => {
@@ -153,97 +167,218 @@ function Navigator(props) {
     }
 
     const categories = isAuth
-        ? [
-              {
-                  id: 'Inicio',
-                  children: [
-                      {
-                          id: 'Mi cuenta',
-                          icon: <PersonIcon />,
-                          route: `perfil/${userAuthInfo.userId}`,
-                          active: 'perfil' === activeUrl[1] ? true : false,
-                      },
-                      {
-                          id: 'Portal de servicios',
-                          icon: <StoreIcon />,
-                          route: 'portal-servicios/',
-                          active:
-                              'portal-servicios' === activeUrl[1]
-                                  ? true
-                                  : false,
-                      },
-                      {
-                          id: 'Directorio de Requerimientos',
-                          icon: <DriveFileMoveIcon />,
-                          route: 'directorio-requerimientos/',
-                          active:
-                              'directorio-requerimientos' === activeUrl[1]
-                                  ? true
-                                  : false,
-                      },
-                      {
-                          id: 'Notificaciones',
-                          icon: <NotificationsIcon />,
-                          route: 'notificaciones',
-                          active:
-                              'notificaciones' === activeUrl[1] ? true : false,
-                      },
-                      {
-                          id: 'Suscripciones',
-                          icon: <LoyaltyIcon />,
-                          route: 'suscripciones',
-                          active:
-                              'suscripciones' === activeUrl[1] ? true : false,
-                      },
-                      {
-                          id: 'Biblioteca',
-                          icon: <CollectionsBookmarkIcon />,
-                          route: 'biblioteca',
-                          active: 'biblioteca' === activeUrl[1] ? true : false,
-                      },
-                      {
-                          id: 'Invitar a un Amigo',
-                          icon: <CardMembershipIcon />,
-                          route: 'invitar-amigos',
-                          active:
-                              'invitar-amigos' === activeUrl[1] ? true : false,
-                      },
-                      {
-                          id: 'Ajustes',
-                          icon: <ManageAccountsIcon />,
-                          route: `ajustes/${userAuthInfo.userId}`,
-                          active: 'ajustes' === activeUrl[1] ? true : false,
-                      },
-                  ],
-              },
-              {
-                  id: 'Configuracion',
-                  children: [
-                      {
-                          id: 'Privacidad',
-                          icon: <TuneIcon />,
-                          route: 'configuracion-privacidad',
-                          active:
-                              'configuracion-privacidad' === activeUrl[1]
-                                  ? true
-                                  : false,
-                      },
-                      {
-                          id: 'Formas de Pago',
-                          icon: <PaymentIcon />,
-                          route: 'formas-pago',
-                          active: 'formas-pago' === activeUrl[1] ? true : false,
-                      },
-                      {
-                          id: 'Cambiar Clave',
-                          icon: <LockResetIcon />,
-                          route: 'cambiar-clave',
-                          active:
-                              'cambiar-clave' === activeUrl[1] ? true : false,
-                      },
-                  ],
-              },
-          ]
+        ? rolAuth === 2
+            ? [
+                  {
+                      id: 'Inicio',
+                      children: [
+                          {
+                              id: 'Mi cuenta',
+                              icon: <PersonIcon />,
+                              route: `perfil/${userAuthInfo.userId}`,
+                              active: 'perfil' === activeUrl[1] ? true : false,
+                          },
+                          {
+                              id: 'Portal de servicios',
+                              icon: <StoreIcon />,
+                              route: 'portal-servicios/',
+                              active:
+                                  'portal-servicios' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Directorio de Requerimientos',
+                              icon: <DriveFileMoveIcon />,
+                              route: 'directorio-requerimientos/',
+                              active:
+                                  'directorio-requerimientos' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Notificaciones',
+                              icon: <NotificationsIcon />,
+                              route: 'notificaciones',
+                              active:
+                                  'notificaciones' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Suscripciones',
+                              icon: <LoyaltyIcon />,
+                              route: 'suscripciones',
+                              active:
+                                  'suscripciones' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Certificaciones',
+                              icon: <HowToRegIcon />,
+                              route: 'certificaciones',
+                              active:
+                                  'certificaciones' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Biblioteca',
+                              icon: <CollectionsBookmarkIcon />,
+                              route: 'biblioteca',
+                              active:
+                                  'biblioteca' === activeUrl[1] ? true : false,
+                          },
+                          {
+                              id: 'Invitar a un Amigo',
+                              icon: <CardMembershipIcon />,
+                              route: 'invitar-amigos',
+                              active:
+                                  'invitar-amigos' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Ajustes',
+                              icon: <ManageAccountsIcon />,
+                              route: `ajustes/${userAuthInfo.userId}`,
+                              active: 'ajustes' === activeUrl[1] ? true : false,
+                          },
+                      ],
+                  },
+                  {
+                      id: 'Configuracion',
+                      children: [
+                          {
+                              id: 'Privacidad',
+                              icon: <TuneIcon />,
+                              route: 'configuracion-privacidad',
+                              active:
+                                  'configuracion-privacidad' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Formas de Pago',
+                              icon: <PaymentIcon />,
+                              route: 'formas-pago',
+                              active:
+                                  'formas-pago' === activeUrl[1] ? true : false,
+                          },
+                          {
+                              id: 'Cambiar Clave',
+                              icon: <LockResetIcon />,
+                              route: 'cambiar-clave',
+                              active:
+                                  'cambiar-clave' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                      ],
+                  },
+              ]
+            : [
+                  {
+                      id: 'Inicio',
+                      children: [
+                          {
+                              id: 'Mi cuenta',
+                              icon: <PersonIcon />,
+                              route: `perfil/${userAuthInfo.userId}`,
+                              active: 'perfil' === activeUrl[1] ? true : false,
+                          },
+                          {
+                              id: 'Portal de servicios',
+                              icon: <StoreIcon />,
+                              route: 'portal-servicios/',
+                              active:
+                                  'portal-servicios' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Directorio de Requerimientos',
+                              icon: <DriveFileMoveIcon />,
+                              route: 'directorio-requerimientos/',
+                              active:
+                                  'directorio-requerimientos' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Notificaciones',
+                              icon: <NotificationsIcon />,
+                              route: 'notificaciones',
+                              active:
+                                  'notificaciones' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Suscripciones',
+                              icon: <LoyaltyIcon />,
+                              route: 'suscripciones',
+                              active:
+                                  'suscripciones' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Biblioteca',
+                              icon: <CollectionsBookmarkIcon />,
+                              route: 'biblioteca',
+                              active:
+                                  'biblioteca' === activeUrl[1] ? true : false,
+                          },
+                          {
+                              id: 'Invitar a un Amigo',
+                              icon: <CardMembershipIcon />,
+                              route: 'invitar-amigos',
+                              active:
+                                  'invitar-amigos' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Ajustes',
+                              icon: <ManageAccountsIcon />,
+                              route: `ajustes/${userAuthInfo.userId}`,
+                              active: 'ajustes' === activeUrl[1] ? true : false,
+                          },
+                      ],
+                  },
+                  {
+                      id: 'Configuracion',
+                      children: [
+                          {
+                              id: 'Privacidad',
+                              icon: <TuneIcon />,
+                              route: 'configuracion-privacidad',
+                              active:
+                                  'configuracion-privacidad' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                          {
+                              id: 'Formas de Pago',
+                              icon: <PaymentIcon />,
+                              route: 'formas-pago',
+                              active:
+                                  'formas-pago' === activeUrl[1] ? true : false,
+                          },
+                          {
+                              id: 'Cambiar Clave',
+                              icon: <LockResetIcon />,
+                              route: 'cambiar-clave',
+                              active:
+                                  'cambiar-clave' === activeUrl[1]
+                                      ? true
+                                      : false,
+                          },
+                      ],
+                  },
+              ]
         : [
               {
                   id: 'Inicio',
@@ -279,7 +414,7 @@ function Navigator(props) {
 
     return (
         <Drawer open={true} variant="permanent" {...other}>
-            <List disablePadding>
+            <List disablePadding  style={{width: 'auto', maxWidth: '256px'}}>
                 <ListItem
                     sx={{
                         ...item,

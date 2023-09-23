@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { auth } from '#@/firebase/firebaseClient'
 import { ThemeProvider } from '@mui/material/styles'
@@ -13,6 +13,7 @@ import { Navigator } from '#@/app/components/Navigator'
 import { Header } from '#@/app/components/Header'
 import { theme } from '#@/app/components/theme.tsx'
 import { Providers } from '#@/app/components/Providers'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 import '#@/app/components/Private-App.scss'
 import '#R/index.scss'
@@ -35,16 +36,23 @@ function Copyright() {
 const drawerWidth = 256
 
 function LayoutAppPaperbase({ children }) {
-    const [mobileOpen, setMobileOpen] = React.useState(false)
-    const isSmUp = useMediaQuery(theme.breakpoints.up('sm'))
+    const { currentUser, updateMobileMenu } = useContext(UserAuthContext)
+    // const isSmUp = useMediaQuery(theme.breakpoints.up('sm'))
+    // const [mobileOpen, setMobileOpen] = useState(false)
+
+    // Here change state to open and close menu
 
     // const user = auth?.currentUser || {}
 
     // const localRole = localStorage.getItem('role')
     // console.log(JSON.parse(localRole))
 
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen)
+    // const handleDrawerToggle = () => {
+    //     setMobileOpen(!mobileOpen)
+    // }
+
+    const handleDrawerToggle2 = () => {
+        updateMobileMenu(false)
     }
 
     return (
@@ -56,22 +64,36 @@ function LayoutAppPaperbase({ children }) {
                     <Box
                         component="nav"
                         sx={{
-                            width: { sm: drawerWidth },
+                            width: { md: drawerWidth },
                             flexShrink: { sm: 0 },
                         }}
                     >
-                        {isSmUp ? null : (
+                        {/* {isSmUp ? null : (
                             <Navigator
                                 PaperProps={{ style: { width: drawerWidth } }}
                                 variant="temporary"
                                 open={mobileOpen}
                                 onClose={handleDrawerToggle}
                             />
-                        )}
+                        )} */}
 
+                        {currentUser.mobileOpen && currentUser.isAuth && (
+                            <Navigator
+                                PaperProps={{ style: { width: drawerWidth } }}
+                                variant="temporary"
+                                open={currentUser.mobileOpen}
+                                onClose={handleDrawerToggle2}
+                            />
+                        )}
                         <Navigator
-                            PaperProps={{ style: { width: drawerWidth } }}
-                            sx={{ display: { sm: 'block', xs: 'none' } }}
+                            PaperProps={{}}
+                            sx={{
+                                display: {
+                                    md: 'block',
+                                    sm: 'none',
+                                    xs: 'none',
+                                },
+                            }}
                         />
                     </Box>
                     {/* )} */}
@@ -84,7 +106,7 @@ function LayoutAppPaperbase({ children }) {
                         }}
                         style={{ overflowX: 'auto' }}
                     >
-                        <Header onDrawerToggle={handleDrawerToggle} />
+                        <Header onDrawerToggle={handleDrawerToggle2} />
                         <Box
                             className="p-0"
                             component="main"
