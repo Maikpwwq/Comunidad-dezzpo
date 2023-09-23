@@ -1,7 +1,7 @@
 export { MenuComunidad }
 
 /* Menu de navegacion de contenidos Grupo Paginas Comunidad */
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from '#R/Link'
 import '#@/assets/css/menu.css' 
 import { MenuLinks } from '#@/index/components/menu/MenuLinks.ts'
@@ -30,6 +30,7 @@ const MenuComunidad = (props) => {
     */
 
     const Close = () => {
+        setIsOpen(false)
         // TODO: handle mobile display none
         // const dropdownQuery = document.querySelectorAll('.menuMobile')
         // dropdownQuery.forEach((menuMobile) => {
@@ -42,7 +43,12 @@ const MenuComunidad = (props) => {
         // const menuMobileById = document.getElementById('menuMobile')
         // menuMobileById.style.display = `none `
     }
+    const [ isOpen, setIsOpen] = useState(false)
 
+    const handleOpenMenu = () => {
+        setIsOpen(!isOpen)
+    }
+    
     return (
         <>
             <Container fluid className="p-0">
@@ -53,7 +59,8 @@ const MenuComunidad = (props) => {
                             <div className="containerLogo container d-flex w-auto ms-0">
                                 <IconButton
                                     aria-label="mobile-more"
-                                    className="mobile-menu"
+                                    className="mobile-menu" 
+                                    onClick={handleOpenMenu}
                                 >
                                     <MenuIcon sx={{ fontSize: '30px' }} />
                                 </IconButton>
@@ -61,6 +68,7 @@ const MenuComunidad = (props) => {
                                 <Link
                                     href="/"
                                     className="activo body-2 p-2 d-flex flex-row"
+                                    onClick={Close}
                                 >
                                     <img
                                         src={LogoMenuComunidadDezzpo}
@@ -149,6 +157,7 @@ const MenuComunidad = (props) => {
                             </Link>
                         </ul>
                     </nav>
+                    { isOpen && 
                     <nav className="menuMobile col-10 pt-2 pb-2">
                         {/* sm="collapseContents" */}
                         <ul className="menuMobileSecciones">
@@ -202,6 +211,7 @@ const MenuComunidad = (props) => {
                             </Link>
                         </ul>
                     </nav>
+                    }
                 </Col>
             </Container>
         </>

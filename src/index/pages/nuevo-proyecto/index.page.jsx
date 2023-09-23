@@ -2,8 +2,8 @@ export { Page }
 
 // Pagina de NuevoProyecto
 import React, { useState, useContext, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { Link } from '#R/Link'
+// import PropTypes from 'prop-types'
+// import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { DirectionalButton } from '#@/index/components/DirectionalButton/DirectionalButton'
 import { ListadoCategorias } from '#@/index/components/ListadoCategorias'
@@ -46,12 +46,11 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 const Page = () => {
     const draftID = uuidv4()
     const { currentUser } = useContext(UserAuthContext)
-
-    const user = auth?.currentUser || {}
-    const userID = currentUser.uid ? true : false
+    const userId = currentUser?.userId
     const pageContext = usePageContext()
-    const paramCategoriaProfesional =pageContext.routeParams.paramCategoriaProfesional
-    const paramTipoProyecto = pageContext.routeParams.paramTipoProyecto       
+    console.log('nuevo-proyecto', pageContext.routeParams)  
+    const paramCategoriaProfesional = pageContext.routeParams?.CategoriaProfesional
+    const paramTipoProyecto = pageContext.routeParams?.TipoProyecto     
     // const { paramCategoriaProfesional, paramTipoProyecto } =
     //     pageContext.routeParams['*']
     // console.log('nuevo-proyecto', paramCategoriaProfesional, paramTipoProyecto)
@@ -62,7 +61,7 @@ const Page = () => {
     // }, [])
     // console.log('requerimiento-local', requerimiento)
     // console.log(requerimiento.draftId)
-    const [hideRegister] = useState(userID) // , setHideRegister
+    const [hideRegister] = useState(currentUser?.isAuth) // , setHideRegister
     const [showMore, setShowMore] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const _firestore = firestore
@@ -78,14 +77,14 @@ const Page = () => {
     })
     const [activeStep, setActiveStep] = useState(0)
     const [draftInfo, setDraftInfo] = useState({
-        draftCategory: paramCategoriaProfesional,
+        draftCategory: paramCategoriaProfesional || undefined,
         draftSubCategory: '',
-        draftProject: paramTipoProyecto,
+        draftProject: paramTipoProyecto || undefined,
         draftId: draftID,
         draftTotal: 0,
         draftName: '',
         draftDescription: '',
-        draftPropietarioResidente: user.uid || '',
+        draftPropietarioResidente: userId || '',
         draftCreated: '',
         draftPriority: '',
         draftCity: '',
@@ -102,10 +101,10 @@ const Page = () => {
         draftApply: '',
     })
 
-    const [open, setOpen] = useState(false)
+    const [openModal, setOpen] = useState(false)
     const [categoriesIndex, setCategoriesIndex] = useState(0)
     const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+    const handleCloseModal = () => setOpen(false)
 
     const handleNext = () => {
         if (categoriesIndex < categoriaInfo.subCatLength - 1) {
@@ -123,26 +122,25 @@ const Page = () => {
         await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
     }
 
-
-
     useEffect(() => {
-        const categoriasFromFirestore = async () => {
-            try {
-                // 'aPTAljOeD48FbniBg6Lw' main document categories
-                const subCategoriaRef = collection(
-                    doc(categoriaRef, 'aPTAljOeD48FbniBg6Lw'),
-                    draftInfo.draftCategory
-                )
-                const categoriaData = await getDocs(subCategoriaRef)
-                return categoriaData
-            } catch (err) {
-                console.log(
-                    'Error al obtener los datos de la colleccion categorias: ',
-                    err
-                )
-            }
-        }
+        
         if  (!isLoaded) {
+            const categoriasFromFirestore = async () => {
+                try {
+                    // 'aPTAljOeD48FbniBg6Lw' main document categories
+                    const subCategoriaRef = collection(
+                        doc(categoriaRef, 'aPTAljOeD48FbniBg6Lw'),
+                        draftInfo.draftCategory
+                    )
+                    const categoriaData = await getDocs(subCategoriaRef)
+                    return categoriaData
+                } catch (err) {
+                    console.log(
+                        'Error al obtener los datos de la colleccion categorias: ',
+                        err
+                    )
+                }
+            }
         if (!!draftInfo.draftProject && !!draftInfo.draftCategory ) {
             categoriasFromFirestore().then((docSnap) => {
                     if (docSnap) {
@@ -284,7 +282,7 @@ const Page = () => {
                                     xs={12}
                                 >
                                     <BuscadorNuevoProyecto
-                                        data={pageContext.routeParams}
+                                        // data={{paramCategoriaProfesional, paramTipoProyecto}}
                                         setDraftInfo={setDraftInfo}
                                         draftInfo={draftInfo}
                                     ></BuscadorNuevoProyecto>
@@ -772,9 +770,9 @@ const Page = () => {
                                             <AdjuntarArchivos
                                                 name={'draftAtachments'}
                                                 multiple={true}
-                                                idPerson={user.uid}
+                                                idPerson={userId}
                                                 rol={1}
-                                                route={`profiles/${user.uid}/draft`}
+                                                route={`profiles/${userId}/draft`}
                                                 functionState={setDraftInfo}
                                                 state={draftInfo}
                                             ></AdjuntarArchivos>
@@ -795,8 +793,8 @@ const Page = () => {
                                     /> */}
                                 </Form.Group>
                                 <Modal
-                                    open={open}
-                                    onClose={handleClose}
+                                    open={openModal}
+                                    onClose={handleCloseModal}
                                     aria-labelledby="modal-modal-title"
                                     aria-describedby="modal-modal-description"
                                 >

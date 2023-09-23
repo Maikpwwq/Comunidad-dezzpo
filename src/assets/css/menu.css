@@ -55,15 +55,19 @@
     }
 
     .menuMobileSecciones, .menuMobile {
-        display: none;
-    }
-
-    .menuFijo:hover .menuMobile, .menuFijo:hover .menuMobileSecciones {
+        /* display: none; */
         display: flex !important;
         flex-direction: column;
         position: absolute !important;
         left: 0 !important;
     }
+
+    /* .menuFijo:hover .menuMobile, .menuFijo:hover .menuMobileSecciones {
+        display: flex !important;
+        flex-direction: column;
+        position: absolute !important;
+        left: 0 !important;
+    } */
 
     .menuSecciones, .menuContenedor {
         display: none !important;
@@ -104,12 +108,9 @@
     }
 }
 
-@media screen and (min-width: 600px) and (max-width: 900px) {
-    .isologo-comunidad-dezzpo {
-        height: 45px !important;
-        width: 110px !important;
-    }
-}
+/* @media screen and (min-width: 600px) and (max-width: 900px) {
+
+} */
 
 @media screen and (min-width: 900px) {
 }

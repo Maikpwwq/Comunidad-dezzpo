@@ -3,10 +3,11 @@ export { BuscadorNuevoProyecto }
 import React, { useEffect, useState } from 'react'
 import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
-import { ListadoCategorias } from '../ListadoCategorias'
+import { ListadoCategorias } from '#@/index/components/ListadoCategorias'
 import '#@/assets/css/buscador_nuevos_proyectos.css'
-import IcoMoon from 'react-icomoon'
-import iconSet from '#@/assets/css/icomoon/selection.json'
+import StorefrontIcon from '@mui/icons-material/Storefront';
+// import IcoMoon from 'react-icomoon'
+// import iconSet from '#@/assets/css/icomoon/selection.json'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -14,56 +15,73 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 import PropTypes from 'prop-types'
+import Typography from '@mui/material/Typography'
 
-const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
-    const { categoriaProfesional, tipoProyecto } = data || {}
-    // const { paramCategoriaProfesional, paramTipoProyecto } = useParams()
-
+const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
+    console.log('BuscadorNuevoProyecto', draftInfo)
+    const [isLoaded, setIsLoaded] = useState(false)
     const [projectData, setProjectData] = useState({
-        categoriaProfesional: categoriaProfesional, // || paramCategoriaProfesional
-        tipoProyecto: tipoProyecto, // || paramTipoProyecto
+        categoriaProfesional: undefined, 
+        tipoProyecto: undefined,
     })
 
     useEffect(() => {
-        if (draftInfo) {
-            setDraftInfo({
-                ...draftInfo,
-                draftCategory: projectData.categoriaProfesional,
-                draftProject: projectData.tipoProyecto,
-            })
-            // console.log('BuscadorChanged')
+        if (!isLoaded){
+            if (draftInfo && projectData.categoriaProfesional && projectData.tipoProyecto) {
+                setDraftInfo({
+                    ...draftInfo,
+                    draftCategory: projectData.categoriaProfesional,
+                    draftProject: projectData.tipoProyecto,
+                })
+                // console.log('BuscadorChanged')
+                setIsLoaded(true)
+            }
         }
-    }, [projectData, draftInfo, setDraftInfo])
+    }, [projectData, draftInfo, setDraftInfo, isLoaded])
 
     const handleChange = (event) => {
         setProjectData({
             ...projectData,
             [event.target.name]: event.target.value,
         })
+        setIsLoaded(false)
     }
 
     const handleClick = () => {
+        const route = `/nuevo-proyecto/${projectData.tipoProyecto}/${projectData.categoriaProfesional}`
         navigate(
-            `/nuevo-proyecto/${projectData.categoriaProfesional}/${projectData.tipoProyecto}`
+            route
         )
-        // console.log(projectData)
-        // setDraftInfo(projectData)
     }
+
 
     return (
         <>
             <Container fluid className="p-0">
                 <Col className="col-12">
                     <div className="p-4 contenerdorFormulario center ms-2 me-2">
+                    <h3 className="headline-l pt-4 pb-2">
+                                Solicitar servicios
+                    </h3>
+                                    
+                                            <Link
+                                    href="/app/portal-servicios"
+                                    className="body-2 btn-menu-comunidad mt-4 w-auto"
+                                >
+                                            <StorefrontIcon className="me-1"/> 
+                                            <strong>
+                                                Visitar Directorio de Comerciantes
+                                            </strong>
+                                            </Link>
+                                    
+                        <Typography variant="body1" className="my-3 pt-2">O registra un nuevo requerimiento</Typography>
                         <Form
-                            className="p-4"
+                            className="p-4 pt-0"
                             action=""
                             id="formularioServicios"
                         >
                             {/* {' asistencia '} */}
-                            <h3 className="headline-l pb-2">
-                                Solicitar servicios
-                            </h3>
+                            
                             <Form.Group
                                 className="mb-3"
                                 controlId="formTipoProyecto"
@@ -157,15 +175,14 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
                             </Form.Group>
                             <Form.Group>
                                 <Col className="pt-4 pb-2">
-                                    {/*  */}
                                     <Button
                                         className="animacionBoton body-1 btn-buscador btn btn-round btn-high"
                                         variant="primary"
-                                        type="submit"
+                                        // type="submit"
                                         onClick={handleClick}
                                     >
                                         <strong>Siguiente</strong>
-                                    </Button>
+                                    </Button>                                       
                                 </Col>
                             </Form.Group>
                         </Form>
@@ -177,7 +194,7 @@ const BuscadorNuevoProyecto = ({ data, setDraftInfo, draftInfo }) => {
 }
 
 BuscadorNuevoProyecto.propTypes = {
-    data: PropTypes.object,
+    // data: PropTypes.object,
     setDraftInfo: PropTypes.func,
     draftInfo: PropTypes.object,
 }
