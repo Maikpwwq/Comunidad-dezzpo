@@ -1,3 +1,16 @@
+/* Pantallas de Moviles */
+@media screen and (max-width: 600px) {
+    .asisteme {
+        flex-direction: column !important;
+        align-items: end !important;
+    }
+
+    .asisteme p, .asisteme button {
+        font-size: 0.9rem !important;
+        line-height: 1rem !important;
+    }
+}
+
 .asisteme {
     background-color: var(--background-dark-purple-color);
     display: flex;

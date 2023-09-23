@@ -3,7 +3,7 @@
 // Parameters available at:
 //  - `pageContext.routeParams.paramCategoriaProfesional`
 //  - `pageContext.routeParams.paramTipoProyecto`
-// export default '/nuevo-proyecto/@paramCategoriaProfesional/@paramTipoProyecto'
+// export default '/nuevo-proyecto/@paramTipoProyecto/@paramCategoriaProfesional'
 
 // Parameters available at:
 //  - `pageContext.routeParams['*']`
@@ -14,7 +14,7 @@ import { resolveRoute } from 'vite-plugin-ssr/routing'
 export default (pageContext) => {
     {
         const result = resolveRoute(
-            '/nuevo-proyecto/@paramCategoriaProfesional/@paramTipoProyecto',
+            '/nuevo-proyecto/@TipoProyecto/@CategoriaProfesional',
             pageContext.urlPathname
         )
         if (result.match) {

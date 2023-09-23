@@ -17,11 +17,11 @@ const SliderAction = () => {
             sx={{ width: { sm: 'auto', md: '99.5%', lg: '99.5%' } }}
         >
             <p className="headline-s textBlanco m-0 pe-4">
-                Te ayudamos a elegir el profesional calificado para tus
+                Te ayudamos a elegir el profesional calificado ideal para tus
                 proyectos.
             </p>
             <Button
-                className="headline-s btn-round btn-high btn-avanzar"
+                className="headline-s btn-round btn-high"
                 variant="primary"
                 onClick={handleClick}
             >
