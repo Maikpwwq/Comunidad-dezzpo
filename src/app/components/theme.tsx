@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles'
 // When using TypeScript 4.x and above
-import type {} from '@mui/x-data-grid/themeAugmentation';
+import type {} from '@mui/x-data-grid/themeAugmentation'
 
 export { theme }
 

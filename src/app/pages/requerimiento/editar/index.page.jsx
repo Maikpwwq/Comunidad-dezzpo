@@ -1,5 +1,5 @@
 export { Page }
-export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
+export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
 import React, { useState, useEffect } from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
@@ -102,88 +102,89 @@ const Page = () => {
     }
 
     useEffect(() => {
-        if (!isLoaded) { 
-        console.log(draftId)
-        const LoadDraftData = (data) => {
-            const { draft } = data
-            const {
-                draftName,
-                draftCategory,
-                draftProject,
-                draftDescription,
-                draftId,
-                draftTotal,
-                draftSubCategory,
-                draftPropietarioResidente,
-                draftCreated,
-                draftPriority,
-                draftProperty,
-                draftRooms,
-                draftPlans,
-                draftPermissions,
-                draftCity,
-                draftDirection,
-                draftPostalCode,
-                draftAtachments,
-                draftBestScheduleDate,
-                draftBestScheduleTime,
-                draftApply,
-            } = draft
-            console.log('readDraftFromFirestore:', draft)
-            setRequerimientoInfo({
-                ...requerimientoInfo,
-                requerimientoTitulo: draftName,
-                requerimientoCategoria: draftCategory,
-                requerimientoTipoProyecto: draftProject,
-                requerimientoDescripcion: draftDescription,
-                requerimientoId: draftId,
-                requerimientoTotal: draftTotal,
-                requerimientoCategorias: draftSubCategory,
-                requerimientoPropietario: draftPropietarioResidente,
-                requerimientoCreated: draftCreated,
-                requerimientoPrioridad: draftPriority,
-                requerimientoTipoPropiedad: draftProperty,
-                requerimientoCantidadObra: draftRooms,
-                requerimientoPlanos: draftPlans,
-                requerimientoPermisos: draftPermissions,
-                requerimientoCiudad: draftCity,
-                requerimientoDireccion: draftDirection,
-                requerimientoCodigoPostal: draftPostalCode,
-                requerimientoAdjuntos: draftAtachments,
-                requerimientoMejorFecha: draftBestScheduleDate,
-                requerimientoMejorHora: draftBestScheduleTime,
-                requerimientoAplicaciones: draftApply,
-            })
-            // console.log(data, data.draftApply)
-            const appliedQuotations = draftApply[0]
-            fromQuotation(appliedQuotations)
-        }
+        if (!isLoaded) {
+            console.log(draftId)
+            const LoadDraftData = (data) => {
+                const { draft } = data
+                const {
+                    draftName,
+                    draftCategory,
+                    draftProject,
+                    draftDescription,
+                    draftId,
+                    draftTotal,
+                    draftSubCategory,
+                    draftPropietarioResidente,
+                    draftCreated,
+                    draftPriority,
+                    draftProperty,
+                    draftRooms,
+                    draftPlans,
+                    draftPermissions,
+                    draftCity,
+                    draftDirection,
+                    draftPostalCode,
+                    draftAtachments,
+                    draftBestScheduleDate,
+                    draftBestScheduleTime,
+                    draftApply,
+                } = draft
+                console.log('readDraftFromFirestore:', draft)
+                setRequerimientoInfo({
+                    ...requerimientoInfo,
+                    requerimientoTitulo: draftName,
+                    requerimientoCategoria: draftCategory,
+                    requerimientoTipoProyecto: draftProject,
+                    requerimientoDescripcion: draftDescription,
+                    requerimientoId: draftId,
+                    requerimientoTotal: draftTotal,
+                    requerimientoCategorias: draftSubCategory,
+                    requerimientoPropietario: draftPropietarioResidente,
+                    requerimientoCreated: draftCreated,
+                    requerimientoPrioridad: draftPriority,
+                    requerimientoTipoPropiedad: draftProperty,
+                    requerimientoCantidadObra: draftRooms,
+                    requerimientoPlanos: draftPlans,
+                    requerimientoPermisos: draftPermissions,
+                    requerimientoCiudad: draftCity,
+                    requerimientoDireccion: draftDirection,
+                    requerimientoCodigoPostal: draftPostalCode,
+                    requerimientoAdjuntos: draftAtachments,
+                    requerimientoMejorFecha: draftBestScheduleDate,
+                    requerimientoMejorHora: draftBestScheduleTime,
+                    requerimientoAplicaciones: draftApply,
+                })
+                // console.log(data, data.draftApply)
+                const appliedQuotations = draftApply[0]
+                fromQuotation(appliedQuotations)
+            }
 
-        if (draftId && draftId !== ' ' && draftId !== undefined) {
-            fromDraft(draftId)
-            const draftData = sharingInformationService.getSubject()
-            draftData.then((data) => {
-                if (data) {
-                    LoadDraftData(data)
-                    const quotationData = sharingInformationService.getSubject()
-                    quotationData.subscribe((data2) => {
-                        if (data2) {
-                            const { quotation } = data2
-                            console.log(
-                                'readQuotationFromFirestore:',
-                                quotation
-                            )
-                            setCotizacionesInfo({
-                                ...cotizacionesInfo,
-                                appliedQuotations: [quotation],
-                            })
-                            setIsLoaded(true)
-                        }
-                    })
-                }
-            })
+            if (draftId && draftId !== ' ' && draftId !== undefined) {
+                fromDraft(draftId)
+                const draftData = sharingInformationService.getSubject()
+                draftData.then((data) => {
+                    if (data) {
+                        LoadDraftData(data)
+                        const quotationData =
+                            sharingInformationService.getSubject()
+                        quotationData.subscribe((data2) => {
+                            if (data2) {
+                                const { quotation } = data2
+                                console.log(
+                                    'readQuotationFromFirestore:',
+                                    quotation
+                                )
+                                setCotizacionesInfo({
+                                    ...cotizacionesInfo,
+                                    appliedQuotations: [quotation],
+                                })
+                                setIsLoaded(true)
+                            }
+                        })
+                    }
+                })
+            }
         }
-    }
     }, [draftId, cotizacionesInfo, requerimientoInfo])
 
     const handleChange = (event) => {

@@ -5,7 +5,7 @@ import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { ListadoCategorias } from '#@/index/components/ListadoCategorias'
 import '#@/assets/css/buscador_nuevos_proyectos.css'
-import StorefrontIcon from '@mui/icons-material/Storefront';
+import StorefrontIcon from '@mui/icons-material/Storefront'
 // import IcoMoon from 'react-icomoon'
 // import iconSet from '#@/assets/css/icomoon/selection.json'
 import Container from 'react-bootstrap/Container'
@@ -21,13 +21,17 @@ const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
     console.log('BuscadorNuevoProyecto', draftInfo)
     const [isLoaded, setIsLoaded] = useState(false)
     const [projectData, setProjectData] = useState({
-        categoriaProfesional: undefined, 
+        categoriaProfesional: undefined,
         tipoProyecto: undefined,
     })
 
     useEffect(() => {
-        if (!isLoaded){
-            if (draftInfo && projectData.categoriaProfesional && projectData.tipoProyecto) {
+        if (!isLoaded) {
+            if (
+                draftInfo &&
+                projectData.categoriaProfesional &&
+                projectData.tipoProyecto
+            ) {
                 setDraftInfo({
                     ...draftInfo,
                     draftCategory: projectData.categoriaProfesional,
@@ -49,39 +53,36 @@ const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
 
     const handleClick = () => {
         const route = `/nuevo-proyecto/${projectData.tipoProyecto}/${projectData.categoriaProfesional}`
-        navigate(
-            route
-        )
+        navigate(route)
     }
-
 
     return (
         <>
             <Container fluid className="p-0">
                 <Col className="col-12">
                     <div className="p-4 contenerdorFormulario center ms-2 me-2">
-                    <h3 className="headline-l pt-4 pb-2">
-                                Solicitar servicios
-                    </h3>
-                                    
-                                            <Link
-                                    href="/app/portal-servicios"
-                                    className="body-2 btn-menu-comunidad mt-4 w-auto"
-                                >
-                                            <StorefrontIcon className="me-1"/> 
-                                            <strong>
-                                                Visitar Directorio de Comerciantes
-                                            </strong>
-                                            </Link>
-                                    
-                        <Typography variant="body1" className="my-3 pt-2">O registra un nuevo requerimiento</Typography>
+                        <h3 className="headline-l pt-4 pb-2">
+                            Solicitar servicios
+                        </h3>
+
+                        <Link
+                            href="/app/portal-servicios"
+                            className="body-2 btn-menu-comunidad me-0 mt-2 w-auto"
+                        >
+                            <StorefrontIcon className="me-1" />
+                            <strong>Visitar Directorio de Comerciantes</strong>
+                        </Link>
+
+                        <Typography variant="body1" className="my-3 pt-2">
+                            O registra un nuevo requerimiento
+                        </Typography>
                         <Form
                             className="p-4 pt-0"
                             action=""
                             id="formularioServicios"
                         >
                             {/* {' asistencia '} */}
-                            
+
                             <Form.Group
                                 className="mb-3"
                                 controlId="formTipoProyecto"
@@ -182,7 +183,7 @@ const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
                                         onClick={handleClick}
                                     >
                                         <strong>Siguiente</strong>
-                                    </Button>                                       
+                                    </Button>
                                 </Col>
                             </Form.Group>
                         </Form>

@@ -1,5 +1,5 @@
 export { Page }
-export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
+export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
 import React from 'react' // , { useState, useEffect }
 // import { firestore, storage } from '#@/firebase/firebaseClient'

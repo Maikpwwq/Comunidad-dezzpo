@@ -35,4 +35,3 @@ updateDraftToFirestore.propTypes = {
     docId: PropTypes.string.isRequired,
     updateInfo: PropTypes.object.isRequired,
 }
-

@@ -40,7 +40,7 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import DownloadIcon from '@mui/icons-material/Download';
+import DownloadIcon from '@mui/icons-material/Download'
 
 // const styles = () => ({
 //     selectRolBtn: {
@@ -59,7 +59,7 @@ const Page = (props) => {
     } = props
     // sessionStorage.draftId = draftID
 
-    const { currentUser, updateUser } = useContext(UserAuthContext) 
+    const { currentUser, updateUser } = useContext(UserAuthContext)
 
     const [alert, setAlert] = useState({
         open: false,
@@ -101,7 +101,7 @@ const Page = (props) => {
     const handleSelectRol = (e) => {
         setRol(e[0])
         // console.log('handleSelectRol', e, userSignupRol)
-        setStep(2)        
+        setStep(2)
     }
 
     const handleAlert = (message, severity) => {
@@ -120,11 +120,11 @@ const Page = (props) => {
     const onSuccess = (user) => {
         const { uid, email, displayName } = user
         console.log('onSigninSuccess', userSignupRol, uid)
-  
+
         updateUser({
             displayName: displayName,
             userId: uid,
-            isAuth: true,    
+            isAuth: true,
             updated: false,
             rol: userSignupRol[0],
         })
@@ -133,12 +133,12 @@ const Page = (props) => {
         // newOpenChannelSendbird(uid, displayName, setChannelUrl)
 
         const data = {
-                            userMail: email,
-                            userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
-                            userId: uid,
-                            userChannelUrl: '',
-                            createdDrafts: [],
-                            userName: displayName || userSignupName,
+            userMail: email,
+            userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
+            userId: uid,
+            userChannelUrl: '',
+            createdDrafts: [],
+            userName: displayName || userSignupName,
         }
 
         if (userSignupRol == 1) {
@@ -163,7 +163,6 @@ const Page = (props) => {
             navigate(`/app/ajustes/${uid}`)
         }
     }
-
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -449,16 +448,19 @@ const Page = (props) => {
                                 </Form.Group> */}
                                             </Col>
                                             <Col className="pt-4 pb-3">
-                                                    {/* Aviso tratamiento de datos personales. */}
-                                                    <a
-                                                        href="https://drive.google.com/file/d/1R3uRi3zZ0MmjN3VoUp3GvLGvZ3bCaT6e/view?usp=sharing"
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                    >
-                                                        <h3 className="body-2 btn-TEXT textVerde2">
-                                                            Aviso tratamiento de datos personales <DownloadIcon fontSize='small'/>.
-                                                        </h3>
-                                                    </a>
+                                                {/* Aviso tratamiento de datos personales. */}
+                                                <a
+                                                    href="https://drive.google.com/file/d/1R3uRi3zZ0MmjN3VoUp3GvLGvZ3bCaT6e/view?usp=sharing"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <h3 className="body-2 btn-TEXT textVerde2">
+                                                        Aviso tratamiento de
+                                                        datos personales{' '}
+                                                        <DownloadIcon fontSize="small" />
+                                                        .
+                                                    </h3>
+                                                </a>
                                                 <Button
                                                     className="btn-buscador btn-round btn-high body-1"
                                                     variant="primary"
@@ -482,11 +484,11 @@ const Page = (props) => {
                                     <p className="body-1 pt-2">
                                         {/* Bienvenido a todos los beneficios de dezzpo. */}
                                         <Link
-                                                    className="body-2 btn-TEXT textVerde2"
-                                                    href="/ingreso/"
+                                            className="body-2 btn-TEXT textVerde2"
+                                            href="/ingreso/"
                                         >
-                                                    {/* {'¿Ya tienes una cuenta?'} */}
-                                                    {'Ingresar'}
+                                            {/* {'¿Ya tienes una cuenta?'} */}
+                                            {'Ingresar'}
                                         </Link>
                                     </p>
                                 </Col>

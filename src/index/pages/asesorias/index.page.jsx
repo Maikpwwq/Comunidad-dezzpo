@@ -16,8 +16,8 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import ChatIcon from '@mui/icons-material/Chat';
-// <ChatIcon className="ms-1"/> 
+import ChatIcon from '@mui/icons-material/Chat'
+// <ChatIcon className="ms-1"/>
 
 const Page = (props) => {
     // const navigate = useNavigate()
@@ -37,19 +37,19 @@ const Page = (props) => {
     const toAsesoria = async (updateInfo, docId) => {
         console.log('updateAsesoriaToFirestore', updateInfo, docId)
         await updateAsesoriaToFirestore({
-            updateInfo, docId
+            updateInfo,
+            docId,
         })
     }
 
     const handleClick = () => {
         console.log('asesoriaInfo', asesoriaInfo)
-        toAsesoria(asesoriaInfo, asesoriaID)
-            .then((data) => {
-                if (data) {
-                    const res = data.data()
-                    console.log(data, res)
-                }
-            })
+        toAsesoria(asesoriaInfo, asesoriaID).then((data) => {
+            if (data) {
+                const res = data.data()
+                console.log(data, res)
+            }
+        })
         // const asesoriaData = sharingInformationService.getSubject()
         // asesoriaData.subscribe((data) => {
         //     if (data) {
@@ -66,7 +66,6 @@ const Page = (props) => {
             [event.target.name]: event.target.value,
         })
     }
-
 
     return (
         <>
@@ -186,7 +185,8 @@ const Page = (props) => {
                             <span className="chatAsesor headline-xl mb-4">
                                 Contacta Con Un Asesor
                                 <br />
-                                en Tiempo Real En Nuestro Chat <ChatIcon className="ms-1"/> 
+                                en Tiempo Real En Nuestro Chat{' '}
+                                <ChatIcon className="ms-1" />
                             </span>
                             <Button
                                 className="btn btn-round btn-high btn-avanzar"
@@ -215,7 +215,8 @@ const Page = (props) => {
                                 <Link href="/legal" className="ms-1 me-1">
                                     politica de privacidad
                                 </Link>
-                                y los <Link href="/legal">terminos de uso.</Link>
+                                y los{' '}
+                                <Link href="/legal">terminos de uso.</Link>
                             </p>
                             <h3 className=".headline-l">
                                 Historial de preguntas de la comunidad

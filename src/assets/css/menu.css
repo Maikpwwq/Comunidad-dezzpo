@@ -36,40 +36,29 @@
     }
 
     .menuMobile {
-        flex-direction: row;
+        /* flex-direction: row; */
         flex-wrap: wrap;
         justify-content: space-between;
         margin: 0 auto;
-        position: absolute;
-        left: 0;
-    }
-
-    .menuFijo:hover .menuMobile {
         position: fixed;
         height: 100%;
         z-index: 15;
         top: 80px;
-        left: 0;
         min-width: 256px;
         align-items: start;
+        opacity: 96%;
     }
 
-    .menuMobileSecciones, .menuMobile {
-        /* display: none; */
+    .menuMobileSecciones,
+    .menuMobile {
         display: flex !important;
         flex-direction: column;
         position: absolute !important;
         left: 0 !important;
     }
 
-    /* .menuFijo:hover .menuMobile, .menuFijo:hover .menuMobileSecciones {
-        display: flex !important;
-        flex-direction: column;
-        position: absolute !important;
-        left: 0 !important;
-    } */
-
-    .menuSecciones, .menuContenedor {
+    .menuSecciones,
+    .menuContenedor {
         display: none !important;
     }
 
@@ -97,6 +86,10 @@
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
+    }
+
+    .dropdownContenidos a:hover {
+        color: var(--primary-light-gray-text-color) !important;
     }
 
     .activo {
@@ -187,7 +180,8 @@
     height: auto;
 }
 
-.menuMobileSecciones, .menuMobile {
+.menuMobileSecciones,
+.menuMobile {
     display: none;
     height: auto;
 }
@@ -200,7 +194,7 @@
 .dropdownContenidos {
     display: none;
     position: absolute;
-    background-color: var(--background-light-grey-color);
+    background-color: var(--background-light-gray-color);
     min-width: 300px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
@@ -215,13 +209,13 @@
     color: black !important;
 }
 
-.menuMobile ul a:visited {
-    color: black !important;
+/* .menuMobile ul a:visited {
+    color: green !important;
 }
 
 .menuMobile a:visited {
-    color: black !important;
-}
+    color: green !important;
+} */
 
 .dropdownContenidos a {
     font-size: 21px;

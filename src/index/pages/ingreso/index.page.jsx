@@ -34,7 +34,6 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import Typography from '@mui/material/Typography'
 
 const Page = (props) => {
-
     const { currentUser, updateUser } = useContext(UserAuthContext)
 
     const googleProvider = new GoogleAuthProvider()
@@ -75,7 +74,7 @@ const Page = (props) => {
         updateUser({
             displayName: displayName,
             userId: uid,
-            isAuth: true,    
+            isAuth: true,
             updated: false,
             rol: userSignupRol,
         })

@@ -10,7 +10,7 @@ import useSendbirdStateContext from '@sendbird/uikit-react/useSendbirdStateConte
 
 export { newOpenChannelSendbird }
 
-const newOpenChannelSendbird = async({uid, displayName}) => {
+const newOpenChannelSendbird = async ({ uid, displayName }) => {
     console.log('crearCanal props', uid, displayName)
     const globalStore = useSendbirdStateContext()
     const sbSdk = sendbirdSelectors.getSdk(globalStore)
@@ -20,11 +20,11 @@ const newOpenChannelSendbird = async({uid, displayName}) => {
     // const {
     //     uid,
     //     displayName,
-        // userEditInfo,
-        // setUserEditInfo,
-        // connect,
-        // createChannel,
-        // sbSdk,
+    // userEditInfo,
+    // setUserEditInfo,
+    // connect,
+    // createChannel,
+    // sbSdk,
     // } = props //
 
     // Transform display name

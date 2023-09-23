@@ -1,5 +1,5 @@
 export { Page }
-export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
+export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
 import React, { useState, useEffect } from 'react'
 import { usePageContext } from '#R/usePageContext'

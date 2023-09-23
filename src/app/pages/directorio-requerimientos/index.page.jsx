@@ -1,5 +1,5 @@
 export { Page }
-export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
+export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
@@ -22,7 +22,7 @@ const Page = () => {
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
-        if (!isLoaded) { 
+        if (!isLoaded) {
             const draftsFromFirestore = async () => {
                 try {
                     const draftData = await getDocs(draftRef)

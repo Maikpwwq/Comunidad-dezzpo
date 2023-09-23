@@ -1,5 +1,5 @@
 export { Page }
-export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
+export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
@@ -25,7 +25,7 @@ const Page = (props) => {
     const searchInput = pageContext.routeParams.searchInput // ['*']
     const [isLoaded, setIsLoaded] = useState(false)
     console.log('portal-servicios', searchInput)
-    
+
     // const _storage = storage
     const _firestore = firestore
 
@@ -52,11 +52,10 @@ const Page = (props) => {
 
     useEffect(() => {
         if (!isLoaded) {
-        if (typeof searchInput !== 'undefined') {
-            userSearch(searchInput)
-            const consultedData = sharingInformationService.getSubject()
-            consultedData
-                .subscribe((docSnap) => {
+            if (typeof searchInput !== 'undefined') {
+                userSearch(searchInput)
+                const consultedData = sharingInformationService.getSubject()
+                consultedData.subscribe((docSnap) => {
                     if (docSnap) {
                         const { search } = docSnap
                         console.log('docSnap', search)
@@ -76,8 +75,8 @@ const Page = (props) => {
                 // .catch((error) => {
                 //     console.log(error)
                 // })
+            }
         }
-    }
     }, [searchInput, isLoaded])
 
     // console.log('SearchData', searchData)

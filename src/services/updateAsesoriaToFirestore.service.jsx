@@ -16,7 +16,10 @@ const updateAsesoriaToFirestore = async (props) => {
     // TODO: asesoriaToFirestore implementation
     const asesoriaToFirestore = async (updateInfo, docId) => {
         try {
-            const asesoriaData = await setDoc(doc(asesoriaRef, docId), updateInfo)
+            const asesoriaData = await setDoc(
+                doc(asesoriaRef, docId),
+                updateInfo
+            )
             return asesoriaData
         } catch (err) {
             console.log('Error getting asesoria: ', err)
@@ -36,4 +39,3 @@ updateAsesoriaToFirestore.propTypes = {
     docId: PropTypes.string.isRequired,
     updateInfo: PropTypes.object.isRequired,
 }
-

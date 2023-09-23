@@ -1,8 +1,8 @@
 export { Page }
-export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
+export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - InvitarAmigos
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 // react-bootrstrap
@@ -41,7 +41,9 @@ const Page = (props) => {
                             </p>
                         </Col>
 
-                        <Button onClick={copyReferedLink}>Copiar tu Link</Button>
+                        <Button onClick={copyReferedLink}>
+                            Copiar tu Link
+                        </Button>
                     </Col>
                 </Row>
             </Container>

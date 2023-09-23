@@ -38,7 +38,7 @@ function ComentarPerfil(props) {
     // const iconUp = <ArrowUpwardIcon />
     // const iconDown = <ArrowDownwardIcon />
     // const iconComments = <AddCommentIcon />
-    
+
     // const globalStore = useSendbirdStateContext()
     // const sbSdk = sendbirdSelectors.getSdk(globalStore)
     // const connect = sendbirdSelectors.getConnect(globalStore)

@@ -55,4 +55,3 @@ const doSearchFromFirestore = (props) => {
 doSearchFromFirestore.propTypes = {
     searchInput: PropTypes.string.isRequired,
 }
-

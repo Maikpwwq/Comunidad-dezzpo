@@ -12,18 +12,12 @@ import { resolveRoute } from 'vite-plugin-ssr/routing'
 
 export default (pageContext) => {
     {
-        const result = resolveRoute(
-            '/app/ajustes/@id',
-            pageContext.urlPathname
-        )
+        const result = resolveRoute('/app/ajustes/@id', pageContext.urlPathname)
         if (result.match) {
             return result
         }
     }
 
-    const result = resolveRoute(
-        '/app/ajustes/',
-        pageContext.urlPathname
-    )
+    const result = resolveRoute('/app/ajustes/', pageContext.urlPathname)
     return result
 }
