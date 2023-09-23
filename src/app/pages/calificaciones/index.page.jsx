@@ -1,5 +1,5 @@
 export { Page }
-export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
+export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - Notificaciones
 import React, { useState } from 'react'

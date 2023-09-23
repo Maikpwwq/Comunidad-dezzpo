@@ -1,5 +1,5 @@
 export { Page }
-export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
+export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - Perfil
 import React, { useState, useContext, useEffect, useMemo } from 'react'
@@ -32,12 +32,11 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 
-import MailIcon from '@mui/icons-material/Mail';
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import MailIcon from '@mui/icons-material/Mail'
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 // import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 const Page = () => {
-
     const { currentUser } = useContext(UserAuthContext)
 
     const pageContext = usePageContext()
@@ -47,12 +46,12 @@ const Page = () => {
     // })
     // TODO bring before render userAuth
     // const userAuth = pageContext.pageProps.userAuth
-    const userAuth = useMemo(() => auth?.currentUser , [] )
+    const userAuth = useMemo(() => auth?.currentUser, [])
     // const urlPath = pageContext.urlPathname
     // console.log('Perfil user', pageContext) // .user
     // const user = auth?.currentUser
-    const userAuthID = currentUser.userId || "" // Este es el id de la cuenta de Auth
-    const userAuthName = currentUser.displayName || "" // Este es el id de la cuenta de Auth
+    const userAuthID = currentUser.userId || '' // Este es el id de la cuenta de Auth
+    const userAuthName = currentUser.displayName || '' // Este es el id de la cuenta de Auth
     const [isLoaded, setIsLoaded] = useState(false)
 
     let id = pageContext.routeParams.id // ['*']
@@ -120,8 +119,6 @@ const Page = () => {
         return distanceTime
     }
 
-
-
     useEffect(() => {
         const LoadAuthData = (userAuth) => {
             const {
@@ -133,12 +130,12 @@ const Page = () => {
                 //emailVerified,
                 // metadata,
             } = userAuth
-    
+
             // let distanceTime
             // if (metadata) {
             //     distanceTime = determineDistanceTime(metadata)
             // }
-    
+
             setUserInfo({
                 ...userInfo,
                 userPhone: phoneNumber,
@@ -149,7 +146,7 @@ const Page = () => {
                 // userJoined: distanceTime,
             })
         }
-    
+
         const LoadCurrentData = (currentUser) => {
             const {
                 userJoined,
@@ -189,7 +186,7 @@ const Page = () => {
                     })
                     return chipsInfo
                 }
-    
+
                 chipsInfo = chipsCategories(userCategories)
             }
             setUserInfo({
@@ -219,7 +216,9 @@ const Page = () => {
                 userCiudad: userCiudad ? userCiudad : '',
                 userCodigoPostal: userCodigoPostal ? userCodigoPostal : '',
                 userRazonSocial: userRazonSocial ? userRazonSocial : '',
-                userIdentification: userIdentification ? userIdentification : '',
+                userIdentification: userIdentification
+                    ? userIdentification
+                    : '',
                 userDescription: userDescription ? userDescription : '',
             })
             // chipsInfoAdapter(userCategories)
@@ -240,11 +239,11 @@ const Page = () => {
             // Perform localStorage action
             const localRole = localStorage.getItem('role')
             const selectRole = parseInt(JSON.parse(localRole))
-            setUserRol({ rol: selectRole})
+            setUserRol({ rol: selectRole })
             // console.log('selectRole', selectRole, userRol.rol)
 
             // console.log(userRol, state)
-            if (!isNaN(userRol.rol) && userRol.rol !== undefined ) {
+            if (!isNaN(userRol.rol) && userRol.rol !== undefined) {
                 userData()
                 const productData = sharingInformationService.getSubject()
                 productData.subscribe((data) => {
@@ -254,8 +253,8 @@ const Page = () => {
                         if (currentUser) {
                             LoadCurrentData(currentUser)
                             setIsLoaded(true)
-                        } 
-                        
+                        }
+
                         // if (authUser) {
                         //     LoadAuthData(authUser)
                         //     setIsLoaded(true)
@@ -284,93 +283,104 @@ const Page = () => {
         <>
             <Container fluid className="p-0">
                 {/* <Row className="h-100 pt-4 pb-4"></Row> */}
-                    <Col className="col-12 w-100 fondoVerde" >
-                        <Row
-                            className="border-green_bottom m-0 w-100 d-flex flex-nowrap"
-                            sx={{ flexDirection: { sm: 'col' } }}
+                <Col className="col-12 w-100 fondoVerde">
+                    <Row
+                        className="border-green_bottom m-0 w-100 d-flex flex-nowrap"
+                        sx={{ flexDirection: { sm: 'col' } }}
+                    >
+                        {/* perfil-banner */}
+                        <div
+                            className="d-flex flex-inline-row w-auto position-relative"
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'baseline',
+                                top: '1.8rem',
+                            }}
                         >
-                            {/* perfil-banner */}
-                            <div
-                                className="d-flex flex-inline-row w-auto position-relative"
+                            <img
+                                src={userInfo.userPhotoUrl}
+                                alt="imagen de perfil"
+                                height="184px"
+                                width="184px"
                                 style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'baseline',
-                                    top: '1.8rem',
+                                    borderRadius: '50%',
+                                    border: '8px solid var(--background-light-gray-color)',
                                 }}
+                            />
+
+                            {!consult && (
+                                <AdjuntarArchivos
+                                    name={'profilePhoto'}
+                                    multiple={false}
+                                    idPerson={userConsultId}
+                                    rol={userRol.rol}
+                                    route={`profiles/${userConsultId}`}
+                                    functionState={setUserInfo}
+                                    state={userInfo}
+                                ></AdjuntarArchivos>
+                            )}
+                        </div>
+                    </Row>
+                </Col>
+                <Col className="col mx-auto pt-4" md={10} sm={12}>
+                    <Box
+                        className="m-2 w-auto"
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            // backgroundColor: '#ececec',
+                        }}
+                        action=""
+                    >
+                        <Typography
+                            variant="h3"
+                            id="userRazonSocial"
+                            sx={{ maxWidth: '480px' }}
+                            className="textGris fw-bold"
+                        >
+                            {userInfo.userRazonSocial}
+                        </Typography>
+                        <Typography
+                            variant="h5"
+                            id="userProfession"
+                            className="textGris fw-light"
+                        >
+                            {userInfo.userProfession}
+                        </Typography>
+                        <Typography
+                            variant="body-2"
+                            id="userExperience"
+                            className="textGris fw-lighter"
+                        >
+                            Experiencia: {userInfo.userExperience}
+                        </Typography>
+                        <CincoEstrellas />
+                        <span className="textGris fs-6 fw-lighter">
+                            {userInfo.userVotes.votes} Personas votaron
+                        </span>
+                    </Box>
+                    {/* p-description textBlanco fondoVerde */}
+                    <Row className="p-0 m-0 w-100 d-flex align-items-start">
+                        <Col md={10} className="pt-4 pb-4">
+                            <Typography
+                                variant="h5"
+                                className="textVerde headline-l pb-4"
+                                align="left"
                             >
-                                <img
-                                    src={userInfo.userPhotoUrl}
-                                    alt="imagen de perfil"
-                                    height="184px"
-                                    width="184px"
-                                    style={{
-                                        borderRadius: '50%',
-                                        border: '8px solid var(--background-light-gray-color)',
-                                    }}
-                                />
-
-                                {!consult && (
-                                    <AdjuntarArchivos
-                                        name={'profilePhoto'}
-                                        multiple={false}
-                                        idPerson={userConsultId}
-                                        rol={userRol.rol}
-                                        route={`profiles/${userConsultId}`}
-                                        functionState={setUserInfo}
-                                        state={userInfo}
-                                    ></AdjuntarArchivos>
-                                )}
-                            </div>
-
-                            
-                        </Row>
-                    </Col>
-                    <Col className="col mx-auto pt-4" md={10} sm={12}>
-                        <Box
-                                className="m-2 w-auto"
+                                Datos de contacto
+                            </Typography>
+                            <Box
                                 style={{
                                     display: 'flex',
-                                    flexDirection: 'column',
+                                    flexDirection: 'row',
                                     alignItems: 'center',
-                                    // backgroundColor: '#ececec',
+                                    justifyContent: 'space-evenly',
                                 }}
                                 action=""
+                                className="p-4 cardFrame"
                             >
-                                <Typography variant="h3" id="userRazonSocial" sx={{maxWidth: '480px'}} className='textGris fw-bold'>
-                                    {userInfo.userRazonSocial}
-                                </Typography>
-                                <Typography variant="h5" id="userProfession" className='textGris fw-light'>
-                                    {userInfo.userProfession}
-                                </Typography>
-                                <Typography variant="body-2" id="userExperience" className='textGris fw-lighter'>
-                                    Experiencia: {userInfo.userExperience}
-                                </Typography>
-                                <CincoEstrellas />
-                                <span className='textGris fs-6 fw-lighter'>
-                                    {userInfo.userVotes.votes} Personas votaron
-                                </span>
-                            </Box>
-                        {/* p-description textBlanco fondoVerde */}
-                        <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                            <Col md={10} className="pt-4 pb-4">
-                                <Typography
-                                    variant="h5"
-                                    className="textVerde headline-l pb-4"
-                                    align="left"
-                                >
-                                    Datos de contacto
-                                </Typography>
-                                <Box
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-evenly'
-                                    }}
-                                    action=""
-                                    className="p-4 cardFrame"
-                                >
-                                    {/* <Typography
+                                {/* <Typography
                                         variant="subtitle1"
                                         className=""
                                     >
@@ -384,41 +394,43 @@ const Page = () => {
                                         {userInfo.userName}
                                     </Typography> */}
 
-                                    {/* <Typography
+                                {/* <Typography
                                         variant="subtitle1"
                                         className=""
                                     >
                                         Correo de usuario
                                     </Typography> */}
-                                    
-                                    <Typography
-                                        variant="body2"
-                                        className="ps-3 pe-3 detail-pill"
-                                        name="userMail"
-                                    >
-                                        <MailIcon fontSize='large'/> {userInfo.userMail}
-                                    </Typography>
 
-                                    {/* <Typography
+                                <Typography
+                                    variant="body2"
+                                    className="ps-3 pe-3 detail-pill"
+                                    name="userMail"
+                                >
+                                    <MailIcon fontSize="large" />{' '}
+                                    {userInfo.userMail}
+                                </Typography>
+
+                                {/* <Typography
                                         variant="subtitle1"
                                         className=""
                                     >
                                         Celular
                                     </Typography> */}
-                                    
-                                    <Typography
-                                        variant="body2"
-                                        className="ps-3 pe-3 detail-pill"
-                                        name="userPhone"
-                                    >
-                                        <PhoneIphoneIcon fontSize='large'/> {userInfo.userPhone}
-                                    </Typography>
-                                </Box>
-                            </Col>
-                        </Row>
-                        <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                            <Col className="p-0 col-10">
-                                <Row className="m-0 d-flex w-100 justify-content-start">
+
+                                <Typography
+                                    variant="body2"
+                                    className="ps-3 pe-3 detail-pill"
+                                    name="userPhone"
+                                >
+                                    <PhoneIphoneIcon fontSize="large" />{' '}
+                                    {userInfo.userPhone}
+                                </Typography>
+                            </Box>
+                        </Col>
+                    </Row>
+                    <Row className="p-0 m-0 w-100 d-flex align-items-start">
+                        <Col className="p-0 col-10">
+                            <Row className="m-0 d-flex w-100 justify-content-start">
                                 <Typography
                                     variant="h5"
                                     className="textVerde headline-l w-auto pt-4 pb-4"
@@ -427,55 +439,55 @@ const Page = () => {
                                     Acerca de mi
                                 </Typography>
                                 <Typography
-                                        variant="subtitle1"
-                                        className="w-auto"
-                                    >
-                                        Activo desde
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        className="ps-3 pe-3 w-auto"
-                                        name="userJoined"
-                                    >
-                                        {userInfo.userJoined}
-                                    </Typography>
-                                    </Row>
-                                <Typography
-                                    className="body-1"
-                                    style={{
-                                        textAlign: 'justify',
-                                    }}
+                                    variant="subtitle1"
+                                    className="w-auto"
                                 >
-                                    {userInfo.userDescription}
+                                    Activo desde
                                 </Typography>
-                                <Button className='p-4'>
-                                    <PictureAsPdfIcon /> Portafolio de servicios
-                                </Button>
-                            </Col>
-                        </Row>
-                        <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                            <Col md={10} className="pt-4 pb-4">
-                                {userRol.rol === 2 && (
-                                    <>
-                                        <Typography
-                                            variant="h5"
-                                            className="textVerde headline-l pt-4 pb-4"
-                                            align="left"
-                                        >
-                                            Habilidades
-                                        </Typography>
-                                        {userInfo.userCategoriesChips.length >
-                                            0 && (
-                                            <ChipsCategories
-                                                listadoCategorias={
-                                                    userInfo.userCategoriesChips
-                                                }
-                                                editableContent={false}
-                                            />
-                                        )}
-                                    </>
-                                )}
-                                {/* TODO: Implementar las certificaciones obtenidas
+                                <Typography
+                                    variant="body2"
+                                    className="ps-3 pe-3 w-auto"
+                                    name="userJoined"
+                                >
+                                    {userInfo.userJoined}
+                                </Typography>
+                            </Row>
+                            <Typography
+                                className="body-1"
+                                style={{
+                                    textAlign: 'justify',
+                                }}
+                            >
+                                {userInfo.userDescription}
+                            </Typography>
+                            <Button className="p-4">
+                                <PictureAsPdfIcon /> Portafolio de servicios
+                            </Button>
+                        </Col>
+                    </Row>
+                    <Row className="p-0 m-0 w-100 d-flex align-items-start">
+                        <Col md={10} className="pt-4 pb-4">
+                            {userRol.rol === 2 && (
+                                <>
+                                    <Typography
+                                        variant="h5"
+                                        className="textVerde headline-l pt-4 pb-4"
+                                        align="left"
+                                    >
+                                        Habilidades
+                                    </Typography>
+                                    {userInfo.userCategoriesChips.length >
+                                        0 && (
+                                        <ChipsCategories
+                                            listadoCategorias={
+                                                userInfo.userCategoriesChips
+                                            }
+                                            editableContent={false}
+                                        />
+                                    )}
+                                </>
+                            )}
+                            {/* TODO: Implementar las certificaciones obtenidas
                                 <Row className="p-4 pb-0">
                                     <Col>
                                         <Typography
@@ -486,63 +498,63 @@ const Page = () => {
                                         </Typography>
                                     </Col>
                                 </Row> */}
-                            </Col>
-                        </Row>
-                        <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                            <Col className="col-10 pt-4 pb-4">
-                                <Typography
-                                    variant="h5"
-                                    className="textVerde headline-l pt-4 pb-4 w-100"
-                                    align="left"
-                                >
-                                    Portafolio
-                                </Typography>
-                                <Row className="w-100 pb-4">
-                                    {userInfo.userGalleryUrl.map(
-                                        (imagen, index) => {
-                                            // console.log(imagen)
-                                            return (
-                                                <Box
-                                                    key={index}
-                                                    component="img"
-                                                    src={imagen}
-                                                    alt="galleria-usuario"
-                                                    sx={{
-                                                        height: 400,
-                                                        display: 'block',
-                                                        maxWidth: 400,
-                                                        overflow: 'hidden',
-                                                        width: 'auto !important',
-                                                        borderRadius: '5%',
-                                                    }}
-                                                    className="p-2"
-                                                ></Box>
-                                            )
-                                        }
-                                    )}
-                                    {!consult && (
-                                        <AdjuntarArchivos
-                                            name={'galleryPhoto'}
-                                            multiple={true}
-                                            idPerson={userConsultId}
-                                            rol={userRol.rol}
-                                            route={`profiles/${userConsultId}`}
-                                            functionState={setUserInfo}
-                                            state={userInfo}
-                                        ></AdjuntarArchivos>
-                                    )}
-                                </Row>
+                        </Col>
+                    </Row>
+                    <Row className="p-0 m-0 w-100 d-flex align-items-start">
+                        <Col className="col-10 pt-4 pb-4">
+                            <Typography
+                                variant="h5"
+                                className="textVerde headline-l pt-4 pb-4 w-100"
+                                align="left"
+                            >
+                                Portafolio
+                            </Typography>
+                            <Row className="w-100 pb-4">
+                                {userInfo.userGalleryUrl.map(
+                                    (imagen, index) => {
+                                        // console.log(imagen)
+                                        return (
+                                            <Box
+                                                key={index}
+                                                component="img"
+                                                src={imagen}
+                                                alt="galleria-usuario"
+                                                sx={{
+                                                    height: 400,
+                                                    display: 'block',
+                                                    maxWidth: 400,
+                                                    overflow: 'hidden',
+                                                    width: 'auto !important',
+                                                    borderRadius: '5%',
+                                                }}
+                                                className="p-2"
+                                            ></Box>
+                                        )
+                                    }
+                                )}
+                                {!consult && (
+                                    <AdjuntarArchivos
+                                        name={'galleryPhoto'}
+                                        multiple={true}
+                                        idPerson={userConsultId}
+                                        rol={userRol.rol}
+                                        route={`profiles/${userConsultId}`}
+                                        functionState={setUserInfo}
+                                        state={userInfo}
+                                    ></AdjuntarArchivos>
+                                )}
+                            </Row>
 
-                                <Col className='col-12'>
-                                    <Row className="m-0 d-flex w-100 justify-content-start">
-                                        <Typography
-                                            variant="h5"
-                                            className="textVerde headline-l w-auto pt-4 pb-4"
-                                            align="left"
-                                        >
-                                            Ubicación
-                                        </Typography>
-                                        {/* <Typography
+                            <Col className="col-12">
+                                <Row className="m-0 d-flex w-100 justify-content-start">
+                                    <Typography
+                                        variant="h5"
+                                        className="textVerde headline-l w-auto pt-4 pb-4"
+                                        align="left"
+                                    >
+                                        Ubicación
+                                    </Typography>
+                                    {/* <Typography
                                             variant="subtitle1"
                                             className="w-auto"
                                         >
@@ -555,33 +567,32 @@ const Page = () => {
                                         >
                                             {userInfo.userDirection}
                                         </Typography> */}
-                                    </Row>
-                                    <MapaPerfil userInfo={userInfo} />
-                                </Col>
-
-                                <Typography
-                                    variant="h5"
-                                    align="left"
-                                    className="textVerde headline-l pt-4 pb-4 w-100"
-                                >
-                                    Comentarios
-                                </Typography>
-
-                                {userInfo.userChannelUrl && (
-                                    <Comentarios
-                                        channelUrl={userInfo.userChannelUrl}
-                                        userID={userAuthID}
-                                        nickname={userAuthName}
-                                        // ID y Nombre del perfil que comenta
-                                        // userID={userInfo.userId} no
-                                        // nickname={userInfo.userName} no
-                                    />
-                                )}
+                                </Row>
+                                <MapaPerfil userInfo={userInfo} />
                             </Col>
-                        </Row>
-                    </Col>
-                    {/* <Col className="col-2 h-100 fondoGris">SideContent</Col> */}
-                
+
+                            <Typography
+                                variant="h5"
+                                align="left"
+                                className="textVerde headline-l pt-4 pb-4 w-100"
+                            >
+                                Comentarios
+                            </Typography>
+
+                            {userInfo.userChannelUrl && (
+                                <Comentarios
+                                    channelUrl={userInfo.userChannelUrl}
+                                    userID={userAuthID}
+                                    nickname={userAuthName}
+                                    // ID y Nombre del perfil que comenta
+                                    // userID={userInfo.userId} no
+                                    // nickname={userInfo.userName} no
+                                />
+                            )}
+                        </Col>
+                    </Row>
+                </Col>
+                {/* <Col className="col-2 h-100 fondoGris">SideContent</Col> */}
             </Container>
         </>
     )

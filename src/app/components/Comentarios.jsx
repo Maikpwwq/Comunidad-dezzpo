@@ -124,8 +124,8 @@ const Comentarios = (props) => {
                         // accessToken={accessToken}
                         // dateLocale={es}
                     > */}
-                        <ComentarPerfil channelUrl={channelUrl} />
-                        {/* <CreateChannel />
+                    <ComentarPerfil channelUrl={channelUrl} />
+                    {/* <CreateChannel />
                         <ChannelList />
                         <Channel />
                         <ChannelSettings /> */}

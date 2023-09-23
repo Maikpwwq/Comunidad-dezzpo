@@ -37,4 +37,3 @@ const readQuotationFromFirestore = (props) => {
 readQuotationFromFirestore.propTypes = {
     docId: PropTypes.string.isRequired,
 }
-

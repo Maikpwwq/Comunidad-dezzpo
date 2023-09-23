@@ -1,3 +1,3 @@
-export {categories}
+export { categories }
 
-const categories = {} 
+const categories = {}

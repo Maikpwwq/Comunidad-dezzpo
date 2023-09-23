@@ -50,50 +50,57 @@ function LayoutAppPaperbase({ children }) {
     return (
         <ThemeProvider theme={theme}>
             <Providers>
-            <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-                <CssBaseline />
-                {/* {user.uid && ( */}
-                <Box
-                    component="nav"
-                    sx={{
-                        width: { sm: drawerWidth },
-                        flexShrink: { sm: 0 },
-                    }}
-                >
-                    {isSmUp ? null : (
+                <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+                    <CssBaseline />
+                    {/* {user.uid && ( */}
+                    <Box
+                        component="nav"
+                        sx={{
+                            width: { sm: drawerWidth },
+                            flexShrink: { sm: 0 },
+                        }}
+                    >
+                        {isSmUp ? null : (
+                            <Navigator
+                                PaperProps={{ style: { width: drawerWidth } }}
+                                variant="temporary"
+                                open={mobileOpen}
+                                onClose={handleDrawerToggle}
+                            />
+                        )}
+
                         <Navigator
                             PaperProps={{ style: { width: drawerWidth } }}
-                            variant="temporary"
-                            open={mobileOpen}
-                            onClose={handleDrawerToggle}
+                            sx={{ display: { sm: 'block', xs: 'none' } }}
                         />
-                    )}
+                    </Box>
+                    {/* )} */}
 
-                    <Navigator
-                        PaperProps={{ style: { width: drawerWidth } }}
-                        sx={{ display: { sm: 'block', xs: 'none' } }}
-                    />
-                </Box>
-                {/* )} */}
-
-                <Box
-                    sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-                    style={{ overflowX: 'auto' }}
-                >
-                    <Header onDrawerToggle={handleDrawerToggle} />
                     <Box
-                        className="p-0"
-                        component="main"
-                        sx={{ flex: 1, py: 6, px: 4, bgcolor: '#ffffff' }}
+                        sx={{
+                            flex: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                        }}
+                        style={{ overflowX: 'auto' }}
                     >
-                        {/* Punto de inserción */}
-                        {children}
-                    </Box>
-                    <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
-                        <Copyright />
+                        <Header onDrawerToggle={handleDrawerToggle} />
+                        <Box
+                            className="p-0"
+                            component="main"
+                            sx={{ flex: 1, py: 6, px: 4, bgcolor: '#ffffff' }}
+                        >
+                            {/* Punto de inserción */}
+                            {children}
+                        </Box>
+                        <Box
+                            component="footer"
+                            sx={{ p: 2, bgcolor: '#eaeff1' }}
+                        >
+                            <Copyright />
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
             </Providers>
         </ThemeProvider>
     )

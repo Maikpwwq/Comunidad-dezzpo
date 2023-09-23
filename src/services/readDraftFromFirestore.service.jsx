@@ -33,4 +33,3 @@ const readDraftFromFirestore = (props) => {
 readDraftFromFirestore.propTypes = {
     draftId: PropTypes.string.isRequired,
 }
-

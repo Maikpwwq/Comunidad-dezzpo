@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc' // SWC instead babel
 import ssr from 'vite-plugin-ssr/plugin'
 // import { cjsInterop } from 'vite-plugin-cjs-interop'
 import vercel from 'vite-plugin-vercel'
-// import vercelSsr from '@vite-plugin-vercel/vike' 
+// import vercelSsr from '@vite-plugin-vercel/vike'
 
 import * as path from 'path'
 
@@ -78,10 +78,7 @@ export default defineConfig(async ({ command, mode }) => {
                 { find: '#@', replacement: path.resolve(__dirname, 'src') },
                 {
                     find: '#R',
-                    replacement: path.resolve(
-                        __dirname,
-                        'src/index/renderer'
-                    ),
+                    replacement: path.resolve(__dirname, 'src/index/renderer'),
                 },
             ],
         },

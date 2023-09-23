@@ -1,14 +1,14 @@
 export { Page }
-export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
+export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - Mensajes
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import es from 'date-fns/locale/es'
 // import { auth } from '#@/firebase/firebaseClient'
 import { App as SendBirdApp } from '@sendbird/uikit-react'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col' 
+import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 // import FormControl from '@mui/material/FormControl'
 // import InputLabel from '@mui/material/InputLabel'
@@ -22,8 +22,8 @@ let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
 const Page = () => {
     const { currentUser } = useContext(UserAuthContext)
-    let userId = currentUser.userId || ""
-    let displayName = currentUser.displayName || ""
+    let userId = currentUser.userId || ''
+    let displayName = currentUser.displayName || ''
     console.log('Mensajes', userId, displayName, appId, accessToken)
 
     return (

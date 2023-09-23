@@ -14,10 +14,10 @@ import { UserAuthContext } from '#@/providers/UserAuthProvider'
 export { Providers }
 
 let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
-let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN 
+let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
-// 
-const Providers = ({ children }: { children: React.ReactNode}) => {
+//
+const Providers = ({ children }: { children: React.ReactNode }) => {
     const { currentUser } = useContext(UserAuthContext)
     // const { children } = props
     const userAuthID = currentUser.userId || '' // Este es el id de la cuenta de Auth

@@ -29,103 +29,105 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd'
 function Header(props) {
     const { currentUser, updateUser } = useContext(UserAuthContext)
     const { onDrawerToggle } = props
-    const userAuth = useMemo(() => auth?.currentUser , [] )
+    const userAuth = useMemo(() => auth?.currentUser, [])
     const [isLoaded, setIsLoaded] = useState(false)
     const [tab, setTab] = useState(0)
-    const [ isAuth, setIsAuth ] = useState(currentUser.isAuth)
-    const [ userAuthInfo, setUserAuthInfo ] = useState({
-        userId : currentUser.userId || "",  // Este es el id de la cuenta de Auth
-        userPhotoUrl : userAuth?.photoURL || "",
-        userName : currentUser.displayName || ""
+    const [isAuth, setIsAuth] = useState(currentUser.isAuth)
+    const [userAuthInfo, setUserAuthInfo] = useState({
+        userId: currentUser.userId || '', // Este es el id de la cuenta de Auth
+        userPhotoUrl: userAuth?.photoURL || '',
+        userName: currentUser.displayName || '',
     })
 
     const perfilRoute = `/app/perfil/${userAuthInfo.userId}`
 
-    useEffect(() => {  
+    useEffect(() => {
         if (!isLoaded) {
-        const userData = sharingInformationService.getSubject()
-        userData.subscribe((data) => {
-            if (data) {
-                const { currentUser, authUser } = data
-                console.log('Header', currentUser, authUser)
-                if (authUser) { // currentUser || 
-                    const { uid, displayName, photoURL } = authUser
-                    setUserAuthInfo({
-                        ...userAuthInfo,
-                        userId: uid,
-                        userPhotoUrl: photoURL,
-                        userName: displayName,
-                    })                
-                    updateUser({
-                        displayName: displayName,
-                        userId: uid,
-                        isAuth: true,    
-                        updated: true,
-                    })
-                    setIsAuth(true)
-                    setIsLoaded(true)
-                } 
-            } else {
-                console.log(
-                    'No se encontro información relacionada con este usuario!'
-                )
-            }
-        })
-    }
-    }, [userAuthInfo, updateUser, isLoaded]) 
+            const userData = sharingInformationService.getSubject()
+            userData.subscribe((data) => {
+                if (data) {
+                    const { currentUser, authUser } = data
+                    console.log('Header', currentUser, authUser)
+                    if (authUser) {
+                        // currentUser ||
+                        const { uid, displayName, photoURL } = authUser
+                        setUserAuthInfo({
+                            ...userAuthInfo,
+                            userId: uid,
+                            userPhotoUrl: photoURL,
+                            userName: displayName,
+                        })
+                        updateUser({
+                            displayName: displayName,
+                            userId: uid,
+                            isAuth: true,
+                            updated: true,
+                        })
+                        setIsAuth(true)
+                        setIsLoaded(true)
+                    }
+                } else {
+                    console.log(
+                        'No se encontro información relacionada con este usuario!'
+                    )
+                }
+            })
+        }
+    }, [userAuthInfo, updateUser, isLoaded])
 
     const handleNav = (route, tab) => {
-        console.log("handleHeaderNav", route, tab)
+        console.log('handleHeaderNav', route, tab)
         setTab(tab)
         navigate(`${route}`)
     }
 
     const headerLinks = isAuth
-    ? [ 
-        {
-            id: 'Ver tu perfil',
-            tab: 0,
-            icon: <PersonIcon className="ms-1"/>,
-            route: perfilRoute,
-        },
-        {
-            id: 'Calificaciones',
-            tab: 1,
-            icon: <StarRateIcon className="ms-1"/>,
-            route: "/app/calificaciones",
-        },
-        {
-            id: 'Mensajes',
-            tab: 2,
-            icon: <MessageIcon className="ms-1"/>,
-            route: "/app/mensajes",
-        },
-        {
-            id: 'Historial de servicio',
-            tab: 3,
-            icon: <WorkHistoryIcon className="ms-1"/>,
-            route: "/app/historial-servicios",
-        },
-        {
-            id: 'Certificaciones',
-            tab: 4,
-            icon: <HowToRegIcon className="ms-1"/>,
-            route: "/app/certificaciones",
-        },
-    ] : [
-        {
-            id: 'Iniciar Sesión',
-            tab: 0,
-            icon: <LoginIcon className="ms-1"/>,
-            route: "/ingreso",
-        },
-        {
-            id: 'Registrarse',
-            tab: 1,
-            icon: <PersonAddIcon className="ms-1"/>,
-            route: "/registro",
-        },
-    ]
+        ? [
+              {
+                  id: 'Ver tu perfil',
+                  tab: 0,
+                  icon: <PersonIcon className="ms-1" />,
+                  route: perfilRoute,
+              },
+              {
+                  id: 'Calificaciones',
+                  tab: 1,
+                  icon: <StarRateIcon className="ms-1" />,
+                  route: '/app/calificaciones',
+              },
+              {
+                  id: 'Mensajes',
+                  tab: 2,
+                  icon: <MessageIcon className="ms-1" />,
+                  route: '/app/mensajes',
+              },
+              {
+                  id: 'Historial de servicio',
+                  tab: 3,
+                  icon: <WorkHistoryIcon className="ms-1" />,
+                  route: '/app/historial-servicios',
+              },
+              {
+                  id: 'Certificaciones',
+                  tab: 4,
+                  icon: <HowToRegIcon className="ms-1" />,
+                  route: '/app/certificaciones',
+              },
+          ]
+        : [
+              {
+                  id: 'Iniciar Sesión',
+                  tab: 0,
+                  icon: <LoginIcon className="ms-1" />,
+                  route: '/ingreso',
+              },
+              {
+                  id: 'Registrarse',
+                  tab: 1,
+                  icon: <PersonAddIcon className="ms-1" />,
+                  route: '/registro',
+              },
+          ]
 
     return (
         <>
@@ -149,22 +151,25 @@ function Header(props) {
                         </Grid>
                         <Grid item xs>
                             <Tabs
-                                    value={tab}
-                                    textColor="inherit"
-                                    // style={{ 'overflow-x': 'auto' }}
+                                value={tab}
+                                textColor="inherit"
+                                // style={{ 'overflow-x': 'auto' }}
                             >
-                                { headerLinks.map(({ id, tab, icon, route }) => (
+                                {headerLinks.map(({ id, tab, icon, route }) => (
                                     <Tab
                                         key={id}
-                                        label={<>{icon}{id}</>} 
+                                        label={
+                                            <>
+                                                {icon}
+                                                {id}
+                                            </>
+                                        }
                                         component={Link}
                                         href={route}
                                         onClick={() => handleNav(route, tab)}
                                     />
-                                    ))
-                                } 
+                                ))}
                             </Tabs>
-                           
                         </Grid>
                     </Grid>
                 </Toolbar>

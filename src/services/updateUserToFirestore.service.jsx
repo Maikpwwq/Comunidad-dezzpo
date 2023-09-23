@@ -4,7 +4,7 @@ import { firestore, auth } from '#@/firebase/firebaseClient'
 
 import { sharingInformationService } from '#@/services/sharing-information'
 
-export {updateUserToFirestore}
+export { updateUserToFirestore }
 
 const updateUserToFirestore = (props) => {
     const user = auth?.currentUser || {}

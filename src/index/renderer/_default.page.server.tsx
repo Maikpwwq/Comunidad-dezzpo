@@ -1,7 +1,7 @@
 export { render }
 // See https://vite-plugin-ssr.com/data-fetching
 // `pageContext.urlPathname` is already available in the browser when using Client Routing; including `urlPathname` in `passToClient` has no effect.
-export const passToClient = ['pageProps', 'routeParams', 'redirectTo' ] // 'urlPathname',
+export const passToClient = ['pageProps', 'routeParams', 'redirectTo'] // 'urlPathname',
 
 import { renderToString } from 'react-dom/server'
 import { PageShell } from './PageShell'

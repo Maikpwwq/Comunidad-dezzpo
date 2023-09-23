@@ -1,6 +1,6 @@
 export { Page }
 // Set the Layout for all `/app/**/*.page.js`
-export { LayoutAppPaperbase as Layout} from '#@/app/components/LayoutAppPaperbase'
+export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
 // Pagina de Usuario - Ajustes
 import React, { useState, useContext, useEffect, useMemo } from 'react'
@@ -10,8 +10,8 @@ import es from 'date-fns/locale/es'
 import { usePageContext } from '#R/usePageContext'
 // import { newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
 import { sharingInformationService } from '#@/services/sharing-information'
-import {readUserFromFirestore} from '#@/services/readUserFromFirestore.service'
-import {updateUserToFirestore} from '#@/services/updateUserToFirestore.service'
+import { readUserFromFirestore } from '#@/services/readUserFromFirestore.service'
+import { updateUserToFirestore } from '#@/services/updateUserToFirestore.service'
 
 import '#@/assets/cssPrivateApp/ajustes.css'
 import { Ubicacion } from '#@/index/components/ubicacion/Ubicacion'
@@ -38,7 +38,7 @@ const Page = () => {
     const pageContext = usePageContext()
     let id = pageContext.routeParams.id // ['*']
     // console.log('routeParamsPerfil', id)
-    const userAuth = useMemo(() => auth.currentUser , [] )
+    const userAuth = useMemo(() => auth.currentUser, [])
     const userAuthID = currentUser.userId || id
     const userAuthName = currentUser.displayName || ''
     const [isLoaded, setIsLoaded] = useState(false)
@@ -97,7 +97,6 @@ const Page = () => {
         return distanceTime
     }
 
-
     useEffect(() => {
         const LoadAuthData = () => {
             const {
@@ -114,7 +113,6 @@ const Page = () => {
             if (metadata) {
                 distanceTime = determineDistanceTime(metadata)
             }
-            
 
             setUserEditInfo({
                 ...userEditInfo,
@@ -158,21 +156,17 @@ const Page = () => {
                 console.log('Ajustes creando nuevo open channel')
                 newOpenChannelSendbird(
                     userAuthID,
-                    userAuthName, 
+                    userAuthName
                     // setChannelUrl,
                     // userEditInfo,
                     // setUserEditInfo,
                 )
-                
+
                 const currentURL = sharingInformationService.getSubject()
                 currentURL.subscribe((data) => {
                     if (data) {
                         const { channelURL } = data
-                        console.log(
-                            'newOpenChannelSendbird:',
-                            channelURL,
-                            data
-                        )
+                        console.log('newOpenChannelSendbird:', channelURL, data)
                         setUserEditInfo({
                             ...userEditInfo,
                             userChannelUrl: channelURL,
@@ -209,7 +203,11 @@ const Page = () => {
         const userData = () => {
             const firestoreUserID = userAuthID
             const userSelectedRol = userRol.rol
-            console.log('readUserFromFirestore', firestoreUserID, userSelectedRol)
+            console.log(
+                'readUserFromFirestore',
+                firestoreUserID,
+                userSelectedRol
+            )
             readUserFromFirestore({
                 firestoreUserID,
                 userSelectedRol,
@@ -217,11 +215,10 @@ const Page = () => {
         }
 
         if (!isLoaded) {
-
             // Perform localStorage action
             const localRole = localStorage.getItem('role')
             const selectRole = parseInt(JSON.parse(localRole))
-            setUserRol({ rol: selectRole}) // ...userRol , 
+            setUserRol({ rol: selectRole }) // ...userRol ,
             console.log('selectRole', selectRole, userRol.rol)
 
             if (!isNaN(userRol.rol) && userRol.rol !== undefined) {
@@ -233,7 +230,7 @@ const Page = () => {
                     if (data) {
                         const { currentUser, authUser } = data
                         console.log('ajustesPage:', currentUser, authUser)
-                        if (currentUser){
+                        if (currentUser) {
                             LoadCurrentData(currentUser)
                             setIsLoaded(true)
                         }
@@ -290,15 +287,12 @@ const Page = () => {
     }
 
     const handleSubmit = () => {
-        try { 
+        try {
             snap()
             const userData = sharingInformationService.getSubject()
             userData
-            handleAlert(
-                'Se actualizó correctamente su información!',
-                'success'
-            )       
-        } catch ( err ){
+            handleAlert('Se actualizó correctamente su información!', 'success')
+        } catch (err) {
             handleAlert(
                 'No se actualizó correctamente su información, intente de nuevo!',
                 'error'

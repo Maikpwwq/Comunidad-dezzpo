@@ -182,17 +182,31 @@ const Page = (props) => {
                 <Row className="nosotrosHitos m-0">
                     <Col className="p-0">
                         <Col className="p-0 w-100 mb-5">
-                            <Typography variant='h3' className="headline-xl pt-5 pb-5">
+                            <Typography
+                                variant="h3"
+                                className="headline-xl pt-5 pb-5"
+                            >
                                 HITOS
                             </Typography>
                             <Row className="w-100">
-                                <img src={Hitos} style={{ width: 'auto', }} alt="Mapa de Hitos" />
+                                <img
+                                    src={Hitos}
+                                    style={{ width: 'auto' }}
+                                    alt="Mapa de Hitos"
+                                />
                             </Row>
-                            <Typography variant='h3' className="headline-xl pt-5 pb-5">
+                            <Typography
+                                variant="h3"
+                                className="headline-xl pt-5 pb-5"
+                            >
                                 ROAD MAP
                             </Typography>
                             <Row className="w-100">
-                                <img src={RoadMap2}  style={{ width: 'auto', }}  alt="ROAD MAP V2" />
+                                <img
+                                    src={RoadMap2}
+                                    style={{ width: 'auto' }}
+                                    alt="ROAD MAP V2"
+                                />
                             </Row>
                         </Col>
                         <Col className="mb-5">

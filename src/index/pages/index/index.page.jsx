@@ -228,7 +228,9 @@ const Page = () => {
                                     </Typography>
                                     <p className="body-1 p-4 d-inline-block">
                                         Crea una nueva
-                                        <strong className="pb-4 ms-1 me-1">oferta</strong>
+                                        <strong className="pb-4 ms-1 me-1">
+                                            oferta
+                                        </strong>
                                         gratis.
                                         {/* Describe tu proyecto <br /> */}
                                     </p>

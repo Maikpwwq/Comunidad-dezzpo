@@ -1,136 +1,136 @@
-export { MenuLinks}
+export { MenuLinks }
 
 const MenuLinks = [
     {
-        name: "Asi trabajamos",
-        href: "asi-trabajamos",
-        dropdownContents : [
+        name: 'Asi trabajamos',
+        href: 'asi-trabajamos',
+        dropdownContents: [
             {
-                name: "Profesionales y servicios",
-                href: "/profesionales-servicios",
+                name: 'Profesionales y servicios',
+                href: '/profesionales-servicios',
             },
             {
-                name: "Asesores en vivo",
-                href: "/asesorias",
+                name: 'Asesores en vivo',
+                href: '/asesorias',
             },
             {
-                name: "Perfil Comerciante",
-                href: "/comunidad-comerciantes",
+                name: 'Perfil Comerciante',
+                href: '/comunidad-comerciantes',
             },
             {
-                name: "Perfil Propietario",
-                href: "/comunidad-propietarios",
+                name: 'Perfil Propietario',
+                href: '/comunidad-propietarios',
             },
             {
-                name: "Ingresar",
-                href: "/ingreso",
+                name: 'Ingresar',
+                href: '/ingreso',
             },
             {
-                name: "Registrarse",
-                href: "/registro",
+                name: 'Registrarse',
+                href: '/registro',
             },
             {
-                name: "Calificaciones",
-                href: "/asi-trabajamos",
+                name: 'Calificaciones',
+                href: '/asi-trabajamos',
             },
-        ]
+        ],
     },
     {
-        name: "Nosotros",
-        href: "/nosotros",
-        dropdownContents : [
+        name: 'Nosotros',
+        href: '/nosotros',
+        dropdownContents: [
             {
-                name: "Acerca de nosotros",
-                href: "/nosotros/#Acerca-de-nosotros",
+                name: 'Acerca de nosotros',
+                href: '/nosotros/#Acerca-de-nosotros',
             },
             {
-                name: "Equipo dezzpo",
-                href: "/nosotros/#equipo-dezzpo",
+                name: 'Equipo dezzpo',
+                href: '/nosotros/#equipo-dezzpo',
             },
             {
-                name: "Programa de afiliados",
-                href: "/blog",
+                name: 'Programa de afiliados',
+                href: '/blog',
             },
             {
-                name: "Prensa",
-                href: "/prensa",
+                name: 'Prensa',
+                href: '/prensa',
             },
             {
-                name: "Patrocinadores",
-                href: "/patrocinadores",
+                name: 'Patrocinadores',
+                href: '/patrocinadores',
             },
             {
-                name: "Legal",
-                href: "/legal",
+                name: 'Legal',
+                href: '/legal',
             },
-        ]
+        ],
     },
     {
-        name: "Comunidad de comerciantes",
-        href: "/comunidad-comerciantes",
-        dropdownContents : [
+        name: 'Comunidad de comerciantes',
+        href: '/comunidad-comerciantes',
+        dropdownContents: [
             {
-                name: "Tu cuenta",
-                href: "/ingreso",
+                name: 'Tu cuenta',
+                href: '/ingreso',
             },
             {
-                name: "Asesores en vivo",
-                href: "/asesorias",
+                name: 'Asesores en vivo',
+                href: '/asesorias',
             },
             {
-                name: "Asi funciona",
-                href: "/asi-trabajamos",
+                name: 'Asi funciona',
+                href: '/asi-trabajamos',
             },
             {
-                name: "Profesionales y servicios",
-                href: "/profesionales-servicios",
+                name: 'Profesionales y servicios',
+                href: '/profesionales-servicios',
             },
             {
-                name: "contactanos",
-                href: "/contactenos",
+                name: 'contactanos',
+                href: '/contactenos',
             },
             {
-                name: "Ayuda & Pqrs",
-                href: "/ayuda-pqrs",
+                name: 'Ayuda & Pqrs',
+                href: '/ayuda-pqrs',
             },
             {
-                name: "Terminos y condiciones",
-                href: "/legal",
+                name: 'Terminos y condiciones',
+                href: '/legal',
             },
-        ]
+        ],
     },
     {
-        name: "Comunidad de propietarios",
-        href: "/comunidad-propietarios",
-        dropdownContents : [
+        name: 'Comunidad de propietarios',
+        href: '/comunidad-propietarios',
+        dropdownContents: [
             {
-                name: "Crea un nuevo proyecto",
-                href: "/nuevo-proyecto",
+                name: 'Crea un nuevo proyecto',
+                href: '/nuevo-proyecto',
             },
             {
-                name: "Testimonio de propietarios",
-                href: "/blog",
+                name: 'Testimonio de propietarios',
+                href: '/blog',
             },
             {
-                name: "Asi funciona",
-                href: "/asi-trabajamos",
+                name: 'Asi funciona',
+                href: '/asi-trabajamos',
             },
             {
-                name: "Profesionales y servicios",
-                href: "/profesionales-servicios",
+                name: 'Profesionales y servicios',
+                href: '/profesionales-servicios',
             },
             {
-                name: "contactanos",
-                href: "/contactenos",
+                name: 'contactanos',
+                href: '/contactenos',
             },
             {
-                name: "Ayuda & Pqrs",
-                href: "/ayuda-pqrs",
+                name: 'Ayuda & Pqrs',
+                href: '/ayuda-pqrs',
             },
             {
-                name: "Terminos y condiciones",
-                href: "/legal",
+                name: 'Terminos y condiciones',
+                href: '/legal',
             },
-        ]
+        ],
     },
 ]

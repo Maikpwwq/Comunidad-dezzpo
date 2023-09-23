@@ -6,7 +6,7 @@
  */
 /*jslint browser: true */
 /*global XDomainRequest */
-(function () {
+;(function () {
     'use strict'
     if (typeof window !== 'undefined' && window.addEventListener) {
         var cache = Object.create(null) // holds xhr objects to prevent multiple requests

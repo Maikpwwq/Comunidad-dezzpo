@@ -48,9 +48,10 @@ const Page = () => {
     const { currentUser } = useContext(UserAuthContext)
     const userId = currentUser?.userId
     const pageContext = usePageContext()
-    console.log('nuevo-proyecto', pageContext.routeParams)  
-    const paramCategoriaProfesional = pageContext.routeParams?.CategoriaProfesional
-    const paramTipoProyecto = pageContext.routeParams?.TipoProyecto     
+    console.log('nuevo-proyecto', pageContext.routeParams)
+    const paramCategoriaProfesional =
+        pageContext.routeParams?.CategoriaProfesional
+    const paramTipoProyecto = pageContext.routeParams?.TipoProyecto
     // const { paramCategoriaProfesional, paramTipoProyecto } =
     //     pageContext.routeParams['*']
     // console.log('nuevo-proyecto', paramCategoriaProfesional, paramTipoProyecto)
@@ -123,8 +124,7 @@ const Page = () => {
     }
 
     useEffect(() => {
-        
-        if  (!isLoaded) {
+        if (!isLoaded) {
             const categoriasFromFirestore = async () => {
                 try {
                     // 'aPTAljOeD48FbniBg6Lw' main document categories
@@ -141,57 +141,64 @@ const Page = () => {
                     )
                 }
             }
-        if (!!draftInfo.draftProject && !!draftInfo.draftCategory ) {
-            categoriasFromFirestore().then((docSnap) => {
-                    if (docSnap) {
-                        const data = docSnap.docs.map((element) => ({
-                            ...element.data(),
-                        }))
-                        // TODO: Pasar la data por hojas que agrupen hasta seis subCategorias
-                        if (data.length > 0) {
-                            // console.log(
-                            //     data
+            if (!!draftInfo.draftProject && !!draftInfo.draftCategory) {
+                categoriasFromFirestore()
+                    .then((docSnap) => {
+                        if (docSnap) {
+                            const data = docSnap.docs.map((element) => ({
+                                ...element.data(),
+                            }))
+                            // TODO: Pasar la data por hojas que agrupen hasta seis subCategorias
+                            if (data.length > 0) {
+                                // console.log(
+                                //     data
                                 //     draftInfo.draftCategory,
                                 //     categoriaProfesional
-                            // )
-                            let i = 0
-                            let j = 0
-                            let response = [[], [], [], [], [], []]
-                            data.map((element) => {
-                                if (i < 6) {
-                                    if (!response[j]) {
-                                        response[j] = []
+                                // )
+                                let i = 0
+                                let j = 0
+                                let response = [[], [], [], [], [], []]
+                                data.map((element) => {
+                                    if (i < 6) {
+                                        if (!response[j]) {
+                                            response[j] = []
+                                        }
+                                        response[j].push(element)
+                                        i++
+                                    } else {
+                                        j++
+                                        i = 0
                                     }
-                                    response[j].push(element)
-                                    i++
-                                } else {
-                                    j++
-                                    i = 0
-                                }
-                            })
-                            // console.log(response[0])
-                            if (response[0].length > 0) {
-                                setCategoriaInfo({
-                                    ...categoriaInfo,
-                                    data: response,
-                                    subCatLength: ( data.length -1 ) / 6,
                                 })
-                                // console.log(categoriaInfo)
-                                setIsLoaded(true)
+                                // console.log(response[0])
+                                if (response[0].length > 0) {
+                                    setCategoriaInfo({
+                                        ...categoriaInfo,
+                                        data: response,
+                                        subCatLength: (data.length - 1) / 6,
+                                    })
+                                    // console.log(categoriaInfo)
+                                    setIsLoaded(true)
+                                }
                             }
+                        } else {
+                            console.log(
+                                'No se encontro información en la colleccion proyectos!'
+                            )
                         }
-                    } else {
-                        console.log(
-                            'No se encontro información en la colleccion proyectos!'
-                        )
-                    }
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-            } 
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            }
         }
-    }, [categoriaInfo, isLoaded, categoriaRef, draftInfo.draftCategory, draftInfo.draftProject])
+    }, [
+        categoriaInfo,
+        isLoaded,
+        categoriaRef,
+        draftInfo.draftCategory,
+        draftInfo.draftProject,
+    ])
 
     const handleShowMore = () => {
         setShowMore(!showMore)
@@ -225,7 +232,7 @@ const Page = () => {
             ...draftInfo,
             [event.target.name]: event.target.value,
         })
-        if ( event.target.name === "draftCategory"){
+        if (event.target.name === 'draftCategory') {
             setIsLoaded(false)
         }
     }
@@ -252,7 +259,7 @@ const Page = () => {
                 {activeStep == 0 && (
                     <Col>
                         {(draftInfo.draftProject === undefined ||
-                            draftInfo.draftCategory === undefined ) && (
+                            draftInfo.draftCategory === undefined) && (
                             <Row className="nuevoProyectoBuscador">
                                 <Col
                                     className="align-items-start p-4 m-4"
@@ -290,92 +297,111 @@ const Page = () => {
                             </Row>
                         )}
                         {/* <ScrollToTopOnMount /> */}
-                        {(!!draftInfo.draftProject && !!draftInfo.draftCategory ) && (
+                        {!!draftInfo.draftProject &&
+                            !!draftInfo.draftCategory && (
                                 <>
-                        <Row className="w-100 m-0">
-                            <Col className="p-4" lg={8} md={10}>
-                                <p className="body-1">
-                                    Al seleccionar categorías podrás ir
-                                    agregando uno a uno todos los servicios que
-                                    vas a solicitar. Luego en el siguiente paso
-                                    podrás modificar la cantidad de obra que
-                                    requieres.
-                                </p>
-                                <Form.Select
-                                    className="casillaSeleccion m-auto"
-                                    name="draftCategory"
-                                    value={draftInfo.draftCategory}
-                                    onChange={handleChange}
-                                >
-                                    <option>seleccionar categoria</option>
-                                    {ListadoCategorias.map((categoria) => {
-                                        const { label, key } = categoria
-                                        return (
-                                            <option key={key} value={label}>
-                                                {label}
-                                            </option>
-                                        )
-                                    })}
-                                </Form.Select>
-                            </Col>
-                        </Row>
-                        <Row className="categorias w-100 m-0 p-4">
-                            <Col className="p-0 pt-4 col-10 categorias-contenedor">
-                                <Row className="w-100 m-0">
-                                    {categoriaInfo.data[categoriesIndex] && (
-                                        categoriaInfo.data[categoriesIndex].map(
-                                            (item, index) => {
-                                                // console.log("SubCategorias", item, index)
-                                                return (
-                                                    <>
-                                                        { item.subCategoria &&
-                                                            (<SubCategorias
-                                                                key={index}
-                                                                item={item}
-                                                                setCategoriaInfo={
-                                                                    setCategoriaInfo
-                                                                }
-                                                                categoriaInfo={
-                                                                    categoriaInfo
-                                                                }
-                                                            />)
-                                                        }
-                                                    </>
-                                                )
-                                            }
-                                        )
-                                    )}
-                                </Row>
-                                <DirectionalButton
-                                    handleNext={handleNext}
-                                    handleBack={handleBack}
-                                />
-                            </Col>
-                        </Row>
-                        
-                        <Col className="col-10">
-                            <Row className="pt-4 pb-4 w-100 justify-content-center">
-                                <Button
-                                    onClick={goForward}
-                                    style={{ paddingRight: '10px' }}
-                                    className="p-2 ps-4 pe-4 btn-round btn-high body-1 w-auto"
-                                    variant="primary"
-                                    // type="submit"
-                                >
-                                    Guardar y continuar
-                                </Button>
-                                <span className="p-4 w-auto"> </span>
-                                <Button
-                                    onClick={handleComeBack}
-                                    className="btn-round btn-middle w-auto"
-                                    variant="secondary"
-                                    // type="submit"
-                                >
-                                    <KeyboardBackspaceIcon /> Volver atrás
-                                </Button>
-                            </Row>
-                        </Col>
-                        </>)}
+                                    <Row className="w-100 m-0">
+                                        <Col className="p-4" lg={8} md={10}>
+                                            <p className="body-1">
+                                                Al seleccionar categorías podrás
+                                                ir agregando uno a uno todos los
+                                                servicios que vas a solicitar.
+                                                Luego en el siguiente paso
+                                                podrás modificar la cantidad de
+                                                obra que requieres.
+                                            </p>
+                                            <Form.Select
+                                                className="casillaSeleccion m-auto"
+                                                name="draftCategory"
+                                                value={draftInfo.draftCategory}
+                                                onChange={handleChange}
+                                            >
+                                                <option>
+                                                    seleccionar categoria
+                                                </option>
+                                                {ListadoCategorias.map(
+                                                    (categoria) => {
+                                                        const { label, key } =
+                                                            categoria
+                                                        return (
+                                                            <option
+                                                                key={key}
+                                                                value={label}
+                                                            >
+                                                                {label}
+                                                            </option>
+                                                        )
+                                                    }
+                                                )}
+                                            </Form.Select>
+                                        </Col>
+                                    </Row>
+                                    <Row className="categorias w-100 m-0 p-4">
+                                        <Col className="p-0 pt-4 col-10 categorias-contenedor">
+                                            <Row className="w-100 m-0">
+                                                {categoriaInfo.data[
+                                                    categoriesIndex
+                                                ] &&
+                                                    categoriaInfo.data[
+                                                        categoriesIndex
+                                                    ].map((item, index) => {
+                                                        // console.log("SubCategorias", item, index)
+                                                        return (
+                                                            <>
+                                                                {item.subCategoria && (
+                                                                    <SubCategorias
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        item={
+                                                                            item
+                                                                        }
+                                                                        setCategoriaInfo={
+                                                                            setCategoriaInfo
+                                                                        }
+                                                                        categoriaInfo={
+                                                                            categoriaInfo
+                                                                        }
+                                                                    />
+                                                                )}
+                                                            </>
+                                                        )
+                                                    })}
+                                            </Row>
+                                            <DirectionalButton
+                                                handleNext={handleNext}
+                                                handleBack={handleBack}
+                                            />
+                                        </Col>
+                                    </Row>
+
+                                    <Col className="col-10">
+                                        <Row className="pt-4 pb-4 w-100 justify-content-center">
+                                            <Button
+                                                onClick={goForward}
+                                                style={{ paddingRight: '10px' }}
+                                                className="p-2 ps-4 pe-4 btn-round btn-high body-1 w-auto"
+                                                variant="primary"
+                                                // type="submit"
+                                            >
+                                                Guardar y continuar
+                                            </Button>
+                                            <span className="p-4 w-auto">
+                                                {' '}
+                                            </span>
+                                            <Button
+                                                onClick={handleComeBack}
+                                                className="btn-round btn-middle w-auto"
+                                                variant="secondary"
+                                                // type="submit"
+                                            >
+                                                <KeyboardBackspaceIcon /> Volver
+                                                atrás
+                                            </Button>
+                                        </Row>
+                                    </Col>
+                                </>
+                            )}
                     </Col>
                 )}
                 {activeStep == 1 && (

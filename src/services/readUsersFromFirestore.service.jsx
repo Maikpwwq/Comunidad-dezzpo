@@ -51,4 +51,3 @@ const readUsersFromFirestore = (props) => {
 readUsersFromFirestore.propTypes = {
     userSelectedRol: PropTypes.number.isRequired,
 }
-

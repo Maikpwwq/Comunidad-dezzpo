@@ -8,9 +8,7 @@ export { PageContextProvider }
 // eslint-disable-next-line react-refresh/only-export-components
 export { usePageContext }
 
-const Context = createContext<PageContext>(
-    undefined as unknown as PageContext
-)
+const Context = createContext<PageContext>(undefined as unknown as PageContext)
 
 function PageContextProvider({
     pageContext,

@@ -24,19 +24,19 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import StoreIcon from '@mui/icons-material/Store';
-import PersonIcon from '@mui/icons-material/Person';
+import StoreIcon from '@mui/icons-material/Store'
+import PersonIcon from '@mui/icons-material/Person'
 // import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
+import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove'
 import NotificationsIcon from '@mui/icons-material/Notifications'
-import LoyaltyIcon from '@mui/icons-material/Loyalty';
-import CardMembershipIcon from '@mui/icons-material/CardMembership';
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
-import TuneIcon from '@mui/icons-material/Tune';
-import PaymentIcon from '@mui/icons-material/Payment';
-import LockResetIcon from '@mui/icons-material/LockReset';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import LoyaltyIcon from '@mui/icons-material/Loyalty'
+import CardMembershipIcon from '@mui/icons-material/CardMembership'
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark'
+import TuneIcon from '@mui/icons-material/Tune'
+import PaymentIcon from '@mui/icons-material/Payment'
+import LockResetIcon from '@mui/icons-material/LockReset'
+import LogoutIcon from '@mui/icons-material/Logout'
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 
 // import HomeIcon from '@mui/icons-material/Home'
 // import PeopleIcon from '@mui/icons-material/People'
@@ -69,54 +69,56 @@ const itemCategory = {
 export { Navigator }
 
 function Navigator(props) {
-    const { currentUser, updateUser, clearAuthUser } = useContext(UserAuthContext)
+    const { currentUser, updateUser, clearAuthUser } =
+        useContext(UserAuthContext)
     const pageContext = usePageContext()
     const urlPath = pageContext.urlPathname
     const activeUrl = urlPath.slice(1).split('/')
     // console.log("Navigator urlPath", activeUrl[1])
     const { ...other } = props
-    const userAuth = useMemo(() => auth?.currentUser , [] )
+    const userAuth = useMemo(() => auth?.currentUser, [])
     const [isLoaded, setIsLoaded] = useState(false)
     const [open, setOpen] = useState(false)
-    const [ isAuth, setIsAuth ] = useState(currentUser.isAuth)
-    const [ userAuthInfo, setUserAuthInfo ] = useState({
-        userId : currentUser.userId || "",  // Este es el id de la cuenta de Auth
-        userPhotoUrl : userAuth?.photoURL || "",
-        userName : currentUser.displayName || ""
+    const [isAuth, setIsAuth] = useState(currentUser.isAuth)
+    const [userAuthInfo, setUserAuthInfo] = useState({
+        userId: currentUser.userId || '', // Este es el id de la cuenta de Auth
+        userPhotoUrl: userAuth?.photoURL || '',
+        userName: currentUser.displayName || '',
     })
 
-    useEffect(() => {  
+    useEffect(() => {
         if (!isLoaded) {
-        const userData = sharingInformationService.getSubject()
-        userData.subscribe((data) => {
-            if (data) {
-                const { currentUser, authUser } = data
-                console.log('Navigation', currentUser, authUser)
-                if (authUser) { // currentUser || 
-                    const { uid, displayName, photoURL } = authUser
-                    setUserAuthInfo({
-                        ...userAuthInfo,
-                        userId: uid,
-                        userPhotoUrl: photoURL,
-                        userName: displayName,
-                    })
-                    updateUser({
-                        displayName: displayName,
-                        userId: uid,
-                        isAuth: true,    
-                        updated: true,
-                    })
-                    setIsAuth(true)
-                    setIsLoaded(true)
-                } 
-            } else {
-                console.log(
-                    'No se encontro información relacionada con este usuario!'
-                )
-            }
-        })
-    }
-    }, [userAuthInfo, updateUser, isLoaded])     
+            const userData = sharingInformationService.getSubject()
+            userData.subscribe((data) => {
+                if (data) {
+                    const { currentUser, authUser } = data
+                    console.log('Navigation', currentUser, authUser)
+                    if (authUser) {
+                        // currentUser ||
+                        const { uid, displayName, photoURL } = authUser
+                        setUserAuthInfo({
+                            ...userAuthInfo,
+                            userId: uid,
+                            userPhotoUrl: photoURL,
+                            userName: displayName,
+                        })
+                        updateUser({
+                            displayName: displayName,
+                            userId: uid,
+                            isAuth: true,
+                            updated: true,
+                        })
+                        setIsAuth(true)
+                        setIsLoaded(true)
+                    }
+                } else {
+                    console.log(
+                        'No se encontro información relacionada con este usuario!'
+                    )
+                }
+            })
+        }
+    }, [userAuthInfo, updateUser, isLoaded])
 
     // const navigate = useNavigate()
     const handleSignout = () => {
@@ -135,7 +137,7 @@ function Navigator(props) {
     }
 
     const handleNav = (route) => {
-        console.log("handleNav", route)
+        console.log('handleNav', route)
         navigate(`/app/${route}`)
     }
 
@@ -299,10 +301,15 @@ function Navigator(props) {
                 <ListItem sx={{ ...item, ...itemCategory }}>
                     <ListItemIcon>
                         <IconButton color="inherit" sx={{ p: 0.5 }}>
-                            <Avatar src={userAuthInfo.userPhotoUrl} alt="My Avatar" />
+                            <Avatar
+                                src={userAuthInfo.userPhotoUrl}
+                                alt="My Avatar"
+                            />
                         </IconButton>
                     </ListItemIcon>
-                    <ListItemText>Bienvenido {userAuthInfo.userName}!</ListItemText>
+                    <ListItemText>
+                        Bienvenido {userAuthInfo.userName}!
+                    </ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (
                     <Box key={id} sx={{ bgcolor: '#575856' }}>
@@ -326,7 +333,6 @@ function Navigator(props) {
                                         // href={route}
                                         onClick={() => handleNav(route)}
                                         // exact
-
                                     >
                                         <ListItemButton
                                             className=""
