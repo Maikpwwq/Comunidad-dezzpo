@@ -105,7 +105,7 @@ const Page = () => {
                                         className="mb-4 mt-2"
                                     >
                                         ¡Descubre al instante el personal
-                                        profesional perfecto para <br />
+                                        profesional perfecto para 
                                         cada proyecto en tu hogar con tan solo
                                         un clic!
                                     </Typography>

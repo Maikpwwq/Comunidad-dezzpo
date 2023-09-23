@@ -71,6 +71,7 @@ body {
     flex-direction: column;
     padding: 0px 33px 0px 33px;
     color: var(--content-text-color);
+    max-width: 430px;
 }
 
 .mensajeBanner {
