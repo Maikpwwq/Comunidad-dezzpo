@@ -24,6 +24,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import SwipeableViews from 'react-swipeable-views'
 import { bindKeyboard } from 'react-swipeable-views-utils'
 import { Typography } from '@mui/material'
+// import { LogosServicios } from './LogosServicios'
 
 const CustomSwipeableViews = bindKeyboard(SwipeableViews)
 
@@ -367,6 +368,7 @@ const Page = () => {
             </Container>
             {/* seccion de categorias y servicios */}
             <NuestraComunidad></NuestraComunidad>
+            {/* <LogosServicios /> */}
         </>
     )
 }

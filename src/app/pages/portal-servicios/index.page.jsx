@@ -7,6 +7,7 @@ import { navigate } from 'vite-plugin-ssr/client/router'
 import { firestore } from '#@/firebase/firebaseClient' // storage,
 import { collection } from 'firebase/firestore'
 import { usePageContext } from '#R/usePageContext'
+import { SearchBar } from '#@/app/components/SearchBar'
 
 import { doSearchFromFirestore } from '#@/services/doSearchFromFirestore.service'
 import { readUsersFromFirestore } from '#@/services/readUsersFromFirestore.service'
@@ -52,7 +53,7 @@ const Page = (props) => {
 
     useEffect(() => {
         if (!isLoaded) {
-            if (typeof searchInput !== 'undefined') {
+            if (typeof searchInput === 'string') {
                 userSearch(searchInput)
                 const consultedData = sharingInformationService.getSubject()
                 consultedData.subscribe((docSnap) => {
@@ -115,6 +116,7 @@ const Page = (props) => {
                                 Publica un proyecto gratis
                             </Button>
                         </h2>
+                        <SearchBar></SearchBar>
                     </Col>
                     {searchInput ? (
                         <Row className="">

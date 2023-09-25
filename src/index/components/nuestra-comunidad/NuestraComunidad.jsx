@@ -3,7 +3,6 @@ export { NuestraComunidad }
 import * as React from 'react'
 import '#@/assets/css/nuestra_comunidad.css'
 import { CategoriasSlider } from './CategoriasSlider'
-// import { CategoriasServicios } from '../categorias-servicios/CategoriasServicios'
 // import { CategoriasPupulares } from './CategoriasPupulares/CategoriasPupulares'
 //imagenes
 //import CategoriasPopulares from '#@/assets/img/CategoriasPopulares.png'
@@ -31,7 +30,6 @@ const NuestraComunidad = () => {
             </Container>
             {/* seccion de categorias y servicios */}
             {/* <CategoriasPupulares />
-            <CategoriasServicios />
             <BuscaEnTuCiudad /> */}
         </>
     )

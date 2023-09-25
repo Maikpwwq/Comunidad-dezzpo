@@ -3,7 +3,7 @@ export { Page }
 import React from 'react'
 import '#@/assets/css/profesionales_servicios.css'
 import { NuestraComunidad } from '#@/index/components/nuestra-comunidad/NuestraComunidad'
-
+import { CategoriasServicios } from '#@/index/components/categorias-servicios/CategoriasServicios'
 // react-bootrstrap
 // import { Row, Col, Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
@@ -44,6 +44,7 @@ const Page = (props) => {
                     </Col>
                 </Row>
             </Container>
+            <CategoriasServicios />
             {/* seccion de categorias y servicios */}
             <NuestraComunidad></NuestraComunidad>
         </>

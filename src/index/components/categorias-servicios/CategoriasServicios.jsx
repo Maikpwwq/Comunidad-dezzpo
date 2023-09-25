@@ -9,8 +9,6 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
-export { CategoriasServicios }
-
 const CategoriasServicios = () => {
     const sliceUno = ListadoCategorias.slice(0, 11)
     const sliceDos = ListadoCategorias.slice(12, 23)
@@ -34,6 +32,7 @@ const CategoriasServicios = () => {
                                     {sliceUno.map((categoria, index) => {
                                         return (
                                             <li key={index}>
+                                                {categoria.icon} {'> '}
                                                 {categoria.label} {'> '}
                                                 {categoria.rol}
                                             </li>
@@ -46,6 +45,7 @@ const CategoriasServicios = () => {
                                     {sliceDos.map((categoria, index) => {
                                         return (
                                             <li key={index}>
+                                                {categoria.icon} {'> '}
                                                 {categoria.label} {'> '}
                                                 {categoria.rol}
                                             </li>
@@ -58,6 +58,7 @@ const CategoriasServicios = () => {
                                     {sliceTres.map((categoria, index) => {
                                         return (
                                             <li key={index}>
+                                                {categoria.icon} {'> '}
                                                 {categoria.label} {'> '}
                                                 {categoria.rol}
                                             </li>
@@ -70,6 +71,7 @@ const CategoriasServicios = () => {
                                     {sliceCuatro.map((categoria, index) => {
                                         return (
                                             <li key={index}>
+                                                {categoria.icon} {'> '}
                                                 {categoria.label} {'> '}
                                                 {categoria.rol}
                                             </li>

@@ -107,6 +107,7 @@ const ChipsCategories = (props) => {
                     p: 0.5,
                     m: 0,
                     width: '100% !important',
+                    overflow: 'auto',
                 }}
                 component="ul"
             >
@@ -124,8 +125,8 @@ const ChipsCategories = (props) => {
                         return (
                             <ListItem key={data.key}>
                                 <Chip
-                                    className="body-1"
-                                    icon={icon}
+                                    className="caption"
+                                    icon={data.icon}
                                     color="primary"
                                     label={data.label}
                                     variant={data.variant} // "outlined" or "filled"
