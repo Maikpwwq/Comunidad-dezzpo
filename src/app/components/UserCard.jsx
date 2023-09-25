@@ -120,7 +120,7 @@ function UserCard({ props }) {
             ></CardHeader>
             <CardContent sx={{ textAlign: 'left' }} className="p-2">
                 <Typography
-                    variant="body2"
+                    variant="body1"
                     color="text.secondary"
                     style={{ overflowY: 'auto', maxHeight: 100 }}
                 >

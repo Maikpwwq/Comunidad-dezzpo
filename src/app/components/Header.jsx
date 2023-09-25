@@ -3,7 +3,7 @@ export { Header }
 import React, { useState, useContext, useMemo, useEffect } from 'react'
 import { Link } from '#R/Link'
 import { auth } from '#@/firebase/firebaseClient'
-import { SearchBar } from './SearchBar'
+import { SearchBar } from '#@/app/components/SearchBar'
 import '#@/assets/cssPrivateApp/header.css'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
 import { sharingInformationService } from '#@/services/sharing-information'
@@ -227,7 +227,7 @@ function Header(props) {
                                 </IconButton>
                             </Grid>
                         )}
-                        <Grid item xs style={{ maxWidth: '330px' }}>
+                        <Grid item xs >
                             <SearchBar></SearchBar>
                         </Grid>
                         <Grid item xs>

@@ -71,9 +71,9 @@ const SearchBar = () => {
             console.log(multipleSearch)
             setSearchParams({
                 ...searchParams,
-                searchInput: multipleSearch,
+                searchInput: multipleSearch[multipleSearch.length -1],
             })
-            handleSearch(multipleSearch)
+            handleSearch(multipleSearch[multipleSearch.length -1])
         }
     }
 
@@ -119,7 +119,7 @@ const SearchBar = () => {
                         />
                     </SearchIconWrapper>
                     <StyledSelect
-                        style={{ borderStyle: 'solid', borderWidth: '1px' }}
+                        style={{ borderStyle: 'solid', borderWidth: '1px', minWidth: '300px' }}
                         className="w-100"
                         id="search-select-category"
                         name="searchInput"
@@ -134,10 +134,10 @@ const SearchBar = () => {
                         // 'Busqueda Local: Buscar por categoria'
                     >
                         {ListadoCategorias.map((item) => {
-                            const { key, label } = item
+                            const { key, label, icon } = item
                             return (
                                 <MenuItem value={label} key={key}>
-                                    {label}
+                                    {icon}{label}
                                 </MenuItem>
                             )
                         })}
