@@ -99,8 +99,8 @@ const Page = (props) => {
     }
 
     const handleSelectRol = (e) => {
-        setRol(e[0])
-        // console.log('handleSelectRol', e, userSignupRol)
+        setRol(e)
+        console.log('handleSelectRol', e, userSignupRol)
         setStep(2)
     }
 
@@ -119,7 +119,7 @@ const Page = (props) => {
 
     const onSuccess = (user) => {
         const { uid, email, displayName } = user
-        console.log('onSigninSuccess', userSignupRol, uid)
+        console.log('onSignupSuccess', userSignupRol, uid, displayName)
 
         updateUser({
             displayName: displayName,
@@ -166,6 +166,7 @@ const Page = (props) => {
 
     const handleClick = (e) => {
         e.preventDefault()
+        console.log('handleSelectRol', userSignupRol)
         if (userSignupRol) {
             const signUp = (email, password) => {
                 createUserWithEmailAndPassword(auth, email, password)

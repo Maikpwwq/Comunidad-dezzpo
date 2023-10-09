@@ -66,7 +66,8 @@ const Page = () => {
     // state != undefined && state != null && state.id != undefined
     //     ? state.id
     //     : id
-    const consult = userId !== null && userId !== undefined ? true : false
+    const consult = userId === userAuthID ? false : true
+    // userId !== null && userId !== undefined ? true : false
     const userConsultId = consult ? userId : userAuthID
     // console.log(userConsultId)
     // console.log(userId, consult, userConsultId)

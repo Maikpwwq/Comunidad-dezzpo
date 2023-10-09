@@ -70,6 +70,7 @@ const Page = (props) => {
 
     const onSuccess = (user) => {
         const { uid, displayName } = user
+        console.log('onLoginSuccess', userSignupRol, uid, displayName)
 
         updateUser({
             displayName: displayName,
