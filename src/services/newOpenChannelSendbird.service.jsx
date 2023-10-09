@@ -1,21 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 // import { sendbirdSelectors } from '@sendbird/uikit-react'
-import sendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
-import useSendbirdStateContext from '@sendbird/uikit-react/useSendbirdStateContext'
+// import sendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
+// import useSendbirdStateContext from '@sendbird/uikit-react/useSendbirdStateContext'
 // import withSendBird from '@sendbird/uikit-react/withSendbird'
 
-// import { sharingInformationService } from '#@/services/sharing-information'
+import { sharingInformationService } from '#@/services/sharing-information'
 // let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
 export { newOpenChannelSendbird }
 
-const newOpenChannelSendbird = async ({ uid, displayName }) => {
+const newOpenChannelSendbird = async ({ uid, displayName, sbSdk, connect, createChannel }) => {
     console.log('crearCanal props', uid, displayName)
-    const globalStore = useSendbirdStateContext()
-    const sbSdk = sendbirdSelectors.getSdk(globalStore)
-    const connect = sendbirdSelectors.getConnect(globalStore)
-    const createChannel = sendbirdSelectors.getCreateOpenChannel(globalStore)
+    // const globalStore = useSendbirdStateContext()
+    // const sbSdk = sendbirdSelectors.getSdk(globalStore)
+    // const connect = sendbirdSelectors.getConnect(globalStore)
+    // const createChannel = sendbirdSelectors.getCreateOpenChannel(globalStore)
 
     // const {
     //     uid,
@@ -95,12 +95,13 @@ const newOpenChannelSendbird = async ({ uid, displayName }) => {
 newOpenChannelSendbird.propTypes = {
     uid: PropTypes.string.isRequired,
     displayName: PropTypes.string.isRequired,
+    globalStore: PropTypes.any.isRequired,
     // setChannelUrl: PropTypes.func,
     // setUserEditInfo: PropTypes.func.isRequired,
     // userEditInfo: PropTypes.object.isRequired,
-    // connect: PropTypes.func.isRequired,
-    // createChannel: PropTypes.func.isRequired,
-    // sbSdk: PropTypes.object.isRequired,
+    connect: PropTypes.func.isRequired,
+    createChannel: PropTypes.func.isRequired,
+    sbSdk: PropTypes.object.isRequired,
 }
 
 // Replace withSendbird by useSendbirdStateContext component useState hook pattern

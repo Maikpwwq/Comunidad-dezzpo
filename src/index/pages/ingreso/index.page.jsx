@@ -70,6 +70,7 @@ const Page = (props) => {
 
     const onSuccess = (user) => {
         const { uid, displayName } = user
+        console.log('onLoginSuccess', userSignupRol, uid, displayName)
 
         updateUser({
             displayName: displayName,
@@ -164,27 +165,6 @@ const Page = (props) => {
         }
     }
 
-    const handleClickForgetPassword = (e) => {
-        e.preventDefault()
-        sendPasswordResetEmail(auth, userLoginEmail)
-            .then((result) => {
-                handleAlert(
-                    'Se envio correo de restauración con éxito.',
-                    'info'
-                )
-                // console.log(`Se envio correo de restauración ${result}`)
-            })
-            .catch((error) => {
-                handleAlert(
-                    'Se produjo un error al enviar correo de restauración.',
-                    'error'
-                )
-                // console.log(
-                //     `Se produjo un error al enviar correo de restauración ${error}`
-                // )
-            })
-    }
-
     let checkStyle = {
         width: '30px',
     }
@@ -264,15 +244,17 @@ const Page = (props) => {
                                                 </Link>
                                             </p>
                                             {/* TODO: Modal ingresar datos olvidaste la contaseña */}
-                                            <Button
-                                                className="textBlanco btn-TEXT btn-round btn-high"
-                                                variant="primary"
-                                                onClick={
-                                                    handleClickForgetPassword
-                                                }
+                                            <Link
+                                                className="body-2 btn-TEXT textVerde2"
+                                                href="/restaurar-contraseña/"
                                             >
-                                                Olvidé mi contraseña
-                                            </Button>
+                                                <Button
+                                                    className="textBlanco btn-TEXT btn-round btn-high"
+                                                    variant="primary"
+                                                >
+                                                    Olvidé mi contraseña
+                                                </Button>
+                                            </Link>
                                         </>
                                     )}
                                     {step === 2 && (

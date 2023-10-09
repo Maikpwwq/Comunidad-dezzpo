@@ -8,7 +8,11 @@ import { auth } from '#@/firebase/firebaseClient'
 import { formatDistance, parse } from 'date-fns' // parseISO, format, subDays
 import es from 'date-fns/locale/es'
 import { usePageContext } from '#R/usePageContext'
-// import { newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
+
+import useSendbirdStateContext from '@sendbird/uikit-react/useSendbirdStateContext'
+import sendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
+
+import { newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 import { readUserFromFirestore } from '#@/services/readUserFromFirestore.service'
 import { updateUserToFirestore } from '#@/services/updateUserToFirestore.service'
@@ -39,9 +43,15 @@ const Page = () => {
     let id = pageContext.routeParams.id // ['*']
     // console.log('routeParamsPerfil', id)
     const userAuth = useMemo(() => auth.currentUser, [])
-    const userAuthID = currentUser.userId || id
-    const userAuthName = currentUser.displayName || ''
+    const userAuthID = currentUser?.userId || id
+    const userAuthName = currentUser?.displayName || ''
     const [isLoaded, setIsLoaded] = useState(false)
+    const [isChanneled, setIsChanneled] = useState(false)
+
+    const globalStore = useSendbirdStateContext()
+    const sbSdk = sendbirdSelectors.getSdk(globalStore)
+    const connect = sendbirdSelectors.getConnect(globalStore)
+    const createChannel = sendbirdSelectors.getCreateOpenChannel(globalStore)
 
     const [userRol, setUserRol] = useState({
         rol: currentUser.rol,
@@ -125,6 +135,35 @@ const Page = () => {
             })
         }
 
+        const createUserChannel = (userName, userId) => {
+            // Sendbird new open channel
+            console.log('Ajustes creando nuevo open channel', userName, userAuthID, userId)
+            newOpenChannelSendbird(
+                {
+                    uid: userAuthID,
+                    displayName: userName,
+                    sbSdk, connect, createChannel
+                }
+                // setChannelUrl,
+                // userEditInfo,
+                // setUserEditInfo,
+            )
+
+            const currentURL = sharingInformationService.getSubject()
+            currentURL.subscribe((data) => {
+                if (data) {
+                    const { channelURL } = data
+                    console.log('newOpenChannelSendbird:', channelURL, data)
+                    if (channelURL) {
+                        setUserEditInfo({
+                            ...userEditInfo,
+                            userChannelUrl: channelURL,
+                        })
+                    }
+                }
+            })
+        }
+
         const LoadCurrentData = (currentUser) => {
             const {
                 userId,
@@ -150,29 +189,13 @@ const Page = () => {
             } = currentUser
 
             // Sendbird new open channel
-            // console.log('create new open channel', userChannelUrl)
-            if (userChannelUrl === undefined || userChannelUrl === '') {
-                // Sendbird new open channel
-                console.log('Ajustes creando nuevo open channel')
-                newOpenChannelSendbird(
-                    userAuthID,
-                    userAuthName
-                    // setChannelUrl,
-                    // userEditInfo,
-                    // setUserEditInfo,
-                )
-
-                const currentURL = sharingInformationService.getSubject()
-                currentURL.subscribe((data) => {
-                    if (data) {
-                        const { channelURL } = data
-                        console.log('newOpenChannelSendbird:', channelURL, data)
-                        setUserEditInfo({
-                            ...userEditInfo,
-                            userChannelUrl: channelURL,
-                        })
-                    }
-                })
+            console.log('create new open channel', userChannelUrl, userEditInfo.userChannelUrl)
+            if (
+                userChannelUrl === undefined ||
+                userChannelUrl === ''
+            ) {
+                console.log('conditioanl', userName, userId, userAuthName, userAuthID)
+                createUserChannel(userName, userId)
             }
 
             setUserEditInfo({
@@ -253,7 +276,7 @@ const Page = () => {
                 })
             }
         }
-    }, [userAuth, userAuthID, userEditInfo, userRol.rol, isLoaded])
+    }, [userAuth, userAuthID, userEditInfo, userRol.rol, isLoaded, userAuthName, sbSdk, connect, createChannel])
 
     const handleAlert = (message, severity) => {
         setAlert({ ...alert, open: true, message: message, severity: severity })
