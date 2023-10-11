@@ -41,8 +41,8 @@ function Header(props) {
     const userAuth = useMemo(() => auth?.currentUser, [])
     const [isLoaded, setIsLoaded] = useState(false)
     const [tab, setTab] = useState(0)
-    const [isAuth, setIsAuth] = useState(currentUser.isAuth)
-    const [rolAuth, setRolAuth] = useState(currentUser.rol)
+    const [isAuth, setIsAuth] = useState(currentUser?.isAuth)
+    const [rolAuth, setRolAuth] = useState(currentUser?.rol)
     const [userAuthInfo, setUserAuthInfo] = useState({
         userId: currentUser.userId || '', // Este es el id de la cuenta de Auth
         userPhotoUrl: userAuth?.photoURL || '',
@@ -77,7 +77,7 @@ function Header(props) {
             userData.subscribe((data) => {
                 if (data) {
                     const { currentUser, authUser } = data
-                    console.log('Header', currentUser, authUser)
+                    // console.log('Header', currentUser, authUser)
                     if (authUser) {
                         // currentUser ||
                         const { uid, displayName, photoURL } = authUser
@@ -217,7 +217,7 @@ function Header(props) {
                         spacing={1}
                     >
                         {isSmDown && (
-                            <Grid item xs style={{ maxWidth: '50px' }}>
+                            <Grid item xs style={{ maxWidth: 'fit-content'}}>
                                 <IconButton
                                     aria-label="mobile-more"
                                     className="mobile-app-menu"
@@ -227,7 +227,7 @@ function Header(props) {
                                 </IconButton>
                             </Grid>
                         )}
-                        <Grid item xs >
+                        <Grid item xs style={{ maxWidth: 'fit-content'}}>
                             <SearchBar></SearchBar>
                         </Grid>
                         <Grid item xs>

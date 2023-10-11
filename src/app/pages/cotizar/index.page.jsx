@@ -1,7 +1,8 @@
 export { Page }
 export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { v4 as uuidv4 } from 'uuid'
 import { auth } from '#@/firebase/firebaseClient'
@@ -30,8 +31,10 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import Typography from '@mui/material/Typography'
 
 const Page = (props) => {
-    const user = auth?.currentUser || {}
-    const userID = user?.uid || ''
+    const { currentUser, updateUser } = useContext(UserAuthContext)
+    const userAuthID = currentUser?.userId  // Este es el id de la cuenta de Auth
+    // const userAuthName = currentUser?.displayName  // Este es el id de la cuenta de Auth
+
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams // , quotationId
     const quotationID = uuidv4() // quotationId ? quotationId :
@@ -39,7 +42,7 @@ const Page = (props) => {
 
     const [cotizacion, setCotizacion] = useState({
         quotationId: '',
-        proponentId: userID,
+        proponentId: userAuthID,
         description: '',
         scope: '',
         procedimiento: '',

@@ -1,7 +1,8 @@
 export { Page }
 export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { auth } from '#@/firebase/firebaseClient'
 import { usePageContext } from '#R/usePageContext'
@@ -23,21 +24,22 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
 const Page = () => {
-    const user = auth?.currentUser || {}
-    const userID = user?.uid || '' // Este es el id de la cuenta de Auth
+    const { currentUser, updateUser } = useContext(UserAuthContext)
+    const userAuthID = currentUser?.userId  // Este es el id de la cuenta de Auth
+    // const userAuthName = currentUser?.displayName  // Este es el id de la cuenta de Auth
+
     // const _storage = storage
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams
 
-    let selectRole
+    const [rolAuth, setRolAuth] = useState(currentUser?.rol)
+
     useEffect(() => {
         // Perform localStorage action
         const localRole = localStorage.getItem('role')
-        selectRole = parseInt(JSON.parse(localRole))
+        const selectRole = parseInt(JSON.parse(localRole))
+        setRolAuth(selectRole)
     }, [])
-    const [userRol, setUserRol] = useState({
-        rol: selectRole ? selectRole : 2,
-    })
 
     const [cotizacionesInfo, setCotizacionesInfo] = useState({
         appliedQuotations: [],
@@ -63,7 +65,7 @@ const Page = () => {
         requerimientoAdjuntos: '',
         requerimientoMejorFecha: '',
         requerimientoMejorHora: '',
-        requerimientoAplicaciones: '',
+        requerimientoAplicaciones: [],
     })
     const [isLoaded, setIsLoaded] = useState(false)
 
@@ -92,7 +94,7 @@ const Page = () => {
         toDraft(updateInfo, docId)
         setIsLoaded(false)
         const draftData = sharingInformationService.getSubject()
-        draftData.then((data) => {
+        draftData?.then((data) => {
             if (data) {
                 const { sendDraft } = data
                 console.log('updateDraftToFirestore:', sendDraft)
@@ -129,7 +131,7 @@ const Page = () => {
                     draftBestScheduleTime,
                     draftApply,
                 } = draft
-                console.log('readDraftFromFirestore:', draft)
+                // console.log('readDraftFromFirestore:', draft)
                 setRequerimientoInfo({
                     ...requerimientoInfo,
                     requerimientoTitulo: draftName,
@@ -155,14 +157,18 @@ const Page = () => {
                     requerimientoAplicaciones: draftApply,
                 })
                 // console.log(data, data.draftApply)
-                const appliedQuotations = draftApply[0]
-                fromQuotation(appliedQuotations)
+                const appliedQuotations = draftApply[0] || 0
+                console.log('dataReq', data, data.draftApply)
+                if (appliedQuotations !== 0) {
+                    console.log('appliedQuotations', appliedQuotations)
+                    fromQuotation(appliedQuotations)
+                }
             }
 
             if (draftId && draftId !== ' ' && draftId !== undefined) {
                 fromDraft(draftId)
                 const draftData = sharingInformationService.getSubject()
-                draftData.then((data) => {
+                draftData.subscribe((data) => {
                     if (data) {
                         LoadDraftData(data)
                         const quotationData =
@@ -174,10 +180,12 @@ const Page = () => {
                                     'readQuotationFromFirestore:',
                                     quotation
                                 )
-                                setCotizacionesInfo({
-                                    ...cotizacionesInfo,
-                                    appliedQuotations: [quotation],
-                                })
+                                if (quotation?.length > 0) {
+                                    setCotizacionesInfo({
+                                        ...cotizacionesInfo,
+                                        appliedQuotations: [quotation],
+                                    })
+                                }
                                 setIsLoaded(true)
                             }
                         })
@@ -185,7 +193,7 @@ const Page = () => {
                 })
             }
         }
-    }, [draftId, cotizacionesInfo, requerimientoInfo])
+    }, [draftId, cotizacionesInfo, requerimientoInfo, isLoaded])
 
     const handleChange = (event) => {
         setRequerimientoInfo({
@@ -467,9 +475,9 @@ const Page = () => {
                                 <AdjuntarArchivos
                                     name={'draftAtachments'}
                                     multiple={true}
-                                    idPerson={userID}
-                                    rol={userRol.rol}
-                                    route={`profiles/${userID}/draft`}
+                                    idPerson={userAuthID}
+                                    rol={rolAuth}
+                                    route={`profiles/${userAuthID}/draft`}
                                     functionState={setRequerimientoInfo}
                                     state={requerimientoInfo}
                                 ></AdjuntarArchivos>

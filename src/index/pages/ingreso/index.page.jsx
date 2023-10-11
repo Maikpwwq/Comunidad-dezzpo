@@ -2,6 +2,7 @@ export { Page }
 
 // Pagina de Ingreso
 import React, { useState, useContext } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { SnackBarAlert } from '#@/index/components/SnackBarAlert'
@@ -34,6 +35,14 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import Typography from '@mui/material/Typography'
 
 const Page = (props) => {
+    const {
+        showLogo,
+        // draftId,
+        setDraftInfo,
+        draftInfo,
+        handleSave,
+    } = props
+
     const { currentUser, updateUser } = useContext(UserAuthContext)
 
     const googleProvider = new GoogleAuthProvider()
@@ -64,7 +73,7 @@ const Page = (props) => {
 
     const handleSelectRol = (e) => {
         setRol(e[0])
-        // console.log('handleSelectRol', e, userSignupRol)
+        console.log('handleSelectRol', e, userSignupRol)
         setStep(2)
     }
 
@@ -72,21 +81,37 @@ const Page = (props) => {
         const { uid, displayName } = user
         console.log('onLoginSuccess', userSignupRol, uid, displayName)
 
-        updateUser({
+        const loginData = { 
             displayName: displayName,
             userId: uid,
             isAuth: true,
             updated: false,
             rol: userSignupRol,
-        })
+        }
+
+        updateUser(loginData)
 
         // console.log('Account successfully upgraded', user)
         // console.log('onLoginSuccess', userSignupRol, uid)
+        // if (userSignupRol == 1) {
+        //     if (draftInfo) {
+        //         data.createdDrafts.push(draftInfo.draftId)
+        //     }
+        // }        
+
         localStorage.role = JSON.stringify(userSignupRol)
         localStorage.userID = JSON.stringify(uid)
         // localStorage.setItem('role', JSON.stringify(userSignupRol))
         handleAlert('Cuenta autorizada con éxito.', 'success')
-        navigate(`/app/perfil/${uid}`)
+        if (draftInfo && uid ) {
+            setDraftInfo({
+                ...draftInfo,
+                draftPropietarioResidente: uid,
+            })
+            handleSave()
+        } else {
+            navigate(`/app/perfil/${uid}`)
+        }
     }
 
     const handleClick = (e) => {
@@ -174,18 +199,20 @@ const Page = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row className="ingresoFormulario  m-0 w-100">
-                    <Col
-                        className="imagenIngreso d-flex align-items-start justify-content-center"
-                        lg={6}
-                        md={6}
-                        sm={12}
-                    >
-                        <Box style={{ top: '16vh', position: 'relative' }}>
-                            <Typography className="text-white" variant="h4">
-                                Bienvenido a
-                            </Typography>
-                        </Box>
-                    </Col>
+                    {showLogo === true && (
+                        <Col
+                            className="imagenIngreso d-flex align-items-start justify-content-center"
+                            lg={6}
+                            md={6}
+                            sm={12}
+                        >
+                            <Box style={{ top: '16vh', position: 'relative' }}>
+                                <Typography className="text-white" variant="h4">
+                                    Bienvenido a
+                                </Typography>
+                            </Box>
+                        </Col>
+                    )}
                     <Col
                         className="ingresarFormulario m-0 p-0 mb-4 mt-4"
                         lg={4}
@@ -401,4 +428,11 @@ const Page = (props) => {
             </Container>
         </>
     )
+}
+
+Page.propTypes = {
+    showLogo: PropTypes.bool,
+    setDraftInfo: PropTypes.func,
+    draftInfo: PropTypes.object,
+    handleSave: PropTypes.func,
 }

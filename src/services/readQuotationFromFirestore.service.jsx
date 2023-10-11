@@ -6,10 +6,10 @@ import { sharingInformationService } from '#@/services/sharing-information'
 
 export { readQuotationFromFirestore }
 
-const readQuotationFromFirestore = (props) => {
+const readQuotationFromFirestore = (props) => { 
     const _firestore = firestore
     const { docId } = props
-    console.log('readQuotationFromFirestore', docId)
+    // console.log('readQuotationFromFirestore', docId)
 
     const quotationRef = collection(_firestore, 'quotation')
 
@@ -28,8 +28,10 @@ const readQuotationFromFirestore = (props) => {
     quotationFromFirestore(docId).then((data) => {
         if (data) {
             const res = data.data()
-            console.log('quotationFromFirestore', data, res)
-            sharingInformationService.setSubject({ quotation: res })
+            // console.log('quotationFromFirestore', data, res)
+            if ( res ) {
+                sharingInformationService.setSubject({ quotation: res })
+            }
         }
     })
 }

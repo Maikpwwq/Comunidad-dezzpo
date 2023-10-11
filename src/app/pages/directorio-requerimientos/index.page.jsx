@@ -37,15 +37,17 @@ const Page = () => {
             draftsFromFirestore()
                 .then((docSnap) => {
                     if (docSnap) {
-                        console.log('draftsFromFirestore', docSnap)
+                        console.log('draftsFromFirestore:', docSnap)
                         const data = docSnap.docs.map((element) => ({
                             ...element.data(),
-                        }))
-                        console.log(data)
-                        setDraftsData({
-                            data,
-                        })
-                        setIsLoaded(true)
+                        }))                     
+                        if (data){ 
+                            console.log('draftsFromFirestore data:', data)
+                            setDraftsData({
+                                data,
+                            })
+                            setIsLoaded(true)
+                        }
                     } else {
                         console.log(
                             'No se encontro información en la colleccion proyectos!'
@@ -56,7 +58,7 @@ const Page = () => {
                     console.log(error)
                 })
         }
-    }, [draftRef])
+    }, [draftRef, isLoaded])
 
     return (
         <>
@@ -76,15 +78,13 @@ const Page = () => {
                         <p className="body-2">Requerimientos activos </p>
                         {/* TODO: Para el propietario proponente cambiar la accion de Aplicar por Editar */}
                         <Row className="m-0 d-flex">
-                            {draftsData.data ? (
-                                draftsData.data.map((draft) => (
+                            {draftsData.data && (
+                                draftsData.data?.map((draft) => (
                                     <DraftCard
                                         key={draft.id}
                                         props={draft}
                                     ></DraftCard>
                                 ))
-                            ) : (
-                                <></>
                             )}
                         </Row>
                     </Col>

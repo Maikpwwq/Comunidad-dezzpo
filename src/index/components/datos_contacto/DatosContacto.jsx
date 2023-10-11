@@ -27,14 +27,14 @@ const DatosContacto = () => {
                             />
                             <Col className="m-0 p-0 body-1 align-items-end pt-2 pb-2">
                                 <li>
-                                    +57
+                                    +57{' '}
                                     <a
                                         className="chat-with-us body-1"
                                         href="https://api.whatsapp.com/send?phone=573196138057"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
-                                        3196138057
+                                        319 6138057
                                     </a>
                                     - Office
                                 </li>

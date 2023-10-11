@@ -49,9 +49,9 @@ const Page = () => {
     const [isChanneled, setIsChanneled] = useState(false)
 
     const globalStore = useSendbirdStateContext()
-    const sbSdk = sendbirdSelectors.getSdk(globalStore)
-    const connect = sendbirdSelectors.getConnect(globalStore)
-    const createChannel = sendbirdSelectors.getCreateOpenChannel(globalStore)
+    const sbSdk = sendbirdSelectors?.getSdk(globalStore)
+    const connect = sendbirdSelectors?.getConnect(globalStore)
+    const createChannel = sendbirdSelectors?.getCreateOpenChannel(globalStore)
 
     const [userRol, setUserRol] = useState({
         rol: currentUser.rol,

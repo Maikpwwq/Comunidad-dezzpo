@@ -39,7 +39,7 @@ const Page = (props) => {
     const [usersData, setUsersData] = useState({})
 
     const FromUsersComerciantes = () => {
-        const userSelectedRol = 2 // Solo comerciantes calificados
+        const userSelectedRol = 2 // Solo comerciantes calificados  
         readUsersFromFirestore({
             userSelectedRol,
         })

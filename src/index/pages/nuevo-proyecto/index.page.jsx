@@ -22,6 +22,7 @@ import '#@/assets/css/nuevo_proyecto.css'
 import { Ubicacion } from '#@/index/components/ubicacion/Ubicacion'
 import { BuscadorNuevoProyecto } from '#@/index/components/buscador/BuscadorNuevoProyecto'
 import { Page as Registro } from '#@/index/pages/registro/index.page'
+import { Page as Ingreso } from '#@/index/pages/ingreso/index.page'
 import { SubCategorias } from '#@/index/components/sub-categorias/SubCategorias'
 import { PasoAPaso } from '#@/index/components/paso_a_paso/Paso_A_Paso'
 import { TablaSubCategoriaCantidades } from './Tabla_SubCategoria_Cantidades'
@@ -101,7 +102,7 @@ const Page = () => {
         draftBestScheduleTime: '',
         draftProperty: '',
         draftPostalCode: '',
-        draftApply: '',
+        draftApply: [],
     })
 
     const [openModal, setOpen] = useState(false)
@@ -885,6 +886,15 @@ const Page = () => {
                             showLogo={false}
                             className="pb-4"
                         ></Registro>
+
+                        <Ingreso
+                            setDraftInfo={setDraftInfo}
+                            draftInfo={draftInfo}
+                            // draftId={draftInfo.draftID}
+                            handleSave={handleSave}
+                            showLogo={false}
+                            className="pb-4"
+                        ></Ingreso>
                     </Row>
                 ) : (
                     <></>

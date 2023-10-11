@@ -55,7 +55,7 @@ const Page = (props) => {
         // draftId,
         setDraftInfo,
         draftInfo,
-        handleSave,
+        handleSave, 
     } = props
     // sessionStorage.draftId = draftID
 
@@ -236,9 +236,7 @@ const Page = (props) => {
         <>
             <Container fluid className="p-0">
                 <Row id="registrate" className="m-0">
-                    {showLogo == false ? (
-                        <></>
-                    ) : (
+                    {showLogo === true && (
                         <Col
                             className="registrateImagen m-0 d-flex align-items-center justify-content-start"
                             md={6}

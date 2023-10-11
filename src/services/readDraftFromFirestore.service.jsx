@@ -9,7 +9,7 @@ export { readDraftFromFirestore }
 const readDraftFromFirestore = (props) => {
     const _firestore = firestore
     const { draftId } = props
-    console.log('readDraftFromFirestore', draftId)
+    // console.log('readDraftFromFirestore**', draftId)
 
     const draftRef = collection(_firestore, 'drafts')
 
@@ -25,7 +25,10 @@ const readDraftFromFirestore = (props) => {
     draftFromFirestore(draftId).then((data) => {
         if (data) {
             const res = data.data()
-            sharingInformationService.setSubject({ draft: res })
+            // console.log('draftFromFirestore', data, res)
+            if ( res ) {
+                sharingInformationService.setSubject({ draft: res })
+            }            
         }
     })
 }
