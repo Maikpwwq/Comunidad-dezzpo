@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
+
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { firestore, auth } from '#@/firebase/firebaseClient'
 import PropTypes from 'prop-types'
@@ -36,9 +38,11 @@ import Collapse from '@mui/material/Collapse'
 export { DraftCard }
 
 function DraftCard({ props }) {
+    const { currentUser, updateUser } = useContext(UserAuthContext)
+    const userAuthID = currentUser?.userId  // Este es el id de la cuenta de Auth
+    // const userAuthName = currentUser?.displayName  // Este es el id de la cuenta de Auth
+
     console.log('DraftCard', props)
-    const user = auth?.currentUser || {}
-    const userID = user?.uid || '' // Este es el id de la cuenta de Auth
     const {
         draftId,
         draftPropietarioResidente,
@@ -66,16 +70,14 @@ function DraftCard({ props }) {
     // console.log(props)
     const [expanded] = useState(false) // , setExpanded
 
-    let selectRole
+    const [rolAuth, setRolAuth] = useState(currentUser?.rol)
+
     useEffect(() => {
         // Perform localStorage action
         const localRole = localStorage.getItem('role')
-        selectRole = parseInt(JSON.parse(localRole))
+        const selectRole = parseInt(JSON.parse(localRole))
+        setRolAuth(selectRole)
     }, [])
-
-    const [userRol, setUserRol] = useState({
-        rol: selectRole ? selectRole : 2,
-    })
 
     // const handleExpandClick = () => {
     //     setExpanded(!expanded)
@@ -161,28 +163,25 @@ function DraftCard({ props }) {
                             </Button>
 
                             {/* TODO: mostrar solo al propietario que crea el requerimiento */}
-                            {userRol.rol === 1 &&
-                            draftPropietarioResidente === userID ? (
+                            {rolAuth === 1 &&
+                                draftPropietarioResidente === userAuthID && (
+                                    <Button
+                                        style={{ paddingRight: '10px' }}
+                                        className="body-1 w-auto"
+                                        // variant="primary"
+                                        onClick={handleEditar}
+                                    >
+                                        Editar
+                                    </Button>
+                                )}
+                            {/* Mostrar solo a profesionales */}
+                            {rolAuth === 2 && draftApply.length < 4 && (
                                 <Button
-                                    style={{ paddingRight: '10px' }}
-                                    className="body-1 w-auto"
-                                    // variant="primary"
-                                    onClick={handleEditar}
+                                    className="btn-round btn-high body-1 w-auto"
+                                    onClick={handleAplicar}
                                 >
-                                    Editar
+                                    Aplicar
                                 </Button>
-                            ) : (
-                                <>
-                                    {userRol.rol === 2 &&
-                                        draftApply.length < 4 && (
-                                            <Button
-                                                className="btn-round btn-high body-1 w-auto"
-                                                onClick={handleAplicar}
-                                            >
-                                                Aplicar
-                                            </Button>
-                                        )}
-                                </>
                             )}
                             <IconButton
                                 style={{ marginLeft: 'auto' }}

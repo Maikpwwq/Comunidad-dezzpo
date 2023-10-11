@@ -250,7 +250,7 @@ const Page = () => {
                 productData.subscribe((data) => {
                     if (data) {
                         const { currentUser, authUser } = data
-                        console.log('perfilPage', currentUser, authUser)
+                        // console.log('perfilPage', currentUser, authUser)
                         if (currentUser) {
                             LoadCurrentData(currentUser)
                             setIsLoaded(true)

@@ -105,7 +105,7 @@ function Navigator(props) {
             userData.subscribe((data) => {
                 if (data) {
                     const { currentUser, authUser } = data
-                    console.log('Navigation', currentUser, authUser)
+                    // console.log('Navigation', currentUser, authUser)
                     if (authUser) {
                         // currentUser ||
                         const { uid, displayName, photoURL } = authUser

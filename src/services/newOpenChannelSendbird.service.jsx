@@ -65,7 +65,7 @@ const newOpenChannelSendbird = async ({ uid, displayName, sbSdk, connect, create
     // conectarSB(uid)
     if (typeof createChannel == 'function' && typeof sbSdk === 'object') {
         // if (typeof sbSdk.GroupChannelParams == 'function') {
-        if (typeof sbSdk.OpenChannelParams == 'function') {
+        if (typeof sbSdk?.OpenChannelParams === 'function') {
             // https://sendbird.com/docs/chat/uikit/v3/react/core-components/sendbirdselectors
             const param = new sbSdk.OpenChannelParams()
             param.name(displayName)

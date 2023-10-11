@@ -1,7 +1,8 @@
 export { Page }
 export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { UserAuthContext } from '#@/providers/UserAuthProvider'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { firestore, auth } from '#@/firebase/firebaseClient'
 import { collection, doc, getDocFromServer } from 'firebase/firestore'
@@ -27,8 +28,10 @@ import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 
 const Page = () => {
-    const user = auth?.currentUser || {}
-    const userID = user?.uid || '' // Este es el id de la cuenta de Auth
+    const { currentUser, updateUser } = useContext(UserAuthContext)
+    const userAuthID = currentUser?.userId // Este es el id de la cuenta de Auth
+    // const userAuthName = currentUser?.displayName  // Este es el id de la cuenta de Auth
+
     // const navigate = useNavigate()
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams
@@ -39,15 +42,14 @@ const Page = () => {
     // const draftRef = collection(_firestore, 'drafts')
     // const quotationRef = collection(_firestore, 'quotation')
 
-    let selectRole
+    const [rolAuth, setRolAuth] = useState(currentUser?.rol)
+
     useEffect(() => {
         // Perform localStorage action
         const localRole = localStorage.getItem('role')
-        selectRole = parseInt(JSON.parse(localRole))
+        const selectRole = parseInt(JSON.parse(localRole))
+        setRolAuth(selectRole)
     }, [])
-    const [userRol, setUserRol] = useState({
-        rol: selectRole ? selectRole : 2,
-    })
 
     const [cotizacionesInfo, setCotizacionesInfo] = useState({
         appliedQuotations: [],
@@ -91,8 +93,8 @@ const Page = () => {
     useEffect(() => {
         if (!isLoaded) {
             console.log(draftId)
-            const LoadDraftData = (data) => {
-                const { draft } = data
+            const LoadDraftData = (draft) => {
+                // const { draft } = data
                 const {
                     draftName,
                     draftCategory,
@@ -116,7 +118,7 @@ const Page = () => {
                     draftBestScheduleTime,
                     draftApply,
                 } = draft
-                console.log('readDraftFromFirestore')
+                // console.log('readDraftFromFirestore--', draft)
                 setRequerimientoInfo({
                     ...requerimientoInfo,
                     requerimientoTitulo: draftName,
@@ -142,16 +144,23 @@ const Page = () => {
                     requerimientoAplicaciones: draftApply ? draftApply : [],
                 })
 
+                const appliedQuotations = draftApply[0] || 0
                 console.log('dataReq', data, data.draftApply)
-                const appliedQuotations = draftApply[0] || []
-                fromQuotation(appliedQuotations)
+                if (appliedQuotations !== 0) {
+                    console.log('appliedQuotations', appliedQuotations)
+                    fromQuotation(appliedQuotations)
+                }
             }
             if (draftId !== ' ' && draftId !== undefined) {
                 fromDraft(draftId)
                 const draftData = sharingInformationService.getSubject()
                 draftData.subscribe((data) => {
                     if (data) {
-                        LoadDraftData(data)
+                        const { draft } = data
+                        if (draft) {
+                            console.log('LoadDraftData', draft)
+                            LoadDraftData(draft)    
+                        }                        
                         const quotationData =
                             sharingInformationService.getSubject()
                         quotationData.subscribe((data2) => {
@@ -161,20 +170,20 @@ const Page = () => {
                                     'readQuotationFromFirestore:',
                                     quotation
                                 )
-                                if (quotation.length > 0) {
+                                if (quotation?.length > 0) {
                                     setCotizacionesInfo({
                                         ...cotizacionesInfo,
                                         appliedQuotations: [quotation],
                                     })
-                                    setIsLoaded(true)
                                 }
+                                setIsLoaded(true)
                             }
                         })
                     }
                 })
             }
         }
-    }, [draftId, cotizacionesInfo, requerimientoInfo])
+    }, [draftId, cotizacionesInfo, requerimientoInfo, isLoaded])
 
     // TODO: implementar arrow function para descargar archivos adjuntos
     const handleDescargarAdjuntos = () => {}
@@ -518,7 +527,7 @@ const Page = () => {
                                                             </TableCell>
                                                             <TableCell>
                                                                 {/* TODOS PUEDEN, VER SI ES COMERCIANTE PROPONENTE EDITAR */}
-                                                                {userID ==
+                                                                {userAuthID ==
                                                                 proponentId ? (
                                                                     <Button
                                                                         className="btn btn-round btn-middle"
@@ -550,8 +559,8 @@ const Page = () => {
                                                                     </Button>
                                                                 )}
                                                                 {/* USUARIO PROPIETARIO / RESIDENTE PUEDE CONTRATAR */}
-                                                                {userRol.rol ==
-                                                                1 ? (
+                                                                {rolAuth ===
+                                                                    1 && (
                                                                     <Button
                                                                         className="btn btn-round btn-middle"
                                                                         onClick={(
@@ -566,8 +575,6 @@ const Page = () => {
                                                                     >
                                                                         CONTRATAR
                                                                     </Button>
-                                                                ) : (
-                                                                    <></>
                                                                 )}
                                                             </TableCell>
                                                         </TableRow>

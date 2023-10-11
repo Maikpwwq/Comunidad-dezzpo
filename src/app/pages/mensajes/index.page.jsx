@@ -22,8 +22,8 @@ let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
 const Page = () => {
     const { currentUser } = useContext(UserAuthContext)
-    let userId = currentUser.userId || ''
-    let displayName = currentUser.displayName || ''
+    let userId = currentUser?.userId // || ''
+    let displayName = currentUser?.displayName // || ''
     console.log('Mensajes', userId, displayName, appId, accessToken)
 
     return (
@@ -37,13 +37,17 @@ const Page = () => {
                         style={{ height: '50vh' }}
                     >
                         <h2 className="headline-xl">Mensajes</h2>
-                        {/* <SendBirdApp
-                            appId={appId} // Sendbird application ID.
-                            userId={userId} // user Auth ID.
-                            nickname={displayName} // user Auth displayName.
-                            accessToken={accessToken}
-                            // dateLocale={es}
-                        /> */}
+                        {
+                            userId && displayName && (
+                                <SendBirdApp
+                                    appId={appId} // Sendbird application ID.
+                                    userId={userId} // user Auth ID.
+                                    nickname={displayName} // user Auth displayName.
+                                    accessToken={accessToken}
+                                    // dateLocale={es}
+                                />
+                            )
+                        }
                         {/* <FormControl
                             fullWidth
                             style={{
