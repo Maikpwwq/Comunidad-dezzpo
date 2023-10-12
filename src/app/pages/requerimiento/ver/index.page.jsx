@@ -55,27 +55,27 @@ const Page = () => {
         appliedQuotations: [],
     })
     const [requerimientoInfo, setRequerimientoInfo] = useState({
-        requerimientoTitulo: '',
-        requerimientoCategoria: '',
-        requerimientoTipoProyecto: '',
-        requerimientoDescripcion: '',
-        requerimientoId: '',
-        requerimientoTotal: 0,
-        requerimientoCategorias: [],
-        requerimientoPropietario: '',
-        requerimientoCreated: '',
-        requerimientoPrioridad: '',
-        requerimientoTipoPropiedad: '',
-        requerimientoCantidadObra: '',
-        requerimientoPlanos: '',
-        requerimientoPermisos: '',
-        requerimientoCiudad: '',
-        requerimientoDireccion: '',
-        requerimientoCodigoPostal: '',
-        requerimientoAdjuntos: '',
-        requerimientoMejorFecha: '',
-        requerimientoMejorHora: '',
-        requerimientoAplicaciones: '',
+        draftName: '',
+                    draftCategory: '',
+                    draftProject: '',
+                    draftDescription: '',
+                    draftId: draftId,
+                    draftTotal: 0,
+                    draftSubCategory: [],
+                    draftPropietarioResidente: '',
+                    draftCreated: '',
+                    draftPriority: '',
+                    draftProperty: '',
+                    draftRooms: '',
+                    draftPlans: '',
+                    draftPermissions: '',
+                    draftCity: '',
+                    draftDirection: '',
+                    draftPostalCode: '',
+                    draftAtachments: '',
+                    draftBestScheduleDate: '',
+                    draftBestScheduleTime: '',
+                    draftApply: [],
     })
 
     const fromDraft = (draftId) => {
@@ -121,31 +121,31 @@ const Page = () => {
                 // console.log('readDraftFromFirestore--', draft)
                 setRequerimientoInfo({
                     ...requerimientoInfo,
-                    requerimientoTitulo: draftName,
-                    requerimientoCategoria: draftCategory,
-                    requerimientoTipoProyecto: draftProject,
-                    requerimientoDescripcion: draftDescription,
-                    requerimientoId: draftId,
-                    requerimientoTotal: draftTotal,
-                    requerimientoCategorias: draftSubCategory || [],
-                    requerimientoPropietario: draftPropietarioResidente,
-                    requerimientoCreated: draftCreated,
-                    requerimientoPrioridad: draftPriority,
-                    requerimientoTipoPropiedad: draftProperty,
-                    requerimientoCantidadObra: draftRooms,
-                    requerimientoPlanos: draftPlans,
-                    requerimientoPermisos: draftPermissions,
-                    requerimientoCiudad: draftCity,
-                    requerimientoDireccion: draftDirection,
-                    requerimientoCodigoPostal: draftPostalCode,
-                    requerimientoAdjuntos: draftAtachments,
-                    requerimientoMejorFecha: draftBestScheduleDate,
-                    requerimientoMejorHora: draftBestScheduleTime,
-                    requerimientoAplicaciones: draftApply ? draftApply : [],
+                    draftName: draftName,
+                    draftCategory: draftCategory,
+                    draftProject: draftProject,
+                    draftDescription: draftDescription,
+                    draftId: draftId,
+                    draftTotal: draftTotal,
+                    draftSubCategory: draftSubCategory || [],
+                    draftPropietarioResidente: draftPropietarioResidente,
+                    draftCreated: draftCreated,
+                    draftPriority: draftPriority,
+                    draftProperty: draftProperty,
+                    draftRooms: draftRooms,
+                    draftPlans: draftPlans,
+                    draftPermissions: draftPermissions,
+                    draftCity: draftCity,
+                    draftDirection: draftDirection,
+                    draftPostalCode: draftPostalCode,
+                    draftAtachments: draftAtachments,
+                    draftBestScheduleDate: draftBestScheduleDate,
+                    draftBestScheduleTime: draftBestScheduleTime,
+                    draftApply: draftApply ? draftApply : [],
                 })
 
                 const appliedQuotations = draftApply[0] || 0
-                console.log('dataReq', data, data.draftApply)
+                console.log('dataReq', draft, draft.draftApply)
                 if (appliedQuotations !== 0) {
                     console.log('appliedQuotations', appliedQuotations)
                     fromQuotation(appliedQuotations)
@@ -208,7 +208,7 @@ const Page = () => {
     }
 
     const handleCotizar = () => {
-        const draftParamId = requerimientoInfo.requerimientoId
+        const draftParamId = requerimientoInfo.draftId
         navigate(`/app/cotizacion/${draftParamId}`)
     }
 
@@ -240,11 +240,11 @@ const Page = () => {
                                 <Row className="m-0 w-100 pb-2 d-flex">
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoTotal"
+                                        name="draftTotal"
                                         className="w-100 detail-pill ps-3"
                                     >
                                         Total: $
-                                        {requerimientoInfo.requerimientoTotal}
+                                        {requerimientoInfo.draftTotal}
                                     </Typography>
                                 </Row>
                                 <Typography
@@ -258,50 +258,50 @@ const Page = () => {
                                 <Row className="m-0 w-100 pb-2 d-flex">
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoTitulo"
+                                        name="draftName"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Titulo:
-                                        {requerimientoInfo.requerimientoTitulo}
+                                        {requerimientoInfo.draftName}
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoCategoria"
+                                        name="draftCategory"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Categoria:
                                         {
-                                            requerimientoInfo.requerimientoCategoria
+                                            requerimientoInfo.draftCategory
                                         }
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoTipoProyecto"
+                                        name="draftProject"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Tipo Proyecto:
                                         {
-                                            requerimientoInfo.requerimientoTipoProyecto
+                                            requerimientoInfo.draftProject
                                         }
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoDescripcion"
+                                        name="draftDescription"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Descripción:
                                         {
-                                            requerimientoInfo.requerimientoDescripcion
+                                            requerimientoInfo.draftDescription
                                         }
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoPropietario"
+                                        name="draftPropietarioResidente"
                                         className="w-100 detail-pill ps-3"
                                     >
                                         Propietario:
                                         {
-                                            requerimientoInfo.requerimientoPropietario
+                                            requerimientoInfo.draftPropietarioResidente
                                         }
                                     </Typography>
                                 </Row>
@@ -316,30 +316,30 @@ const Page = () => {
                                 <Row className="m-0 w-100 pb-2 d-flex">
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoCiudad"
+                                        name="draftCity"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Ciudad:
-                                        {requerimientoInfo.requerimientoCiudad}
+                                        {requerimientoInfo.draftCity}
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoDireccion"
+                                        name="draftDirection"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Dirección:
                                         {
-                                            requerimientoInfo.requerimientoDireccion
+                                            requerimientoInfo.draftDirection
                                         }
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoCodigoPostal"
+                                        name="draftPostalCode"
                                         className="w-100 detail-pill ps-3"
                                     >
                                         Codigo Postal:
                                         {
-                                            requerimientoInfo.requerimientoCodigoPostal
+                                            requerimientoInfo.draftPostalCode
                                         }
                                     </Typography>
                                 </Row>
@@ -356,40 +356,40 @@ const Page = () => {
                                 <Row className="m-0 w-100 pb-2 d-flex">
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoCreated"
+                                        name="draftCreated"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         FECHA DE PUBLICACIÓN:
-                                        {requerimientoInfo.requerimientoCreated}
+                                        {requerimientoInfo.draftCreated}
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoPrioridad"
+                                        name="draftPriority"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Prioridad:
                                         {
-                                            requerimientoInfo.requerimientoPrioridad
+                                            requerimientoInfo.draftPriority
                                         }
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoMejorFecha"
+                                        name="draftBestScheduleDate"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Calendario asignado:
                                         {
-                                            requerimientoInfo.requerimientoMejorFecha
+                                            requerimientoInfo.draftBestScheduleDate
                                         }
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoMejorHora"
+                                        name="draftBestScheduleTime"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Disponibilidad de horario:
                                         {
-                                            requerimientoInfo.requerimientoMejorHora
+                                            requerimientoInfo.draftBestScheduleTime
                                         }
                                     </Typography>
                                 </Row>
@@ -404,40 +404,40 @@ const Page = () => {
                                 <Row className="m-0 w-100 pb-2 d-flex">
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoTipoPropiedad"
+                                        name="draftProperty"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Tipo propiedad:
                                         {
-                                            requerimientoInfo.requerimientoTipoPropiedad
+                                            requerimientoInfo.draftProperty
                                         }
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoCantidadObra"
+                                        name="draftRooms"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Cantidad Obra:
                                         {
-                                            requerimientoInfo.requerimientoCantidadObra
+                                            requerimientoInfo.draftRooms
                                         }
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoPlanos"
+                                        name="draftPlans"
                                         className="w-100 detail-pill ps-3 mb-2"
                                     >
                                         Planos:
-                                        {requerimientoInfo.requerimientoPlanos}
+                                        {requerimientoInfo.draftPlans}
                                     </Typography>
                                     <Typography
                                         variant="body1"
-                                        name="requerimientoPermisos"
+                                        name="draftPermissions"
                                         className="w-100 detail-pill ps-3"
                                     >
                                         Permisos:
                                         {
-                                            requerimientoInfo.requerimientoPermisos
+                                            requerimientoInfo.draftPermissions
                                         }
                                     </Typography>
                                 </Row>
@@ -458,18 +458,18 @@ const Page = () => {
                             </Col>
                         </Row>
                         <TablaSubCategoriaPresupuesto
-                            requerimientoCategorias={
-                                requerimientoInfo.requerimientoCategorias
+                            draftSubCategory={
+                                requerimientoInfo.draftSubCategory
                             }
-                            requerimientoTotal={
-                                requerimientoInfo.requerimientoTotal
+                            draftTotal={
+                                requerimientoInfo.draftTotal
                             }
                         />
                         <Row>
                             <Col>
                                 <p className="headline-l">
                                     COTIZACIONES
-                                    {requerimientoInfo.requerimientoAplicaciones
+                                    {requerimientoInfo.draftApply
                                         .length < 4 && (
                                         <Button
                                             className="btn-TEXT textBlanco"

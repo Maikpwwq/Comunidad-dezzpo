@@ -45,27 +45,27 @@ const Page = () => {
         appliedQuotations: [],
     })
     const [requerimientoInfo, setRequerimientoInfo] = useState({
-        requerimientoTitulo: '',
-        requerimientoCategoria: '',
-        requerimientoTipoProyecto: '',
-        requerimientoDescripcion: '',
-        requerimientoId: '',
-        requerimientoTotal: 0,
-        requerimientoCategorias: [],
-        requerimientoPropietario: '',
-        requerimientoCreated: '',
-        requerimientoPrioridad: '',
-        requerimientoTipoPropiedad: '',
-        requerimientoCantidadObra: '',
-        requerimientoPlanos: '',
-        requerimientoPermisos: '',
-        requerimientoCiudad: '',
-        requerimientoDireccion: '',
-        requerimientoCodigoPostal: '',
-        requerimientoAdjuntos: '',
-        requerimientoMejorFecha: '',
-        requerimientoMejorHora: '',
-        requerimientoAplicaciones: [],
+        draftName: '',
+                    draftCategory: '',
+                    draftProject: '',
+                    draftDescription: '',
+                    draftId: draftId,
+                    draftTotal: 0,
+                    draftSubCategory: [],
+                    draftPropietarioResidente: '',
+                    draftCreated: '',
+                    draftPriority: '',
+                    draftProperty: '',
+                    draftRooms: '',
+                    draftPlans: '',
+                    draftPermissions: '',
+                    draftCity: '',
+                    draftDirection: '',
+                    draftPostalCode: '',
+                    draftAtachments: '',
+                    draftBestScheduleDate: '',
+                    draftBestScheduleTime: '',
+                    draftApply: [],
     })
     const [isLoaded, setIsLoaded] = useState(false)
 
@@ -106,59 +106,39 @@ const Page = () => {
     useEffect(() => {
         if (!isLoaded) {
             console.log(draftId)
-            const LoadDraftData = (data) => {
-                const { draft } = data
-                const {
-                    draftName,
-                    draftCategory,
-                    draftProject,
-                    draftDescription,
-                    draftId,
-                    draftTotal,
-                    draftSubCategory,
-                    draftPropietarioResidente,
-                    draftCreated,
-                    draftPriority,
-                    draftProperty,
-                    draftRooms,
-                    draftPlans,
-                    draftPermissions,
-                    draftCity,
-                    draftDirection,
-                    draftPostalCode,
-                    draftAtachments,
-                    draftBestScheduleDate,
-                    draftBestScheduleTime,
-                    draftApply,
-                } = draft
+            const LoadDraftData = (draft) => {
+                // const { draft } = data
+                // const {
+                //     draftName,
+                //     draftCategory,
+                //     draftProject,
+                //     draftDescription,
+                //     draftId,
+                //     draftTotal,
+                //     draftSubCategory,
+                //     draftPropietarioResidente,
+                //     draftCreated,
+                //     draftPriority,
+                //     draftProperty,
+                //     draftRooms,
+                //     draftPlans,
+                //     draftPermissions,
+                //     draftCity,
+                //     draftDirection,
+                //     draftPostalCode,
+                //     draftAtachments,
+                //     draftBestScheduleDate,
+                //     draftBestScheduleTime,
+                //     draftApply,
+                // } = draft
                 // console.log('readDraftFromFirestore:', draft)
                 setRequerimientoInfo({
                     ...requerimientoInfo,
-                    requerimientoTitulo: draftName,
-                    requerimientoCategoria: draftCategory,
-                    requerimientoTipoProyecto: draftProject,
-                    requerimientoDescripcion: draftDescription,
-                    requerimientoId: draftId,
-                    requerimientoTotal: draftTotal,
-                    requerimientoCategorias: draftSubCategory,
-                    requerimientoPropietario: draftPropietarioResidente,
-                    requerimientoCreated: draftCreated,
-                    requerimientoPrioridad: draftPriority,
-                    requerimientoTipoPropiedad: draftProperty,
-                    requerimientoCantidadObra: draftRooms,
-                    requerimientoPlanos: draftPlans,
-                    requerimientoPermisos: draftPermissions,
-                    requerimientoCiudad: draftCity,
-                    requerimientoDireccion: draftDirection,
-                    requerimientoCodigoPostal: draftPostalCode,
-                    requerimientoAdjuntos: draftAtachments,
-                    requerimientoMejorFecha: draftBestScheduleDate,
-                    requerimientoMejorHora: draftBestScheduleTime,
-                    requerimientoAplicaciones: draftApply,
+                    draft
                 })
                 // console.log(data, data.draftApply)
-                const appliedQuotations = draftApply[0] || 0
-                console.log('dataReq', data, data.draftApply)
+                const appliedQuotations = draft.draftApply[0] || 0
+                console.log('dataReq', draft, draft.draftApply)
                 if (appliedQuotations !== 0) {
                     console.log('appliedQuotations', appliedQuotations)
                     fromQuotation(appliedQuotations)
@@ -170,7 +150,10 @@ const Page = () => {
                 const draftData = sharingInformationService.getSubject()
                 draftData.subscribe((data) => {
                     if (data) {
-                        LoadDraftData(data)
+                        const { draft } = data
+                        if (draft) {
+                            LoadDraftData(draft)
+                        }
                         const quotationData =
                             sharingInformationService.getSubject()
                         quotationData.subscribe((data2) => {
@@ -228,10 +211,10 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 mt-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoTotal"
-                                    name="requerimientoTotal"
+                                    id="draftTotal"
+                                    name="draftTotal"
                                     label="Total"
-                                    value={requerimientoInfo.requerimientoTotal}
+                                    value={requerimientoInfo.draftTotal}
                                     onChange={handleChange}
                                     // defaultValue="@Ciudad"
                                 />
@@ -246,11 +229,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 mt-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoTitulo"
-                                    name="requerimientoTitulo"
+                                    id="draftName"
+                                    name="draftName"
                                     label="Titulo"
                                     value={
-                                        requerimientoInfo.requerimientoTitulo
+                                        requerimientoInfo.draftName
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@Titulo"
@@ -258,11 +241,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoCategoria"
-                                    name="requerimientoCategoria"
+                                    id="draftCategory"
+                                    name="draftCategory"
                                     label="Categoria"
                                     value={
-                                        requerimientoInfo.requerimientoCategoria
+                                        requerimientoInfo.draftCategory
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@Categoria"
@@ -270,11 +253,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoTipoProyecto"
-                                    name="requerimientoTipoProyecto"
+                                    id="draftProject"
+                                    name="draftProject"
                                     label="Tipo Proyecto?"
                                     value={
-                                        requerimientoInfo.requerimientoTipoProyecto
+                                        requerimientoInfo.draftProject
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@TipoProyecto"
@@ -282,11 +265,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoDescripcion"
-                                    name="requerimientoDescripcion"
+                                    id="draftDescription"
+                                    name="draftDescription"
                                     label="Descripción"
                                     value={
-                                        requerimientoInfo.requerimientoDescripcion
+                                        requerimientoInfo.draftDescription
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@Descripción"
@@ -297,7 +280,7 @@ const Page = () => {
                                     name="requerimientoPropietario"
                                     label="Propietario"
                                     value={
-                                        requerimientoInfo.requerimientoPropietario
+                                        requerimientoInfo.draftPropietarioResidente
                                     }
                                     onChange={handleChange}
                                 /> */}
@@ -312,11 +295,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 mt-4  fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoCiudad"
-                                    name="requerimientoCiudad"
+                                    id="draftCity"
+                                    name="draftCity"
                                     label="Ciudad"
                                     value={
-                                        requerimientoInfo.requerimientoCiudad
+                                        requerimientoInfo.draftCity
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@Ciudad"
@@ -324,11 +307,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoDireccion"
-                                    name="requerimientoDireccion"
+                                    id="draftDirection"
+                                    name="draftDirection"
                                     label="Dirección"
                                     value={
-                                        requerimientoInfo.requerimientoDireccion
+                                        requerimientoInfo.draftDirection
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@Direccion"
@@ -336,11 +319,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoCodigoPostal"
-                                    name="requerimientoCodigoPostal"
+                                    id="draftPostalCode"
+                                    name="draftPostalCode"
                                     label="Codigo Postal"
                                     value={
-                                        requerimientoInfo.requerimientoCodigoPostal
+                                        requerimientoInfo.draftPostalCode
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@CodigoPostal"
@@ -358,11 +341,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 mt-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoCreated"
-                                    name="requerimientoCreated"
+                                    id="draftCreated"
+                                    name="draftCreated"
                                     label="Fecha de publicación"
                                     value={
-                                        requerimientoInfo.requerimientoCreated
+                                        requerimientoInfo.draftCreated
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@Created"
@@ -370,11 +353,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoPrioridad"
-                                    name="requerimientoPrioridad"
+                                    id="draftPriority"
+                                    name="draftPriority"
                                     label="Prioridad"
                                     value={
-                                        requerimientoInfo.requerimientoPrioridad
+                                        requerimientoInfo.draftPriority
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@PRIORIDAD"
@@ -382,11 +365,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoMejorFecha"
-                                    name="requerimientoMejorFecha"
+                                    id="draftBestScheduleDate"
+                                    name="draftBestScheduleDate"
                                     label="Calendario asignado"
                                     value={
-                                        requerimientoInfo.requerimientoMejorFecha
+                                        requerimientoInfo.draftBestScheduleDate
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@PROPIETARIO"
@@ -394,11 +377,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoMejorHora"
-                                    name="requerimientoMejorHora"
+                                    id="draftBestScheduleTime"
+                                    name="draftBestScheduleTime"
                                     label="Disponibilidad de horario"
                                     value={
-                                        requerimientoInfo.requerimientoMejorHora
+                                        requerimientoInfo.draftBestScheduleTime
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@PROPIETARIO"
@@ -414,11 +397,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 mt-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoTipoPropiedad"
-                                    name="requerimientoTipoPropiedad"
+                                    id="draftProperty"
+                                    name="draftProperty"
                                     label="Tipo propiedad"
                                     value={
-                                        requerimientoInfo.requerimientoTipoPropiedad
+                                        requerimientoInfo.draftProperty
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@TipoPropiedad"
@@ -426,11 +409,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoCantidadObra"
-                                    name="requerimientoCantidadObra"
+                                    id="draftRooms"
+                                    name="draftRooms"
                                     label="Cantidad Obra"
                                     value={
-                                        requerimientoInfo.requerimientoCantidadObra
+                                        requerimientoInfo.draftRooms
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@CantidadObra"
@@ -438,11 +421,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoPlanos"
-                                    name="requerimientoPlanos"
+                                    id="draftPlans"
+                                    name="draftPlans"
                                     label="Planos"
                                     value={
-                                        requerimientoInfo.requerimientoPlanos
+                                        requerimientoInfo.draftPlans
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@PLANOS"
@@ -450,11 +433,11 @@ const Page = () => {
                                 <TextField
                                     className="w-100 mb-4 fondoBlanco"
                                     style={{ borderRadius: '15px' }}
-                                    id="requerimientoPermisos"
-                                    name="requerimientoPermisos"
+                                    id="draftPermissions"
+                                    name="draftPermissions"
                                     label="Permisos"
                                     value={
-                                        requerimientoInfo.requerimientoPermisos
+                                        requerimientoInfo.draftPermissions
                                     }
                                     onChange={handleChange}
                                     // defaultValue="@PERMISOS"
@@ -486,10 +469,10 @@ const Page = () => {
                         {/* TODO: Cambiar esta tabla por la de crear nuevo proyecto */}
                         <TablaSubCategoriaPresupuesto
                             requerimientoCategorias={
-                                requerimientoInfo.requerimientoCategorias
+                                requerimientoInfo.draftSubCategory
                             }
                             requerimientoTotal={
-                                requerimientoInfo.requerimientoTotal
+                                requerimientoInfo.draftTotal
                             }
                         />
                         <Row className="pb-4 w-100">

@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
 const TablaSubCategoriaPresupuesto = (props) => {
-    const { requerimientoCategorias, requerimientoTotal } = props
+    const { draftSubCategory, draftTotal } = props
 
     return (
         <>
@@ -36,8 +36,8 @@ const TablaSubCategoriaPresupuesto = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {requerimientoCategorias.length > 0 &&
-                            requerimientoCategorias.map((selection) => {
+                        {draftSubCategory.length > 0 &&
+                            draftSubCategory.map((selection) => {
                                 const {
                                     subCategoria,
                                     subCategoriaCantidad,
@@ -51,7 +51,7 @@ const TablaSubCategoriaPresupuesto = (props) => {
                                     <TableRow key={subCategoria}>
                                         {console.log(
                                             'this load changes',
-                                            requerimientoCategorias
+                                            draftSubCategory
                                         )}
                                         <TableCell>{subCategoria}</TableCell>
                                         <TableCell>
@@ -89,7 +89,7 @@ const TablaSubCategoriaPresupuesto = (props) => {
                             <TableCell></TableCell>
                             <TableCell> Precio Total</TableCell>
                             <TableCell>
-                                {parseInt(requerimientoTotal).toLocaleString(
+                                {parseInt(draftTotal).toLocaleString(
                                     'es-CO',
                                     {
                                         style: 'currency',
@@ -106,6 +106,6 @@ const TablaSubCategoriaPresupuesto = (props) => {
 }
 
 TablaSubCategoriaPresupuesto.propTypes = {
-    requerimientoCategorias: PropTypes.array.isRequired,
-    requerimientoTotal: PropTypes.number.isRequired,
+    draftSubCategory: PropTypes.array.isRequired,
+    draftTotal: PropTypes.number.isRequired,
 }
