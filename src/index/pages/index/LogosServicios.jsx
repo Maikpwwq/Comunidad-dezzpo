@@ -48,6 +48,21 @@ import CameraOutdoorIcon from '@mui/icons-material/CameraOutdoor'
 import BathtubIcon from '@mui/icons-material/Bathtub'
 import ChairIcon from '@mui/icons-material/Chair'
 import HandymanIcon from '@mui/icons-material/Handyman'
+import ThermostatAutoIcon from '@mui/icons-material/ThermostatAuto';
+import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
+import TungstenIcon from '@mui/icons-material/Tungsten';
+import BlenderIcon from '@mui/icons-material/Blender';
+import DeckIcon from '@mui/icons-material/Deck';
+import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import PowerIcon from '@mui/icons-material/Power';
+import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
+import WaterIcon from '@mui/icons-material/Water';
+import CheckroomIcon from '@mui/icons-material/Checkroom';
+import ControlCameraIcon from '@mui/icons-material/ControlCamera';
+import CottageIcon from '@mui/icons-material/Cottage';
+import DeskIcon from '@mui/icons-material/Desk';
+import BorderBottomIcon from '@mui/icons-material/BorderBottom';
+
 
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
@@ -60,21 +75,13 @@ import Diversity2Icon from '@mui/icons-material/Diversity2';
 import AssistWalkerIcon from '@mui/icons-material/AssistWalker';
 import WheelchairPickupIcon from '@mui/icons-material/WheelchairPickup';
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
-import ControlCameraIcon from '@mui/icons-material/ControlCamera';
 import PestControlIcon from '@mui/icons-material/PestControl';
-import BlenderIcon from '@mui/icons-material/Blender';
-import DeckIcon from '@mui/icons-material/Deck';
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import RollerShadesIcon from '@mui/icons-material/RollerShades';
 import ReduceCapacityIcon from '@mui/icons-material/ReduceCapacity';
 import LightIcon from '@mui/icons-material/Light';
 import GrassIcon from '@mui/icons-material/Grass';
-import ThermostatAutoIcon from '@mui/icons-material/ThermostatAuto';
-import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import ElectricCarIcon from '@mui/icons-material/ElectricCar';
-import TungstenIcon from '@mui/icons-material/Tungsten';
-import PowerIcon from '@mui/icons-material/Power';
 import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied';
 import SolarPowerIcon from '@mui/icons-material/SolarPower';
 import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
@@ -86,7 +93,6 @@ import RecyclingIcon from '@mui/icons-material/Recycling';
 import ParkIcon from '@mui/icons-material/Park';
 import TrackChangesIcon from '@mui/icons-material/TrackChanges';
 import ImagesearchRollerIcon from '@mui/icons-material/ImagesearchRoller';
-import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
 import SecurityIcon from '@mui/icons-material/Security';
 
 const LogosServicios = ( ) => {
@@ -141,7 +147,22 @@ const LogosServicios = ( ) => {
             <ChairIcon fontSize="large" className="p-1" />
             <BathtubIcon fontSize="large" className='p-1' />
             <HandymanIcon fontSize="large" className='p-1' />
-            <div />
+            <ThermostatAutoIcon fontSize="large" className='p-1' />
+            <DeviceThermostatIcon fontSize="large" className='p-1' />            
+            <TungstenIcon fontSize="large" className='p-1' />
+            <BlenderIcon fontSize="large" className='p-1' />
+            <DeckIcon fontSize="large" className='p-1' />
+            <DeliveryDiningIcon fontSize="large" className='p-1' />
+            <PowerIcon fontSize="large" className='p-1' />
+            <ElectricalServicesIcon fontSize="large" className='p-1' />
+            <WaterIcon fontSize="large" className='p-1' />
+            <CheckroomIcon fontSize="large" className='p-1' />
+            <ControlCameraIcon fontSize="large" className='p-1' />  
+            <CottageIcon fontSize="large" className='p-1' />  
+            <DeskIcon fontSize="large" className='p-1' />  
+            <BorderBottomIcon fontSize="large" className='p-1' />  
+            
+            <br /><br />
             <AdminPanelSettingsIcon fontSize="large" className='p-1'/>
             <DoneAllIcon fontSize="large" className='p-1' />
             <PestControlIcon fontSize="large" className='p-1' />
@@ -155,19 +176,11 @@ const LogosServicios = ( ) => {
             <AssistWalkerIcon fontSize="large" className='p-1' />
             <WheelchairPickupIcon fontSize="large" className='p-1' />
             <SettingsAccessibilityIcon fontSize="large" className='p-1' />
-            <ControlCameraIcon fontSize="large" className='p-1' />
-            <BlenderIcon fontSize="large" className='p-1' />
-            <DeckIcon fontSize="large" className='p-1' />
-            <DeliveryDiningIcon fontSize="large" className='p-1' />
             <RollerShadesIcon fontSize="large" className='p-1' />
             <ReduceCapacityIcon fontSize="large" className='p-1' />
             <LightIcon fontSize="large" className='p-1' />
             <GrassIcon fontSize="large" className='p-1' />
-            <ThermostatAutoIcon fontSize="large" className='p-1' />
-            <DeviceThermostatIcon fontSize="large" className='p-1' />
             <ElectricCarIcon fontSize="large" className='p-1' />
-            <TungstenIcon fontSize="large" className='p-1' />
-            <PowerIcon fontSize="large" className='p-1' />
             <SensorOccupiedIcon fontSize="large" className='p-1' />
             <SolarPowerIcon fontSize="large" className='p-1' />
             <SoupKitchenIcon fontSize="large" className='p-1' />
@@ -179,9 +192,7 @@ const LogosServicios = ( ) => {
             <ParkIcon fontSize="large" className='p-1' />
             <TrackChangesIcon fontSize="large" className='p-1' />
             <ImagesearchRollerIcon fontSize="large" className='p-1' />
-            <ElectricalServicesIcon fontSize="large" className='p-1' />
             <SecurityIcon fontSize="large" className='p-1' />
-            
         </div>
     )
 }

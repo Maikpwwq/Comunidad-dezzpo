@@ -102,6 +102,7 @@ const Page = () => {
             mean: 0,
             votes: 0,
         },
+        userWebSite: '',
     })
 
     const determineDistanceTime = (metadata) => {
@@ -171,6 +172,7 @@ const Page = () => {
                 userRazonSocial,
                 userIdentification,
                 userDescription,
+                userWebSite,
             } = currentUser
             // console.log('Detail load:', currentUser)
             let chipsInfo = []
@@ -221,6 +223,7 @@ const Page = () => {
                     ? userIdentification
                     : '',
                 userDescription: userDescription ? userDescription : '',
+                userWebSite: userWebSite? userWebSite : '',
             })
             // chipsInfoAdapter(userCategories)
         }

@@ -89,6 +89,7 @@ const Page = () => {
         userRazonSocial: '',
         userIdentification: '',
         userDescription: '',
+        userWebSite: '',
     })
 
     const determineDistanceTime = (metadata) => {
@@ -183,6 +184,7 @@ const Page = () => {
                 userIdentification,
                 userDescription,
                 userChannelUrl,
+                userWebSite,
                 // userCategorie,
                 // userClasification,
                 // userGrade,
@@ -220,6 +222,7 @@ const Page = () => {
                 userRazonSocial: userRazonSocial || '',
                 userIdentification: userIdentification || '',
                 userDescription: userDescription || '',
+                userWebSite: userWebSite || '',
             })
         }
 

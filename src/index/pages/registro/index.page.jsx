@@ -137,13 +137,13 @@ const Page = (props) => {
             userJoined: format(new Date(), 'dd-MM-yyyy'), // toString(new Date()), //user.metadata.creationTime
             userId: uid,
             userChannelUrl: '',
-            createdDrafts: [],
+            userCreatedDrafts: [],
             userName: displayName || userSignupName,
         }
 
         if (userSignupRol == 1) {
             if (draftInfo) {
-                data.createdDrafts.push(draftInfo.draftId)
+                data.userCreatedDrafts.push(draftInfo.draftId)
             }
             userProResToFirestore(data, uid)
         }
@@ -293,10 +293,10 @@ const Page = (props) => {
                                                 <ToggleButton
                                                     className="body-1 p-3 btn-round btn-high btn-buscador w-auto select-rol d-flex flex-row align-items-center justify-content-center"
                                                     value={1} // "SoyPropietarioResidente" //
-                                                    id="formBasicRolPropietarioResidente"
-                                                    aria-label="Soy Propietario/Residente"
+                                                    id="formBasicRolPropietarioInmobiliario"
+                                                    aria-label="Soy propietario inmobiliario"
                                                 >
-                                                    Soy propietario/residente
+                                                    Soy propietario inmobiliario
                                                 </ToggleButton>
                                                 <br className="mb-2 mt-2" />
                                                 <ToggleButton
