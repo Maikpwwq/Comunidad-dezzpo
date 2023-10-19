@@ -95,7 +95,7 @@ const Page = (props) => {
         // console.log('onLoginSuccess', userSignupRol, uid)
         // if (userSignupRol == 1) {
         //     if (draftInfo) {
-        //         data.createdDrafts.push(draftInfo.draftId)
+        //         data.userCreatedDrafts.push(draftInfo.draftId)
         //     }
         // }        
 
@@ -248,15 +248,17 @@ const Page = (props) => {
                                                 <ToggleButton
                                                     className="body-1 p-3 btn-round btn-high btn-buscador w-auto d-flex flex-row align-items-center justify-content-center"
                                                     value={1}
-                                                    id="formBasicRolPropietarioResidente"
+                                                    id="formBasicRolPropietarioInmobiliario"
+                                                    aria-label="Soy propietario inmobiliario"
                                                 >
-                                                    Soy propietario / residente
+                                                    Soy propietario inmobiliario
                                                 </ToggleButton>
                                                 <br className="mb-2 mt-2" />
                                                 <ToggleButton
                                                     className="body-1 p-3 btn-round btn-middle w-auto d-flex flex-row align-items-center justify-content-center"
                                                     value={2}
                                                     id="formBasicRolComercianteCalificado"
+                                                    aria-label="Soy Comerciante Calificado"
                                                 >
                                                     Soy comerciante calificado
                                                 </ToggleButton>

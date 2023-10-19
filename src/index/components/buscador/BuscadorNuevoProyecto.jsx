@@ -210,8 +210,9 @@ const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
                                     <MenuItem value={0}>
                                         seleccionar categoria
                                     </MenuItem>
-                                    {ListadoCategorias.map((item) => {
+                                    {!!ListadoCategorias && ListadoCategorias.map((item) => {
                                         const { key, label, icon } = item
+                                        // console.log('ListadoCategorias item', item)
                                         return (
                                             <MenuItem className="py-1 px-3" value={label} key={key}>
                                                 {icon}{label}

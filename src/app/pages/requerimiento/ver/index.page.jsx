@@ -558,7 +558,7 @@ const Page = () => {
                                                                         COTIZACION
                                                                     </Button>
                                                                 )}
-                                                                {/* USUARIO PROPIETARIO / RESIDENTE PUEDE CONTRATAR */}
+                                                                {/* USUARIO PROPIETARIO INMOBILIARIO PUEDE CONTRATAR */}
                                                                 {rolAuth ===
                                                                     1 && (
                                                                     <Button
