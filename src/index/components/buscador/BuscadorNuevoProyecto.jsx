@@ -3,7 +3,7 @@ export { BuscadorNuevoProyecto }
 import React, { useEffect, useState } from 'react'
 import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
-import { ListadoCategorias } from '#@/index/components/ListadoCategorias'
+import { SeleccionarCategoria } from '#@/index/components/SeleccionarCategoria'
 import '#@/assets/css/buscador_nuevos_proyectos.css'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 // import IcoMoon from 'react-icomoon'
@@ -15,31 +15,14 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 import PropTypes from 'prop-types'
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-
-import { styled } from '@mui/material/styles'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-
-const StyledSelect = styled(Select)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingRigth: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '100%', // 20ch
-        },
-    },
-}))
 
 const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
     console.log('BuscadorNuevoProyecto', draftInfo)
     const [isLoaded, setIsLoaded] = useState(false)
     const [projectData, setProjectData] = useState({
-        categoriaProfesional: 0,
+        draftCategory: 0,
         tipoProyecto: undefined,
     })
 
@@ -47,12 +30,12 @@ const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
         if (!isLoaded) {
             if (
                 draftInfo &&
-                projectData.categoriaProfesional &&
+                projectData.draftCategory &&
                 projectData.tipoProyecto
             ) {
                 setDraftInfo({
                     ...draftInfo,
-                    draftCategory: projectData.categoriaProfesional,
+                    draftCategory: projectData.draftCategory,
                     draftProject: projectData.tipoProyecto,
                 })
                 // console.log('BuscadorChanged')
@@ -70,7 +53,7 @@ const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
     }
 
     const handleClick = () => {
-        const route = `/nuevo-proyecto/${projectData.tipoProyecto}/${projectData.categoriaProfesional}`
+        const route = `/nuevo-proyecto/${projectData.tipoProyecto}/${projectData.draftCategory}`
         navigate(route)
     }
 
@@ -127,25 +110,29 @@ const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
                                         ¿Qué tipo de proyecto es?
                                     </Form.Label>
                                 </InputGroup>
-                                <Form.Select
-                                    className="casillaSeleccion"
-                                    name="tipoProyecto"
-                                    value={projectData.tipoProyecto}
-                                    onChange={handleChange}
+                                <Box
+                                    className="mt-1"
                                 >
-                                    <option value="">seleccionar uno</option>
-                                    {/* <option value="Persona">Persona</option> */}
-                                    {/* Domicilio, Oficina, Edificio, Organización, Aliado */}
-                                    <option value="Hogar">Hogar</option>
-                                    <option value="Negocio">Negocio</option>
-                                    <option value="PH">
-                                        Propiedad Horizontal
-                                    </option>
-                                    <option value="Inmobiliaria">
-                                        Inmobiliaria
-                                    </option>
-                                    <option value="Alianzas">Alianzas</option>
-                                </Form.Select>
+                                    <Form.Select
+                                        className="casillaSeleccion"
+                                        name="tipoProyecto"
+                                        value={projectData.tipoProyecto}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">seleccionar uno</option>
+                                        {/* <option value="Persona">Persona</option> */}
+                                        {/* Domicilio, Oficina, Edificio, Organización, Aliado */}
+                                        <option value="Hogar">Hogar</option>
+                                        <option value="Negocio">Negocio</option>
+                                        <option value="PH">
+                                            Propiedad Horizontal
+                                        </option>
+                                        <option value="Inmobiliaria">
+                                            Inmobiliaria
+                                        </option>
+                                        <option value="Alianzas">Alianzas</option>
+                                    </Form.Select>
+                                </Box>
                             </Form.Group>
                             {/* type="text" value="Selecciona un profesional listado #1" */}
                             <Form.Group
@@ -175,51 +162,11 @@ const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
                                         ¿Qué tipo de profesional necesitas?
                                     </Form.Label>
                                 </InputGroup>
-                                {/* <Form.Select
-                                    className="casillaSeleccion"
-                                    name="categoriaProfesional"
-                                    value={projectData.categoriaProfesional}
-                                    onChange={handleChange}
-                                >
-                                    <option>seleccionar categoria</option>
-                                    {ListadoCategorias.map((categoria) => {
-                                        const { label, key, icon } = categoria
-                                        return (
-                                            // <div key={key}>
-                                            //     {' '}
-                                            //     </div>
-                                                <option key={key} value={label} icon={`${icon}` } label={`${label}`} />                                            
-                                        )
-                                    })}
-                                </Form.Select> */}
-                                <StyledSelect
-                                    // style={{ borderStyle: 'solid', borderWidth: '1px', minWidth: '300px' }}
-                                    className="casillaSeleccion form-select w-100"
-                                    style={{padding: '0  50px 0 0'}} 
-                                    name="categoriaProfesional"
-                                    // multiple
-                                    // autoFocus={true}
-                                    // onKeyDown={handleSearch}
-                                    value={projectData.categoriaProfesional}
-                                    onChange={handleChange}
-                                    inputProps={{
-                                        'aria-label': 'search', //Without label
-                                    }}
-                                    // 'Busqueda Local: Buscar por categoria'
-                                >
-                                    <MenuItem value={0}>
-                                        seleccionar categoria
-                                    </MenuItem>
-                                    {!!ListadoCategorias && ListadoCategorias.map((item) => {
-                                        const { key, label, icon } = item
-                                        // console.log('ListadoCategorias item', item)
-                                        return (
-                                            <MenuItem className="py-1 px-3" value={label} key={key}>
-                                                {icon}{label}
-                                            </MenuItem>
-                                        )
-                                    })}
-                                </StyledSelect>
+                                <SeleccionarCategoria
+                                                setDraftInfo={setProjectData}
+                                                draftInfo={projectData}
+                                                setIsLoaded={setIsLoaded}
+                                />
                             </Form.Group>
                             <Form.Group>
                                 <Col className="pt-4 pb-2">

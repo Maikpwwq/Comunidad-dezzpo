@@ -6,9 +6,9 @@ import React, { useState, useContext, useEffect } from 'react'
 // import { Link } from '#R/Link'
 import { navigate } from 'vite-plugin-ssr/client/router'
 import { DirectionalButton } from '#@/index/components/DirectionalButton/DirectionalButton'
-import { ListadoCategorias } from '#@/index/components/ListadoCategorias'
 // import ScrollToTopOnMount from '#@/index/components/ScrollToTop'
 import { AdjuntarArchivos } from '#@/app/components/AdjuntarArchivos'
+import { SeleccionarCategoria } from '#@/index/components/SeleccionarCategoria'
 import { v4 as uuidv4 } from 'uuid'
 import {
     collection,
@@ -28,7 +28,6 @@ import { PasoAPaso } from '#@/index/components/paso_a_paso/Paso_A_Paso'
 import { TablaSubCategoriaCantidades } from './Tabla_SubCategoria_Cantidades'
 import { usePageContext } from '#R/usePageContext'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
-import MenuItem from '@mui/material/MenuItem'
 
 // react-bootrstrap
 // import { Row, Col, Container, Button, Form } from 'react-bootstrap'
@@ -37,7 +36,6 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import Select from '@mui/material/Select'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
@@ -81,7 +79,7 @@ const Page = () => {
     })
     const [activeStep, setActiveStep] = useState(0)
     const [draftInfo, setDraftInfo] = useState({
-        draftCategory: paramCategoriaProfesional || undefined,
+        draftCategory: paramCategoriaProfesional || 0,
         draftSubCategory: '',
         draftProject: paramTipoProyecto || undefined,
         draftId: draftID,
@@ -301,7 +299,7 @@ const Page = () => {
                         )}
                         {/* <ScrollToTopOnMount /> */}
                         {!!draftInfo.draftProject &&
-                            !!draftInfo.draftCategory && (
+                            draftInfo.draftCategory !== 0 && (
                                 <>
                                     <Row className="w-100 m-0">
                                         <Col className="p-4" lg={8} md={10}>
@@ -313,25 +311,11 @@ const Page = () => {
                                                 podrás modificar la cantidad de
                                                 obra que requieres.
                                             </p>
-                                            <Select
-                                                className="casillaSeleccion form-select w-100 m-auto p-0"
-                                                // style={{padding: '0  50px 0 0'}} 
-                                                name="draftCategory"
-                                                value={draftInfo.draftCategory}
-                                                onChange={handleChange}
-                                                inputProps={{
-                                                    'aria-label': 'search', //Without label
-                                                }}
-                                            >
-                                                {ListadoCategorias.map((item) => {
-                                                    const { key, label, icon } = item
-                                                    return (
-                                                        <MenuItem className="py-1 px-3" value={label} key={key}>
-                                                            {icon}{label}
-                                                        </MenuItem>
-                                                    )
-                                                })}
-                                            </Select>
+                                            <SeleccionarCategoria
+                                                setDraftInfo={setDraftInfo}
+                                                draftInfo={draftInfo}
+                                                setIsLoaded={setIsLoaded}
+                                            />
                                         </Col>
                                     </Row>
                                     <Row className="categorias w-100 m-0 p-4">

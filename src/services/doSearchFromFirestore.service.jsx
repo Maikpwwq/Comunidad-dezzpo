@@ -11,7 +11,7 @@ const doSearchFromFirestore = (props) => {
     const { searchInput } = props
     console.log('doSearchFromFirestore', searchInput)
 
-    const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
+    // const usersProResRef = collection(_firestore, 'usersPropietariosResidentes')
     const usersComCalRef = collection(
         _firestore,
         'usersComerciantesCalificados'
@@ -20,10 +20,10 @@ const doSearchFromFirestore = (props) => {
     const searchFromFirestore = async () => {
         try {
             // TODO: Refactor this query to search in categories from users profiles
-            const response = []
+            let response = []
             const queryRef = query(
                 usersComCalRef,
-                where('userCategories', 'array-contains-any', searchInput)
+                where('userCategories', 'array-contains-any', [searchInput])
             )
             const searchUsers = await getDocs(queryRef)
             searchUsers.forEach((DOC) => {
@@ -40,9 +40,12 @@ const doSearchFromFirestore = (props) => {
 
     searchFromFirestore().then((data) => {
         if (data) {
-            const data = data.docs.map((element) => ({
-                ...element.data(),
-            }))
+            console.log('searchFromFirestore', data)
+            // const search = data?.docs.map((element) => ({
+            //     ...element.data(),
+            // }))
+            // console.log('searchFromFirestore', search)
+            // if (search) {}
             sharingInformationService.setSubject({ search: data })
         } else {
             console.log(

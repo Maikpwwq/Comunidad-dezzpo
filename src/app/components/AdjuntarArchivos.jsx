@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 // import {Button} from '@mui/material'
 import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip'
 import { SnackBarAlert } from '#@/index/components/SnackBarAlert'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
@@ -178,7 +179,8 @@ const AdjuntarArchivos = ({
                     htmlFor="icon-button-file"
                     style={{
                         position: 'relative',
-                        right: '50px',
+                        right: '21px',
+                        bottom: '9px',
                         width: 'auto',
                     }}
                 >
@@ -189,21 +191,26 @@ const AdjuntarArchivos = ({
                         type="file"
                         onClick={updateGalleryPhoto}
                     />
+                    <Tooltip title="+ Agregar foto de perfil">
                     <Button
                         type="submit"
                         id={name}
                         name={name}
                         variant="contained"
                         component="span"
+                        className='px-2'
+                        sx={{ minWidth: 'auto'}}
                     >
-                        <PermMediaOutlinedIcon
-                            alt={
-                                name == 'profilePhoto'
-                                    ? '+ Agregar foto de perfil'
-                                    : '+ Agregar foto a la galeria de usuario'
-                            }
-                        />
-                    </Button>
+                            <PermMediaOutlinedIcon
+                                fontSize="small"
+                                alt={
+                                    name == 'profilePhoto'
+                                        ? '+ Agregar foto de perfil'
+                                        : '+ Agregar foto a la galeria de usuario'
+                                }
+                            />
+                        
+                    </Button></Tooltip>
                 </label>
             </Box>
         </>

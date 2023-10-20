@@ -4,8 +4,6 @@ export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperba
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
 import { navigate } from 'vite-plugin-ssr/client/router'
-import { firestore } from '#@/firebase/firebaseClient' // storage,
-import { collection } from 'firebase/firestore'
 import { usePageContext } from '#R/usePageContext'
 import { SearchBar } from '#@/app/components/SearchBar'
 
@@ -20,57 +18,57 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
+import { Typography } from '@mui/material'
 
 const Page = (props) => {
     const pageContext = usePageContext()
-    const searchInput = pageContext.routeParams.searchInput // ['*']
+    const searchInput = pageContext?.routeParams.searchInput // ['*']
+    const spacedText = searchInput?.replace(/\+/g, ' ')
+    // const urlPathname = pageContext?.urlPathname
     const [isLoaded, setIsLoaded] = useState(false)
-    console.log('portal-servicios', searchInput)
 
-    // const _storage = storage
-    const _firestore = firestore
-
-    // const usersRef = collection(_firestore, 'users')
-    const usersComCalRef = collection(
-        _firestore,
-        'usersComerciantesCalificados'
-    )
     const [searchData, setSearchData] = useState({})
     const [usersData, setUsersData] = useState({})
 
     const FromUsersComerciantes = () => {
-        const userSelectedRol = 2 // Solo comerciantes calificados  
+        const userSelectedRol = 2 // Solo comerciantes calificados
         readUsersFromFirestore({
             userSelectedRol,
         })
     }
 
     const userSearch = (searchInput) => {
-        doSearchFromFirestore({
-            searchInput,
-        })
+        doSearchFromFirestore({ searchInput })
     }
+
+    // search reloaded
+    useEffect(() => {
+        setIsLoaded(false)
+    }, [searchInput])
 
     useEffect(() => {
         if (!isLoaded) {
+            console.log('portal-servicios', searchInput, isLoaded)
             if (typeof searchInput === 'string') {
-                userSearch(searchInput)
+                userSearch(spacedText)
                 const consultedData = sharingInformationService.getSubject()
                 consultedData.subscribe((docSnap) => {
                     if (docSnap) {
                         const { search } = docSnap
-                        console.log('docSnap', search)
-                        setSearchData({
-                            docSnap: search,
-                        })
+                        if (search?.length > 0) {
+                            console.log('docSnapSearch', search)
+                            setSearchData({
+                                docSnap: search,
+                            })
+                        } else {
+                            console.log(
+                                'No se encontro información para la busqueda en la colleccion usuarios!'
+                            )
+                            setSearchData({
+                                docSnap: [],
+                            })
+                        }
                         setIsLoaded(true)
-                    } else {
-                        console.log(
-                            'No se encontro información para la busqueda en la colleccion usuarios!'
-                        )
-                        setSearchData({
-                            docSnap: [],
-                        })
                     }
                 })
                 // .catch((error) => {
@@ -88,8 +86,10 @@ const Page = (props) => {
         userData.subscribe((data) => {
             if (data) {
                 const { users } = data
-                // console.log('FromUsersComerciantes', users)
-                setUsersData(users)
+                if (users) {
+                    // console.log('FromUsersComerciantes', users)
+                    setUsersData(users)
+                }
             } else {
                 console.log(
                     'No se encontro información sobre esta collección de usuarios!'
@@ -120,13 +120,15 @@ const Page = (props) => {
                     </Col>
                     {searchInput ? (
                         <Row className="">
-                            <p className="body-1">
-                                Busqueda Local Servicios: Buscar comerciantes
-                                Calificados
-                            </p>
+                            <Typography className="body-1">
+                                {/* Busqueda Local Servicios: <br /> */}
+                                Buscar comerciantes Calificados por categoria:{' '}
+                                <br />
+                                <span className="subtitle">{spacedText}</span>
+                            </Typography>
                             <Row className="pt-2 p-0">
-                                {searchData.docSnap ? (
-                                    searchData.docSnap.map((user) => (
+                                {searchData?.docSnap.length > 0 ? (
+                                    searchData?.docSnap.map((user) => (
                                         <UserCard
                                             key={user.id}
                                             props={user}
@@ -134,10 +136,15 @@ const Page = (props) => {
                                         ></UserCard>
                                     ))
                                 ) : (
-                                    <>
+                                    <Typography
+                                        variant="body1"
+                                        fontSize={'1.125rem'}
+                                    >
                                         No se encontraron resultados de la
-                                        busqueda!
-                                    </>
+                                        busqueda para la categoria!
+                                        <br />
+                                        {spacedText}
+                                    </Typography>
                                 )}
                             </Row>
                         </Row>
