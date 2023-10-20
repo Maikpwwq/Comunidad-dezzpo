@@ -29,11 +29,13 @@ import Container from 'react-bootstrap/Container'
 // import {Button, Box} from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 
 import MailIcon from '@mui/icons-material/Mail'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
+import LinkIcon from '@mui/icons-material/Link'
 // import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 const Page = () => {
@@ -50,8 +52,8 @@ const Page = () => {
     // const urlPath = pageContext.urlPathname
     // console.log('Perfil user', pageContext) // .user
     // const user = auth?.currentUser
-    const userAuthID = currentUser?.userId  // Este es el id de la cuenta de Auth
-    const userAuthName = currentUser?.displayName  // Este es el id de la cuenta de Auth
+    const userAuthID = currentUser?.userId // Este es el id de la cuenta de Auth
+    const userAuthName = currentUser?.displayName // Este es el id de la cuenta de Auth
     const [isLoaded, setIsLoaded] = useState(false)
 
     let id = pageContext.routeParams.id // ['*']
@@ -223,7 +225,7 @@ const Page = () => {
                     ? userIdentification
                     : '',
                 userDescription: userDescription ? userDescription : '',
-                userWebSite: userWebSite? userWebSite : '',
+                userWebSite: userWebSite ? userWebSite : '',
             })
             // chipsInfoAdapter(userCategories)
         }
@@ -282,6 +284,11 @@ const Page = () => {
     }, [isLoaded, userConsultId, userInfo, userRol.rol, userAuth])
 
     // console.log(userInfo.userCategoriesChips)
+
+    const copyUserWebSiteLink = () => {
+        const referenced = `${userInfo?.userWebSite}`
+        navigator.clipboard.writeText(referenced)
+    }
 
     return (
         <>
@@ -343,7 +350,18 @@ const Page = () => {
                             sx={{ maxWidth: '480px' }}
                             className="textGris fw-bold"
                         >
-                            {userInfo.userRazonSocial}
+                            {userInfo?.userRazonSocial}{' '}
+                            {/* <a
+                                target="_blank"
+                                referrerPolicy="origin"
+                                rel="external noreferrer"
+                                href={userInfo?.userWebSite}
+                            ></a> */}
+                            { !!userInfo?.userWebSite && 
+                                <Tooltip title="Copiar sitio web">
+                                    <LinkIcon onClick={copyUserWebSiteLink} fontSize="large" className="p-1" />
+                                </Tooltip>
+                            }
                         </Typography>
                         <Typography
                             variant="h5"

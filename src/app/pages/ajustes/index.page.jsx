@@ -506,10 +506,10 @@ const Page = () => {
                                 )}
                                 <TextField
                                     style={{ borderRadius: '30px' }}
-                                    id="userIdentification"
-                                    name="userIdentification"
-                                    label="Identificación"
-                                    value={userEditInfo.userIdentification}
+                                    id="userWebSite"
+                                    name="userWebSite"
+                                    label="Sitio web"
+                                    value={userEditInfo.userWebSite}
                                     onChange={handleChange}
                                     // defaultValue="Identificación"
                                     className="mb-4 me-4 fondoBlanco"
@@ -525,6 +525,18 @@ const Page = () => {
                                     // defaultValue="Celular"
                                     className="mt-2 mb-4 me-4 fondoBlanco"
                                 />
+
+                                <TextField
+                                    style={{ borderRadius: '30px' }}
+                                    id="userIdentification"
+                                    name="userIdentification"
+                                    label="Identificación"
+                                    value={userEditInfo.userIdentification}
+                                    onChange={handleChange}
+                                    // defaultValue="Identificación"
+                                    className="mb-4 me-4 fondoBlanco"
+                                />
+
                                 <Row className="pb-4 w-100">
                                     <Col className="col-6">
                                         <Button

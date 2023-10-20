@@ -53,12 +53,9 @@ import ThermostatAutoIcon from '@mui/icons-material/ThermostatAuto'
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat'
 import BlenderIcon from '@mui/icons-material/Blender'
 import DeckIcon from '@mui/icons-material/Deck'
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining'
-import PowerIcon from '@mui/icons-material/Power'
 import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices'
 import WaterIcon from '@mui/icons-material/Water'
 import CheckroomIcon from '@mui/icons-material/Checkroom'
-import DoorSlidingIcon from '@mui/icons-material/DoorSliding'
 import ControlCameraIcon from '@mui/icons-material/ControlCamera'
 import CottageIcon from '@mui/icons-material/Cottage'
 import DeskIcon from '@mui/icons-material/Desk'
@@ -492,7 +489,7 @@ const ListadoCategorias = [
         icon: <PoolIcon fontSize="medium" className="mx-2 my-1" />,
     },
     {
-        key: 58,
+        key: 59,
         label: 'Refrigeración',
         rol: 'Técnico en refrigeración',
         variant: 'outlined',

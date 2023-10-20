@@ -53,8 +53,6 @@ import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import TungstenIcon from '@mui/icons-material/Tungsten';
 import BlenderIcon from '@mui/icons-material/Blender';
 import DeckIcon from '@mui/icons-material/Deck';
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-import PowerIcon from '@mui/icons-material/Power';
 import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
 import WaterIcon from '@mui/icons-material/Water';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
@@ -64,6 +62,9 @@ import DeskIcon from '@mui/icons-material/Desk';
 import BorderBottomIcon from '@mui/icons-material/BorderBottom';
 
 
+import DoorSlidingIcon from '@mui/icons-material/DoorSliding'
+import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining'
+import PowerIcon from '@mui/icons-material/Power'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import BedroomParentIcon from '@mui/icons-material/BedroomParent';
@@ -152,8 +153,6 @@ const LogosServicios = ( ) => {
             <TungstenIcon fontSize="large" className='p-1' />
             <BlenderIcon fontSize="large" className='p-1' />
             <DeckIcon fontSize="large" className='p-1' />
-            <DeliveryDiningIcon fontSize="large" className='p-1' />
-            <PowerIcon fontSize="large" className='p-1' />
             <ElectricalServicesIcon fontSize="large" className='p-1' />
             <WaterIcon fontSize="large" className='p-1' />
             <CheckroomIcon fontSize="large" className='p-1' />
@@ -163,6 +162,9 @@ const LogosServicios = ( ) => {
             <BorderBottomIcon fontSize="large" className='p-1' />  
             
             <br /><br />
+            <DoorSlidingIcon fontSize="large" className='p-1' />
+            <DeliveryDiningIcon fontSize="large" className='p-1' />
+            <PowerIcon fontSize="large" className='p-1' />
             <AdminPanelSettingsIcon fontSize="large" className='p-1'/>
             <DoneAllIcon fontSize="large" className='p-1' />
             <PestControlIcon fontSize="large" className='p-1' />
