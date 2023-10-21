@@ -127,7 +127,7 @@ const Page = (props) => {
                                 <span className="subtitle">{spacedText}</span>
                             </Typography>
                             <Row className="pt-2 p-0">
-                                {searchData?.docSnap.length > 0 ? (
+                                {searchData?.docSnap && searchData?.docSnap.length > 0 ? (
                                     searchData?.docSnap.map((user) => (
                                         <UserCard
                                             key={user.id}
