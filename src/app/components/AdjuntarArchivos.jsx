@@ -191,26 +191,25 @@ const AdjuntarArchivos = ({
                         type="file"
                         onClick={updateGalleryPhoto}
                     />
-                    <Tooltip title="+ Agregar foto de perfil">
-                    <Button
-                        type="submit"
-                        id={name}
-                        name={name}
-                        variant="contained"
-                        component="span"
-                        className='px-2'
-                        sx={{ minWidth: 'auto'}}
+                    <Tooltip
+                        title={
+                            name == 'profilePhoto'
+                                ? '+ Agregar foto de perfil'
+                                : '+ Agregar foto a la galeria de usuario'
+                        }
                     >
-                            <PermMediaOutlinedIcon
-                                fontSize="small"
-                                alt={
-                                    name == 'profilePhoto'
-                                        ? '+ Agregar foto de perfil'
-                                        : '+ Agregar foto a la galeria de usuario'
-                                }
-                            />
-                        
-                    </Button></Tooltip>
+                        <Button
+                            type="submit"
+                            id={name}
+                            name={name}
+                            variant="contained"
+                            component="span"
+                            className="px-2"
+                            sx={{ minWidth: 'auto' }}
+                        >
+                            <PermMediaOutlinedIcon fontSize="small" />
+                        </Button>
+                    </Tooltip>
                 </label>
             </Box>
         </>
