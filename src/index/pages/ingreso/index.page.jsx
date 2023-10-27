@@ -22,6 +22,8 @@ import '#@/assets/css/ingreso.css'
 import LogoGmail from '#@/assets/img/G.jpg'
 import LogoComunidadDezzpo from '#@/assets/img/IsologoFooter.png'
 
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
+
 // react-bootrstrap
 import Paper from '@mui/material/Paper'
 import Row from 'react-bootstrap/Row'
@@ -193,7 +195,13 @@ const Page = (props) => {
     let checkStyle = {
         width: '30px',
     }
-    //
+    
+    const handleComeBack = () => {
+        if (step > 0) {
+            let active = step - 1
+            setStep(active)
+        }
+    }
 
     return (
         <>
@@ -401,6 +409,17 @@ const Page = (props) => {
                                 </Form.Group> */}
                                             </Col>
                                             <Col className="pt-4 pb-2">
+                                                <Button
+                                                    onClick={handleComeBack}
+                                                    className="mb-4 btn-round btn-middle w-auto"
+                                                    variant="secondary"
+                                                    
+                                                    // type="submit"
+                                                >
+                                                    <KeyboardBackspaceIcon /> Volver
+                                                    atras
+                                                </Button>
+                                                <span className='mt-1' style={{ marginBottom: `1rem`}}></span>
                                                 <Button
                                                     className="btn-buscador btn-round btn-high body-1"
                                                     variant="primary"

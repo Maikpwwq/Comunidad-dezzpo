@@ -46,7 +46,8 @@ const Page = () => {
     const userAuthID = currentUser?.userId || id
     const userAuthName = currentUser?.displayName || ''
     const [isLoaded, setIsLoaded] = useState(false)
-    const [isChanneled, setIsChanneled] = useState(false)
+    const [isChannelLoad, setIsChannelLoad] = useState(false)
+    const [saved, setSaved] = useState(true)
 
     const globalStore = useSendbirdStateContext()
     const sbSdk = sendbirdSelectors?.getSdk(globalStore)
@@ -138,17 +139,27 @@ const Page = () => {
 
         const createUserChannel = (userName, userId) => {
             // Sendbird new open channel
-            console.log('Ajustes creando nuevo open channel', userName, userAuthID, userId)
+            console.log(
+                'Ajustes creando nuevo open channel',
+                userName,
+                userAuthID,
+                userId
+            )
             newOpenChannelSendbird(
                 {
                     uid: userAuthID,
                     displayName: userName,
-                    sbSdk, connect, createChannel
+                    sbSdk,
+                    connect,
+                    createChannel,
                 }
                 // setChannelUrl,
                 // userEditInfo,
                 // setUserEditInfo,
             )
+
+            // Limit to load one time
+            setIsChannelLoad(true)
 
             const currentURL = sharingInformationService.getSubject()
             currentURL.subscribe((data) => {
@@ -191,12 +202,22 @@ const Page = () => {
             } = currentUser
 
             // Sendbird new open channel
-            console.log('create new open channel', userChannelUrl, userEditInfo.userChannelUrl)
+            console.log(
+                'create new open channel',
+                userChannelUrl,
+                userEditInfo.userChannelUrl
+            )
             if (
                 userChannelUrl === undefined ||
-                userChannelUrl === ''
+                (userChannelUrl === '' && isChannelLoad === false)
             ) {
-                console.log('conditioanl', userName, userId, userAuthName, userAuthID)
+                console.log(
+                    'conditioanl',
+                    userName,
+                    userId,
+                    userAuthName,
+                    userAuthID
+                )
                 createUserChannel(userName, userId)
             }
 
@@ -279,7 +300,18 @@ const Page = () => {
                 })
             }
         }
-    }, [userAuth, userAuthID, userEditInfo, userRol.rol, isLoaded, userAuthName, sbSdk, connect, createChannel])
+    }, [
+        userAuth,
+        userAuthID,
+        userEditInfo,
+        userRol.rol,
+        isLoaded,
+        userAuthName,
+        sbSdk,
+        connect,
+        createChannel,
+        isChannelLoad,
+    ])
 
     const handleAlert = (message, severity) => {
         setAlert({ ...alert, open: true, message: message, severity: severity })
@@ -315,6 +347,7 @@ const Page = () => {
     const handleSubmit = () => {
         try {
             snap()
+            setSaved(false)
             const userData = sharingInformationService.getSubject()
             userData
             handleAlert('Se actualizó correctamente su información!', 'success')
@@ -607,6 +640,7 @@ const Page = () => {
                                         setUserEditInfo={setUserEditInfo}
                                         userEditInfo={userEditInfo}
                                         listadoCategorias={ListadoCategorias}
+                                        saved={saved}
                                     />
                                 </Col>
                             ) : (

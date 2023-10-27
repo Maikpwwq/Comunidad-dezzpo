@@ -5,7 +5,7 @@ import React from 'react'
 import '#@/assets/css/home.css'
 import { BuscadorNuevoProyecto } from '#@/index/components/buscador/BuscadorNuevoProyecto'
 import { NuestraComunidad } from '#@/index/components/nuestra-comunidad/NuestraComunidad'
-
+import { navigate } from 'vite-plugin-ssr/client/router'
 import { Subscribe } from './Subscribe'
 // imagenes
 
@@ -74,6 +74,11 @@ const Page = () => {
         setActiveStep(step)
     }
 
+    const handleClick = () => {
+        const route = '/registro/'
+        navigate(`${route}`)
+    }
+
     return (
         <>
             <Container fluid className="p-0 pt-4">
@@ -105,10 +110,7 @@ const Page = () => {
                                         variant="body2"
                                         className="mb-4 mt-2"
                                     >
-                                        ¡Descubre al instante el personal
-                                        profesional perfecto para 
-                                        cada proyecto en tu hogar con tan solo
-                                        un clic!
+                                        ¡Encuentra al instante el personal profesional ideal para cada proyecto en el hogar!
                                     </Typography>
                                     <Typography
                                         variant="subtitle1"
@@ -117,6 +119,7 @@ const Page = () => {
                                             backgroundColor:
                                                 'transparent !important',
                                         }}
+                                        onClick={handleClick}
                                     >
                                         Unete a la Comunidad
                                     </Typography>

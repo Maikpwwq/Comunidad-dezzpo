@@ -43,10 +43,11 @@ function Header(props) {
     const [tab, setTab] = useState(0)
     const [isAuth, setIsAuth] = useState(currentUser?.isAuth)
     const [rolAuth, setRolAuth] = useState(currentUser?.rol)
+
     const [userAuthInfo, setUserAuthInfo] = useState({
-        userId: currentUser.userId || '', // Este es el id de la cuenta de Auth
-        userPhotoUrl: userAuth?.photoURL || '',
-        userName: currentUser.displayName || '',
+        userId: currentUser?.userId || userAuth?.userId || '', // Este es el id de la cuenta de Auth
+        userPhotoUrl: currentUser?.photoURL || userAuth?.photoURL || '',
+        userName: currentUser?.displayName || userAuth?.displayName || '',
     })
 
     useEffect(() => {

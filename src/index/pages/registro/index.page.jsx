@@ -41,6 +41,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import DownloadIcon from '@mui/icons-material/Download'
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 
 // const styles = () => ({
 //     selectRolBtn: {
@@ -150,7 +151,10 @@ const Page = (props) => {
         if (userSignupRol == 2) {
             userComCalToFirestore(data, uid)
         }
-        localStorage.role = JSON.stringify(userSignupRol) // localStorage.setItem('role', JSON.stringify(userSignupRol))
+
+        // Save data (role, userID) in localStorage
+        // localStorage.setItem('role', JSON.stringify(userSignupRol))
+        localStorage.role = JSON.stringify(userSignupRol) 
         localStorage.userID = JSON.stringify(uid)
         handleAlert('Cuenta actualizada con éxito!', 'success')
         if (draftInfo) {
@@ -229,6 +233,13 @@ const Page = (props) => {
             }
             signUp()
             setSend(true)
+        }
+    }
+
+    const handleComeBack = () => {
+        if (step > 0) {
+            let active = step - 1
+            setStep(active)
         }
     }
 
@@ -460,6 +471,18 @@ const Page = (props) => {
                                                         .
                                                     </h3>
                                                 </a>
+                                                <br />
+                                                <Button
+                                                    onClick={handleComeBack}
+                                                    className="mb-4 btn-round btn-middle w-auto"
+                                                    variant="secondary"
+                                                    
+                                                    // type="submit"
+                                                >
+                                                    <KeyboardBackspaceIcon /> Volver
+                                                    atras
+                                                </Button>
+                                                <span className='mt-1' style={{ marginBottom: `1rem`}}></span>
                                                 <Button
                                                     className="btn-buscador btn-round btn-high body-1"
                                                     variant="primary"

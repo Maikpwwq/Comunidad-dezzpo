@@ -18,13 +18,14 @@ const ChipsCategories = (props) => {
         userEditInfo,
         listadoCategorias,
         editableContent,
+        saved,
     } = props
     const editable = editableContent === false ? false : true
     const [chipData, setChipData] = useState({
         categorias: listadoCategorias,
         selected: {
-            numbers: [],
-            labels: [],
+            numbers: [], // TODO: compare categories in list and save numbers
+            labels: [userEditInfo?.userCategories],
         },
     })
     // const handleDelete = (chipToDelete) => () => {
@@ -34,13 +35,14 @@ const ChipsCategories = (props) => {
     // }
 
     useEffect(() => {
-        if (userEditInfo) {
+        // Almacena las categorias cuando se editan los seleccionados
+        if (userEditInfo && chipData.selected.labels.length > 0) {
             setUserEditInfo({
                 ...userEditInfo,
                 userCategories: chipData.selected.labels,
             })
         }
-    }, [chipData.selected.labels, setUserEditInfo, userEditInfo])
+    }, [chipData.selected.labels, saved, setUserEditInfo, userEditInfo])
 
     const handleClick = (e, numero) => {
         e.preventDefault()
@@ -152,4 +154,5 @@ ChipsCategories.propTypes = {
     userEditInfo: PropTypes.object,
     listadoCategorias: PropTypes.array.isRequired,
     editableContent: PropTypes.bool,
+    saved: PropTypes.bool,
 }
