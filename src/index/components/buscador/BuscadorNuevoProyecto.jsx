@@ -68,14 +68,17 @@ const BuscadorNuevoProyecto = ({ setDraftInfo, draftInfo }) => {
 
                         <Link
                             href="/app/portal-servicios"
-                            className="body-2 btn-menu-comunidad me-0 mt-2 w-auto"
+                            className="body-2 btn-menu-comunidad me-0 mt-2 px-4 w-auto"
                         >
                             <StorefrontIcon className="me-1" />
-                            <strong>Visitar Directorio de Comerciantes</strong>
+                            <strong>Visitar Directorio <br /> de Comerciantes</strong>
                         </Link>
 
-                        <Typography variant="body1" className="my-3 pt-2">
-                            O registra un nuevo requerimiento
+                        <Typography variant="body1" className="mt-3 pt-2 pb-2">
+                            O prueba
+                        </Typography>
+                        <Typography variant="body2" className="mb-3">
+                            Registrar un nuevo requerimiento
                         </Typography>
                         <Form
                             className="p-4 pt-0"

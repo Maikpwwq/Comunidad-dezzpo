@@ -80,12 +80,12 @@ function Navigator(props) {
     const userAuth = useMemo(() => auth?.currentUser, [])
     const [isLoaded, setIsLoaded] = useState(false)
     const [open, setOpen] = useState(false)
-    const [isAuth, setIsAuth] = useState(currentUser.isAuth)
-    const [rolAuth, setRolAuth] = useState(currentUser.rol)
+    const [isAuth, setIsAuth] = useState(currentUser?.isAuth)
+    const [rolAuth, setRolAuth] = useState(currentUser?.rol)
     const [userAuthInfo, setUserAuthInfo] = useState({
-        userId: currentUser.userId || '', // Este es el id de la cuenta de Auth
-        userPhotoUrl: userAuth?.photoURL || '',
-        userName: currentUser.displayName || '',
+        userId: currentUser?.userId || userAuth?.userId || '', // Este es el id de la cuenta de Auth
+        userPhotoUrl: currentUser?.photoURL || userAuth?.photoURL || '',
+        userName: currentUser?.displayName || userAuth?.displayName || '',
     })
 
     useEffect(() => {
@@ -136,6 +136,12 @@ function Navigator(props) {
 
     // const navigate = useNavigate()
     const handleSignout = () => {
+
+        // restore to void data saved in localStorage
+        localStorage.role = null
+        localStorage.userID = null
+        localStorage.requerimiento = null
+
         signOut(auth)
             .then(() => {
                 handleClick()

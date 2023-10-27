@@ -60,8 +60,9 @@ function UserCard({ props }) {
     const handleVerSitio = () => {
         navigate(`/app/perfil/${userId}`)
     }
-    const handleCotizar = () => {
-        navigate('/nuevo-proyecto')
+    const handleCotizarVisitaTecnica = () => {
+        // Todo redirect to pay transaction
+        // navigate('/nuevo-proyecto')
     }
     const handleFavorite = () => {}
     const handleShare = () => {}
@@ -81,6 +82,8 @@ function UserCard({ props }) {
         }
     }, [userCategories])
 
+    const bgAvatar = userPhotoUrl ? ({bgcolor: 'var(--background-light-gray-color)'}) : ({bgcolor: 'var(--background-hover-green-color)'})
+
     return (
         <Card className="card-user mb-4" elevation={16}>
             {/* <CardMedia
@@ -95,10 +98,10 @@ function UserCard({ props }) {
                 avatar={
                     <Avatar
                         src={userPhotoUrl}
-                        sx={{ bgcolor: red[500] }}
+                        sx={bgAvatar}
                         aria-label="recipe"
                     >
-                        CD
+                        <Typography variant='body1' fontSize={'0.35rem'}>Comunidad Dezzpo</Typography>
                     </Avatar>
                 }
                 action={
@@ -108,7 +111,7 @@ function UserCard({ props }) {
                         gutterBottom
                         color="text.secondary"
                     >
-                        Se unio el <br />
+                        Se unió el <br />
                         {userJoined}
                     </Typography>
                     // <IconButton aria-label="settings">
@@ -135,12 +138,22 @@ function UserCard({ props }) {
                     <></>
                 )}
                 <br />
-                <Typography variant="body1" color="text.secondary">
-                    Experiencia: {userExperience}
-                </Typography>
-                <Typography variant="body1" color="text.secondary">
-                    Ubicacion: {userDirection}
-                </Typography>
+                {userExperience !== '' && userExperience !== undefined && (
+                    <>
+                        <Typography variant="body1" color="text.secondary">
+                            Experiencia: {userExperience}
+                        </Typography>
+                    </>
+                    )
+                }
+                {userDirection !== '' && userDirection !== undefined && (
+                    <>
+                        <Typography variant="body1" color="text.secondary">
+                            Ubicacion: {userDirection}
+                        </Typography>
+                    </>
+                    )
+                }
             </CardContent>
             <CardActions
                 className="d-flex p-0 pt-2 m-2 mt-0"
@@ -155,9 +168,9 @@ function UserCard({ props }) {
                 <Button
                     style={{ paddingRight: '10px' }}
                     className="body-1 w-auto"
-                    onClick={handleCotizar}
+                    onClick={handleCotizarVisitaTecnica}
                 >
-                    Cotizar
+                    Cotizar Visita Técnica
                 </Button>
                 <IconButton
                     style={{ marginLeft: 'auto' }}

@@ -29,7 +29,7 @@ import Container from 'react-bootstrap/Container'
 // import {Button, Box} from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 
@@ -316,6 +316,7 @@ const Page = () => {
                                 style={{
                                     borderRadius: '50%',
                                     border: '8px solid var(--background-light-gray-color)',
+                                    background: 'white',
                                 }}
                             />
 
@@ -357,11 +358,15 @@ const Page = () => {
                                 rel="external noreferrer"
                                 href={userInfo?.userWebSite}
                             ></a> */}
-                            { !!userInfo?.userWebSite && 
+                            {!!userInfo?.userWebSite && (
                                 <Tooltip title="Copiar sitio web">
-                                    <LinkIcon onClick={copyUserWebSiteLink} fontSize="large" className="p-1" />
+                                    <LinkIcon
+                                        onClick={copyUserWebSiteLink}
+                                        fontSize="large"
+                                        className="p-1"
+                                    />
                                 </Tooltip>
-                            }
+                            )}
                         </Typography>
                         <Typography
                             variant="h5"
@@ -524,59 +529,64 @@ const Page = () => {
                     </Row>
                     <Row className="p-0 m-0 w-100 d-flex align-items-start">
                         <Col className="col-10 pt-4 pb-4">
-                            <Typography
-                                variant="h5"
-                                className="textVerde headline-l pt-4 pb-4 w-100"
-                                align="left"
-                            >
-                                Portafolio
-                            </Typography>
-                            <Row className="w-100 pb-4">
-                                {userInfo.userGalleryUrl.map(
-                                    (imagen, index) => {
-                                        // console.log(imagen)
-                                        return (
-                                            <Box
-                                                key={index}
-                                                component="img"
-                                                src={imagen}
-                                                alt="galleria-usuario"
-                                                sx={{
-                                                    height: 400,
-                                                    display: 'block',
-                                                    maxWidth: 400,
-                                                    overflow: 'hidden',
-                                                    width: 'auto !important',
-                                                    borderRadius: '5%',
-                                                }}
-                                                className="p-2"
-                                            ></Box>
-                                        )
-                                    }
-                                )}
-                                {!consult && (
-                                    <AdjuntarArchivos
-                                        name={'galleryPhoto'}
-                                        multiple={true}
-                                        idPerson={userConsultId}
-                                        rol={userRol.rol}
-                                        route={`profiles/${userConsultId}`}
-                                        functionState={setUserInfo}
-                                        state={userInfo}
-                                    ></AdjuntarArchivos>
-                                )}
-                            </Row>
-
-                            <Col className="col-12">
-                                <Row className="m-0 d-flex w-100 justify-content-start">
+                            {userInfo.userGalleryUrl.length > 0 && (
+                                <>
                                     <Typography
                                         variant="h5"
-                                        className="textVerde headline-l w-auto pt-4 pb-4"
+                                        className="textVerde headline-l pt-4 pb-4 w-100"
                                         align="left"
                                     >
-                                        Ubicación
+                                        Portafolio
                                     </Typography>
-                                    {/* <Typography
+                                    <Row className="w-100 pb-4">
+                                        {userInfo.userGalleryUrl.map(
+                                            (imagen, index) => {
+                                                // console.log(imagen)
+                                                return (
+                                                    <Box
+                                                        key={index}
+                                                        component="img"
+                                                        src={imagen}
+                                                        alt="galleria-usuario"
+                                                        sx={{
+                                                            height: 400,
+                                                            display: 'block',
+                                                            maxWidth: 400,
+                                                            overflow: 'hidden',
+                                                            width: 'auto !important',
+                                                            borderRadius: '5%',
+                                                        }}
+                                                        className="p-2"
+                                                    ></Box>
+                                                )
+                                            }
+                                        )}
+                                        {!consult && (
+                                            <AdjuntarArchivos
+                                                name={'galleryPhoto'}
+                                                multiple={true}
+                                                idPerson={userConsultId}
+                                                rol={userRol.rol}
+                                                route={`profiles/${userConsultId}`}
+                                                functionState={setUserInfo}
+                                                state={userInfo}
+                                            ></AdjuntarArchivos>
+                                        )}
+                                    </Row>
+                                </>
+                            )}
+                            {userInfo.userDirection && (
+                                <>
+                                    <Col className="col-12">
+                                        <Row className="m-0 d-flex w-100 justify-content-start">
+                                            <Typography
+                                                variant="h5"
+                                                className="textVerde headline-l w-auto pt-4 pb-4"
+                                                align="left"
+                                            >
+                                                Ubicación
+                                            </Typography>
+                                            {/* <Typography
                                             variant="subtitle1"
                                             className="w-auto"
                                         >
@@ -589,27 +599,30 @@ const Page = () => {
                                         >
                                             {userInfo.userDirection}
                                         </Typography> */}
-                                </Row>
-                                <MapaPerfil userInfo={userInfo} />
-                            </Col>
-
-                            <Typography
-                                variant="h5"
-                                align="left"
-                                className="textVerde headline-l pt-4 pb-4 w-100"
-                            >
-                                Comentarios
-                            </Typography>
-
+                                        </Row>
+                                        <MapaPerfil userInfo={userInfo} />
+                                    </Col>
+                                </>
+                            )}
                             {userInfo.userChannelUrl && (
-                                <Comentarios
-                                    channelUrl={userInfo.userChannelUrl}
-                                    userID={userAuthID}
-                                    nickname={userAuthName}
-                                    // ID y Nombre del perfil que comenta
-                                    // userID={userInfo.userId} no
-                                    // nickname={userInfo.userName} no
-                                />
+                                <>
+                                    <Typography
+                                        variant="h5"
+                                        align="left"
+                                        className="textVerde headline-l pt-4 pb-4 w-100"
+                                    >
+                                        Comentarios
+                                    </Typography>
+
+                                    <Comentarios
+                                        channelUrl={userInfo.userChannelUrl}
+                                        userID={userAuthID}
+                                        nickname={userAuthName}
+                                        // ID y Nombre del perfil que comenta
+                                        // userID={userInfo.userId} no
+                                        // nickname={userInfo.userName} no
+                                    />
+                                </>
                             )}
                         </Col>
                     </Row>
