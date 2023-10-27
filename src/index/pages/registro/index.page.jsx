@@ -4,7 +4,7 @@ export { Page }
 import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from '#R/Link'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { SnackBarAlert } from '#@/index/components/SnackBarAlert'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
 // import { newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'

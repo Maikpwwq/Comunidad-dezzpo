@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useMemo } from 'react'
 import { Link } from '#R/Link'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { auth } from '#@/firebase/firebaseClient'
 import { signOut } from 'firebase/auth'
 import { usePageContext } from '#R/usePageContext'
@@ -138,10 +138,11 @@ function Navigator(props) {
     const handleSignout = () => {
 
         // restore to void data saved in localStorage
-        localStorage.role = null
-        localStorage.userID = null
-        localStorage.requerimiento = null
-
+        // if (typeof window !== 'undefined') {
+        //     localStorage.role = null
+        //     localStorage.userID = null
+        //     localStorage.requerimiento = null
+        // }
         signOut(auth)
             .then(() => {
                 handleClick()

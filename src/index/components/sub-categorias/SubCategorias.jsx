@@ -2,7 +2,7 @@ export { SubCategorias }
 
 import React, { useState } from 'react'
 import '#@/assets/css/subCategoriesCard.css'
-// import { navigate } from 'vite-plugin-ssr/client/router'
+// import { navigate } from 'vike/client/router'
 // import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'

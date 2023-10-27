@@ -4,7 +4,7 @@ export { Page }
 import React, { useState, useContext, useEffect } from 'react'
 // import PropTypes from 'prop-types'
 // import { Link } from '#R/Link'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { DirectionalButton } from '#@/index/components/DirectionalButton/DirectionalButton'
 // import ScrollToTopOnMount from '#@/index/components/ScrollToTop'
 import { AdjuntarArchivos } from '#@/app/components/AdjuntarArchivos'

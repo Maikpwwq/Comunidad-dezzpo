@@ -3,7 +3,7 @@ export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperba
 
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { usePageContext } from '#R/usePageContext'
 import { SearchBar } from '#@/app/components/SearchBar'
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from '#R/Link'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { styled, alpha } from '@mui/material/styles'
 import IcoMoon from 'react-icomoon'
 import iconSet from '#@/assets/css/icomoon/selection.json'

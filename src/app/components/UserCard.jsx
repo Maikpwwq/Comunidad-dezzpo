@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 
 import { ChipsCategories } from './ChipsCategories'
 import { ListadoCategorias } from '#@/index/components/ListadoCategorias'

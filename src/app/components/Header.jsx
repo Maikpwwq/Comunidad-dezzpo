@@ -11,7 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { theme } from '#@/app/components/theme.tsx'
 
 import { NotificationBar } from './NotificationBar'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 
 import PropTypes from 'prop-types'
 import AppBar from '@mui/material/AppBar'

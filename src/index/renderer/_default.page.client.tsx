@@ -4,16 +4,16 @@ export { render }
 export const clientRouting = true
 export const prefetchStaticAssets = 'viewport'
 export const hydrationCanBeAborted = true
-// !! WARNING !! Before doing so, read https://vite-plugin-ssr.com/clientRouting */
+// !! WARNING !! Before doing so, read https://vike.dev/clientRouting */
 
 import { hydrateRoot, createRoot, Root } from 'react-dom/client'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { PageShell } from './PageShell'
 import type { PageContextClient } from './types'
 import React from 'react'
 
 let root: Root
-// This render() hook only supports SSR, see https://vite-plugin-ssr.com/render-modes for how to modify render() to support SPA
+// This render() hook only supports SSR, see https://vike.dev/render-modes for how to modify render() to support SPA
 async function render(pageContext: PageContextClient) {
     const { Page, pageProps, redirectTo } = pageContext
     // console.log('pageContextClient', Page, pageProps)

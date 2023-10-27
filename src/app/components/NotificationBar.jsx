@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from '#R/Link'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { auth } from '#@/firebase/firebaseClient'
 import '#@/assets/cssPrivateApp/header.css'
 
