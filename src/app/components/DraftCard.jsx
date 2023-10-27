@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { firestore, auth } from '#@/firebase/firebaseClient'
 import PropTypes from 'prop-types'
 

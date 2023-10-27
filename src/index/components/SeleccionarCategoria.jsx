@@ -1,7 +1,7 @@
 export { SeleccionarCategoria }
 
 import React from 'react'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import PropTypes from 'prop-types'
 import { ListadoCategorias } from '#@/index/components/ListadoCategorias'
 

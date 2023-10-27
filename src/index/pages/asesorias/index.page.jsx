@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import '#@/assets/css/asesorias.css'
 import { Link } from '#R/Link'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { updateAsesoriaToFirestore } from '#@/services/updateAsesoriaToFirestore.service'
 // import { sharingInformationService } from '#@/services/sharing-information'
 

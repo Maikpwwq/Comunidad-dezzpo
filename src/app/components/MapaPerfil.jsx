@@ -54,7 +54,9 @@ const MapaPerfil = ({ userInfo }) => {
                             infowindow.open(map, marker)
                         }
                     } else {
-                        window.alert('No results found')
+                        if (typeof window !== 'undefined') {
+                            window.alert('No results found')
+                        }
                     }
                 })
             })

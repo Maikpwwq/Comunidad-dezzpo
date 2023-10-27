@@ -9,7 +9,7 @@
 //  - `pageContext.routeParams['*']`
 // export default '/nuevo-proyecto/*'
 
-import { resolveRoute } from 'vite-plugin-ssr/routing'
+import { resolveRoute } from 'vike/routing'
 
 export default (pageContext) => {
     {

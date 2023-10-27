@@ -5,7 +5,7 @@ import React from 'react'
 import '#@/assets/css/home.css'
 import { BuscadorNuevoProyecto } from '#@/index/components/buscador/BuscadorNuevoProyecto'
 import { NuestraComunidad } from '#@/index/components/nuestra-comunidad/NuestraComunidad'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { Subscribe } from './Subscribe'
 // imagenes
 

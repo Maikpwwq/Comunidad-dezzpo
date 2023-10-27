@@ -1,11 +1,11 @@
 export { render }
-// See https://vite-plugin-ssr.com/data-fetching
+// See https://vike.dev/data-fetching
 // `pageContext.urlPathname` is already available in the browser when using Client Routing; including `urlPathname` in `passToClient` has no effect.
 export const passToClient = ['pageProps', 'routeParams', 'redirectTo'] // 'urlPathname',
 
 import { renderToString } from 'react-dom/server'
 import { PageShell } from './PageShell'
-import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr/server'
+import { escapeInject, dangerouslySkipEscape } from 'vike/server'
 import type { PageContextServer } from './types'
 import React from 'react'
 // import logoUrl from './logo.svg'
@@ -26,7 +26,7 @@ async function render(pageContext: PageContextServer) {
     } else {
         // SSR / HTML-only
         const { Page, pageProps } = pageContext
-        // This render() hook only supports SSR, see https://vite-plugin-ssr.com/render-modes for how to modify render() to support SPA
+        // This render() hook only supports SSR, see https://vike.dev/render-modes for how to modify render() to support SPA
         // if (!Page) throw new Error('My render() hook expects pageContext.Page to be defined')
         // console.log('pageIndexContextServer', Page, pageProps)
         const page = (
@@ -42,7 +42,7 @@ async function render(pageContext: PageContextServer) {
         // emotionCss = constructStyleTagsFromChunks(emotionChunks);
     }
 
-    // See https://vite-plugin-ssr.com/head
+    // See https://vike.dev/head
     const { documentProps } = pageContext.exports
     const title = (documentProps && documentProps.title) || 'Comunidad Dezzpo'
     const desc =
@@ -195,7 +195,7 @@ async function render(pageContext: PageContextServer) {
     return {
         documentHtml,
         pageContext: {
-            // We can add some `pageContext` here, which is useful if we want to do page redirection https://vite-plugin-ssr.com/page-redirection
+            // We can add some `pageContext` here, which is useful if we want to do page redirection https://vike.dev/page-redirection
         },
     }
 }

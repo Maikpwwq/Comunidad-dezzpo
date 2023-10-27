@@ -88,9 +88,9 @@
     "styled-components": "^6.1.0",
     "ts-node": "^10.9.1",
     "uuid": "^9.0.1",
+    "vike": "^0.4.144",
     "vite": "^4.5.0",
-    "vite-plugin-ssr": "^0.4.142",
-    "vite-plugin-vercel": "^0.3.7",
+    "vite-plugin-vercel": "^2.0.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

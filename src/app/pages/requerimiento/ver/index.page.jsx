@@ -3,7 +3,7 @@ export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperba
 
 import React, { useState, useEffect, useContext } from 'react'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
-import { navigate } from 'vite-plugin-ssr/client/router'
+import { navigate } from 'vike/client/router'
 import { firestore, auth } from '#@/firebase/firebaseClient'
 import { collection, doc, getDocFromServer } from 'firebase/firestore'
 import { usePageContext } from '#R/usePageContext'

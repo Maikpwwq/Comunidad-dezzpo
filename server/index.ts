@@ -1,12 +1,12 @@
-// This file isn't processed by Vite, see https://github.com/brillout/vite-plugin-ssr/issues/562
+// This file isn't processed by Vite, see https://github.com/vikejs/vike/issues/562
 //  - Consequently, the server needs be manually restarted when changing this file
 
 // const express = require('express')
 // const compression = require('compression')
-// const { renderPage } = require('vite-plugin-ssr/server')
+// const { renderPage } = require('vike/server')
 import express from 'express'
 import compression from 'compression'
-import { renderPage } from 'vite-plugin-ssr/server'
+import { renderPage } from 'vike/server'
 import { root } from './root'
 
 // import { auth } from '../src/firebase/firebaseClient'
@@ -48,7 +48,7 @@ async function startServer() {
     // Other middlewares (e.g. some RPC middleware such as Telefunc)
     // ...
 
-    // Vite-plugin-ssr middleware. It should always be our last middleware (because it's a
+    // Vike middleware. It should always be our last middleware (because it's a
     // catch-all middleware superseding any middleware placed after it).
     app.get('*', async (req, res, next) => {
         // const user = auth?.currentUser

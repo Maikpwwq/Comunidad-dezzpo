@@ -7,12 +7,12 @@
 // Parameters available at:
 //  - `pageContext.routeParams['*']`
 // export default '/app/portal-servicios/*'
-import { resolveRoute } from 'vite-plugin-ssr/routing'
+import { resolveRoute } from 'vike/routing'
 
-export default (pageContext) => {
+export default async (pageContext) => {
     {
         const result = resolveRoute(
-            '/app/portal-servicios/@searchInput',
+            '/app/portal-servicios/',
             pageContext.urlPathname
         )
         if (result.match) {
@@ -21,7 +21,7 @@ export default (pageContext) => {
     }
 
     const result = resolveRoute(
-        '/app/portal-servicios/',
+        '/app/portal-servicios/@searchInput',
         pageContext.urlPathname
     )
     return result

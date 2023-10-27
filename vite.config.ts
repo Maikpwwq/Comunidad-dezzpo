@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc' // SWC instead babel
-import ssr from 'vite-plugin-ssr/plugin'
+import ssr from 'vike/plugin'
 // import { cjsInterop } from 'vite-plugin-cjs-interop'
 import vercel from 'vite-plugin-vercel'
 // import vercelSsr from '@vite-plugin-vercel/vike'
@@ -13,7 +13,7 @@ const noExternal: string[] = []
 if (isProd) {
     noExternal.push(
         ...[
-            // MUI needs to be pre-processed by Vite in production: https://github.com/brillout/vite-plugin-ssr/discussions/901
+            // MUI needs to be pre-processed by Vite in production: https://github.com/vikejs/vike/discussions/901
             '@mui/base',
             '@mui/icons-material',
             '@mui/material',
