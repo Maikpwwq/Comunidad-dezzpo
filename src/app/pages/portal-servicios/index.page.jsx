@@ -1,5 +1,9 @@
 export { Page }
 export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
+// Now this page is a Prerender Function, meaning that it will be cached on Edge network for 15 seconds.
+// Check official documentation for further details on how it works.
+export { isr }
+const isr = { expiration: 15 }
 
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'

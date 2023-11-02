@@ -118,7 +118,8 @@ function ComentarPerfil(props) {
         <div className="comentar-perfil">
             <div className="comentar-perfil_container">
                 <div className="comentar-perfil_conversation-container">
-                    <OpenChannel channelUrl={currentChannelUrl} />
+                    {/* Todo activate OpenChannel */}
+                    {/* <OpenChannel channelUrl={currentChannelUrl} /> */}
                     {/* <Channel
                         channelUrl={currentChannelUrl}
                         replyType="QUOTE_REPLY"

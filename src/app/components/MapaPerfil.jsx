@@ -31,34 +31,36 @@ const MapaPerfil = ({ userInfo }) => {
             .load()
             .then((google) => {
                 // console.log(latLng)
-                map = new google.maps.Map(
-                    document.getElementById('profile-map'),
-                    mapOptions
-                )
-                const geocoder = new google.maps.Geocoder()
-                const infowindow = new google.maps.InfoWindow()
-                const marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-                })
-                geocoder.geocode({ location: latLng }).then((response) => {
-                    if (response.results[0]) {
-                        // const formattedAddress =
-                        //     response.results[0].formatted_address
-                        if (userInfo.userId) {
-                            // console.log(userInfo.userId)
-                            const infoGroup = `${
-                                userInfo.userRazonSocial || userInfo.userName
-                            }, ${userInfo.userDirection}`
-                            infowindow.setContent(infoGroup)
-                            infowindow.open(map, marker)
+                if (google) {
+                    map = new google.maps.Map(
+                        document.getElementById('profile-map'),
+                        mapOptions
+                    )
+                    const geocoder = new google.maps.Geocoder()
+                    const infowindow = new google.maps.InfoWindow()
+                    const marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                    })
+                    geocoder.geocode({ location: latLng }).then((response) => {
+                        if (response.results[0]) {
+                            // const formattedAddress =
+                            //     response.results[0].formatted_address
+                            if (userInfo.userId) {
+                                // console.log(userInfo.userId)
+                                const infoGroup = `${
+                                    userInfo.userRazonSocial || userInfo.userName
+                                }, ${userInfo.userDirection}`
+                                infowindow.setContent(infoGroup)
+                                infowindow.open(map, marker)
+                            }
+                        } else {
+                            if (!!window && typeof window !== 'undefined') {
+                                window.alert('No results found')
+                            }
                         }
-                    } else {
-                        if (typeof window !== 'undefined') {
-                            window.alert('No results found')
-                        }
-                    }
-                })
+                    })
+                }
             })
             .catch((e) => {
                 console.log(e)

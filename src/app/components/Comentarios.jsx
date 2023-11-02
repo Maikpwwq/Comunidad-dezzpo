@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import '@sendbird/uikit-react/dist/index.css'
 
 // Custom
-import { ComentarPerfil } from '#@/app/components/ComentarPerfil'
+// import { ComentarPerfil } from '#@/app/components/ComentarPerfil'
 
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -124,7 +124,8 @@ const Comentarios = (props) => {
                         // accessToken={accessToken}
                         // dateLocale={es}
                     > */}
-                    <ComentarPerfil channelUrl={channelUrl} />
+                    {/* Todo activate GroupChannel */}
+                    {/* <ComentarPerfil channelUrl={channelUrl} /> */}
                     {/* <CreateChannel />
                         <ChannelList />
                         <Channel />

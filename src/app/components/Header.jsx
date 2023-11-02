@@ -126,7 +126,7 @@ function Header(props) {
                       id: 'Directorio de Requerimientos',
                       tab: 1,
                       icon: <DriveFileMoveIcon />,
-                      route: '/app/directorio-requerimientos/',
+                      route: '/app/directorio-requerimientos',
                   },
                   {
                       id: 'Mensajes',
@@ -158,7 +158,7 @@ function Header(props) {
                       id: 'Portal de servicios',
                       icon: <StoreIcon />,
                       tab: 0,
-                      route: '/app/portal-servicios/',
+                      route: '/app/portal-servicios',
                   },
                   {
                       id: 'Mensajes',

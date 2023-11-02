@@ -9,10 +9,10 @@
 // export default '/app/portal-servicios/*'
 import { resolveRoute } from 'vike/routing'
 
-export default async (pageContext) => {
+export default (pageContext) => {
     {
         const result = resolveRoute(
-            '/app/portal-servicios/',
+            '/app/portal-servicios',
             pageContext.urlPathname
         )
         if (result.match) {

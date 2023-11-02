@@ -19,5 +19,6 @@ export default (pageContext) => {
     }
 
     const result = resolveRoute('/app/ajustes/', pageContext.urlPathname)
+    result.precedence = -1
     return result
 }

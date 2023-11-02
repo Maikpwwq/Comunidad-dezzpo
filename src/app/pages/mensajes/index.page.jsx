@@ -3,9 +3,9 @@ export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperba
 
 // Pagina de Usuario - Mensajes
 import React, { useContext } from 'react'
-import es from 'date-fns/locale/es'
+// import es from 'date-fns/locale/es'
 // import { auth } from '#@/firebase/firebaseClient'
-import { App as SendBirdApp } from '@sendbird/uikit-react'
+// import { App as SendBirdApp } from '@sendbird/uikit-react'
 // react-bootrstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -37,7 +37,7 @@ const Page = () => {
                         style={{ height: '50vh' }}
                     >
                         <h2 className="headline-xl">Mensajes</h2>
-                        {
+                        {/* {
                             userId && displayName && (
                                 <SendBirdApp
                                     appId={appId} // Sendbird application ID.
@@ -47,7 +47,7 @@ const Page = () => {
                                     // dateLocale={es}
                                 />
                             )
-                        }
+                        } */}
                         {/* <FormControl
                             fullWidth
                             style={{

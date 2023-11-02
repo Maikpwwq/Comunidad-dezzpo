@@ -9,10 +9,10 @@ import { formatDistance, parse } from 'date-fns' // parseISO, format, subDays
 import es from 'date-fns/locale/es'
 import { usePageContext } from '#R/usePageContext'
 
-import useSendbirdStateContext from '@sendbird/uikit-react/useSendbirdStateContext'
-import sendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
+// import useSendbirdStateContext from '@sendbird/uikit-react/useSendbirdStateContext'
+// import sendbirdSelectors from '@sendbird/uikit-react/sendbirdSelectors'
 
-import { newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
+// import { newOpenChannelSendbird } from '#@/services/newOpenChannelSendbird.service'
 import { sharingInformationService } from '#@/services/sharing-information'
 import { readUserFromFirestore } from '#@/services/readUserFromFirestore.service'
 import { updateUserToFirestore } from '#@/services/updateUserToFirestore.service'
@@ -49,10 +49,10 @@ const Page = () => {
     const [isChannelLoad, setIsChannelLoad] = useState(false)
     const [saved, setSaved] = useState(true)
 
-    const globalStore = useSendbirdStateContext()
-    const sbSdk = sendbirdSelectors?.getSdk(globalStore)
-    const connect = sendbirdSelectors?.getConnect(globalStore)
-    const createChannel = sendbirdSelectors?.getCreateOpenChannel(globalStore)
+    // const globalStore = useSendbirdStateContext()
+    // const sbSdk = sendbirdSelectors?.getSdk(globalStore)
+    // const connect = sendbirdSelectors?.getConnect(globalStore)
+    // const createChannel = sendbirdSelectors?.getCreateOpenChannel(globalStore)
 
     const [userRol, setUserRol] = useState({
         rol: currentUser.rol,
@@ -145,18 +145,18 @@ const Page = () => {
                 userAuthID,
                 userId
             )
-            newOpenChannelSendbird(
-                {
-                    uid: userAuthID,
-                    displayName: userName,
-                    sbSdk,
-                    connect,
-                    createChannel,
-                }
-                // setChannelUrl,
-                // userEditInfo,
-                // setUserEditInfo,
-            )
+            // newOpenChannelSendbird(
+            //     {
+            //         uid: userAuthID,
+            //         displayName: userName,
+            //         sbSdk,
+            //         connect,
+            //         createChannel,
+            //     }
+            //     // setChannelUrl,
+            //     // userEditInfo,
+            //     // setUserEditInfo,
+            // )
 
             // Limit to load one time
             setIsChannelLoad(true)
@@ -307,9 +307,9 @@ const Page = () => {
         userRol.rol,
         isLoaded,
         userAuthName,
-        sbSdk,
-        connect,
-        createChannel,
+        // sbSdk,
+        // connect,
+        // createChannel,
         isChannelLoad,
     ])
 

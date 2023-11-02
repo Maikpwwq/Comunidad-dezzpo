@@ -1,5 +1,5 @@
 export { Ubicacion }
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import AutoComplete from 'react-google-autocomplete'
 // import { Loader } from '@googlemaps/js-api-loader'
 import { googleLoader } from '#@/google/GoogleMapsAdmin'
@@ -37,13 +37,16 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
         auth_referrer_policy: 'origin',
     }
 
+    const mapElement = document.getElementById('map')
+
     let map
     useEffect(() => {
         loader
             .load()
             .then((google) => {
+                if (google) {
                 map = new google.maps.Map(
-                    document.getElementById('map'),
+                    mapElement,
                     mapOptions
                 )
                 map.addListener('click', (e) => {
@@ -90,9 +93,12 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                             })
                             infowindow.open(map, marker)
                         } else {
-                            window.alert('No results found')
+                            if (!!window && typeof window !== 'undefined') {
+                                window.alert('No results found')
+                            }
                         }
                     })
+                }
                 }
             })
             .catch((e) => {
@@ -123,7 +129,7 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
                 console.log('DirectionChanged')
             }
         }
-    }, [locationInfo])
+    }, [locInfo, locationInfo, setLocInfo])
 
     const handleChange = (event) => {
         setLocationInfo({

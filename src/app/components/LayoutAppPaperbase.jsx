@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { auth } from '#@/firebase/firebaseClient'
+// import { auth } from '#@/firebase/firebaseClient'
 import { ThemeProvider } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+// import useMediaQuery from '@mui/material/useMediaQuery'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -12,7 +12,7 @@ import { Navigator } from '#@/app/components/Navigator'
 // import Content from '#@/app/components/Content'
 import { Header } from '#@/app/components/Header'
 import { theme } from '#@/app/components/theme.tsx'
-import { Providers } from '#@/app/components/Providers'
+// import { Providers } from '#@/app/components/Providers'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 import '#@/app/components/Private-App.scss'
@@ -21,6 +21,7 @@ import '#R/index.scss'
 export { LayoutAppPaperbase }
 
 function Copyright() {
+    const showYear = new Date().getFullYear()
     return (
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
@@ -28,7 +29,7 @@ function Copyright() {
                 COMUNIDAD DEZZPO INC.
                 <br /> - Todos los derechos reservados -
             </Link>
-            {new Date().getFullYear()}.
+            {showYear}.
         </Typography>
     )
 }
@@ -57,7 +58,7 @@ function LayoutAppPaperbase({ children }) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Providers>
+            {/* <Providers> */}
                 <Box sx={{ display: 'flex', minHeight: '100vh' }}>
                     <CssBaseline />
                     {/* {user.uid && ( */}
@@ -77,7 +78,7 @@ function LayoutAppPaperbase({ children }) {
                             />
                         )} */}
 
-                        {currentUser.mobileOpen && currentUser.isAuth && (
+                        {currentUser?.mobileOpen && currentUser?.isAuth && (
                             <Navigator
                                 PaperProps={{ style: { width: drawerWidth } }}
                                 variant="temporary"
@@ -123,7 +124,7 @@ function LayoutAppPaperbase({ children }) {
                         </Box>
                     </Box>
                 </Box>
-            </Providers>
+            {/* </Providers> */}
         </ThemeProvider>
     )
 }
