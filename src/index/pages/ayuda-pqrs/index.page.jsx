@@ -178,7 +178,7 @@ const Page = (props) => {
                             >
                                 <a
                                     className="body-1"
-                                    href="https://api.whatsapp.com/send?phone=573196138057"
+                                    href="https://wa.me/573196138057?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
