@@ -207,19 +207,20 @@ const Page = () => {
                 userChannelUrl,
                 userEditInfo.userChannelUrl
             )
-            if (
-                userChannelUrl === undefined ||
-                (userChannelUrl === '' && isChannelLoad === false)
-            ) {
-                console.log(
-                    'conditioanl',
-                    userName,
-                    userId,
-                    userAuthName,
-                    userAuthID
-                )
-                createUserChannel(userName, userId)
-            }
+            // TODO: Activate with sendbird provider
+            // if (
+            //     userChannelUrl === undefined ||
+            //     (userChannelUrl === '' && isChannelLoad === false)
+            // ) {
+            //     console.log(
+            //         'conditioanl',
+            //         userName,
+            //         userId,
+            //         userAuthName,
+            //         userAuthID
+            //     )
+            //     createUserChannel(userName, userId)
+            // }
 
             setUserEditInfo({
                 ...userEditInfo,
