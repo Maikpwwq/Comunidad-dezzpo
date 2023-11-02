@@ -8,7 +8,7 @@
 /*global XDomainRequest */
 ;(function () {
     'use strict'
-    if (typeof window !== 'undefined' && window.addEventListener) {
+    if (!!window && typeof window !== 'undefined' && window.addEventListener) {
         var cache = Object.create(null) // holds xhr objects to prevent multiple requests
         var checkUseElems
         var tid // timeout id

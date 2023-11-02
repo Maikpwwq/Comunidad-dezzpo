@@ -4,13 +4,15 @@
         "strict": true,
         "module": "ESNext", // "module": "ESNext",
         "target": "ES2020", // "target": "ESNext",
-        "moduleResolution": "Node",
+        // "moduleResolution": "Node",
+        "moduleResolution": "Bundler",
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "types": ["vite/client"],
         "jsx": "react-jsx",
         "skipLibCheck": true,
         "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "paths": {"#@/*": ["./*"]}, // Typescript needs to know path aliases
         // "useDefineForClassFields": true,
         // "allowJs": false,
         // "composite": true,
@@ -30,9 +32,10 @@
     "ts-node": {
         "experimentalSpecifierResolution": "node",
         "transpileOnly": true,
-        "esm": true
-        // "compilerOptions": {
-        //     "moduleResolution": "Node16"
-        // }
+        "esm": true,
+        "compilerOptions": {
+            "module": "Node16",
+            "moduleResolution": "Node16"
+        }
     }
 }

@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc' // SWC instead babel
-import ssr from 'vike/plugin'
+import vike from 'vike/plugin'
 // import { cjsInterop } from 'vite-plugin-cjs-interop'
 import vercel from 'vite-plugin-vercel'
 // import vercelSsr from '@vite-plugin-vercel/vike'
@@ -42,7 +42,7 @@ export default defineConfig(async ({ command, mode }) => {
     return {
         plugins: [
             react(),
-            ssr({
+            vike({
                 // Use the default pre-render config:
                 prerender: true,
             }),

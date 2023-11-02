@@ -7,6 +7,7 @@ module.exports = {
         //     }
         // ],
         'react-refresh/only-export-components': 'warn',
+        '@typescript-eslint/no-namespace': 'off'
     },
     reportUnusedDisableDirectives: true,
     ignorePatterns: ['dist/*'],
