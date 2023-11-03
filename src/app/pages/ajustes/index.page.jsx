@@ -42,7 +42,7 @@ const Page = () => {
     const pageContext = usePageContext()
     let id = pageContext.routeParams.id // ['*']
     // console.log('routeParamsPerfil', id)
-    const userAuth = useMemo(() => auth.currentUser, [])
+    const userAuth = useMemo(() => auth?.currentUser, [])
     const userAuthID = currentUser?.userId || id
     const userAuthName = currentUser?.displayName || ''
     const [isLoaded, setIsLoaded] = useState(false)
@@ -137,14 +137,14 @@ const Page = () => {
             })
         }
 
-        const createUserChannel = (userName, userId) => {
-            // Sendbird new open channel
-            console.log(
-                'Ajustes creando nuevo open channel',
-                userName,
-                userAuthID,
-                userId
-            )
+        // const createUserChannel = (userName, userId) => {
+        //     // Sendbird new open channel
+        //     console.log(
+        //         'Ajustes creando nuevo open channel',
+        //         userName,
+        //         userAuthID,
+        //         userId
+        //     )
             // newOpenChannelSendbird(
             //     {
             //         uid: userAuthID,
@@ -159,22 +159,22 @@ const Page = () => {
             // )
 
             // Limit to load one time
-            setIsChannelLoad(true)
+            // setIsChannelLoad(true)
 
-            const currentURL = sharingInformationService.getSubject()
-            currentURL.subscribe((data) => {
-                if (data) {
-                    const { channelURL } = data
-                    console.log('newOpenChannelSendbird:', channelURL, data)
-                    if (channelURL) {
-                        setUserEditInfo({
-                            ...userEditInfo,
-                            userChannelUrl: channelURL,
-                        })
-                    }
-                }
-            })
-        }
+            // const currentURL = sharingInformationService.getSubject()
+            // currentURL.subscribe((data) => {
+            //     if (data) {
+            //         const { channelURL } = data
+            //         console.log('newOpenChannelSendbird:', channelURL, data)
+            //         if (channelURL) {
+            //             setUserEditInfo({
+            //                 ...userEditInfo,
+            //                 userChannelUrl: channelURL,
+            //             })
+            //         }
+            //     }
+            // })
+        // }
 
         const LoadCurrentData = (currentUser) => {
             const {
@@ -184,6 +184,7 @@ const Page = () => {
                 userPhone,
                 userPhotoUrl,
                 userGalleryUrl,
+                userCreatedDrafts,
                 userJoined,
                 userProfession,
                 userExperience,
@@ -201,13 +202,14 @@ const Page = () => {
                 // userGrade,
             } = currentUser
 
-            // Sendbird new open channel
-            console.log(
-                'create new open channel',
-                userChannelUrl,
-                userEditInfo.userChannelUrl
-            )
+            
             // TODO: Activate with sendbird provider
+            // Sendbird new open channel
+            // console.log(
+            //     'create new open channel',
+            //     userChannelUrl,
+            //     userEditInfo.userChannelUrl
+            // )
             // if (
             //     userChannelUrl === undefined ||
             //     (userChannelUrl === '' && isChannelLoad === false)
@@ -227,6 +229,7 @@ const Page = () => {
                 userPhone: userPhone || '',
                 userPhotoUrl: userPhotoUrl || '',
                 userGalleryUrl: userGalleryUrl || [],
+                userCreatedDrafts: userCreatedDrafts || [],
                 userId: userId,
                 userMail: userMail,
                 userName: userName || '',

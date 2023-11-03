@@ -182,7 +182,7 @@ function Navigator(props) {
                           {
                               id: 'Mi cuenta',
                               icon: <PersonIcon />,
-                              route: `perfil/${userAuthInfo.userId}`,
+                              route: `perfil/${userAuthInfo?.userId}`,
                               active: 'perfil' === activeUrl[1] ? true : false,
                           },
                           {
@@ -249,7 +249,7 @@ function Navigator(props) {
                           {
                               id: 'Ajustes',
                               icon: <ManageAccountsIcon />,
-                              route: `ajustes/${userAuthInfo.userId}`,
+                              route: `ajustes/${userAuthInfo?.userId}`,
                               active: 'ajustes' === activeUrl[1] ? true : false,
                           },
                       ],
@@ -292,7 +292,7 @@ function Navigator(props) {
                           {
                               id: 'Mi cuenta',
                               icon: <PersonIcon />,
-                              route: `perfil/${userAuthInfo.userId}`,
+                              route: `perfil/${userAuthInfo?.userId}`,
                               active: 'perfil' === activeUrl[1] ? true : false,
                           },
                           {
@@ -350,7 +350,7 @@ function Navigator(props) {
                           {
                               id: 'Ajustes',
                               icon: <ManageAccountsIcon />,
-                              route: `ajustes/${userAuthInfo.userId}`,
+                              route: `ajustes/${userAuthInfo?.userId}`,
                               active: 'ajustes' === activeUrl[1] ? true : false,
                           },
                       ],
@@ -444,13 +444,13 @@ function Navigator(props) {
                     <ListItemIcon>
                         <IconButton color="inherit" sx={{ p: 0.5 }}>
                             <Avatar
-                                src={userAuthInfo.userPhotoUrl}
+                                src={userAuthInfo?.userPhotoUrl}
                                 alt="My Avatar"
                             />
                         </IconButton>
                     </ListItemIcon>
                     <ListItemText>
-                        Bienvenido {userAuthInfo.userName}!
+                        Bienvenido {userAuthInfo?.userName}!
                     </ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (

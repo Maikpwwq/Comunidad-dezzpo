@@ -1,5 +1,5 @@
 export { Ubicacion }
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import AutoComplete from 'react-google-autocomplete'
 // import { Loader } from '@googlemaps/js-api-loader'
 import { googleLoader } from '#@/google/GoogleMapsAdmin'
@@ -20,122 +20,140 @@ const Ubicacion = ({ setLocInfo, locInfo, setOpen }) => {
         lat: 4.624335,
         lng: -74.063644,
     })
-
+    const [loaded, setLoaded] = useState(false)
     const [locationInfo, setLocationInfo] = useState({
         city: '',
         street: '',
         postalCode: '',
     })
     const loader = googleLoader
-    // The latitude of Bogotá, Colombia is 4.624335, and the longitude is -74.063644.
-    const mapOptions = {
-        center: {
-            lat: 4.624335,
-            lng: -74.063644,
-        },
-        zoom: 8,
-        auth_referrer_policy: 'origin',
-    }
 
-    const mapElement = document.getElementById('map')
+    // useMemo()
 
-    let map
+    // let map
     useEffect(() => {
         loader
             .load()
             .then((google) => {
                 if (google) {
-                map = new google.maps.Map(
-                    mapElement,
-                    mapOptions
-                )
-                map.addListener('click', (e) => {
-                    const marker = new google.maps.Marker({
-                        position: e.latLng,
-                        map: map,
-                    })
-                    if (e.latLng.toJSON()) {
-                        const coordenadas = e.latLng.toJSON()
-                        // const coordenadas = JSON.stringify(
-                        //     e.latLng.toJSON(),
-                        //     null,
-                        //     2
-                        // )
-                        console.log('coordenadas', coordenadas)
-                        setClicks({
-                            lat: coordenadas.lat,
-                            lng: coordenadas.lng,
-                        })
+                    const mapOptions = {
+                        // The latitude of Bogotá, Colombia is 4.624335, and the longitude is -74.063644.
+                        center: {
+                            lat: 4.624335,
+                            lng: -74.063644,
+                        },
+                        zoom: 8,
+                        auth_referrer_policy: 'origin',
                     }
-                })
-                if (clicks.lat !== 4.624335) {
-                    const geocoder = new google.maps.Geocoder()
-                    const infowindow = new google.maps.InfoWindow()
-                    console.log(typeof clicks.lat, typeof clicks.lng)
-                    geocoder.geocode({ location: clicks }).then((response) => {
-                        if (response.results[0]) {
-                            map.setZoom(8)
-                            const marker = new google.maps.Marker({
-                                position: clicks,
-                                map: map,
+                    const mapElement = document.getElementById('map')
+                    const map = new google.maps.Map(mapElement, mapOptions)
+                    map.addListener('click', (e) => {
+                        const marker = new google.maps.Marker({
+                            position: e.latLng,
+                            map: map,
+                        })
+                        if (e.latLng.toJSON()) {
+                            const coordenadas = e.latLng.toJSON()
+                            // const coordenadas = JSON.stringify(
+                            //     e.latLng.toJSON(),
+                            //     null,
+                            //     2
+                            // )
+                            console.log('coordenadas', coordenadas)
+                            setClicks({
+                                lat: coordenadas.lat,
+                                lng: coordenadas.lng,
                             })
-                            const formattedAddress =
-                                response.results[0].formatted_address
-                            // const ZipCode =
-                            //     response.results[0].address_components[7]
-                            //         .long_name
-                            console.log(response.results[0])
-                            infowindow.setContent(formattedAddress)
-                            setLocationInfo({
-                                ...locationInfo,
-                                street: formattedAddress,
-                                // postalCode: ZipCode,
-                            })
-                            infowindow.open(map, marker)
-                        } else {
-                            if (!!window && typeof window !== 'undefined') {
-                                window.alert('No results found')
-                            }
                         }
+                        if (clicks.lat !== 4.624335 && !loaded) {
+                        const geocoder = new google.maps.Geocoder()
+                        const infowindow = new google.maps.InfoWindow()
+                        console.log(typeof clicks.lat, typeof clicks.lng)
+                        geocoder
+                            .geocode({ location: clicks })
+                            .then((response) => {
+                                if (response.results[0]) {
+                                    map.setZoom(8)
+                                    const marker = new google.maps.Marker({
+                                        position: clicks,
+                                        map: map,
+                                    })
+                                    const formattedAddress =
+                                        response.results[0]?.formatted_address
+                                    // const ZipCode =
+                                    //     response.results[0].address_components[7]
+                                    //         .long_name
+                                    console.log(response.results[0])
+                                    infowindow.setContent(formattedAddress)
+                                    setLocationInfo({
+                                        ...locationInfo,
+                                        street: formattedAddress,
+                                        // postalCode: ZipCode,
+                                    })
+                                    infowindow.open(map, marker)
+                                } else {
+                                    if (
+                                        !!window &&
+                                        typeof window !== 'undefined'
+                                    ) {
+                                        window.alert('No results found')
+                                    }
+                                }
+                            })
+                    }
                     })
-                }
+                    
                 }
             })
             .catch((e) => {
                 console.log(e)
             })
-    }, [clicks])
+    }, [clicks, loaded, loader, locationInfo])
 
     useEffect(() => {
-        if (locInfo) {
-            if (locInfo.draftId) {
-                console.log(locInfo.draftId)
+        if (locationInfo.street !== '' && !loaded) {
+            if (
+                locInfo?.draftId &&
+                locInfo?.draftDirection !== locationInfo?.street
+            ) {
+                console.log(locInfo.draftId, locationInfo)
                 setLocInfo({
                     ...locInfo,
                     draftCity: locationInfo.city,
                     draftDirection: locationInfo.street,
                     draftPostalCode: locationInfo.postalCode,
                 })
+                setLoaded(true)
                 console.log('DirectionChanged')
             }
-            if (locInfo.userId) {
-                console.log(locInfo.userId)
+            if (
+                locInfo?.userId &&
+                locInfo?.userDirection !== locationInfo?.street
+            ) {
+                console.log(locInfo.userId, locationInfo)
                 setLocInfo({
                     ...locInfo,
                     userDirection: locationInfo.street,
                     userCiudad: locationInfo.city,
                     userCodigoPostal: locationInfo.postalCode,
                 })
+                setLoaded(true)
                 console.log('DirectionChanged')
             }
         }
-    }, [locInfo, locationInfo, setLocInfo])
+    }, [loaded, locInfo, locationInfo, setLocInfo])
 
     const handleChange = (event) => {
         setLocationInfo({
             ...locationInfo,
             [event.target.name]: event.target.value,
         })
+        if (
+            locInfo?.draftDirection !== locationInfo?.street ||
+            locInfo?.userDirection !== locationInfo?.street
+        ) {
+            setLoaded(false)
+        }
     }
 
     const handleConsult = () => {
