@@ -25,7 +25,7 @@ const ChipsCategories = (props) => {
         categorias: listadoCategorias,
         selected: {
             numbers: [], // TODO: compare categories in list and save numbers
-            labels: [userEditInfo?.userCategories],
+            labels: userEditInfo?.userCategories,
         },
     })
     // const handleDelete = (chipToDelete) => () => {

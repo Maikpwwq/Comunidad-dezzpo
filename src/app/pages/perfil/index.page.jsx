@@ -529,52 +529,56 @@ const Page = () => {
                     </Row>
                     <Row className="p-0 m-0 w-100 d-flex align-items-start">
                         <Col className="col-10 pt-4 pb-4">
-                            {userInfo.userGalleryUrl.length > 0 && (
-                                <>
-                                    <Typography
-                                        variant="h5"
-                                        className="textVerde headline-l pt-4 pb-4 w-100"
-                                        align="left"
-                                    >
-                                        Portafolio
-                                    </Typography>
-                                    <Row className="w-100 pb-4">
-                                        {userInfo.userGalleryUrl.map(
-                                            (imagen, index) => {
-                                                // console.log(imagen)
-                                                return (
-                                                    <Box
-                                                        key={index}
-                                                        component="img"
-                                                        src={imagen}
-                                                        alt="galleria-usuario"
-                                                        sx={{
-                                                            height: 400,
-                                                            display: 'block',
-                                                            maxWidth: 400,
-                                                            overflow: 'hidden',
-                                                            width: 'auto !important',
-                                                            borderRadius: '5%',
-                                                        }}
-                                                        className="p-2"
-                                                    ></Box>
-                                                )
-                                            }
-                                        )}
-                                        {!consult && (
-                                            <AdjuntarArchivos
-                                                name={'galleryPhoto'}
-                                                multiple={true}
-                                                idPerson={userConsultId}
-                                                rol={userRol.rol}
-                                                route={`profiles/${userConsultId}`}
-                                                functionState={setUserInfo}
-                                                state={userInfo}
-                                            ></AdjuntarArchivos>
-                                        )}
-                                    </Row>
-                                </>
-                            )}
+                            {userInfo.userGalleryUrl.length > 0 ||
+                                (!consult && (
+                                    <>
+                                        <Typography
+                                            variant="h5"
+                                            className="textVerde headline-l pt-4 pb-4 w-100"
+                                            align="left"
+                                        >
+                                            Portafolio
+                                        </Typography>
+                                        <Row className="w-100 pb-4">
+                                            {userInfo.userGalleryUrl.map(
+                                                (imagen, index) => {
+                                                    // console.log(imagen)
+                                                    return (
+                                                        <Box
+                                                            key={index}
+                                                            component="img"
+                                                            src={imagen}
+                                                            alt="galleria-usuario"
+                                                            sx={{
+                                                                height: 400,
+                                                                display:
+                                                                    'block',
+                                                                maxWidth: 400,
+                                                                overflow:
+                                                                    'hidden',
+                                                                width: 'auto !important',
+                                                                borderRadius:
+                                                                    '5%',
+                                                            }}
+                                                            className="p-2"
+                                                        ></Box>
+                                                    )
+                                                }
+                                            )}
+                                            {!consult && (
+                                                <AdjuntarArchivos
+                                                    name={'galleryPhoto'}
+                                                    multiple={true}
+                                                    idPerson={userConsultId}
+                                                    rol={userRol.rol}
+                                                    route={`profiles/${userConsultId}`}
+                                                    functionState={setUserInfo}
+                                                    state={userInfo}
+                                                ></AdjuntarArchivos>
+                                            )}
+                                        </Row>
+                                    </>
+                                ))}
                             {userInfo.userDirection && (
                                 <>
                                     <Col className="col-12">

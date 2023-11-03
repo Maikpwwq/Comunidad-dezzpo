@@ -7,7 +7,7 @@ import { sharingInformationService } from '#@/services/sharing-information'
 export { updateUserToFirestore }
 
 const updateUserToFirestore = (props) => {
-    const user = auth?.currentUser || {}
+    const user = auth?.currentUser // || {}
     const _firestore = firestore
 
     const { firestoreUserID, userSelectedRol, userEditInfo } = props
@@ -23,6 +23,7 @@ const updateUserToFirestore = (props) => {
     }
 
     const userComCalToFirestore = async (updateInfo, userID) => {
+        console.log('userComCalToFirestore', userSelectedRol, updateInfo, userID)
         await setDoc(doc(usersComCalRef, userID), updateInfo, { merge: true })
     }
 
@@ -33,27 +34,28 @@ const updateUserToFirestore = (props) => {
                     userEditInfo,
                     firestoreUserID
                 )
-                snap.then((docSnap) => {
+                await snap.then((docSnap) => {
                     // handleAlert(
                     //     'Se actualizó correctamente su información!',
                     //     'success'
                     // )
                     console.log(docSnap)
                 })
+                sendInfo()
             } else if (userSelectedRol === 2) {
                 const snap = userComCalToFirestore(
                     userEditInfo,
                     firestoreUserID
                 )
-                snap.then((docSnap) => {
+                await snap.then((docSnap) => {
                     // handleAlert(
                     //     'Se actualizó correctamente su información!',
                     //     'success'
                     // )
                     console.log(docSnap)
                 })
-            }
-            sendInfo()
+                sendInfo()
+            }             
         } catch (err) {
             console.log('Error getting user: ', err)
         }
@@ -62,12 +64,12 @@ const updateUserToFirestore = (props) => {
     // Firebase Auth
     const sendInfo = () => {
         const profile = {
-            displayName: userEditInfo.userName,
-            phoneNumber: userEditInfo.userPhone,
-            photoURL: userEditInfo.userPhotoUrl,
+            displayName: userEditInfo?.userName,
+            phoneNumber: userEditInfo?.userPhone,
+            photoURL: userEditInfo?.userPhotoUrl,
         }
-        if (user !== null) {
-            // console.log(auth)
+        if (typeof(user) !== "undefined") {
+            console.log('updateProfile', user, profile)
             updateProfile(user, profile)
                 .then((result) => {
                     console.log(`Se actualizo el perfil de usuario ${result}`)
