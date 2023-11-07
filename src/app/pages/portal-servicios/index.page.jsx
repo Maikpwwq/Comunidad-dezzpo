@@ -7,7 +7,7 @@ export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperba
 // const isr = { expiration: 15 }
 
 // Pagina de Usuario - Portal_Servicios
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { navigate } from 'vike/client/router'
 import { usePageContext } from '#R/usePageContext'
 import { SearchBar } from '#@/app/components/SearchBar'
@@ -23,6 +23,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
+import Skeleton from '@mui/material/Skeleton'
+import Stack from '@mui/material/Stack'
 import { Typography } from '@mui/material'
 
 const PortalSkeleton = () => {

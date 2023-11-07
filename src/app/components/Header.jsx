@@ -69,9 +69,9 @@ function Header(props) {
     const perfilRoute = `/app/perfil/${userAuthInfo.userId}`
 
     useEffect(() => {
-        if ( !rolAuth ){ 
-            console.log('rolAuth', rolAuth) 
-            setIsAuth(false) 
+        if (!rolAuth) {
+            console.log('rolAuth', rolAuth)
+            setIsAuth(false)
         }
         if (!isLoaded) {
             const userData = sharingInformationService.getSubject()
@@ -217,8 +217,8 @@ function Header(props) {
                         alignItems="center"
                         spacing={1}
                     >
-                        {isSmDown && (
-                            <Grid item xs style={{ maxWidth: 'fit-content'}}>
+                        <Grid item xs style={{ maxWidth: 'fit-content' }}>
+                            {isSmDown && (
                                 <IconButton
                                     aria-label="mobile-more"
                                     className="mobile-app-menu"
@@ -226,9 +226,7 @@ function Header(props) {
                                 >
                                     <MenuIcon sx={{ fontSize: '30px' }} />
                                 </IconButton>
-                            </Grid>
-                        )}
-                        <Grid item xs style={{ maxWidth: 'fit-content'}}>
+                            )}
                             <SearchBar></SearchBar>
                         </Grid>
                         <Grid item xs>
