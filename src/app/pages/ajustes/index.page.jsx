@@ -43,7 +43,7 @@ const Page = () => {
     let id = pageContext.routeParams.id // ['*']
     // console.log('routeParamsPerfil', id)
     const userAuth = useMemo(() => auth?.currentUser, [])
-    const userAuthID = currentUser?.userId || id
+    const userAuthID = currentUser?.userId || id 
     const userAuthName = currentUser?.displayName || ''
     const [isLoaded, setIsLoaded] = useState(false)
     const [isChannelLoad, setIsChannelLoad] = useState(false)

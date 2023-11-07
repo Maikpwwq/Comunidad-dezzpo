@@ -104,6 +104,10 @@ const Page = () => {
             mean: 0,
             votes: 0,
         },
+        userLikes: {
+            likedsProfiles: [],
+            likedsDrafts: []
+        },
         userWebSite: '',
     })
 

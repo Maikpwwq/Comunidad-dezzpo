@@ -68,6 +68,8 @@ function DraftCard({ props }) {
         draftApply,
     } = props
     // console.log(props)
+    const draftLink = `/app/ver-requerimiento/${draftId}`
+
     const [expanded] = useState(false) // , setExpanded
 
     const [rolAuth, setRolAuth] = useState(currentUser?.rol)
@@ -83,8 +85,8 @@ function DraftCard({ props }) {
     //     setExpanded(!expanded)
     // }
     const handleVerRequerimiento = () => {
-        console.log(draftId)
-        navigate(`/app/ver-requerimiento/${draftId}`)
+        // console.log(draftId)
+        navigate(draftLink)
     }
     const handleAplicar = () => {
         navigate(`/app/cotizacion/${draftId}`)
@@ -92,8 +94,27 @@ function DraftCard({ props }) {
     const handleEditar = () => {
         navigate(`/app/editar-requerimiento/${draftId}`)
     }
-    const handleFavorite = () => {}
-    const handleShare = () => {}
+    const handleFavorite = () => {
+        try {
+            // TODO add changes to profile
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    const handleShare = async () => {
+        try {
+            const shareData = {
+                title: draftName,
+                text: draftDescription,
+                url: draftLink,
+            }
+            
+            await navigator.share(shareData)
+        } catch (err) {
+            console.error(err)
+        }
+    }
 
     return (
         <>

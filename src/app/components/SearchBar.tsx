@@ -128,7 +128,7 @@ const SearchBar = () => {
                         setIsLoaded={setIsLoaded}
                     /> */}
                     <StyledSelect
-                        style={{ borderStyle: 'solid', borderWidth: '1px', minWidth: '300px' }}
+                        style={{ borderStyle: 'solid', borderWidth: '1px', minWidth: '250px', borderColor: 'white' }}
                         className="w-100 textGris"
                         id="search-select-category"
                         name="searchInput"
