@@ -2,8 +2,9 @@ export { Page }
 export { LayoutAppPaperbase as Layout } from '#@/app/components/LayoutAppPaperbase'
 // Now this page is a Prerender Function, meaning that it will be cached on Edge network for 15 seconds.
 // Check official documentation for further details on how it works.
-export { isr }
-const isr = { expiration: 15 }
+// ISR is not supported when using route function
+// export { isr }
+// const isr = { expiration: 15 }
 
 // Pagina de Usuario - Portal_Servicios
 import React, { useState, useEffect } from 'react'
@@ -23,6 +24,17 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import { Typography } from '@mui/material'
+
+const PortalSkeleton = () => {
+    return (
+        <Stack spacing={1}>
+            <Skeleton variant="rectangular" width={210} height={118} />
+            <Skeleton variant="circular" width={40} height={40} />
+            <Skeleton variant="rectangular" width={210} height={60} />
+            <Skeleton variant="rounded" width={210} height={60} />
+        </Stack>
+    )
+}
 
 const Page = (props) => {
     const pageContext = usePageContext()
@@ -131,25 +143,28 @@ const Page = (props) => {
                                 <span className="subtitle">{spacedText}</span>
                             </Typography>
                             <Row className="pt-2 p-0">
-                                {searchData?.docSnap && searchData?.docSnap.length > 0 ? (
-                                    searchData?.docSnap.map((user) => (
-                                        <UserCard
-                                            key={user.id}
-                                            props={user}
-                                            className=""
-                                        ></UserCard>
-                                    ))
-                                ) : (
-                                    <Typography
-                                        variant="body1"
-                                        fontSize={'1.125rem'}
-                                    >
-                                        No se encontraron resultados de la
-                                        busqueda para la categoria!
-                                        <br />
-                                        {spacedText}
-                                    </Typography>
-                                )}
+                                <Suspense fallback={<PortalSkeleton />}>
+                                    {searchData?.docSnap &&
+                                    searchData?.docSnap.length > 0 ? (
+                                        searchData?.docSnap.map((user) => (
+                                            <UserCard
+                                                key={user.id}
+                                                props={user}
+                                                className=""
+                                            ></UserCard>
+                                        ))
+                                    ) : (
+                                        <Typography
+                                            variant="body1"
+                                            fontSize={'1.125rem'}
+                                        >
+                                            No se encontraron resultados de la
+                                            busqueda para la categoria!
+                                            <br />
+                                            {spacedText}
+                                        </Typography>
+                                    )}
+                                </Suspense>
                             </Row>
                         </Row>
                     ) : (
@@ -163,24 +178,24 @@ const Page = (props) => {
                                 Todos los profesionales
                             </h3>
                         </Col>
-                        <p className="body-2">
+                        <p className="body-2 px-2">
                             Directorio de comerciantes calificados, contratistas
                             independientes y empresas del sector. <br />
                             Encuentra todo lo mejor en asisitencia técnica!
                         </p>
 
                         <Row className="m-0 w-100 d-flex">
-                            {usersData && usersData.length > 0 ? (
-                                usersData.map((user) => (
-                                    <UserCard
-                                        key={user.id}
-                                        props={user}
-                                        className=""
-                                    ></UserCard>
-                                ))
-                            ) : (
-                                <></>
-                            )}
+                            <Suspense fallback={<PortalSkeleton />}>
+                                {usersData &&
+                                    usersData.length > 0 &&
+                                    usersData.map((user) => (
+                                        <UserCard
+                                            key={user.id}
+                                            props={user}
+                                            className=""
+                                        ></UserCard>
+                                    ))}
+                            </Suspense>
                         </Row>
                     </Col>
                 </Row>
