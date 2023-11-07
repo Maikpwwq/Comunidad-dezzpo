@@ -106,7 +106,7 @@ const Page = () => {
         },
         userLikes: {
             likedsProfiles: [],
-            likedsDrafts: []
+            likedsDrafts: [],
         },
         userWebSite: '',
     })
@@ -393,7 +393,7 @@ const Page = () => {
                     </Box>
                     {/* p-description textBlanco fondoVerde */}
                     <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                        <Col md={10} className="pt-4 pb-4">
+                        <Col md={10} className="col-10 pt-4 pb-4">
                             <Typography
                                 variant="h5"
                                 className="textVerde headline-l pb-4"
@@ -497,25 +497,23 @@ const Page = () => {
                         </Col>
                     </Row>
                     <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                        <Col md={10} className="pt-4 pb-4">
-                            {userRol.rol === 2 && (
+                        <Col md={10} className="col-10 py-4">
+                            {userInfo.userCategoriesChips.length > 0 && (
                                 <>
                                     <Typography
                                         variant="h5"
-                                        className="textVerde headline-l pt-4 pb-4"
+                                        className="textVerde headline-l py-4"
                                         align="left"
                                     >
                                         Habilidades
                                     </Typography>
-                                    {userInfo.userCategoriesChips.length >
-                                        0 && (
-                                        <ChipsCategories
-                                            listadoCategorias={
-                                                userInfo.userCategoriesChips
-                                            }
-                                            editableContent={false}
-                                        />
-                                    )}
+
+                                    <ChipsCategories
+                                        listadoCategorias={
+                                            userInfo.userCategoriesChips
+                                        }
+                                        editableContent={false}
+                                    />
                                 </>
                             )}
                             {/* TODO: Implementar las certificaciones obtenidas
@@ -532,7 +530,7 @@ const Page = () => {
                         </Col>
                     </Row>
                     <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                        <Col className="col-10 pt-4 pb-4">
+                        <Col className="col-10 py-4">
                             {userInfo.userGalleryUrl.length > 0 ||
                                 (!consult && (
                                     <>

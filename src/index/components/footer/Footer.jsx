@@ -178,9 +178,9 @@ const FooterComunidad = () => {
                         {/* parte inferior*/}
                         <Row className="footerInferior pt-2 w-100">
                             <p className="mb-2 body-1 textBlanco">
-                                © 2021 - Todos los derechos reservados -
+                                © 2023 - Todos los derechos reservados -
                                 <span className="dezzpo-svg textBlanco">
-                                    COMUNIDAD DEZZPO INC.
+                                    Comunidad Dezzpo Inc.
                                 </span>
                             </p>
                         </Row>
