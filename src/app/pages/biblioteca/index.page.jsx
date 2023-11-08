@@ -10,11 +10,36 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 // import { Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material'
+import Typography from '@mui/material/Typography'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
+
+const documentosA = [
+    {
+        title: 'Contrato De Adquisición De Servicios',
+    },
+    {
+        title: 'Formato De Requerimientos Del Cliente',
+    },
+    {
+        title: 'Formato De Cotización De Servicios',
+    },
+]
+
+const documentosB = [
+    {
+        title: 'Patologías Y Sistemas De Mantenimiento En Los Inmuebles',
+    },
+    {
+        title: 'Manual De Procedimientos De Mantenimiento Correctivo Y Preventivo',
+    },
+    {
+        title: 'Reglamentaciones Del Sistema De Salud Y Seguridad En El Trabajo',
+    },
+]
 
 const Page = () => {
     return (
@@ -23,11 +48,9 @@ const Page = () => {
                 <Row className="m-0 w-100 ">
                     <Col className="col-10 d-flex align-items-start justify-content-start">
                         <Row className="p-4" md={10}>
-                            <span>
-                                <h2 className="headline-xl">
-                                    Descargar documentos
-                                </h2>
-                            </span>
+                            <Typography className="headline-xl" variant="">
+                                Descargar documentos{' '}
+                            </Typography>
                             <p className="body-1">
                                 Encuentra aqui, plantillas para redactar tus
                                 documentos, material de consulta, enlaces utiles
@@ -44,83 +67,58 @@ const Page = () => {
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Titulo</TableCell>
-                                            <TableCell>Descargar</TableCell>
+                                            <TableCell className="table-head">Titulo</TableCell>
+                                            <TableCell className="table-head">Descargar</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        <TableRow>
-                                            <TableCell>
-                                                CONTRATO DE ADQUISICION DE
-                                                SERVICIO
-                                            </TableCell>
-                                            <TableCell>Pdf</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell>
-                                                FORMATO DE REQUERIMIENTOS DEL
-                                                CLIENTE
-                                            </TableCell>
-                                            <TableCell>Pdf</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell>
-                                                FORMATO DE COTIZACIÓN DE
-                                                SERVICIOS
-                                            </TableCell>
-                                            <TableCell>Pdf</TableCell>
-                                        </TableRow>
+                                        {documentosA.map((item, index) => {
+                                            const { title } = item
+                                            return (
+                                                <TableRow key={index}>
+                                                    <TableCell className="body-1">
+                                                        {title}
+                                                    </TableCell>
+                                                    <TableCell className="body-1">Pdf</TableCell>
+                                                </TableRow>
+                                            )
+                                        })}
                                     </TableBody>
                                 </Table>
                             </Col>
                         </Row>
                         <Row className="p-4" md={10}>
-                            <span>
-                                <h2 className="headline-xl">
-                                    Material de consulta
-                                </h2>
-                            </span>
+                            <Typography className="headline-xl" variant="">
+                                Material de consulta{' '}
+                            </Typography>
                             <Col className="col-10 p-4">
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Titulo</TableCell>
-                                            <TableCell>Descargar</TableCell>
+                                            <TableCell className="table-head">Titulo</TableCell>
+                                            <TableCell className="table-head">Descargar</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        <TableRow>
-                                            <TableCell>
-                                                Patologías y sistemas de
-                                                mantenimiento en los inmuebles
-                                            </TableCell>
-                                            <TableCell>Pdf</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell>
-                                                MANUAL DE PROCEDIMIENTOS DE
-                                                MANTENIMIENTO CORRECTIVO Y
-                                                PREVENTIVO
-                                            </TableCell>
-                                            <TableCell>Pdf</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell>
-                                                Reglamentaciones del Sistema de
-                                                salud y seguridad en el trabajo
-                                            </TableCell>
-                                            <TableCell>Pdf</TableCell>
-                                        </TableRow>
+                                        {documentosB.map((item, index) => {
+                                            const { title } = item
+                                            return (
+                                                <TableRow key={index}>
+                                                    <TableCell className="body-1">
+                                                        {title}
+                                                    </TableCell>
+                                                    <TableCell className="body-1">Pdf</TableCell>
+                                                </TableRow>
+                                            )
+                                        })}
                                     </TableBody>
                                 </Table>
                             </Col>
                         </Row>
                         <Row className="p-4" md={10}>
-                            <span>
-                                <h2 className="headline-xl">
-                                    Canal de youtube
-                                </h2>
-                            </span>
+                            <Typography className="headline-xl" variant="">
+                                Canal de YouTube{' '}
+                            </Typography>
                             <p className="body-1">
                                 Hemos recopilado unas listas de videos, las
                                 cuales pueden ser de gran utilidad, para
@@ -128,12 +126,10 @@ const Page = () => {
                             </p>
                         </Row>
                         <Row className="p-4" md={10}>
-                            <span>
-                                <h2 className="headline-xl">
-                                    Libreta de direcciones
-                                </h2>
-                            </span>
-                            <span>Tiendas</span>
+                            <Typography className="headline-xl" variant="">
+                                Libreta de direcciones{' '}
+                            </Typography>
+                            <span className="btn btn-round btn-high">Tiendas</span>
                         </Row>
                     </Col>
                 </Row>

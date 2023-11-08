@@ -110,7 +110,8 @@ function DraftCard({ props }) {
                 url: draftLink,
             }
             
-            await navigator.share(shareData)
+            // await navigator.share(shareData)
+            await navigator['share'](shareData)
         } catch (err) {
             console.error(err)
         }

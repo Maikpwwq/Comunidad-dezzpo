@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
 const Page = (props) => {
     const { currentUser } = useContext(UserAuthContext)
@@ -23,11 +24,9 @@ const Page = (props) => {
             <Container fluid className="p-0 h-100">
                 <Row className="m-0 w-100 d-flex align-items-start pt-4 pb-4">
                     <Col className="col-10">
-                        <span>
-                            <h2 className="headline-xl">
-                                Programa de referidos
-                            </h2>
-                        </span>
+                        <Typography className="headline-xl" variant="">
+                            Programa de referidos
+                        </Typography>
                         <Col className="p-4">
                             <p className="body-1">
                                 Con el programa de referidos te premiamos por
@@ -41,7 +40,7 @@ const Page = (props) => {
                             </p>
                         </Col>
 
-                        <Button onClick={copyReferedLink}>
+                        <Button className="me-6 btn btn-buscador" onClick={copyReferedLink}>
                             Copiar tu Link
                         </Button>
                     </Col>
