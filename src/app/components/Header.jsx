@@ -217,7 +217,15 @@ function Header(props) {
                         alignItems="center"
                         spacing={1}
                     >
-                        <Grid item xs style={{ maxWidth: 'fit-content' }}>
+                        <Grid
+                            item
+                            xs
+                            className="d-flex"
+                            style={{
+                                maxWidth: 'fit-content',
+                                flexWrap: 'nowrap',
+                            }}
+                        >
                             {isSmDown && (
                                 <IconButton
                                     aria-label="mobile-more"

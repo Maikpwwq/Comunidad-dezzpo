@@ -7,6 +7,8 @@ import { BuscadorNuevoProyecto } from '#@/index/components/buscador/BuscadorNuev
 import { NuestraComunidad } from '#@/index/components/nuestra-comunidad/NuestraComunidad'
 import { navigate } from 'vike/client/router'
 import { Subscribe } from './Subscribe'
+// import { AllFontStyles } from '#@/index/components/AllFontStyles'
+
 // imagenes
 
 // react-bootrstrap
@@ -203,6 +205,7 @@ const Page = () => {
                     </Col>
                 </Row>
             </Container>
+            {/* <AllFontStyles /> */}
             {/* Seccion de Registro */}
             <Container fluid className="p-0">
                 {/* Seccion de como funciona la comunidad */}

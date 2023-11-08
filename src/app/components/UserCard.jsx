@@ -103,7 +103,11 @@ function UserCard({ props }) {
                 text: userDescription,
                 url: userLink,
             }
-            await navigator.share(shareData)
+            if (navigator['share']) {
+                await navigator['share'](shareData)
+            } else {
+                console.error("El navegador no es compatible con Web Share API");
+            }
         } catch (err) {
             console.error(err)
         }
