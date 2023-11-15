@@ -251,14 +251,7 @@ const Page = () => {
             })
         }
 
-        const userData = () => {
-            const firestoreUserID = userAuthID
-            const userSelectedRol = userRol.rol
-            console.log(
-                'readUserFromFirestore',
-                firestoreUserID,
-                userSelectedRol
-            )
+        const userData = (firestoreUserID, userSelectedRol) => {            
             readUserFromFirestore({
                 firestoreUserID,
                 userSelectedRol,
@@ -274,7 +267,14 @@ const Page = () => {
 
             if (!isNaN(userRol.rol) && userRol.rol !== undefined) {
                 // Load and expose user data from firestore
-                userData()
+                const firestoreUserID = userAuthID
+                const userSelectedRol = userRol.rol
+                console.log(
+                    'readUserFromFirestore',
+                    firestoreUserID,
+                    userSelectedRol
+                )
+                userData(firestoreUserID, userSelectedRol)
 
                 const userInformation = sharingInformationService.getSubject()
                 userInformation.subscribe((data) => {
