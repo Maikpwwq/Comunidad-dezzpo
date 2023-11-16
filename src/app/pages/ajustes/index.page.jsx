@@ -236,7 +236,7 @@ const Page = () => {
                 userJoined: userJoined || '',
                 userProfession: userProfession || '',
                 userExperience: userExperience || '',
-                userChannelUrl: userChannelUrl,
+                userChannelUrl: userChannelUrl || '',
                 // userCategorie: userCategorie,
                 // userClasification: userClasification,
                 // userGrade: userGrade,
