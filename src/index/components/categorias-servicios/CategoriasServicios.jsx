@@ -10,10 +10,10 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
 const CategoriasServicios = () => {
-    const sliceUno = ListadoCategorias.slice(0, 16)
-    const sliceDos = ListadoCategorias.slice(16, 32)
-    const sliceTres = ListadoCategorias.slice(32, 48)
-    const sliceCuatro = ListadoCategorias.slice(48, 65)
+    const sliceUno = ListadoCategorias.slice(0, 19)
+    const sliceDos = ListadoCategorias.slice(20, 41)
+    const sliceTres = ListadoCategorias.slice(42, 63)
+    const sliceCuatro = ListadoCategorias.slice(64, 82)
 
     return (
         <>
