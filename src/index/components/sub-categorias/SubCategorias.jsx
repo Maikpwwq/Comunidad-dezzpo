@@ -1,5 +1,3 @@
-export { SubCategorias }
-
 import React, { useState } from 'react'
 import '#@/assets/css/subCategoriesCard.css'
 // import { navigate } from 'vike/client/router'
@@ -113,3 +111,5 @@ SubCategorias.propTypes = {
     setCategoriaInfo: PropTypes.func.isRequired,
     categoriaInfo: PropTypes.object.isRequired,
 }
+
+export default SubCategorias

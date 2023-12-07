@@ -1,4 +1,3 @@
-export { BuscaEnTuCiudad }
 import * as React from 'react'
 import './busca_en_tu_ciudad.css'
 
@@ -57,3 +56,5 @@ const BuscaEnTuCiudad = () => {
         </>
     )
 }
+
+export default BuscaEnTuCiudad

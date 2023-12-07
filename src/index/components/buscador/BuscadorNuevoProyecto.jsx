@@ -1,9 +1,7 @@
-export { BuscadorNuevoProyecto }
-
 import React, { useEffect, useState } from 'react'
-import { Link } from '#R/Link'
+import Link from '#R/Link'
 import { navigate } from 'vike/client/router'
-import { SeleccionarCategoria } from '#@/index/components/SeleccionarCategoria'
+import SeleccionarCategoria from '#@/index/components/SeleccionarCategoria'
 import '#@/assets/css/buscador_nuevos_proyectos.css'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 // import IcoMoon from 'react-icomoon'
@@ -196,3 +194,5 @@ BuscadorNuevoProyecto.propTypes = {
     setDraftInfo: PropTypes.func,
     draftInfo: PropTypes.object,
 }
+
+export default BuscadorNuevoProyecto

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { sharingInformationService } from '#@/services/sharing-information'
 
-export { doSearchFromFirestore }
+export default doSearchFromFirestore
 
 const doSearchFromFirestore = (props) => {
     const _firestore = firestore

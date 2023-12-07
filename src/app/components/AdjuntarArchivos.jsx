@@ -1,5 +1,3 @@
-export { AdjuntarArchivos }
-
 import React, { useState, useEffect } from 'react'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { firestore, auth, storage } from '#@/firebase/firebaseClient'
@@ -11,7 +9,7 @@ import Box from '@mui/material/Box'
 // import {Button} from '@mui/material'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
-import { SnackBarAlert } from '#@/index/components/SnackBarAlert'
+import SnackBarAlert from '#@/index/components/SnackBarAlert'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
 const Input = styled('input')({
@@ -225,3 +223,5 @@ AdjuntarArchivos.propTypes = {
     functionState: PropTypes.func.isRequired,
     state: PropTypes.object.isRequired,
 }
+
+export default AdjuntarArchivos

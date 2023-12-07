@@ -1,5 +1,3 @@
-export { CategoriasSlider }
-
 import * as React from 'react'
 import Button from '@mui/material/Button'
 import { useTheme } from '@mui/material/styles'
@@ -17,7 +15,7 @@ import { autoPlay, bindKeyboard } from 'react-swipeable-views-utils' // , virtua
 
 const AutoPlaySwipeableViews = bindKeyboard(autoPlay(SwipeableViews))
 
-import { Categorias } from './CategoriesImages'
+import Categorias from './CategoriesImages'
 
 const styles = (theme) => ({
     stepper: {
@@ -132,3 +130,5 @@ const CategoriasSlider = () => {
         </Box>
     )
 }
+
+export default CategoriasSlider

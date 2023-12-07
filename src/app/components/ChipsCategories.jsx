@@ -1,5 +1,3 @@
-export { ChipsCategories }
-
 import React, { useEffect, useState } from 'react'
 import Chip from '@mui/material/Chip'
 import Paper from '@mui/material/Paper'
@@ -156,3 +154,5 @@ ChipsCategories.propTypes = {
     editableContent: PropTypes.bool,
     saved: PropTypes.bool,
 }
+
+export default ChipsCategories

@@ -12,8 +12,6 @@ import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import RefreshIcon from '@mui/icons-material/Refresh'
 
-export { Content }
-
 function Content() {
     return (
         <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
@@ -68,3 +66,5 @@ function Content() {
         </Paper>
     )
 }
+
+export default Content 

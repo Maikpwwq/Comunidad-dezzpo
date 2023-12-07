@@ -127,8 +127,6 @@ const Tapiceria2 = '/assets/img/categories/Tapicería.webp'
 const Toderos = '/assets/img/categories/Toderos.webp'
 // const CableadoEstructurado = '/assets/img/categories/cableado estructurado.webp'
 
-export { Categorias }
-
 const Categorias = [
     [AcabadosMuros, AcabadosMuros2, AcabadosMuros3],
     [AcabadosMuros4, AdministrarPH, AdministrarPH2],
@@ -167,3 +165,5 @@ const Categorias = [
     [Tapiceria, Tapiceria2, Toderos],
     // { CableadoEstructurado },
 ]
+
+export default Categorias

@@ -1,5 +1,3 @@
-export { AdministrarDB }
-
 import React, { useState } from 'react'
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { firestore } from '#@/firebase/firebaseClient'
@@ -256,3 +254,5 @@ const AdministrarDB = () => {
         </>
     )
 }
+
+export default AdministrarDB

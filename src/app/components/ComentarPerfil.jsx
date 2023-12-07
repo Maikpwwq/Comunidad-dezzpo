@@ -26,9 +26,6 @@ import {
 // import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 // import AddCommentIcon from '@mui/icons-material/AddComment'
 
-// export { ComentProfile }
-export { ComentarPerfil }
-
 function ComentarPerfil(props) {
     // const commentUserPhotoUrl = ''
     // const commentUserName = 'Nombre Usuario'
@@ -189,3 +186,5 @@ ComentarPerfil.propTypes = {
 // }))
 
 // export { Component }
+
+export default ComentarPerfil

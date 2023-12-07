@@ -1,5 +1,3 @@
-export { CincoEstrellas }
-
 import React, { useState } from 'react'
 
 import Row from 'react-bootstrap/Row'
@@ -62,3 +60,5 @@ const CincoEstrellas = () => {
         </>
     )
 }
+
+export default CincoEstrellas

@@ -1,5 +1,3 @@
-export { SnackBarAlert }
-
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import Snackbar from '@mui/material/Snackbar'
@@ -33,3 +31,5 @@ SnackBarAlert.propTypes = {
     severity: PropTypes.string.isRequired,
     open: PropTypes.bool.isRequired,
 }
+
+export default SnackBarAlert

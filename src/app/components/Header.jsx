@@ -1,16 +1,14 @@
-export { Header }
-
 import React, { useState, useContext, useMemo, useEffect } from 'react'
-import { Link } from '#R/Link'
+import Link from '#R/Link'
 import { auth } from '#@/firebase/firebaseClient'
-import { SearchBar } from '#@/app/components/SearchBar'
+import SearchBar from '#@/app/components/SearchBar'
 import '#@/assets/cssPrivateApp/header.css'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
 import { sharingInformationService } from '#@/services/sharing-information'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { theme } from '#@/app/components/theme.tsx'
+import theme from '#@/app/components/theme.tsx'
 
-import { NotificationBar } from './NotificationBar'
+// import NotificationBar from './NotificationBar'
 import { navigate } from 'vike/client/router'
 
 import PropTypes from 'prop-types'
@@ -269,3 +267,5 @@ function Header(props) {
 Header.propTypes = {
     onDrawerToggle: PropTypes.func.isRequired,
 }
+
+export default Header

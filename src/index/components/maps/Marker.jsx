@@ -1,8 +1,4 @@
-export { Marker }
-
 import React, { useState, useEffect } from 'react'
-
-export { Marker }
 
 const Marker = (options) => {
     const [marker, setMarker] = useState()
@@ -26,3 +22,5 @@ const Marker = (options) => {
     }, [marker, options])
     return null
 }
+
+export default Marker

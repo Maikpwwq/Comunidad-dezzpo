@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import { sharingInformationService } from '#@/services/sharing-information'
 // let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
-export { newOpenChannelSendbird }
+export default newOpenChannelSendbird
 
 const newOpenChannelSendbird = async ({ uid, displayName, sbSdk, connect, createChannel }) => {
     console.log('crearCanal props', uid, displayName)

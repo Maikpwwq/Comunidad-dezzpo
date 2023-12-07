@@ -1,5 +1,3 @@
-export { PasoAPaso }
-
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material/styles'
@@ -130,3 +128,5 @@ PasoAPaso.propTypes = {
     activeStep: PropTypes.number,
     steps: PropTypes.array,
 }
+
+export default PasoAPaso

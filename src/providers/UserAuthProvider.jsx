@@ -1,5 +1,3 @@
-export { UserAuthProvider }
-
 import React, { useState, createContext } from 'react'
 
 export const UserAuthContext = createContext()
@@ -62,3 +60,5 @@ const UserAuthProvider = ({ children }) => {
         </UserAuthContext.Provider>
     )
 }
+
+export default UserAuthProvider

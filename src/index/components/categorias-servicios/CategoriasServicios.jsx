@@ -1,8 +1,6 @@
-export { CategoriasServicios }
-
 import * as React from 'react'
 import '#@/assets/css/categorias_servicios.css'
-import { ListadoCategorias } from '../ListadoCategorias'
+import  { ListadoCategorias } from '#@/index/components/ListadoCategorias'
 // react-bootrstrap
 // import { Row, Col, Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
@@ -86,3 +84,5 @@ const CategoriasServicios = () => {
         </>
     )
 }
+
+export default CategoriasServicios

@@ -1,5 +1,3 @@
-export { SliderAction }
-
 import React from 'react'
 import { navigate } from 'vike/client/router'
 import Button from 'react-bootstrap/Button'
@@ -30,3 +28,5 @@ const SliderAction = () => {
         </Box>
     )
 }
+
+export default SliderAction

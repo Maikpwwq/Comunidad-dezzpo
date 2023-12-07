@@ -1,5 +1,3 @@
-export { CategoriasPupulares }
-
 import React from 'react'
 import styled from 'styled-components'
 import Col from 'react-bootstrap/Col'
@@ -34,3 +32,5 @@ const CategoriasPupulares = () => {
         </CategoriasPupularesStyle>
     )
 }
+
+export default CategoriasPupulares

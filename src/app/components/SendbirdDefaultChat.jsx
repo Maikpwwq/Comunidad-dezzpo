@@ -3,8 +3,6 @@ import React from 'react'
 import { App as SendBirdApp } from '@sendbird/uikit-react' // withSendBird,
 import '@sendbird/uikit-react/dist/index.css'
 
-export { SendbirdDefaultChat }
-
 let accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 let appId = import.meta.env.VITE_APP_SENDBIRD_APPID
 
@@ -34,3 +32,5 @@ const SendbirdDefaultChat = () => {
 // const Component = withSendBird(SendbirdDefaultChat)
 
 // export { Component }
+
+export default SendbirdDefaultChat

@@ -1,9 +1,7 @@
-export { SeleccionarCategoria }
-
 import React from 'react'
 import { navigate } from 'vike/client/router'
 import PropTypes from 'prop-types'
-import { ListadoCategorias } from '#@/index/components/ListadoCategorias'
+import  { ListadoCategorias } from '#@/index/components/ListadoCategorias'
 
 import Button from 'react-bootstrap/Button'
 import Box from '@mui/material/Box'
@@ -82,3 +80,5 @@ SeleccionarCategoria.propTypes = {
     draftInfo: PropTypes.object.isRequired,
     setIsLoaded: PropTypes.func.isRequired,
 }
+
+export default SeleccionarCategoria

@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { navigate } from 'vike/client/router'
 
-import { ChipsCategories } from './ChipsCategories'
-import { ListadoCategorias } from '#@/index/components/ListadoCategorias'
+import ChipsCategories from '#@/app/components/ChipsCategories'
+import  { ListadoCategorias } from '#@/index/components/ListadoCategorias'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
-import { updateUserToFirestore } from '#@/services/updateUserToFirestore.service'
+import updateUserToFirestore from '#@/services/updateUserToFirestore.service'
 import PropTypes from 'prop-types'
 
 import Button from '@mui/material/Button'
@@ -16,7 +16,7 @@ import CardActions from '@mui/material/CardActions'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import { red } from '@mui/material/colors'
+// import { red } from '@mui/material/colors'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
 // import Box from '@mui/material/Box'
@@ -37,8 +37,6 @@ import ShareIcon from '@mui/icons-material/Share'
 //         duration: theme.transitions.duration.shortest,
 //     }),
 // }))
-
-export { UserCard }
 
 function UserCard({ props }) {
     const { currentUser } = useContext(UserAuthContext)
@@ -296,3 +294,5 @@ UserCard.propTypes = {
     userDescription: PropTypes.string,
     userCategories: PropTypes.object,
 }
+
+export default UserCard

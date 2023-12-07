@@ -11,8 +11,6 @@ import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 // import es from 'date-fns/locale/es'
 
-export { Providers }
-
 const appId = import.meta.env.VITE_APP_SENDBIRD_APPID
 const accessToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
 
@@ -55,3 +53,5 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 // Providers.propTypes = {
 //     children: PropTypes.any,
 // }
+
+export default Providers

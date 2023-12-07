@@ -1,5 +1,3 @@
-export { TablaSubCategoriaCantidades }
-
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
@@ -222,3 +220,5 @@ TablaSubCategoriaCantidades.propTypes = {
     setDraftInfo: PropTypes.func.isRequired,
     draftInfo: PropTypes.object.isRequired,
 }
+
+export default TablaSubCategoriaCantidades

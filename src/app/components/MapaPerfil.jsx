@@ -1,4 +1,3 @@
-export { MapaPerfil }
 import React, { useState, useEffect } from 'react'
 // import { Loader } from '@googlemaps/js-api-loader'
 import { googleLoader } from '#@/google/GoogleMapsAdmin'
@@ -94,3 +93,5 @@ const MapaPerfil = ({ userInfo }) => {
 MapaPerfil.propTypes = {
     userInfo: PropTypes.object,
 }
+
+export default MapaPerfil

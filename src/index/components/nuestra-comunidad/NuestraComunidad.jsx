@@ -1,15 +1,13 @@
-export { NuestraComunidad }
-
 import * as React from 'react'
 import '#@/assets/css/nuestra_comunidad.css'
-import { CategoriasSlider } from './CategoriasSlider'
+import CategoriasSlider from '#@/index/components/nuestra-comunidad/CategoriasSlider'
 // import { CategoriasPupulares } from './CategoriasPupulares/CategoriasPupulares'
 //imagenes
 //import CategoriasPopulares from '#@/assets/img/CategoriasPopulares.png'
 
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
-import { BuscaEnTuCiudad } from './busca-en-tu-ciudad/BuscaEnTuCiudad'
+// import BuscaEnTuCiudad from './busca-en-tu-ciudad/BuscaEnTuCiudad'
 
 const NuestraComunidad = () => {
     return (
@@ -34,3 +32,5 @@ const NuestraComunidad = () => {
         </>
     )
 }
+
+export default NuestraComunidad

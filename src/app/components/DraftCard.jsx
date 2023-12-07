@@ -35,8 +35,6 @@ import Collapse from '@mui/material/Collapse'
 //     }),
 // }))
 
-export { DraftCard }
-
 function DraftCard({ props }) {
     const { currentUser, updateUser } = useContext(UserAuthContext)
     const userAuthID = currentUser?.userId  // Este es el id de la cuenta de Auth
@@ -287,3 +285,5 @@ DraftCard.propTypes = {
     draftBestScheduleDate: PropTypes.string.isRequired,
     draftBestScheduleTime: PropTypes.string.isRequired,
 }
+
+export default DraftCard

@@ -1,5 +1,3 @@
-export { ScrollToTop }
-
 import { useLayoutEffect } from 'react'
 
 const ScrollToTop = ({ pathname }) => {
@@ -9,3 +7,5 @@ const ScrollToTop = ({ pathname }) => {
 
     return null
 }
+
+export default ScrollToTop

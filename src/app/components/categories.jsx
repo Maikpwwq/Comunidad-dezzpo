@@ -1,3 +1,3 @@
-export { categories }
-
 const categories = {}
+
+export default categories 

@@ -1,5 +1,3 @@
-export { TableCards }
-
 import React, { useState, useEffect, Suspense } from 'react'
 import PropTypes from 'prop-types'
 import { DataGrid } from '@mui/x-data-grid'
@@ -104,3 +102,5 @@ const TableCards = (props) => {
 TableCards.propTypes = {
     dataTable: PropTypes.array,
 }
+
+export default TableCards

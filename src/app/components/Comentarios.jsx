@@ -10,12 +10,10 @@ import PropTypes from 'prop-types'
 import '@sendbird/uikit-react/dist/index.css'
 
 // Custom
-// import { ComentarPerfil } from '#@/app/components/ComentarPerfil'
+// import ComentarPerfil from '#@/app/components/ComentarPerfil'
 
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-
-export { Comentarios }
 
 /* Place Holder */
 
@@ -147,3 +145,5 @@ Comentarios.propTypes = {
 // const Component = withSendBird(Comentarios)
 
 // export { Component }
+
+export default Comentarios

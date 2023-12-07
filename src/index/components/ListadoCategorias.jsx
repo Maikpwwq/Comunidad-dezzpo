@@ -1,5 +1,3 @@
-export { ListadoCategorias }
-
 import DomainDisabledIcon from '@mui/icons-material/DomainDisabled'
 import GraphicEqIcon from '@mui/icons-material/GraphicEq'
 import HouseSidingIcon from '@mui/icons-material/HouseSiding'
@@ -23,7 +21,7 @@ import HubIcon from '@mui/icons-material/Hub'
 import GasMeterIcon from '@mui/icons-material/GasMeter'
 import WaterDamageIcon from '@mui/icons-material/WaterDamage'
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle'
-import ElectricBoltIcon from '@mui/icons-material/ElectricBolt'
+// import ElectricBoltIcon from '@mui/icons-material/ElectricBolt'
 import DesignServicesIcon from '@mui/icons-material/DesignServices'
 import RoofingIcon from '@mui/icons-material/Roofing'
 import ForestIcon from '@mui/icons-material/Forest'
@@ -657,3 +655,5 @@ const ListadoCategorias = [
         icon: <HandymanIcon fontSize="medium" className="mx-2 my-1" />, // Change
     },
 ]
+
+export { ListadoCategorias }

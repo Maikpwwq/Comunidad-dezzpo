@@ -1,5 +1,3 @@
-export { MenuLinks }
-
 const MenuLinks = [
     {
         name: 'Asi trabajamos',
@@ -134,3 +132,5 @@ const MenuLinks = [
         ],
     },
 ]
+
+export default MenuLinks

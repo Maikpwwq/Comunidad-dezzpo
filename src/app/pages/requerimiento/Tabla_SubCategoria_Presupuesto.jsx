@@ -1,4 +1,4 @@
-export { TablaSubCategoriaPresupuesto }
+export default TablaSubCategoriaPresupuesto
 
 import React from 'react'
 import PropTypes from 'prop-types'

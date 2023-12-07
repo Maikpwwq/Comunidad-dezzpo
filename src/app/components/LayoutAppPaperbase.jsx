@@ -8,17 +8,17 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 // import Providers from '#@/app/components/Providers'
-import { Navigator } from '#@/app/components/Navigator'
+import Navigator from '#@/app/components/Navigator'
 // import Content from '#@/app/components/Content'
-import { Header } from '#@/app/components/Header'
-import { theme } from '#@/app/components/theme.tsx'
+import Header from '#@/app/components/Header'
+import theme from '#@/app/components/theme.tsx'
 // import { Providers } from '#@/app/components/Providers'
 import { UserAuthContext } from '#@/providers/UserAuthProvider'
 
 import '#@/app/components/Private-App.scss'
 import '#R/index.scss'
 
-export { LayoutAppPaperbase }
+export { LayoutAppPaperbase as Layout }
 
 function Copyright() {
     const showYear = new Date().getFullYear()

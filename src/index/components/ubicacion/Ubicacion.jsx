@@ -1,4 +1,3 @@
-export { Ubicacion }
 import React, { useState, useEffect, useMemo } from 'react'
 import AutoComplete from 'react-google-autocomplete'
 // import { Loader } from '@googlemaps/js-api-loader'
@@ -273,3 +272,5 @@ Ubicacion.propTypes = {
     setLocInfo: PropTypes.func,
     locInfo: PropTypes.object,
 }
+
+export default Ubicacion

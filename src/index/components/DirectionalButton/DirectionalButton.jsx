@@ -1,5 +1,3 @@
-export { DirectionalButton }
-
 import React from 'react'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
@@ -36,3 +34,5 @@ DirectionalButton.propTypes = {
     handleBack: PropTypes.func,
     handleNext: PropTypes.func,
 }
+
+export default DirectionalButton

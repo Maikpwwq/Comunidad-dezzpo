@@ -1,5 +1,3 @@
-export { DatosContacto }
-
 /* Footer de navegacion de contenidos Grupo Paginas Comunidad */
 import React from 'react'
 import '#@/assets/css/datos_contacto.css'
@@ -84,3 +82,5 @@ const DatosContacto = () => {
         </>
     )
 }
+
+export default DatosContacto

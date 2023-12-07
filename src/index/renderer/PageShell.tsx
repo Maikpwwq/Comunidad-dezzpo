@@ -2,16 +2,18 @@ import React from 'react'
 import type { PageContext } from './types'
 // import logo from './logo.svg'
 // import './PageShell.css'
-import { PageContextProvider } from './usePageContext'
-// import { Link } from './Link'
-import { LayoutPaperbase } from '#@/index/components/LayoutPaperbase'
+import PageContextProvider from './usePageContext'
+// import Link from './Link'
+// export { Layout } from '#@/index/components/LayoutPaperbase'
+import { Layout } from '#@/index/components/LayoutPaperbase'
+
 // import createEmotionCache from './createEmotionCache';
-import { UserAuthProvider } from '#@/providers/UserAuthProvider'
+import UserAuthProvider from '#@/providers/UserAuthProvider'
 
 import './App.scss'
 import './index.scss'
 
-export { PageShell }
+export default PageShell 
 
 function PageShell({
     children,
@@ -20,7 +22,7 @@ function PageShell({
     children: React.ReactNode
     pageContext: PageContext
 }) {
-    const Layout = pageContext.exports.Layout || LayoutPaperbase
+    const PageLayout = pageContext.exports.Layout || Layout
     //const cache = createEmotionCache();
 
     return (
@@ -28,7 +30,7 @@ function PageShell({
             {/* <CacheProvider value={cache}> */}
             <UserAuthProvider>
                 <PageContextProvider pageContext={pageContext}>
-                    <Layout>{children}</Layout>
+                    <PageLayout>{children}</PageLayout>
                 </PageContextProvider>
             </UserAuthProvider>
             {/* </CacheProvider> */}

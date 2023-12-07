@@ -12,4 +12,4 @@ const getUser = new Observable((subscriber) => {
     }
 })
 
-export { getUser }
+export default getUser

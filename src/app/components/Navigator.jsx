@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState, useMemo } from 'react'
-import { Link } from '#R/Link'
+import Link from '#R/Link'
 import { navigate } from 'vike/client/router'
 import { auth } from '#@/firebase/firebaseClient'
 import { signOut } from 'firebase/auth'
@@ -13,7 +13,7 @@ import { UserAuthContext } from '#@/providers/UserAuthProvider'
 // import Avatar1 from '#@/assets/img/CategoriasPopulares.png'
 import LogoMenuComunidadDezzpo from '/assets/img/logo/IsoLogo-Dezzpo-Verde.png'
 
-import { SnackBarAlert } from '#@/index/components/SnackBarAlert'
+import SnackBarAlert from '#@/index/components/SnackBarAlert'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
@@ -66,8 +66,6 @@ const itemCategory = {
     py: 1.5,
     px: 3,
 }
-
-export { Navigator }
 
 function Navigator(props) {
     const { currentUser, updateUser, clearAuthUser } =
@@ -440,7 +438,7 @@ function Navigator(props) {
                         />
                     </Link>
                 </ListItem>
-                <ListItem sx={{ ...item, ...itemCategory }}>
+                <ListItem sx={{ flexDirection: 'row', ...item, ...itemCategory }}>
                     <ListItemIcon>
                         <IconButton color="inherit" sx={{ p: 0.5 }}>
                             <Avatar
@@ -450,7 +448,10 @@ function Navigator(props) {
                         </IconButton>
                     </ListItemIcon>
                     <ListItemText>
-                        Bienvenido {userAuthInfo?.userName}!
+                        Bienvenido
+                    </ListItemText>
+                    <ListItemText>
+                        {userAuthInfo?.userName}!
                     </ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (
@@ -529,3 +530,5 @@ function Navigator(props) {
         </Drawer>
     )
 }
+
+export default Navigator

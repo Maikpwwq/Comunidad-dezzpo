@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Link } from '#R/Link'
+import Link from '#R/Link'
 import { navigate } from 'vike/client/router'
 import { styled, alpha } from '@mui/material/styles'
 import IcoMoon from 'react-icomoon'
 import iconSet from '#@/assets/css/icomoon/selection.json'
-import { SeleccionarCategoria } from '#@/index/components/SeleccionarCategoria'
-import { ListadoCategorias } from '#@/index/components/ListadoCategorias'
+import SeleccionarCategoria from '#@/index/components/SeleccionarCategoria'
+import  { ListadoCategorias } from '#@/index/components/ListadoCategorias'
 // import SearchIcon from '@mui/icons-material/Search'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
@@ -53,8 +53,6 @@ const StyledSelect = styled(Select)(({ theme }) => ({
         },
     },
 }))
-
-export { SearchBar }
 
 const SearchBar = () => {
     // const navigate = useNavigate()
@@ -159,3 +157,5 @@ const SearchBar = () => {
         </>
     )
 }
+
+export default SearchBar

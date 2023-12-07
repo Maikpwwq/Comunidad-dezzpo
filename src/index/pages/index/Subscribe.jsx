@@ -1,4 +1,4 @@
-export { Subscribe }
+export default Subscribe
 
 import React from 'react'
 import { firestore } from '#@/firebase/firebaseClient'

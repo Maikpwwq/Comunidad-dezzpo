@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { sharingInformationService } from '#@/services/sharing-information'
 
-export { updateQuotationToFirestore }
+export default updateQuotationToFirestore
 
 const updateQuotationToFirestore = (props) => {
     const _firestore = firestore
