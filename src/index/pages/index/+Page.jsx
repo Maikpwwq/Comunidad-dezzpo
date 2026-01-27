@@ -1,11 +1,11 @@
 // Pagina de Inicio
 import React from 'react'
-import '#@/assets/css/home.css'
-import BuscadorNuevoProyecto from '#@/index/components/buscador/BuscadorNuevoProyecto'
-import NuestraComunidad from '#@/index/components/nuestra-comunidad/NuestraComunidad'
+import '@assets/css/home.css'
+import BuscadorNuevoProyecto from '@index/components/buscador/BuscadorNuevoProyecto'
+import NuestraComunidad from '@index/components/nuestra-comunidad/NuestraComunidad'
 import { navigate } from 'vike/client/router'
 import Subscribe from './Subscribe'
-// import { AllFontStyles } from '#@/index/components/AllFontStyles'
+// import { AllFontStyles } from '@index/components/AllFontStyles'
 
 // imagenes
 

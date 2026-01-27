@@ -1,86 +1,110 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc' // SWC instead babel
+import react from '@vitejs/plugin-react-swc'
 import vike from 'vike/plugin'
-// import { cjsInterop } from 'vite-plugin-cjs-interop'
-import vercel from 'vite-plugin-vercel'
-// import vercelSsr from '@vite-plugin-vercel/vike'
-
 import * as path from 'path'
 
 const isProd = process.env.NODE_ENV === 'production'
 
+// SSR externals configuration for production
 const noExternal: string[] = []
 if (isProd) {
-    noExternal.push(
-        ...[
-            // MUI needs to be pre-processed by Vite in production: https://github.com/vikejs/vike/discussions/901
-            '@mui/base',
-            '@mui/icons-material',
-            '@mui/material',
-            '@mui/utils',
-            '@mui/x-data-grid',
-            '@emotion/react',
-            '@emotion/styled',
-            'react-bootstrap',
-            'date-fns',
-            '@sendbird/uikit-react',
-            'react-swipeable-views',
-            'react-swipeable-views-utils',
-            'react-google-autocomplete',
-            'react-icomoon',
-            'firebase',
-            'rxjs',
-            'prop-types',
-            'uuid',
-            '@googlemaps/js-api-loader',
-        ]
-    )
+  noExternal.push(
+    // MUI requires pre-processing by Vite in production
+    '@mui/base',
+    '@mui/icons-material',
+    '@mui/material',
+    '@mui/utils',
+    '@mui/x-data-grid',
+    '@emotion/react',
+    '@emotion/styled',
+    // Third-party UI libraries
+    'react-bootstrap',
+    'date-fns',
+    '@sendbird/uikit-react',
+    'react-swipeable-views',
+    'react-swipeable-views-utils',
+    'react-google-autocomplete',
+    'react-icomoon',
+    // Firebase & utilities
+    'firebase',
+    'uuid',
+    '@googlemaps/js-api-loader',
+    // State management
+    'zustand'
+  )
 }
 
-export default defineConfig(async ({ command, mode }) => {
-    console.log('defineConfig', command, mode)
-    return {
-        plugins: [
-            react(),
-            vike({
-                // Use the default pre-render config:
-                prerender: true,
-            }),
+export default defineConfig({
+  plugins: [
+    react(),
+    vike({
+      prerender: true,
+    }),
+  ],
 
-            // cjsInterop({
-            //     // List of CJS dependencies that require interop
-            //     dependencies: [
-            //         '@mui/material/*',
-            //         'react-bootstrap/*',
-            //         'react-bootstrap/cjs/*',
-            //     ],
-            // }),
-            vercel(),
-        ],
-        ssr: { noExternal },
-        build: {
-            chunkSizeWarningLimit: 900,
-            rollupOptions: {
-                onwarn(warning, warn) {
-                    if (
-                        warning.code === 'MODULE_LEVEL_DIRECTIVE' &&
-                        warning.message.includes(`"use client"`)
-                    ) {
-                        return
-                    }
-                    warn(warning)
-                },
-            },
-        },
-        resolve: {
-            // Prefix your path aliases with a special character, most commonly #
-            alias: [
-                { find: '#@', replacement: path.resolve(__dirname, 'src') },
-                {
-                    find: '#R',
-                    replacement: path.resolve(__dirname, 'src/index/renderer'),
-                },
-            ],
-        },
-    }
+  ssr: {
+    noExternal,
+  },
+
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Suppress "use client" directive warnings from React libraries
+        if (
+          warning.code === 'MODULE_LEVEL_DIRECTIVE' &&
+          warning.message.includes('"use client"')
+        ) {
+          return
+        }
+        warn(warning)
+      },
+    },
+  },
+
+  resolve: {
+    alias: [
+      // Root source alias
+      { find: '@', replacement: path.resolve(__dirname, 'src') },
+
+      // Feature modules
+      { find: '@features', replacement: path.resolve(__dirname, 'src/features') },
+
+      // Component layers (Atomic Design)
+      { find: '@components', replacement: path.resolve(__dirname, 'src/components') },
+
+      // Shared utilities
+      { find: '@hooks', replacement: path.resolve(__dirname, 'src/hooks') },
+      { find: '@stores', replacement: path.resolve(__dirname, 'src/stores') },
+      { find: '@services', replacement: path.resolve(__dirname, 'src/services') },
+      { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
+      { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
+
+      // Assets
+      { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
+      { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
+
+      // Firebase specific (renamed to avoid collision with @firebase/* packages in node_modules)
+      { find: '@firebase-services', replacement: path.resolve(__dirname, 'src/services/firebase') },
+      { find: '@firestore-services', replacement: path.resolve(__dirname, 'src/services/firestore') },
+
+      // Legacy aliases (for gradual migration - keep until full migration complete)
+      { find: '#@', replacement: path.resolve(__dirname, 'src') },
+      { find: '#R', replacement: path.resolve(__dirname, 'pages') },
+    ],
+  },
+
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Make variables available globally
+        additionalData: `@use "@styles/_variables" as *;`,
+      },
+    },
+  },
+
+  server: {
+    port: 3000,
+    strictPort: false,
+  },
 })

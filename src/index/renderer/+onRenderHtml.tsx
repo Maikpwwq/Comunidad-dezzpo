@@ -6,7 +6,7 @@ import { renderToString } from 'react-dom/server'
 import PageShell from './PageShell'
 import { escapeInject, dangerouslySkipEscape } from 'vike/server'
 import type { PageContextServer } from './types'
-import React from 'react'
+// import React from 'react'
 // import logoUrl from './logo.svg'
 // <link rel="icon" href="${logoUrl}" />
 

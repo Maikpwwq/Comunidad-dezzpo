@@ -1,12 +1,12 @@
 // Pagina de NuevoProyecto
 import React, { useState, useContext, useEffect } from 'react'
 // import PropTypes from 'prop-types'
-// import Link from '#R/Link'
+// import Link from '@hooks/Link'
 import { navigate } from 'vike/client/router'
-import DirectionalButton from '#@/index/components/DirectionalButton/DirectionalButton'
-// import ScrollToTopOnMount from '#@/index/components/ScrollToTop'
-import AdjuntarArchivos from '#@/app/components/AdjuntarArchivos'
-import SeleccionarCategoria from '#@/index/components/SeleccionarCategoria'
+import DirectionalButton from '@index/components/DirectionalButton/DirectionalButton'
+// import ScrollToTopOnMount from '@index/components/ScrollToTop'
+import AdjuntarArchivos from '@app/components/AdjuntarArchivos'
+import SeleccionarCategoria from '@index/components/SeleccionarCategoria'
 import { v4 as uuidv4 } from 'uuid'
 import {
     collection,
@@ -15,17 +15,17 @@ import {
     // getDocFromServer,
     getDocs,
 } from 'firebase/firestore'
-import { firestore, auth } from '#@/firebase/firebaseClient'
-import '#@/assets/css/nuevo_proyecto.css'
-import Ubicacion from '#@/index/components/ubicacion/Ubicacion'
-import BuscadorNuevoProyecto from '#@/index/components/buscador/BuscadorNuevoProyecto'
-import { Page as Registro } from '#@/index/pages/registro/index.page'
-import { Page as Ingreso } from '#@/index/pages/ingreso/index.page'
-import SubCategorias from '#@/index/components/sub-categorias/SubCategorias'
-import PasoAPaso from '#@/index/components/paso_a_paso/Paso_A_Paso'
+import { firestore, auth } from '@firebase/firebaseClient'
+import '@assets/css/nuevo_proyecto.css'
+import Ubicacion from '@index/components/ubicacion/Ubicacion'
+import BuscadorNuevoProyecto from '@index/components/buscador/BuscadorNuevoProyecto'
+import { Page as Registro } from '@pages/registro/index.page'
+import { Page as Ingreso } from '@pages/ingreso/index.page'
+import SubCategorias from '@index/components/sub-categorias/SubCategorias'
+import PasoAPaso from '@index/components/paso_a_paso/Paso_A_Paso'
 import TablaSubCategoriaCantidades from './Tabla_SubCategoria_Cantidades'
-import { usePageContext } from '#R/usePageContext'
-import { UserAuthContext } from '#@/providers/UserAuthProvider'
+import { usePageContext } from '@hooks/usePageContext'
+import { UserAuthContext } from '@providers/UserAuthProvider'
 
 // react-bootrstrap
 // import { Row, Col, Container, Button, Form } from 'react-bootstrap'

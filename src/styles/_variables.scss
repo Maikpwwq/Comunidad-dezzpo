@@ -1,0 +1,154 @@
+/**
+ * Global SCSS Variables
+ *
+ * Central design tokens for the application.
+ * These are injected globally via vite.config.ts:
+ *   additionalData: `@use "@styles/_variables" as *;`
+ *
+ * Usage in any .scss file:
+ *   color: $primary-blue;
+ *   padding: $spacing-md;
+ */
+
+// =============================================================================
+// COLOR PALETTE
+// =============================================================================
+
+// Brand Colors
+$primary-blue: #0f71b7;
+$primary-dark: #30347b;
+$primary-teal: #149ba1;
+$accent-orange: #ec6f27;
+$accent-red: #e42620;
+$accent-yellow: #c6b61e;
+
+// Neutral Colors
+$white: #ffffff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000000;
+
+// Semantic Colors
+$success: #28a745;
+$warning: #ffc107;
+$danger: #dc3545;
+$info: #17a2b8;
+
+// =============================================================================
+// TYPOGRAPHY
+// =============================================================================
+
+// Font Families
+$font-family-base: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family-heading: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family-mono: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
+
+// Font Sizes
+$font-size-xs: 0.75rem;   // 12px
+$font-size-sm: 0.875rem;  // 14px
+$font-size-base: 1rem;    // 16px
+$font-size-md: 1.125rem;  // 18px
+$font-size-lg: 1.25rem;   // 20px
+$font-size-xl: 1.5rem;    // 24px
+$font-size-2xl: 2rem;     // 32px
+$font-size-3xl: 2.5rem;   // 40px
+$font-size-4xl: 3rem;     // 48px
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Line Heights
+$line-height-tight: 1.2;
+$line-height-base: 1.5;
+$line-height-relaxed: 1.7;
+
+// =============================================================================
+// SPACING
+// =============================================================================
+
+$spacing-0: 0;
+$spacing-1: 0.25rem;  // 4px
+$spacing-2: 0.5rem;   // 8px
+$spacing-3: 0.75rem;  // 12px
+$spacing-4: 1rem;     // 16px
+$spacing-5: 1.25rem;  // 20px
+$spacing-6: 1.5rem;   // 24px
+$spacing-8: 2rem;     // 32px
+$spacing-10: 2.5rem;  // 40px
+$spacing-12: 3rem;    // 48px
+$spacing-16: 4rem;    // 64px
+
+// Aliases for semantic naming
+$spacing-xs: $spacing-1;
+$spacing-sm: $spacing-2;
+$spacing-md: $spacing-4;
+$spacing-lg: $spacing-6;
+$spacing-xl: $spacing-8;
+
+// =============================================================================
+// BREAKPOINTS
+// =============================================================================
+
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;
+
+// =============================================================================
+// BORDERS & RADIUS
+// =============================================================================
+
+$border-width: 1px;
+$border-color: $gray-300;
+
+$radius-sm: 0.25rem;   // 4px
+$radius-md: 0.5rem;    // 8px
+$radius-lg: 1rem;      // 16px
+$radius-xl: 1.5rem;    // 24px
+$radius-full: 9999px;  // Pill shape
+$radius-round: 50%;    // Circle
+
+// Legacy support
+$border-radius-pill: 30px;
+
+// =============================================================================
+// SHADOWS
+// =============================================================================
+
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+// =============================================================================
+// TRANSITIONS
+// =============================================================================
+
+$transition-fast: 150ms ease-in-out;
+$transition-base: 300ms ease-in-out;
+$transition-slow: 500ms ease-in-out;
+
+// =============================================================================
+// Z-INDEX SCALE
+// =============================================================================
+
+$z-dropdown: 1000;
+$z-sticky: 1020;
+$z-fixed: 1030;
+$z-modal-backdrop: 1040;
+$z-modal: 1050;
+$z-popover: 1060;
+$z-tooltip: 1070;

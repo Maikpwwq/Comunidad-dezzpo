@@ -6,11 +6,11 @@ export default onRenderClient
 // export const prefetchStaticAssets = 'viewport'
 // !! WARNING !! Before doing so, read https://vike.dev/clientRouting */
 
-import { hydrateRoot, createRoot, Root } from 'react-dom/client'
+import { hydrateRoot, createRoot, type Root } from 'react-dom/client'
 import { navigate } from 'vike/client/router'
 import PageShell from './PageShell'
 import type { PageContextClient } from './types'
-import React from 'react'
+// import React from 'react'
 
 let root: Root
 // This render() hook only supports SSR, see https://vike.dev/render-modes for how to modify render() to support SPA

@@ -1,45 +1,83 @@
-# Comunidad-dezzpo Colombia
+# Comunidad Dezzpo
 
-Únete a la red profesional de Comunidad Dezzpo: brindamos soluciones de mantenimiento, remodelaciones, instalaciones y acabados inmobiliarios basados en experiencia, prevención y empatía. ¡Accede a información confiable y selecciona perfiles según estadísticas en nuestro marketplace!
+Professional network for real estate maintenance, remodeling, and finishes. We connect qualified professionals with users through a trusted marketplace.
 
-![Comunidad Dezzpo](/public/assets/img/Comunidad-Dezzpo.jpg)
+## Tech Stack
+- **Framework**: [Vike v0.4.x](https://vike.dev/) (SSR/SSG)
+- **Frontend**: React + TypeScript
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **UI Library**: [MUI v6](https://mui.com/)
+- **Backend/Services**: Firebase (Auth, Firestore, Storage)
 
-## Web site
+## Project Structure
 
-> https://www.dezzpo.com/
+```bash
+src/
+├── app/              # Legacy compat (being phased out)
+├── components/       # Shared UI components
+│   ├── common/       # Generic atoms (buttons, inputs)
+│   └── layout/       # App shell (Navbar, Sidebar, Footer)
+├── config/           # App-wide configuration (theme, constants)
+├── features/         # Domain-specific modules
+│   ├── auth/         # Authentication logic & components
+│   ├── marketing/    # Public-facing components
+│   ├── messaging/    # Sendbird chat integration
+│   ├── profile/      # User profile management
+│   ├── projects/     # Project creation & management
+│   └── quotes/       # Quotation system
+├── hooks/            # Custom React hooks (useAuth, useFirestoreQuery)
+├── services/         # Typed service layer (Firebase wrappers)
+│   ├── firebase/     # Core Firebase config & client
+│   └── sendbird/     # Sendbird SDK wrappers
+└── stores/           # Global Zustand stores
+```
 
-_Project Console:_
+## Workflow
 
-> https://console.firebase.google.com/project/app-comunidad-dezzpo/overview
+### Development
+```bash
+# Install dependencies
+pnpm install
 
-_Hosting URL:_
+# Start dev server
+pnpm dev
+```
 
-> https://app-comunidad-dezzpo.web.app
+### Build
+```bash
+# Build for production
+pnpm build
 
-_GithubPage:_
+# Preview build
+pnpm preview
+```
 
-> https://maikpwwq.github.io/Comunidad-dezzpo/
+## Migration Status
 
-_Instagram:_
+| Module | Status | Notes |
+|--------|--------|-------|
+| **Auth** | ✅ Migrated | Uses `@features/auth`, `useAuth` hook, strictly typed |
+| **Profile** | ✅ Migrated | Uses `@features/profile`, `userService`, Zustand store |
+| **Quotes** | ✅ Migrated | Uses `@features/quotes`, `quotationService`, `draftService` |
 
-> https://www.instagram.com/comunidad_dezzpo/
+## Service Standards
 
-_Facebook:_
+All new services must strictly adhere to the `ServiceResponse<T>` pattern to ensure robust error handling and type safety.
 
-> https://www.facebook.com/comunidad.dezzpo/
+```typescript
+// Standard Response Pattern
+export type ServiceResponse<T> = 
+  | { success: true; data: T; error: null }
+  | { success: false; data: null; error: ServiceErrorInfo };
 
-_LinkedIn:_
+// Example Usage
+async function getProfile(id: string): Promise<ServiceResponse<UserProfile>> {
+  // ... implementation
+}
+```
 
-> https://www.linkedin.com/company/dezzpo-inc/
+## Legal
 
-## Desarrollado por
-
-1. Michael Arias Fajardo @Maikpwwq
-2. Comunidad.dezzpo@gmail.com
-3. WhatsApp: +57 319 613 80 57
-
-![Mockup site](/public/assets/img/Home-WIREFRAMES.png)
-
-**Agradecimientos a Bictia ❤️ MisionTic 2022 ❤️ Red Tecnoparque Sena**
-
-npx prettier . --write
+Developed by **Dezzpo Inc.**
+- [Website](https://www.dezzpo.com/)
+- [Console](https://console.firebase.google.com/project/app-comunidad-dezzpo/overview)

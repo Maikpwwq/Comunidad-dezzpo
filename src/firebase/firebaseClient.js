@@ -9,7 +9,7 @@ import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 // import { getAnalytics } from 'firebase/analytics'
 
-import { sharingInformationService } from '#@/services/sharing-information'
+// import { sharingInformationService } from '#@/services/sharing-information'
 
 let firebaseApp
 // Instancia de Firebase
@@ -48,7 +48,7 @@ const storage = getStorage(firebaseApp)
 onAuthStateChanged(auth, (user) => {
     // Check for user status
     if (user) {
-        sharingInformationService.setSubject({ authUser: user })
+        // sharingInformationService.setSubject({ authUser: user }) -> Removed
         // console.log('onAuthStateChanged', user)
         // let displayName = user.displayName
         // let email = user.email

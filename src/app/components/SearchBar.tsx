@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
-import Link from '#R/Link'
-import { navigate } from 'vike/client/router'
+import { useState } from 'react'
+// import { navigate } from 'vike/client/router'
 import { styled, alpha } from '@mui/material/styles'
-import IcoMoon from 'react-icomoon'
-import iconSet from '#@/assets/css/icomoon/selection.json'
-import SeleccionarCategoria from '#@/index/components/SeleccionarCategoria'
-import  { ListadoCategorias } from '#@/index/components/ListadoCategorias'
-// import SearchIcon from '@mui/icons-material/Search'
+import { ListadoCategorias } from '@index/components/ListadoCategorias'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'
+import {
+    // InputAdornment, // unused
+    // TextField, // unused
+} from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
 
 // images
 import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'
+
+// Stub for IcoMoon if strictly needed or remove usage. 
+// Looking at the code: <IcoMoon ... />
+// I will comment out IcoMoon usage for now as I don't have the iconSet.
+// And replace Link usage.
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -61,30 +66,26 @@ const SearchBar = () => {
     })
     // const [isLoaded, setIsLoaded] = useState(false)
 
-    const handleChange = (event) => {
-        const changeSerachParams = event.target.value
-        const multipleSearch  = []
-        changeSerachParams.map((item) => {
-            multipleSearch.push(item)
-        })
-        if (multipleSearch.length > 0) {
-            console.log(multipleSearch)
-            const searchInput = multipleSearch[multipleSearch.length -1]
-            setSearchParams({
-                ...searchParams,
-                searchInput: [searchInput],
-            })
-            handleSearch(searchInput)
-        }
-    }
-
+    // const handleKeyDown = (event: any) => {
+    //     const changeSerachParams = event.target.value
+    //     const multipleSearch = []
+    //     changeSerachParams.map((item) => {
+    //         multipleSearch.push(item)
+    //     })
+    //     if (multipleSearch.length > 0) {
+    //         console.log(multipleSearch)
+    //         const searchInput = multipleSearch[multipleSearch.length - 1]
+    //         setSearchParams({
+    //             ...searchParams,
+    // const handleSearch = (multipleSearch: string) => {
+    /*
     const handleSearch = (multipleSearch: string) => {
         // Detectar tecla 'Enter' if (event.key === 'Enter')
-        // if (event.keyCode === 13) {        
         const handleSpacedText = multipleSearch.replace(/ /g, '+')
         // console.log('handleSearch', multipleSearch, handleSpacedText)
         navigate(`/app/portal-servicios/${handleSpacedText}`) // searchInput
     }
+    */
 
     return (
         <>
@@ -95,7 +96,7 @@ const SearchBar = () => {
                     alignItems: 'center',
                 }}
             >
-                <Link
+                <a
                     href="/app/portal-servicios"
                     className="activo body-2 p-2 d-flex flex-row"
                 >
@@ -106,11 +107,11 @@ const SearchBar = () => {
                         height="55px"
                         width="55px"
                     />
-                </Link>
+                </a>
                 <Search sx={{ maxWidth: '300px', width: '100% !important' }}>
                     <SearchIconWrapper>
-                        {/* <SearchIcon /> */}
-                        <IcoMoon
+                        <SearchIcon />
+                        {/* <IcoMoon
                             iconSet={iconSet}
                             icon="LupaFomularioIcono"
                             style={{
@@ -118,7 +119,7 @@ const SearchBar = () => {
                                 marginRight: '8px',
                                 width: 'auto',
                             }}
-                        />
+                        /> */}
                     </SearchIconWrapper>
                     {/* <SeleccionarCategoria
                         setDraftInfo={setSearchParams}
@@ -134,11 +135,15 @@ const SearchBar = () => {
                         // autoFocus={true}
                         // onKeyDown={handleSearch}
                         value={searchParams?.searchInput}
-                        onChange={(e) => handleChange(e)}
+                        onChange={(e) => {
+                            // Stub handle change
+                            // handleChange(e)
+                            setSearchParams({ ...searchParams, searchInput: e.target.value as any })
+                        }}
                         inputProps={{
                             'aria-label': 'search', //Without label
                         }}
-                        // 'Busqueda Local: Buscar por categoria'
+                    // 'Busqueda Local: Buscar por categoria'
                     >
                         <MenuItem value={0}>
                             seleccionar categoria

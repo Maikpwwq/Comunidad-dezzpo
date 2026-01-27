@@ -1,11 +1,11 @@
 import React from 'react'
-import Link from '#R/Link'
+import Link from '@hooks/Link'
 import { navigate } from 'vike/client/router'
-import { auth } from '#@/firebase/firebaseClient'
-import '#@/assets/cssPrivateApp/header.css'
+import { auth } from '@firebase/firebaseClient'
+import '@assets/cssPrivateApp/header.css'
 
 //imagenes
-import LogoMenuComunidadDezzpo from '#@/assets/img/IsologoHeader.png'
+import LogoMenuComunidadDezzpo from '@assets/img/IsologoHeader.png'
 
 import PropTypes from 'prop-types'
 import AppBar from '@mui/material/AppBar'

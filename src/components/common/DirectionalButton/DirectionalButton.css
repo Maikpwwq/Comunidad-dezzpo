@@ -1,0 +1,11 @@
+.container-btns {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.arrow-back,
+.arrow-next {
+    min-width: 48px;
+    border-radius: 50%;
+}
