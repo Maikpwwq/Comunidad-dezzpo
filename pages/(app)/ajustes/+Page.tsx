@@ -1,20 +1,15 @@
 import { useState, useEffect } from 'react'
 import { usePageContext } from '@hooks/usePageContext'
 import { useAuth } from '@hooks/useAuth'
-
 // Services
 import { getUser, updateUser } from '@services/users'
 import type { UserRole } from '@services/types'
-
 // Components
-import Ubicacion from '@index/components/ubicacion/Ubicacion'
-import SnackBarAlert from '@index/components/SnackBarAlert'
-import ChipsCategories from '@app/components/ChipsCategories'
-import { ListadoCategorias } from '@index/components/ListadoCategorias'
-
+import { Ubicacion } from '@features/marketing'
+import { SnackBarAlert, ChipsCategories } from '@components/common'
+import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 // Styles
 import '@assets/cssPrivateApp/ajustes.css'
-
 // UI Libs
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -25,12 +20,6 @@ import FormGroup from '@mui/material/FormGroup'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
-
-export const documentProps = {
-    title: 'Ajustes | Comunidad Dezzpo',
-    description: 'Configura tu cuenta en Comunidad Dezzpo.',
-}
-
 interface UserEditInfo {
     userName: string
     userMail: string
@@ -53,39 +42,30 @@ interface UserEditInfo {
     userWebSite: string
     [key: string]: any
 }
-
 interface AlertState {
     open: boolean
     message: string
     severity: 'success' | 'error' | 'warning' | 'info' | 'default'
 }
-
 export default function Page() {
     const { currentUser } = useAuth()
     const pageContext = usePageContext()
-
     // Safety check for routeParams
     const id = pageContext.routeParams?.id as string | undefined
-
     const userAuthID = currentUser?.userId || id || ''
-
     const [isLoaded, setIsLoaded] = useState(false)
     const [saved, setSaved] = useState(true)
-
     const [userRol, setUserRol] = useState<{ rol: UserRole | undefined }>({
         rol: currentUser?.rol as UserRole | undefined,
     })
-
     const [alert, setAlert] = useState<AlertState>({
         open: false,
         message: '',
         severity: 'success',
     })
-
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
-
     const [userEditInfo, setUserEditInfo] = useState<UserEditInfo>({
         userName: '',
         userMail: '',
@@ -107,12 +87,10 @@ export default function Page() {
         userDescription: '',
         userWebSite: '',
     })
-
     /*
     const determineDistanceTime = (metadata: any) => {
         const creationTime = metadata.creationTime
         const formatedTime = parse(creationTime, 'dd-MM-yyyy', new Date())
-        
         const distanceTime = formatDistance(
             formatedTime,
             new Date(),
@@ -121,13 +99,10 @@ export default function Page() {
         return distanceTime
     }
     */
-
     const fetchUserData = async () => {
         if (!userAuthID) return;
-
         try {
             let roleToUse: UserRole | undefined = userRol.rol;
-
             if (!roleToUse) {
                 const localRole = localStorage.getItem('role')
                 if (localRole) {
@@ -135,14 +110,11 @@ export default function Page() {
                     if (!isNaN(parsed)) roleToUse = parsed as UserRole
                 }
             }
-
             if (!roleToUse) return;
-
             const userData = await getUser({
                 userId: userAuthID,
                 role: roleToUse
             });
-
             if (userData) {
                 const {
                     userName,
@@ -165,7 +137,6 @@ export default function Page() {
                     userDescription,
                     userWebSite,
                 } = userData;
-
                 setUserEditInfo({
                     ...userEditInfo,
                     userName: userName || '',
@@ -188,14 +159,12 @@ export default function Page() {
                     userDescription: userDescription || '',
                     userWebSite: userWebSite || '',
                 });
-
                 setIsLoaded(true);
             }
         } catch (error) {
             console.error("Error fetching user data:", error);
         }
     };
-
     useEffect(() => {
         // Initialize role from local storage if not present
         if (!userRol.rol) {
@@ -207,16 +176,13 @@ export default function Page() {
                 }
             }
         }
-
         if (!isLoaded && userAuthID) {
             fetchUserData();
         }
     }, [isLoaded, userAuthID, userRol.rol])
-
     const handleAlert = (message: string, severity: AlertState['severity']) => {
         setAlert({ ...alert, open: true, message: message, severity: severity })
     }
-
     const handleCloseAlert = (_event: any, reason?: string) => {
         if (reason === 'clickaway') {
             return
@@ -224,7 +190,6 @@ export default function Page() {
             setAlert({ ...alert, open: false, message: '' })
         }
     }
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         // console.log(event)
         setUserEditInfo({
@@ -232,25 +197,20 @@ export default function Page() {
             [event.target.name]: event.target.value,
         })
     }
-
     const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-
         if (!userRol.rol) {
             handleAlert('Error: Role not identified.', 'error');
             return;
         }
-
         try {
             await updateUser({
                 userId: userAuthID,
                 role: userRol.rol,
                 data: userEditInfo
             });
-
             handleAlert('Se actualizó correctamente su información!', 'success')
             setSaved(true)
-
         } catch (error) {
             console.error('Error updating user:', error)
             handleAlert(
@@ -259,7 +219,6 @@ export default function Page() {
             )
         }
     }
-
     return (
         <>
             <Container fluid className="p-0 h-100">
@@ -414,7 +373,6 @@ export default function Page() {
                                     onChange={handleChange}
                                     className="mb-4 me-4 fondoBlanco"
                                 />
-
                                 <TextField
                                     style={{ borderRadius: '30px' }}
                                     id="userPhone"
@@ -424,7 +382,6 @@ export default function Page() {
                                     onChange={handleChange}
                                     className="mt-2 mb-4 me-4 fondoBlanco"
                                 />
-
                                 <TextField
                                     style={{ borderRadius: '30px' }}
                                     id="userIdentification"
@@ -434,7 +391,6 @@ export default function Page() {
                                     onChange={handleChange}
                                     className="mb-4 me-4 fondoBlanco"
                                 />
-
                                 <Row className="pb-4 w-100">
                                     <Col className="col-6">
                                         <Button
@@ -527,7 +483,6 @@ export default function Page() {
                         >
                             Confirma tu identidad
                         </Typography>
-
                         <Typography variant="body1" className="body-1">
                             Adjunta tu documento de identificación para...
                         </Typography>

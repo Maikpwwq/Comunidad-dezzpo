@@ -6,7 +6,7 @@
  */
 
 import { useEffect, useState, useRef, useCallback } from 'react'
-import { googleLoader } from '@google/GoogleMapsAdmin'
+import { googleLoader } from '@services/utils/googleMapsLoader'
 
 export interface MapOptions {
     /** Center coordinates */

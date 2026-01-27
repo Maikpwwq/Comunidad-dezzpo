@@ -1,15 +1,7 @@
-
 import Container from 'react-bootstrap/Container'
-
-export const documentProps = {
-    title: 'Editar Cotización | Comunidad Dezzpo',
-    description: 'Modificar una cotización existente.',
-}
-
 export default function Page() {
     // const pageContext = usePageContext()
     // const { quotationId } = pageContext.routeParams
-
     return (
         <Container fluid className="p-0">
             <h1>Cargar cotizacion</h1>

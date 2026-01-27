@@ -27,7 +27,7 @@ import type { FooterProps } from './types'
 // IcoMoon icon set - loaded via require to handle JSON import
 // The iconSet must conform to { icons: Array<...>, ... } shape expected by IcoMoon
 // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-explicit-any
-const iconSet = require('@assets/css/icomoon/selection.json') as any
+import iconSet from '@assets/css/icomoon/selection.json'
 
 /** Contact data component - extracted for reuse */
 function ContactInfo(): React.ReactElement {

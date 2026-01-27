@@ -4,28 +4,19 @@
  * Displays subscription benefits for Owners and Merchants.
  * Migrated from src/app/pages/suscripciones/+Page.jsx
  */
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-
-export const documentProps = {
-    title: 'Suscripciones | Comunidad Dezzpo',
-    description: 'Planes de beneficios y suscripciones para la comunidad.',
-}
-
 const beneficiosPropietarios = [
     { title: 'Servicio 24 horas para urgencias' },
     { title: 'Todos los servicios disponibles' },
     { title: 'Prioridad al solicitar presupuestos' },
     { title: 'Garantia anti fraude' },
 ]
-
 const beneficiosComerciantes = [
     { title: 'Ficha personalizado del perfil, con proyectos, opiniones, fotos...' },
     { title: 'Obten todos los detalles de contacto y observa todos los requerimientos en el area donde quieres trabajar' },
@@ -37,7 +28,6 @@ const beneficiosComerciantes = [
     { title: 'Guias de costeo de servicios para que tu presupuesto sea más que el indicado, estas te dejaran conocer los costos basicos y las variables que pueden influir en tu cotización' },
     { title: 'Pronto diponible para descarga nuestra aplicacion, para que siempre estes conectado con la comunidad' },
 ]
-
 export default function Page() {
     return (
         <Container fluid className="p-0">
@@ -81,7 +71,6 @@ export default function Page() {
                             </Button>
                         </Col>
                     </Row>
-
                     <Row className="m-0 pt-4 w-100 d-flex">
                         <Col md={8}>
                             <Typography

@@ -26,6 +26,7 @@ export * from './drafts'
 export * from './quotations'
 
 // Search services
+export * from './asesoriaService'
 export * from './search'
 
 // Utilities

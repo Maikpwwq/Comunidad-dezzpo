@@ -7,5 +7,13 @@ export default {
   hydrationCanBeAborted: true,
   passToClient: ['pageProps', 'routeParams', 'redirectTo'],
   prefetchStaticAssets: 'viewport',
-  prerender: true
+  prerender: true,
+  meta: {
+    title: {
+      env: { server: true, client: true }
+    },
+    description: {
+      env: { server: true, client: true }
+    }
+  }
 } satisfies Config

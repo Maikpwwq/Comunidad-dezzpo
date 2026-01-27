@@ -4,17 +4,10 @@
  * Converted to TypeScript.
  * Downloads, reference materials, and resources for users.
  */
-
-export const documentProps = {
-    title: 'Biblioteca | Comunidad Dezzpo',
-    description: 'Documentos, plantillas y material de consulta para tus proyectos.',
-}
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Typography from '@mui/material/Typography'
 import Table from '@mui/material/Table'
@@ -22,20 +15,17 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
-
 // Document data
 const documentosA = [
     { title: 'Contrato De Adquisición De Servicios' },
     { title: 'Formato De Requerimientos Del Cliente' },
     { title: 'Formato De Cotización De Servicios' },
 ]
-
 const documentosB = [
     { title: 'Patologías Y Sistemas De Mantenimiento En Los Inmuebles' },
     { title: 'Manual De Procedimientos De Mantenimiento Correctivo Y Preventivo' },
     { title: 'Reglamentaciones Del Sistema De Salud Y Seguridad En El Trabajo' },
 ]
-
 export default function Page() {
     return (
         <Container fluid className="p-0 h-100">
@@ -52,7 +42,6 @@ export default function Page() {
                             documentos anexos, como lo son cotizaciones y contratos.
                         </p>
                     </Row>
-
                     <Row className="w-100">
                         <Col className="col-10 p-4">
                             <Table>
@@ -73,7 +62,6 @@ export default function Page() {
                             </Table>
                         </Col>
                     </Row>
-
                     <Row className="p-4" md={10}>
                         <Typography className="headline-xl">Material de consulta</Typography>
                         <Col className="col-10 p-4">
@@ -95,7 +83,6 @@ export default function Page() {
                             </Table>
                         </Col>
                     </Row>
-
                     <Row className="p-4" md={10}>
                         <Typography className="headline-xl">Canal de YouTube</Typography>
                         <p className="body-1">
@@ -103,7 +90,6 @@ export default function Page() {
                             utilidad, para especificar los detalles y acabados del servicio
                         </p>
                     </Row>
-
                     <Row className="p-4" md={10}>
                         <Typography className="headline-xl">Libreta de direcciones</Typography>
                         <span className="btn btn-round btn-high">Tiendas</span>

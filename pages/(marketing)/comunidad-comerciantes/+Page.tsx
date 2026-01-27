@@ -4,23 +4,14 @@
  * Converted to TypeScript.
  * NOTE: Imports Registro component from pages/(auth)/registro/+Page.tsx
  */
-
-export const documentProps = {
-    title: 'Comunidad Comerciantes | Comunidad Dezzpo',
-    description: 'Únete como comerciante calificado en Comunidad Dezzpo y accede a nuevos clientes.',
-}
-
 // Styles
 import '@assets/css/comunidad_comerciantes.css'
-
 // Components - Import Registro page component
 import Registro from '../../../pages/(auth)/registro/+Page'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // Benefits data
 const benefits = [
     {
@@ -40,7 +31,6 @@ const benefits = [
         description: 'Adopta herramientas de gestión estratégica CEO, tendrás un Informe de resultados en tiempo real.',
     },
 ]
-
 export default function Page() {
     return (
         <>
@@ -65,7 +55,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="comunidadComerciantesRegistro p-4 m-0">
                     <Col md={6} lg={6}>
@@ -74,7 +63,6 @@ export default function Page() {
                     <Registro showLogo={false} />
                 </Row>
             </Container>
-
             <Container fluid className="p-0 fondoVerde">
                 <Row className="p-0" style={{ alignItems: 'inherit' }}>
                     <Col className="colLeft p-0 ps-4 m-0" lg={6} md={12} sm={12}>
@@ -116,7 +104,6 @@ export default function Page() {
                     />
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="comunidadComerciantesBeneficios2 m-0">
                     <Col className="p-4" md={8}>

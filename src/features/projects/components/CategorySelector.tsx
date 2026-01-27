@@ -12,7 +12,7 @@ import type { SelectChangeEvent } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import { styled } from '@mui/material/styles'
 
-import { ListadoCategorias } from '@index/components/ListadoCategorias'
+import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 import type { ProjectDraftInfo } from '../types'
 
 const StyledSelect = styled(Select)(({ theme }) => ({

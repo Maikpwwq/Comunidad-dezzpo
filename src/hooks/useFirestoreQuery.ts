@@ -37,7 +37,7 @@ import {
     type WhereFilterOp,
     type OrderByDirection,
 } from 'firebase/firestore'
-import { firestore } from '@firebase/firebaseClient'
+import { firestore } from '@services/firebase'
 
 export type WhereClause = [string, WhereFilterOp, unknown]
 export type OrderByClause = [string, OrderByDirection?]

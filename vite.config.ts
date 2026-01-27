@@ -57,6 +57,14 @@ export default defineConfig({
         }
         warn(warning)
       },
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+             if (id.includes('firebase')) return 'firebase';
+             if (id.includes('@mui') || id.includes('react') || id.includes('emotion')) return 'ui-vendor';
+          }
+        }
+      }
     },
   },
 
@@ -82,6 +90,7 @@ export default defineConfig({
       // Assets
       { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
       { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
+      { find: '@providers', replacement: path.resolve(__dirname, 'src/providers') },
 
       // Firebase specific (renamed to avoid collision with @firebase/* packages in node_modules)
       { find: '@firebase-services', replacement: path.resolve(__dirname, 'src/services/firebase') },

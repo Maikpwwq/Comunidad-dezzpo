@@ -4,21 +4,13 @@
  * Converted to TypeScript.
  * Service contract page.
  */
-
-export const documentProps = {
-    title: 'Contratar | Comunidad Dezzpo',
-    description: 'Contrato de servicios profesionales.',
-}
-
 // Bootstrap
 import Container from 'react-bootstrap/Container'
-
 interface PageProps {
     draftId?: string
     quotationId?: string
     proponentId?: string
 }
-
 export default function Page({ draftId, quotationId, proponentId }: PageProps) {
     return (
         <Container fluid className="p-0">

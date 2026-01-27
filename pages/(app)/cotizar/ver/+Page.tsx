@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { usePageContext } from '@hooks/usePageContext'
 import { getQuotation } from '@services/quotations'
 import type { QuotationFirestoreDocument } from '@services/types'
-
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -12,7 +11,6 @@ import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
-
 interface QuotationInfoState extends Partial<QuotationFirestoreDocument> {
     description?: string
     scope?: string
@@ -26,16 +24,9 @@ interface QuotationInfoState extends Partial<QuotationFirestoreDocument> {
     quotationPrice?: number
     quotationStatus?: 'pending' | 'accepted' | 'rejected'
 }
-
-export const documentProps = {
-    title: 'Ver Cotización | Comunidad Dezzpo',
-    description: 'Detalles de la cotización.',
-}
-
 export default function Page() {
     const pageContext = usePageContext()
     const { quotationId } = pageContext.routeParams as { quotationId: string }
-
     const [quotationInfo, setQuotationInfo] = useState<QuotationInfoState>({
         quotationId: '',
         quotationComercianteId: '',
@@ -48,13 +39,10 @@ export default function Page() {
         garantia: '',
         valorSubtotal: 0,
     })
-
     const fetchQuotationData = async () => {
         if (!quotationId || quotationId.trim() === '') return;
-
         try {
             const response = await getQuotation({ quotationId });
-
             if (response.success && response.data) {
                 const {
                     quotationComercianteId,
@@ -65,12 +53,10 @@ export default function Page() {
                     quotationStatus,
                     ...rest
                 } = response.data as any; // Using any to destructure unknown properties from data if they exist
-
                 // Map response data to state structure
                 // Note: The legacy code mapped 'description' from 'quotationDescription' if available, 
                 // but usually legacy code had mixed naming. 
                 // We keep the mapping similar to legacy but type safe.
-
                 setQuotationInfo({
                     ...quotationInfo,
                     quotationId: quotationId,
@@ -96,11 +82,9 @@ export default function Page() {
             console.error('Error fetching quotation:', error);
         }
     };
-
     useEffect(() => {
         fetchQuotationData();
     }, [quotationId]);
-
     return (
         <Container
             fluid
@@ -145,7 +129,6 @@ export default function Page() {
                 >
                     {quotationInfo.procedimiento}
                 </Typography>
-
                 <Row className="m-0 w-100 p-0 pt-2 d-flex">
                     <Typography
                         variant="h6"
@@ -153,7 +136,6 @@ export default function Page() {
                     >
                         Tabla de valores
                     </Typography>
-
                     <Table>
                         <TableHead>
                             <TableRow
@@ -247,7 +229,6 @@ export default function Page() {
                 >
                     {quotationInfo.tiempoEjecucion}
                 </Typography>
-
                 <Typography
                     variant="h6"
                     className="p-description w-auto mt-3"
@@ -260,7 +241,6 @@ export default function Page() {
                 >
                     {quotationInfo.condicionesNegocio}
                 </Typography>
-
                 <Typography
                     variant="h6"
                     className="p-description w-auto mt-3"

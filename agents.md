@@ -90,3 +90,13 @@ src/
     ├── (marketing)/  # Public
     └── app/          # Private
 ```
+
+## 6. Learned Lessons
+
+### Vike Configuration (2026-01-27)
+- **Deprecation of `+config.h.ts`**: Vike now prefers `+config.ts`.
+- **Forbidden Exports in `+Page.tsx`**: Vike V1 design strictly forbids side exports like `documentProps` in `+Page.tsx` files when using `clientRouting` to avoid bundling server-side logic in the client. Metadata strings must be defined in `+config.ts` (or `+config.h.ts` if legacy).
+- **Migration Pattern**: When moving metadata from `+Page.tsx` to `+config.ts`, ensure `title` and `description` are valid config keys. This often requires defining them in the global `renderer/+config.ts` under the `meta` property.
+
+### Build Stability
+- **Firebase Usage**: Never import `getAuth()` or `getFirestore()` directly in global scope. Always use the initialized instances exported from `services/firebase/client.ts`. Direct usage causes "No Firebase App" errors during build/SSR because the app isn't initialized yet.

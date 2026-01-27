@@ -3,31 +3,21 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Cambiar Contraseña | Comunidad Dezzpo',
-    description: 'Actualiza tu contraseña de acceso.',
-}
-
 import { useState } from 'react'
-import { auth } from '@firebase/firebaseClient'
+import { auth } from '@services/firebase'
 import { updatePassword } from 'firebase/auth'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-
 interface PasswordState {
     newPassword: string
     againNewPassword: string
 }
-
 export default function Page() {
     const [passwords, setPasswords] = useState<PasswordState>({
         newPassword: '',
@@ -35,28 +25,23 @@ export default function Page() {
     })
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState(false)
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPasswords({
             ...passwords,
             [event.target.name]: event.target.value,
         })
     }
-
     const handleClick = async () => {
         setError(null)
         setSuccess(false)
-
         if (passwords.newPassword !== passwords.againNewPassword) {
             setError('Las contraseñas no coinciden')
             return
         }
-
         if (!auth?.currentUser) {
             setError('Debes iniciar sesión para cambiar la contraseña')
             return
         }
-
         try {
             await updatePassword(auth.currentUser, passwords.newPassword)
             setSuccess(true)
@@ -66,7 +51,6 @@ export default function Page() {
             console.error('Password update error:', err)
         }
     }
-
     return (
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex pt-4 pb-4">

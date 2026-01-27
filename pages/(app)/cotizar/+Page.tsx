@@ -3,11 +3,9 @@ import { UserAuthContext } from '@providers/UserAuthProvider'
 import { v4 as uuidv4 } from 'uuid'
 import { usePageContext } from '@hooks/usePageContext'
 import { navigate } from 'vike/client/router'
-
 import { updateDraft } from '@services/drafts'
 import { setQuotation } from '@services/quotations'
 import type { QuotationFirestoreDocument } from '@services/types'
-
 // UI Libs
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -22,7 +20,6 @@ import TableCell from '@mui/material/TableCell'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import Typography from '@mui/material/Typography'
-
 interface Activity {
     id: string
     item: string
@@ -32,7 +29,6 @@ interface Activity {
     precio: number | string
     valor: number
 }
-
 interface CotizacionState {
     quotationId: string
     proponentId: string
@@ -45,25 +41,16 @@ interface CotizacionState {
     garantia: string
     valorSubtotal: number
 }
-
-export const documentProps = {
-    title: 'Cotizar | Comunidad Dezzpo',
-    description: 'Crear una nueva cotización.',
-}
-
 export default function Page() {
     const { currentUser } = useContext(UserAuthContext)
     const userAuthID = currentUser?.userId || ''
-
     const pageContext = usePageContext()
     const draftId = pageContext.routeParams?.draftId as string
-
     // Generate a new ID for this quotation session
     // Note: We use useState so it doesn't regenerate on every render, 
     // although technically the legacy code did `const quotationID = uuidv4()` in the body which IS wrong.
     // We'll fix it to be stable.
     const [quotationID] = useState(() => uuidv4())
-
     const [cotizacion, setCotizacion] = useState<CotizacionState>({
         quotationId: '', // Will be set on save, or we can set it now. Legacy set it in handleEnviar.
         proponentId: userAuthID,
@@ -76,28 +63,23 @@ export default function Page() {
         garantia: '',
         valorSubtotal: 0,
     })
-
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setCotizacion({
             ...cotizacion,
             [e.target.name]: e.target.value,
         })
     }
-
     const handleRemoveTableRow = (e: React.MouseEvent, index: number) => {
         e.preventDefault()
         const actividades = cotizacion.actividades.filter((_, i) => i !== index)
-
         // Recalculate subtotal
         const newSubtotal = actividades.reduce((sum, act) => sum + (act.valor || 0), 0)
-
         setCotizacion({
             ...cotizacion,
             actividades,
             valorSubtotal: newSubtotal
         })
     }
-
     const handleNewTableRow = (e: React.MouseEvent) => {
         e.preventDefault()
         setCotizacion({
@@ -116,42 +98,34 @@ export default function Page() {
             ],
         })
     }
-
     const handleActivityChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, index: number) => {
         e.preventDefault()
         const { name, value } = e.target
-
         let sumaSubtotal = 0
         const updateActivities = cotizacion.actividades.map((activity, i) => {
             if (i === index) {
                 const updatedActivity = { ...activity, [name]: value }
-
                 // Calculate line value if quantity or price changes
                 const qty = Number(updatedActivity.cantidad) || 0
                 const price = Number(updatedActivity.precio) || 0
                 updatedActivity.valor = qty * price
-
                 return updatedActivity
             }
             return activity
         })
-
         // Recalculate total
         sumaSubtotal = updateActivities.reduce((sum, act) => sum + (act.valor || 0), 0)
-
         setCotizacion({
             ...cotizacion,
             actividades: updateActivities,
             valorSubtotal: sumaSubtotal,
         })
     }
-
     const handleEnviar = async () => {
         if (!userAuthID) {
             console.error('User not authenticated')
             return
         }
-
         // Prepare quotation data
         const quotationData: Partial<QuotationFirestoreDocument> = {
             ...cotizacion,
@@ -161,45 +135,37 @@ export default function Page() {
             quotationStatus: 'pending',
             quotationId: quotationID
         }
-
         try {
             // 1. Save Quotation
             const quoteResponse = await setQuotation({
                 quotationId: quotationID,
                 data: quotationData
             })
-
             // Check if quoteResponse exists and has success property (handling potential void return if types are mixed)
             if (quoteResponse && 'success' in quoteResponse && !quoteResponse.success) {
                 console.error('Error saving quotation:', quoteResponse.error)
                 return
             }
-
             console.log('Quotation saved successfully')
-
             // 2. Update Draft with reference to this quotation
             if (draftId && draftId.trim() !== '') {
                 const updatePayload = {
                     draftApply: [quotationID]
                 }
-
                 // draftService.updateDraft returns Promise<void> and throws on error
                 await updateDraft({
                     draftId: draftId,
                     data: updatePayload
                 })
-
                 console.log('Draft updated with quotation reference')
                 navigate('/app/portal-servicios')
             } else {
                 navigate('/app/portal-servicios')
             }
-
         } catch (error) {
             console.error('Error in handleEnviar:', error)
         }
     }
-
     return (
         <Container
             fluid
@@ -361,7 +327,6 @@ export default function Page() {
                         </TableBody>
                     </Table>
                 </Row>
-
                 <Typography
                     variant="h6"
                     align="left"

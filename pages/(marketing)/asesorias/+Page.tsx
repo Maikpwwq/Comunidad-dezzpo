@@ -3,41 +3,28 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Asesorías | Comunidad Dezzpo',
-    description: 'Servicios de asesoría profesional para tus proyectos de construcción y mantenimiento.',
-}
-
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { navigate } from 'vike/client/router'
-
 // Styles
 import '@assets/css/asesorias.css'
-
 // Services
-import updateAsesoriaToFirestore from '@services/updateAsesoriaToFirestore.service'
-
+import { updateAsesoriaToFirestore } from '@services/asesoriaService'
 // Components
 import { Link } from '@hooks'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-
 // MUI
 import ChatIcon from '@mui/icons-material/Chat'
-
 interface AsesoriaInfo {
     asesoriaTitulo: string
     asesoriaDescription: string
     asesoriaSelect: string
 }
-
 export default function Page() {
     const asesoriaID = uuidv4()
     const [asesoriaInfo, setAsesoriaInfo] = useState<AsesoriaInfo>({
@@ -45,11 +32,9 @@ export default function Page() {
         asesoriaDescription: '',
         asesoriaSelect: '',
     })
-
     const handleBlogButton = () => {
         navigate('/blog')
     }
-
     const handleSubmit = async () => {
         try {
             await updateAsesoriaToFirestore({
@@ -60,7 +45,6 @@ export default function Page() {
             console.error('Error submitting asesoria:', error)
         }
     }
-
     const handleChange = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
     ) => {
@@ -70,7 +54,6 @@ export default function Page() {
             [event.target.name]: event.target.value,
         })
     }
-
     return (
         <>
             <Container fluid className="p-0">
@@ -88,7 +71,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="asesoriasPreguntas m-0 w-100">
                     <Col className="row">
@@ -153,7 +135,6 @@ export default function Page() {
                                 </Button>
                             </Form>
                         </Col>
-
                         <Col className="col pt-4 pb-4" md={6} sm={12}>
                             <span className="chatAsesor headline-xl mb-4">
                                 Contacta Con Un Asesor
@@ -174,7 +155,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="asesoriasBlog m-0 w-100">
                     <Row className="col">

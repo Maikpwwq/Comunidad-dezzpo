@@ -3,15 +3,8 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Blog | Comunidad Dezzpo',
-    description: 'Artículos, consejos y noticias sobre mantenimiento del hogar y proyectos de construcción.',
-}
-
 // Styles
 import '@assets/css/blog.css'
-
 // Assets
 import BlogEntrada1 from '@assets/img/BlogEntrada1.png'
 import User1 from '@assets/img/iconos/User1.svg'
@@ -19,12 +12,10 @@ import BlogEntrada2 from '@assets/img/BlogEntrada2.png'
 import User2 from '@assets/img/iconos/User2.svg'
 import BlogEntrada3 from '@assets/img/BlogEntrada3.png'
 import User3 from '@assets/img/iconos/User3.svg'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // Testimonial data
 const testimonials = [
     {
@@ -46,7 +37,6 @@ const testimonials = [
         text: 'Pasaron años antes de que me decidiera, ahora los problemas de humedad ya son cosas del pasado',
     },
 ]
-
 export default function Page() {
     return (
         <>
@@ -57,14 +47,12 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="testimonioPropietarios m-0 w-100">
                     <Col className="mt-4 mb-4">
                         <Col>
                             <h3 className="headline-l">Testimonios de Propietarios</h3>
                         </Col>
-
                         {testimonials.map((testimonial) => (
                             <Container key={testimonial.id} fluid className="p-0">
                                 <Row>

@@ -3,22 +3,14 @@
  *
  * Displays user notifications.
  */
-
 // Bootstrap
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
 // MUI
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
-
-export const documentProps = {
-    title: 'Notificaciones | Comunidad Dezzpo',
-    description: 'Historial de notificaciones de tu cuenta.',
-}
-
 export default function Page() {
     return (
         <Container fluid className="p-0 h-100">
@@ -27,7 +19,6 @@ export default function Page() {
                     <Typography variant="h4" className="headline-xl mb-4">
                         Notificaciones
                     </Typography>
-
                     <Box
                         sx={{
                             display: 'flex',

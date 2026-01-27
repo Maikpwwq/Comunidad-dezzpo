@@ -5,7 +5,7 @@
  */
 
 import { collection, getDocs, query, where } from 'firebase/firestore'
-import { firestore } from '@firebase/firebaseClient'
+import { firestore } from '@services/firebase'
 import type { SearchParams, SearchResult, UserFirestoreDocument } from '../types'
 
 const COMERCIANTES_COLLECTION = 'usersComerciantesCalificados'

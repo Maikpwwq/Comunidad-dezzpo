@@ -1,13 +1,11 @@
 import { useState, useEffect, type ChangeEvent } from 'react' // Fix type import
 // ... other imports
-
 // @ts-ignore
-import AdjuntarArchivos from '@app/components/AdjuntarArchivos'
+import { AdjuntarArchivos } from '@components/common'
 import { v4 as uuidv4 } from 'uuid'
 import { navigate } from 'vike/client/router'
 import { usePageContext } from '@hooks/usePageContext'
 import { useAuth } from '@hooks/useAuth'
-
 // Firebase
 import {
     collection,
@@ -17,31 +15,27 @@ import {
     // DocumentData,
 } from 'firebase/firestore'
 import { firestore } from '@services/firebase'
-
 // Components
-import DirectionalButton from '@index/components/DirectionalButton/DirectionalButton'
-import SeleccionarCategoria from '@index/components/SeleccionarCategoria'
-import BuscadorNuevoProyecto from '@index/components/buscador/BuscadorNuevoProyecto'
-import SubCategorias from '@index/components/sub-categorias/SubCategorias'
-
+import { DirectionalButton } from '@components/common'
+import {
+    ProjectSearchForm,
+    CategorySelector,
+    SubCategoryCard
+} from '@features/projects'
 // Features
 import { PasoAPaso, Ubicacion } from '@features/marketing'
 import PageRegistro from '../../(auth)/registro/+Page'
 import PageIngreso from '../../(auth)/ingreso/+Page'
-
 // Local
 import TablaSubCategoriaCantidades from './TablaSubCategoriaCantidades'
-
 // Styles
 import '@assets/css/nuevo_proyecto.css'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-
 // MUI
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
@@ -50,13 +44,11 @@ import AddLocationIcon from '@mui/icons-material/AddLocation'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-
 // Types
 interface CategoryItem {
     subCategoria?: string
     [key: string]: any
 }
-
 interface DraftInfo {
     draftCategory: string | number
     draftSubCategory: any
@@ -82,29 +74,19 @@ interface DraftInfo {
     draftApply: any[]
     [key: string]: any
 }
-
-export const documentProps = {
-    title: 'Nuevo Proyecto | Comunidad Dezzpo',
-    description: 'Crea un nuevo proyecto y recibe cotizaciones de profesionales calificados.',
-}
-
 export default function Page() {
     const draftID = uuidv4()
     const { currentUser } = useAuth()
     const userId = currentUser?.userId || ''
     const pageContext = usePageContext()
-
     const paramCategoriaProfesional = pageContext.routeParams?.CategoriaProfesional
     const paramTipoProyecto = pageContext.routeParams?.TipoProyecto
-
     const [hideRegister] = useState(!!currentUser?.isAuth)
     const [showMore, setShowMore] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
-
     // Firestore refs
     const categoriaRef = collection(firestore, 'categoriasServicios')
     const draftRef = collection(firestore, 'drafts')
-
     // Categoria State
     const [categoriaInfo, setCategoriaInfo] = useState<{
         selected: any[]
@@ -117,9 +99,7 @@ export default function Page() {
         data: [],
         subCatLength: 0,
     })
-
     const [activeStep, setActiveStep] = useState(0)
-
     const [draftInfo, setDraftInfo] = useState<DraftInfo>({
         draftCategory: paramCategoriaProfesional || 0,
         draftSubCategory: '',
@@ -144,29 +124,23 @@ export default function Page() {
         draftPostalCode: '',
         draftApply: [],
     })
-
     const [openModal, setOpen] = useState(false)
     const [categoriesIndex, setCategoriesIndex] = useState(0)
-
     const handleOpen = () => setOpen(true)
     const handleCloseModal = () => setOpen(false)
-
     const handleNext = () => {
         if (categoriesIndex < categoriaInfo.subCatLength - 1) {
             setCategoriesIndex(categoriesIndex + 1)
         }
     }
-
     const handleBack = () => {
         if (categoriesIndex > 0) {
             setCategoriesIndex(categoriesIndex - 1)
         }
     }
-
     const draftToFirestore = async (updateInfo: DraftInfo, projectID: string) => {
         await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
     }
-
     useEffect(() => {
         if (!isLoaded) {
             const categoriasFromFirestore = async () => {
@@ -185,7 +159,6 @@ export default function Page() {
                     )
                 }
             }
-
             if (!!draftInfo.draftProject && draftInfo.draftCategory !== 0) {
                 categoriasFromFirestore()
                     .then((docSnap) => {
@@ -193,12 +166,10 @@ export default function Page() {
                             const data = docSnap.docs.map((element) => ({
                                 ...element.data(),
                             }))
-
                             if (data.length > 0) {
                                 let i = 0
                                 let j = 0
                                 let response: any[][] = [[], [], [], [], [], []]
-
                                 data.forEach((element) => {
                                     if (i < 6) {
                                         if (!response[j]) {
@@ -227,7 +198,6 @@ export default function Page() {
                                         i++
                                     }
                                 })
-
                                 if (response[0] && response[0].length > 0) {
                                     setCategoriaInfo((prev: any) => ({
                                         ...prev,
@@ -253,18 +223,15 @@ export default function Page() {
         draftInfo.draftCategory,
         draftInfo.draftProject,
     ])
-
     const handleShowMore = () => {
         setShowMore(!showMore)
     }
-
     const handleSave = () => {
         const snap = draftToFirestore(draftInfo, draftInfo.draftId)
         snap.then(() => {
             navigate('/app/directorio-requerimientos')
         })
     }
-
     const goForward = () => {
         if (activeStep < steps.length) {
             let active = activeStep + 1
@@ -275,39 +242,32 @@ export default function Page() {
             localStorage.setItem('requerimiento', JSON.stringify(draftInfo))
         }
     }
-
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const name = event.target.name;
         const value = event.target.value;
-
         setDraftInfo((prev: DraftInfo) => ({
             ...prev,
             [name]: value,
         }))
-
         if (name === 'draftCategory') {
             setIsLoaded(false)
         }
     }
-
     const handleComeBack = () => {
         if (activeStep > 0) {
             let active = activeStep - 1
             setActiveStep(active)
         }
     }
-
     const steps = [
         'Categoria/Subcategoria',
         'Elige tus ajustes',
         'Programa la visita',
         'Registrarse',
     ]
-
     return (
         <Container fluid className="p-0" style={{ position: 'relative' }}>
             <PasoAPaso activeStep={activeStep} steps={steps} />
-
             {activeStep === 0 && (
                 <Col>
                     {(draftInfo.draftProject === undefined ||
@@ -324,14 +284,13 @@ export default function Page() {
                                     </Col>
                                 </Col>
                                 <Col className="col m-4 p-0" xl={4} lg={6} md={8} sm={12} xs={12}>
-                                    <BuscadorNuevoProyecto
+                                    <ProjectSearchForm
                                         setDraftInfo={setDraftInfo}
                                         draftInfo={draftInfo}
                                     />
                                 </Col>
                             </Row>
                         )}
-
                     {!!draftInfo.draftProject && Number(draftInfo.draftCategory) !== 0 && (
                         <>
                             <Row className="w-100 m-0">
@@ -341,7 +300,7 @@ export default function Page() {
                                         servicios que vas a solicitar. Luego en el siguiente paso podrás modificar la cantidad de
                                         obra que requieres.
                                     </p>
-                                    <SeleccionarCategoria
+                                    <ProjectSearchForm
                                         setDraftInfo={setDraftInfo}
                                         draftInfo={draftInfo}
                                         setIsLoaded={setIsLoaded}
@@ -355,7 +314,7 @@ export default function Page() {
                                             categoriaInfo.data[categoriesIndex]!.map((item: CategoryItem, index: number) => {
                                                 return (
                                                     item.subCategoria ? (
-                                                        <SubCategorias
+                                                        <SubCategoryCard
                                                             key={index}
                                                             item={item}
                                                             setCategoriaInfo={setCategoriaInfo}
@@ -371,7 +330,6 @@ export default function Page() {
                                     />
                                 </Col>
                             </Row>
-
                             <Col className="col-10">
                                 <Row className="pt-4 pb-4 w-100 justify-content-center">
                                     <Button
@@ -396,7 +354,6 @@ export default function Page() {
                     )}
                 </Col>
             )}
-
             {activeStep === 1 && (
                 <Col className="nuevoProyectoBuscador2 align-items-baseline p-2 ps-4">
                     <TablaSubCategoriaCantidades
@@ -438,12 +395,10 @@ export default function Page() {
                                     Provee información adicional aquí, como especificaciones de tecnica y materiales requeridos.
                                 </Form.Text>
                             </Form.Group>
-
                             <Typography variant="body2" color="text.secondary" className="pb-2" onClick={handleShowMore} style={{ cursor: 'pointer' }}>
                                 Ofrece mayores detalles
                                 {showMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                             </Typography>
-
                             {showMore && (
                                 <Box>
                                     <Form.Group className="mb-3" controlId="formNewProjectSize">
@@ -501,7 +456,6 @@ export default function Page() {
                                     </Form.Group>
                                 </Box>
                             )}
-
                             <Col className="col-10">
                                 <Row className="pt-4 pb-4 w-100 justify-content-center">
                                     <Button
@@ -526,7 +480,6 @@ export default function Page() {
                     </Col>
                 </Col>
             )}
-
             {activeStep === 2 && (
                 <Col className="nuevoProyectoBuscador3 align-items-baseline p-2 ps-4">
                     <Typography variant="h3" className="p-description w-100 center">
@@ -568,7 +521,6 @@ export default function Page() {
                                     </Row>
                                 </Form.Label>
                             </Form.Group>
-
                             <Form.Group className="m-4" controlId="formNewProjectAtachments">
                                 <Form.Label className="body-2">
                                     Cargar fotos, imagenes y documentos relacionados.
@@ -594,7 +546,6 @@ export default function Page() {
                                     />
                                 </Row>
                             </Form.Group>
-
                             <Modal
                                 open={openModal}
                                 onClose={handleCloseModal}
@@ -609,7 +560,6 @@ export default function Page() {
                                     />
                                 </Box>
                             </Modal>
-
                             <Col className="col-10">
                                 <Row className="pt-4 pb-4 w-100 justify-content-center">
                                     <Button
@@ -634,7 +584,6 @@ export default function Page() {
                     </Col>
                 </Col>
             )}
-
             {activeStep === 3 && !hideRegister ? (
                 <Row className="nuevoProyectoMensaje w-100">
                     <Col className="p-4 col-10">
@@ -646,14 +595,12 @@ export default function Page() {
                             Asegúrate que tus datos son exactos.
                         </p>
                     </Col>
-
                     <PageRegistro
                         setDraftInfo={(info: any) => setDraftInfo(info)}
                         draftInfo={draftInfo}
                         handleSave={handleSave}
                         showLogo={false}
                     />
-
                     <PageIngreso
                         setDraftInfo={(info: any) => setDraftInfo(info)}
                         draftInfo={draftInfo}

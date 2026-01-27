@@ -4,25 +4,16 @@
  * Converted to TypeScript.
  * Shows list of project requirements/drafts.
  */
-
-export const documentProps = {
-    title: 'Directorio de Requerimientos | Comunidad Dezzpo',
-    description: 'Explora requerimientos de proyectos activos y aplica con cotizaciones.',
-}
-
 import { useState, useEffect } from 'react'
-import { firestore } from '@firebase/firebaseClient'
+import { firestore } from '@services/firebase'
 import { collection, getDocs } from 'firebase/firestore'
-
 // Components
 import { DraftCard } from '@features/quotes'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-
 interface Draft {
     id?: string
     draftName?: string
@@ -30,16 +21,13 @@ interface Draft {
     draftCategory?: string
     [key: string]: unknown
 }
-
 interface DraftsData {
     data?: Draft[]
 }
-
 export default function Page() {
     const draftRef = collection(firestore, 'drafts')
     const [draftsData, setDraftsData] = useState<DraftsData>({})
     const [isLoaded, setIsLoaded] = useState(false)
-
     useEffect(() => {
         if (!isLoaded) {
             const draftsFromFirestore = async () => {
@@ -50,7 +38,6 @@ export default function Page() {
                     console.error('Error fetching drafts:', err)
                 }
             }
-
             draftsFromFirestore()
                 .then((docSnap) => {
                     if (docSnap) {
@@ -58,7 +45,6 @@ export default function Page() {
                             id: element.id,
                             ...element.data(),
                         })) as Draft[]
-
                         if (data) {
                             setDraftsData({ data })
                             setIsLoaded(true)
@@ -70,7 +56,6 @@ export default function Page() {
                 })
         }
     }, [draftRef, isLoaded])
-
     return (
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex">

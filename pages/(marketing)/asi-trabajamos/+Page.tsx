@@ -3,24 +3,15 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Así Trabajamos | Comunidad Dezzpo',
-    description: 'Descubre cómo funciona Comunidad Dezzpo y cómo puedes encontrar al contratista ideal para tu proyecto.',
-}
-
 // Styles
 import '@assets/css/asi_trabajamos.css'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import ChatIcon from '@mui/icons-material/Chat'
-
 // Stats data
 const stats = [
     { value: '48', label: 'USUARIOS' },
@@ -28,7 +19,6 @@ const stats = [
     { value: '33', label: 'CLIENTES FELICES' },
     { value: '62', label: 'PROYECTOS' },
 ]
-
 // Rating criteria
 const ratingCriteria = [
     'Cumple con los tiempos de entrega de las certificaciones, pólizas, actas y contratos.',
@@ -37,12 +27,10 @@ const ratingCriteria = [
     'Fue suficiente el personal y tenía todas las competencias necesarias.',
     'Las facturas, soportes y documentos contractuales fueron entregados oportunamente.',
 ]
-
 export default function Page() {
     return (
         <>
             <div className="asiTrabajamosRegistro" />
-
             {/* Chat Section */}
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosChat m-0 w-100 d-flex justify-content-end">
@@ -66,7 +54,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* Vinculate Section */}
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosVinculate m-0 w-100 d-flex justify-content-end">
@@ -78,7 +65,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* Propietario Section */}
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosPropietario m-0 w-100 d-flex justify-content-end">
@@ -93,7 +79,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* Certificación Section */}
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosCertificaciones m-0 w-100">
@@ -126,7 +111,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* Calificaciones Section */}
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosCalificaciones m-0 p-4 w-100 d-flex flex-column align-items-end">
@@ -150,7 +134,6 @@ export default function Page() {
                     <Col className="col-12" style={{ minHeight: '200px' }} />
                 </Row>
             </Container>
-
             {/* Estadísticas Section */}
             <Container fluid className="p-0">
                 <Row className="asiTrabajamosEstadisticas m-0">

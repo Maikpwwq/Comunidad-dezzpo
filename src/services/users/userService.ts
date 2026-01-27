@@ -16,7 +16,7 @@ import {
     where,
     type DocumentReference,
 } from 'firebase/firestore'
-import { firestore } from '@firebase/firebaseClient'
+import { firestore } from '@services/firebase'
 import type { ReadUserParams, UpdateUserParams, UserFirestoreDocument, UserRole } from '../types'
 
 // Collection names

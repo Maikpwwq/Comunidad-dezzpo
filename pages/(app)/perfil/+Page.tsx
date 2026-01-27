@@ -4,7 +4,7 @@ import { useState, useContext, useEffect, useMemo } from 'react'
 // import { formatDistance, parse } from 'date-fns'
 // import { es } from 'date-fns/locale'
 import { getUser } from '@services/users'
-import { auth } from '@firebase/firebaseClient'
+import { auth } from '@services/firebase'
 import { UserAuthContext } from '@providers/UserAuthProvider'
 import { usePageContext } from '@hooks/usePageContext'
 
@@ -13,17 +13,11 @@ import '@assets/cssPrivateApp/perfil.css'
 // @ts-ignore
 import ProfilePhoto from '@assets/img/Profile.png'
 
-// Components
 // @ts-ignore
-import MapaPerfil from '@app/components/MapaPerfil'
 // @ts-ignore
-import CincoEstrellas from '@app/components/CincoEstrellas'
-// @ts-ignore
-import Comentarios from '@app/components/Comentarios'
-import ChipsCategories from '@app/components/ChipsCategories'
-import { ListadoCategorias } from '@index/components/ListadoCategorias'
-// @ts-ignore
-import AdjuntarArchivos from '@app/components/AdjuntarArchivos'
+import { Comentarios } from '@features/profile'
+import { ChipsCategories, MapaPerfil, AdjuntarArchivos, CincoEstrellas } from '@components/common'
+import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 // UI Libs
 import Row from 'react-bootstrap/Row'
@@ -41,10 +35,7 @@ import LinkIcon from '@mui/icons-material/Link'
 // Types
 import type { UserFirestoreDocument, UserRole } from '@services/types'
 
-export const documentProps = {
-    title: 'Perfil | Comunidad Dezzpo',
-    description: 'Perfil de usuario y portafolio de servicios.',
-}
+
 
 interface UserInfoState extends Partial<UserFirestoreDocument> {
     userCategoriesChips: any[]

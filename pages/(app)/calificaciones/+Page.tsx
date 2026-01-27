@@ -4,32 +4,22 @@
  * Converted to TypeScript.
  * Rating form for evaluating service providers.
  */
-
-export const documentProps = {
-    title: 'Calificaciones | Comunidad Dezzpo',
-    description: 'Evalúa el desempeño de comerciantes calificados.',
-}
-
 import { useState } from 'react'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Button from '@mui/material/Button'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import Rating from '@mui/material/Rating'
 import FormLabel from '@mui/material/FormLabel'
-
 interface RateState {
     gestion: number
     calidad: number
     oportunidad: number
     description: string
 }
-
 // Rating criteria
 const ratingCriteria = [
     {
@@ -48,7 +38,6 @@ const ratingCriteria = [
         description: 'El servicio fue prestado en las fechas y horario programados, además las facturas y documentos fueron entregados oportunamente.',
     },
 ]
-
 export default function Page() {
     const [rate, setRate] = useState<RateState>({
         gestion: 0,
@@ -56,22 +45,18 @@ export default function Page() {
         oportunidad: 0,
         description: '',
     })
-
     const handleRate = (value: number | null, name: keyof RateState) => {
         if (value !== null && name !== 'description') {
             setRate({ ...rate, [name]: value })
         }
     }
-
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setRate({ ...rate, description: event.target.value })
     }
-
     const handleSubmit = () => {
         // TODO: Implement rating submission
         console.log('Rating submitted:', rate)
     }
-
     return (
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex pt-4 pb-4">
@@ -99,7 +84,6 @@ export default function Page() {
                                 />
                             </FormLabel>
                         ))}
-
                         <TextareaAutosize
                             value={rate.description}
                             onChange={handleChange}

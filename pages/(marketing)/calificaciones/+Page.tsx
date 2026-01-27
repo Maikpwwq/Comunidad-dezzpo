@@ -3,18 +3,10 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Calificaciones | Comunidad Dezzpo',
-    description: 'Sistema de calificaciones y reseñas de Comunidad Dezzpo.',
-}
-
 // Styles
 import '@assets/css/calificaciones.css'
-
 // Bootstrap
 import Container from 'react-bootstrap/Container'
-
 export default function Page() {
     return (
         <Container fluid className="p-0">

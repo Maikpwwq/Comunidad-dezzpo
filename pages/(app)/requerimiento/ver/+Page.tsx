@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { navigate } from 'vike/client/router'
-
 // Hooks
 import { usePageContext } from '@hooks/usePageContext'
 import { useAuth } from '@hooks/useAuth'
-
 // Services
 import { getDraft } from '@services/drafts'
 import { getQuotation } from '@services/quotations'
 import type { DraftFirestoreDocument, QuotationFirestoreDocument } from '@services/types'
-
 // Components
 import TablaSubCategoriaPresupuesto from '../components/TablaSubCategoriaPresupuesto'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Button from '@mui/material/Button'
 import Table from '@mui/material/Table'
@@ -26,33 +21,21 @@ import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
-
 // CSS
-import '../../detalle_requerimiento.css'
-
-export const documentProps = {
-    title: 'Detalle Requerimiento | Comunidad Dezzpo',
-    description: 'Detalles de tu solicitud de servicio.',
-}
-
+// import '../../detalle_requerimiento.css'
 export default function Page() {
     const { currentUser } = useAuth()
     const userAuthID = currentUser?.userId
     const rolAuth = currentUser?.role
-
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams
-
     const [isLoaded, setIsLoaded] = useState(false)
-
     interface CotizacionesState {
         appliedQuotations: QuotationFirestoreDocument[]
     }
-
     const [cotizacionesInfo, setCotizacionesInfo] = useState<CotizacionesState>({
         appliedQuotations: [],
     })
-
     const [requerimientoInfo, setRequerimientoInfo] = useState<Omit<Partial<DraftFirestoreDocument>, 'draftSubCategory'> & {
         draftName: string
         draftCategory: string
@@ -66,13 +49,10 @@ export default function Page() {
         draftTotal: 0,
         draftApply: [] as string[],
     })
-
     const fetchDraftData = async () => {
         if (!draftId) return;
-
         try {
             const draft = await getDraft({ draftId });
-
             if (draft) {
                 // Map draft data to state
                 setRequerimientoInfo(prev => ({
@@ -83,7 +63,6 @@ export default function Page() {
                     draftTotal: typeof draft.draftTotal === 'string' ? parseFloat(draft.draftTotal) : (draft.draftTotal || 0),
                     draftApply: draft.draftApply && Array.isArray(draft.draftApply) ? draft.draftApply : [] // Type guard
                 } as any));
-
                 // Handle applied quotations
                 // Logic: "appliedQuotations = (draft.draftApply && draft.draftApply.length > 0) ? draft.draftApply[0] : null;"
                 // This logic seems to fetch only the FIRST applied quotation?
@@ -94,10 +73,8 @@ export default function Page() {
                 // The table maps over "cotizacionesInfo.appliedQuotations".
                 // So yes, it seems it supports only one or the view logic is limited.
                 // I will reproduce legacy behavior.
-
                 const appliedQuotationIds = draft.draftApply || [] // get safe array
                 const firstQuotationId = appliedQuotationIds.length > 0 ? appliedQuotationIds[0] : null
-
                 if (firstQuotationId) {
                     try {
                         const response = await getQuotation({ quotationId: firstQuotationId });
@@ -117,25 +94,20 @@ export default function Page() {
             console.error('Error fetching draft:', error);
         }
     };
-
     useEffect(() => {
         if (!isLoaded && draftId) {
             fetchDraftData();
         }
     }, [draftId, isLoaded]);
-
     const handleDescargarAdjuntos = () => { }
-
     const handleSeeQuotation = (e: React.MouseEvent, quotationId: string) => {
         e.preventDefault()
         navigate(`/app/ver-cotizacion/${quotationId}`)
     }
-
     const handleEditQuotation = (e: React.MouseEvent, quotationId: string) => {
         e.preventDefault()
         navigate(`/app/editar-cotizacion/${quotationId}`)
     }
-
     const handleHire = (e: React.MouseEvent, quotationId: string, proponentId: string) => {
         e.preventDefault()
         // Legacy passed state: { draftId, quotationId, proponentId }
@@ -146,12 +118,10 @@ export default function Page() {
         // and when migrating 'contratar' we will ensure it reads from query params.
         navigate(`/app/contratar?draftId=${draftId}&quotationId=${quotationId}&proponentId=${proponentId}`)
     }
-
     const handleCotizar = () => {
         const draftParamId = requerimientoInfo.draftId || draftId
         navigate(`/app/cotizacion/${draftParamId}`)
     }
-
     return (
         <Container fluid className="p-0">
             <Row className="h-100 pt-4 pb-4">
@@ -415,10 +385,8 @@ export default function Page() {
                                                     // This implies legacy 'proponentId' = 'quotationComercianteId'
                                                     // 'scope' = ? maybe missing from types?
                                                     // 'description' = 'quotationDescription'
-
                                                     // Checking types again... types.ts:
                                                     // quotationPrice, quotationDescription, quotationStatus.
-
                                                     // If legacy used 'scope', I should handle it.
                                                     // I will cast item to any to access legacy fields for now.
                                                 } = item
@@ -426,7 +394,6 @@ export default function Page() {
                                                 const proponentId = legacyItem.proponentId || item.quotationComercianteId
                                                 const scope = legacyItem.scope // ??
                                                 const description = legacyItem.description || item.quotationDescription
-
                                                 return (
                                                     <TableRow
                                                         key={quotationId}

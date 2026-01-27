@@ -2,13 +2,11 @@ import { useState, useEffect, Suspense } from 'react'
 import { navigate } from 'vike/client/router'
 import { usePageContext } from '@hooks/usePageContext'
 // @ts-ignore
-import SearchBar from '@app/components/SearchBar'
+import { SearchBar } from '@components/layout'
 import { getUsers } from '@services/users'
 import { searchByName } from '@services/search'
-
 // @ts-ignore
 import { UserCard } from '@features/profile'
-
 // UI Libs
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -17,15 +15,8 @@ import Button from 'react-bootstrap/Button'
 import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-
 // Types
 import type { UserFirestoreDocument } from '@services/types'
-
-export const documentProps = {
-    title: 'Portal de Servicios | Comunidad Dezzpo',
-    description: 'Directorio de profesionales y comerciantes calificados.',
-}
-
 const PortalSkeleton = () => {
     return (
         <Stack spacing={1}>
@@ -36,20 +27,16 @@ const PortalSkeleton = () => {
         </Stack>
     )
 }
-
 interface SearchDataState {
     docSnap?: UserFirestoreDocument[]
 }
-
 export default function Page() {
     const pageContext = usePageContext()
     const searchInput = pageContext.routeParams?.searchInput
     const spacedText = searchInput?.replace(/\+/g, ' ')
-
     const [isLoaded, setIsLoaded] = useState(false)
     const [searchData, setSearchData] = useState<SearchDataState>({})
     const [usersData, setUsersData] = useState<UserFirestoreDocument[]>([])
-
     const fetchInitialUsers = async () => {
         try {
             // Role 2: Comerciantes Calificados based on legacy 'userSelectedRol = 2'
@@ -69,7 +56,6 @@ export default function Page() {
             console.error('Error fetching users:', error);
         }
     };
-
     const fetchSearchResults = async (query: string) => {
         try {
             const results = await searchByName(query);
@@ -89,12 +75,10 @@ export default function Page() {
             setIsLoaded(true);
         }
     }
-
     // search reloaded
     useEffect(() => {
         setIsLoaded(false)
     }, [searchInput])
-
     useEffect(() => {
         if (!isLoaded) {
             // console.log('portal-servicios', searchInput, isLoaded)
@@ -103,15 +87,12 @@ export default function Page() {
             }
         }
     }, [searchInput, isLoaded, spacedText])
-
     useEffect(() => {
         fetchInitialUsers();
     }, [])
-
     const handleNewProject = () => {
         navigate('/nuevo-proyecto')
     }
-
     return (
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex">
@@ -172,7 +153,6 @@ export default function Page() {
                         independientes y empresas del sector. <br />
                         Encuentra todo lo mejor en asisitencia técnica!
                     </p>
-
                     <Row className="m-0 w-100 d-flex">
                         <Suspense fallback={<PortalSkeleton />}>
                             {usersData &&

@@ -3,23 +3,14 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Presupuestos | Comunidad Dezzpo',
-    description: 'Solicita presupuestos gratuitos para tus proyectos de construcción y mantenimiento.',
-}
-
 // Styles
 import '@assets/css/presupuestos.css'
-
 // Components
 import BuscadorNuevoProyecto from '@index/components/buscador/BuscadorNuevoProyecto'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 export default function Page() {
     return (
         <>
@@ -41,7 +32,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="presupuestosMensajeBuscador align-items-start p-4">
                     <Col className="m-0" lg={4} md={8} sm={8} xs={10}>

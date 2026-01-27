@@ -4,15 +4,8 @@
  * Refactored to use @features/auth components and hooks.
  * Original: 384 lines → Current: ~170 lines (56% reduction)
  */
-
-export const documentProps = {
-    title: 'Iniciar Sesión | Comunidad Dezzpo',
-    description: 'Inicia sesión en Comunidad Dezzpo para acceder a tu perfil, proyectos y mensajes.',
-}
-
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { Link } from '@hooks'
-
 // Auth feature components & hooks
 import {
     useAuthActions,
@@ -21,26 +14,21 @@ import {
     type UserRoleNumeric,
     type DraftInfo,
 } from '@features/auth'
-
 // Components
 import { SnackBarAlert } from '@components/common'
-
 // Styles
 import '@assets/css/ingreso.css'
-
 // MUI
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-
 // Types
 interface PageProps {
     showLogo?: boolean
@@ -48,7 +36,6 @@ interface PageProps {
     setDraftInfo?: (info: DraftInfo) => void
     handleSave?: () => void
 }
-
 export default function Page({
     showLogo = true,
     draftInfo,
@@ -63,19 +50,16 @@ export default function Page({
         loginWithGoogle,
         isLoading
     } = useAuthActions()
-
     // Local state
     const [step, setStep] = useState<1 | 2>(1)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [role, setRole] = useState<UserRoleNumeric>(null)
-
     // Role selection
     const handleSelectRole = (selectedRole: UserRoleNumeric) => {
         setRole(selectedRole)
         setStep(2)
     }
-
     // Email login
     const handleEmailLogin = async (e: FormEvent) => {
         e.preventDefault()
@@ -85,7 +69,6 @@ export default function Page({
             handleSave()
         }
     }
-
     // Google login
     const handleGoogleLogin = async () => {
         const result = await loginWithGoogle(role, draftInfo)
@@ -94,7 +77,6 @@ export default function Page({
             handleSave()
         }
     }
-
     return (
         <Container fluid className="p-0">
             <Row className="ingresoFormulario m-0 w-100">
@@ -110,7 +92,6 @@ export default function Page({
                         </Box>
                     </Col>
                 )}
-
                 <Col className="ingresarFormulario m-0 p-0 mb-4 mt-4" lg={4} md={5} sm={10} xs={10}>
                     <Paper elevation={16} id="formularioIngreso" className="pt-4 pb-4">
                         <Form action="" className="p-4" onSubmit={handleEmailLogin}>
@@ -118,7 +99,6 @@ export default function Page({
                                 <Typography variant="h4" className="headline-xl">
                                     Iniciar sesión
                                 </Typography>
-
                                 {/* Step 1: Role Selection */}
                                 {step === 1 && (
                                     <>
@@ -126,13 +106,11 @@ export default function Page({
                                             onSelect={handleSelectRole}
                                             selectedRole={role}
                                         />
-
                                         <p className="body-1 pt-2 m-0">
                                             <Link className="body-2 btn-TEXT textVerde2" href="/registro/">
                                                 Registrarme
                                             </Link>
                                         </p>
-
                                         <Link className="body-2 btn-TEXT textVerde2" href="/restaurar-contrasena/">
                                             <Button className="textBlanco btn-TEXT btn-round btn-high" variant="primary">
                                                 Olvidé mi contraseña
@@ -140,19 +118,16 @@ export default function Page({
                                         </Link>
                                     </>
                                 )}
-
                                 {/* Step 2: Login Form */}
                                 {step === 2 && (
                                     <>
                                         <Form.Label className="mb-0 body-1 pt-4">
                                             {role === 1 ? 'Soy propietario/residente' : 'Soy comerciante calificado'}
                                         </Form.Label>
-
                                         <GoogleAuthButton
                                             onClick={handleGoogleLogin}
                                             label="Ingresar con Gmail"
                                         />
-
                                         <Col className="d-flex flex-column align-items-center" lg={10} md={12} sm={10} xs={12}>
                                             <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
                                                 <Form.Label className="mb-0 body-1">Email</Form.Label>
@@ -163,7 +138,6 @@ export default function Page({
                                                     onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                                                 />
                                             </Form.Group>
-
                                             <Form.Group className="mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
                                                 <Form.Label className="mb-0 body-1">Contraseña</Form.Label>
                                                 <Form.Control
@@ -174,7 +148,6 @@ export default function Page({
                                                 />
                                             </Form.Group>
                                         </Col>
-
                                         <Col className="pt-4 pb-2">
                                             <Button
                                                 onClick={() => setStep(1)}
@@ -183,9 +156,7 @@ export default function Page({
                                             >
                                                 <KeyboardBackspaceIcon /> Volver atrás
                                             </Button>
-
                                             <span className="mt-1" style={{ marginBottom: '1rem' }} />
-
                                             <Button
                                                 className="btn-buscador btn-round btn-high body-1"
                                                 variant="primary"
@@ -202,7 +173,6 @@ export default function Page({
                     </Paper>
                 </Col>
             </Row>
-
             {alert.open && (
                 <SnackBarAlert
                     message={alert.message}

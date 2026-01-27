@@ -3,26 +3,17 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Comunidad Propietarios | Comunidad Dezzpo',
-    description: 'Encuentra comerciantes calificados para tus proyectos de hogar en Comunidad Dezzpo.',
-}
-
 // Styles
 import '@assets/css/comunidad_propietarios.css'
-
 // Components
 import { Link } from '@hooks'
 import Registro from '../../../pages/(auth)/registro/+Page'
 import BuscadorNuevoProyecto from '@index/components/buscador/BuscadorNuevoProyecto'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-
 // Verification list items
 const verificationList = [
     'Verifica Adecuadamente La Identidad.',
@@ -35,7 +26,6 @@ const verificationList = [
     'Expón claramente cualquier aspecto que pueda influir en el resultado final.',
     'Si el proyecto tiene impacto energético y/o ecológico, consulta ayudas y subvenciones institucionales.',
 ]
-
 export default function Page() {
     return (
         <>
@@ -55,7 +45,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosRegistro m-0 d-flex flex-column">
                     <Col className="m-0" style={{ paddingLeft: '0px' }}>
@@ -67,7 +56,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosBuscador m-0 row">
                     <Col
@@ -88,7 +76,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosConsultar m-0 row p-4">
                     <Col className="col-10">
@@ -183,7 +170,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="comunidadPropietariosListaVerificacion m-0">
                     <Col className="col-8 p-0 m-0 pt-4 mt-4 pb-4 mb-4" id="listaChequeo">

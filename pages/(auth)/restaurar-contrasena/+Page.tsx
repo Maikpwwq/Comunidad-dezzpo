@@ -3,35 +3,24 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Recuperar Contraseña | Comunidad Dezzpo',
-    description: 'Recupera el acceso a tu cuenta en Comunidad Dezzpo.',
-}
-
 import { useState } from 'react'
-import { auth } from '@firebase/firebaseClient'
+import { auth } from '@services/firebase'
 import { sendPasswordResetEmail, confirmPasswordReset } from 'firebase/auth'
-
 // Components
 import { Link } from '@hooks'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-
 interface ResetEmailState {
     resetEmail: string
     code: string | null
     newPassword: string | undefined
 }
-
 export default function Page() {
     const [resetEmail, setResetEmail] = useState<ResetEmailState>({
         resetEmail: '',
@@ -40,14 +29,12 @@ export default function Page() {
     })
     const [formStatus, setFormStatus] = useState<1 | 2>(1)
     const [error, setError] = useState<string | null>(null)
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setResetEmail({
             ...resetEmail,
             [event.target.name]: event.target.value,
         })
     }
-
     const handleClick = async () => {
         setError(null)
         try {
@@ -58,10 +45,8 @@ export default function Page() {
             console.error('Reset email error:', err)
         }
     }
-
     const handleConfirm = async () => {
         if (!resetEmail.code || !resetEmail.newPassword) return
-
         setError(null)
         try {
             await confirmPasswordReset(auth, resetEmail.code, resetEmail.newPassword)
@@ -72,7 +57,6 @@ export default function Page() {
             console.error('Confirm reset error:', err)
         }
     }
-
     return (
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex pt-4 pb-4">
@@ -105,7 +89,6 @@ export default function Page() {
                                 </Button>
                             </>
                         )}
-
                         {formStatus === 2 && (
                             <>
                                 <p className="body-1 pb-4 m-0">
@@ -135,7 +118,6 @@ export default function Page() {
                                 </Button>
                             </>
                         )}
-
                         {error && <p className="body-1 text-danger">{error}</p>}
                     </Box>
                     <p className="body-1 pt-2 m-0">

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 // import { navigate } from 'vike/client/router'
 import { styled, alpha } from '@mui/material/styles'
-import { ListadoCategorias } from '@index/components/ListadoCategorias'
+import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'

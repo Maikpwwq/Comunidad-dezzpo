@@ -5,6 +5,7 @@
  * Variables are available via @use from _variables.scss
  */
 
+@use 'sass:color';
 @use './variables' as *;
 
 // =============================================================================
@@ -66,7 +67,7 @@ a {
   transition: color $transition-fast;
 
   &:hover {
-    color: darken($primary-blue, 10%);
+    color: color.adjust($primary-blue, $lightness: -10%);
     text-decoration: underline;
   }
 }

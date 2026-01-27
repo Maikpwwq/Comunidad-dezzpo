@@ -40,4 +40,12 @@ export default {
    * @see https://vike.dev/prerender
    */
   prerender: true,
+  meta: {
+    title: {
+      env: { server: true, client: true }
+    },
+    description: {
+      env: { server: true, client: true }
+    }
+  }
 } satisfies Config

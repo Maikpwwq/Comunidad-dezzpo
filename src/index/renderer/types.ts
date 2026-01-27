@@ -28,6 +28,10 @@ export type PageContextCustom = {
             description?: string
         }
     }
+    config: {
+        title?: string
+        description?: string
+    }
 }
 
 type PageContextServer = PageContextBuiltInServer<Page> & PageContextCustom

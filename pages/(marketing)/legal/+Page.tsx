@@ -3,23 +3,14 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Legal | Comunidad Dezzpo',
-    description: 'Términos de servicio y política de privacidad de Comunidad Dezzpo.',
-}
-
 // Styles
 import '@assets/css/legal.css'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import DownloadIcon from '@mui/icons-material/Download'
-
 // Legal documents data
 const legalDocuments = [
     {
@@ -43,7 +34,6 @@ const legalDocuments = [
         url: '#',
     },
 ]
-
 export default function Page() {
     return (
         <Container fluid className="p-0">

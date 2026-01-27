@@ -3,24 +3,14 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Profesionales y Servicios | Comunidad Dezzpo',
-    description: 'Encuentra profesionales certificados para todo tipo de servicios de mantenimiento y construcción.',
-}
-
 // Styles
 import '@assets/css/profesionales_servicios.css'
-
 // Components
-import { NuestraComunidad } from '@features/marketing'
-import CategoriasServicios from '@index/components/categorias-servicios/CategoriasServicios'
-
+import { NuestraComunidad, CategoriasServicios } from '@features/marketing'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 export default function Page() {
     return (
         <>
@@ -51,9 +41,7 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <CategoriasServicios />
-
             <NuestraComunidad />
         </>
     )

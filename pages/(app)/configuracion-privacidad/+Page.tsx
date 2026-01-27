@@ -3,17 +3,10 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Configuración de Privacidad | Comunidad Dezzpo',
-    description: 'Administra la privacidad de tu cuenta y perfil.',
-}
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Button from '@mui/material/Button'
 import Table from '@mui/material/Table'
@@ -21,7 +14,6 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
-
 // Privacy settings data
 const privacySettings = [
     { setting: 'Quién puede ver las publicaciones de tu perfil', value: 'Público' },
@@ -30,7 +22,6 @@ const privacySettings = [
     { setting: 'Quién puede buscarte con el número de teléfono que proporcionaste', value: 'Público' },
     { setting: 'Quién puede buscarte con el correo electrónico que proporcionaste', value: 'Público' },
 ]
-
 export default function Page() {
     return (
         <Container fluid className="p-0 h-100">

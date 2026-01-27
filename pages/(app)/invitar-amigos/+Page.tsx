@@ -3,32 +3,20 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Invitar Amigos | Comunidad Dezzpo',
-    description: 'Programa de referidos - Invita amigos y gana premios.',
-}
-
-import { useContext } from 'react'
-import { UserAuthContext } from '@providers/UserAuthProvider'
-
+import { useAuth } from '@hooks/useAuth'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-
 export default function Page() {
-    const { currentUser } = useContext(UserAuthContext)
-
+    const { currentUser } = useAuth()
     const copyReferedLink = () => {
         const referenced = `www.dezzpo.com/app/perfil/${currentUser?.userId}`
         navigator.clipboard.writeText(referenced)
     }
-
     return (
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex align-items-start pt-4 pb-4">

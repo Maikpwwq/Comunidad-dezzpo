@@ -4,28 +4,17 @@
  * Main landing page for Comunidad Dezzpo marketplace.
  * Converted to TypeScript with V1 design patterns.
  */
-
-export const documentProps = {
-    title: 'Comunidad Dezzpo | Red Profesional de Contratistas',
-    description: '¡Encuentra al instante el personal profesional ideal para cada proyecto en el hogar! Explora en Comunidad Dezzpo una red profesional confiable para todo tipo de trabajos.',
-}
-
 import { useState } from 'react'
 import { navigate } from 'vike/client/router'
-
 // Styles
 import '@assets/css/home.css'
-
 // Components
 import BuscadorNuevoProyecto from '@index/components/buscador/BuscadorNuevoProyecto'
-import { NuestraComunidad } from '@features/marketing'
-import Subscribe from '@pages/index/Subscribe'
-
+import { NuestraComunidad, Subscribe } from '@features/marketing'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -34,13 +23,10 @@ import MobileStepper from '@mui/material/MobileStepper'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
-
 // Swipeable views
 import SwipeableViews from 'react-swipeable-views'
 import { bindKeyboard } from 'react-swipeable-views-utils'
-
 const CustomSwipeableViews = bindKeyboard(SwipeableViews)
-
 const styles = {
     stepper: {
         position: 'relative' as const,
@@ -54,28 +40,22 @@ const styles = {
         flexDirection: 'row' as const,
     },
 }
-
 export default function Page() {
     const theme = useTheme()
     const maxSteps = 2
     const [activeStep, setActiveStep] = useState(0)
-
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1)
     }
-
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1)
     }
-
     const handleStepChange = (step: number) => {
         setActiveStep(step)
     }
-
     const handleClick = () => {
         navigate('/registro/')
     }
-
     return (
         <>
             <Container fluid className="p-0 pt-4">
@@ -114,16 +94,13 @@ export default function Page() {
                                     </Typography>
                                 </Box>
                             </Col>
-
                             <Col className="col m-4 p-0" xl={4} lg={6} md={8} sm={12} xs={12}>
                                 <BuscadorNuevoProyecto />
                             </Col>
                         </Row>
-
                         {/* Subscribe Section */}
                         <Subscribe />
                     </CustomSwipeableViews>
-
                     <MobileStepper
                         sx={styles.stepper}
                         className="pb-4 mb-4"
@@ -160,7 +137,6 @@ export default function Page() {
                     />
                 </Box>
             </Container>
-
             {/* Description Banner */}
             <Container fluid className="p-0">
                 <Row className="m-0 pt-4 w-100 mensajeBanner">
@@ -177,7 +153,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* How It Works Section */}
             <Container fluid className="p-0">
                 <Row id="comoFunciona" className="color-steps m-0">
@@ -186,7 +161,6 @@ export default function Page() {
                             ¿Cómo funciona <br />
                             <strong>nuestra comunidad?</strong>
                         </Typography>
-
                         {/* Propietarios Section */}
                         <Col className="comoPropietarios">
                             <Col className="comunidadTitulo m-4 w-auto" md={3}>
@@ -213,7 +187,6 @@ export default function Page() {
                                 />
                             </Row>
                         </Col>
-
                         {/* Comerciantes Section */}
                         <Col className="comoComerciantes">
                             <Col className="comunidadTitulo m-4 w-auto" md={3}>
@@ -243,13 +216,11 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* Community Section */}
             <NuestraComunidad />
         </>
     )
 }
-
 // Step Card Component (extracted for cleaner code)
 interface StepCardProps {
     number: number
@@ -257,7 +228,6 @@ interface StepCardProps {
     className: string
     text: React.ReactNode
 }
-
 function StepCard({ number, color, className, text }: StepCardProps) {
     return (
         <Col className={`${className} comoCard p-0 mb-4 me-2`} lg={2} md={3} sm={3}>

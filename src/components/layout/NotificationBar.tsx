@@ -8,7 +8,7 @@
 import React from 'react'
 import { navigate } from 'vike/client/router'
 import Link from '@hooks/Link'
-import { auth } from '@firebase/firebaseClient'
+import { auth } from '@services/firebase'
 
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'

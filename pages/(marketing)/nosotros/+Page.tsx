@@ -3,32 +3,21 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Nosotros | Comunidad Dezzpo',
-    description: 'Conoce la historia y misión de Comunidad Dezzpo, la red profesional que conecta propietarios con contratistas calificados.',
-}
-
 // Styles
 import '@assets/css/nosotros.css'
-
 // Components
 import IcoMoon from 'react-icomoon'
 import iconSet from '@assets/css/icomoon/selection.json'
-
 // Assets
 import RoadMap2 from '@assets/img/RoadMap2.png'
 import Hitos from '@assets/img/Hitos.png'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-
 // MUI
 import Typography from '@mui/material/Typography'
-
 // Values list
 const values = [
     'Disciplina',
@@ -39,7 +28,6 @@ const values = [
     'Crecimiento personal',
     'Orden y limpieza',
 ]
-
 export default function Page() {
     return (
         <>
@@ -61,7 +49,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* Misión y Visión Section */}
             <Container fluid className="p-0">
                 <Row className="nosotrosMisionVision m-0" id="Acerca-de-nosotros">
@@ -104,7 +91,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* Política HSEQ Section */}
             <Container fluid className="p-0">
                 <Row className="nosotrosPoliticas m-0">
@@ -122,7 +108,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* Valores Section */}
             <Container fluid className="p-0">
                 <Row className="nosotrosEtica m-0">
@@ -142,7 +127,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* Equipo Section */}
             <Container fluid className="p-0" id="equipo-dezzpo">
                 <Row className="nosotrosEquipo m-0">
@@ -164,7 +148,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             {/* Hitos Section */}
             <Container fluid className="p-0">
                 <Row className="nosotrosHitos m-0">

@@ -35,4 +35,3 @@ export const guard: GuardSync = (pageContext): void => {
   }
 }
 
-export default guard

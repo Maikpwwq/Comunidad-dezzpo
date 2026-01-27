@@ -43,8 +43,9 @@ async function onRenderHtml(pageContext: PageContextServer) {
 
     // See https://vike.dev/head
     const { documentProps } = pageContext.exports
-    const title = (documentProps && documentProps.title) || 'Comunidad Dezzpo'
+    const title = pageContext.config.title || (documentProps && documentProps.title) || 'Comunidad Dezzpo'
     const desc =
+        pageContext.config.description ||
         (documentProps && documentProps.description) ||
         'Explora en Comunidad Dezzpo una red profesional confiable para todo tipo de trabajos, desde soluciones de mantenimiento e instalaciones pequeñas hasta acabados inmobiliarios y remodelaciones completas. Nuestro marketplace te ofrece la posibilidad de elegir contratistas especializados con estadísticas verificadas. ¡Únete ahora y comienza a hacer realidad tus proyectos!'
 

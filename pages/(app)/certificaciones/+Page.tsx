@@ -4,35 +4,24 @@
  * Converted to TypeScript.
  * Labor competency certification module.
  */
-
-export const documentProps = {
-    title: 'Certificaciones | Comunidad Dezzpo',
-    description: 'Módulo de evaluación y certificación por competencias laborales.',
-}
-
 import { useState } from 'react'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-
 export default function Page() {
     const [certificationDate, setCertificationDate] = useState('')
     const [certificationHour, setCertificationHour] = useState('12:00')
     const [certificationService, setCertificationService] = useState('')
-
     const handleChange = (setter: (value: string) => void) => (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         setter(event.target.value)
     }
-
     return (
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 pt-4 pb-4">

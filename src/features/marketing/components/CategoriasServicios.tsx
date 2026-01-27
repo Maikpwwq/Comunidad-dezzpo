@@ -10,7 +10,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
-import { ListadoCategorias } from '@index/components/ListadoCategorias'
+import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 import '@assets/css/categorias_servicios.css'
 
 interface CategoryItem {

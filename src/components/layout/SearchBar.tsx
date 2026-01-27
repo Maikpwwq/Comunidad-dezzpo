@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'
 
 import iconSet from '@assets/css/icomoon/selection.json'
-import { ListadoCategorias } from '@index/components/ListadoCategorias'
+import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 // Logo
 import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'

@@ -3,38 +3,26 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Contáctenos | Comunidad Dezzpo',
-    description: 'Ponte en contacto con el equipo de Comunidad Dezzpo. Estamos aquí para ayudarte.',
-}
-
 import { useState } from 'react'
-
 // Styles
 import '@assets/css/contactenos.css'
-
 // Assets
 import ContactenosFranja from '@assets/img/ContactenosFranja.png'
 import LogoPNG from '@assets/img/LogoPNG.png'
 import SelectorContactenos from '@assets/img/SelectorContactenos.png'
-
 // Components
 import { DatosContacto } from '@features/marketing'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-
 interface ContactFormData {
     name: string
     email: string
     phone: string
     message: string
 }
-
 export default function Page() {
     const [formData, setFormData] = useState<ContactFormData>({
         name: '',
@@ -42,20 +30,17 @@ export default function Page() {
         phone: '',
         message: '',
     })
-
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
     }
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         // TODO: Implement form submission
         console.log('Form submitted:', formData)
     }
-
     return (
         <>
             <Container fluid className="p-0">
@@ -65,14 +50,12 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="contactenosMensaje row m-0 w-100">
                     <Col lg={4} md={6} sm={10}>
                         <img src={ContactenosFranja} alt="fondo comunidad dezzpo" />
                         <img src={LogoPNG} alt="Logo Comunidad Dezzpo" />
                     </Col>
-
                     <Col lg={4} md={6} sm={10}>
                         <div className="formContacto">
                             <form onSubmit={handleSubmit}>
@@ -125,7 +108,6 @@ export default function Page() {
                             </form>
                         </div>
                     </Col>
-
                     <Col lg={4} md={6} sm={10}>
                         <div className="borderBlue">
                             <img src={SelectorContactenos} alt="datos de contacto" />

@@ -1,45 +1,30 @@
 import React, { useState, useEffect } from 'react'
-
 // Hooks
 import { usePageContext } from '@hooks/usePageContext'
 import { useAuth } from '@hooks/useAuth'
-
 // Services
 import { getDraft, updateDraft } from '@services/drafts'
-
 // Components
 // @ts-ignore
-import AdjuntarArchivos from '@app/components/AdjuntarArchivos'
+import { AdjuntarArchivos } from '@components/common'
 import TablaSubCategoriaPresupuesto from '../components/TablaSubCategoriaPresupuesto'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-
 // CSS
-import '../../detalle_requerimiento.css'
-
-export const documentProps = {
-    title: 'Editar Requerimiento | Comunidad Dezzpo',
-    description: 'Edita tu solicitud de servicio.',
-}
-
+// import '../../detalle_requerimiento.css'
 export default function Page() {
     const { currentUser } = useAuth()
     const userAuthID = currentUser?.userId
     const userAuthRol = currentUser?.role
-
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams
-
     const [rolAuth, setRolAuth] = useState<number | undefined>(userAuthRol as number | undefined)
-
     useEffect(() => {
         const localRole = localStorage.getItem('role')
         if (localRole) {
@@ -55,7 +40,6 @@ export default function Page() {
             }
         }
     }, [])
-
     const [formData, setFormData] = useState<any>({
         draftName: '',
         draftCategory: '',
@@ -79,18 +63,14 @@ export default function Page() {
         draftBestScheduleTime: '',
         draftApply: [],
     })
-
     const [isLoaded, setIsLoaded] = useState(false)
-
     const handleEnviar = async () => {
         if (!draftId) return
-
         try {
             await updateDraft({
                 draftId: draftId,
                 data: formData
             });
-
             console.log('Draft updated successfully');
             setIsLoaded(false);
             window.history.back();
@@ -98,13 +78,10 @@ export default function Page() {
             console.error('Error updating draft:', error);
         }
     }
-
     const fetchDraftData = async () => {
         if (!draftId) return;
-
         try {
             const draft = await getDraft({ draftId });
-
             if (draft) {
                 setFormData((prev: any) => ({
                     ...prev,
@@ -116,22 +93,18 @@ export default function Page() {
             console.error('Error fetching draft:', error);
         }
     };
-
     useEffect(() => {
         if (!isLoaded && draftId) {
             fetchDraftData();
         }
     }, [draftId, isLoaded]);
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [event.target.name]: event.target.value,
         })
     }
-
     const handleAdjuntos = () => { }
-
     return (
         <Container fluid className="p-0">
             <Row className="h-100 pt-4 pb-4">

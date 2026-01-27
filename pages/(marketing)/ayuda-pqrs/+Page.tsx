@@ -3,31 +3,21 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Ayuda y PQRS | Comunidad Dezzpo',
-    description: 'Centro de ayuda, preguntas frecuentes, quejas, reclamos y sugerencias.',
-}
-
 // Styles
 import '@assets/css/ayuda_pqrs.css'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-
 // MUI
 import ChatIcon from '@mui/icons-material/Chat'
-
 // FAQ data
 const propietariosFaq = [
     'Adquirir servicios',
     'Modificar proyectos',
     '¿Cómo escoger el mejor personal?',
 ]
-
 const comerciantesFaq = [
     'Ofrecer servicios',
     '¿Cuál es el costo de un proyecto?',
@@ -36,7 +26,6 @@ const comerciantesFaq = [
     '¿Cómo puedo aplicar a un proyecto?',
     '¿Cómo responder con un presupuesto?',
 ]
-
 const generalFaq = [
     '¿Cómo actualizo mi perfil en dezzpo?',
     '¿Cómo trabajan las calificaciones de los perfiles?',
@@ -47,7 +36,6 @@ const generalFaq = [
     'Consejos prácticos para Comerciantes calificados',
     'Reglamentación del Sistema de Salud y seguridad en el trabajo',
 ]
-
 export default function Page() {
     return (
         <>
@@ -67,7 +55,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="ayudaPqrsPreguntas m-0 w-100">
                     <Row className="p-4 align-items-baseline">
@@ -82,7 +69,6 @@ export default function Page() {
                                     </li>
                                 ))}
                             </ul>
-
                             <span className="tituloSinMargen">
                                 <h3 className="headline-l">Comerciantes calificados FAQ's</h3>
                             </span>
@@ -93,7 +79,6 @@ export default function Page() {
                                     </li>
                                 ))}
                             </ul>
-
                             <span className="tituloSinMargen">
                                 <h3 className="headline-l">
                                     Y aquí, más todas las preguntas frecuentes
@@ -107,7 +92,6 @@ export default function Page() {
                                 ))}
                             </ul>
                         </Col>
-
                         <Col className="col justify-content-start p-4" lg={5} sm={12} xs={12}>
                             <span className="tituloSinMargen">
                                 <h3 className="headline-l">Servicio al Cliente</h3>

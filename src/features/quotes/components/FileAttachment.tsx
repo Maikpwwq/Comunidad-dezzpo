@@ -15,7 +15,7 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
-import { firestore, storage } from '@firebase/firebaseClient'
+import { firestore, storage } from '@services/firebase'
 import { SnackBarAlert } from '@components/common'
 
 const HiddenInput = styled('input')({

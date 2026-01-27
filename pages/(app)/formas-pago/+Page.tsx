@@ -3,19 +3,11 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Formas de Pago | Comunidad Dezzpo',
-    description: 'Administra tus métodos de pago y consulta tickets.',
-}
-
 import { useState } from 'react'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
@@ -27,7 +19,6 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
-
 // Payment method options
 const paymentMethods = [
     { value: 'Tarjetas', label: 'Tarjeta Débito o Crédito' },
@@ -35,17 +26,13 @@ const paymentMethods = [
     { value: 'Baloto', label: 'Vía Baloto' },
     { value: 'Efecty', label: 'Efecty' },
 ]
-
 // Table columns
 const ticketColumns = ['Fecha', 'Orden de Servicios', 'Vigencia', 'Estado', 'Pagar en línea', 'Descargar']
-
 export default function Page() {
     const [selectedMethod, setSelectedMethod] = useState('')
-
     const handleChange = (event: SelectChangeEvent) => {
         setSelectedMethod(event.target.value)
     }
-
     return (
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100">
@@ -73,7 +60,6 @@ export default function Page() {
                             </Select>
                         </FormControl>
                     </Row>
-
                     <Row className="p-4" md={10}>
                         <h2 className="headline-xl">Tickets de pago</h2>
                         <Col className="col-10 p-4">

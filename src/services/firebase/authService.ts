@@ -6,7 +6,6 @@
  */
 
 import {
-    getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signInWithPopup,
@@ -28,7 +27,7 @@ import type {
 } from '@/types/services.d'
 
 // Initialize auth instance (uses default Firebase app from firebaseClient.js)
-const auth = getAuth()
+import { auth } from './client'
 const googleProvider = new GoogleAuthProvider()
 
 /**

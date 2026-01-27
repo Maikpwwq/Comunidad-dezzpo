@@ -4,45 +4,26 @@
  * Converted to TypeScript.
  * Displays cost reference table for common services.
  */
-
-export const documentProps = {
-    title: 'Apéndice de Costos | Comunidad Dezzpo',
-    description: 'Referencia de precios y costos estimados para servicios de mantenimiento y construcción.',
-}
-
 import { useState, useEffect } from 'react'
-
 // Styles
 import '@assets/css/apendice_costos.css'
-
-// Components
+// Components and Data
 import { Link } from '@hooks'
-import TableCards from '@pages/apendice-costos/tabla/tabla'
-
-// Local data
-import ApendiceJson from '@pages/apendice-costos/apendice-costos.json'
-
+import {
+    TableCards,
+    apendiceCostosData,
+    type CategoriaItem,
+} from '@features/marketing'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // MUI
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
-
-// Types
-interface CategoriaItem {
-    subSistema?: string
-    subCategoria?: string
-    subCategoriaCantidad?: string
-    subCategoriaDescription?: string
-    subCategoriaPrecio?: number
-}
-
 // FAQ Links
 const faqLinks = [
     '¿Cuánto cuesta instalar nuevas tomacorrientes?',
@@ -51,24 +32,20 @@ const faqLinks = [
     '¿Cuánto cuesta remodelar una habitación?',
     '¿Cuánto cuesta instalar nuevas iluminaciones y lámparas?',
 ]
-
 export default function Page() {
     const [categoriaInfo, setCategoriaInfo] = useState<CategoriaItem[]>([])
-
     useEffect(() => {
-        // Load from local JSON
-        if (ApendiceJson) {
-            setCategoriaInfo(ApendiceJson as CategoriaItem[])
+        // Load from config
+        if (apendiceCostosData) {
+            setCategoriaInfo(apendiceCostosData)
         }
     }, [])
-
     const formatCurrency = (value: number) => {
         return parseInt(String(value)).toLocaleString('es-CO', {
             style: 'currency',
             currency: 'COP',
         })
     }
-
     return (
         <>
             <Container fluid className="p-0">
@@ -82,7 +59,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="m-0 w-100 d-flex ps-4 pe-4">
                     <TableCards dataTable={categoriaInfo} />
@@ -112,10 +88,8 @@ export default function Page() {
                                         </TableRow>
                                     )
                                 }
-
                                 const precioBajo = (categoria.subCategoriaPrecio || 0) * 1.05
                                 const precioAlto = (categoria.subCategoriaPrecio || 0) * 1.65
-
                                 return (
                                     <TableRow key={categoria.subCategoria}>
                                         <TableCell>{categoria.subCategoria}</TableCell>
@@ -130,7 +104,6 @@ export default function Page() {
                     </Table>
                 </Row>
             </Container>
-
             <Container fluid className="p-0">
                 <Row className="apendiceCostosPreguntas m-0 w-100">
                     <Col>

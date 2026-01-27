@@ -3,25 +3,16 @@
  *
  * Converted to TypeScript.
  */
-
-export const documentProps = {
-    title: 'Patrocinadores | Comunidad Dezzpo',
-    description: 'Conoce a los patrocinadores y aliados de Comunidad Dezzpo.',
-}
-
 // Styles
 import '@assets/css/patrocinadores.css'
-
 // Assets (using public path for these)
 import LogoBictia from '/assets/img/LogoBictia.png'
 import LogoMisionTic2022 from '/assets/img/LogoMisionTic2022.png'
 import LogoTecnoparque from '/assets/img/LogoTecnoparque.png'
-
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-
 // Sponsors data
 const sponsors = [
     {
@@ -44,7 +35,6 @@ const sponsors = [
         className: 'ms-5',
     },
 ]
-
 export default function Page() {
     return (
         <Container fluid className="p-0">
