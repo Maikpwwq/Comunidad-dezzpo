@@ -99,4 +99,8 @@ src/
 - **Migration Pattern**: When moving metadata from `+Page.tsx` to `+config.ts`, ensure `title` and `description` are valid config keys. This often requires defining them in the global `renderer/+config.ts` under the `meta` property.
 
 ### Build Stability
-- **Firebase Usage**: Never import `getAuth()` or `getFirestore()` directly in global scope. Always use the initialized instances exported from `services/firebase/client.ts`. Direct usage causes "No Firebase App" errors during build/SSR because the app isn't initialized yet.
+- **Firebase Usage**: Never import `getAuth()` or `getFirestore()` directly in global scope. Always use the initialized instances exported from `services/firebase/client.ts`. Direct usage causes "No Firebase App" errors during build/SSR because the app isn't initialized yet.                                                                     
+
+### Vercel Deployment (2026-01-27)
+- **Plugin Requirement**: Vike apps strictly require `vite-plugin-vercel` to bridge the SSR handler to Vercel's primitives (Serverless/Edge). Without it, Vercel fails to route SSR requests, resulting in 404s.
+- **Server Entry**: Do not rely on custom Express servers (`server/index.ts`) for Vercel deployment unless manually configuring rewrites. The plugin handles this automatically.
