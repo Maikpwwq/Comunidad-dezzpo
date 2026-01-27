@@ -66,6 +66,7 @@
       /* Component layers */
       "@components": ["src/components/index.ts"],
       "@app/*": ["src/app/*"],
+      "@index/*": ["src/index/*"],
       "@config/*": ["src/config/*"],
 
       /* Assets */

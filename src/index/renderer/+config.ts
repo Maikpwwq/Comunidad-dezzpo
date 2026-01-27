@@ -6,5 +6,6 @@ export default {
   clientRouting: true,
   hydrationCanBeAborted: true,
   passToClient: ['pageProps', 'routeParams', 'redirectTo'],
-  prefetchStaticAssets: 'viewport'
+  prefetchStaticAssets: 'viewport',
+  prerender: true
 } satisfies Config

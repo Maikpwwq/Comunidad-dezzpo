@@ -37,9 +37,7 @@ if (isProd) {
 export default defineConfig({
   plugins: [
     react(),
-    vike({
-      prerender: true,
-    }),
+    vike({}),
   ],
 
   ssr: {
@@ -66,6 +64,7 @@ export default defineConfig({
     alias: [
       // Root source alias
       { find: '@', replacement: path.resolve(__dirname, 'src') },
+      { find: '@index', replacement: path.resolve(__dirname, 'src/index') },
 
       // Feature modules
       { find: '@features', replacement: path.resolve(__dirname, 'src/features') },
