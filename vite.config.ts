@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import vike from 'vike/plugin'
+import vercel from 'vite-plugin-vercel'
 import * as path from 'path'
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -38,6 +39,7 @@ export default defineConfig({
   plugins: [
     react(),
     vike({}),
+    vercel(),
   ],
 
   ssr: {
