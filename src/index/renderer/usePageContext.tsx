@@ -4,7 +4,7 @@
 import React, { useContext, createContext } from 'react'
 import type { PageContext } from './types'
 
-export { PageContextProvider }
+export default PageContextProvider
 // eslint-disable-next-line react-refresh/only-export-components
 export { usePageContext }
 

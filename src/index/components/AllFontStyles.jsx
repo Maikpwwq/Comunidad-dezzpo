@@ -1,4 +1,3 @@
-export { AllFontStyles }
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
@@ -49,3 +48,5 @@ const AllFontStyles = () => {
         </Box>
     )
 }
+
+export default AllFontStyles

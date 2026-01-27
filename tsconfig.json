@@ -1,41 +1,101 @@
 {
-    // "extends": "@tsconfig/vite-react/tsconfig.json",
-    "compilerOptions": {
-        "strict": true,
-        "module": "ESNext", // "module": "ESNext",
-        "target": "ES2020", // "target": "ESNext",
-        // "moduleResolution": "Node",
-        "moduleResolution": "Bundler",
-        "lib": ["DOM", "DOM.Iterable", "ESNext"],
-        "types": ["vite/client"],
-        "jsx": "react-jsx",
-        "skipLibCheck": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "paths": {"#@/*": ["./*"]}, // Typescript needs to know path aliases
-        // "useDefineForClassFields": true,
-        // "allowJs": false,
-        // "composite": true,
-        // "forceConsistentCasingInFileNames": true,
-        // "resolveJsonModule": true,
-        // "isolatedModules": true,
-        // "noEmit": true,
-    },
-    // "exclude": ["/node_modules/"],
-    "include": [
-        "node_modules/@sendbird/uikit-react/index.d.ts"
-        // "./src/**/*.ts",
-        // "./src/**/*.tsx",
-        // "./src/**/*.jsx",
-        // "./src/**/*.js",
-    ], // https://www.npmjs.com/package/@sendbird/uikit-react
-    "ts-node": {
-        "experimentalSpecifierResolution": "node",
-        "transpileOnly": true,
-        "esm": true,
-        "compilerOptions": {
-            "module": "Node16",
-            "moduleResolution": "Node16"
-        }
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@tsconfig/vite-react/tsconfig.json",
+  "compilerOptions": {
+    /* Language & Environment */
+    "target": "ES2022",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+
+    /* Modules */
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+
+    /* Emit */
+    "noEmit": true,
+
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+
+    /* Type Checking */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+
+    /* Path Aliases - Extensive shortcuts for clean imports */
+    "baseUrl": ".",
+    "paths": {
+      /* Root source alias */
+      "@/*": ["src/*"],
+
+      /* Feature modules */
+      "@features/*": ["src/features/*"],
+      "@features/auth/*": ["src/features/auth/*"],
+      "@features/profile/*": ["src/features/profile/*"],
+      "@features/budget/*": ["src/features/budget/*"],
+      "@features/chat/*": ["src/features/chat/*"],
+      "@features/requirements/*": ["src/features/requirements/*"],
+
+      /* Component layers (Atomic Design) */
+      "@components/*": ["src/components/*"],
+      "@components/atoms/*": ["src/components/atoms/*"],
+      "@components/molecules/*": ["src/components/molecules/*"],
+      "@components/organisms/*": ["src/components/organisms/*"],
+      "@components/templates/*": ["src/components/templates/*"],
+
+      /* Shared utilities - base paths for barrel exports */
+      "@hooks": ["src/hooks/index.ts"],
+      "@hooks/*": ["src/hooks/*"],
+      "@stores": ["src/stores/index.ts"],
+      "@stores/*": ["src/stores/*"],
+      "@services": ["src/services/index.ts"],
+      "@services/*": ["src/services/*"],
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"],
+
+      /* Component layers */
+      "@components": ["src/components/index.ts"],
+      "@app/*": ["src/app/*"],
+      "@index/*": ["src/index/*"],
+      "@config/*": ["src/config/*"],
+
+      /* Assets */
+      "@assets/*": ["src/assets/*"],
+      "@styles/*": ["src/styles/*"],
+      "@providers/*": ["src/providers/*"],
+
+      /* Firebase specific */
+      "@firebase/*": ["src/services/firebase/*"],
+      "@firestore/*": ["src/services/firestore/*"],
+
+      /* Legacy aliases (for gradual migration) */
+      "#@/*": ["src/*"],
+      "#R/*": ["pages/*"]
     }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "pages/**/*.ts",
+    "pages/**/*.tsx",
+    "server/**/*.ts",
+    "vite.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "old"
+  ]
 }

@@ -1,7 +1,5 @@
-export { SubCategorias }
-
 import React, { useState } from 'react'
-import '#@/assets/css/subCategoriesCard.css'
+import '@assets/css/subCategoriesCard.css'
 // import { navigate } from 'vike/client/router'
 // import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -113,3 +111,5 @@ SubCategorias.propTypes = {
     setCategoriaInfo: PropTypes.func.isRequired,
     categoriaInfo: PropTypes.object.isRequired,
 }
+
+export default SubCategorias

@@ -1,0 +1,19 @@
+// https://vike.dev/migration/v1-design
+import type { Config } from 'vike/types'
+
+// New way 
+export default {
+  clientRouting: true,
+  hydrationCanBeAborted: true,
+  passToClient: ['pageProps', 'routeParams', 'redirectTo'],
+  prefetchStaticAssets: 'viewport',
+  prerender: true,
+  meta: {
+    title: {
+      env: { server: true, client: true }
+    },
+    description: {
+      env: { server: true, client: true }
+    }
+  }
+} satisfies Config

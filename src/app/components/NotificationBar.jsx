@@ -1,11 +1,11 @@
 import React from 'react'
-import { Link } from '#R/Link'
+import Link from '@hooks/Link'
 import { navigate } from 'vike/client/router'
-import { auth } from '#@/firebase/firebaseClient'
-import '#@/assets/cssPrivateApp/header.css'
+import { auth } from '@firebase/firebaseClient'
+import '@assets/cssPrivateApp/header.css'
 
 //imagenes
-import LogoMenuComunidadDezzpo from '#@/assets/img/IsologoHeader.png'
+import LogoMenuComunidadDezzpo from '@assets/img/IsologoHeader.png'
 
 import PropTypes from 'prop-types'
 import AppBar from '@mui/material/AppBar'
@@ -23,8 +23,6 @@ import Tooltip from '@mui/material/Tooltip'
 // import Typography from '@mui/material/Typography'
 
 const lightColor = 'rgba(255, 255, 255, 0.7)'
-
-export { NotificationBar }
 
 function NotificationBar(props) {
     const { onDrawerToggle } = props
@@ -176,3 +174,5 @@ function NotificationBar(props) {
 NotificationBar.propTypes = {
     onDrawerToggle: PropTypes.func.isRequired,
 }
+
+export default NotificationBar

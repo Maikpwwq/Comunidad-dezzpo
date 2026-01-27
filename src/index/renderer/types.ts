@@ -4,7 +4,7 @@ export type { PageContext }
 export type { PageProps }
 
 import type {
-    PageContextBuiltIn,
+    PageContextBuiltInServer,
     /*
   // When using Client Routing https://vike.dev/clientRouting
   PageContextBuiltInClientWithClientRouting as PageContextBuiltInClient
@@ -28,9 +28,13 @@ export type PageContextCustom = {
             description?: string
         }
     }
+    config: {
+        title?: string
+        description?: string
+    }
 }
 
-type PageContextServer = PageContextBuiltIn<Page> & PageContextCustom
+type PageContextServer = PageContextBuiltInServer<Page> & PageContextCustom
 type PageContextClient = PageContextBuiltInClient<Page> & PageContextCustom
 
 type PageContext = PageContextClient | PageContextServer

@@ -1,7 +1,7 @@
 // import PropTypes from 'prop-types'
 import { usePageContext } from './usePageContext'
 
-export { Link }
+export default Link
 
 function Link(props: {
     href?: string
