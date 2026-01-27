@@ -11,6 +11,7 @@ export { default as Footer } from './Footer'
 export { NotificationBar } from './NotificationBar'
 export { ContentWrapper } from './ContentWrapper'
 export { SearchBar } from './SearchBar'
+export { PageContainer } from './PageContainer'
 
 // Navigation Config
 export {
