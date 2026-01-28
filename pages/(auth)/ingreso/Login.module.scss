@@ -1,0 +1,76 @@
+@use '@styles/_variables' as *;
+
+.Container {
+    width: 100%;
+}
+
+.MainRow {
+    // .ingreso-formulario
+    background: linear-gradient(
+        45deg,
+        rgba(24, 177, 167, 1) 35%,
+        rgba(0, 153, 204, 1) 100%
+    );
+    min-height: 540px;
+    width: 100%;
+    position: relative;
+    flex-wrap: nowrap;
+
+    @media screen and (max-width: 800px) {
+        flex-direction: column !important;
+    }
+}
+
+.ImageSection {
+    // .imagen-ingreso
+    background: url('/assets/img/logo/LOGO-11.png') no-repeat center;
+    background-attachment: scroll;
+    background-size: 50% auto;
+    min-height: 565px;
+    height: auto;
+}
+
+.FormWrapper {
+    // .ingresar-formulario
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    text-align: left;
+    min-height: 480px;
+    margin-top: 20px;
+    margin-right: 1em;
+}
+
+.FormCard {
+    // #formulario-ingreso
+    background-color: var(--background-white-color);
+    border-radius: 50px;
+    padding-top: $spacing-4;
+    padding-bottom: $spacing-4;
+}
+
+.Input {
+    // .form-control
+    height: 27px;
+    text-align: center;
+    width: 100%;
+    background-color: var(--background-light-gray-color);
+}
+
+.Headline {
+    // .headline-xl
+    font-size: $font-size-4xl;
+    font-weight: bold;
+    color: var(--primary-titles-text-color); // Assuming inheritance or specific token
+    margin: 0;
+}
+
+.Link {
+    text-decoration: none;
+    cursor: pointer;
+    
+    &.Green {
+        color: var(--primary-green-text-color);
+    }
+}

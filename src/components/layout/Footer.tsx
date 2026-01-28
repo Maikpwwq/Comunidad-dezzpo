@@ -19,6 +19,8 @@ import Col from 'react-bootstrap/Col'
 import LogoFooterComunidadDezzpo from '@assets/img/IsologoFooter.png'
 
 // Styles
+import clsx from 'clsx'
+import styles from './Footer.module.scss'
 
 // Types
 import type { FooterProps } from './types'
@@ -32,8 +34,8 @@ import iconSet from '@assets/icomoon/selection.json'
 function ContactInfo(): React.ReactElement {
     return (
         <Col className="px-4" lg={4} md={12}>
-            <h3 className="headline-l textBlanco mb-3">Contáctenos</h3>
-            <ul className="body-1">
+            <h3 className={clsx(styles.Headline, "mb-3")}>Contáctenos</h3>
+            <ul className={clsx(styles.TextBody)}>
                 <li>📧 contacto@dezzpo.com</li>
                 <li>📱 +57 300 123 4567</li>
                 <li>📍 Bogotá, Colombia</li>
@@ -48,9 +50,9 @@ function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
     // App variant uses minimal footer
     if (variant === 'app') {
         return (
-            <footer className="footer py-3" style={{ backgroundColor: '#333' }}>
+            <footer className={clsx(styles.Footer, "py-3")} style={{ backgroundColor: '#333' }}>
                 <Container>
-                    <p className="mb-0 body-1 textBlanco text-center">
+                    <p className={clsx(styles.TextBody, "mb-0 text-center")}>
                         © {currentYear} - Comunidad Dezzpo Inc.
                     </p>
                 </Container>
@@ -61,10 +63,10 @@ function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
     // Marketing variant uses full footer
     return (
         <Container fluid className="p-0">
-            <footer className="footer">
-                <Col className="footerContainer p-0">
+            <footer className={clsx(styles.Footer)}>
+                <Col className={clsx(styles.Container, "p-0")}>
                     {/* Upper Section */}
-                    <Row className="footerSuperior">
+                    <Row className={clsx(styles.TopSection)}>
                         <Row className="mt-2">
                             {/* Navigation Links */}
                             <Col
@@ -74,7 +76,7 @@ function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
                                 sm={6}
                                 xs={12}
                             >
-                                <ul className="body-1">
+                                <ul className={clsx(styles.LinkList)}>
                                     {FOOTER_LINKS.map((link) => (
                                         <li key={link.id}>
                                             &#10095;
@@ -88,13 +90,13 @@ function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
 
                             {/* Social Links */}
                             <Col
-                                className="siguenosRedes p-0 align-items-start"
+                                className={clsx(styles.SocialSection, "p-0 align-items-start")}
                                 lg={4}
                                 md={8}
                                 sm={8}
                                 xs={12}
                             >
-                                <Container className="containerLogo p-0 m-0 mb-3 d-flex justify-content-start">
+                                <Container className={clsx(styles.LogoContainer)}>
                                     <img
                                         src={LogoFooterComunidadDezzpo}
                                         alt="Logo Comunidad Dezzpo"
@@ -102,11 +104,11 @@ function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
                                         width="210px"
                                     />
                                 </Container>
-                                <h2 className="headline-l textBlanco ps-4">
+                                <h2 className={clsx(styles.Headline, "ps-4")}>
                                     Síguenos
                                 </h2>
                                 <Container className="p-0 ps-4">
-                                    <ul className="listaFooter w-100 body-1 row justify-content-start">
+                                    <ul className={clsx(styles.SocialList, "w-100 row justify-content-start")}>
                                         &#10095;
                                         {SOCIAL_LINKS.map((social) => (
                                             <li
@@ -137,10 +139,10 @@ function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
                     </Row>
 
                     {/* Lower Section */}
-                    <Row className="footerInferior pt-2 w-100">
-                        <p className="mb-2 body-1 textBlanco">
+                    <Row className={clsx(styles.BottomSection, "pt-2 w-100")}>
+                        <p className="mb-2">
                             © {currentYear} - Todos los derechos reservados -
-                            <span className="dezzpo-svg textBlanco">
+                            <span className="dezzpo-svg">
                                 Comunidad Dezzpo Inc.
                             </span>
                         </p>

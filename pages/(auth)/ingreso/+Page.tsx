@@ -17,6 +17,8 @@ import {
 // Components
 import { SnackBarAlert } from '@components/common'
 // Styles
+import clsx from 'clsx'
+import styles from './Login.module.scss'
 // MUI
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
@@ -77,11 +79,11 @@ export default function Page({
         }
     }
     return (
-        <Container fluid className="p-0">
-            <Row className="ingresoFormulario m-0 w-100">
+        <Container fluid className={clsx(styles.Container, "p-0")}>
+            <Row className={clsx(styles.MainRow, "m-0 w-100")}>
                 {showLogo && (
                     <Col
-                        className="imagenIngreso d-flex align-items-start justify-content-center"
+                        className={clsx(styles.ImageSection, "d-flex align-items-start justify-content-center")}
                         lg={6} md={6} sm={12}
                     >
                         <Box style={{ top: '16vh', position: 'relative' }}>
@@ -91,11 +93,11 @@ export default function Page({
                         </Box>
                     </Col>
                 )}
-                <Col className="ingresarFormulario m-0 p-0 mb-4 mt-4" lg={4} md={5} sm={10} xs={10}>
-                    <Paper elevation={16} id="formularioIngreso" className="pt-4 pb-4">
+                <Col className={clsx(styles.FormWrapper, "m-0 p-0 mb-4 mt-4")} lg={4} md={5} sm={10} xs={10}>
+                    <Paper elevation={16} className={clsx(styles.FormCard, "pt-4 pb-4")}>
                         <Form action="" className="p-4" onSubmit={handleEmailLogin}>
                             <Col className="d-flex pt-4 pb-4">
-                                <Typography variant="h4" className="headline-xl">
+                                <Typography variant="h4" className={clsx(styles.Headline)}>
                                     Iniciar sesión
                                 </Typography>
                                 {/* Step 1: Role Selection */}
@@ -106,11 +108,11 @@ export default function Page({
                                             selectedRole={role}
                                         />
                                         <p className="body-1 pt-2 m-0">
-                                            <Link className="body-2 btn-TEXT textVerde2" href="/registro/">
+                                            <Link className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")} href="/registro/">
                                                 Registrarme
                                             </Link>
                                         </p>
-                                        <Link className="body-2 btn-TEXT textVerde2" href="/restaurar-contrasena/">
+                                        <Link className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")} href="/restaurar-contrasena/">
                                             <Button className="textBlanco btn-TEXT btn-round btn-high" variant="primary">
                                                 Olvidé mi contraseña
                                             </Button>
@@ -131,6 +133,7 @@ export default function Page({
                                             <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
                                                 <Form.Label className="mb-0 body-1">Email</Form.Label>
                                                 <Form.Control
+                                                    className={clsx(styles.Input)}
                                                     type="email"
                                                     placeholder="usa tu correo electrónico"
                                                     value={email}
@@ -140,6 +143,7 @@ export default function Page({
                                             <Form.Group className="mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
                                                 <Form.Label className="mb-0 body-1">Contraseña</Form.Label>
                                                 <Form.Control
+                                                    className={clsx(styles.Input)}
                                                     type="password"
                                                     placeholder="usa tu contraseña"
                                                     value={password}

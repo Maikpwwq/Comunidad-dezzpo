@@ -11,6 +11,8 @@ import { usePageContext } from '@hooks/usePageContext'
 // Styles & Assets
 // @ts-ignore
 import ProfilePhoto from '@assets/img/Profile.png'
+import clsx from 'clsx'
+import styles from './Profile.module.scss'
 
 // @ts-ignore
 // @ts-ignore
@@ -226,37 +228,26 @@ export default function Page() {
     }
 
     return (
-        <Container fluid className="p-0">
-            <Col className="col-12 w-100 fondoVerde">
+        <Container fluid className={clsx(styles.Container, "p-0")}>
+            <Col className={clsx(styles.GreenBackground, "col-12 w-100")}>
                 <Row
-                    className="border-green_bottom m-0 w-100 d-flex flex-nowrap"
+                    className={clsx(styles.HeaderRow)}
                 // sx={{ flexDirection: { sm: 'col' } }} // React-bootstrap Row doesn't support sx like MUI
                 >
                     <div
-                        className="d-flex flex-inline-row w-auto position-relative"
-                        style={{
-                            justifyContent: 'center',
-                            alignItems: 'baseline',
-                            top: '1.8rem',
-                        }}
+                        className={clsx(styles.ProfileImageContainer)}
                     >
                         <img
-                            src={userInfo.userPhotoUrl}
+                            src={userInfo.userPhotoUrl || ''}
                             alt="imagen de perfil"
-                            height="184px"
-                            width="184px"
-                            style={{
-                                borderRadius: '50%',
-                                border: '8px solid var(--background-light-gray-color)',
-                                background: 'white',
-                            }}
+                            className={styles.ProfileImage}
                         />
 
                         {!consult && (
                             <AdjuntarArchivos
                                 name={'profilePhoto'}
                                 multiple={false}
-                                idPerson={userConsultId}
+                                idPerson={userConsultId || ''}
                                 rol={userRol.rol}
                                 route={`profiles/${userConsultId}`}
                                 functionState={setUserInfo}
@@ -268,18 +259,13 @@ export default function Page() {
             </Col>
             <Col className="col mx-auto pt-4" md={10} sm={12}>
                 <Box
-                    className="m-2 w-auto"
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
+                    className={clsx(styles.UserInfoBox)}
                 >
                     <Typography
                         variant="h3"
                         id="userRazonSocial"
                         sx={{ maxWidth: '480px' }}
-                        className="textGris fw-bold"
+                        className={clsx(styles.BusinessName)}
                     >
                         {userInfo?.userRazonSocial}{' '}
                         {!!userInfo?.userWebSite && (
@@ -287,8 +273,7 @@ export default function Page() {
                                 <LinkIcon
                                     onClick={copyUserWebSiteLink}
                                     fontSize="large"
-                                    className="p-1"
-                                    style={{ cursor: 'pointer' }}
+                                    className={clsx(styles.LinkIcon)}
                                 />
                             </Tooltip>
                         )}
@@ -296,19 +281,19 @@ export default function Page() {
                     <Typography
                         variant="h5"
                         id="userProfession"
-                        className="textGris fw-light"
+                        className={clsx(styles.Profession)}
                     >
                         {userInfo.userProfession}
                     </Typography>
                     <Typography
                         variant="body2" // corrected 'body-2' to 'body2'
                         id="userExperience"
-                        className="textGris fw-lighter"
+                        className={clsx(styles.Experience)}
                     >
                         Experiencia: {userInfo.userExperience}
                     </Typography>
                     <CincoEstrellas />
-                    <span className="textGris fs-6 fw-lighter">
+                    <span className={clsx(styles.Experience, "fs-6")}>
                         {userInfo.userVotes.votes} Personas votaron
                     </span>
                 </Box>
@@ -317,23 +302,17 @@ export default function Page() {
                     <Col md={10} className="col-10 pt-4 pb-4">
                         <Typography
                             variant="h5"
-                            className="textVerde headline-l pb-4"
+                            className={clsx(styles.SectionTitle)}
                             align="left"
                         >
                             Datos de contacto
                         </Typography>
                         <Box
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-evenly',
-                            }}
-                            className="p-4 cardFrame"
+                            className={clsx(styles.ContactCard)}
                         >
                             <Typography
                                 variant="body2"
-                                className="ps-3 pe-3 detail-pill"
+                                className={clsx(styles.InfoPill)}
                             // name="userMail" // Typography doesn't support name prop usually
                             >
                                 <MailIcon fontSize="large" />{' '}
@@ -342,7 +321,7 @@ export default function Page() {
 
                             <Typography
                                 variant="body2"
-                                className="ps-3 pe-3 detail-pill"
+                                className={clsx(styles.InfoPill)}
                             // name="userPhone"
                             >
                                 <PhoneIphoneIcon fontSize="large" />{' '}
@@ -357,7 +336,7 @@ export default function Page() {
                         <Row className="m-0 d-flex w-100 justify-content-start">
                             <Typography
                                 variant="h5"
-                                className="textVerde headline-l w-auto pt-4 pb-4"
+                                className={clsx(styles.SectionTitle, "w-auto pt-4 pb-4")}
                                 align="left"
                             >
                                 Acerca de mi
@@ -396,7 +375,7 @@ export default function Page() {
                             <>
                                 <Typography
                                     variant="h5"
-                                    className="textVerde headline-l py-4"
+                                    className={clsx(styles.SectionTitle, "py-4")}
                                     align="left"
                                 >
                                     Habilidades
@@ -417,7 +396,7 @@ export default function Page() {
                             <>
                                 <Typography
                                     variant="h5"
-                                    className="textVerde headline-l pt-4 pb-4 w-100"
+                                    className={clsx(styles.SectionTitle, "pt-4 pb-4 w-100")}
                                     align="left"
                                 >
                                     Portafolio
@@ -427,17 +406,9 @@ export default function Page() {
                                         <Box
                                             key={index}
                                             component="img"
-                                            src={imagen}
+                                            src={imagen || ''}
                                             alt="galleria-usuario"
-                                            sx={{
-                                                height: 400,
-                                                display: 'block',
-                                                maxWidth: 400,
-                                                overflow: 'hidden',
-                                                width: 'auto !important',
-                                                borderRadius: '5%',
-                                            }}
-                                            className="p-2"
+                                            className={clsx(styles.GalleryImage)}
                                         />
                                     ))}
 
@@ -445,7 +416,7 @@ export default function Page() {
                                         <AdjuntarArchivos
                                             name={'galleryPhoto'}
                                             multiple={true}
-                                            idPerson={userConsultId}
+                                            idPerson={userConsultId || ''}
                                             rol={userRol.rol}
                                             route={`profiles/${userConsultId}`}
                                             functionState={setUserInfo}
@@ -461,7 +432,7 @@ export default function Page() {
                                 <Row className="m-0 d-flex w-100 justify-content-start">
                                     <Typography
                                         variant="h5"
-                                        className="textVerde headline-l w-auto pt-4 pb-4"
+                                        className={clsx(styles.SectionTitle, "w-auto pt-4 pb-4")}
                                         align="left"
                                     >
                                         Ubicación
@@ -476,21 +447,21 @@ export default function Page() {
                                 <Typography
                                     variant="h5"
                                     align="left"
-                                    className="textVerde headline-l pt-4 pb-4 w-100"
+                                    className={clsx(styles.SectionTitle, "pt-4 pb-4 w-100")}
                                 >
                                     Comentarios
                                 </Typography>
 
                                 <Comentarios
-                                    channelUrl={userInfo.userChannelUrl}
-                                    userID={userAuthID}
-                                    nickname={userAuthName}
+                                    channelUrl={userInfo.userChannelUrl || ''}
+                                    userID={userAuthID || ''}
+                                    nickname={userAuthName || ''}
                                 />
                             </>
                         )}
                     </Col>
                 </Row>
             </Col>
-        </Container>
+        </Container >
     )
 }

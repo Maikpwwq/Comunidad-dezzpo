@@ -17,6 +17,8 @@ import {
 // Components
 import { SnackBarAlert } from '@components/common'
 // Styles
+import clsx from 'clsx'
+import styles from './Register.module.scss'
 // MUI
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
@@ -87,11 +89,11 @@ export default function Page({
         }
     }
     return (
-        <Container fluid className="p-0">
-            <Row id="registrate" className="m-0">
+        <Container fluid className={clsx(styles.Container, "p-0")}>
+            <Row className={clsx(styles.MainRow, "m-0")} id="registrate">
                 {showLogo && (
                     <Col
-                        className="registrateImagen m-0 d-flex align-items-center justify-content-start"
+                        className={clsx(styles.ImageSection, "m-0 d-flex align-items-center justify-content-start")}
                         md={6} sm={12}
                     >
                         <Box style={{ top: '16vh', position: 'relative' }}>
@@ -101,11 +103,11 @@ export default function Page({
                         </Box>
                     </Col>
                 )}
-                <Col className="registrateformulario m-0 p-0 mb-4 mt-4" lg={4} md={5} sm={10} xs={10}>
-                    <Paper elevation={16} id="formularioRegistro" className="pt-4 pb-4">
+                <Col className={clsx(styles.FormWrapper, "m-0 p-0 mb-4 mt-4")} lg={4} md={5} sm={10} xs={10}>
+                    <Paper elevation={16} className={clsx(styles.FormCard, "pt-4 pb-4")}>
                         <Form action="" className="p-2" onSubmit={handleEmailSignup}>
                             <Col className="d-flex pt-4 pb-4">
-                                <Typography variant="h4" className="headline-xl">
+                                <Typography variant="h4" className={clsx(styles.Headline)}>
                                     Registrate
                                 </Typography>
                                 {/* Step 1: Role Selection */}
@@ -128,6 +130,7 @@ export default function Page({
                                             <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
                                                 <Form.Label className="mb-0 body-1">Nombre de usuario</Form.Label>
                                                 <Form.Control
+                                                    className={clsx(styles.Input)}
                                                     type="text"
                                                     placeholder="elija su usuario"
                                                     value={name}
@@ -137,6 +140,7 @@ export default function Page({
                                             <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
                                                 <Form.Label className="mb-0 body-1">Email</Form.Label>
                                                 <Form.Control
+                                                    className={clsx(styles.Input)}
                                                     type="email"
                                                     placeholder="registre una cuenta de email válida"
                                                     value={email}
@@ -146,6 +150,7 @@ export default function Page({
                                             <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
                                                 <Form.Label className="mb-0 body-1">Contraseña</Form.Label>
                                                 <Form.Control
+                                                    className={clsx(styles.Input)}
                                                     type="password"
                                                     placeholder="registre una clave"
                                                     value={password}
@@ -155,6 +160,7 @@ export default function Page({
                                             <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
                                                 <Form.Label className="mb-0 body-1">Confirmar contraseña</Form.Label>
                                                 <Form.Control
+                                                    className={clsx(styles.Input)}
                                                     type="password"
                                                     placeholder="de nuevo la clave"
                                                     value={confirmPassword}
@@ -168,7 +174,7 @@ export default function Page({
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >
-                                                <h3 className="body-2 btn-TEXT textVerde2">
+                                                <h3 className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")}>
                                                     Aviso tratamiento de datos personales <DownloadIcon fontSize="small" />.
                                                 </h3>
                                             </a>
@@ -193,7 +199,7 @@ export default function Page({
                                     </>
                                 )}
                                 <p className="body-1 pt-2">
-                                    <Link className="body-2 btn-TEXT textVerde2" href="/ingreso/">
+                                    <Link className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")} href="/ingreso/">
                                         Ingresar
                                     </Link>
                                 </p>
