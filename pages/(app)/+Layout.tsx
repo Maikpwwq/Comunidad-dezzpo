@@ -21,7 +21,6 @@ import { useUserStore, useMobileMenu } from '@stores/userStore'
 // Providers
 import { SendbirdProviderWrapper, UserAuthProvider } from '@providers'
 // Styles
-import '@styles/Private-App.scss'
 import '@styles/index.scss'
 
 interface LayoutProps {
