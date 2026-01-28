@@ -7,7 +7,7 @@
 
 import React from 'react'
 import IcoMoon from 'react-icomoon'
-import iconSet from '@assets/css/icomoon/selection.json'
+import iconSet from '@assets/icomoon/selection.json'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
