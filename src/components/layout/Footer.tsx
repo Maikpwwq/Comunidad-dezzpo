@@ -30,19 +30,7 @@ import type { FooterProps } from './types'
 // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-explicit-any
 import iconSet from '@assets/icomoon/selection.json'
 
-/** Contact data component - extracted for reuse */
-function ContactInfo(): React.ReactElement {
-    return (
-        <Col className="px-4" lg={4} md={12}>
-            <h3 className={clsx(styles.Headline, "mb-3")}>Contáctenos</h3>
-            <ul className={clsx(styles.TextBody)}>
-                <li>📧 contacto@dezzpo.com</li>
-                <li>📱 +57 300 123 4567</li>
-                <li>📍 Bogotá, Colombia</li>
-            </ul>
-        </Col>
-    )
-}
+
 
 function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
     const currentYear = new Date().getFullYear()
@@ -66,80 +54,70 @@ function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
             <footer className={clsx(styles.Footer)}>
                 <Col className={clsx(styles.Container, "p-0")}>
                     {/* Upper Section */}
-                    <Row className={clsx(styles.TopSection)}>
-                        <Row className="mt-2">
-                            {/* Navigation Links */}
-                            <Col
-                                className="ps-4 ms-4 align-items-end"
-                                lg={4}
-                                md={4}
-                                sm={6}
-                                xs={12}
-                            >
-                                <ul className={clsx(styles.LinkList)}>
-                                    {FOOTER_LINKS.map((link) => (
-                                        <li key={link.id}>
-                                            &#10095;
-                                            <Link href={link.href} title={link.label}>
-                                                {link.label}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </Col>
-
-                            {/* Social Links */}
-                            <Col
-                                className={clsx(styles.SocialSection, "p-0 align-items-start")}
-                                lg={4}
-                                md={8}
-                                sm={8}
-                                xs={12}
-                            >
-                                <Container className={clsx(styles.LogoContainer)}>
-                                    <img
-                                        src={LogoFooterComunidadDezzpo}
-                                        alt="Logo Comunidad Dezzpo"
-                                        height="80px"
-                                        width="210px"
-                                    />
-                                </Container>
-                                <h2 className={clsx(styles.Headline, "ps-4")}>
-                                    Síguenos
-                                </h2>
-                                <Container className="p-0 ps-4">
-                                    <ul className={clsx(styles.SocialList, "w-100 row justify-content-start")}>
+                    <div className={clsx(styles.TopSection, "py-5")}>
+                        {/* Navigation Links */}
+                        <div className={clsx(styles.Column, "d-none d-md-block")}>
+                            <ul className={clsx(styles.LinkList)}>
+                                {FOOTER_LINKS.map((link) => (
+                                    <li key={link.id}>
                                         &#10095;
-                                        {SOCIAL_LINKS.map((social) => (
-                                            <li
-                                                key={social.id}
-                                                className="w-auto d-flex align-items-center"
-                                            >
-                                                <a
-                                                    href={social.href}
-                                                    title={social.label}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                >
-                                                    <IcoMoon
-                                                        iconSet={iconSet}
-                                                        icon={social.icon}
-                                                        style={{ height: '33px' }}
-                                                    />
-                                                </a>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </Container>
-                            </Col>
+                                        <Link href={link.href} title={link.label}>
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
 
-                            {/* Contact Info */}
-                            <ContactInfo />
-                        </Row>
-                    </Row>
+                        {/* Social Links & Logo (Center) */}
+                        <div className={clsx(styles.Column, "align-items-center text-center")}>
+                            <Container className={clsx(styles.LogoContainer, "justify-content-center mb-4")}>
+                                <img
+                                    src={LogoFooterComunidadDezzpo}
+                                    alt="Logo Comunidad Dezzpo"
+                                    height="80px"
+                                    width="210px"
+                                />
+                            </Container>
+                            <h2 className={clsx(styles.Headline, "mb-3")}>
+                                Síguenos
+                            </h2>
+                            <ul className={clsx(styles.SocialList, "justify-content-center")}>
+                                {SOCIAL_LINKS.map((social) => (
+                                    <li
+                                        key={social.id}
+                                        className="mx-2"
+                                    >
+                                        <a
+                                            href={social.href}
+                                            title={social.label}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <IcoMoon
+                                                iconSet={iconSet}
+                                                icon={social.icon}
+                                                style={{ height: '32px', width: '32px', fill: 'white' }}
+                                            />
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Contact Info (Right) */}
+                        <div className={clsx(styles.Column)}>
+                            <h3 className={clsx(styles.Headline, "mb-3")}>Contáctenos</h3>
+                            <ul className={clsx(styles.TextBody, "list-unstyled")}>
+                                <li className="mb-2">📧 contacto@dezzpo.com</li>
+                                <li className="mb-2">📱 +57 300 123 4567</li>
+                                <li className="mb-2">📍 Bogotá, Colombia</li>
+                            </ul>
+                        </div>
+                    </div>
 
                     {/* Lower Section */}
-                    <Row className={clsx(styles.BottomSection, "pt-2 w-100")}>
+                    <Row className={clsx(styles.BottomSection, "pt-3 pb-3 w-100 m-0")}>
                         <p className="mb-2">
                             © {currentYear} - Todos los derechos reservados -
                             <span className="dezzpo-svg">

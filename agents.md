@@ -142,6 +142,7 @@ This file acts as the primary orchestrator. For specific domain constraints, ref
 ### Build Stability
 - **Firebase Usage**: Never import `getAuth()` or `getFirestore()` directly in global scope. Always use the initialized instances exported from `services/firebase/client.ts`. Direct usage causes "No Firebase App" errors during build/SSR because the app isn't initialized yet.                                                                     
 
+
 ### Vercel Deployment & Server Architecture (2026-01-27)
 - **Framework**: **Hono** (via `vike-photon`).
 - **Adapter**: `@photonjs/vercel` automates Vercel Serverless Function generation.
@@ -149,3 +150,10 @@ This file acts as the primary orchestrator. For specific domain constraints, ref
   - **Do NOT use `vite-plugin-vercel`**: It conflicts with `vike-photon`.
   - **Server Entry**: Logic resides in `server/index.ts` using `@photonjs/hono`.
   - **Vite Version**: Must be v7+ for `vike-photon` compatibility.
+
+## 8. Package Manager Policy (STRICT)
+- **ALWAYS use `pnpm`**.
+- **NEVER use `npm` or `npx`**.
+- Use `pnpm dlx` instead of `npx`.
+- Use `pnpm run <script>` for package scripts.
+

@@ -78,3 +78,9 @@ When modifying marketing pages:
 2. **Test with SSG**: Run `pnpm build` to verify pre-rendering
 3. **Avoid client-only logic**: Content must render on server
 4. **Use Vike v0.4.x patterns**: `export default` for page component
+5. **STRICT PACKAGE MANAGER POLICY**:
+   - **ALWAYS use `pnpm`**.
+   - **NEVER use `npm` or `npx`**.
+   - Use `pnpm dlx` instead of `npx`.
+   - Use `pnpm run <script>` for package scripts.
+

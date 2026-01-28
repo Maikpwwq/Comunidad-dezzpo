@@ -40,6 +40,12 @@ declare global {
       /** Redirect URL for auth flows */
       redirectTo?: string
 
+      /** Reason for page abortion (e.g. { notAdmin: true } or custom string) */
+      abortReason?: string | { notAdmin: boolean }
+
+      /** HTTP Status Code for abortion */
+      abortStatusCode?: number
+
       /** Document metadata for SEO */
       exports: {
         documentProps?: {

@@ -90,22 +90,34 @@ export function MenuComunidad(): React.ReactElement {
 
     return (
         <Container fluid className="p-0">
-            <Col className={clsx(styles.Container, "w-100 p-0 m-0")}>
-                {/* Fixed Header Bar */}
-                <Col className="p-0 pt-2 pb-2">
-                    <Row className="m-0 ps-2 pe-4 d-flex w-100 menuVisible">
-                        <div className="container d-flex w-auto ms-0">
-                            <IconButton
-                                aria-label="mobile-more"
-                                className={clsx(styles.MobileMenu)}
-                                onClick={handleToggleMenu}
-                            >
-                                <MenuIcon sx={{ fontSize: '30px' }} />
-                            </IconButton>
+            {/* Top Bar (Dark) - Legacy "Franja Gris" */}
+            <div className={clsx(styles.TopBar, "d-none d-md-block")}>
+                <Container>
+                    <Row className="justify-content-end align-items-center">
+                        <div className="d-flex">
+                            <Link href="/app/portal-servicios" className="d-flex align-items-center me-4 text-white">
+                                <Storefront className="me-2" fontSize="small" />
+                                <strong>Directorio Comerciantes</strong>
+                            </Link>
+                            <Link href="/ingreso" className="d-flex align-items-center text-white">
+                                <Login className="me-2" fontSize="small" />
+                                <strong>Ingresar</strong>
+                            </Link>
+                        </div>
+                    </Row>
+                </Container>
+            </div>
 
+            {/* Main Navbar (White) */}
+            <div className={clsx(styles.MainNavbar)}>
+                <Container>
+                    <Row className="align-items-center m-0">
+                        {/* Logo Area */}
+                        <Col xs={6} md={3} className="d-flex align-items-center">
                             <Link
                                 href="/"
-                                className={clsx(styles.NavLink, "p-2 d-flex flex-row")}
+                                className={clsx(styles.NavLink, "p-0 d-flex flex-row justify-content-start bg-transparent")}
+                                style={{ minHeight: 'auto', backgroundColor: 'transparent' }} // Override specific navlink defaults for logo
                                 onClick={handleClose}
                             >
                                 <img
@@ -119,34 +131,47 @@ export function MenuComunidad(): React.ReactElement {
                                     className={clsx(styles.Logo, styles.Isologo)}
                                 />
                             </Link>
-                        </div>
+                        </Col>
 
-                        <Row className="w-auto">
-                            <Link href="/app/portal-servicios" className={clsx(styles.NavLink, "me-0")}>
-                                <Storefront className="me-1" />
-                                <strong>
-                                    Directorio <br /> Comerciantes
-                                </strong>
-                            </Link>
-                            <Link href="/ingreso" className={clsx(styles.NavLink, "ms-2")}>
-                                <Login className="me-1" /> <strong>Ingresar</strong>
-                            </Link>
-                        </Row>
+                        {/* Mobile Toggle */}
+                        <Col xs={6} className="d-flex d-md-none justify-content-end">
+                            <IconButton
+                                aria-label="mobile-more"
+                                className={clsx(styles.MobileMenu)} // Reusing style for toggle button visibility logic
+                                onClick={handleToggleMenu}
+                                sx={{ color: '#28a745' }}
+                            >
+                                <MenuIcon sx={{ fontSize: '30px' }} />
+                            </IconButton>
+                        </Col>
+
+                        {/* Desktop Navigation */}
+                        <Col md={9} className="d-none d-md-flex justify-content-end">
+                            <nav>
+                                <ul className="d-flex flex-row align-items-center m-0 list-unstyled">
+                                    {renderMenuItems()}
+                                </ul>
+                            </nav>
+                        </Col>
                     </Row>
-                </Col>
+                </Container>
+            </div>
 
-                {/* Desktop Navigation */}
-                <nav className="col-10 pt-2 pb-2 d-none d-md-block">
-                    <ul className="d-flex flex-row justify-content-center m-0 list-unstyled">{renderMenuItems()}</ul>
+            {/* Mobile Navigation Drawer */}
+            {isOpen && (
+                <nav className={clsx(styles.MobileMenu, "col-12 pt-2 pb-2")}>
+                    <div className="d-flex flex-column p-4">
+                        <div className="mb-4 d-flex justify-content-center">
+                            <Link href="/ingreso" className="btn btn-light w-100 rounded-pill fw-bold">
+                                <Login className="me-2" /> Ingresar
+                            </Link>
+                        </div>
+                        <ul className="list-unstyled">
+                            {renderMenuItems(true)}
+                        </ul>
+                    </div>
                 </nav>
-
-                {/* Mobile Navigation */}
-                {isOpen && (
-                    <nav className={clsx(styles.MobileMenu, "col-12 pt-2 pb-2")}>
-                        <ul className="d-flex flex-column p-3 list-unstyled">{renderMenuItems(true)}</ul>
-                    </nav>
-                )}
-            </Col>
+            )}
         </Container>
     )
 }

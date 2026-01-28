@@ -12,6 +12,6 @@ export default (pageContext: PageContext) => {
         }
     }
 
-    const result = resolveRoute('/nuevo-proyecto/', pageContext.urlPathname)
+    const result = resolveRoute('/nuevo-proyecto', pageContext.urlPathname)
     return result
 }

@@ -4,17 +4,36 @@ import { getAuth, type Auth } from 'firebase/auth'
 import { getFirestore, type Firestore } from 'firebase/firestore'
 import { getStorage, type FirebaseStorage } from 'firebase/storage'
 
-let firebaseApp: FirebaseApp
+let firebaseApp: FirebaseApp | undefined
 
 // Instancia de Firebase
-if (getApps().length < 1) {
-    firebaseApp = initializeApp(firebaseClientConfig)
+if (typeof window !== 'undefined') {
+    if (getApps().length < 1) {
+        try {
+            firebaseApp = initializeApp(firebaseClientConfig)
+        } catch (error) {
+            console.error('Firebase initialization error:', error)
+        }
+    } else {
+        firebaseApp = getApps()[0]!
+    }
 } else {
-    firebaseApp = getApps()[0]!
+    // SSR / Build time stub to prevent crashes
+    if (getApps().length < 1) {
+         try {
+            firebaseApp = initializeApp(firebaseClientConfig)
+        } catch (error) {
+             console.warn('Firebase init failed in SSR (expected if env missing):', error)
+             // Create a dummy app or handle gracefully if possible, or just let it fail later if actually used
+        }
+    } else {
+         firebaseApp = getApps()[0]!
+    }
 }
 
-const auth: Auth = getAuth(firebaseApp)
-const firestore: Firestore = getFirestore(firebaseApp)
-const storage: FirebaseStorage = getStorage(firebaseApp)
+// Ensure exports are safe even if initialization failed or is partial
+const auth: Auth = firebaseApp ? getAuth(firebaseApp) : {} as Auth
+const firestore: Firestore = firebaseApp ? getFirestore(firebaseApp) : {} as Firestore
+const storage: FirebaseStorage = firebaseApp ? getStorage(firebaseApp) : {} as FirebaseStorage
 
 export { firebaseApp, auth, firestore, storage }
