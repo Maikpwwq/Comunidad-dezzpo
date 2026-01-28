@@ -54,6 +54,9 @@ export default {
     },
     description: {
       env: { server: true, client: true }
+    },
+    Layout: {
+      env: { server: true, client: true }
     }
   }
 } satisfies Config
