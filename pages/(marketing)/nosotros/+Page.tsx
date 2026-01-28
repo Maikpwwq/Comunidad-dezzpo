@@ -6,7 +6,7 @@
 // Styles
 // Components
 import IcoMoon from 'react-icomoon'
-import iconSet from '@assets/css/icomoon/selection.json'
+import iconSet from '@assets/icomoon/selection.json'
 // Assets
 import RoadMap2 from '@assets/img/RoadMap2.png'
 import Hitos from '@assets/img/Hitos.png'

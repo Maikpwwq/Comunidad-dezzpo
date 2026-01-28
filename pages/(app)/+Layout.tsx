@@ -21,7 +21,7 @@ import { useUserStore, useMobileMenu } from '@stores/userStore'
 // Providers
 import { SendbirdProviderWrapper, UserAuthProvider } from '@providers'
 // Styles
-import '@styles/index.scss'
+
 
 interface LayoutProps {
     children: React.ReactNode
