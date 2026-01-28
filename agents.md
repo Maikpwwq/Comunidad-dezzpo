@@ -101,6 +101,10 @@ src/
 ### Build Stability
 - **Firebase Usage**: Never import `getAuth()` or `getFirestore()` directly in global scope. Always use the initialized instances exported from `services/firebase/client.ts`. Direct usage causes "No Firebase App" errors during build/SSR because the app isn't initialized yet.                                                                     
 
-### Vercel Deployment (2026-01-27)
-- **Plugin Requirement**: Vike apps strictly require `vite-plugin-vercel` to bridge the SSR handler to Vercel's primitives (Serverless/Edge). Without it, Vercel fails to route SSR requests, resulting in 404s.
-- **Server Entry**: Do not rely on custom Express servers (`server/index.ts`) for Vercel deployment unless manually configuring rewrites. The plugin handles this automatically.
+### Vercel Deployment & Server Architecture (2026-01-27)
+- **Framework**: **Hono** (via `vike-photon`).
+- **Adapter**: `@photonjs/vercel` automates Vercel Serverless Function generation.
+- **Constraints**:
+  - **Do NOT use `vite-plugin-vercel`**: It conflicts with `vike-photon`.
+  - **Server Entry**: Logic resides in `server/index.ts` using `@photonjs/hono`.
+  - **Vite Version**: Must be v7+ for `vike-photon` compatibility.
