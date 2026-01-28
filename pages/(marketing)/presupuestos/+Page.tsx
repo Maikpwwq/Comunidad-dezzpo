@@ -6,7 +6,7 @@
 // Styles
 import '@assets/css/presupuestos.css'
 // Components
-import BuscadorNuevoProyecto from '@index/components/buscador/BuscadorNuevoProyecto'
+import { ProjectSearchBar } from '@features/projects'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -54,7 +54,7 @@ export default function Page() {
                         sm={12}
                         xs={12}
                     >
-                        <BuscadorNuevoProyecto />
+                        <ProjectSearchBar />
                     </Col>
                 </Row>
             </Container>
