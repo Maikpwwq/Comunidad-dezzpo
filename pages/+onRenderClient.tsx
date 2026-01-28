@@ -25,11 +25,14 @@ async function onRenderClient(pageContext: PageContextClient) {
 
     // Cast Page to React component type for JSX usage
     const PageComponent = Page as React.ComponentType<Record<string, unknown>>
+    const Layout = pageContext.config.Layout || ((({ children }: { children: React.ReactNode }) => <>{children}</>) as any)
 
     // Construct the page tree
     const page = (
         <PageShell pageContext={pageContext}>
-            <PageComponent {...pageProps} />
+            <Layout>
+                <PageComponent {...pageProps} />
+            </Layout>
         </PageShell>
     )
 

@@ -12,32 +12,35 @@ import PageShell from './PageShell'
  * @see https://vike.dev/onRenderHtml
  */
 async function onRenderHtml(pageContext: PageContextServer) {
-    const { Page, pageProps } = pageContext
+  const { Page, pageProps } = pageContext
 
-    // Support SPA mode (no SSR)
-    let pageHtml = ''
-    if (Page) {
-        // Cast Page to React component type for JSX usage
-        const PageComponent = Page as React.ComponentType<Record<string, unknown>>
-        const page = (
-            <PageShell pageContext={pageContext}>
-                <PageComponent {...pageProps} />
-            </PageShell>
-        )
-        pageHtml = renderToString(page)
-    }
+  // Support SPA mode (no SSR)
+  let pageHtml = ''
+  if (Page) {
+    // Cast Page to React component type for JSX usage
+    const PageComponent = Page as React.ComponentType<Record<string, unknown>>
+    const Layout = pageContext.config.Layout || ((({ children }) => <>{children}</>) as any)
+    const page = (
+      <PageShell pageContext={pageContext}>
+        <Layout>
+          <PageComponent {...pageProps} />
+        </Layout>
+      </PageShell>
+    )
+    pageHtml = renderToString(page)
+  }
 
-    // Extract document metadata from page exports
-    const { documentProps } = pageContext.exports as {
-        documentProps?: { title?: string; description?: string }
-    }
-    const title = (documentProps && documentProps.title) || 'Comunidad Dezzpo'
-    const description =
-        (documentProps && documentProps.description) ||
-        'Explora en Comunidad Dezzpo una red profesional confiable para todo tipo de trabajos, desde soluciones de mantenimiento e instalaciones pequeñas hasta acabados inmobiliarios y remodelaciones completas.'
+  // Extract document metadata from page exports
+  const { documentProps } = pageContext.exports as {
+    documentProps?: { title?: string; description?: string }
+  }
+  const title = (documentProps && documentProps.title) || 'Comunidad Dezzpo'
+  const description =
+    (documentProps && documentProps.description) ||
+    'Explora en Comunidad Dezzpo una red profesional confiable para todo tipo de trabajos, desde soluciones de mantenimiento e instalaciones pequeñas hasta acabados inmobiliarios y remodelaciones completas.'
 
-    // Construct the full HTML document
-    const documentHtml = escapeInject`<!DOCTYPE html>
+  // Construct the full HTML document
+  const documentHtml = escapeInject`<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -94,8 +97,8 @@ async function onRenderHtml(pageContext: PageContextServer) {
   </body>
 </html>`
 
-    return {
-        documentHtml,
-        pageContext: {},
-    }
+  return {
+    documentHtml,
+    pageContext: {},
+  }
 }

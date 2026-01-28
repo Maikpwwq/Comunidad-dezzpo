@@ -14,6 +14,10 @@ declare global {
     interface Photon {
       server: 'hono' // Provides correct types for pageContext.runtime.req
     }
+
+    interface Config {
+      Layout?: React.ComponentType<{ children: React.ReactNode }>
+    }
     
     interface PageContext {
       /** Page-specific props passed from data hooks */
