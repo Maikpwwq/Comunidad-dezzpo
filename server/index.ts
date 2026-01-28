@@ -1,75 +1,49 @@
-// This file isn't processed by Vite, see https://github.com/vikejs/vike/issues/562
-//  - Consequently, the server needs be manually restarted when changing this file
+import { Hono } from 'hono'
+import { cors } from 'hono/cors'
+import { logger } from 'hono/logger'
+import { compress } from 'hono/compress'
+import { apply, serve } from '@photonjs/hono'
 
-// const express = require('express')
-// const compression = require('compression')
-// const { renderPage } = require('vike/server')
-import express from 'express'
-import compression from 'compression'
-import { renderPage } from 'vike/server'
-import { root } from './root'
+/**
+ * Refined Hono Server for Comunidad Dezzpo
+ * Replaces Express with Photon-optimized middleware
+ */
+function startServer() {
+  const app = new Hono()
 
-// import { auth } from '../src/firebase/firebaseClient'
+  // 1. Standard Middlewares (Hono equivalents)
+  app.use('*', logger())
+  app.use(compress())
+  app.use('/api/*', cors())
 
-const isProduction = process.env.NODE_ENV === 'production'
-
-Error.stackTraceLimit = Infinity
-
-startServer()
-
-async function startServer() {
-    const app = express()
-
-    app.use(compression())
-
-    // Vite integration
-    if (isProduction) {
-        // In production, we need to serve our static assets ourselves.
-        // (In dev, Vite's middleware serves our static assets.)
-        // const sirv = require('sirv')
-        const sirv = (await import('sirv')).default
-        app.use(sirv(`${root}/dist/client`))
-    } else {
-        // We instantiate Vite's development server and integrate its middleware to our server.
-        // ⚠️ We instantiate it only in development. (It isn't needed in production and it
-        // would unnecessarily bloat our server in production.)
-        // const vite = require('vite')
-        const vite = await import('vite')
-        const viteDevMiddleware = (
-            await vite.createServer({
-                root,
-                server: { middlewareMode: true },
-            })
-        ).middlewares
-        app.use(viteDevMiddleware)
+  // 2. Custom Firebase Admin Middleware (Example Translation)
+  // If you had an Express middleware for Firebase Auth, translate it here:
+  app.use('/api/*', async (c, next) => {
+    const authHeader = c.req.header('Authorization')
+    if (authHeader?.startsWith('Bearer ')) {
+      // Logic for firebase-admin verification goes here
     }
+    await next()
+  })
 
-    // ...
-    // Other middlewares (e.g. some RPC middleware such as Telefunc)
-    // ...
+  // 3. Vike & Extension Integration
+  // This automatically handles SSR and Vike-specific routing
+  apply(app)
 
-    // Vike middleware. It should always be our last middleware (because it's a
-    // catch-all middleware superseding any middleware placed after it).
-    // Express 5 uses path-to-regexp v8 which requires named wildcards
-    app.get('/{*path}', async (req, res, next) => {
-        // const user = auth?.currentUser
-        const pageContextInit = {
-            urlOriginal: req.originalUrl,
-            // user
-        }
-        const pageContext = await renderPage(pageContextInit)
-        const { httpResponse } = pageContext
-        if (!httpResponse) return next()
-        const { body, statusCode, earlyHints, headers } = httpResponse // replace ("Content-Type", contentType); deprecated by headers
-        if (res.writeEarlyHints)
-            res.writeEarlyHints({
-                link: earlyHints.map((e) => e.earlyHintLink),
-            })
-        headers.forEach(([name, value]) => res.setHeader(name, value))
-        res.status(statusCode).send(body)
-    })
+  // 4. API Route Implementation
+  app.get('/api/v1/status', (c) => c.json({ 
+    status: 'online', 
+    framework: 'vike-photon' 
+  }))
 
-    const port = process.env.PORT || 3000
-    app.listen(port)
-    console.log(`Server running at http://localhost:${port}`)
+  // 5. Unified Server Start
+  const port = process.env.PORT || 3000
+  return serve(app, {
+    port: Number(port),
+    onReady() {
+      console.log(`🚀 Server ready at http://localhost:${port}`)
+    },
+  })
 }
+
+export default startServer()

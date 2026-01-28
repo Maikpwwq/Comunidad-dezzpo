@@ -99,4 +99,12 @@ src/
 - **Migration Pattern**: When moving metadata from `+Page.tsx` to `+config.ts`, ensure `title` and `description` are valid config keys. This often requires defining them in the global `renderer/+config.ts` under the `meta` property.
 
 ### Build Stability
-- **Firebase Usage**: Never import `getAuth()` or `getFirestore()` directly in global scope. Always use the initialized instances exported from `services/firebase/client.ts`. Direct usage causes "No Firebase App" errors during build/SSR because the app isn't initialized yet.
+- **Firebase Usage**: Never import `getAuth()` or `getFirestore()` directly in global scope. Always use the initialized instances exported from `services/firebase/client.ts`. Direct usage causes "No Firebase App" errors during build/SSR because the app isn't initialized yet.                                                                     
+
+### Vercel Deployment & Server Architecture (2026-01-27)
+- **Framework**: **Hono** (via `vike-photon`).
+- **Adapter**: `@photonjs/vercel` automates Vercel Serverless Function generation.
+- **Constraints**:
+  - **Do NOT use `vite-plugin-vercel`**: It conflicts with `vike-photon`.
+  - **Server Entry**: Logic resides in `server/index.ts` using `@photonjs/hono`.
+  - **Vite Version**: Must be v7+ for `vike-photon` compatibility.

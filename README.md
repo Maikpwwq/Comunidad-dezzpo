@@ -5,9 +5,11 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 ## Tech Stack
 - **Framework**: [Vike v0.4.x](https://vike.dev/) (SSR/SSG)
 - **Frontend**: React + TypeScript
+- **Server**: Hono (via Vike-Photon)
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand)
 - **UI Library**: [MUI v6](https://mui.com/)
 - **Backend/Services**: Firebase (Auth, Firestore, Storage)
+- **Deployment**: Vercel (Serverless Functions)
 
 ## Project Structure
 

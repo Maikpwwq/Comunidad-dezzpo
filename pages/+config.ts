@@ -1,5 +1,6 @@
 // https://vike.dev/config
 import type { Config } from 'vike/types'
+import vikePhoton from 'vike-photon/config'
 
 /**
  * Global Vike v0.4.x Configuration
@@ -29,6 +30,12 @@ export default {
     'redirectTo',
   ],
 
+  extends: [vikePhoton],
+
+  photon: {
+    server: 'server/index.ts'
+  },
+
   /**
    * Prefetch strategy for static assets
    * 'viewport' = prefetch when link enters viewport
@@ -39,7 +46,8 @@ export default {
    * Enable pre-rendering for static pages
    * @see https://vike.dev/prerender
    */
-  prerender: true,
+  /* prerender: true, (Moved to marketing scope) */
+
   meta: {
     title: {
       env: { server: true, client: true }

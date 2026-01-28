@@ -39,6 +39,7 @@
   "scripts": {
     "dev": "node --import tsx ./server/index.ts",
     "build": "vite build",
+    "prod": "vike build && node ./dist/server/index.mjs",
     "preview": "cross-env NODE_ENV=production node --import tsx ./server/index.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
@@ -53,13 +54,16 @@
     "@mui/icons-material": "^6.5.0",
     "@mui/material": "^6.5.0",
     "@mui/x-data-grid": "^7.29.12",
+    "@photonjs/express": "^0.1.13",
+    "@photonjs/hono": "^0.1.12",
+    "@photonjs/vercel": "^0.1.22",
     "@sendbird/uikit-react": "^3.17.8",
     "compression": "^1.8.1",
     "cross-env": "^10.1.0",
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.3",
-    "express": "^5.2.1",
     "firebase": "^12.8.0",
+    "hono": "^4.11.7",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.10",
@@ -72,13 +76,13 @@
     "sirv": "^3.0.0",
     "uuid": "^13.0.0",
     "vike": "^0.4.252",
+    "vike-photon": "^0.1.24",
     "xlsx": "^0.18.5",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@tsconfig/vite-react": "^7.0.2",
     "@types/compression": "^1.8.1",
-    "@types/express": "^5.0.0",
     "@types/google.maps": "^3.58.1",
     "@types/node": "^22.10.7",
     "@types/react": "^18.3.27",
@@ -96,6 +100,6 @@
     "sass": "^1.97.3",
     "tsx": "^4.19.2",
     "typescript": "^5.9.3",
-    "vite": "^6.4.1"
+    "vite": "^7.3.1"
   }
 }

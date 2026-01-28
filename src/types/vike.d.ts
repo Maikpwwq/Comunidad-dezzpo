@@ -11,6 +11,10 @@ import type { PageContext as VikePageContext } from 'vike/types'
 
 declare global {
   namespace Vike {
+    interface Photon {
+      server: 'hono' // Provides correct types for pageContext.runtime.req
+    }
+    
     interface PageContext {
       /** Page-specific props passed from data hooks */
       pageProps?: Record<string, unknown>
