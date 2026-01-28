@@ -1,0 +1,36 @@
+@use '../../_variables' as *;
+
+.categories-page {
+    #categorias-servicios {
+        background: var(--background-dark-gray-color) url('/assets/img/Profesionales_servicios2.png') no-repeat center;
+        background-size: 100% 100%;
+        background-attachment: scroll;
+        width: 100%;
+        max-height: auto;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+    }
+
+    .titulo-servicios {
+        width: 100%;
+    }
+
+    .contratistas-reformas {
+        display: flex;
+        flex-direction: row;
+        text-align: left;
+        justify-content: space-around;
+        width: 100%;
+        overflow-x: auto;
+        
+        @media screen and (max-width: 600px) {
+            flex-direction: column !important;
+        }
+
+        li {
+            list-style-type: none;
+        }
+    }
+}

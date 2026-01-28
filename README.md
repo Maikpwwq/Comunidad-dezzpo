@@ -13,25 +13,115 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 
 ## Project Structure
 
-```bash
-src/
-├── app/              # Legacy compat (being phased out)
-├── components/       # Shared UI components
-│   ├── common/       # Generic atoms (buttons, inputs)
-│   └── layout/       # App shell (Navbar, Sidebar, Footer)
-├── config/           # App-wide configuration (theme, constants)
-├── features/         # Domain-specific modules
-│   ├── auth/         # Authentication logic & components
-│   ├── marketing/    # Public-facing components
-│   ├── messaging/    # Sendbird chat integration
-│   ├── profile/      # User profile management
-│   ├── projects/     # Project creation & management
-│   └── quotes/       # Quotation system
-├── hooks/            # Custom React hooks (useAuth, useFirestoreQuery)
-├── services/         # Typed service layer (Firebase wrappers)
-│   ├── firebase/     # Core Firebase config & client
-│   └── sendbird/     # Sendbird SDK wrappers
-└── stores/           # Global Zustand stores
+```
+comunidad-dezzpo/
+├── pages/                                    # Vike root pages directory
+│   ├── +config.ts                            # [NEW] Global Vike v1 config
+│   ├── +Layout.tsx                           # [NEW] Root layout wrapper
+│   ├── +onRenderClient.tsx                   # [MOVE] from src/index/renderer
+│   ├── +onRenderHtml.tsx                     # [MOVE] from src/index/renderer
+│   ├── +Head.tsx                             # [NEW] Shared <head> meta
+│   │
+│   ├── (marketing)/                          # Route Group: Marketing Pages (SSR/SSG)
+│   │   ├── +Layout.tsx                       # [NEW] Marketing layout (header/footer)
+│   │   ├── +Page.tsx                         # [RENAME] Home page
+│   │   ├── nosotros/+Page.tsx
+│   │   ├── contactenos/+Page.tsx
+│   │   ├── asi-trabajamos/+Page.tsx
+│   │   ├── blog/+Page.tsx
+│   │   ├── legal/+Page.tsx
+│   │   ├── prensa/+Page.tsx
+│   │   ├── patrocinadores/+Page.tsx
+│   │   ├── ayuda-pqrs/+Page.tsx
+│   │   ├── asesorias/+Page.tsx
+│   │   ├── calificaciones/+Page.tsx
+│   │   ├── presupuestos/+Page.tsx
+│   │   ├── apendice-costos/+Page.tsx
+│   │   ├── profesionales-servicios/+Page.tsx
+│   │   ├── comunidad-comerciantes/+Page.tsx
+│   │   ├── comunidad-propietarios/+Page.tsx
+│   │   └── nuevo-proyecto/
+│   │       ├── +Page.tsx
+│   │       └── +route.ts
+│   │
+│   ├── (auth)/                               # Route Group: Authentication Pages
+│   │   ├── +Layout.tsx                       # [NEW] Auth layout (minimal UI)
+│   │   ├── ingreso/+Page.tsx
+│   │   ├── registro/+Page.tsx
+│   │   ├── restaurar-contrasena/+Page.tsx
+│   │   └── aplicar/+Page.tsx
+│   │
+│   ├── app/                                  # Protected App Routes (SSR + Client)
+│   │   ├── +Layout.tsx                       # [MOVE/REFACTOR] AppLayout.jsx
+│   │   ├── +guard.ts                         # [NEW] Auth guard for /app/*
+│   │   │
+│   │   ├── perfil/
+│   │   │   ├── +Page.tsx                     # User's own profile
+│   │   │   ├── @id/+Page.tsx                 # [NEW] Dynamic public profile
+│   │   │   └── +route.ts                     # [REFACTOR] Simplified route
+│   │   │
+│   │   ├── ajustes/
+│   │   │   ├── +Page.tsx                     # Settings page
+│   │   │   └── @id/+Page.tsx                 # [OPTIONAL] Admin edit
+│   │   │
+│   │   ├── cotizar/                          # Quote/Budget flow
+│   │   │   ├── +Page.tsx
+│   │   │   ├── editar/@id/+Page.tsx
+│   │   │   └── ver/@id/+Page.tsx
+│   │   │
+│   │   ├── requerimiento/                    # Requirements flow
+│   │   │   ├── editar/@id/+Page.tsx
+│   │   │   └── ver/@id/+Page.tsx
+│   │   │
+│   │   ├── mensajes/+Page.tsx                # Sendbird Chat integration
+│   │   ├── notificaciones/+Page.tsx
+│   │   ├── portal-servicios/+Page.tsx
+│   │   ├── directorio-requerimientos/+Page.tsx
+│   │   ├── historial-servicios/+Page.tsx
+│   │   ├── biblioteca/+Page.tsx
+│   │   ├── calificaciones/+Page.tsx
+│   │   ├── certificaciones/+Page.tsx
+│   │   ├── contratacion/+Page.tsx
+│   │   ├── contratar/+Page.tsx
+│   │   ├── proyecto/+Page.tsx
+│   │   ├── suscripciones/+Page.tsx
+│   │   ├── formas-pago/+Page.tsx
+│   │   ├── invitar-amigos/+Page.tsx
+│   │   ├── cambiar-clave/+Page.tsx
+│   │   └── configuracion-privacidad/+Page.tsx
+│   │   │
+│   │   └── _error/+Page.tsx                  # [MOVE] Error page
+│   │
+│   ├── src/
+│   │   ├── components/                       # [RESTRUCTURE] Atomic Design
+│   │   │   ├── atoms/                        # Basic UI elements
+│   │   │   ├── molecules/                    # Combined atoms
+│   │   │   ├── organisms/                    # Complex components
+│   │   │   └── templates/                    # Page templates
+│   │   │
+│   │   ├── features/                         # [NEW] Feature modules
+│   │   │   ├── auth/
+│   │   │   ├── profile/
+│   │   │   ├── budget/
+│   │   │   ├── chat/
+│   │   │   └── requirements/
+│   │   │
+│   │   ├── services/                         # [REFACTOR] TypeScript services
+│   │   │   ├── firebase/
+│   │   │   ├── firestore/
+│   │   │   └── sendbird/
+│   │   │
+│   │   ├── hooks/                            # [NEW] Shared hooks
+│   │   ├── stores/                           # [REFACTOR] RxJS state
+│   │   ├── types/                            # [NEW] Shared TypeScript types
+│   │   ├── assets/                           # [KEEP] Static assets
+│   │   ├── fonts/                            # [KEEP] Local fonts
+│   │   └── styles/                           # [NEW] Global styles
+│   │
+│   ├── server/                               # [KEEP] Express server
+│   ├── vite.config.ts
+│   ├── tsconfig.json
+│   └── package.json
 ```
 
 ## Workflow

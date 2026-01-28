@@ -1,0 +1,20 @@
+@use '../../_variables' as *;
+
+.community-page {
+    #popular-categorias {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+    }
+
+    .categorias-populares {
+        background-color: var(--background-dark-gray-color);
+        color: var(--content-text-white-color);
+        border-radius: 0.5rem;
+        
+        li {
+            list-style-type: none;
+        }
+    }
+}

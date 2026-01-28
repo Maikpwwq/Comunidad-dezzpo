@@ -1,0 +1,92 @@
+@use '../../_variables' as *;
+
+.new-project-page {
+    @media screen and (max-width: 600px) {
+        .paso-a-paso {
+            position: sticky;
+            top: 0px;
+            width: 100%;
+            z-index: 8;
+        }
+
+        .pasos-fixed {
+            display: block !important;
+            height: 140px;
+        }
+    }
+
+    .pasos-fixed {
+        display: none;
+    }
+    
+    .opacidad-stepper {
+        background-color: var(--background-light-gray-color); // Replaced rgba
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        font-size: 21px;
+        text-align: center;
+        padding-left: 0px;
+        align-items: center;
+    }
+
+    .section-base {
+        background-color: var(--background-light-gray-color);
+        background-attachment: scroll;
+        width: 100%;
+        height: auto;
+    }
+
+    .nuevo-proyecto-buscador {
+        @extend .section-base;
+        background-image: url('/assets/img/ComunidadPropietarios2.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+        min-height: 590px;
+    }
+
+    .nuevo-proyecto-buscador-2 {
+        @extend .section-base;
+        background-image: url('/assets/img/NuevoProyecto1.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        min-height: 530px;
+    }
+
+    .nuevo-proyecto-buscador-3 {
+        @extend .section-base;
+        background-image: url('/assets/img/NuevoProyecto2.png');
+        background-repeat: no-repeat;
+        background-position: right;
+        background-size: auto 100%;
+        min-height: 550px;
+    }
+
+    .cargar-archivos {
+        position: relative;
+        left: 50px;
+        width: 100px !important;
+        border-right: 1px solid var(--primary-black-text-color);
+    }
+
+    .nuevo-proyecto-mensaje {
+        background: var(--background-blue-color2);
+    }
+
+    .casilla-seleccion {
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--content-text-white-color) !important;
+        max-width: 300px;
+    }
+
+    // MUI overrides - prefer to move to component sx if possible
+    .MuiStepConnector-line {
+        height: 24px !important;
+    }
+    
+    .MuiStepConnector-root {
+        top: 12px !important;
+    }
+}

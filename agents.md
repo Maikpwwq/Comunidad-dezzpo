@@ -77,21 +77,62 @@ export type ServiceResponse<T> =
 ## 5. Visual Guide
 
 ### File Structure
+### File Structure
 ```
-src/
-├── features/         # [Domain Logic]
-│   ├── auth/
-│   ├── profile/
-│   └── quotes/
-├── services/         # [Data Layer]
-│   ├── firebase/     # Core Config
-│   └── user/         # User Service
-└── pages/            # [Routing]
-    ├── (marketing)/  # Public
-    └── app/          # Private
+comunidad-dezzpo/
+├── pages/                                    # Vike root pages directory
+│   ├── +config.ts                            # [NEW] Global Vike v1 config
+│   ├── +Layout.tsx                           # [NEW] Root layout wrapper
+│   ├── +onRenderClient.tsx                   # [MOVE] from src/index/renderer
+│   ├── +onRenderHtml.tsx                     # [MOVE] from src/index/renderer
+│   ├── +Head.tsx                             # [NEW] Shared <head> meta
+│   │
+│   ├── (marketing)/                          # Route Group: Marketing Pages (SSR/SSG)
+│   │   ├── +Layout.tsx                       # [NEW] Marketing layout (header/footer)
+│   │   └── ... (Public pages)
+│   │
+│   ├── (auth)/                               # Route Group: Authentication Pages
+│   │   ├── +Layout.tsx                       # [NEW] Auth layout (minimal UI)
+│   │   └── ... (Login, Register pages)
+│   │
+│   ├── app/                                  # Protected App Routes (SSR + Client)
+│   │   ├── +Layout.tsx                       # [MOVE/REFACTOR] AppLayout.jsx
+│   │   ├── +guard.ts                         # [NEW] Auth guard for /app/*
+│   │   └── ... (Dashboard, Profile, Quotes)
+│   │
+│   ├── src/
+│   │   ├── components/                       # [RESTRUCTURE] Atomic Design
+│   │   │   ├── atoms/
+│   │   │   ├── molecules/
+│   │   │   ├── organisms/
+│   │   │   └── templates/
+│   │   │
+│   │   ├── features/                         # [NEW] Feature modules
+│   │   │   ├── auth/
+│   │   │   ├── profile/
+│   │   │   ├── budget/
+│   │   │   ├── chat/
+│   │   │   └── requirements/
+│   │   │
+│   │   ├── services/                         # [REFACTOR] TypeScript services
+│   │   ├── hooks/                            # [NEW] Shared hooks
+│   │   ├── stores/                           # [REFACTOR] RxJS state
+│   │   ├── types/                            # [NEW] Shared TypeScript types
+│   │   ├── assets/                           # [KEEP] Static assets
+│   │   └── styles/                           # [NEW] Global styles
+│   │
+│   ├── server/                               # [KEEP] Express server
+│   ├── vite.config.ts
+│   ├── tsconfig.json
+│   └── package.json
 ```
 
-## 6. Learned Lessons
+## 6. Sub-Agent Orchestration
+This file acts as the primary orchestrator. For specific domain constraints, refer to:
+- **Marketing Pages**: [pages/(marketing)/agents.md](pages/(marketing)/agents.md)
+- **App/Dashboard**: [pages/(app)/agents.md](pages/(app)/agents.md)
+
+## 7. Learned Lessons
 
 ### Vike Configuration (2026-01-27)
 - **Deprecation of `+config.h.ts`**: Vike now prefers `+config.ts`.

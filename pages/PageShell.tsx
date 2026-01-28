@@ -2,6 +2,7 @@ import type { PageContext } from 'vike/types'
 import { PageContextProvider } from '@hooks/usePageContext'
 // CSS import - will be processed by Vite
 import '@styles/global.scss'
+import '@styles/index.scss'
 
 /**
  * PageShell Component

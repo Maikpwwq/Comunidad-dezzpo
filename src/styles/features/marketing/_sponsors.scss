@@ -1,0 +1,25 @@
+@use '../../_variables' as *;
+
+.sponsors-page {
+    .container-patrocinadores {
+        background: var(--background-light-gray-color) url('/assets/img/Patrocinadores1.png') no-repeat center;
+        background-attachment: scroll;
+        background-size: 100% auto;
+        min-height: 510px;
+        width: 100%;
+
+        @media screen and (max-width: 600px) {
+            background-size: cover !important;
+        }
+    }
+
+    .patrocinadores-mensaje {
+        text-align: left;
+    }
+
+    .titulo-documento h1 {
+        font-size: 21px;
+        margin-top: 0px;
+        padding-top: 21px;
+    }
+}

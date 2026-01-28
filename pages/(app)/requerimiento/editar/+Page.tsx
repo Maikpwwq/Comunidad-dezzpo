@@ -17,7 +17,6 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 // CSS
-// import '../../detalle_requerimiento.css'
 export default function Page() {
     const { currentUser } = useAuth()
     const userAuthID = currentUser?.userId

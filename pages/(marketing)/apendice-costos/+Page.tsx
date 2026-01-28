@@ -6,7 +6,6 @@
  */
 import { useState, useEffect } from 'react'
 // Styles
-import '@assets/css/apendice_costos.css'
 // Components and Data
 import { Link } from '@hooks'
 import {

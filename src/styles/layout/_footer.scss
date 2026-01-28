@@ -1,0 +1,61 @@
+@use '../../_variables' as *;
+
+.footer {
+    margin: 0 auto;
+    background: #313332; // Consider moving to variable if used elsewhere
+    background-size: 100% auto;
+    border-top: 1px solid var(--background-yellow-color);
+
+    &-container {
+        color: var(--content-text-white-color);
+        padding-top: 21px;
+    }
+
+    &-superior {
+        background-size: cover;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+
+        @media screen and (max-width: 600px) {
+            background-size: 100% 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        ul {
+            list-style-type: none;
+            color: var(--background-yellow-color);
+            padding: 0;
+            
+            a {
+                font-size: 14px;
+                text-decoration: none;
+                color: var(--content-text-white-color);
+                transition: background-color $transition-fast;
+
+                &:hover {
+                    background-color: var(--background-blue-color2);
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    &-social {
+        display: flex;
+        flex-direction: column;
+        padding: 0 48px;
+        margin-top: -15px;
+        justify-content: space-evenly;
+    }
+
+    &-inferior {
+        width: 100%;
+        text-align: center;
+        font-size: 21px;
+        border-top: 1px solid blanchedalmond; // Consider token
+        padding: $spacing-3 0;
+    }
+}

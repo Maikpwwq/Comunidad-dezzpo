@@ -29,7 +29,6 @@ import PageIngreso from '../../(auth)/ingreso/+Page'
 // Local
 import TablaSubCategoriaCantidades from './TablaSubCategoriaCantidades'
 // Styles
-import '@assets/css/nuevo_proyecto.css'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'

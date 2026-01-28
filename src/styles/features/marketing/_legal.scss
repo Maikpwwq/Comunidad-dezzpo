@@ -1,0 +1,23 @@
+@use '../../_variables' as *;
+
+.legal-page {
+    .legal-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        background-color: var(--background-dark-gray-color);
+        min-height: 480px;
+    }
+
+    .legal-documentos {
+        min-height: 480px;
+        height: auto;
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: flex-start;
+    }
+}

@@ -4,7 +4,6 @@
  * Converted to TypeScript.
  */
 // Styles
-import '@assets/css/patrocinadores.css'
 // Assets (using public path for these)
 import LogoBictia from '/assets/img/LogoBictia.png'
 import LogoMisionTic2022 from '/assets/img/LogoMisionTic2022.png'

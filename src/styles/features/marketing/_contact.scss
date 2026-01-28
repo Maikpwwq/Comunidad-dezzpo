@@ -1,0 +1,63 @@
+@use '../../_variables' as *;
+
+.contact-page {
+    .main-titulo {
+        font-size: 40px;
+        margin: auto 30px;
+        
+        h1 {
+            margin: auto 0%;
+        }
+    }
+
+    .contactenos-mensaje {
+        background-color: var(--background-light-gray-color);
+        min-height: 690px;
+        height: auto;
+        width: 100%;
+    }
+
+    .form-contacto {
+        width: 100%;
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 30px;
+
+        form {
+            width: 100%;
+            min-height: 330px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        input, textarea {
+            width: 100%;
+            border: 3px solid var(--background-hover-green-color);
+        }
+    }
+
+    .border-blue {
+        border: 3px solid var(--background-hover-green-color);
+    }
+
+    .datos-contacto {
+        display: flex;
+        flex-direction: column;
+        margin-top: -15px;
+    }
+
+    .lista-contacto {
+        margin-top: -21px;
+        text-align: left;
+        
+        li {
+            color: var(--background-hover-green-color);
+            list-style-type: none;
+        }
+    }
+}

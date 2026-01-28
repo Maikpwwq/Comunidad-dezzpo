@@ -4,7 +4,6 @@
  * Converted to TypeScript.
  */
 // Styles
-import '@assets/css/comunidad_propietarios.css'
 // Components
 import { Link } from '@hooks'
 import Registro from '../../../pages/(auth)/registro/+Page'

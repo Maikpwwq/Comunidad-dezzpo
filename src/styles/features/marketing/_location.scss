@@ -1,0 +1,32 @@
+@use '../../_variables' as *;
+
+.location-page {
+    .ingreso-ubicacion {
+        color: var(--background-light-gray-color);
+        background: var(--background-dark-blue-color2);
+        width: 100%;
+    }
+
+    .imagen-ubicacion {
+        background: var(--background-dark-blue-color2) url('/assets/img/Mapa.png') no-repeat center;
+        background-attachment: scroll;
+        background-size: auto 100%;
+        min-height: 330px;
+        height: auto;
+        width: 100%;
+    }
+
+    #busqueda-ciudad input {
+        height: 27px;
+        text-align: left;
+    }
+    
+    // Google Maps overrides
+    .gm-style-iw-d {
+        color: black !important;
+    }
+
+    .pac-container {
+        z-index: 15 !important;
+    }
+}

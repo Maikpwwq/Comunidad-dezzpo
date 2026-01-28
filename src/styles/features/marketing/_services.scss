@@ -1,0 +1,17 @@
+@use '../../_variables' as *;
+
+.services-page {
+    .profesionales-servicios-mensaje {
+        background: var(--background-light-gray-color) url('/assets/img/AsiTrabajamos3.png') no-repeat center;
+        background-attachment: scroll;
+        background-size: cover;
+        height: auto;
+        min-height: 360px;
+        width: 100%;
+
+        @media screen and (max-width: 600px) {
+             background: var(--background-light-gray-color) url('/assets/img/AsiTrabajamos3Mobile.png') no-repeat center !important;
+             background-size: cover !important;
+        }
+    }
+}

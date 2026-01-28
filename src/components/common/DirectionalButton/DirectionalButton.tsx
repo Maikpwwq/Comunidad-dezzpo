@@ -11,7 +11,6 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
-import './DirectionalButton.css'
 
 export interface DirectionalButtonProps {
     /** Handler for next button click */

@@ -1,0 +1,33 @@
+@use '../../_variables' as *;
+
+.budgets-page {
+    .bg-main {
+        background: var(--background-light-gray-color) url('/assets/img/Presupuestos1.png') no-repeat center;
+        background-attachment: scroll;
+        background-size: 100% 100%;
+        min-height: 400px;
+        height: auto;
+        width: 100%;
+        color: var(--background-light-gray-color);
+    }
+    
+    .presupuestos-mensaje {
+        @extend .bg-main;
+    }
+
+    .presupuestos-mensaje-buscador {
+        @extend .bg-main;
+        background-image: url('/assets/img/Presupuestos2.png');
+        min-height: 510px;
+        margin-left: 0px;
+        
+        @media screen and (max-width: 900px) {
+            background-image: url('/assets/img/BackgoundHexagonal.png') !important;
+            justify-content: center !important;
+        }
+        
+        @media screen and (min-width: 900px) {
+            justify-content: space-between !important;
+        }
+    }
+}

@@ -4,7 +4,6 @@
  * Converted to TypeScript.
  */
 // Styles
-import '@assets/css/nosotros.css'
 // Components
 import IcoMoon from 'react-icomoon'
 import iconSet from '@assets/css/icomoon/selection.json'

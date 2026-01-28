@@ -4,7 +4,6 @@
  * Converted to TypeScript.
  */
 // Styles
-import '@assets/css/blog.css'
 // Assets
 import BlogEntrada1 from '@assets/img/BlogEntrada1.png'
 import User1 from '@assets/img/iconos/User1.svg'

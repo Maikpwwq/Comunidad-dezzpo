@@ -1,0 +1,25 @@
+@use '../../_variables' as *;
+
+.contact-data {
+    display: flex;
+    flex-direction: column;
+    margin-top: -15px;
+
+    .lista-contacto {
+        margin-top: -21px;
+        text-align: justify;
+        
+        .chat-with-us {
+            font-size: 1rem !important;
+            text-decoration: none !important;
+            
+            &:visited, &:link {
+                color: var(--background-yellow-color) !important;
+            }
+        }
+    }
+
+    .border-top {
+        border-top: 1px solid var(--background-light-gray-color);
+    }
+}

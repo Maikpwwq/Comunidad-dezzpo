@@ -11,7 +11,6 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
-import '@assets/css/categorias_servicios.css'
 
 interface CategoryItem {
     key: number

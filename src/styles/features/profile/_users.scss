@@ -1,0 +1,66 @@
+@use '../../_variables' as *;
+
+// Note: This file contains legacy global body overrides and potentially unused admin styles. 
+// Refactored to be scoped under .users-page-legacy where possible or utilities.
+
+.users-page-legacy {
+    // Legacy container overrides
+    .container {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .row {
+         display: flex;
+         flex-direction: row;
+         justify-content: space-evenly;
+         text-align: center;
+    }
+
+    .user-navigation {
+        display: flex;
+        flex-direction: row;
+        color: var(--content-text-white-color);
+        background-color: #20232a; // Consider separate variable
+        justify-items: center;
+        align-items: flex-end;
+    }
+
+    .navigation-group {
+        ul {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            text-align: center;
+            
+            li {
+                 padding: 0 30px;
+                 list-style-type: none;
+            }
+        }
+    }
+    
+    .menu-content {
+        background-color: #cccccc; // Consider variable
+        width: 20%;
+        text-align: left;
+    }
+    
+    .side-loader {
+        width: 20%;
+        background-color: #cccccc;
+        height: 700px;
+    }
+    
+    .content-loader {
+        width: 60%;
+        background-color: var(--content-text-white-color);
+        color: var(--background-dark-blue-color2);
+        height: 700px;
+    }
+    
+    a {
+         color: var(--content-text-white-color);
+    }
+}

@@ -14,7 +14,6 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 import { googleLoader } from '@services/utils/googleMapsLoader'
-import '@assets/css/ubicacion.css'
 
 interface LocationInfo {
     city: string
