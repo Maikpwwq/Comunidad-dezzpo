@@ -109,13 +109,13 @@ export function DraftCard({
 
     return (
         <Card
-            className={styles.Card}
+            className={clsx(styles.Card)}
             elevation={16}
         >
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                 <Box className="w-100" sx={{ display: 'flex', flexDirection: 'column' }}>
                     <CardHeader
-                        className={styles.Header}
+                        className={clsx(styles.Header)}
                         avatar={
                             <Avatar sx={{ bgcolor: red[500] }} aria-label="draft avatar">
                                 CD
@@ -129,7 +129,7 @@ export function DraftCard({
                         title={draftPropietarioResidente}
                     />
 
-                    <CardContent sx={{ textAlign: 'left' }} className={styles.Content}>
+                    <CardContent sx={{ textAlign: 'left' }} className={clsx(styles.Content)}>
                         <Typography variant="h6">{draftName}</Typography>
                         <Typography variant="subtitle1">{draftCategory}</Typography>
                         <Typography variant="body1">$ {draftTotal}</Typography>
@@ -139,10 +139,10 @@ export function DraftCard({
                     </CardContent>
 
                     <CardActions
-                        className={styles.Actions}
+                        className={clsx(styles.Actions)}
                         disableSpacing
                     >
-                        <Button className={styles.BodyText} onClick={handleVerRequerimiento}>
+                        <Button className={clsx(styles.BodyText)} onClick={handleVerRequerimiento}>
                             Ver requerimiento
                         </Button>
 
@@ -164,7 +164,7 @@ export function DraftCard({
                         )}
 
                         <IconButton
-                            className={styles.FavoriteButton}
+                            className={clsx(styles.FavoriteButton)}
                             aria-label="add to favorites"
                             onClick={handleFavorite}
                         >

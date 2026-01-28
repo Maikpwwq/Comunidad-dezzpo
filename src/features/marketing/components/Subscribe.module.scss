@@ -1,0 +1,35 @@
+@use '@styles/_variables' as *;
+
+.Section {
+    background-color: var(--background-light-gray-color); // #f8f9fa equivalent
+    width: 100%;
+    margin: 0;
+}
+
+.Title {
+    // .headline-m
+    font-size: $font-size-3xl; // ~28px
+    font-weight: bold;
+    font-family: $font-family-heading;
+    color: var(--primary-titles-text-color);
+}
+
+.Description {
+    // .body-1
+    font-size: $font-size-md;
+    font-family: $font-family-base;
+    color: var(--content-text-color);
+}
+
+.SubmitButton {
+    // .btn-green .btn-high
+    background-color: var(--primary-green-text-color);
+    color: var(--content-text-white-color);
+    border-radius: $radius-full;
+    padding: $spacing-2 $spacing-4;
+    border: none;
+    
+    &:hover {
+        background-color: var(--background-hover-green-color);
+    }
+}

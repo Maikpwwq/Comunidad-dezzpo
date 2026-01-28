@@ -136,12 +136,12 @@ export function UserCard({
     }, [userCategories])
 
     return (
-        <Card className={styles.Card} elevation={16}>
+        <Card className={clsx(styles.Card)} elevation={16}>
             <CardHeader
-                className={styles.Header}
+                className={clsx(styles.Header)}
                 avatar={
                     <Avatar src={userPhotoUrl || ''} sx={bgAvatar} aria-label="user avatar">
-                        <Typography className={styles.AvatarText}>
+                        <Typography className={clsx(styles.AvatarText)}>
                             Comunidad Dezzpo
                         </Typography>
                     </Avatar>
@@ -156,17 +156,17 @@ export function UserCard({
                 subheader={userProfession}
             />
 
-            <CardContent sx={{ textAlign: 'left' }} className={styles.Content}>
+            <CardContent sx={{ textAlign: 'left' }} className={clsx(styles.Content)}>
                 <Typography
                     variant="body1"
                     color="text.secondary"
-                    className={styles.Description}
+                    className={clsx(styles.Description)}
                 >
                     {userDescription}
                 </Typography>
 
                 {chips.length > 0 && (
-                    <Typography variant="body2" color="text.secondary" className={styles.Chips}>
+                    <Typography variant="body2" color="text.secondary" className={clsx(styles.Chips)}>
                         {chips.map((chip) => chip.label).join(', ')}
                     </Typography>
                 )}
@@ -185,10 +185,10 @@ export function UserCard({
             </CardContent>
 
             <CardActions
-                className={styles.Actions}
+                className={clsx(styles.Actions)}
                 disableSpacing
             >
-                <Button className={styles.ActionButton} onClick={handleVerSitio}>
+                <Button className={clsx(styles.ActionButton)} onClick={handleVerSitio}>
                     Ver sitio
                 </Button>
 
@@ -202,7 +202,7 @@ export function UserCard({
                         </Button>
 
                         <IconButton
-                            className={styles.FavoriteButton}
+                            className={clsx(styles.FavoriteButton)}
                             aria-label="add to favorites"
                             onClick={handleFavorite}
                         >

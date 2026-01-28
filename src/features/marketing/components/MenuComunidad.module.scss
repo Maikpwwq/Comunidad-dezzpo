@@ -1,0 +1,107 @@
+@use '@styles/_variables' as *;
+
+.Container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+
+    @media screen and (max-width: 600px) {
+        display: none !important;
+    }
+}
+
+.MobileMenu {
+    visibility: hidden;
+
+    @media screen and (max-width: 600px) {
+        visibility: visible !important;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 80px;
+        left: 0;
+        z-index: 15;
+        background-color: var(--background-main-green-color);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+    }
+}
+
+.Logo {
+    height: 45px;
+    width: 45px;
+
+    &.Isologo {
+        width: 160px;
+        padding-left: $spacing-3;
+        @media screen and (max-width: 600px) {
+            display: none !important;
+        }
+    }
+}
+
+.NavLink {
+    padding: 0.5rem 0.75rem;
+    text-align: center;
+    color: var(--primary-black-text-color);
+    text-decoration: none;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: normal;
+    border-radius: 30px;
+    max-width: 160px;
+    transition: background-color $transition-fast;
+
+    &:hover {
+        background-color: var(--background-main-green-color);
+        color: var(--content-text-white-color) !important;
+    }
+
+    &.Active {
+        color: var(--primary-black-text-color);
+        font-weight: bold;
+    }
+    
+    // Legacy body-2 override
+    font-size: $font-size-sm !important;
+}
+
+.Dropdown {
+    position: relative;
+    max-width: 150px;
+    transition: background-color 0.3s;
+
+    &:hover .DropdownContent {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.DropdownContent {
+    display: none;
+    position: absolute;
+    background-color: var(--background-light-gray-color);
+    min-width: 300px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 3px 10px;
+
+    a {
+        font-size: 21px; // keeping legacy size for now, might need token
+        color: var(--content-text-color);
+        text-decoration: none;
+        width: 100%;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: var(--content-text-white-color);
+            text-decoration: underline;
+        }
+    }
+}

@@ -9,7 +9,9 @@ import React, { useMemo } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import clsx from 'clsx'
 
+import styles from './CategoriasServicios.module.scss'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 interface CategoryItem {
@@ -44,7 +46,7 @@ export function CategoriasServicios({
     }, [columns])
 
     const renderCategoryList = (items: CategoryItem[]) => (
-        <ul className="body-1">
+        <ul className={styles.CategoryList}>
             {items.map((categoria) => (
                 <li key={categoria.key}>
                     {categoria.icon} {'> '}
@@ -57,13 +59,13 @@ export function CategoriasServicios({
 
     return (
         <Container fluid className="p-0">
-            <Row id="categoriasServicios" className="m-0">
-                <Col className="col-12 w-80 m-4 p-4">
-                    <div className="tituloServicios">
-                        <h2 className="headline-xl">{title}</h2>
+            <Row className="m-0">
+                <Col className={clsx(styles.Container)}>
+                    <div className={styles.TitleWrapper}>
+                        <h2 className={styles.Title}>{title}</h2>
                     </div>
                     <br />
-                    <Row className="contratistasReformas">
+                    <Row>
                         {categoryColumns.map((columnItems, index) => (
                             <Col key={index} className="col-md-3 p-0" sm={12}>
                                 {renderCategoryList(columnItems)}
