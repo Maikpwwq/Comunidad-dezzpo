@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import { firestore } from '@services/firebase'
-import { collection, doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 
 interface CategorySelectProps {
     setDraftInfo: (data: any) => void
@@ -27,7 +27,7 @@ export const CategorySelect = ({ setDraftInfo, draftInfo, setIsLoaded }: Categor
                 const docSnap = await getDoc(docRef)
 
                 if (docSnap.exists()) {
-                    const data = docSnap.data().listadoCategorias
+                    const data = docSnap.data()?.listadoCategorias || []
                     setCategories(data)
                 }
             } catch (error) {
@@ -53,7 +53,7 @@ export const CategorySelect = ({ setDraftInfo, draftInfo, setIsLoaded }: Categor
             onChange={handleChange}
         >
             <option value="0">Seleccionar una...</option>
-            {categories.map((cat) => (
+            {Array.isArray(categories) && categories.map((cat) => (
                 <option key={cat.key} value={cat.key}>
                     {cat.label}
                 </option>
