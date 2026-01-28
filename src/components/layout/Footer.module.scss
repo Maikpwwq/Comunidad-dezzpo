@@ -1,0 +1,104 @@
+@use '@styles/_variables' as *;
+
+.Footer {
+    margin: 0 auto;
+    background: #313332; // Legacy color preserved
+    background-size: 100% auto;
+    border-top: 1px solid var(--background-yellow-color);
+}
+
+.Container {
+    // .footer-container
+    color: var(--content-text-white-color);
+    padding-top: 21px;
+}
+
+.TopSection {
+    // .footer-superior
+    background-size: cover;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+
+    @media screen and (max-width: 600px) {
+        background-size: 100% 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.LinkList {
+    list-style-type: none;
+    color: var(--background-yellow-color);
+    padding: 0;
+    
+    a {
+        font-size: 14px;
+        text-decoration: none;
+        color: var(--content-text-white-color);
+        transition: background-color $transition-fast;
+
+        &:hover {
+            background-color: var(--background-blue-color2);
+            text-decoration: underline;
+        }
+    }
+}
+
+.SocialSection {
+    // .footer-social / .siguenosRedes
+    display: flex;
+    flex-direction: column;
+    padding: 0 48px;
+    margin-top: -15px;
+    justify-content: space-evenly;
+}
+
+.LogoContainer {
+    // .containerLogo
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0 0 $spacing-3 0;
+}
+
+.SocialList {
+    // .listaFooter
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    @extend .TextBody;
+    
+    li {
+        margin-right: $spacing-2;
+    }
+}
+
+.BottomSection {
+    // .footer-inferior
+    width: 100%;
+    text-align: center;
+    font-size: 21px; // Keeping legacy size for now
+    border-top: 1px solid blanchedalmond; // Legacy color
+    padding: $spacing-3 0;
+    
+    p {
+        @extend .TextBody;
+    }
+}
+
+.Headline {
+    // .headline-l
+    font-size: $font-size-xl;
+    font-weight: bold;
+    color: var(--content-text-white-color);
+    margin: 0;
+}
+
+.TextBody {
+    // .body-1
+    font-size: $font-size-md;
+    font-family: $font-family-base;
+    color: var(--content-text-white-color);
+}

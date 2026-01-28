@@ -1,0 +1,89 @@
+@use '@styles/_variables' as *;
+
+.Container {
+    width: 100%;
+}
+
+.MainRow {
+    // #registrate
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(24, 177, 167, 1) 35%,
+        rgba(0, 153, 204, 1) 100%
+    );
+
+    @media screen and (max-width: 600px) {
+        flex-direction: column !important;
+    }
+}
+
+.ImageSection {
+    // .registrate-imagen
+    display: flex;
+    flex-direction: column;
+    min-height: 565px;
+    height: auto;
+    width: 50%;
+    background: url('/assets/img/logo/LOGO-11.png') no-repeat center;
+    background-attachment: scroll;
+    background-size: 50% auto;
+
+    @media screen and (max-width: 600px) {
+        width: 100%;
+        min-height: 300px;
+    }
+}
+
+.FormWrapper {
+    // .registrate-formulario
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    height: auto;
+    margin-top: 20px;
+}
+
+.FormCard {
+    // #formulario-registro
+    background-color: var(--background-white-color);
+    border-radius: 50px;
+    padding-top: $spacing-4;
+    padding-bottom: $spacing-4;
+}
+
+.Input {
+    // .form-control
+    height: 27px;
+    background-color: var(--background-light-gray-color);
+    
+    @media screen and (max-width: 600px) {
+        width: 100% !important;
+    }
+}
+
+.Checkbox {
+    // .form-check-input
+    width: 10% !important;
+    margin: 0;
+}
+
+.Headline {
+    // .headline-xl
+    font-size: $font-size-4xl;
+    font-weight: bold;
+    margin: 0;
+}
+
+.Link {
+    text-decoration: none;
+    cursor: pointer;
+    
+    &.Green {
+        color: var(--primary-green-text-color);
+    }
+}

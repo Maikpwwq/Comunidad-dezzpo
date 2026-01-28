@@ -6,10 +6,10 @@ import Col from 'react-bootstrap/Col'
 
 interface MapaPerfilProps {
     userInfo: {
-        userId?: string
-        userRazonSocial?: string
-        userName?: string
-        userDirection?: string
+        userId?: string | null
+        userRazonSocial?: string | null
+        userName?: string | null
+        userDirection?: string | null
         [key: string]: any
     }
 }

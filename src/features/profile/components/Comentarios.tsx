@@ -10,6 +10,8 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import clsx from 'clsx'
+import styles from './Comentarios.module.scss'
 import '@sendbird/uikit-react/dist/index.css'
 
 // Uncomment when ready for Sendbird integration
@@ -39,10 +41,10 @@ export function Comentarios({
     // const _appId = import.meta.env.VITE_APP_SENDBIRD_APPID
 
     return (
-        <Container fixed className="p-2">
+        <Container fixed className={clsx(styles.Container)}>
             <Box
-                sx={{ bgcolor: '#cfe8fc' }}
-                className="p-4 cardFrame"
+                // sx={{ bgcolor: '#cfe8fc' }} // Moved to SCSS
+                className={clsx(styles.CommentCard)}
             >
                 {/* TODO: Uncomment when Sendbird is configured
                 <SendbirdProvider
@@ -55,7 +57,7 @@ export function Comentarios({
                 */}
 
                 {/* Placeholder content */}
-                <Box sx={{ textAlign: 'center', py: 4, color: '#666' }}>
+                <Box className={clsx(styles.Placeholder)}>
                     <p>Sección de comentarios</p>
                     <small>Integración de Sendbird próximamente</small>
                 </Box>
