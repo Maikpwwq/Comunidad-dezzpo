@@ -18,6 +18,7 @@ async function onRenderHtml(pageContext: PageContextServer) {
   let pageHtml = ''
   if (Page) {
     // Cast Page to React component type for JSX usage
+    const PageComponent = Page as React.ComponentType<Record<string, unknown>>
     const Layout = pageContext.config.Layout || ((({ children }) => <>{children}</>) as any)
     const page = (
       <PageShell pageContext={pageContext}>

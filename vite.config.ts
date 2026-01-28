@@ -2,6 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import vike from 'vike/plugin'
 import * as path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -45,6 +48,7 @@ export default defineConfig({
   },
 
   build: {
+    manifest: true, // Explicitly enable manifest generation
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       onwarn(warning, warn) {
@@ -86,6 +90,7 @@ export default defineConfig({
       { find: '@services', replacement: path.resolve(__dirname, 'src/services') },
       { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
       { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
+      { find: '@config', replacement: path.resolve(__dirname, 'src/config') },
 
       // Assets
       { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
