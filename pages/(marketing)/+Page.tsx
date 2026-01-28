@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { navigate } from 'vike/client/router'
 // Styles
 // Components
-import { ProjectSearchBar } from '@features/projects'
+import { ProjectSearchForm } from '@features/projects'
 import { NuestraComunidad, Subscribe } from '@features/marketing'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
@@ -94,7 +94,7 @@ export default function Page() {
                                 </Box>
                             </Col>
                             <Col className="col m-4 p-0" xl={4} lg={6} md={8} sm={12} xs={12}>
-                                <ProjectSearchBar />
+                                <ProjectSearchForm simple={false} />
                             </Col>
                         </Row>
                         {/* Subscribe Section */}

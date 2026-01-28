@@ -7,7 +7,7 @@
 // Components
 import { Link } from '@hooks'
 import Registro from '../../../pages/(auth)/registro/+Page'
-import { ProjectSearchBar } from '@features/projects'
+import { ProjectSearchForm } from '@features/projects'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -71,7 +71,7 @@ export default function Page() {
                         </Col>
                     </Col>
                     <Col className="col m-4 p-0" xl={4} lg={6} md={8} sm={12} xs={12}>
-                        <ProjectSearchBar />
+                        <ProjectSearchForm simple={false} />
                     </Col>
                 </Row>
             </Container>

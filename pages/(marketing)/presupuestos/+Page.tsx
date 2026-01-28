@@ -5,7 +5,7 @@
  */
 // Styles
 // Components
-import { ProjectSearchBar } from '@features/projects'
+import { ProjectSearchForm } from '@features/projects'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -53,7 +53,7 @@ export default function Page() {
                         sm={12}
                         xs={12}
                     >
-                        <ProjectSearchBar />
+                        <ProjectSearchForm simple={false} />
                     </Col>
                 </Row>
             </Container>

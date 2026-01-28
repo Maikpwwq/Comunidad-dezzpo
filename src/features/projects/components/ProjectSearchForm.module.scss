@@ -2,6 +2,7 @@
 
 .Container {
     display: flex;
+    flex-direction: column; // Fix: Layout direction
     justify-content: center;
     background-color: var(--background-white-color);
     border-radius: 20px;
@@ -36,7 +37,12 @@
 }
 
 .SubmitButton {
-    background-color: #17a2b8; // Legacy Teal
+    // Fix: Match Login page gradient
+    background: linear-gradient(
+        45deg,
+        rgba(24, 177, 167, 1) 35%,
+        rgba(0, 153, 204, 1) 100%
+    );
     color: var(--content-text-white-color);
     border-radius: $radius-full;
     padding: $spacing-3 $spacing-4;
@@ -45,13 +51,23 @@
 
     &:hover {
         transform: scale(1.05);
-        background-color: var(--background-hover-green-color);
+        // Keep gradient on hover or slightly adjust, usually opacity or scale is enough for gradient buttons
+        opacity: 0.9;
     }
 }
 
 .Select {
     border-radius: 10px;
-    border: 1px solid var(--selected-border-light-gray-color);
+    border: 1px solid var(--background-light-gray-color) !important; // Fix: Visible border
     padding: 10px;
     width: 100%;
+    
+    // Fix: Remove unwanted Bootstrap shadows/borders
+    box-shadow: none !important;
+    background-color: var(--background-white-color);
+    
+    &:focus {
+        border-color: var(--primary-green-text-color) !important;
+        box-shadow: 0 0 0 0.2rem rgba(32, 157, 161, 0.25) !important;
+    }
 }
