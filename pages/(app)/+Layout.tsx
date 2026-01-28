@@ -2,34 +2,26 @@
  * App Layout
  *
  * Application layout using refactored layout components.
- * Migrated from AppLayout.jsx to TypeScript with new @components/layout.
+ * Migrated from AppLayout.tsx to Vike pages/(app)/+Layout.tsx
  */
 
 import React, { useState } from 'react'
-
 // MUI
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
-
-// Layout components (refactored)
+// Layout components
 import { Sidebar, Navbar } from '@components/layout'
-
 // Theme
 import { theme } from '@config/theme'
-
 // Zustand store
 import { useUserStore, useMobileMenu } from '@stores/userStore'
-
 // Styles
 import '@styles/Private-App.scss'
 import '@styles/index.scss'
 
-export { LayoutAppPaperbase as Layout }
-
-// Types
 interface LayoutProps {
     children: React.ReactNode
 }
@@ -50,8 +42,8 @@ function Copyright(): React.ReactElement {
     )
 }
 
-function LayoutAppPaperbase({ children }: LayoutProps): React.ReactElement {
-    // Zustand store (replaces UserAuthContext)
+export function Layout({ children }: LayoutProps): React.ReactElement {
+    // Zustand store
     const isAuth = useUserStore((state) => state.isAuth)
     const { mobileOpen, updateMobileMenu } = useMobileMenu()
 
@@ -70,7 +62,7 @@ function LayoutAppPaperbase({ children }: LayoutProps): React.ReactElement {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-                <CssBaseline />....
+                <CssBaseline />
 
                 {/* Sidebar Navigation */}
                 <Box
