@@ -11,6 +11,8 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
+import clsx from 'clsx'
+import styles from './DirectionalButton.module.scss'
 
 export interface DirectionalButtonProps {
     /** Handler for next button click */
@@ -31,14 +33,14 @@ export function DirectionalButton({
 }: DirectionalButtonProps): React.ReactElement {
     return (
         <Container maxWidth="sm" sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Box className="container-btns">
+            <Box className={clsx(styles.Container)}>
                 {showBack && (
-                    <Button className="arrow-back" onClick={handleBack}>
+                    <Button className={clsx(styles.ArrowBack)} onClick={handleBack}>
                         <KeyboardArrowLeft fontSize="large" />
                     </Button>
                 )}
                 {showNext && (
-                    <Button className="arrow-next" onClick={handleNext}>
+                    <Button className={clsx(styles.ArrowNext)} onClick={handleNext}>
                         <KeyboardArrowRight fontSize="large" />
                     </Button>
                 )}
