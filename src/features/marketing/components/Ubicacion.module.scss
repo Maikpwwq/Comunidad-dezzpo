@@ -1,0 +1,49 @@
+@use '@styles/_variables' as *;
+
+.Container {
+    width: 100%;
+    margin: 0;
+}
+
+.FormContainer {
+    // .ingresoUbicacion .left
+    background-color: var(--background-main-green-color);
+    padding: $spacing-4;
+    width: 100%;
+    color: var(--content-text-white-color);
+}
+
+.Headline {
+    // .headline-l .textBlanco
+    font-size: $font-size-xl;
+    color: var(--content-text-white-color);
+    font-weight: bold;
+    margin-bottom: $spacing-2;
+}
+
+.Description {
+    // .body-1 .textBlanco
+    font-size: $font-size-md;
+    color: var(--content-text-white-color);
+    margin-bottom: $spacing-3;
+}
+
+.Label {
+    font-weight: bold;
+    margin-bottom: $spacing-2;
+}
+
+.ConfirmButton {
+    background-color: var(--primary-white-text-color) !important;
+    color: var(--primary-green-text-color) !important;
+    border: none;
+    border-radius: $radius-full;
+    padding: $spacing-2 $spacing-4;
+    font-weight: bold;
+    transition: transform $transition-fast;
+
+    &:hover {
+        transform: scale(1.05);
+        background-color: var(--background-light-gray-color) !important;
+    }
+}

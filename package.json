@@ -58,6 +58,7 @@
     "@photonjs/hono": "^0.1.12",
     "@photonjs/vercel": "^0.1.22",
     "@sendbird/uikit-react": "^3.17.8",
+    "clsx": "^2.1.1",
     "compression": "^1.8.1",
     "cross-env": "^10.1.0",
     "date-fns": "^4.1.0",

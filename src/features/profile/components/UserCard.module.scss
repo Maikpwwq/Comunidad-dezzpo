@@ -1,0 +1,62 @@
+@use '@styles/_variables' as *;
+
+.Card {
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Header {
+    align-items: flex-start;
+}
+
+.Avatar {
+    background-color: var(--background-light-gray-color);
+    
+    &.Default {
+        background-color: var(--background-hover-green-color);
+    }
+}
+
+.AvatarText {
+    font-size: 0.35rem;
+}
+
+.Content {
+    text-align: left;
+    padding: $spacing-3;
+}
+
+.Description {
+    overflow-y: auto; 
+    max-height: 100px;
+}
+
+.Chips {
+    margin-top: $spacing-3;
+}
+
+.Actions {
+    display: flex;
+    padding: 0;
+    padding-top: $spacing-3;
+    margin: $spacing-3;
+    margin-top: 0;
+    border-top: solid 1.5px $selected-border-light-gray-color;
+}
+
+.ActionButton {
+    color: var(--primary-black-text-color) !important;
+    font-family: $font-family-base !important;
+    font-size: $font-size-md !important;
+    
+    &.Quote {
+        width: auto;
+        padding-right: 10px;
+    }
+}
+
+.FavoriteButton {
+    margin-left: auto;
+}

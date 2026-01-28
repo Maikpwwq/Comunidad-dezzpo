@@ -1,0 +1,59 @@
+@use '@styles/_variables' as *;
+
+.Card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding-top: $spacing-3;
+    padding-bottom: $spacing-3;
+    
+    // Legacy .card-draft overrides
+    margin-bottom: $spacing-4;
+}
+
+.Header {
+    align-items: flex-start;
+}
+
+.Avatar {
+    background-color: #f44336; // red[500] from MUI, considered replacing with token if available
+}
+
+.Content {
+    text-align: left;
+    padding: $spacing-3;
+}
+
+.Actions {
+    display: flex;
+    padding: 0;
+    padding-top: $spacing-3;
+    margin: $spacing-3;
+    margin-top: 0;
+    border-top: solid 1.5px $selected-border-light-gray-color;
+}
+
+.BodyText {
+    font-family: $font-family-base !important;
+    font-size: $font-size-md !important;
+    color: var(--primary-black-text-color) !important;
+}
+
+.ActionButton {
+    width: auto;
+    
+    &.Primary {
+        background-color: var(--background-main-green-color);
+        color: var(--content-text-white-color);
+        border-radius: $radius-full;
+        
+        &:hover {
+             background-color: var(--background-hover-green-color);
+        }
+    }
+}
+
+.FavoriteButton {
+    margin-left: auto;
+}

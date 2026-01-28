@@ -13,6 +13,9 @@
 
 import React, { useState, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
+import clsx from 'clsx'
+
+import styles from './DraftCard.module.scss'
 
 // Zustand store
 import { useUserStore } from '@stores/userStore'
@@ -106,19 +109,13 @@ export function DraftCard({
 
     return (
         <Card
-            className="card-draft d-flex pt-2 pb-2 mb-4"
+            className={clsx(styles.Card)}
             elevation={16}
-            sx={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                borderRadius: '20px',
-            }}
         >
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                 <Box className="w-100" sx={{ display: 'flex', flexDirection: 'column' }}>
                     <CardHeader
-                        className="align-items-start"
+                        className={clsx(styles.Header)}
                         avatar={
                             <Avatar sx={{ bgcolor: red[500] }} aria-label="draft avatar">
                                 CD
@@ -132,7 +129,7 @@ export function DraftCard({
                         title={draftPropietarioResidente}
                     />
 
-                    <CardContent sx={{ textAlign: 'left' }} className="p-2">
+                    <CardContent sx={{ textAlign: 'left' }} className={clsx(styles.Content)}>
                         <Typography variant="h6">{draftName}</Typography>
                         <Typography variant="subtitle1">{draftCategory}</Typography>
                         <Typography variant="body1">$ {draftTotal}</Typography>
@@ -142,19 +139,17 @@ export function DraftCard({
                     </CardContent>
 
                     <CardActions
-                        className="d-flex p-0 pt-2 m-2 mt-0"
-                        sx={{ borderTop: 'solid 1.5px' }}
+                        className={clsx(styles.Actions)}
                         disableSpacing
                     >
-                        <Button className="body-1" onClick={handleVerRequerimiento}>
+                        <Button className={clsx(styles.BodyText)} onClick={handleVerRequerimiento}>
                             Ver requerimiento
                         </Button>
 
                         {/* Edit button - only for owner propietario */}
                         {isPropietario && isOwner && (
                             <Button
-                                style={{ paddingRight: '10px' }}
-                                className="body-1 w-auto"
+                                className={clsx(styles.BodyText, styles.ActionButton)}
                                 onClick={handleEditar}
                             >
                                 Editar
@@ -163,13 +158,13 @@ export function DraftCard({
 
                         {/* Apply button - only for commerciantes when slots available */}
                         {isCommerciante && canApply && (
-                            <Button className="btn-round btn-high body-1 w-auto" onClick={handleAplicar}>
+                            <Button className={clsx(styles.ActionButton, styles.Primary)} onClick={handleAplicar}>
                                 Aplicar
                             </Button>
                         )}
 
                         <IconButton
-                            style={{ marginLeft: 'auto' }}
+                            className={clsx(styles.FavoriteButton)}
                             aria-label="add to favorites"
                             onClick={handleFavorite}
                         >

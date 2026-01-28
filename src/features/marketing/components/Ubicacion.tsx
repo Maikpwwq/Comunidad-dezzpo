@@ -12,7 +12,9 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import clsx from 'clsx'
 
+import styles from './Ubicacion.module.scss'
 import { googleLoader } from '@services/utils/googleMapsLoader'
 
 interface LocationInfo {
@@ -158,27 +160,27 @@ export function Ubicacion({
 
     return (
         <Container fluid className="p-0">
-            <Row className="ingresoUbicacion m-0 w-100">
-                <Col className="left p-4 w-100">
+            <Row className={clsx(styles.Container, "m-0 w-100")}>
+                <Col className={clsx(styles.FormContainer)}>
                     <Form action="busquedaCiudad">
-                        <h3 className="headline-l textBlanco">Ingresa tu ubicación</h3>
-                        <p className="body-1 textBlanco">
+                        <h3 className={styles.Headline}>Ingresa tu ubicación</h3>
+                        <p className={styles.Description}>
                             Podras consultar con mejor precision los costos y tiempos de
                             entrega.
                         </p>
 
                         <Form.Group className="mb-2" controlId="formBasicCity">
-                            <Form.Label className="mb-0">1. Elija su ciudad</Form.Label>
+                            <Form.Label className={clsx(styles.Label, "mb-0")}>1. Elija su ciudad</Form.Label>
                             <br />
                             <AutoComplete
-                                className="w-100"
+                                className="w-100 form-control"
                                 apiKey={googleApiKey}
                                 onPlaceSelected={handlePlaceSelected}
                             />
                         </Form.Group>
 
                         <Form.Group className="mb-2" controlId="formBasicStreet">
-                            <Form.Label className="mb-0">
+                            <Form.Label className={clsx(styles.Label, "mb-0")}>
                                 2. Clickear una dirección en el mapa
                             </Form.Label>
                             <Form.Control
@@ -194,7 +196,7 @@ export function Ubicacion({
                             <Col>
                                 <hr />
                                 <Button
-                                    className="btn-round btn-high"
+                                    className={styles.ConfirmButton}
                                     variant="primary"
                                     onClick={handleConfirm}
                                 >
@@ -206,7 +208,7 @@ export function Ubicacion({
                 </Col>
 
                 <Col className="p-0">
-                    <div ref={mapRef} id="map" style={{ height: '450px', width: '700px' }} />
+                    <div ref={mapRef} id="map" style={{ height: '450px', width: '100%' }} />
                 </Col>
             </Row>
         </Container>

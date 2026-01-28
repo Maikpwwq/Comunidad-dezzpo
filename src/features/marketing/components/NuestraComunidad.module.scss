@@ -1,0 +1,18 @@
+@use '@styles/_variables' as *;
+
+.Title {
+    font-family: $font-family-heading;
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-regular;
+    margin-bottom: $spacing-3;
+    
+    strong {
+        font-weight: $font-weight-bold;
+    }
+}
+
+.Description {
+    font-family: $font-family-base;
+    font-size: $font-size-md;
+    color: var(--content-text-color);
+}

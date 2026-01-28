@@ -56,7 +56,7 @@ export default function Page() {
         navigate('/registro/')
     }
     return (
-        <>
+        <div className="home-container">
             <Container fluid className="p-0 pt-4">
                 <Box sx={{ width: '100%', flexGrow: 1 }}>
                     <CustomSwipeableViews
@@ -66,7 +66,7 @@ export default function Page() {
                         enableMouseEvents
                     >
                         {/* Banner Principal */}
-                        <Row className="m-0 w-100 bannerComunidad">
+                        <Row className="m-0 w-100 banner-comunidad">
                             <Col
                                 id="contenedorBanner"
                                 className="m-0 p-0 pt-4"
@@ -138,7 +138,7 @@ export default function Page() {
             </Container>
             {/* Description Banner */}
             <Container fluid className="p-0">
-                <Row className="m-0 pt-4 w-100 mensajeBanner">
+                <Row className="m-0 pt-4 w-100 mensaje-banner">
                     <Col className="p-4" lg={7} md={8} sm={10}>
                         <Typography variant="body2" className="m-0 body-2">
                             <strong>
@@ -154,15 +154,15 @@ export default function Page() {
             </Container>
             {/* How It Works Section */}
             <Container fluid className="p-0">
-                <Row id="comoFunciona" className="color-steps m-0">
+                <Row id="como-funciona" className="color-steps m-0">
                     <Col className="col-lg-8 col-md-10 col-sm-12 pt-4 pb-4">
                         <Typography variant="h3" className="pt-4 headline-l">
                             ¿Cómo funciona <br />
                             <strong>nuestra comunidad?</strong>
                         </Typography>
                         {/* Propietarios Section */}
-                        <Col className="comoPropietarios">
-                            <Col className="comunidadTitulo m-4 w-auto" md={3}>
+                        <Col className="como-propietarios">
+                            <Col className="comunidad-titulo m-4 w-auto" md={3}>
                                 <h4 className="headline-s">Propietarios</h4>
                             </Col>
                             <Row className="ms-1 me-1 w-100">
@@ -187,8 +187,8 @@ export default function Page() {
                             </Row>
                         </Col>
                         {/* Comerciantes Section */}
-                        <Col className="comoComerciantes">
-                            <Col className="comunidadTitulo m-4 w-auto" md={3}>
+                        <Col className="como-comerciantes">
+                            <Col className="comunidad-titulo m-4 w-auto" md={3}>
                                 <h4 className="headline-s">Comerciantes calificados</h4>
                             </Col>
                             <Row className="ms-1 me-1 w-100">
@@ -217,7 +217,7 @@ export default function Page() {
             </Container>
             {/* Community Section */}
             <NuestraComunidad />
-        </>
+        </div>
     )
 }
 // Step Card Component (extracted for cleaner code)
@@ -229,7 +229,7 @@ interface StepCardProps {
 }
 function StepCard({ number, color, className, text }: StepCardProps) {
     return (
-        <Col className={`${className} comoCard p-0 mb-4 me-2`} lg={2} md={3} sm={3}>
+        <Col className={`${className} como-card p-0 mb-4 me-2`} lg={2} md={3} sm={3}>
             <Typography
                 className="how-numbers headline-l pb-2 pt-2 justify-content-center"
                 sx={{ backgroundColor: color }}

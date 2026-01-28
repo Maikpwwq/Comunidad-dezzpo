@@ -5,15 +5,18 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { Typography } from '@mui/material'
+import clsx from 'clsx'
+
+import styles from './Subscribe.module.scss'
 
 export const Subscribe: React.FC = () => {
     return (
-        <Row className="m-0 w-100 subscribe-section p-4" style={{ backgroundColor: '#f8f9fa' }}>
+        <Row className={clsx(styles.Section, "m-0 w-100 p-4")}>
             <Col lg={6} md={8} sm={10} className="mx-auto text-center">
-                <Typography variant="h4" className="headline-m mb-3">
+                <Typography variant="h4" className={clsx(styles.Title, "mb-3")}>
                     Suscríbete a nuestro boletín
                 </Typography>
-                <Typography variant="body1" className="body-1 mb-4">
+                <Typography variant="body1" className={clsx(styles.Description, "mb-4")}>
                     Recibe las últimas noticias y actualizaciones de Comunidad Dezzpo directamente en tu correo.
                 </Typography>
                 <Form className="d-flex justify-content-center">
@@ -23,7 +26,7 @@ export const Subscribe: React.FC = () => {
                             aria-label="Tu correo electrónico"
                             type="email"
                         />
-                        <Button variant="primary" className="btn-high btn-green">
+                        <Button variant="primary" className={styles.SubmitButton}>
                             Suscribirse
                         </Button>
                     </InputGroup>

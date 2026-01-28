@@ -15,6 +15,9 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay, bindKeyboard } from 'react-swipeable-views-utils'
 import Row from 'react-bootstrap/Row'
+import clsx from 'clsx'
+
+import styles from './CategoriasSlider.module.scss'
 
 // Category images config
 import { categoriesImages } from '../config/categoriesImages'
@@ -85,7 +88,7 @@ export function CategoriasSlider(): React.ReactElement {
                     <Button
                         size="large"
                         onClick={handleNext}
-                        className="arrow-next"
+                        className={clsx(styles.ArrowNext)}
                         disabled={activeStep === maxSteps - 1}
                     >
                         {isRtl ? (
@@ -99,7 +102,7 @@ export function CategoriasSlider(): React.ReactElement {
                     <Button
                         size="large"
                         onClick={handleBack}
-                        className="arrow-back"
+                        className={clsx(styles.ArrowBack)}
                         disabled={activeStep === 0}
                     >
                         {isRtl ? (

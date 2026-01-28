@@ -12,6 +12,10 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
+import clsx from 'clsx'
+
+// Note: Ensure vite.config.ts supports logical scss modules
+import styles from './UserCard.module.scss'
 
 // Zustand store
 import { useUserStore } from '@stores/userStore'
@@ -69,6 +73,7 @@ export function UserCard({
 
     // Computed
     const userLink = `/app/perfil/${userId}`
+    // Legacy logic for avatar background - keeping dynamic for now due to url dependency
     const bgAvatar = userPhotoUrl
         ? { bgcolor: 'var(--background-light-gray-color)' }
         : { bgcolor: 'var(--background-hover-green-color)' }
@@ -131,12 +136,12 @@ export function UserCard({
     }, [userCategories])
 
     return (
-        <Card className="card-user mb-4" elevation={16}>
+        <Card className={clsx(styles.Card)} elevation={16}>
             <CardHeader
-                className="align-items-start"
+                className={clsx(styles.Header)}
                 avatar={
                     <Avatar src={userPhotoUrl || ''} sx={bgAvatar} aria-label="user avatar">
-                        <Typography variant="body1" fontSize="0.35rem">
+                        <Typography className={clsx(styles.AvatarText)}>
                             Comunidad Dezzpo
                         </Typography>
                     </Avatar>
@@ -151,25 +156,23 @@ export function UserCard({
                 subheader={userProfession}
             />
 
-            <CardContent sx={{ textAlign: 'left' }} className="p-2">
+            <CardContent sx={{ textAlign: 'left' }} className={clsx(styles.Content)}>
                 <Typography
                     variant="body1"
                     color="text.secondary"
-                    style={{ overflowY: 'auto', maxHeight: 100 }}
+                    className={clsx(styles.Description)}
                 >
                     {userDescription}
                 </Typography>
 
                 {chips.length > 0 && (
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                    <Typography variant="body2" color="text.secondary" className={clsx(styles.Chips)}>
                         {chips.map((chip) => chip.label).join(', ')}
                     </Typography>
                 )}
 
-                <br />
-
                 {userExperience && (
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
                         Experiencia: {userExperience}
                     </Typography>
                 )}
@@ -182,26 +185,24 @@ export function UserCard({
             </CardContent>
 
             <CardActions
-                className="d-flex p-0 pt-2 m-2 mt-0"
-                sx={{ borderTop: 'solid 1.5px' }}
+                className={clsx(styles.Actions)}
                 disableSpacing
             >
-                <Button className="body-1" onClick={handleVerSitio}>
+                <Button className={clsx(styles.ActionButton)} onClick={handleVerSitio}>
                     Ver sitio
                 </Button>
 
                 {isAuthenticated && (
                     <>
                         <Button
-                            style={{ paddingRight: '10px' }}
-                            className="body-1 w-auto"
+                            className={clsx(styles.ActionButton, styles.Quote)}
                             onClick={handleCotizarVisitaTecnica}
                         >
                             Cotizar Visita Técnica
                         </Button>
 
                         <IconButton
-                            style={{ marginLeft: 'auto' }}
+                            className={clsx(styles.FavoriteButton)}
                             aria-label="add to favorites"
                             onClick={handleFavorite}
                         >

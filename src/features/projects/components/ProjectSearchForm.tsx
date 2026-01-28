@@ -8,6 +8,9 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
 import Link from '@hooks/Link'
+import clsx from 'clsx'
+
+import styles from './ProjectSearchForm.module.scss'
 
 // MUI
 import Box from '@mui/material/Box'
@@ -94,12 +97,12 @@ export function ProjectSearchForm({
     return (
         <Container fluid className="p-0">
             <Col className="col-12">
-                <div className="p-4 contenerdorFormulario center ms-2 me-2">
-                    <h3 className="headline-l pt-4 pb-2">Solicitar servicios</h3>
+                <div className={clsx(styles.Container, "p-4 center ms-2 me-2")}>
+                    <h3 className={clsx(styles.Headline, "pt-4 pb-2")}>Solicitar servicios</h3>
 
                     <Link
                         href="/app/portal-servicios"
-                        className="body-2 btn-menu-comunidad me-0 mt-2 px-4 w-auto"
+                        className={clsx(styles.NavLink, styles.BodyText, "me-0 mt-2 px-4 w-auto")}
                     >
                         <StorefrontIcon className="me-1" />
                         <strong>
@@ -118,13 +121,13 @@ export function ProjectSearchForm({
                         {/* Project Type */}
                         <Form.Group className="mb-3" controlId="formTipoProyecto">
                             <InputGroup>
-                                <Form.Label className="body-1 mb-0">
+                                <Form.Label className={clsx(styles.BodyText, "mb-0")}>
                                     ¿Qué tipo de proyecto es?
                                 </Form.Label>
                             </InputGroup>
                             <Box className="mt-1">
                                 <Form.Select
-                                    className="casillaSeleccion"
+                                    className={styles.Select}
                                     name="tipoProyecto"
                                     value={projectData.tipoProyecto}
                                     onChange={handleProjectTypeChange}
@@ -141,7 +144,7 @@ export function ProjectSearchForm({
                         {/* Category */}
                         <Form.Group className="mb-2" controlId="formCategoriaProfesional">
                             <InputGroup>
-                                <Form.Label className="body-1 mb-0">
+                                <Form.Label className={clsx(styles.BodyText, "mb-0")}>
                                     ¿Qué tipo de profesional necesitas?
                                 </Form.Label>
                             </InputGroup>
@@ -156,7 +159,7 @@ export function ProjectSearchForm({
                         <Form.Group>
                             <Col className="pt-4 pb-2">
                                 <Button
-                                    className="animacionBoton body-1 btn-buscador btn btn-round btn-high"
+                                    className={clsx(styles.SubmitButton, styles.BodyText)}
                                     variant="primary"
                                     onClick={handleSubmit}
                                     disabled={!isValid}

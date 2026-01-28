@@ -1,0 +1,9 @@
+@use '@styles/_variables' as *;
+
+.ArrowNext, .ArrowBack {
+    color: var(--primary-blue-light-color) !important;
+    
+    &:disabled {
+        color: var(--content-text-light-gray-color) !important;
+    }
+}

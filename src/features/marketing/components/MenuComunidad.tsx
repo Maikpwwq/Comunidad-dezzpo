@@ -9,15 +9,18 @@
  * - Extracted menu config to config/menuLinks.ts
  * - Using @hooks/Link
  * - Removed redundant mobile menu duplication
+ * - SCSS Module migration
  */
 
 import React, { useState, useCallback } from 'react'
 import { Link } from '@hooks'
+import clsx from 'clsx'
 
 // Config
 import { menuLinks, staticMenuItems } from '../config/menuLinks'
 
 // Styles
+import styles from './MenuComunidad.module.scss'
 
 // Images
 import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'
@@ -51,12 +54,12 @@ export function MenuComunidad(): React.ReactElement {
     const renderMenuItems = (isMobile = false) => (
         <>
             {menuLinks.map((item, index) => (
-                <div key={index} className="dropdown ms-4" style={{ minWidth: '118px' }}>
-                    <Link href={item.href} className="botonLink body-2">
+                <div key={index} className={clsx(styles.Dropdown, "ms-4")} style={{ minWidth: '118px' }}>
+                    <Link href={item.href} className={clsx(styles.NavLink)}>
                         {item.name}
                         <ArrowDropDown />
                     </Link>
-                    <div className="dropdownContenidos body-1 p-0">
+                    <div className={clsx(styles.DropdownContent, "p-0")}>
                         {item.dropdownContents?.map((content, idx) => (
                             <Link
                                 key={idx}
@@ -75,7 +78,7 @@ export function MenuComunidad(): React.ReactElement {
                 <Link
                     key={`static-${index}`}
                     href={item.href}
-                    className={`botonLink body-2 ms-4${isMobile ? ' mb-2' : ''}`}
+                    className={clsx(styles.NavLink, "ms-4", isMobile && "mb-2")}
                     style={item.name === 'Apendice de costos' ? { maxWidth: '150px' } : undefined}
                 >
                     {item.name}
@@ -87,14 +90,14 @@ export function MenuComunidad(): React.ReactElement {
 
     return (
         <Container fluid className="p-0">
-            <Col className="menuFijo w-100 p-0 m-0">
+            <Col className={clsx(styles.Container, "w-100 p-0 m-0")}>
                 {/* Fixed Header Bar */}
-                <Col className="p-0 pt-2 pb-2 barraMenu">
+                <Col className="p-0 pt-2 pb-2">
                     <Row className="m-0 ps-2 pe-4 d-flex w-100 menuVisible">
-                        <div className="containerLogo container d-flex w-auto ms-0">
+                        <div className="container d-flex w-auto ms-0">
                             <IconButton
                                 aria-label="mobile-more"
-                                className="mobile-menu"
+                                className={clsx(styles.MobileMenu)}
                                 onClick={handleToggleMenu}
                             >
                                 <MenuIcon sx={{ fontSize: '30px' }} />
@@ -102,30 +105,30 @@ export function MenuComunidad(): React.ReactElement {
 
                             <Link
                                 href="/"
-                                className="activo body-2 p-2 d-flex flex-row"
+                                className={clsx(styles.NavLink, "p-2 d-flex flex-row")}
                                 onClick={handleClose}
                             >
                                 <img
                                     src={LogoMenuComunidadDezzpo}
                                     alt="Logo Comunidad Dezzpo"
-                                    className="logo-comunidad-dezzpo"
+                                    className={clsx(styles.Logo)}
                                 />
                                 <img
                                     src={IsoLogoMenuComunidadDezzpo}
                                     alt="IsoLogo Comunidad Dezzpo"
-                                    className="isologo-comunidad-dezzpo ps-3"
+                                    className={clsx(styles.Logo, styles.Isologo)}
                                 />
                             </Link>
                         </div>
 
                         <Row className="w-auto">
-                            <Link href="/app/portal-servicios" className="body-2 btn-menu-comunidad me-0">
+                            <Link href="/app/portal-servicios" className={clsx(styles.NavLink, "me-0")}>
                                 <Storefront className="me-1" />
                                 <strong>
                                     Directorio <br /> Comerciantes
                                 </strong>
                             </Link>
-                            <Link href="/ingreso" className="body-2 btn-menu-comunidad ms-2">
+                            <Link href="/ingreso" className={clsx(styles.NavLink, "ms-2")}>
                                 <Login className="me-1" /> <strong>Ingresar</strong>
                             </Link>
                         </Row>
@@ -133,14 +136,14 @@ export function MenuComunidad(): React.ReactElement {
                 </Col>
 
                 {/* Desktop Navigation */}
-                <nav className="menuContenedor col-10 pt-2 pb-2">
-                    <ul className="menuSecciones">{renderMenuItems()}</ul>
+                <nav className="col-10 pt-2 pb-2 d-none d-md-block">
+                    <ul className="d-flex flex-row justify-content-center m-0 list-unstyled">{renderMenuItems()}</ul>
                 </nav>
 
                 {/* Mobile Navigation */}
                 {isOpen && (
-                    <nav className="menuMobile col-12 pt-2 pb-2">
-                        <ul className="menuMobileSecciones p-3">{renderMenuItems(true)}</ul>
+                    <nav className={clsx(styles.MobileMenu, "col-12 pt-2 pb-2")}>
+                        <ul className="d-flex flex-column p-3 list-unstyled">{renderMenuItems(true)}</ul>
                     </nav>
                 )}
             </Col>
