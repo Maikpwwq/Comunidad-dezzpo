@@ -211,6 +211,8 @@ $gray-900: #212529;
 
 $primary-blue: #1ec7e6; // var(--primary-blue-light-color) required for sass:color functions
 
+$spacing-1: 0.25rem;
+$spacing-2: 0.5rem;
 $spacing-3: 1rem;
 $spacing-4: 1.5rem;
 
@@ -224,3 +226,4 @@ $font-size-2xl: 1.75rem;  // 28px
 $font-size-xl: 1.5rem;    // 24px
 $font-size-lg: 1.25rem;   // 20px
 $font-size-md: 1rem;      // 16px
+$font-size-sm: 0.875rem;  // 14px

@@ -43,7 +43,7 @@
     padding-top: $spacing-3;
     margin: $spacing-3;
     margin-top: 0;
-    border-top: solid 1.5px $selected-border-light-gray-color;
+    border-top: solid 1.5px var(--selected-border-light-gray-color);
 }
 
 .ActionButton {
