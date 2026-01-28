@@ -1,5 +1,6 @@
 import type { PageContext } from 'vike/types'
 import { PageContextProvider } from '@hooks/usePageContext'
+import { UserAuthProvider } from '@providers/UserAuthProvider'
 // CSS import - will be processed by Vite
 import '@styles/global.scss'
 import '@styles/index.scss'
@@ -19,7 +20,9 @@ export default function PageShell({
 }) {
     return (
         <PageContextProvider pageContext={pageContext}>
-            {children}
+            <UserAuthProvider>
+                {children}
+            </UserAuthProvider>
         </PageContextProvider>
     )
 }

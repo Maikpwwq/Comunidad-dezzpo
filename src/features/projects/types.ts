@@ -21,9 +21,9 @@ export interface SubCategoryItem {
 }
 
 export interface ProjectDraftInfo {
-    draftCategory?: string | number
-    draftProject?: string
-    tipoProyecto?: string
+    draftCategory?: string | number | undefined
+    draftProject?: string | undefined
+    tipoProyecto?: string | undefined
     [key: string]: unknown
 }
 

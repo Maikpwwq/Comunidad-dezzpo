@@ -34,6 +34,10 @@ export interface ProjectSearchFormProps {
     draftInfo?: ProjectDraftInfo
     /** State setter for draft info */
     setDraftInfo?: (info: ProjectDraftInfo) => void
+    /** Simple mode (hides extra links) - default true for Home page match */
+    simple?: boolean
+    /** Optional loader state setter */
+    setIsLoaded?: (loaded: boolean) => void
 }
 
 interface LocalProjectData {
@@ -44,6 +48,8 @@ interface LocalProjectData {
 export function ProjectSearchForm({
     draftInfo,
     setDraftInfo,
+    simple = true,
+    setIsLoaded: parentSetIsLoaded,
 }: ProjectSearchFormProps): React.ReactElement {
     const [isLoaded, setIsLoaded] = useState(false)
     const [projectData, setProjectData] = useState<LocalProjectData>({
@@ -75,9 +81,11 @@ export function ProjectSearchForm({
                 ...prev,
                 tipoProyecto: e.target.value as ProjectType | '',
             }))
+            // Update local or parent loading state
             setIsLoaded(false)
+            if (parentSetIsLoaded) parentSetIsLoaded(false)
         },
-        []
+        [parentSetIsLoaded]
     )
 
     const handleCategoryChange = useCallback((newData: ProjectDraftInfo) => {
@@ -98,24 +106,28 @@ export function ProjectSearchForm({
         <Container fluid className="p-0">
             <Col className="col-12">
                 <div className={clsx(styles.Container, "p-4 center ms-2 me-2")}>
-                    <h3 className={clsx(styles.Headline, "pt-4 pb-2")}>Solicitar servicios</h3>
+                    <h3 className={clsx(styles.Headline, "pt-2 pb-2 text-center")}>Solicitar servicios</h3>
 
-                    <Link
-                        href="/app/portal-servicios"
-                        className={clsx(styles.NavLink, styles.BodyText, "me-0 mt-2 px-4 w-auto")}
-                    >
-                        <StorefrontIcon className="me-1" />
-                        <strong>
-                            Visitar Directorio <br /> de Comerciantes
-                        </strong>
-                    </Link>
+                    {!simple && (
+                        <>
+                            <Link
+                                href="/app/portal-servicios"
+                                className={clsx(styles.NavLink, styles.BodyText, "me-0 mt-2 px-4 w-auto")}
+                            >
+                                <StorefrontIcon className="me-1" />
+                                <strong>
+                                    Visitar Directorio <br /> de Comerciantes
+                                </strong>
+                            </Link>
 
-                    <Typography variant="body1" className="mt-3 pt-2 pb-2">
-                        O prueba
-                    </Typography>
-                    <Typography variant="body2" className="mb-3">
-                        Registrar un nuevo requerimiento
-                    </Typography>
+                            <Typography variant="body1" className="mt-3 pt-2 pb-2">
+                                O prueba
+                            </Typography>
+                            <Typography variant="body2" className="mb-3">
+                                Registrar un nuevo requerimiento
+                            </Typography>
+                        </>
+                    )}
 
                     <Form className="p-4 pt-0" id="formularioServicios">
                         {/* Project Type */}

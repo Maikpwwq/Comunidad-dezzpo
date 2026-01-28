@@ -1,5 +1,31 @@
 @use '@styles/_variables' as *;
 
+// Top Bar styles (Dark background)
+.TopBar {
+    background-color: #333333; // Legacy dark color
+    color: var(--content-text-white-color);
+    font-size: 14px;
+    padding: 5px 0;
+    
+    a {
+        color: var(--content-text-white-color);
+        font-size: 13px;
+        text-decoration: none;
+        
+        &:hover {
+            color: var(--primary-green-text-color);
+        }
+    }
+}
+
+.MainNavbar {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    position: relative;
+    z-index: 10;
+}
+
 .Container {
     display: flex;
     flex-direction: row;
@@ -31,11 +57,12 @@
 }
 
 .Logo {
-    height: 45px;
-    width: 45px;
+    height: 55px; // Increased size to match reference
+    width: auto;
 
     &.Isologo {
-        width: 160px;
+        height: 55px;
+        width: auto;
         padding-left: $spacing-3;
         @media screen and (max-width: 600px) {
             display: none !important;
@@ -44,19 +71,18 @@
 }
 
 .NavLink {
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 1rem;
     text-align: center;
     color: var(--primary-black-text-color);
     text-decoration: none;
-    min-height: 50px;
+    min-height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
-    font-weight: normal;
+    font-size: 0.9rem;
+    font-weight: 500;
     border-radius: 30px;
-    max-width: 160px;
-    transition: background-color $transition-fast;
+    transition: all $transition-fast;
 
     &:hover {
         background-color: var(--background-main-green-color);
@@ -67,10 +93,6 @@
         color: var(--primary-black-text-color);
         font-weight: bold;
     }
-    
-    // Legacy body-2 override
-    font-size: $font-size-sm !important;
-    // font-size: 0.875rem !important; // $font-size-sm
 }
 
 .Dropdown {
@@ -87,22 +109,28 @@
 .DropdownContent {
     display: none;
     position: absolute;
-    background-color: var(--background-light-gray-color);
-    min-width: 300px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    padding: 3px 10px;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 220px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 100;
+    padding: 10px 0;
+    overflow: hidden;
 
     a {
-        font-size: 21px; // keeping legacy size for now, might need token
+        font-size: 14px;
         color: var(--content-text-color);
         text-decoration: none;
         width: 100%;
+        padding: 8px 15px;
+        display: block;
 
         &:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: var(--content-text-white-color);
-            text-decoration: underline;
+            background-color: #f8f9fa;
+            color: var(--primary-green-text-color);
+            text-decoration: none;
         }
     }
 }

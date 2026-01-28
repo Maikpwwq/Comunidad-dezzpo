@@ -19,7 +19,6 @@ import { firestore } from '@services/firebase'
 import { DirectionalButton } from '@components/common'
 import {
     ProjectSearchForm,
-    CategorySelector,
     SubCategoryCard
 } from '@features/projects'
 // Features
@@ -48,8 +47,10 @@ interface CategoryItem {
     subCategoria?: string
     [key: string]: any
 }
-interface DraftInfo {
-    draftCategory: string | number
+import type { ProjectDraftInfo, CategorySelectionState, SubCategoryItem } from '@features/projects'
+
+interface DraftInfo extends ProjectDraftInfo {
+    draftCategory: string | number | undefined
     draftSubCategory: any
     draftProject: string | undefined
     draftId: string
@@ -83,9 +84,8 @@ export default function Page() {
     const [hideRegister] = useState(!!currentUser?.isAuth)
     const [showMore, setShowMore] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
-    // Firestore refs
-    const categoriaRef = collection(firestore, 'categoriasServicios')
-    const draftRef = collection(firestore, 'drafts')
+    // Firestore refs removed from top level to avoid SSR crash
+
     // Categoria State
     const [categoriaInfo, setCategoriaInfo] = useState<{
         selected: any[]
@@ -138,6 +138,7 @@ export default function Page() {
         }
     }
     const draftToFirestore = async (updateInfo: DraftInfo, projectID: string) => {
+        const draftRef = collection(firestore, 'drafts')
         await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
     }
     useEffect(() => {
@@ -145,6 +146,7 @@ export default function Page() {
             const categoriasFromFirestore = async () => {
                 try {
                     // 'aPTAljOeD48FbniBg6Lw' main document categories
+                    const categoriaRef = collection(firestore, 'categoriasServicios')
                     const subCategoriaRef = collection(
                         doc(categoriaRef, 'aPTAljOeD48FbniBg6Lw'),
                         String(draftInfo.draftCategory)
@@ -258,6 +260,18 @@ export default function Page() {
             setActiveStep(active)
         }
     }
+    const handleUpdateDraftInfo = (info: ProjectDraftInfo) => {
+        setDraftInfo((prev) => ({
+            ...prev,
+            ...info,
+        }))
+    }
+    const handleUpdateCategoriaInfo = (info: CategorySelectionState) => {
+        setCategoriaInfo((prev) => ({
+            ...prev,
+            ...info,
+        }))
+    }
     const steps = [
         'Categoria/Subcategoria',
         'Elige tus ajustes',
@@ -284,7 +298,7 @@ export default function Page() {
                                 </Col>
                                 <Col className="col m-4 p-0" xl={4} lg={6} md={8} sm={12} xs={12}>
                                     <ProjectSearchForm
-                                        setDraftInfo={setDraftInfo}
+                                        setDraftInfo={handleUpdateDraftInfo}
                                         draftInfo={draftInfo}
                                     />
                                 </Col>
@@ -300,7 +314,7 @@ export default function Page() {
                                         obra que requieres.
                                     </p>
                                     <ProjectSearchForm
-                                        setDraftInfo={setDraftInfo}
+                                        setDraftInfo={handleUpdateDraftInfo}
                                         draftInfo={draftInfo}
                                         setIsLoaded={setIsLoaded}
                                     />
@@ -315,8 +329,8 @@ export default function Page() {
                                                     item.subCategoria ? (
                                                         <SubCategoryCard
                                                             key={index}
-                                                            item={item}
-                                                            setCategoriaInfo={setCategoriaInfo}
+                                                            item={item as unknown as SubCategoryItem}
+                                                            setCategoriaInfo={handleUpdateCategoriaInfo}
                                                             categoriaInfo={categoriaInfo}
                                                         />
                                                     ) : null
