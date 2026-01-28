@@ -1,0 +1,11 @@
+@use '../../_variables' as *;
+
+.settings-page {
+    .info-user-background {
+        background: url('/assets/img/FondoAgua@2x.png') no-repeat center;
+        background-attachment: scroll;
+        background-size: cover;
+        height: auto;
+        min-height: 350px;
+    }
+}

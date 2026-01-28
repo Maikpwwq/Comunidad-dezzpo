@@ -24,7 +24,6 @@ import HelpIcon from '@mui/icons-material/Help'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
 import LogoMenuComunidadDezzpo from '@assets/img/IsologoHeader.png'
-import '@assets/cssPrivateApp/header.css'
 
 const LIGHT_COLOR = 'rgba(255, 255, 255, 0.7)'
 

@@ -4,7 +4,6 @@
  * Converted to TypeScript.
  */
 // Styles
-import '@assets/css/profesionales_servicios.css'
 // Components
 import { NuestraComunidad, CategoriasServicios } from '@features/marketing'
 // Bootstrap

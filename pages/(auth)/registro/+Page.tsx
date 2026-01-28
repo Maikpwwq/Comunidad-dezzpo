@@ -17,7 +17,6 @@ import {
 // Components
 import { SnackBarAlert } from '@components/common'
 // Styles
-import '@assets/css/registro.css'
 // MUI
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'

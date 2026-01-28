@@ -1,0 +1,16 @@
+.container-btns {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+// Ensure these specific buttons generally have this shape unless overridden by global
+.arrow-back,
+.arrow-next {
+    min-width: 48px;
+    // Note: Global styles in index.scss might override border-radius
+    // keeping local preference if it was scoped, but now it's global.
+    // Assuming the component specific CSS was intended to be 'specific'.
+    // However, looking at the code, it imports './DirectionalButton.css' which is not a module, so it was global anyway.
+    border-radius: 50%; 
+}

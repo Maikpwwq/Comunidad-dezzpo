@@ -1,0 +1,108 @@
+@use '../../_variables' as *;
+
+.how-it-works-page {
+    
+    .section-base {
+        background-attachment: scroll;
+        background-color: var(--background-light-gray-color);
+        height: auto;
+        width: 100%;
+    }
+
+    .bg-mobile-override {
+        @media screen and (max-width: 900px) {
+            background-size: 100% 100% !important;
+        }
+    }
+
+    .asi-trabajamos-registro {
+        @extend .section-base;
+        background-image: url('/assets/img/Buscador-Dezzpo.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% auto;
+    }
+
+    .asi-trabajamos-chat {
+        @extend .section-base;
+        background-image: url('/assets/img/AsiTrabajamos2.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        min-height: 570px;
+    }
+
+    .chat-asesor {
+        font-size: 27px;
+        height: 210px;
+        width: 100%;
+        color: var(--background-dark-gray-color);
+        text-align: center;
+    }
+
+    .asi-trabajamos-vinculate {
+        @extend .section-base;
+        background-image: url('/assets/img/AsiTrabajamos3.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        min-height: 360px;
+        display: flex;
+        flex-direction: row;
+
+        @media screen and (max-width: 600px) {
+            background-image: url('/assets/img/AsiTrabajamos3Mobile.png') !important;
+        }
+    }
+
+    .asi-trabajamos-propietario, 
+    .asi-trabajamos-certificaciones, 
+    .asi-trabajamos-calificaciones {
+        @extend .section-base;
+        @extend .bg-mobile-override;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+        color: var(--background-light-gray-color);
+    }
+
+    .asi-trabajamos-propietario {
+        background-image: url('/assets/img/AsiTrabajamos4.png');
+        min-height: 500px;
+        
+        @media screen and (max-width: 900px) {
+             background-image: url('/assets/img/BackgoundHexagonal.png') !important;
+        }
+    }
+
+    .asi-trabajamos-certificaciones {
+        background-image: url('/assets/img/AsiTrabajamos5.png');
+        min-height: 480px;
+
+        @media screen and (max-width: 900px) {
+             background-image: url('/assets/img/AsiTrabajamos5Mobile.png') !important;
+        }
+    }
+
+    .asi-trabajamos-calificaciones {
+        background-image: url('/assets/img/AsiTrabajamos6.png');
+        min-height: 550px;
+
+         @media screen and (max-width: 900px) {
+             background-image: url('/assets/img/AsiTrabajamos6Mobile.png') !important;
+        }
+    }
+
+    .asi-trabajamos-estadisticas {
+        background: var(--background-light-gray-color);
+        min-height: 220px;
+        
+        ul {
+             @media screen and (max-width: 600px) {
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+            }
+        }
+    }
+}

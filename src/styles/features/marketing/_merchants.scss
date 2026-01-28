@@ -1,0 +1,66 @@
+@use '../../_variables' as *;
+
+.merchants-page {
+    .section-base {
+         background-attachment: scroll;
+         background-color: var(--background-light-gray-color);
+         width: 100%;
+         height: auto;
+    }
+
+    .comunidad-comerciantes-titulo {
+        @extend .section-base;
+        background-image: url('/assets/img/ComunidadComerciantes1.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+        color: var(--background-light-gray-color);
+        min-height: 480px;
+    }
+
+    .pitch-comerciantes h2 {
+        font-size: 21px;
+        text-align: center;
+    }
+
+    .comunidad-comerciantes-registro {
+        @extend .section-base;
+        background-image: url('/assets/img/ComunidadComerciantes2.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .comunidad-comerciantes-beneficios {
+        background: var(--background-hover-green-color) url('/assets/img/ComunidadComerciantes3.png') no-repeat right;
+        background-attachment: scroll;
+        background-size: cover;
+        color: var(--background-light-gray-color);
+        min-height: 840px;
+        text-align: left;
+
+         @media screen and (max-width: 600px) {
+            min-height: 480px !important;
+            background-size: 100% 100% !important;
+        }
+
+        @media screen and (min-width: 600px) and (max-width: 900px) {
+             background-size: auto !important;
+        }
+    }
+
+    .subrayar h2 {
+        border-bottom: 3px solid; // Color inherits
+        font-size: 27px;
+    }
+
+    .comunidad-comerciantes-beneficios-2 {
+        @extend .section-base;
+        background-image: url('/assets/img/Profesionales_servicios2.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+}

@@ -7,7 +7,6 @@ import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { navigate } from 'vike/client/router'
 // Styles
-import '@assets/css/asesorias.css'
 // Services
 import { updateAsesoriaToFirestore } from '@services/asesoriaService'
 // Components

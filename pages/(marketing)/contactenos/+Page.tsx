@@ -5,7 +5,6 @@
  */
 import { useState } from 'react'
 // Styles
-import '@assets/css/contactenos.css'
 // Assets
 import ContactenosFranja from '@assets/img/ContactenosFranja.png'
 import LogoPNG from '@assets/img/LogoPNG.png'

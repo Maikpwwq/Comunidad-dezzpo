@@ -19,7 +19,6 @@ import Col from 'react-bootstrap/Col'
 import LogoFooterComunidadDezzpo from '@assets/img/IsologoFooter.png'
 
 // Styles
-import '@assets/css/footer.css'
 
 // Types
 import type { FooterProps } from './types'

@@ -18,7 +18,6 @@ import { Link } from '@hooks'
 import { menuLinks, staticMenuItems } from '../config/menuLinks'
 
 // Styles
-import '@assets/css/menu.css'
 
 // Images
 import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'

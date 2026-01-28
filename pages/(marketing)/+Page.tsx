@@ -7,7 +7,6 @@
 import { useState } from 'react'
 import { navigate } from 'vike/client/router'
 // Styles
-import '@assets/css/home.css'
 // Components
 import { ProjectSearchBar } from '@features/projects'
 import { NuestraComunidad, Subscribe } from '@features/marketing'

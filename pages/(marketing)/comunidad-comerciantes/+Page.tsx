@@ -5,7 +5,6 @@
  * NOTE: Imports Registro component from pages/(auth)/registro/+Page.tsx
  */
 // Styles
-import '@assets/css/comunidad_comerciantes.css'
 // Components - Import Registro page component
 import Registro from '../../../pages/(auth)/registro/+Page'
 // Bootstrap

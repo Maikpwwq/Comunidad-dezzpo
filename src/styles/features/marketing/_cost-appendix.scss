@@ -1,0 +1,57 @@
+@use '../../_variables' as *;
+
+.cost-appendix-page {
+    .apendice-costos-titulo {
+        background: var(--background-light-gray-color) url('/assets/img/ApendiceCostos1.png') no-repeat center;
+        background-attachment: scroll;
+        background-size: 100% 100%;
+        min-height: 420px;
+        width: 100%;
+    }
+
+    .titulo {
+        display: flex;
+        justify-content: flex-end;
+        text-align: center;
+        float: right;
+        align-items: flex-end;
+        font-size: 29px;
+        margin-right: 120px;
+        margin-top: 130px;
+    }
+
+    .apendice-costos-preguntas {
+        background: var(--background-dark-blue-color2) url('/assets/img/Worker.svg') no-repeat right;
+        background-attachment: scroll;
+        background-size: auto 100%;
+        min-height: 240px;
+        width: 100%;
+
+        ul {
+            text-align: left;
+            margin-top: 0px;
+            padding-top: 50px;
+            padding-left: 100px;
+            
+            li {
+                list-style-type: none;
+                
+                a {
+                    color: var(--background-light-gray-color);
+                    text-decoration: none;
+                    transition: background-color $transition-fast;
+
+                    &:link, &:visited {
+                         color: var(--content-text-white-color);
+                    }
+
+                    &:hover {
+                        background-color: var(--background-light-gray-color);
+                        color: var(--primary-black-text-color);
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -16,7 +16,6 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
 
 import type { SubCategoryItem, CategorySelectionState } from '../types'
-import '@assets/css/subCategoriesCard.css'
 
 export interface SubCategoryCardProps {
     /** Item data */

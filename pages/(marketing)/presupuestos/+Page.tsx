@@ -4,7 +4,6 @@
  * Converted to TypeScript.
  */
 // Styles
-import '@assets/css/presupuestos.css'
 // Components
 import { ProjectSearchBar } from '@features/projects'
 // Bootstrap

@@ -6,7 +6,6 @@
  */
 
 import React from 'react'
-import '@assets/css/nuestra_comunidad.css'
 import { CategoriasSlider } from './CategoriasSlider'
 
 import Container from 'react-bootstrap/Container'

@@ -9,7 +9,6 @@ import { UserAuthContext } from '@providers/UserAuthProvider'
 import { usePageContext } from '@hooks/usePageContext'
 
 // Styles & Assets
-import '@assets/cssPrivateApp/perfil.css'
 // @ts-ignore
 import ProfilePhoto from '@assets/img/Profile.png'
 

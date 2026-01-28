@@ -6,7 +6,6 @@
  */
 
 import React from 'react'
-import '@assets/css/datos_contacto.css'
 import IcoMoon from 'react-icomoon'
 import iconSet from '@assets/css/icomoon/selection.json'
 import Row from 'react-bootstrap/Row'

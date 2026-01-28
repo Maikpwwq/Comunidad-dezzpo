@@ -1,0 +1,64 @@
+@use '../../_variables' as *;
+
+.register-page {
+    @media screen and (max-width: 600px) {
+        #formulario-registro .form-control {
+            width: 100% !important;
+        }
+
+        .form-check-input {
+            width: 10% !important;
+        }
+    }
+
+    #registrate {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        background: linear-gradient(
+            45deg,
+            rgba(24, 177, 167, 1) 35%,
+            rgba(0, 153, 204, 1) 100%
+        );
+    }
+
+    .registrate-imagen {
+        display: flex;
+        flex-direction: column;
+        min-height: 565px;
+        height: auto;
+        width: 50%;
+        background: url('/assets/img/logo/LOGO-11.png') no-repeat center;
+        background-attachment: scroll;
+        background-size: 50% auto;
+    }
+
+    .registrate-formulario {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        text-align: center;
+        height: auto;
+        margin-top: 20px;
+    }
+
+    #formulario-registro {
+        background-color: var(--background-white-color);
+        border-radius: 50px;
+
+        .form-control {
+            height: 27px;
+            background-color: var(--background-light-gray-color);
+        }
+    }
+
+    .form-check-input {
+        width: 10% !important;
+        margin: 0;
+    }
+    
+    .form-check-label {
+        padding-left: 8px !important;
+    }
+}

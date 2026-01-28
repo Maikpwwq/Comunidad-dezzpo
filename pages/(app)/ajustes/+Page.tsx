@@ -9,7 +9,6 @@ import { Ubicacion } from '@features/marketing'
 import { SnackBarAlert, ChipsCategories } from '@components/common'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 // Styles
-import '@assets/cssPrivateApp/ajustes.css'
 // UI Libs
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'

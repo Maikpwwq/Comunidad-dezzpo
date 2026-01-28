@@ -4,7 +4,6 @@
  * Converted to TypeScript.
  */
 // Styles
-import '@assets/css/aplicar.css'
 // Bootstrap
 import Container from 'react-bootstrap/Container'
 export default function Page() {

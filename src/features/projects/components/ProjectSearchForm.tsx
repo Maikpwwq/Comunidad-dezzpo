@@ -25,7 +25,6 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import { CategorySelector } from './CategorySelector'
 import { PROJECT_TYPES, type ProjectDraftInfo, type ProjectType } from '../types'
 
-import '@assets/css/buscador_nuevos_proyectos.css'
 
 export interface ProjectSearchFormProps {
     /** External draft info */

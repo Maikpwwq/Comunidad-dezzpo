@@ -22,7 +22,6 @@ import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 // CSS
-// import '../../detalle_requerimiento.css'
 export default function Page() {
     const { currentUser } = useAuth()
     const userAuthID = currentUser?.userId

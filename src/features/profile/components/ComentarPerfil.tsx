@@ -12,7 +12,6 @@ import React, { useState } from 'react'
 // Sendbird UIKit (uncomment when ready)
 // import { OpenChannel } from '@sendbird/uikit-react'
 
-import '@assets/css/comentarPerfil.css'
 
 export interface ComentarPerfilProps {
     /** Sendbird channel URL for the profile */

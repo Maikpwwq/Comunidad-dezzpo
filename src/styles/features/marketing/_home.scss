@@ -1,0 +1,86 @@
+@use '../../_variables' as *;
+
+.home-container {
+    .banner-comunidad {
+        background: url('/assets/img/MainBanner.png') no-repeat center;
+        background-size: auto 100%;
+        min-height: 515px;
+        height: auto;
+        width: auto;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        font-family: var(--font-worksans-regular); // Replaced 'lato Regular'
+        font-size: 21px;
+
+        @media screen and (max-width: 1200px) {
+            background-size: auto 100% !important;
+        }
+    }
+
+    .slogan {
+        display: flex;
+        flex-direction: column;
+        padding: 0 33px;
+        color: var(--content-text-color);
+        max-width: 430px;
+    }
+
+    .mensaje-banner {
+        text-align: center;
+        color: var(--content-text-white-color);
+        font-size: 27px;
+    }
+
+    .color-steps {
+        background: url('/assets/img/ColorSteps.png') no-repeat bottom;
+        background-size: 100% 95%;
+    }
+
+    #como-funciona {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        color: var(--content-text-white-color);
+
+        .comunidad-titulo {
+            width: 90% !important;
+            text-align: left;
+        }
+
+        p {
+            align-items: center;
+            display: flex;
+        }
+    }
+
+    .como-propietarios,
+    .como-comerciantes {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        text-align: left;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+
+        @media screen and (max-width: 600px) {
+            flex-direction: column !important;
+        }
+    }
+
+    .como-card {
+        background-color: var(--background-tooltip-color);
+        border-radius: 15px;
+        box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+        min-width: 230px;
+    }
+
+    .how-numbers {
+        border-radius: 20px 0px;
+        width: 50px;
+        color: var(--content-text-white-color) !important;
+    }
+}

@@ -1,0 +1,41 @@
+@use '../../_variables' as *;
+
+.projects-search {
+    .contenedor-formulario {
+        display: flex;
+        flex-direction: column;
+        padding: 100px 0;
+        background-color: var(--background-white-color);
+        border-radius: 45px;
+        box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .casilla-seleccion.form-select {
+        background-color: var(--background-light-gray-color) !important;
+    }
+
+    .animacion-boton {
+        animation-name: boton-animado;
+        animation-duration: 3s;
+        animation-delay: 1s;
+        animation-timing-function: ease-out;
+        height: 49px;
+        position: relative;
+        color: var(--content-text-white-color); // Replaced #ffffff
+        font-weight: bold;
+        padding: 3px 6px;
+        margin: 6px 3px;
+        background-color: var(--background-lemon-green-color);
+    }
+    
+    @keyframes boton-animado {
+        0% {
+            background-color: var(--primary-blue-light-color);
+            left: -50px;
+        }
+        100% {
+            background-color: var(--background-lemon-green-color);
+            left: 0px;
+        }
+    }
+}
