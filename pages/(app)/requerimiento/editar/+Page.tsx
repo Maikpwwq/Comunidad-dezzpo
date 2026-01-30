@@ -107,7 +107,7 @@ export default function Page() {
     return (
         <Container fluid className="p-0">
             <Row className="h-100 pt-4 pb-4">
-                <Col className="col-10 cardFrame">
+                <Col className="col-10 card-frame">
                     <Typography variant="h5" className="headline-xl p-4">
                         Editar Requerimiento
                     </Typography>
@@ -122,7 +122,7 @@ export default function Page() {
                                 Presupuesto
                             </Typography>
                             <TextField
-                                className="w-100 mb-4 mt-4 fondoBlanco"
+                                className="w-100 mb-4 mt-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftTotal"
                                 name="draftTotal"
@@ -139,7 +139,7 @@ export default function Page() {
                                 Categoria servicio
                             </Typography>
                             <TextField
-                                className="w-100 mb-4 mt-4 fondoBlanco"
+                                className="w-100 mb-4 mt-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftName"
                                 name="draftName"
@@ -148,7 +148,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftCategory"
                                 name="draftCategory"
@@ -157,7 +157,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftProject"
                                 name="draftProject"
@@ -166,7 +166,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftDescription"
                                 name="draftDescription"
@@ -183,7 +183,7 @@ export default function Page() {
                                 Ubicacion
                             </Typography>
                             <TextField
-                                className="w-100 mb-4 mt-4  fondoBlanco"
+                                className="w-100 mb-4 mt-4  bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftCity"
                                 name="draftCity"
@@ -192,7 +192,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftDirection"
                                 name="draftDirection"
@@ -201,7 +201,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftPostalCode"
                                 name="draftPostalCode"
@@ -220,7 +220,7 @@ export default function Page() {
                                 Programación
                             </Typography>
                             <TextField
-                                className="w-100 mb-4 mt-4 fondoBlanco"
+                                className="w-100 mb-4 mt-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftCreated"
                                 name="draftCreated"
@@ -229,7 +229,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftPriority"
                                 name="draftPriority"
@@ -238,7 +238,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftBestScheduleDate"
                                 name="draftBestScheduleDate"
@@ -247,7 +247,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftBestScheduleTime"
                                 name="draftBestScheduleTime"
@@ -264,7 +264,7 @@ export default function Page() {
                                 Descripción Propiedad
                             </Typography>
                             <TextField
-                                className="w-100 mb-4 mt-4 fondoBlanco"
+                                className="w-100 mb-4 mt-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftProperty"
                                 name="draftProperty"
@@ -273,7 +273,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftRooms"
                                 name="draftRooms"
@@ -282,7 +282,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftPlans"
                                 name="draftPlans"
@@ -291,7 +291,7 @@ export default function Page() {
                                 onChange={handleChange}
                             />
                             <TextField
-                                className="w-100 mb-4 fondoBlanco"
+                                className="w-100 mb-4 bg-blanco"
                                 style={{ borderRadius: '15px' }}
                                 id="draftPermissions"
                                 name="draftPermissions"

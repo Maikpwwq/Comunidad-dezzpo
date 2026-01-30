@@ -39,10 +39,10 @@ export default function Page() {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="ayudaPqrsTitulo m-0 w-100 d-flex flex-row justify-content-start">
+                <Row className="ayuda-pqrs-titulo m-0 w-100 d-flex flex-row justify-content-start">
                     <Col className="align-items-start m-4" lg={4} md={6} sm={10}>
-                        <Col className="opacidadNegro center">
-                            <h2 className="headline-xl textBlanco">
+                        <Col className="opacidad-negro center">
+                            <h2 className="headline-xl text-blanco">
                                 ¿Qué tipo de profesional necesitas?
                             </h2>
                             <p className="p-description">
@@ -55,10 +55,10 @@ export default function Page() {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="ayudaPqrsPreguntas m-0 w-100">
+                <Row className="ayuda-pqrs-preguntas m-0 w-100">
                     <Row className="p-4 align-items-baseline">
                         <Col className="col p-4" lg={5} sm={12}>
-                            <span className="tituloSinMargen">
+                            <span className="titulo-sin-margen">
                                 <h3 className="headline-l">Propietarios FAQ's</h3>
                             </span>
                             <ul className="body-1">
@@ -68,7 +68,7 @@ export default function Page() {
                                     </li>
                                 ))}
                             </ul>
-                            <span className="tituloSinMargen">
+                            <span className="titulo-sin-margen">
                                 <h3 className="headline-l">Comerciantes calificados FAQ's</h3>
                             </span>
                             <ul className="body-1">
@@ -78,7 +78,7 @@ export default function Page() {
                                     </li>
                                 ))}
                             </ul>
-                            <span className="tituloSinMargen">
+                            <span className="titulo-sin-margen">
                                 <h3 className="headline-l">
                                     Y aquí, más todas las preguntas frecuentes
                                 </h3>
@@ -92,7 +92,7 @@ export default function Page() {
                             </ul>
                         </Col>
                         <Col className="col justify-content-start p-4" lg={5} sm={12} xs={12}>
-                            <span className="tituloSinMargen">
+                            <span className="titulo-sin-margen">
                                 <h3 className="headline-l">Servicio al Cliente</h3>
                             </span>
                             <p className="body-1">
@@ -117,7 +117,7 @@ export default function Page() {
                             <Button className="btn btn-round btn-high btn-avanzar">
                                 <a
                                     className="body-1"
-                                    href="https://wa.me/573196138057?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
+                                    href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >

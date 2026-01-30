@@ -124,7 +124,7 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
                         minWidth: '250px',
                         borderColor: 'white',
                     }}
-                    className="w-100 textGris"
+                    className="w-100 text-gris"
                     id="search-select-category"
                     name="searchInput"
                     multiple

@@ -85,7 +85,7 @@ export default function Page() {
                                     </Typography>
                                     <Typography
                                         variant="subtitle1"
-                                        className="textVerde btn btn-round btn-high"
+                                        className="text-verde btn btn-round btn-high"
                                         sx={{ backgroundColor: 'transparent !important' }}
                                         onClick={handleClick}
                                     >
@@ -169,19 +169,19 @@ export default function Page() {
                                 <StepCard
                                     number={1}
                                     color="#0f71b7"
-                                    className="nuevoProyecto"
+                                    className="nuevo-proyecto"
                                     text={<>Crea una nueva <strong>oferta</strong> gratis.</>}
                                 />
                                 <StepCard
                                     number={2}
                                     color="#30347b"
-                                    className="seleccionaPerfiles"
+                                    className="selecciona-perfiles"
                                     text={<>Consigue hasta cuatro <strong>cotizaciones</strong> y selecciona el perfil adecuado.</>}
                                 />
                                 <StepCard
                                     number={3}
                                     color="#149ba1"
-                                    className="calificaServicio"
+                                    className="califica-servicio"
                                     text="Califica y comenta."
                                 />
                             </Row>
@@ -195,19 +195,19 @@ export default function Page() {
                                 <StepCard
                                     number={1}
                                     color="#ec6f27"
-                                    className="buscarOfertas"
+                                    className="buscar-ofertas"
                                     text={<>Observa las ofertas indicadas para ti. Filtra por ubicación y <strong>postulate.</strong></>}
                                 />
                                 <StepCard
                                     number={2}
                                     color="#e42620"
-                                    className="cargaPresupuesto"
+                                    className="carga-presupuesto"
                                     text={<>Diligencia el <strong>presupuesto.</strong> Haz una <strong>cotización</strong> detallada.</>}
                                 />
                                 <StepCard
                                     number={3}
                                     color="#c6b61e"
-                                    className="calificaPropietario"
+                                    className="califica-propietario"
                                     text={<>Califica y comenta. Dejanos conocer tu <strong>experiencia.</strong></>}
                                 />
                             </Row>

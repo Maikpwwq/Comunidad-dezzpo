@@ -56,12 +56,12 @@ export default function Page() {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="asesoriasTitulo m-0 w-100">
+                <Row className="asesorias-titulo m-0 w-100">
                     <Col className="align-items-end" lg={6} md={8} sm={10} xs={12}>
-                        <Col className="opacidadNegro">
-                            <h2 className="headline-xl textBlanco">ASESORÍAS EN VIVO</h2>
+                        <Col className="opacidad-negro">
+                            <h2 className="headline-xl text-blanco">ASESORÍAS EN VIVO</h2>
                             <br />
-                            <p className="asesoriaMessage p-description">
+                            <p className="asesoria-message p-description">
                                 Consulta a un profesional de la comunidad, y resuelve ya las dudas
                                 que tengas en cuanto a técnicas, especificaciones de materiales,
                                 alcance, tiempo y costo, de tu nuevo proyecto.
@@ -71,7 +71,7 @@ export default function Page() {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="asesoriasPreguntas m-0 w-100">
+                <Row className="asesorias-preguntas m-0 w-100">
                     <Col className="row">
                         <Col className="col pb-4" md={6} sm={12}>
                             <h2 className="headline-xl">¿Requieres de una asesoría?</h2>
@@ -135,15 +135,15 @@ export default function Page() {
                             </Form>
                         </Col>
                         <Col className="col pt-4 pb-4" md={6} sm={12}>
-                            <span className="chatAsesor headline-xl mb-4">
+                            <span className="chat-asesor headline-xl mb-4">
                                 Contacta Con Un Asesor
                                 <br />
                                 en Tiempo Real En Nuestro Chat <ChatIcon className="ms-1" />
                             </span>
                             <Button className="btn btn-round btn-high btn-avanzar">
                                 <a
-                                    className="body-1 ps-3 textBlanco"
-                                    href="https://wa.me/573196138057?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
+                                    className="body-1 ps-3 text-blanco"
+                                    href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
@@ -155,10 +155,10 @@ export default function Page() {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="asesoriasBlog m-0 w-100">
+                <Row className="asesorias-blog m-0 w-100">
                     <Row className="col">
                         <Col className="m-4" md={6} sm={10}>
-                            <p className="body-2 textBlanco">
+                            <p className="body-2 text-blanco">
                                 Postulando una pregunta, estás creando una cuenta gratuita y
                                 accediendo a aceptar nuestra
                                 <Link href="/legal" className="ms-1 me-1">
@@ -169,7 +169,7 @@ export default function Page() {
                             <h3 className="headline-l">
                                 Historial de preguntas de la comunidad
                             </h3>
-                            <p className="body-1 textBlanco">
+                            <p className="body-1 text-blanco">
                                 Revisa las últimas preguntas y respuestas de la comunidad, y
                                 participa.
                             </p>

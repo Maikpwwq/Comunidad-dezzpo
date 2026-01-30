@@ -285,10 +285,10 @@ export default function Page() {
                 <Col>
                     {(draftInfo.draftProject === undefined ||
                         Number(draftInfo.draftCategory) === 0) && (
-                            <Row className="nuevoProyectoBuscador">
+                            <Row className="nuevo-proyecto-buscador">
                                 <Col className="align-items-start p-4 m-4" md={5} sm={8}>
-                                    <Col className="opacidadNegro p-0">
-                                        <p className="headline-l textBlanco m-4 p-0">
+                                    <Col className="opacidad-negro p-0">
+                                        <p className="headline-l text-blanco m-4 p-0">
                                             Con ayuda de la comunidad haz realidad la casa que deseas.
                                             Encuentra un profesional Seguro y Confiable, para cada trabajo. Desde
                                             iluminación y pequeños arreglos, hasta diseños de ingeniería y
@@ -368,7 +368,7 @@ export default function Page() {
                 </Col>
             )}
             {activeStep === 1 && (
-                <Col className="nuevoProyectoBuscador2 align-items-baseline p-2 ps-4">
+                <Col className="nuevo-proyecto-buscador-2 align-items-baseline p-2 ps-4">
                     <TablaSubCategoriaCantidades
                         categoriaInfo={categoriaInfo}
                         setDraftInfo={setDraftInfo}
@@ -377,7 +377,7 @@ export default function Page() {
                     <Typography variant="h3" className="p-description w-100 center mt-4 mb-4">
                         Elije tus ajustes
                     </Typography>
-                    <Col className="p-4 align-items-start cardFrame" xl={6} lg={8} md={10} sm={12}>
+                    <Col className="p-4 align-items-start card-frame" xl={6} lg={8} md={10} sm={12}>
                         <Form className="m-4">
                             <p className="body-1">
                                 Crea una oferta. <br />
@@ -494,11 +494,11 @@ export default function Page() {
                 </Col>
             )}
             {activeStep === 2 && (
-                <Col className="nuevoProyectoBuscador3 align-items-baseline p-2 ps-4">
+                <Col className="nuevo-proyecto-buscador-3 align-items-baseline p-2 ps-4">
                     <Typography variant="h3" className="p-description w-100 center">
                         Programa la visita
                     </Typography>
-                    <Col className="p-4 align-items-start cardFrame" xl={6} lg={8} md={10} sm={12}>
+                    <Col className="p-4 align-items-start card-frame" xl={6} lg={8} md={10} sm={12}>
                         <Form>
                             <Form.Group className="m-4" controlId="formNewProjectBestSchedule">
                                 <Form.Label className="body-2">
@@ -528,7 +528,7 @@ export default function Page() {
                                             value={draftInfo.draftDirection}
                                             onChange={handleChange}
                                         />
-                                        <Button className="body-2 ms-2 pb-2 textVerde w-auto" onClick={handleOpen}>
+                                        <Button className="body-2 ms-2 pb-2 text-verde w-auto" onClick={handleOpen}>
                                             <AddLocationIcon /> {'Seleccionar en el mapa'}
                                         </Button>
                                     </Row>
@@ -598,12 +598,12 @@ export default function Page() {
                 </Col>
             )}
             {activeStep === 3 && !hideRegister ? (
-                <Row className="nuevoProyectoMensaje w-100">
+                <Row className="nuevo-proyecto-mensaje w-100">
                     <Col className="p-4 col-10">
-                        <h3 className="headline-xl textBlanco">
+                        <h3 className="headline-xl text-blanco">
                             Por ultimo ingresa tus datos de contacto
                         </h3>
-                        <p className="body-1 textBlanco">
+                        <p className="body-1 text-blanco">
                             Hasta cuatro Comerciantes calificados te contactaran para aplicar con una cotización.
                             Asegúrate que tus datos son exactos.
                         </p>

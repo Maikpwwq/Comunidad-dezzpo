@@ -84,7 +84,7 @@ export default function Page() {
                             variant="standard"
                         />
                         {error && <p className="body-1 text-danger mt-2">{error}</p>}
-                        {success && <p className="body-1 textVerde mt-2">¡Contraseña actualizada!</p>}
+                        {success && <p className="body-1 text-verde mt-2">¡Contraseña actualizada!</p>}
                         <Button type="submit" onClick={handleClick} className="mt-4">
                             Establecer
                         </Button>
