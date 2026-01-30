@@ -32,9 +32,9 @@ export default function Page() {
         <>
             {/* Historia Section */}
             <Container fluid className="p-0">
-                <Row className="nosotrosHistoria pageContainer m-0 justify-content-end">
+                <Row className="nosotros-historia pageContainer m-0 justify-content-end">
                     <Col className="col-md-4 align-items-end">
-                        <div className="opacidadNegro">
+                        <div className="opacidad-negro">
                             <h2 className="headline-xl" style={{ color: '#e9ebe6' }}>
                                 HISTORIA
                             </h2>
@@ -50,16 +50,16 @@ export default function Page() {
             </Container>
             {/* Misión y Visión Section */}
             <Container fluid className="p-0">
-                <Row className="nosotrosMisionVision m-0" id="Acerca-de-nosotros">
+                <Row className="nosotros-mision-vision m-0" id="Acerca-de-nosotros">
                     <Col className="d-flex flex-column align-items-center p-4" md={10}>
                         <Row className="right w-100 p-4 d-flex flex-row justify-content-end align-content-start">
                             <Col md={6} className="d-flex flex-row justify-content-start">
-                                <span className="pitchPropietarios">
+                                <span className="pitch-propietarios">
                                     <h2 className="headline-xl">MISIÓN</h2>
                                 </span>
                             </Col>
                             <Col md={6} className="ps-4 pe-4">
-                                <p className="body-2 textBlanco ps-4 pe-4">
+                                <p className="body-2 text-blanco ps-4 pe-4">
                                     Trabajamos para las personas, destacándonos por la calidad del
                                     servicio al cliente, el crecimiento continuo del ser y la gestión
                                     tecnológica. Somos una Comunidad de Comerciantes Calificados en
@@ -70,7 +70,7 @@ export default function Page() {
                         </Row>
                         <Row className="left w-100 p-4 d-flex flex-row justify-content-start">
                             <Col md={6} className="ps-4 pe-4">
-                                <p className="body-2 textBlanco ps-4 pe-4">
+                                <p className="body-2 text-blanco ps-4 pe-4">
                                     Dezzpo será en 2024 una marca colombiana posicionada, referente de
                                     consulta para la gestión en proyectos de mantenimiento, ofreciendo a
                                     la comunidad una propuesta de valor amigable para los Comerciantes
@@ -82,7 +82,7 @@ export default function Page() {
                                 className="d-flex flex-row justify-content-end"
                                 style={{ paddingRight: '80px' }}
                             >
-                                <span className="pitchPropietarios">
+                                <span className="pitch-propietarios">
                                     <h2 className="headline-xl">VISIÓN</h2>
                                 </span>
                             </Col>
@@ -92,9 +92,9 @@ export default function Page() {
             </Container>
             {/* Política HSEQ Section */}
             <Container fluid className="p-0">
-                <Row className="nosotrosPoliticas m-0">
+                <Row className="nosotros-politicas m-0">
                     <Col>
-                        <span className="pitchPropietarios">
+                        <span className="pitch-propietarios">
                             <h2 className="headline-xl">POLÍTICA INTEGRAL HSEQ</h2>
                         </span>
                         <p className="body-2">
@@ -109,15 +109,15 @@ export default function Page() {
             </Container>
             {/* Valores Section */}
             <Container fluid className="p-0">
-                <Row className="nosotrosEtica m-0">
+                <Row className="nosotros-etica m-0">
                     <Col lg={6} md={6} sm={12} className="m-4 ps-4 d-flex justify-content-center">
                         <div className="left w-100 ps-4">
-                            <h2 className="headline-xl textBlanco">VALORES Y PRINCIPIOS</h2>
+                            <h2 className="headline-xl text-blanco">VALORES Y PRINCIPIOS</h2>
                         </div>
                     </Col>
                     <Col lg={6} md={6} sm={12} className="m-4 ps-4">
                         <div className="right w-100">
-                            <ul className="p-description textBlanco">
+                            <ul className="p-description text-blanco">
                                 {values.map((value) => (
                                     <li key={value}>{value}</li>
                                 ))}
@@ -128,10 +128,10 @@ export default function Page() {
             </Container>
             {/* Equipo Section */}
             <Container fluid className="p-0" id="equipo-dezzpo">
-                <Row className="nosotrosEquipo m-0">
+                <Row className="nosotros-equipo m-0">
                     <Col className="md-12 m-0">
                         <Col className="p-2 ps-4 pe-4 opacidadBlanco">
-                            <span className="pitchPropietarios">
+                            <span className="pitch-propietarios">
                                 <h2 className="headline-xl">Equipo Dezzpo</h2>
                                 <br />
                                 <p className="p-description">Conoce a nuestro equipo</p>
@@ -149,7 +149,7 @@ export default function Page() {
             </Container>
             {/* Hitos Section */}
             <Container fluid className="p-0">
-                <Row className="nosotrosHitos m-0">
+                <Row className="nosotros-hitos m-0">
                     <Col className="p-0">
                         <Col className="p-0 w-100 mb-5">
                             <Typography variant="h3" className="headline-xl pt-5 pb-5">

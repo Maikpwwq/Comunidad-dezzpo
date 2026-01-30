@@ -5,7 +5,7 @@
  */
 // Styles
 // Components
-import { ProjectSearchBar } from '@features/projects'
+import { ProjectSearchForm } from '@features/projects'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -14,9 +14,9 @@ export default function Page() {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="presupuestosMensaje">
+                <Row className="presupuestos-mensaje">
                     <Col className="align-items-end" lg={4} md={6} sm={10}>
-                        <Col className="opacidadNegro textBlanco">
+                        <Col className="opacidad-negro text-blanco">
                             <p className="p-description">
                                 Solicítalo online, en menos tiempo, totalmente gratuito y sin
                                 compromiso.
@@ -32,13 +32,13 @@ export default function Page() {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="presupuestosMensajeBuscador align-items-start p-4">
+                <Row className="presupuestos-mensaje-buscador align-items-start p-4">
                     <Col className="m-0" lg={4} md={8} sm={8} xs={10}>
-                        <p className="p-description textBlanco">
+                        <p className="p-description text-blanco">
                             Publica tu proyecto gratis, los profesionales disponibles te
                             contactarán para ofrecer su presupuesto
                         </p>
-                        <p className="body-2 textBlanco">
+                        <p className="body-2 text-blanco">
                             Anuncia gratuitamente un trabajo.
                             <br />
                             Lee comentarios, recibe cotizaciones y sigue las recomendaciones
@@ -53,7 +53,7 @@ export default function Page() {
                         sm={12}
                         xs={12}
                     >
-                        <ProjectSearchBar />
+                        <ProjectSearchForm simple={false} />
                     </Col>
                 </Row>
             </Container>

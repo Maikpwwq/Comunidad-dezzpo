@@ -38,14 +38,14 @@ export const AllFontStyles: React.FC = () => {
 
             <Typography className="me-6 field">className field</Typography>
             <Typography className="me-6 caption">className caption (class)</Typography>
-            <Typography className="me-6 tituloTabla">className tituloTabla</Typography>
+            <Typography className="me-6 titulo-tabla">className titulo-tabla</Typography>
             <Typography className="me-6 table-head">className table-head</Typography>
-            <Typography className="me-6 headerTitle">className headerTitle</Typography>
-            <Typography className="me-6 tituloSticker">className tituloSticker</Typography>
+            <Typography className="me-6 header-title">className header-title</Typography>
+            <Typography className="me-6 titulo-sticker">className titulo-sticker</Typography>
             <Typography className="me-6 p-description">className p-description</Typography>
             <Typography className="me-6 body-1">className body-1</Typography>
             <Typography className="me-6 body-2">className body-2</Typography>
-            <Typography className="me-6 descripcionSticker">className descripcionSticker</Typography>
+            <Typography className="me-6 descripcion-sticker">className descripcion-sticker</Typography>
 
             {/* Button Classes */}
             <Typography className="me-6 btn-TEXT">Comunidad Dezzpo (btn-TEXT)</Typography>

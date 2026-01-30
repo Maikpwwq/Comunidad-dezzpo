@@ -171,7 +171,7 @@ export default function Page() {
             fluid
             className="p-0 pt-4 pb-4 h-100 d-flex justify-content-center"
         >
-            <Col className="col-10 p-4 cardFrame">
+            <Col className="col-10 p-4 card-frame">
                 <Row className="m-0 w-100 pb-2 d-flex">
                     <Typography variant="h5" className="w-auto pb-4">
                         Detalles de la cotización

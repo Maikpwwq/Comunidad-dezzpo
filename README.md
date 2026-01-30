@@ -151,6 +151,7 @@ pnpm preview
 | **Auth** | ✅ Migrated | Uses `@features/auth`, `useAuth` hook, strictly typed |
 | **Profile** | ✅ Migrated | Uses `@features/profile`, `userService`, Zustand store |
 | **Quotes** | ✅ Migrated | Uses `@features/quotes`, `quotationService`, `draftService` |
+| **CSS Standardization** | ✅ Migrated | Enforced `kebab-case`, asset class mapping in place |
 
 ## Service Standards
 
@@ -166,6 +167,20 @@ export type ServiceResponse<T> =
 async function getProfile(id: string): Promise<ServiceResponse<UserProfile>> {
   // ... implementation
 }
+```
+
+## CSS Style Guide
+
+* **Naming Convention:** Strictly enforce `kebab-case` for all SCSS classes and CSS modules.
+* **Asset Pattern:** Use background-image classes (e.g., `.btn-orange`) mapped in SCSS instead of inline styles or hardcoded URLs.
+* **Deprecation:** Explicitly forbid `camelCase` for styling class names.
+
+```tsx
+// ✅ Correct: Kebab-case from SCSS Module
+<div className={styles['main-container']} />
+
+// ❌ Deprecated: camelCase or global strings
+<div className="mainContainer" />
 ```
 
 ## Legal

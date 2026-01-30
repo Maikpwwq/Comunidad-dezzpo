@@ -113,7 +113,7 @@ export default function Page({
                                             </Link>
                                         </p>
                                         <Link className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")} href="/restaurar-contrasena/">
-                                            <Button className="textBlanco btn-TEXT btn-round btn-high" variant="primary">
+                                            <Button className={clsx(styles.TealButton, "btn-round btn-high")} variant="light">
                                                 Olvidé mi contraseña
                                             </Button>
                                         </Link>
@@ -161,8 +161,8 @@ export default function Page({
                                             </Button>
                                             <span className="mt-1" style={{ marginBottom: '1rem' }} />
                                             <Button
-                                                className="btn-buscador btn-round btn-high body-1"
-                                                variant="primary"
+                                                className={clsx(styles.TealButton, "btn-buscador btn-round btn-high body-1")}
+                                                variant="light"
                                                 type="submit"
                                                 disabled={isLoading}
                                             >

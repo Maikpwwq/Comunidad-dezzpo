@@ -34,11 +34,11 @@ export default function Page() {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="comunidadComerciantesTitulo m-0 d-flex flex-row justify-content-start">
+                <Row className="comunidad-comerciantes-titulo m-0 d-flex flex-row justify-content-start">
                     <Col className="col-md-8 col-lg-6 align-items-start">
-                        <Col className="opacidadNegro">
-                            <span className="pitchComerciantes">
-                                <h2 className="headline-xl textBlanco">
+                        <Col className="opacidad-negro">
+                            <span className="pitch-comerciantes">
+                                <h2 className="headline-xl text-blanco">
                                     ¿TE FALTA GESTIÓN?, DÉJANOS REPRESENTAR TU TRABAJO GARANTIZAMOS
                                     UNA NOTABLE MEJORA EN INGRESOS Y OPORTUNIDADES DE CRECIMIENTO
                                 </h2>
@@ -49,33 +49,33 @@ export default function Page() {
                                 misma cantidad de beneficios. Haz que tus clientes potenciales
                                 conozcan lo que tienes para ofrecer.
                             </p>
-                            <h3 className="headline-l textVerde">Solicita Tu Membresía Ahora</h3>
+                            <h3 className="headline-l text-verde">Solicita Tu Membresía Ahora</h3>
                         </Col>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="comunidadComerciantesRegistro p-4 m-0">
+                <Row className="comunidad-comerciantes-registro p-4 m-0">
                     <Col md={6} lg={6}>
                         <h2 className="headline-xl center">COMUNIDAD COMERCIANTES</h2>
                     </Col>
                     <Registro showLogo={false} />
                 </Row>
             </Container>
-            <Container fluid className="p-0 fondoVerde">
+            <Container fluid className="p-0 bg-verde">
                 <Row className="p-0" style={{ alignItems: 'inherit' }}>
                     <Col className="colLeft p-0 ps-4 m-0" lg={6} md={12} sm={12}>
                         <div className="p-4 m-4">
-                            <span className="pitchComerciantes subrayar">
-                                <h3 className="headline-l textBlanco">Para tu negocio</h3>
+                            <span className="pitch-comerciantes subrayar">
+                                <h3 className="headline-l text-blanco">Para tu negocio</h3>
                             </span>
                             <p>
                                 Encuentra nuevos clientes fácilmente y mantente ocupado, con
                                 nuestros planes de publicidad tu perfil aparecerá arriba en las
                                 búsquedas de Google, accede a un Micro sitio personalizado.
                             </p>
-                            <span className="pitchComerciantes subrayar">
-                                <h3 className="headline-l textBlanco">Para ti</h3>
+                            <span className="pitch-comerciantes subrayar">
+                                <h3 className="headline-l text-blanco">Para ti</h3>
                             </span>
                             <p>
                                 Aumenta tu influencia con el respaldo de la comunidad, Gestiona
@@ -84,8 +84,8 @@ export default function Page() {
                                 <br />
                                 <strong>{`>`} Gestión {`>`} Calidad {`>`} Oportunidad del servicio.</strong>
                             </p>
-                            <span className="pitchComerciantes subrayar">
-                                <h3 className="headline-l textBlanco">Invita A Un Amigo</h3>
+                            <span className="pitch-comerciantes subrayar">
+                                <h3 className="headline-l text-blanco">Invita A Un Amigo</h3>
                             </span>
                             <p>
                                 Con el programa de referidos te premiamos por recomendar a la
@@ -96,7 +96,7 @@ export default function Page() {
                         </div>
                     </Col>
                     <Col
-                        className="comunidadComerciantesBeneficios p-0 justify-content-start"
+                        className="comunidad-comerciantes-beneficios p-0 justify-content-start"
                         lg={6}
                         md={12}
                         sm={12}
@@ -104,9 +104,9 @@ export default function Page() {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="comunidadComerciantesBeneficios2 m-0">
+                <Row className="comunidad-comerciantes-beneficios-2 m-0">
                     <Col className="p-4" md={8}>
-                        <span className="pt-4 pb-4 pitchComerciantes">
+                        <span className="pt-4 pb-4 pitch-comerciantes">
                             <h2 className="headline-xl">
                                 El plan de beneficios con la membresía incluye
                             </h2>
@@ -118,7 +118,7 @@ export default function Page() {
                             contenidos, el lugar de aparición, y la duración de publicación.
                         </p>
                         <br />
-                        <span className="pitchComerciantes">
+                        <span className="pitch-comerciantes">
                             <h3 className="headline-l">
                                 ¿Cuáles son las grandes ventajas de hacer publicidad en Internet?
                             </h3>
@@ -127,7 +127,7 @@ export default function Page() {
                         <ul>
                             {benefits.map((benefit) => (
                                 <li key={benefit.title} className="body-1 pb-4">
-                                    <span className="pitchComerciantes">
+                                    <span className="pitch-comerciantes">
                                         <p className="body-2">{benefit.title}</p>
                                     </span>
                                     {benefit.description}

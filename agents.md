@@ -157,3 +157,21 @@ This file acts as the primary orchestrator. For specific domain constraints, ref
 - Use `pnpm dlx` instead of `npx`.
 - Use `pnpm run <script>` for package scripts.
 
+
+## 9. CSS Style Guide (STRICT)
+
+### Naming Convention
+- **Strictly Kebab-Case**: All SCSS classes and CSS modules MUST use `kebab-case`.
+- **Forbidden**: `camelCase` is strictly prohibited for styling classes.
+
+### Asset Pattern
+- **No Inline URLs**: Do not use hardcoded image URLs in inline styles for backgrounds.
+- **SCSS Mapping**: Use specific background-image classes (e.g., `.btn-orange`, `.bg-hero`) defined in SCSS modules.
+
+```tsx
+// ✅ Correct: Kebab-case from SCSS Module
+<div className={styles['main-container']} />
+
+// ❌ FORBIDDEN: camelCase or global camelCase strings
+<div className="mainContainer" />
+```

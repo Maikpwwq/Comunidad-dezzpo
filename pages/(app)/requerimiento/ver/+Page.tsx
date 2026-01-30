@@ -129,7 +129,7 @@ export default function Page() {
                         Detalle Requerimiento
                     </Typography>
                     <Button
-                        className="btn-TEXT textBlanco"
+                        className="btn-TEXT text-blanco"
                         variant="contained"
                     // Note: Legacy used variant="primary" which might be invalid Mui or Bootstrap mix? 
                     // Mui uses "contained", "outlined", "text". Bootstrap uses "primary".

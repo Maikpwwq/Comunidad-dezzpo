@@ -7,7 +7,7 @@
 // Components
 import { Link } from '@hooks'
 import Registro from '../../../pages/(auth)/registro/+Page'
-import { ProjectSearchBar } from '@features/projects'
+import { ProjectSearchForm } from '@features/projects'
 // Bootstrap
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -29,15 +29,15 @@ export default function Page() {
     return (
         <>
             <Container fluid className="p-0" style={{ overflowY: 'scroll' }}>
-                <Row className="comunidadPropietariosTitulo m-0 d-flex flex-row justify-content-start align-content-start">
+                <Row className="comunidad-propietarios-titulo m-0 d-flex flex-row justify-content-start align-content-start">
                     <Col className="align-items-start" md={8} sm={12} lg={6}>
-                        <Col className="col-12 opacidadNegro mt-4 mb-4">
+                        <Col className="col-12 opacidad-negro mt-4 mb-4">
                             <p className="p-description">
                                 Somos un Marketplace de servicios, promocionamos contratistas de
                                 adecuaciones y acabados inmobiliarios. Compara perfiles y
                                 estadísticas, con base en calificaciones de la comunidad.
                             </p>
-                            <h3 className="headline-l textVerde">
+                            <h3 className="headline-l text-verde">
                                 Contrata seguro con nuestra comunidad
                             </h3>
                         </Col>
@@ -45,38 +45,38 @@ export default function Page() {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="comunidadPropietariosRegistro m-0 d-flex flex-column">
+                <Row className="comunidad-propietarios-registro m-0 d-flex flex-column">
                     <Col className="m-0" style={{ paddingLeft: '0px' }}>
-                        <h2 className="textBlanco headline-xl">COMUNIDAD PROPIETARIOS</h2>
+                        <h2 className="text-blanco headline-xl">COMUNIDAD PROPIETARIOS</h2>
                         <Registro />
                     </Col>
                     <Col md={8}>
-                        <div className="imagenRegistro" />
+                        <div className="imagen-registro" />
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="comunidadPropietariosBuscador m-0 row">
+                <Row className="comunidad-propietarios-buscador m-0 row">
                     <Col
                         className="justify-content-center align-items-center"
                         lg={4}
                         md={6}
                         sm={10}
                     >
-                        <Col className="opacidadNegro">
-                            <p className="body-2 textBlanco">
+                        <Col className="opacidad-negro">
+                            <p className="body-2 text-blanco">
                                 Con ayuda de la comunidad haz realidad la casa que deseas. Encuentra
                                 un profesional Seguro y Confiable, para cada trabajo.
                             </p>
                         </Col>
                     </Col>
                     <Col className="col m-4 p-0" xl={4} lg={6} md={8} sm={12} xs={12}>
-                        <ProjectSearchBar />
+                        <ProjectSearchForm simple={false} />
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="comunidadPropietariosConsultar m-0 row p-4">
+                <Row className="comunidad-propietarios-consultar m-0 row p-4">
                     <Col className="col-10">
                         <Col className="col-12 m-4">
                             <Row className="w-100">
@@ -104,11 +104,11 @@ export default function Page() {
                                     calificado, nunca cancelar la totalidad por adelantado.
                                 </p>
                                 <p className="headline-l">Propietario revisa la</p>
-                                <Button className="btn btn-avanzar body-1 pe-0 textBlanco">
+                                <Button className="btn btn-avanzar body-1 pe-0 text-blanco">
                                     Lista de chequeo
                                 </Button>
                                 <span className="body-2">
-                                    3196138057
+                                    3204842897
                                     <br />
                                     Lunes a viernes, 8am - 5pm
                                     <br />
@@ -170,14 +170,14 @@ export default function Page() {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="comunidadPropietariosListaVerificacion m-0">
+                <Row className="comunidad-propietarios-lista-verificacion m-0">
                     <Col className="col-8 p-0 m-0 pt-4 mt-4 pb-4 mb-4" id="listaChequeo">
-                        <h2 className="headline-xl textBlanco ps-4 ms-4">LISTA DE VERIFICACIÓN</h2>
+                        <h2 className="headline-xl text-blanco ps-4 ms-4">LISTA DE VERIFICACIÓN</h2>
                         <ul className="body-1">
                             {verificationList.map((item, index) => (
                                 <li key={index}>- {item}</li>
                             ))}
-                            <span className="headline-l textVerde">
+                            <span className="headline-l text-verde">
                                 - Se resuelve la encuesta de satisfacción del servicio
                             </span>
                         </ul>

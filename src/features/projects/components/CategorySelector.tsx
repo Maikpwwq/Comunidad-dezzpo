@@ -65,7 +65,7 @@ export function CategorySelector({
     return (
         <Box className={className}>
             <StyledSelect
-                className="casillaSeleccion form-select w-100 m-auto p-0 textGris"
+                className="casilla-seleccion form-select w-100 m-auto p-0 text-gris"
                 style={{ textAlign: 'left' }}
                 name={fieldName}
                 value={currentValue}

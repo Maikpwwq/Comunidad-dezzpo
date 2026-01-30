@@ -228,7 +228,7 @@ export default function Page() {
                     >
                         Datos de contacto
                     </Typography>
-                    <Col className="col-10 cardFrame">
+                    <Col className="col-10 card-frame">
                         {alert.open && (
                             <SnackBarAlert
                                 message={alert.message}
@@ -328,7 +328,7 @@ export default function Page() {
                                     label="Nombre de usuario"
                                     value={userEditInfo.userName}
                                     onChange={handleChange}
-                                    className="mb-4 me-4 fondoBlanco"
+                                    className="mb-4 me-4 bg-blanco"
                                 />
                                 {userRol.rol === 2 ? (
                                     <>
@@ -339,7 +339,7 @@ export default function Page() {
                                             label="Profesión"
                                             value={userEditInfo.userProfession}
                                             onChange={handleChange}
-                                            className="mb-4 me-4 fondoBlanco"
+                                            className="mb-4 me-4 bg-blanco"
                                         />
                                         <TextField
                                             style={{ borderRadius: '30px' }}
@@ -348,7 +348,7 @@ export default function Page() {
                                             label="Experiencia"
                                             value={userEditInfo.userExperience}
                                             onChange={handleChange}
-                                            className="mb-4 me-4 fondoBlanco"
+                                            className="mb-4 me-4 bg-blanco"
                                         />
                                         <TextField
                                             style={{ borderRadius: '30px' }}
@@ -357,7 +357,7 @@ export default function Page() {
                                             label="Razón Social"
                                             value={userEditInfo.userRazonSocial}
                                             onChange={handleChange}
-                                            className="mb-4 me-4 fondoBlanco"
+                                            className="mb-4 me-4 bg-blanco"
                                         />
                                     </>
                                 ) : (
@@ -370,7 +370,7 @@ export default function Page() {
                                     label="Sitio web"
                                     value={userEditInfo.userWebSite}
                                     onChange={handleChange}
-                                    className="mb-4 me-4 fondoBlanco"
+                                    className="mb-4 me-4 bg-blanco"
                                 />
                                 <TextField
                                     style={{ borderRadius: '30px' }}
@@ -379,7 +379,7 @@ export default function Page() {
                                     name="userPhone"
                                     value={userEditInfo.userPhone}
                                     onChange={handleChange}
-                                    className="mt-2 mb-4 me-4 fondoBlanco"
+                                    className="mt-2 mb-4 me-4 bg-blanco"
                                 />
                                 <TextField
                                     style={{ borderRadius: '30px' }}
@@ -388,7 +388,7 @@ export default function Page() {
                                     label="Identificación"
                                     value={userEditInfo.userIdentification}
                                     onChange={handleChange}
-                                    className="mb-4 me-4 fondoBlanco"
+                                    className="mb-4 me-4 bg-blanco"
                                 />
                                 <Row className="pb-4 w-100">
                                     <Col className="col-6">

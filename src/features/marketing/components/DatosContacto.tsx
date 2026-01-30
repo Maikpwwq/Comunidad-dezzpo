@@ -16,7 +16,7 @@ const contactData = {
     phone: {
         icon: 'TelefonoContactoIcono',
         number: '+57 319 6138057',
-        whatsappLink: 'https://wa.me/573196138057?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20...',
+        whatsappLink: 'https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20...',
         label: 'Office',
     },
     address: {
@@ -32,9 +32,9 @@ const contactData = {
 export function DatosContacto(): React.ReactElement {
     return (
         <Col className="p-4 pb-0">
-            <Col className="datosContacto pt-0">
-                <h2 className="headline-l textBlanco">Ponte en Contacto</h2>
-                <ul className="listaContacto pt-3 w-100 align-items-end">
+            <Col className="datos-contacto pt-0">
+                <h2 className="headline-l text-blanco">Ponte en Contacto</h2>
+                <ul className="lista-contacto pt-3 w-100 align-items-end">
                     {/* Phone */}
                     <Row className="border-top m-0 w-100 d-flex">
                         <IcoMoon

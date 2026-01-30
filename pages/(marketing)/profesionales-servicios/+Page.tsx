@@ -14,7 +14,7 @@ export default function Page() {
     return (
         <>
             <Container fluid className="p-0">
-                <Row className="profesionalesServiciosMensaje m-0 d-flex flex-row justify-content-end">
+                <Row className="profesionales-servicios-mensaje m-0 d-flex flex-row justify-content-end">
                     <Col
                         className="d-flex flex-col justify-content-end align-items-end"
                         xl={4}
@@ -23,8 +23,8 @@ export default function Page() {
                         sm={10}
                         xs={12}
                     >
-                        <Col className="opacidadNegro p-4 m-0 center">
-                            <h2 className="headline-xl textBlanco">
+                        <Col className="opacidad-negro p-4 m-0 center">
+                            <h2 className="headline-xl text-blanco">
                                 Profesionales y Servicios Recuerda
                             </h2>
                             <p className="body-1">
@@ -33,7 +33,7 @@ export default function Page() {
                                 además podrás consultar las fotos de sus anteriores trabajos, las
                                 calificaciones y comentarios de otros Propietarios
                             </p>
-                            <span className="p-description textBlanco">
+                            <span className="p-description text-blanco">
                                 Busca Profesionales en tu zona
                             </span>
                         </Col>

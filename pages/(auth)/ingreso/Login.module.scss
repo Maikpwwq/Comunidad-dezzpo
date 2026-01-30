@@ -74,3 +74,15 @@
         color: var(--primary-green-text-color);
     }
 }
+
+.TealButton {
+    background-color: var(--logo-comunidad-dezzpo-color);
+    border-color: var(--logo-comunidad-dezzpo-color);
+    color: var(--content-text-white-color);
+    
+    &:hover, &:focus, &:active {
+        background-color: var(--background-hover-green-color) !important;
+        border-color: var(--background-hover-green-color) !important;
+        color: var(--content-text-white-color) !important;
+    }
+}

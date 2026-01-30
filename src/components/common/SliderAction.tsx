@@ -40,7 +40,7 @@ export function SliderAction({
             className="asisteme ps-4 pt-2 pb-2 pe-4"
             sx={{ width: { sm: 'auto', md: '99.5%', lg: '99.5%' } }}
         >
-            <p className="headline-s textBlanco m-0 pe-4">{title}</p>
+            <p className="headline-s text-blanco m-0 pe-4">{title}</p>
             <Button
                 className="headline-s btn-round btn-high"
                 variant="primary"

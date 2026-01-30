@@ -12,8 +12,8 @@
 
 // Components
 export * from './components'
-export * from './components/CategorySelect'
-export * from './components/ProjectSearchBar'
+
+
 
 // Types
 export type {
