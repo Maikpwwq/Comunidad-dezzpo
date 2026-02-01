@@ -42,21 +42,21 @@ export default function Page() {
     }
     return (
         <>
-            <Container fluid className="p-0">
+            <Container fluid className="contact-page p-0">
                 <Row className="m-0 w-100">
                     <Col className="m-4">
-                        <h2 className="mainTitulo headline-xl textVerde">CONTÁCTENOS</h2>
+                        <h2 className="main-titulo headline-xl text-verde">CONTÁCTENOS</h2>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="contactenosMensaje row m-0 w-100">
+                <Row className="contactenos-mensaje row m-0 w-100">
                     <Col lg={4} md={6} sm={10}>
                         <img src={ContactenosFranja} alt="fondo comunidad dezzpo" />
                         <img src={LogoPNG} alt="Logo Comunidad Dezzpo" />
                     </Col>
                     <Col lg={4} md={6} sm={10}>
-                        <div className="formContacto">
+                        <div className="form-contacto">
                             <form onSubmit={handleSubmit}>
                                 <input
                                     type="text"
@@ -108,7 +108,7 @@ export default function Page() {
                         </div>
                     </Col>
                     <Col lg={4} md={6} sm={10}>
-                        <div className="borderBlue">
+                        <div className="border-blue">
                             <img src={SelectorContactenos} alt="datos de contacto" />
                             <DatosContacto />
                         </div>

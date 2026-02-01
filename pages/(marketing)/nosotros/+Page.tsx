@@ -29,7 +29,7 @@ const values = [
 ]
 export default function Page() {
     return (
-        <>
+        <div className="about-page">
             {/* Historia Section */}
             <Container fluid className="p-0">
                 <Row className="nosotros-historia pageContainer m-0 justify-content-end">
@@ -184,6 +184,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-        </>
+        </div>
     )
 }

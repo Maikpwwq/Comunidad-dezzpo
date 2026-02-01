@@ -16,8 +16,8 @@ import Col from 'react-bootstrap/Col'
 
 export function NuestraComunidad(): React.ReactElement {
     return (
-        <Container fluid className="p-0">
-            <Col id="popularCategorias" className="m-4 p-4">
+        <Container fluid className="p-0 community-page">
+            <Col id="popular-categorias" className="m-4 p-4">
                 <Col className="w-80">
                     <h2 className={styles.Title}>
                         Nuestra <strong>Comunidad</strong>

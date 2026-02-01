@@ -28,7 +28,7 @@ const ratingCriteria = [
 ]
 export default function Page() {
     return (
-        <>
+        <div className="how-it-works-page">
             <div className="asi-trabajamos-registro" />
             {/* Chat Section */}
             <Container fluid className="p-0">
@@ -149,6 +149,6 @@ export default function Page() {
                     </Row>
                 </Row>
             </Container>
-        </>
+        </div>
     )
 }

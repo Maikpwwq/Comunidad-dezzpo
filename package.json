@@ -57,6 +57,7 @@
     "@photonjs/express": "^0.1.13",
     "@photonjs/hono": "^0.1.12",
     "@photonjs/vercel": "^0.1.22",
+    "@sendbird/chat": "4.20.6",
     "@sendbird/uikit-react": "^3.17.8",
     "clsx": "^2.1.1",
     "compression": "^1.8.1",

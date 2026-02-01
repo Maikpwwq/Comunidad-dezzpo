@@ -13,7 +13,7 @@ import Container from 'react-bootstrap/Container'
 export default function Page() {
     return (
         <>
-            <Container fluid className="p-0">
+            <Container fluid className="services-page p-0">
                 <Row className="profesionales-servicios-mensaje m-0 d-flex flex-row justify-content-end">
                     <Col
                         className="d-flex flex-col justify-content-end align-items-end"
