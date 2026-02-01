@@ -55,7 +55,7 @@ export default function Page() {
     }
     return (
         <>
-            <Container fluid className="p-0">
+            <Container fluid className="consulting-page p-0">
                 <Row className="asesorias-titulo m-0 w-100">
                     <Col className="align-items-end" lg={6} md={8} sm={10} xs={12}>
                         <Col className="opacidad-negro">

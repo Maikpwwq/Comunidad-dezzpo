@@ -279,7 +279,7 @@ export default function Page() {
         'Registrarse',
     ]
     return (
-        <Container fluid className="p-0" style={{ position: 'relative' }}>
+        <Container fluid className="p-0 new-project-page" style={{ position: 'relative' }}>
             <PasoAPaso activeStep={activeStep} steps={steps} />
             {activeStep === 0 && (
                 <Col>

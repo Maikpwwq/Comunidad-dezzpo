@@ -35,7 +35,7 @@ const legalDocuments = [
 ]
 export default function Page() {
     return (
-        <Container fluid className="p-0">
+        <Container fluid className="legal-page p-0">
             <Row className="legalContainer">
                 {legalDocuments.map((doc) => (
                     <Col key={doc.title + (doc.subtitle || '')} className="m-4">

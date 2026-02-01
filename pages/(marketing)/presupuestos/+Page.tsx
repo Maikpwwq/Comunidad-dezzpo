@@ -12,7 +12,7 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 export default function Page() {
     return (
-        <>
+        <div className="budgets-page">
             <Container fluid className="p-0">
                 <Row className="presupuestos-mensaje">
                     <Col className="align-items-end" lg={4} md={6} sm={10}>
@@ -57,6 +57,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-        </>
+        </div>
     )
 }

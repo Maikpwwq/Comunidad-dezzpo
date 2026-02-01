@@ -36,7 +36,7 @@ const sponsors = [
 ]
 export default function Page() {
     return (
-        <Container fluid className="p-0">
+        <Container fluid className="sponsors-page p-0">
             <Row className="containerPatrocinadores">
                 <Col className="col-10 align-items-start">
                     <div className="patrocinadoresMensaje">
