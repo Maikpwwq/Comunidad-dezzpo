@@ -32,8 +32,8 @@ const benefits = [
 ]
 export default function Page() {
     return (
-        <>
-            <Container fluid className="p-0 merchants-page">
+        <div className="merchants-page">
+            <Container fluid className="p-0">
                 <Row className="comunidad-comerciantes-titulo m-0 d-flex flex-row justify-content-start">
                     <Col className="col-md-8 col-lg-6 align-items-start">
                         <Col className="opacidad-negro">
@@ -137,6 +137,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-        </>
+        </div>
     )
 }

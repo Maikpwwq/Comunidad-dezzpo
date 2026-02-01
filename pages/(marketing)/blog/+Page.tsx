@@ -38,16 +38,16 @@ const testimonials = [
 ]
 export default function Page() {
     return (
-        <>
+        <div className="blog-page">
             <Container fluid className="p-0">
-                <Row className="blogTitulo m-0 w-100">
+                <Row className="blog-titulo m-0 w-100">
                     <Col>
-                        <h2 className="headline-xl textBlanco">BLOG</h2>
+                        <h2 className="headline-xl text-blanco">BLOG</h2>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="testimonioPropietarios m-0 w-100">
+                <Row className="testimonio-propietarios m-0 w-100">
                     <Col className="mt-4 mb-4">
                         <Col>
                             <h3 className="headline-l">Testimonios de Propietarios</h3>
@@ -84,6 +84,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-        </>
+        </div>
     )
 }
