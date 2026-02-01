@@ -37,8 +37,8 @@ const generalFaq = [
 ]
 export default function Page() {
     return (
-        <>
-            <Container fluid className="help-page p-0">
+        <div className="help-page">
+            <Container fluid className="p-0">
                 <Row className="ayuda-pqrs-titulo m-0 w-100 d-flex flex-row justify-content-start">
                     <Col className="align-items-start m-4" lg={4} md={6} sm={10}>
                         <Col className="opacidad-negro center">
@@ -128,6 +128,6 @@ export default function Page() {
                     </Row>
                 </Row>
             </Container>
-        </>
+        </div>
     )
 }

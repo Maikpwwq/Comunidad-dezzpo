@@ -13,9 +13,9 @@ const documents = ['Estudios', 'Estudios', 'Estudios', 'Estudios']
 export default function Page() {
     return (
         <Container fluid className="p-0">
-            <Row className="pageContainer">
-                <Col className="prensaMensaje">
-                    <span className="tituloDocumento">
+            <Row className="page-container">
+                <Col className="prensa-mensaje">
+                    <span className="titulo-documento">
                         <h3 className="headline-l">Consulta por título de documento</h3>
                     </span>
                     <ul className="body-2">

@@ -41,8 +41,8 @@ export default function Page() {
         console.log('Form submitted:', formData)
     }
     return (
-        <>
-            <Container fluid className="contact-page p-0">
+        <div className="contact-page">
+            <Container fluid className="p-0">
                 <Row className="m-0 w-100">
                     <Col className="m-4">
                         <h2 className="main-titulo headline-xl text-verde">CONTÁCTENOS</h2>
@@ -115,6 +115,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-        </>
+        </div>
     )
 }

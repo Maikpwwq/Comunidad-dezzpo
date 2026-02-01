@@ -27,8 +27,8 @@ const verificationList = [
 ]
 export default function Page() {
     return (
-        <>
-            <Container fluid className="p-0 owners-page" style={{ overflowY: 'scroll' }}>
+        <div className="owners-page">
+            <Container fluid className="p-0" style={{ overflowY: 'scroll' }}>
                 <Row className="comunidad-propietarios-titulo m-0 d-flex flex-row justify-content-start align-content-start">
                     <Col className="align-items-start" md={8} sm={12} lg={6}>
                         <Col className="col-12 opacidad-negro mt-4 mb-4">
@@ -184,6 +184,6 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
-        </>
+        </div>
     )
 }
