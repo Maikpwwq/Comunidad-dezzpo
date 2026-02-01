@@ -146,7 +146,7 @@ body {
 .row a:hover {
     text-decoration: none !important;
 }
-.opacidadNegro {
+.opacidad-negro {
     background-color: var(--background-smoke-color);
     display: flex;
     flex-direction: column;
@@ -157,14 +157,14 @@ body {
     align-items: center;
     color: var(--background-light-gray-color);
 }
-.opacidadNegro p {
+.opacidad-negro p {
     text-align: center;
     margin-top: 0px;
     color: var(--background-light-gray-color);
     padding-left: 1em;
     padding-right: 1em;
 }
-.opacidadBlanco {
+.opacidad-blanco {
     background-color: rgba(233, 235, 230, 0.8);
     display: flex;
     flex-direction: column;
@@ -174,18 +174,6 @@ body {
     padding-left: 0px;
     align-items: center;
 }
-.opacidadBlanco {
-    background-color: rgba(233, 235, 230, 0.8);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    font-size: 21px;
-    text-align: center;
-    padding-left: 0px;
-    align-items: center;
-}
-
-
 
 // .arrow-back and .arrow-next removed (migrated to DirectionalButton.module.scss)
 
