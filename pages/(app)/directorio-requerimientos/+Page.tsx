@@ -60,12 +60,12 @@ export default function Page() {
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex">
                 <Col className="p-2" lg={8} md={8} sm={10} xs={12}>
-                    <h2 className="headline-xl">
+                    <h1 className="type-hero-title">
                         Directorio Requerimientos{'  '}
                         <Button className="body-1 btn-round btn-high">
                             Aplica gratis a un requerimiento
                         </Button>
-                    </h2>
+                    </h1>
                     <h3 className="headline-l">
                         Buscar Requerimientos: Obtener o Aplicar con Cotizaciones
                     </h3>

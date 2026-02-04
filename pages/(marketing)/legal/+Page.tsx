@@ -36,11 +36,14 @@ const legalDocuments = [
 export default function Page() {
     return (
         <Container fluid className="legal-page p-0">
+            <Row className="m-0 w-100 p-4">
+                <h1 className="type-hero-title text-blanco">Legal</h1>
+            </Row>
             <Row className="legalContainer">
                 {legalDocuments.map((doc) => (
                     <Col key={doc.title + (doc.subtitle || '')} className="m-4">
                         <a href={doc.url} target="_blank" rel="noopener noreferrer">
-                            <h3 className="headline-l textBlanco">
+                            <h3 className="headline-l text-blanco">
                                 {doc.title}
                                 {doc.subtitle && (
                                     <>

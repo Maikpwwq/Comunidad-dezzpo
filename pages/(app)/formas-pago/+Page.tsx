@@ -38,7 +38,7 @@ export default function Page() {
             <Row className="m-0 w-100">
                 <Col className="col-10 d-flex align-items-start justify-content-between">
                     <Row className="p-4" md={10}>
-                        <h2 className="headline-xl">Formas de Pago</h2>
+                        <h1 className="type-hero-title">Formas de Pago</h1>
                         <FormControl fullWidth>
                             <InputLabel htmlFor="addMetodoPago">Adicionar método</InputLabel>
                             <Select

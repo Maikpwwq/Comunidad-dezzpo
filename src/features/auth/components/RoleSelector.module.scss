@@ -1,14 +1,18 @@
 @use '@styles/_variables' as *;
 
 .RoleButton {
-    background-color: var(--background-white-color);
-    color: var(--primary-titles-text-color) !important;
+    background-color: var(--background-light-gray-color);
+    color: var(--primary-green-text-color) !important;
     border: 1px solid var(--background-light-gray-color) !important;
+    border-radius: 30px !important;
+    padding: 12px 28px !important;
     transition: all 0.2s ease-in-out;
+    min-width: 220px;
+    font-weight: 500;
 
     &:hover {
-        background-color: var(--background-light-gray-color);
-        color: var(--primary-titles-text-color) !important;
+        background-color: #e0e0e0;
+        color: var(--primary-green-text-color) !important;
     }
 
     // Bootstrap ToggleButton adds 'active' class to the label when selected

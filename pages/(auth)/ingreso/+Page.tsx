@@ -97,9 +97,9 @@ export default function Page({
                     <Paper elevation={16} className={clsx(styles.FormCard, "pt-4 pb-4")}>
                         <Form action="" className="p-4" onSubmit={handleEmailLogin}>
                             <Col className="d-flex pt-4 pb-4">
-                                <Typography variant="h4" className={clsx(styles.Headline)}>
+                                <h1 className="type-hero-title">
                                     Iniciar sesión
-                                </Typography>
+                                </h1>
                                 {/* Step 1: Role Selection */}
                                 {step === 1 && (
                                     <>

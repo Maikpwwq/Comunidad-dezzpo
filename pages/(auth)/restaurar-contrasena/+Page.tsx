@@ -61,7 +61,7 @@ export default function Page() {
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex pt-4 pb-4">
                 <Col className="col-10">
-                    <h2 className="headline-xl pb-4">Recuperar contraseña</h2>
+                    <h1 className="type-hero-title pb-4">Recuperar contraseña</h1>
                     <Box
                         style={{
                             display: 'flex',
@@ -122,7 +122,7 @@ export default function Page() {
                     </Box>
                     <p className="body-1 pt-2 m-0">
                         Eres nuevo, crea fácil una cuenta,
-                        <Link className="body-2 btn-TEXT textVerde2" href="/registro/">
+                        <Link className="body-2 btn-TEXT text-verde-2" href="/registro/">
                             {' Registrarme'}
                         </Link>
                     </p>

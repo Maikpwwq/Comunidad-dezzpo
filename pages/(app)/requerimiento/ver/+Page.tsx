@@ -339,7 +339,7 @@ export default function Page() {
                                 COTIZACIONES
                                 {requerimientoInfo.draftApply && requerimientoInfo.draftApply.length < 4 && (
                                     <Button
-                                        className="btn-TEXT textBlanco"
+                                        className="btn-TEXT text-blanco"
                                         variant="contained" // "primary" replacement
                                         onClick={handleCotizar}
                                     >

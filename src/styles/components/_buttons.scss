@@ -1,0 +1,340 @@
+// =============================================================================
+// CENTRALIZED BUTTON SYSTEM
+// =============================================================================
+// Extracted from legacy site (maikpwwq.github.io) deep DOM audit.
+// All buttons must use these variants for consistency and fidelity.
+// =============================================================================
+
+@use '@styles/_variables' as *;
+
+// -----------------------------------------------------------------------------
+// Base Button Styles
+// -----------------------------------------------------------------------------
+.btn-base {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-helvetica-semibold);
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s ease-in-out;
+    
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    &:active {
+        transform: translateY(0);
+    }
+    
+    &:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// VARIANT 1: Primary Gradient Button
+// -----------------------------------------------------------------------------
+// Usage: Main CTAs like "Siguiente", "Guardar y continuar", "Siguiente"
+// Legacy Reference: Teal-to-blue gradient with high border-radius
+// -----------------------------------------------------------------------------
+.btn-primary-gradient {
+    @extend .btn-base;
+    background: linear-gradient(-90deg, #18B1A7 35%, #0099CC 100%);
+    color: var(--content-text-white-color);
+    border-radius: 30px;
+    padding: 10px 28px;
+    min-width: 140px;
+    
+    &:hover {
+        background: linear-gradient(-90deg, #15a098 35%, #0088bb 100%);
+        color: var(--content-text-white-color);
+    }
+    
+    &:focus {
+        outline: 2px solid var(--background-main-green-color);
+        outline-offset: 2px;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// VARIANT 2: Secondary Outline Button
+// -----------------------------------------------------------------------------
+// Usage: "Volver atrás", "Cancelar", secondary actions
+// Legacy Reference: Transparent background with teal border
+// -----------------------------------------------------------------------------
+.btn-secondary-outline {
+    @extend .btn-base;
+    background-color: transparent;
+    color: var(--background-main-green-color);
+    border: 2px solid var(--background-main-green-color);
+    border-radius: 30px;
+    padding: 8px 26px;
+    min-width: 120px;
+    
+    &:hover {
+        background-color: var(--background-main-green-color);
+        color: var(--content-text-white-color);
+    }
+    
+    &:focus {
+        outline: 2px solid var(--background-main-green-color);
+        outline-offset: 2px;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// VARIANT 3: Icon Action Button (Avanzar Style)
+// -----------------------------------------------------------------------------
+// Usage: "PUBLICAR", "CHAT EN VIVO", "Lista de chequeo" with leading icons
+// Legacy Reference: Solid teal with decorative icon on left, extra left padding
+// -----------------------------------------------------------------------------
+.btn-icon-action {
+    @extend .btn-base;
+    background-color: var(--background-main-green-color);
+    color: var(--content-text-white-color);
+    border-radius: 30px;
+    padding: 8px 20px 8px 48px;
+    position: relative;
+    
+    // Icon slot (use background-image or ::before with icon font)
+    &::before {
+        content: '';
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    
+    &:hover {
+        background-color: var(--background-hover-green-color);
+    }
+    
+    // Specific icon variants
+    &.btn-icon-chat::before {
+        background-image: url('/assets/icons/chat-icon.svg');
+    }
+    
+    &.btn-icon-check::before {
+        background-image: url('/assets/icons/check-icon.svg');
+    }
+    
+    &.btn-icon-arrow::before {
+        background-image: url('/assets/icons/arrow-icon.svg');
+    }
+}
+
+// -----------------------------------------------------------------------------
+// VARIANT 4: Floating Action Button (Asísteme Bar)
+// -----------------------------------------------------------------------------
+// Usage: Sticky "Asísteme" bar at top/bottom of page
+// Legacy Reference: Purple background with chat icon, fixed positioning
+// -----------------------------------------------------------------------------
+.btn-floating-action {
+    @extend .btn-base;
+    background-color: var(--background-dark-purple-color);
+    color: var(--content-text-white-color);
+    border-radius: 30px;
+    padding: 10px 24px 10px 48px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    position: relative;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        background-image: url('/assets/icons/assisteme-icon.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    
+    &:hover {
+        background-color: var(--background-hover-purple-color);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// VARIANT 5: Menu/Navigation Button
+// -----------------------------------------------------------------------------
+// Usage: "Directorio Comerciantes", nav menu items
+// Legacy Reference: Semi-transparent dark background, pill shape
+// -----------------------------------------------------------------------------
+.btn-menu-nav {
+    @extend .btn-base;
+    background-color: var(--background-smoke-color);
+    color: var(--content-text-white-color);
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-size: 0.9rem;
+    
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// VARIANT 6: Card Action Button (Blog, Proyectos Destacados)
+// -----------------------------------------------------------------------------
+// Usage: Side action buttons in info cards ("Nuestro Blog", "Proyectos Destacados")
+// Legacy Reference: Solid teal, smaller size, stacked layout
+// -----------------------------------------------------------------------------
+.btn-card-action {
+    @extend .btn-base;
+    background-color: var(--background-main-green-color);
+    color: var(--content-text-white-color);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    min-width: 100px;
+    text-align: center;
+    
+    &:hover {
+        background-color: var(--background-hover-green-color);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// LEGACY COMPATIBILITY CLASSES
+// -----------------------------------------------------------------------------
+// For gradual migration, map old class names to new variants
+// -----------------------------------------------------------------------------
+
+// Primary buttons
+.btn-buscador,
+.btn-siguiente,
+.btn-avanzar {
+    @extend .btn-primary-gradient;
+    
+    // Fix link color inside buttons
+    a, a:link, a:visited, a:hover {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+// Green solid button (legacy "btn-green")
+.btn-green {
+    @extend .btn-base;
+    background-color: var(--background-main-green-color);
+    color: var(--content-text-white-color);
+    border-radius: 8px;
+    padding: 10px 20px;
+    min-width: 120px;
+    
+    &:hover {
+        background-color: var(--background-hover-green-color);
+        color: var(--content-text-white-color);
+    }
+    
+    // Fix link color inside button
+    a, a:link, a:visited, a:hover {
+        color: var(--content-text-white-color);
+        text-decoration: none;
+    }
+}
+
+// Outline buttons
+.btn-volver,
+.btn-cancelar {
+    @extend .btn-secondary-outline;
+}
+
+// Icon buttons
+.btn-chat-en-vivo,
+.btn-publicar,
+.btn-lista-chequeo {
+    @extend .btn-icon-action;
+}
+
+// Menu buttons
+.btn-menu-comunidad {
+    @extend .btn-menu-nav;
+}
+
+// Round button standard (legacy)
+.btn-round {
+    border-radius: 30px;
+    
+    &.btn-high {
+        padding: 10px 28px;
+        background-color: var(--background-main-green-color);
+        color: var(--content-text-white-color);
+        
+        // Fix link color inside btn-high
+        a, a:link, a:visited, a:hover {
+            color: var(--content-text-white-color);
+            text-decoration: none;
+        }
+    }
+    
+    &.btn-middle {
+        padding: 8px 20px;
+    }
+    
+    &.btn-low {
+        padding: 6px 16px;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// BUTTON SIZE MODIFIERS
+// -----------------------------------------------------------------------------
+.btn-sm {
+    padding: 6px 14px;
+    font-size: 0.875rem;
+}
+
+.btn-md {
+    padding: 10px 24px;
+    font-size: 1rem;
+}
+
+.btn-lg {
+    padding: 14px 32px;
+    font-size: 1.125rem;
+}
+
+// -----------------------------------------------------------------------------
+// GLOBAL LINK FIX FOR ALL BUTTONS
+// -----------------------------------------------------------------------------
+// Ensure all buttons with links inside show proper white text
+// -----------------------------------------------------------------------------
+.btn {
+    a, a:link, a:visited, a:hover, a:active {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// ACCESSIBILITY & CONTRAST FIXES
+// -----------------------------------------------------------------------------
+// Enforce proper contrast ratios on button text
+// -----------------------------------------------------------------------------
+.btn-text-contrast {
+    // High contrast text for buttons on light backgrounds
+    &.on-light {
+        color: var(--primary-black-text-color);
+    }
+    
+    &.on-dark {
+        color: var(--content-text-white-color);
+    }
+}

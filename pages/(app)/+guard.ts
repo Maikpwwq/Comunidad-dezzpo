@@ -1,7 +1,8 @@
 /**
  * App Route Guard
  *
- * Protects all /app/* routes by redirecting unauthenticated users.
+ * Protects most /app/* routes by redirecting unauthenticated users.
+ * Exceptions: portal-servicios and perfil pages are publicly accessible.
  * Uses Zustand store to check authentication state.
  *
  * @see https://vike.dev/guard
@@ -9,7 +10,24 @@
 import { redirect } from 'vike/abort'
 import type { GuardSync } from 'vike/types'
 
+// Pages that don't require authentication (public-facing)
+const PUBLIC_APP_ROUTES = [
+  '/portal-servicios',
+  '/perfil',
+]
+
 export const guard: GuardSync = (pageContext): void => {
+  const currentPath = pageContext.urlPathname
+
+  // Allow public routes without authentication
+  const isPublicRoute = PUBLIC_APP_ROUTES.some(route => 
+    currentPath.startsWith(route)
+  )
+  
+  if (isPublicRoute) {
+    return // No auth required for public app pages
+  }
+
   // Check for user in pageContext (set by server if authenticated)
   const isAuthenticated = pageContext.isAuthenticated ?? false
 

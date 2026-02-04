@@ -1,3 +1,61 @@
 # https://www.robotstxt.org/robotstxt.html
+# Comunidad Dezzpo - Marketplace de servicios profesionales
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Public Marketing Pages (Indexable)
+Allow: /
+Allow: /nosotros
+Allow: /asi-trabajamos
+Allow: /comunidad-propietarios
+Allow: /comunidad-comerciantes
+Allow: /asesorias
+Allow: /ayuda-pqrs
+Allow: /blog
+Allow: /contactenos
+Allow: /legal
+Allow: /patrocinadores
+Allow: /prensa
+Allow: /presupuestos
+Allow: /profesionales-servicios
+Allow: /apendice-costos
+Allow: /calificaciones
+
+# Auth Pages - Allow for login/register discoverability
+Allow: /ingreso
+Allow: /registro
+
+# Private App Pages - Disallow (require authentication)
+Disallow: /ajustes
+Disallow: /biblioteca
+Disallow: /cambiar-clave
+Disallow: /certificaciones
+Disallow: /configuracion-privacidad
+Disallow: /contratacion
+Disallow: /contratar
+Disallow: /cotizar
+Disallow: /directorio-requerimientos
+Disallow: /formas-pago
+Disallow: /historial-servicios
+Disallow: /invitar-amigos
+Disallow: /mensajes
+Disallow: /notificaciones
+Disallow: /proyecto
+Disallow: /requerimiento
+Disallow: /suscripciones
+
+# Public App Pages - Allow for anonymous users
+Allow: /portal-servicios
+Allow: /perfil/*
+
+# API and system paths
+Disallow: /api/
+Disallow: /_*
+Disallow: /assets/
+
+# Sitemap location
+Sitemap: https://comunidad-dezzpo.vercel.app/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

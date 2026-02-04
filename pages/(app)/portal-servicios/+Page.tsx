@@ -97,7 +97,7 @@ export default function Page() {
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex">
                 <Col className="pt-4 pb-2 p-0">
-                    <h2 className="headline-xl">
+                    <h1 className="type-hero-title">
                         Directorio Profesionales{'  '}
                         <Button
                             className="body-1 ms-4 btn-round btn-high"
@@ -105,7 +105,7 @@ export default function Page() {
                         >
                             Publica un proyecto gratis
                         </Button>
-                    </h2>
+                    </h1>
                     <SearchBar />
                 </Col>
                 {searchInput ? (

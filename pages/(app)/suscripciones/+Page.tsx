@@ -34,9 +34,9 @@ export default function Page() {
             <Row>
                 <Col className="col-10">
                     <Row className="pt-4 m-0 w-100 d-flex">
-                        <Typography className="headline-xl mb-5" variant="h4">
+                        <h1 className="type-hero-title mb-5">
                             El plan de beneficios con la membresía incluye
-                        </Typography>
+                        </h1>
                         <Col md={8}>
                             <Typography
                                 variant="h4"

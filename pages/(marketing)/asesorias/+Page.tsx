@@ -59,7 +59,7 @@ export default function Page() {
                 <Row className="asesorias-titulo m-0 w-100">
                     <Col className="align-items-end" lg={6} md={8} sm={10} xs={12}>
                         <Col className="opacidad-negro">
-                            <h2 className="headline-xl text-blanco">ASESORÍAS EN VIVO</h2>
+                            <h1 className="type-hero-title text-blanco">ASESORÍAS EN VIVO</h1>
                             <br />
                             <p className="asesoria-message p-description">
                                 Consulta a un profesional de la comunidad, y resuelve ya las dudas

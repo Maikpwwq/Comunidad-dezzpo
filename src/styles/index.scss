@@ -11,6 +11,8 @@
 
 // Layout
 // Components
+@use './components/buttons';
+@use './components/typography';
 // @use './components/cards';
 
 // Features - Marketing
@@ -46,6 +48,44 @@
 // These are kept here for backward compatibility until full verification
 // They duplicate some logic moved to utilities but are safer to keep for now
 // until checked against components directly.
+
+// =============================================================================
+// ASÍSTEME BAR (Purple Fixed Top Bar)
+// =============================================================================
+// Fixed positioning bar with call-to-action for user assistance
+// =============================================================================
+.asisteme {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--background-dark-purple-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    
+    p {
+        color: var(--content-text-white-color);
+        margin: 0;
+        padding-right: 16px;
+    }
+    
+    .btn {
+        background-color: var(--background-main-green-color);
+        color: var(--content-text-white-color);
+        border-radius: 30px;
+        padding: 6px 20px;
+        font-weight: 700;
+        border: none;
+        
+        &:hover {
+            background-color: var(--background-hover-green-color);
+        }
+    }
+}
 
 
 // Legacy text and background utilities removed. 
@@ -175,7 +215,25 @@ body {
     align-items: center;
 }
 
-// .arrow-back and .arrow-next removed (migrated to DirectionalButton.module.scss)
+// Carousel Arrow Buttons with background and shadow
+.arrow-back,
+.arrow-next {
+    background-color: var(--background-white-color) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    margin: 0 4px !important;
+    
+    &:hover {
+        background-color: #f5f5f5 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    svg {
+        color: var(--background-main-green-color);
+    }
+}
 
 .myDivDiagonalRightA {
     transform: skewY(3deg);

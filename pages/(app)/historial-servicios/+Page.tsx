@@ -28,6 +28,7 @@ export default function Page() {
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex align-items-start pt-4 pb-4">
                 <Col className="col-10" md={10}>
+                    <h1 className="type-hero-title mb-4">Historial de Servicios</h1>
                     {sections.map((section) => (
                         <div key={section.title}>
                             <h2 className="headline-xl">{section.title}</h2>
