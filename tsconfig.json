@@ -37,6 +37,7 @@
     "paths": {
       /* Root source alias */
       "@/*": ["src/*"],
+      "@public/*": ["public/*"],
 
       /* Feature modules */
       "@features/*": ["src/features/*"],
