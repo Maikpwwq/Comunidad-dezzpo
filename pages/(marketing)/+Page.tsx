@@ -66,17 +66,20 @@ export default function Page() {
                         enableMouseEvents
                     >
                         {/* Banner Principal */}
-                        <Row className="m-0 w-100 banner-comunidad">
+                        <Row className="m-0 w-100 banner-comunidad d-flex justify-content-center">
+                            <Col className="image-container" lg={2} md={3} sm={12} xs={11}>
+                                {/* Image placeholder / spacing column if image is background */}
+                            </Col>
                             <Col
                                 id="contenedorBanner"
-                                className="m-0 p-0 pt-4"
-                                xl={7}
-                                lg={6}
+                                className="m-0 p-0 pt-4 d-flex flex-column justify-content-center align-items-center"
+                                xl={5}
+                                lg={5}
                                 md={5}
                                 sm={10}
                                 xs={11}
                             >
-                                <Box className="slogan p-0">
+                                <Box className="slogan p-0 ps-4">
                                     <h1 className="type-hero-title">
                                         <strong>Bienvenido</strong>
                                     </h1>
@@ -93,7 +96,7 @@ export default function Page() {
                                     </Typography>
                                 </Box>
                             </Col>
-                            <Col className="col m-4 p-0" xl={4} lg={6} md={8} sm={12} xs={12}>
+                            <Col className="col m-4 p-0 d-flex justify-content-center" xl={4} lg={4} md={4} sm={12} xs={12}>
                                 <ProjectSearchForm simple={false} />
                             </Col>
                         </Row>
