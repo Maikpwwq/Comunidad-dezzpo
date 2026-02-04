@@ -1,0 +1,404 @@
+// =============================================================================
+// TYPOGRAPHY SYSTEM
+// =============================================================================
+// Centralized typography styles, fluid scaling, and contrast utilities.
+// Based on legacy site audit and WCAG accessibility requirements.
+// =============================================================================
+
+@use 'sass:math';
+@use '@styles/_variables' as *;
+
+// -----------------------------------------------------------------------------
+// FLUID TYPOGRAPHY MIXIN
+// -----------------------------------------------------------------------------
+// Creates responsive font-size that scales smoothly between mobile and desktop.
+// Uses clamp() for modern browsers with fallback for older ones.
+//
+// Usage: @include fluid-type(16px, 24px);
+// This creates text that's 16px on mobile, 24px on desktop, fluid in between.
+// -----------------------------------------------------------------------------
+
+@mixin fluid-type($min-size, $max-size, $min-width: 320px, $max-width: 1200px) {
+    // Fallback for older browsers
+    font-size: $min-size;
+    
+    // Modern fluid typography using clamp()
+    // Formula: clamp(min, preferred, max)
+    // Preferred value scales between min-width and max-width viewports
+    $slope: math.div($max-size - $min-size, $max-width - $min-width);
+    $intercept: $min-size - $slope * $min-width;
+    
+    font-size: clamp(
+        #{$min-size},
+        calc(#{$intercept} + #{$slope * 100}vw),
+        #{$max-size}
+    );
+}
+
+// -----------------------------------------------------------------------------
+// FLUID LINE-HEIGHT MIXIN
+// -----------------------------------------------------------------------------
+// Ensures comfortable reading across all screen sizes.
+// Tighter on mobile (saves space), looser on desktop (better readability).
+// -----------------------------------------------------------------------------
+
+@mixin fluid-line-height($min-lh: 1.35, $max-lh: 1.6) {
+    line-height: clamp(#{$min-lh}, calc(#{$min-lh} + 0.15vw), #{$max-lh});
+}
+
+// -----------------------------------------------------------------------------
+// TYPOGRAPHY PRESET CLASSES
+// -----------------------------------------------------------------------------
+// Ready-to-use classes for common typography patterns.
+// Apply directly in JSX: className="type-hero-title"
+// -----------------------------------------------------------------------------
+
+// Hero/Main Titles (60px → 32px)
+.type-hero-title {
+    @include fluid-type(32px, 60px);
+    font-family: var(--font-helvetica-semibold);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+// Section Headings (36px → 24px)
+.type-section-title {
+    @include fluid-type(24px, 36px);
+    font-family: var(--font-helvetica-semibold);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+// Card Titles (24px → 18px)
+.type-card-title {
+    @include fluid-type(18px, 24px);
+    font-family: var(--font-helvetica-semibold);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+// Body Text - Large (18px → 16px)
+.type-body-lg {
+    @include fluid-type(16px, 18px);
+    @include fluid-line-height(1.5, 1.7);
+    font-family: var(--font-worksans-regular);
+    font-weight: 400;
+}
+
+// Body Text - Regular (16px → 14px)
+.type-body {
+    @include fluid-type(14px, 16px);
+    @include fluid-line-height(1.45, 1.6);
+    font-family: var(--font-worksans-regular);
+    font-weight: 400;
+}
+
+// Caption/Small Text (14px → 12px)
+.type-caption {
+    @include fluid-type(12px, 14px);
+    line-height: 1.4;
+    font-family: var(--font-worksans-regular);
+    font-weight: 400;
+}
+
+// -----------------------------------------------------------------------------
+// CONTRAST ENFORCEMENT CLASSES
+// -----------------------------------------------------------------------------
+// WCAG-compliant text colors for different backgrounds.
+// Prevents "white-on-white" or "grey-on-grey" contrast failures.
+// -----------------------------------------------------------------------------
+
+// Text on LIGHT backgrounds (white, cream, light grey)
+.text-on-light {
+    color: var(--content-text-color) !important; // Dark grey #4b4b4b
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--primary-titles-text-color); // Darker #4d4d4d
+    }
+    
+    p, span, li {
+        color: var(--content-text-color);
+    }
+}
+
+// Text on DARK backgrounds (dark grey, black, gradients)
+.text-on-dark {
+    color: var(--content-text-white-color) !important;
+    
+    h1, h2, h3, h4, h5, h6,
+    p, span, li {
+        color: var(--content-text-white-color);
+    }
+}
+
+// Text on TEAL/GREEN backgrounds
+.text-on-teal {
+    color: var(--content-text-white-color) !important;
+    font-weight: 500; // Slightly bolder to prevent "thinning" on mobile
+    
+    // Add subtle text shadow for extra legibility on gradient backgrounds
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+// -----------------------------------------------------------------------------
+// CARD TEXT FIX
+// -----------------------------------------------------------------------------
+// Specifically fixes the "¿Cómo funciona nuestra comunidad?" step cards
+// where text was invisible (white-on-white).
+// -----------------------------------------------------------------------------
+
+.step-card-text {
+    color: var(--content-text-color) !important;
+    font-weight: 400;
+    
+    h3, h4, h5 {
+        color: var(--primary-titles-text-color);
+        font-weight: 600;
+    }
+    
+    p {
+        color: var(--content-text-color);
+        line-height: 1.5;
+    }
+}
+
+// Card container with proper defaults
+.card-content-light {
+    background-color: var(--background-white-color);
+    
+    // Force all text inside to be dark
+    * {
+        color: var(--content-text-color);
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--primary-titles-text-color);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// HERO SUBTITLE ENHANCEMENT
+// -----------------------------------------------------------------------------
+// Makes secondary hero text pop against colorful backgrounds.
+// Legacy used text-shadow and bold weights; we replicate here.
+// -----------------------------------------------------------------------------
+
+.hero-subtitle {
+    @include fluid-type(16px, 21px);
+    @include fluid-line-height(1.5, 1.7);
+    font-weight: 500;
+    
+    // For light backgrounds
+    &.on-light {
+        color: var(--content-text-color);
+    }
+    
+    // For image/gradient backgrounds
+    &.on-image {
+        color: var(--content-text-white-color);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        font-weight: 600;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// MARKETING-SPECIFIC TYPOGRAPHY
+// -----------------------------------------------------------------------------
+// Classes for specific marketing page elements.
+// -----------------------------------------------------------------------------
+
+// Feature description (longer paragraphs)
+.marketing-description {
+    @include fluid-type(16px, 18px);
+    @include fluid-line-height(1.5, 1.7);
+    color: var(--content-text-color);
+    font-family: var(--font-worksans-regular);
+    max-width: 65ch; // Optimal reading width
+}
+
+// Section label/category (e.g., "Propietarios", "Comerciantes calificados")
+.section-label {
+    @include fluid-type(14px, 16px);
+    color: var(--primary-titles-text-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+// Footer text
+.footer-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--content-text-light-gray-color);
+    
+    a {
+        color: var(--background-yellow-color);
+        
+        &:hover {
+            color: var(--background-light-yellow-color);
+        }
+    }
+}
+
+// Legal/fine print
+.legal-text {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--content-text-light-gray-color);
+}
+
+// =============================================================================
+// TEXT VARIANTS (Gov.co / WCAG 2.1 Compliant)
+// =============================================================================
+// Standard text decorations and styles for consistent typography.
+// Based on Resolución 1519 de 2020 accessibility guidelines.
+// =============================================================================
+
+// Normal text (default - no decoration)
+.text-normal {
+    font-weight: 400;
+    font-style: normal;
+    text-decoration: none;
+}
+
+// Underlined text (links, emphasis)
+.text-underline {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    
+    &:hover {
+        text-decoration-thickness: 2px;
+    }
+}
+
+// Strikethrough text (deprecated content, corrections)
+.text-strikethrough {
+    text-decoration: line-through;
+    text-decoration-color: var(--content-text-color);
+}
+
+// Bold text (emphasis, important content)
+.text-bold {
+    font-weight: 700;
+}
+
+// Semi-bold text (subheadings, labels)
+.text-semibold {
+    font-weight: 600;
+}
+
+// Italic text (quotes, definitions, emphasis)
+.text-italic {
+    font-style: italic;
+}
+
+// Bold + Italic combination
+.text-bold-italic {
+    font-weight: 700;
+    font-style: italic;
+}
+
+// =============================================================================
+// BODY TEXT VARIANTS (Description, Body 1, Body 2)
+// =============================================================================
+// Standard body text sizes for content hierarchy.
+// =============================================================================
+
+// Description (larger body text for introductions)
+.text-description {
+    @include fluid-type(16px, 18px);
+    @include fluid-line-height(1.5, 1.7);
+    font-family: var(--font-worksans-regular);
+    font-weight: 400;
+    color: var(--content-text-color);
+}
+
+// Body Text 1 (primary content)
+.text-body-1 {
+    font-size: $font-size-md; // 16px / 1rem
+    line-height: 1.5;
+    font-family: var(--font-worksans-regular);
+    font-weight: 400;
+    color: var(--content-text-color);
+}
+
+// Body Text 2 (secondary content, help text)
+.text-body-2 {
+    font-size: $font-size-sm; // 14px / 0.875rem
+    line-height: 1.45;
+    font-family: var(--font-worksans-regular);
+    font-weight: 400;
+    color: var(--content-text-color);
+}
+
+// =============================================================================
+// ACCESSIBILITY STANDARDS (WCAG 2.1 / Resolución 1519 de 2020)
+// =============================================================================
+// Guidelines and utility classes for accessible typography.
+// =============================================================================
+
+// Optimal line length for readability (45-75 characters)
+.text-optimal-width {
+    max-width: 65ch;
+}
+
+.text-narrow-width {
+    max-width: 45ch;
+}
+
+.text-wide-width {
+    max-width: 75ch;
+}
+
+// Text alignment classes (avoid justified text per accessibility guidelines)
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+// Screen reader only (visually hidden but accessible)
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+// Focus visible for keyboard navigation
+.focus-visible {
+    &:focus-visible {
+        outline: 3px solid var(--primary-blue-light-color);
+        outline-offset: 2px;
+    }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+    .text-body-1,
+    .text-body-2,
+    .text-description {
+        color: var(--primary-black-text-color);
+    }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+

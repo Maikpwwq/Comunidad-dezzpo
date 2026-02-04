@@ -122,7 +122,7 @@ export default function Page() {
                     </Box>
                     <p className="body-1 pt-2 m-0">
                         Eres nuevo, crea fácil una cuenta,
-                        <Link className="body-2 btn-TEXT textVerde2" href="/registro/">
+                        <Link className="body-2 btn-TEXT text-verde-2" href="/registro/">
                             {' Registrarme'}
                         </Link>
                     </p>

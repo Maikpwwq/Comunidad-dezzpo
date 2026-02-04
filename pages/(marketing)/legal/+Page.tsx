@@ -40,7 +40,7 @@ export default function Page() {
                 {legalDocuments.map((doc) => (
                     <Col key={doc.title + (doc.subtitle || '')} className="m-4">
                         <a href={doc.url} target="_blank" rel="noopener noreferrer">
-                            <h3 className="headline-l textBlanco">
+                            <h3 className="headline-l text-blanco">
                                 {doc.title}
                                 {doc.subtitle && (
                                     <>

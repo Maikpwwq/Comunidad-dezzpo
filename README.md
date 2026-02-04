@@ -169,22 +169,65 @@ async function getProfile(id: string): Promise<ServiceResponse<UserProfile>> {
 }
 ```
 
-## CSS Style Guide
+## CSS & Typography Guide
 
-* **Naming Convention:** Strictly enforce `kebab-case` for all SCSS classes and CSS modules.
-* **Asset Pattern:** Use background-image classes (e.g., `.btn-orange`) mapped in SCSS instead of inline styles or hardcoded URLs.
-* **Deprecation:** Explicitly forbid `camelCase` for styling class names.
+### Naming Convention
+Use `kebab-case` for all SCSS classes. `camelCase` is forbidden.
 
 ```tsx
-// ✅ Correct: Kebab-case from SCSS Module
+// ✅ Correct
 <div className={styles['main-container']} />
 
-// ❌ Deprecated: camelCase or global strings
+// ❌ Forbidden
 <div className="mainContainer" />
 ```
 
+### Typography System
+Located in `src/styles/components/_typography.scss`.
+
+| Class | Size | Use Case |
+|-------|------|----------|
+| `.type-hero-title` | 60px → 32px | Hero/landing titles |
+| `.type-section-title` | 36px → 24px | Section headers |
+| `.type-card-title` | 24px → 18px | Card titles |
+| `.type-body-lg` | 18px → 16px | Lead paragraphs |
+| `.type-body` | 16px → 14px | Standard content |
+| `.type-caption` | 14px → 12px | Captions/metadata |
+
+**Fluid Typography Mixin:**
+```scss
+@include fluid-type(16px, 24px); // Scales 16px→24px between mobile/desktop
+```
+
+### Text Variants
+| Class | Style |
+|-------|-------|
+| `.text-bold` | `font-weight: 700` |
+| `.text-italic` | `font-style: italic` |
+| `.text-underline` | Underlined text |
+| `.text-strikethrough` | Line-through |
+
+### Contrast Classes
+| Class | Use Case |
+|-------|----------|
+| `.text-on-light` | Dark text on white/cream backgrounds |
+| `.text-on-dark` | White text on dark backgrounds |
+| `.opacidad-negro` | Dark overlay box for image backgrounds |
+
+### Button System
+Located in `src/styles/components/_buttons.scss`.
+
+| Class | Style | Use Case |
+|-------|-------|----------|
+| `.btn-primary-gradient` | Teal-to-blue gradient | Main CTAs (Siguiente, Guardar) |
+| `.btn-secondary-outline` | Transparent + border | Secondary (Volver, Cancelar) |
+| `.btn-icon-action` | Solid teal + icon | PUBLICAR, CHAT EN VIVO |
+| `.btn-floating-action` | Purple + shadow | Asísteme sticky bar |
+
+### Dev Reference
+View live typography samples at `/dev/typography`.
+
 ## Legal
 
-Developed by **Dezzpo Inc.**
-- [Website](https://www.dezzpo.com/)
-- [Console](https://console.firebase.google.com/project/app-comunidad-dezzpo/overview)
+Developed by **Dezzpo Inc.** | [Website](https://www.dezzpo.com/)
+

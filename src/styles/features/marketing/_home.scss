@@ -76,6 +76,18 @@
         border-radius: 15px;
         box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
         min-width: 230px;
+        
+        // CONTRAST FIX: Enforce dark text on light cards
+        // Fixes white-on-white text visibility issue
+        color: var(--content-text-color);
+        
+        p, span, li {
+            color: var(--content-text-color);
+        }
+        
+        h3, h4, h5 {
+            color: var(--primary-titles-text-color);
+        }
     }
 
     .how-numbers {

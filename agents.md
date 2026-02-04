@@ -158,20 +158,63 @@ This file acts as the primary orchestrator. For specific domain constraints, ref
 - Use `pnpm run <script>` for package scripts.
 
 
-## 9. CSS Style Guide (STRICT)
+## 9. CSS & Typography Guide (STRICT)
 
 ### Naming Convention
-- **Strictly Kebab-Case**: All SCSS classes and CSS modules MUST use `kebab-case`.
-- **Forbidden**: `camelCase` is strictly prohibited for styling classes.
+- **Kebab-case only**: All SCSS classes must use `kebab-case`.
+- **Forbidden**: `camelCase` classes are prohibited.
 
-### Asset Pattern
-- **No Inline URLs**: Do not use hardcoded image URLs in inline styles for backgrounds.
-- **SCSS Mapping**: Use specific background-image classes (e.g., `.btn-orange`, `.bg-hero`) defined in SCSS modules.
+### Typography System
+File: `src/styles/components/_typography.scss`
 
-```tsx
-// ✅ Correct: Kebab-case from SCSS Module
-<div className={styles['main-container']} />
+**Heading Classes:**
+| Class | Fluid Size | Intent |
+|-------|-----------|--------|
+| `.type-hero-title` | 60px → 32px | Hero titles |
+| `.type-section-title` | 36px → 24px | Section headers |
+| `.type-card-title` | 24px → 18px | Card titles |
 
-// ❌ FORBIDDEN: camelCase or global camelCase strings
-<div className="mainContainer" />
+**Body Classes:**
+| Class | Size | Intent |
+|-------|------|--------|
+| `.type-body-lg` | 18px → 16px | Lead paragraphs |
+| `.type-body` | 16px → 14px | Standard content |
+| `.type-caption` | 14px → 12px | Captions |
+
+**Fluid Mixin Usage:**
+```scss
+@include fluid-type(16px, 24px); // Scales between mobile→desktop
 ```
+
+### Text Variants
+| Class | Effect |
+|-------|--------|
+| `.text-bold` | Bold weight (700) |
+| `.text-italic` | Italic style |
+| `.text-underline` | Underline decoration |
+| `.text-strikethrough` | Line-through |
+
+### Contrast Enforcement
+| Class | Use When |
+|-------|----------|
+| `.text-on-light` | Text on white/cream backgrounds |
+| `.text-on-dark` | Text on dark backgrounds |
+| `.opacidad-negro` | Dark overlay on images |
+
+### Button System
+File: `src/styles/components/_buttons.scss`
+
+| Class | Style | Intent |
+|-------|-------|--------|
+| `.btn-primary-gradient` | Teal gradient | Main CTAs |
+| `.btn-secondary-outline` | Border only | Secondary actions |
+| `.btn-icon-action` | Solid + icon | Form submits |
+
+### Accessibility (WCAG 2.1)
+- Line width: Use `.text-optimal-width` (max 65 characters)
+- Focus states: Use `.focus-visible` for keyboard navigation
+- Screen readers: Use `.sr-only` for hidden labels
+
+### Dev Reference
+Live samples: `/dev/typography`
+
