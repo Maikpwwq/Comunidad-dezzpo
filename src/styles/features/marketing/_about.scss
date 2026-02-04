@@ -34,24 +34,39 @@
         @extend .section-base;
         // background defined in specific class or override
         min-height: 400px;
-        color: var(--background-light-gray-color);
+        color: var(--primary-titles-text-color);
+        width: 100vw !important;
+        margin-left: calc(-50vw + 50%) !important;
+        padding-left: calc(50vw - 50%) !important;
+        padding-right: calc(50vw - 50%) !important;
     }
 
     .nosotros-politicas, .nosotros-etica {
         @extend .section-base;
         background: var(--background-light-gray-color) url('/assets/img/Asesorias1.png') no-repeat center;
+        background-size: cover;
         min-height: 330px;
+        width: 100vw !important;
+        margin-left: calc(-50vw + 50%) !important;
+        padding-left: calc(50vw - 50%) !important;
+        padding-right: calc(50vw - 50%) !important;
     }
     
     .nosotros-etica {
         background-image: url('/assets/img/Nosotros3.png');
+        background-size: cover;
         color: var(--background-light-gray-color);
     }
 
     .nosotros-equipo {
         @extend .section-base;
         background: var(--background-light-gray-color) url('/assets/img/Nosotros4.png') no-repeat center;
+        background-size: cover;
         min-height: 330px;
+        width: 100vw !important;
+        margin-left: calc(-50vw + 50%) !important;
+        padding-left: calc(50vw - 50%) !important;
+        padding-right: calc(50vw - 50%) !important;
         display: flex;
         flex-direction: column;
         justify-content: space-around;

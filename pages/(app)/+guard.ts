@@ -18,10 +18,14 @@ const PUBLIC_APP_ROUTES = [
 
 export const guard: GuardSync = (pageContext): void => {
   const currentPath = pageContext.urlPathname
+  
+  // DEBUG: Check what path is being processed
+  console.log('[Guard] Checking Path:', currentPath)
+  console.log('[Guard] Public Routes:', PUBLIC_APP_ROUTES)
 
   // Allow public routes without authentication
   const isPublicRoute = PUBLIC_APP_ROUTES.some(route => 
-    currentPath.startsWith(route)
+    currentPath.includes(route)
   )
   
   if (isPublicRoute) {

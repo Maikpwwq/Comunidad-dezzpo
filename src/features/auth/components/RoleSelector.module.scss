@@ -11,15 +11,18 @@
     font-weight: 500;
 
     &:hover {
-        background-color: #e0e0e0;
+        background-color: var(--selected-border-light-gray-color);
         color: var(--primary-green-text-color) !important;
     }
 
     // Bootstrap ToggleButton adds 'active' class to the label when selected
     &.Active,
-    &:global(.active) {
+    &:global(.active),
+    &:global(.btn-check:checked + &) {
         background-color: var(--logo-comunidad-dezzpo-color) !important;
         border-color: var(--logo-comunidad-dezzpo-color) !important;
-        color: var(--content-text-white-color) !important;
+        color: $white !important;
+        font-weight: 600;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
     }
 }
