@@ -17,4 +17,5 @@ export {
     auth,
     firestore,
     storage,
+    isFirebaseAvailable,
 } from './client'
