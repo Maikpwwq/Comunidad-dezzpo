@@ -19,7 +19,7 @@ import iconSet from '@assets/icomoon/selection.json'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 // Logo
-import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'
+import LogoMenuComunidadDezzpo from '@assets/img/logo/Logo-Comunidad-Dezzpo.png'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
