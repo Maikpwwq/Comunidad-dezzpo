@@ -6,6 +6,8 @@
     color: var(--content-text-white-color);
     font-size: 14px;
     padding: 5px 0;
+    position: relative;
+    z-index: 1100;
     
     a {
         color: var(--content-text-white-color);
