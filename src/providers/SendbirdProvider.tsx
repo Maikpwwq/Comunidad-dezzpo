@@ -26,10 +26,17 @@ export const SendbirdProviderWrapper = ({ children }: { children: React.ReactNod
         return <>{children}</>
     }
 
+    // If no user is authenticated, render children without Sendbird Provider
+    // This prevents "Max update depth exceeded" error or SDK initialization failures
+    // when accessing public app routes (e.g. /app/portal-servicios) as guest
+    if (!userAuthID) {
+        return <>{children}</>
+    }
+
     return (
         <SendbirdProvider
             appId={appId}
-            userId={userAuthID || ''}
+            userId={userAuthID}
             nickname={userAuthName || ''}
             accessToken={accessToken}
         >
