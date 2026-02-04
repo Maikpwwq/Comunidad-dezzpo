@@ -4,6 +4,19 @@
 
 ## 1. Strict Architecture Laws
 
+### ⚡ PROVIDER & AUTH CONSTRAINTS
+
+* **Firebase Auth Hydration:** All `/app/*` routes must account for the "Initializing" state. **Forbidden:** Hard-redirecting to `/login` before `onAuthStateChanged` has resolved.
+* **Sendbird Initialization:** The Messaging Provider **must not** initialize for anonymous guests. Wrap all Sendbird logic in an `isAuth` check to prevent `null` user crashes.
+* **Hybrid Access Logic:** Specific `/app/` routes are designated as **Hybrid** (Guest + Auth).
+  * *Whitelisted:* `portal-servicios`, `suscripciones`, `directorio-requerimientos`, `perfil`.
+  * *Constraint:* Navigation components (`Sidebar`, `NavBar`) must toggle visibility based on `user.role` or `null` state.
+
+### 🧬 DYNAMIC DATA REQUIREMENTS
+
+* **Profile Hydration:** For `/app/perfil/[id]`, the `id` must be extracted from the Vike `pageContext`.
+* **Fetching State:** Implement mandatory loading skeletons for profile data to prevent UI "jerkiness" during Firestore fetches.
+
 ### Path Aliases are Mandatory
 **NEVER** use relative imports for cross-module dependencies.
 **ALWAYS** use the configured path aliases:
