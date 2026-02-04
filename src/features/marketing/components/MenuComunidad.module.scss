@@ -23,7 +23,7 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 10px 0;
     position: relative;
-    z-index: 10;
+    z-index: 1100;
 }
 
 .Container {
@@ -48,7 +48,7 @@
         height: 100%;
         top: 80px;
         left: 0;
-        z-index: 15;
+        z-index: 1200;
         background-color: var(--background-main-green-color);
         display: flex;
         flex-direction: column;
