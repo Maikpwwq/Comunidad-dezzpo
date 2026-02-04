@@ -5,7 +5,7 @@
  */
 
 import { collection, getDocs, query, where } from 'firebase/firestore'
-import { firestore } from '@services/firebase'
+import { firestore, isFirebaseAvailable } from '@services/firebase'
 import type { SearchParams, SearchResult, UserFirestoreDocument } from '../types'
 
 const COMERCIANTES_COLLECTION = 'usersComerciantesCalificados'
@@ -14,6 +14,11 @@ const COMERCIANTES_COLLECTION = 'usersComerciantesCalificados'
  * Search users by categories
  */
 export async function searchByCategories({ query: searchQuery, categories, limit: resultLimit }: SearchParams): Promise<SearchResult> {
+    if (!isFirebaseAvailable() || !firestore) {
+         console.warn('[SSR] searchByCategories skipped - Firebase not available')
+         return { users: [], total: 0 }
+    }
+
     try {
         const searchTerms = categories || [searchQuery]
         const userCol = collection(firestore, COMERCIANTES_COLLECTION)
@@ -45,6 +50,11 @@ export async function searchByCategories({ query: searchQuery, categories, limit
  * this is a prefix match implementation.
  */
 export async function searchByName(name: string): Promise<UserFirestoreDocument[]> {
+    if (!isFirebaseAvailable() || !firestore) {
+         console.warn('[SSR] searchByName skipped - Firebase not available')
+         return []
+    }
+
     try {
         const userCol = collection(firestore, COMERCIANTES_COLLECTION)
         const q = query(
