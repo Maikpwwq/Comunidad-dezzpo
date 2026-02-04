@@ -19,6 +19,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 // MUI
 import ChatIcon from '@mui/icons-material/Chat'
+import EmailIcon from '@mui/icons-material/Email'
 interface AsesoriaInfo {
     asesoriaTitulo: string
     asesoriaDescription: string
@@ -178,7 +179,10 @@ export default function Page() {
                             <Button
                                 className="btn btn-round btn-middle btn-blog"
                                 onClick={handleBlogButton}
-                            />
+                            >
+                                <EmailIcon className="me-2" />
+                                BLOG DE LA COMUNIDAD
+                            </Button>
                         </Col>
                     </Row>
                 </Row>

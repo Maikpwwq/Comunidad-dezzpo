@@ -46,4 +46,23 @@
         width: 100%;
         color: var(--background-light-gray-color);
     }
+
+    .btn-blog {
+        background-color: var(--secondary-red-text-color) !important; // Red background
+        color: var(--content-text-white-color) !important;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 24px;
+        font-weight: 700;
+        
+        &:hover {
+            background-color: #a0355a !important; // Darker shade for hover
+            color: var(--content-text-white-color) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+    }
 }
