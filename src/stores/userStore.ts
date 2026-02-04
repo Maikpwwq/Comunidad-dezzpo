@@ -92,6 +92,8 @@ export const useUserStore = create<UserState & UserActions>()(
     }),
     {
       name: 'user-storage',
+      // SSR-safe: Skip hydration on server, only hydrate on client
+      skipHydration: true,
       partialize: (state) => ({
         userId: state.userId,
         displayName: state.displayName,
