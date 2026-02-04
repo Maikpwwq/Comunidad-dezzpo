@@ -45,7 +45,7 @@ export default function Page() {
             <Container fluid className="p-0">
                 <Row className="m-0 w-100">
                     <Col className="m-4">
-                        <h1 className="main-titulo type-hero-title text-verde">CONTÁCTENOS</h1>
+                        <h1 className="main-titulo type-hero-title text-verde">Contáctenos</h1>
                     </Col>
                 </Row>
             </Container>

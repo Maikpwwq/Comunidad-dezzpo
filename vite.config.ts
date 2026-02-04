@@ -76,6 +76,7 @@ export default defineConfig({
     alias: [
       // Root source alias
       { find: '@', replacement: path.resolve(__dirname, 'src') },
+      { find: '@public', replacement: path.resolve(__dirname, 'public') },
       { find: '@index', replacement: path.resolve(__dirname, 'src/index') },
 
       // Feature modules
