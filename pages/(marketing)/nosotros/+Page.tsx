@@ -130,7 +130,7 @@ export default function Page() {
             <Container fluid className="p-0" id="equipo-dezzpo">
                 <Row className="nosotros-equipo m-0">
                     <Col className="md-12 m-0">
-                        <Col className="p-2 ps-4 pe-4 opacidadBlanco">
+                        <Col className="p-2 ps-4 pe-4 opacidad-blanco">
                             <span className="pitch-propietarios">
                                 <h2 className="headline-xl">Equipo Dezzpo</h2>
                                 <br />
