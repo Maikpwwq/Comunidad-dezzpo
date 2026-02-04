@@ -12,7 +12,7 @@ export interface CategoryItem {
     key: number
     label: string
     variant?: 'filled' | 'outlined'
-    icon?: React.ReactNode
+    icon?: React.ElementType
     [key: string]: any
 }
 
@@ -45,7 +45,7 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
                 label: cat.label,
                 icon: cat.icon,
                 variant: userEditInfo.userCategories.includes(cat.label) ? 'filled' : 'outlined'
-            }))
+            })) as CategoryItem[]
             setCategoriesState(initialCategories)
         }
     }, [listadoCategorias, userEditInfo?.userCategories, saved]) // Re-sync on save or prop change
@@ -59,6 +59,8 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
         if (categoryIndex === -1) return
 
         const currentCategory = categoriesState[categoryIndex]
+        if (!currentCategory) return
+
         const isSelected = currentCategory.variant === 'filled'
 
         let newCategories = [...categoriesState]
@@ -109,12 +111,13 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
             component="ul"
         >
             {categoriesState.map((data) => {
-                const IconToRender = (data.label === 'React' ? <TagFacesIcon /> : data.icon) as React.ReactElement | undefined
+                const IconComponent = data.icon as React.ElementType
+                const IconToRender = data.label === 'React' ? <TagFacesIcon /> : (IconComponent ? <IconComponent fontSize="medium" className="mx-2 my-1" /> : undefined)
                 return (
                     <ListItem key={data.key}>
                         <Chip
                             // className="caption"
-                            icon={IconToRender}
+                            icon={IconToRender as any}
                             color="primary"
                             label={data.label}
                             variant={data.variant || 'outlined'}

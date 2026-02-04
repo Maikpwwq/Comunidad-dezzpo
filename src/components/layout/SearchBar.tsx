@@ -19,7 +19,7 @@ import iconSet from '@assets/icomoon/selection.json'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 // Logo
-import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'
+import LogoMenuComunidadDezzpo from '@assets/img/logo/Logo-Comunidad-Dezzpo.png'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -135,11 +135,13 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
                     }}
                 >
                     <MenuItem value="">Seleccionar categoría</MenuItem>
-                    {ListadoCategorias?.map((item: { key: number; label: string; icon?: React.ReactNode }) => {
-                        const { key, label, icon } = item
+                    {ListadoCategorias?.map((item: any) => {
+                        const { key, label, icon: IconComponent } = item
                         return (
                             <MenuItem value={label} key={key}>
-                                {icon}
+                                {IconComponent && (
+                                    <Box component={IconComponent} sx={{ mr: 1, fontSize: '1.5rem' }} className="mx-2 my-1" />
+                                )}
                                 {label}
                             </MenuItem>
                         )
