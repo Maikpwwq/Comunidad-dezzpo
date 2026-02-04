@@ -221,6 +221,33 @@
 .btn-siguiente,
 .btn-avanzar {
     @extend .btn-primary-gradient;
+    
+    // Fix link color inside buttons
+    a, a:link, a:visited, a:hover {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+// Green solid button (legacy "btn-green")
+.btn-green {
+    @extend .btn-base;
+    background-color: var(--background-main-green-color);
+    color: var(--content-text-white-color);
+    border-radius: 8px;
+    padding: 10px 20px;
+    min-width: 120px;
+    
+    &:hover {
+        background-color: var(--background-hover-green-color);
+        color: var(--content-text-white-color);
+    }
+    
+    // Fix link color inside button
+    a, a:link, a:visited, a:hover {
+        color: var(--content-text-white-color);
+        text-decoration: none;
+    }
 }
 
 // Outline buttons
@@ -247,6 +274,14 @@
     
     &.btn-high {
         padding: 10px 28px;
+        background-color: var(--background-main-green-color);
+        color: var(--content-text-white-color);
+        
+        // Fix link color inside btn-high
+        a, a:link, a:visited, a:hover {
+            color: var(--content-text-white-color);
+            text-decoration: none;
+        }
     }
     
     &.btn-middle {
@@ -274,6 +309,18 @@
 .btn-lg {
     padding: 14px 32px;
     font-size: 1.125rem;
+}
+
+// -----------------------------------------------------------------------------
+// GLOBAL LINK FIX FOR ALL BUTTONS
+// -----------------------------------------------------------------------------
+// Ensure all buttons with links inside show proper white text
+// -----------------------------------------------------------------------------
+.btn {
+    a, a:link, a:visited, a:hover, a:active {
+        color: inherit;
+        text-decoration: none;
+    }
 }
 
 // -----------------------------------------------------------------------------
