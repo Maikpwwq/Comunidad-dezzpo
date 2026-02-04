@@ -42,7 +42,7 @@ export default function Page() {
             <Container fluid className="p-0">
                 <Row className="blog-titulo m-0 w-100">
                     <Col>
-                        <h2 className="headline-xl text-blanco">BLOG</h2>
+                        <h1 className="type-hero-title text-blanco">BLOG</h1>
                     </Col>
                 </Row>
             </Container>

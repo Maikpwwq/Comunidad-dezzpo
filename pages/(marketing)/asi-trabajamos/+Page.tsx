@@ -34,11 +34,11 @@ export default function Page() {
             <Container fluid className="p-0">
                 <Row className="asi-trabajamos-chat m-0 w-100 d-flex justify-content-end">
                     <Col className="col d-flex" md={6} sm={12}>
-                        <span className="chat-asesor headline-xl">
+                        <h1 className="chat-asesor type-hero-title">
                             Contacta Con Un Asesor
                             <br />
                             en Tiempo Real En Nuestro Chat <ChatIcon className="ms-1" />
-                        </span>
+                        </h1>
                         <br />
                         <Button className="btn btn-round btn-high btn-avanzar">
                             <a
@@ -95,13 +95,13 @@ export default function Page() {
                             </span>
                         </Col>
                         <Col className="p-0 w-100 d-flex flex-column align-items-start">
-                            <p className="text-blanco m-4 p-4 body-1">
+                            <p className="text-blanco m-4 p-4 body-1" style={{ maxWidth: '75ch' }}>
                                 Aumente sus posibilidades laborales, pregunta a nuestro equipo por
                                 nuestra insignia de validación de habilidades. Esto te permitirá
                                 brindar mayor confianza a los propietarios y acceder fácilmente a
                                 proyectos de mayor complejidad.
                             </p>
-                            <p className="m-4 p-4 body-1">
+                            <p className="text-blanco m-4 p-4 body-1" style={{ maxWidth: '75ch' }}>
                                 Juntos programamos una visita de inspección para validar entre otras
                                 cosas, certificados y diplomas, equipos y técnica requerida. ¿Listo
                                 para solicitar una? Regístrese e ingrese con su usuario para comenzar.

@@ -55,7 +55,7 @@ export default function Page() {
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex pt-4 pb-4">
                 <Col className="col-10">
-                    <h2 className="headline-xl">Asigna una nueva contraseña</h2>
+                    <h1 className="type-hero-title">Asigna una nueva contraseña</h1>
                     <Box
                         style={{
                             display: 'flex',

@@ -41,9 +41,9 @@ export default function Page() {
                 <Col className="col-10 align-items-start">
                     <div className="patrocinadoresMensaje">
                         <span className="tituloDocumento">
-                            <h2 className="headline-xl">
+                            <h1 className="type-hero-title">
                                 Estos son algunos de <br /> nuestros patrocinadores
-                            </h2>
+                            </h1>
                         </span>
                         <ul className="p-description flex-row align-items-center">
                             {sponsors.map((sponsor) => (

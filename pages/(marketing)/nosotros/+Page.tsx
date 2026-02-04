@@ -35,9 +35,9 @@ export default function Page() {
                 <Row className="nosotros-historia pageContainer m-0 justify-content-end">
                     <Col className="col-md-4 align-items-end">
                         <div className="opacidad-negro">
-                            <h2 className="headline-xl" style={{ color: '#e9ebe6' }}>
+                            <h1 className="type-hero-title" style={{ color: '#e9ebe6' }}>
                                 HISTORIA
-                            </h2>
+                            </h1>
                             <p className="body-2">
                                 Únete a la red profesional de Comunidad Dezzpo: brindamos soluciones de
                                 mantenimiento, remodelaciones, instalaciones y acabados inmobiliarios
@@ -50,7 +50,7 @@ export default function Page() {
             </Container>
             {/* Misión y Visión Section */}
             <Container fluid className="p-0">
-                <Row className="nosotros-mision-vision m-0" id="Acerca-de-nosotros">
+                <Row className="nosotros-mision-vision bg-mission-vision m-0" id="Acerca-de-nosotros">
                     <Col className="d-flex flex-column align-items-center p-4" md={10}>
                         <Row className="right w-100 p-4 d-flex flex-row justify-content-end align-content-start">
                             <Col md={6} className="d-flex flex-row justify-content-start">

@@ -27,10 +27,10 @@ export default function Page() {
             <Row className="m-0 w-100 pt-4 pb-4">
                 <Col className="col-10 d-flex align-items-start justify-content-start">
                     <Row md={10}>
-                        <h3 className="headline-l">
+                        <h1 className="type-hero-title">
                             Bienvenido al módulo de evaluación y Certificación por Competencias
                             Laborales
-                        </h3>
+                        </h1>
                         <p className="body-1 p-4">
                             El desempeño real de las personas se compara con un referente que es
                             la Norma de Competencia Laboral y/o el esquema de certificación, así

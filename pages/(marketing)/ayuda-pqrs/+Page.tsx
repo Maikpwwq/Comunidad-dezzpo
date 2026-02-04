@@ -42,9 +42,9 @@ export default function Page() {
                 <Row className="ayuda-pqrs-titulo m-0 w-100 d-flex flex-row justify-content-start">
                     <Col className="align-items-start m-4" lg={4} md={6} sm={10}>
                         <Col className="opacidad-negro center">
-                            <h2 className="headline-xl text-blanco">
+                            <h1 className="type-hero-title text-blanco">
                                 ¿Qué tipo de profesional necesitas?
-                            </h2>
+                            </h1>
                             <p className="p-description">
                                 ¿De qué manera podemos ayudarte?
                                 <br />

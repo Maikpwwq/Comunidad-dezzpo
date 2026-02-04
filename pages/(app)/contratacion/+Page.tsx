@@ -15,7 +15,7 @@ export default function Page({ draftId, quotationId, proponentId }: PageProps) {
     return (
         <Container fluid className="p-0">
             <div className="p-4">
-                <h2 className="headline-xl">Contrato de servicios</h2>
+                <h1 className="type-hero-title">Contrato de servicios</h1>
                 {draftId && <p className="body-1">Requerimiento: {draftId}</p>}
                 {quotationId && <p className="body-1">Cotización: {quotationId}</p>}
                 {proponentId && <p className="body-1">Proponente: {proponentId}</p>}

@@ -77,16 +77,16 @@ export default function Page() {
                                 xs={11}
                             >
                                 <Box className="slogan p-0">
-                                    <Typography variant="h2">
+                                    <h1 className="type-hero-title">
                                         <strong>Bienvenido</strong>
-                                    </Typography>
+                                    </h1>
                                     <Typography variant="body2" className="mb-4 mt-2">
                                         ¡Encuentra al instante el personal profesional ideal para cada proyecto en el hogar!
                                     </Typography>
                                     <Typography
                                         variant="subtitle1"
                                         className="text-verde btn btn-round btn-high"
-                                        sx={{ backgroundColor: 'transparent !important' }}
+                                        sx={{ backgroundColor: 'transparent !important', border: '2px solid var(--background-main-green-color)' }}
                                         onClick={handleClick}
                                     >
                                         Unete a la Comunidad

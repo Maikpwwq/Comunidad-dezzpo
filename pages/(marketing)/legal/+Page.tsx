@@ -36,6 +36,9 @@ const legalDocuments = [
 export default function Page() {
     return (
         <Container fluid className="legal-page p-0">
+            <Row className="m-0 w-100 p-4">
+                <h1 className="type-hero-title text-blanco">Legal</h1>
+            </Row>
             <Row className="legalContainer">
                 {legalDocuments.map((doc) => (
                     <Col key={doc.title + (doc.subtitle || '')} className="m-4">

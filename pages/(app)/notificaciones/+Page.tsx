@@ -16,9 +16,9 @@ export default function Page() {
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex pt-4 pb-4">
                 <Col className="col-12">
-                    <Typography variant="h4" className="headline-xl mb-4">
+                    <h1 className="type-hero-title mb-4">
                         Notificaciones
-                    </Typography>
+                    </h1>
                     <Box
                         sx={{
                             display: 'flex',

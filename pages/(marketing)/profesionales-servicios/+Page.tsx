@@ -24,9 +24,9 @@ export default function Page() {
                         xs={12}
                     >
                         <Col className="opacidad-negro p-4 m-0 center">
-                            <h2 className="headline-xl text-blanco">
+                            <h1 className="type-hero-title text-blanco">
                                 Profesionales y Servicios Recuerda
-                            </h2>
+                            </h1>
                             <p className="body-1">
                                 Los Certificados describen las acreditaciones que ha recibido cada
                                 comerciante calificado, estos se pueden consultar junto al perfil,

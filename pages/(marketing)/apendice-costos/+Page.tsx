@@ -50,11 +50,11 @@ export default function Page() {
             <Container fluid className="p-0">
                 <Row className="apendiceCostosTitulo m-0 w-100 d-flex justify-content-end">
                     <Col lg={4} md={6} sm={10} xs={12}>
-                        <h3 className="titulo headline-xl">
+                        <h1 className="titulo type-hero-title">
                             Costeo de Servicios
                             <br />
                             Comunes
-                        </h3>
+                        </h1>
                     </Col>
                 </Row>
             </Container>

@@ -1,15 +1,50 @@
 # humanstxt.org/
 # The humans responsible & technology colophon
 
-# TEAM
+/* TEAM */
 
-  <name> -- <role> -- <twitter>
+  Founder & Lead Developer: Comunidad Dezzpo Team
+  Site: https://comunidad-dezzpo.vercel.app
+  Contact: contacto [at] dezzpo.com
+  Location: Colombia
 
-# THANKS
+/* THANKS */
 
-  <name>
+  Firebase - Backend infrastructure
+  Vercel - Hosting and deployment
+  React Community - UI framework
+  MUI Team - Material UI components
+  Bootstrap Team - Responsive grid system
 
-# TECHNOLOGY COLOPHON
+/* SITE */
 
-  CSS3, HTML5, JavaScript
-  React Starter Kit -- https://reactstarter.com/
+  Last update: 2026-02-04
+  Language: Spanish (es-CO)
+  Standards: HTML5, CSS3, ES6+
+  Components: React 18, Material UI, Bootstrap 5
+  IDE: VS Code, Cursor
+
+/* TECHNOLOGY STACK */
+
+  Framework: React 18 + Vike (SSR)
+  Styling: SCSS Modules + CSS Variables
+  UI Libraries: Material UI, React Bootstrap
+  Backend: Firebase (Firestore, Auth, Storage)
+  Hosting: Vercel
+  Version Control: Git + GitHub
+  Messaging: Sendbird Chat
+  Analytics: Google Analytics
+
+/* SEO */
+
+  Meta Tags: Dynamic per-page
+  Sitemap: /sitemap.xml
+  Robots: /robots.txt
+  Structured Data: JSON-LD
+  Accessibility: WCAG 2.1 AA compliant
+
+/* CONTACT */
+
+  Website: https://comunidad-dezzpo.vercel.app
+  WhatsApp: +57 320 484 2897
+  Email: contacto@dezzpo.com
