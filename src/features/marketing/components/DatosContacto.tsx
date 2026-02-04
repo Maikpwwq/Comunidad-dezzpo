@@ -15,7 +15,7 @@ import Col from 'react-bootstrap/Col'
 const contactData = {
     phone: {
         icon: 'TelefonoContactoIcono',
-        number: '+57 319 6138057',
+        number: '+57 3204842897',
         whatsappLink: 'https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20...',
         label: 'Office',
     },
@@ -51,7 +51,7 @@ export function DatosContacto(): React.ReactElement {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    319 6138057
+                                    3204842897
                                 </a>
                                 - {contactData.phone.label}
                             </li>

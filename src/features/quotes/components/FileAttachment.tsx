@@ -3,6 +3,7 @@
  *
  * File/image upload component for profiles and quotes.
  * Migrated from src/app/components/AdjuntarArchivos.jsx
+ * SSR-safe: Firebase operations moved inside functions with guards.
  */
 
 import React, { useState, useCallback } from 'react'
@@ -15,7 +16,7 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
-import { firestore, storage } from '@services/firebase'
+import { firestore, storage, isFirebaseAvailable } from '@services/firebase'
 import { SnackBarAlert } from '@components/common'
 
 const HiddenInput = styled('input')({
@@ -69,9 +70,6 @@ export function FileAttachment({
         severity: 'success',
     })
 
-    const usersProResRef = collection(firestore, 'usersPropietariosResidentes')
-    const usersComCalRef = collection(firestore, 'usersComerciantesCalificados')
-
     const showAlert = useCallback((message: string, severity: AlertSeverity) => {
         setAlert({ open: true, message, severity })
     }, [])
@@ -83,7 +81,15 @@ export function FileAttachment({
 
     const saveToFirestore = useCallback(
         async (photoInfo: Partial<FileAttachmentState>, userID: string) => {
-            const collectionRef = rol === 1 ? usersProResRef : usersComCalRef
+            // SSR guard
+            if (!isFirebaseAvailable() || !firestore) {
+                console.warn('[SSR] saveToFirestore skipped - Firebase not available')
+                return
+            }
+
+            const collectionName = rol === 1 ? 'usersPropietariosResidentes' : 'usersComerciantesCalificados'
+            const collectionRef = collection(firestore, collectionName)
+
             try {
                 await setDoc(doc(collectionRef, userID), photoInfo, { merge: true })
                 console.log('Photo URL saved to Firestore')
@@ -91,11 +97,17 @@ export function FileAttachment({
                 console.error('Failed to save photo URL to Firestore:', error)
             }
         },
-        [rol, usersProResRef, usersComCalRef]
+        [rol]
     )
 
     const handleFileUpload = useCallback(
         async (event: React.ChangeEvent<HTMLInputElement>) => {
+            // SSR guard
+            if (!isFirebaseAvailable() || !storage) {
+                console.warn('[Client-only] Storage not available')
+                return
+            }
+
             const files = event.target.files
             if (!files?.[0]) return
 

@@ -3,10 +3,10 @@
  *
  * Converted to TypeScript.
  * Shows list of project requirements/drafts.
+ * SSR-safe: Uses draftService which has Firestore guards.
  */
 import { useState, useEffect } from 'react'
-import { firestore } from '@services/firebase'
-import { collection, getDocs } from 'firebase/firestore'
+import { getAllDrafts } from '@services/drafts'
 // Components
 import { DraftCard } from '@features/quotes'
 // Bootstrap
@@ -14,48 +14,41 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
+
 interface Draft {
     id?: string
+    draftId?: string
     draftName?: string
     draftDescription?: string
     draftCategory?: string
+    draftTotal?: number
+    draftPropietarioResidente?: string
+    draftCreated?: string
+    draftApply?: string[]
     [key: string]: unknown
 }
-interface DraftsData {
-    data?: Draft[]
-}
+
 export default function Page() {
-    const draftRef = collection(firestore, 'drafts')
-    const [draftsData, setDraftsData] = useState<DraftsData>({})
+    const [draftsData, setDraftsData] = useState<Draft[]>([])
     const [isLoaded, setIsLoaded] = useState(false)
+
     useEffect(() => {
         if (!isLoaded) {
-            const draftsFromFirestore = async () => {
-                try {
-                    const draftData = await getDocs(draftRef)
-                    return draftData
-                } catch (err) {
-                    console.error('Error fetching drafts:', err)
-                }
-            }
-            draftsFromFirestore()
-                .then((docSnap) => {
-                    if (docSnap) {
-                        const data = docSnap.docs.map((element) => ({
-                            id: element.id,
-                            ...element.data(),
-                        })) as Draft[]
-                        if (data) {
-                            setDraftsData({ data })
-                            setIsLoaded(true)
-                        }
+            // Use SSR-safe service instead of direct Firestore access
+            getAllDrafts()
+                .then((drafts) => {
+                    if (drafts && drafts.length > 0) {
+                        setDraftsData(drafts as Draft[])
                     }
+                    setIsLoaded(true)
                 })
                 .catch((error) => {
                     console.error('Error loading drafts:', error)
+                    setIsLoaded(true)
                 })
         }
-    }, [draftRef, isLoaded])
+    }, [isLoaded])
+
     return (
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex">
@@ -71,17 +64,17 @@ export default function Page() {
                     </h3>
                     <p className="body-2">Requerimientos activos</p>
                     <Row className="m-0 d-flex">
-                        {draftsData.data?.map((draft) => (
+                        {draftsData.map((draft) => (
                             <DraftCard
-                                key={draft.id}
-                                draftId={draft.id || ''}
+                                key={draft.draftId || draft.id}
+                                draftId={draft.draftId || draft.id || ''}
                                 draftPropietarioResidente={String(draft.draftPropietarioResidente || '')}
                                 draftName={draft.draftName || ''}
                                 draftDescription={draft.draftDescription || ''}
                                 draftTotal={Number(draft.draftTotal) || 0}
                                 draftCategory={draft.draftCategory || ''}
                                 draftCreated={String(draft.draftCreated || '')}
-                                draftApply={draft.draftApply as string[] || []}
+                                draftApply={draft.draftApply || []}
                             />
                         ))}
                     </Row>
