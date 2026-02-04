@@ -10,10 +10,12 @@
 import { redirect } from 'vike/abort'
 import type { GuardSync } from 'vike/types'
 
-// Pages that don't require authentication (public-facing)
+// Pages that don't require authentication (public-facing hybrid routes)
 const PUBLIC_APP_ROUTES = [
   '/portal-servicios',
   '/perfil',
+  '/suscripciones',
+  '/directorio-requerimientos',
 ]
 
 export const guard: GuardSync = (pageContext): void => {

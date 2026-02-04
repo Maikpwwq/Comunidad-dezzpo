@@ -110,7 +110,7 @@ function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
                             <h3 className={clsx(styles.Headline, "mb-3")}>Contáctenos</h3>
                             <ul className={clsx(styles.TextBody, "list-unstyled")}>
                                 <li className="mb-2">📧 contacto@dezzpo.com</li>
-                                <li className="mb-2">📱 +57 300 123 4567</li>
+                                <li className="mb-2">📱 +57 320 484 2897</li>
                                 <li className="mb-2">📍 Bogotá, Colombia</li>
                             </ul>
                         </div>

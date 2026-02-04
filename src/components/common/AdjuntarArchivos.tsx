@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { collection, doc, setDoc } from 'firebase/firestore'
-import { storage, firestore } from '@services/firebase'
+import { storage, firestore, isFirebaseAvailable } from '@services/firebase'
 import { v4 as uuidv4 } from 'uuid'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -34,11 +34,6 @@ export const AdjuntarArchivos: React.FC<AdjuntarArchivosProps> = ({
     functionState,
     state,
 }) => {
-    // Services references
-    // storage and firestore exported from @services/firebase are instances
-    const usersProResRef = collection(firestore, 'usersPropietariosResidentes')
-    const usersComCalRef = collection(firestore, 'usersComerciantesCalificados')
-
     const [alert, setAlert] = useState({
         open: false,
         message: '',
@@ -50,14 +45,26 @@ export const AdjuntarArchivos: React.FC<AdjuntarArchivosProps> = ({
     }
 
     const userProResToFirestore = async (updateInfo: any, userID: string) => {
+        // SSR guard
+        if (!isFirebaseAvailable() || !firestore) {
+            console.warn('[SSR] userProResToFirestore skipped')
+            return
+        }
+        const usersProResRef = collection(firestore, 'usersPropietariosResidentes')
         await setDoc(doc(usersProResRef, userID), updateInfo, { merge: true })
     }
 
     const userComCalToFirestore = async (updateInfo: any, userID: string) => {
+        // SSR guard
+        if (!isFirebaseAvailable() || !firestore) {
+            console.warn('[SSR] userComCalToFirestore skipped')
+            return
+        }
+        const usersComCalRef = collection(firestore, 'usersComerciantesCalificados')
         await setDoc(doc(usersComCalRef, userID), updateInfo, { merge: true })
     }
 
-    const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    const handleCloseAlert = (_event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return
         }
@@ -65,14 +72,22 @@ export const AdjuntarArchivos: React.FC<AdjuntarArchivosProps> = ({
     }
 
     const updateGalleryPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // SSR guard - storage operations only on client
+        if (!isFirebaseAvailable() || !storage) {
+            console.warn('[Client-only] Storage not available')
+            return
+        }
+
         const files = event.target.files
         if (!files || files.length === 0) return
 
         const file = files[0]
+        if (!file) return
+
         const fileId = uuidv4()
         const fileRoute = name === 'profilePhoto' ? `${route}` : `${route}/${fileId}`
 
-        const userGalleryRef = ref(storage, fileRoute)
+        const userGalleryRef = ref(storage!, fileRoute)
 
         console.log(file)
         try {
@@ -86,7 +101,7 @@ export const AdjuntarArchivos: React.FC<AdjuntarArchivosProps> = ({
 
                 handleAlert(message, 'success')
 
-                const gsReference = ref(storage, base)
+                const gsReference = ref(storage!, base)
                 getDownloadURL(gsReference)
                     .then((url) => {
                         let photoInfo = undefined

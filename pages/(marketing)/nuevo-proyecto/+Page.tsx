@@ -14,7 +14,7 @@ import {
     getDocs,
     // DocumentData,
 } from 'firebase/firestore'
-import { firestore } from '@services/firebase'
+import { firestore, isFirebaseAvailable } from '@services/firebase'
 // Components
 import { DirectionalButton } from '@components/common'
 import {
@@ -138,12 +138,20 @@ export default function Page() {
         }
     }
     const draftToFirestore = async (updateInfo: DraftInfo, projectID: string) => {
+        if (!isFirebaseAvailable() || !firestore) {
+            console.warn('[SSR] draftToFirestore skipped - Firebase not available')
+            return
+        }
         const draftRef = collection(firestore, 'drafts')
         await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
     }
     useEffect(() => {
         if (!isLoaded) {
             const categoriasFromFirestore = async () => {
+                if (!isFirebaseAvailable() || !firestore) {
+                    console.warn('[SSR] categoriasFromFirestore skipped - Firebase not available')
+                    return undefined
+                }
                 try {
                     // 'aPTAljOeD48FbniBg6Lw' main document categories
                     const categoriaRef = collection(firestore, 'categoriasServicios')
