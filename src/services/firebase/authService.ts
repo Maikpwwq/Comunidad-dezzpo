@@ -3,6 +3,7 @@
  *
  * Centralized authentication service using ServiceResponse<T> discriminated union pattern.
  * All auth operations return consistent success/error states.
+ * SSR-safe: All functions check for client-side availability before using Firebase.
  */
 
 import {
@@ -26,9 +27,18 @@ import type {
     Unsubscribe,
 } from '@/types/services.d'
 
-// Initialize auth instance (uses default Firebase app from firebaseClient.js)
-import { auth } from './client'
-const googleProvider = new GoogleAuthProvider()
+// Import auth instance - may be null during SSR
+import { auth, isFirebaseAvailable } from './client'
+
+// Lazy-initialize Google provider only on client
+let googleProvider: GoogleAuthProvider | null = null
+
+function getGoogleProvider(): GoogleAuthProvider {
+    if (!googleProvider) {
+        googleProvider = new GoogleAuthProvider()
+    }
+    return googleProvider
+}
 
 /**
  * Convert Firebase User to AuthUser type
@@ -52,11 +62,29 @@ function mapAuthErrorCode(firebaseCode?: string): ServiceErrorCode {
 }
 
 /**
+ * SSR-safe error response
+ */
+function ssrErrorResponse<T>(): ServiceResponse<T> {
+    return {
+        success: false,
+        data: null,
+        error: {
+            code: 'INTERNAL_ERROR',
+            message: 'Auth not available (SSR)',
+        },
+    }
+}
+
+/**
  * Sign in with email and password
  */
 export async function signInWithEmail(
     credentials: EmailCredentials
 ): Promise<ServiceResponse<AuthUser>> {
+    if (!isFirebaseAvailable() || !auth) {
+        return ssrErrorResponse()
+    }
+
     try {
         const { email, password } = credentials
         const result = await signInWithEmailAndPassword(auth, email, password)
@@ -92,8 +120,12 @@ export async function signInWithEmail(
  * Sign in with Google OAuth
  */
 export async function signInWithGoogle(): Promise<ServiceResponse<AuthUser>> {
+    if (!isFirebaseAvailable() || !auth) {
+        return ssrErrorResponse()
+    }
+
     try {
-        const result = await signInWithPopup(auth, googleProvider)
+        const result = await signInWithPopup(auth, getGoogleProvider())
         return {
             success: true,
             data: toAuthUser(result.user),
@@ -118,6 +150,10 @@ export async function signInWithGoogle(): Promise<ServiceResponse<AuthUser>> {
 export async function registerWithEmail(
     credentials: RegisterCredentials
 ): Promise<ServiceResponse<AuthUser>> {
+    if (!isFirebaseAvailable() || !auth) {
+        return ssrErrorResponse()
+    }
+
     try {
         const { email, password, displayName } = credentials
         const result = await createUserWithEmailAndPassword(auth, email, password)
@@ -156,6 +192,10 @@ export async function registerWithEmail(
  * Sign out current user
  */
 export async function logout(): Promise<ServiceResponse<void>> {
+    if (!isFirebaseAvailable() || !auth) {
+        return ssrErrorResponse()
+    }
+
     try {
         await signOut(auth)
         return { success: true, data: undefined as unknown as void, error: null }
@@ -176,6 +216,11 @@ export async function logout(): Promise<ServiceResponse<void>> {
  * Subscribe to auth state changes
  */
 export function subscribeToAuth(callback: AuthCallback): Unsubscribe {
+    if (!isFirebaseAvailable() || !auth) {
+        // Return a no-op unsubscribe function during SSR
+        return () => {}
+    }
+
     return onAuthStateChanged(auth, (user) => {
         callback(user ? toAuthUser(user) : null)
     }) as FirebaseUnsubscribe
@@ -185,6 +230,9 @@ export function subscribeToAuth(callback: AuthCallback): Unsubscribe {
  * Get current user (synchronous)
  */
 export function getCurrentUser(): AuthUser | null {
+    if (!isFirebaseAvailable() || !auth) {
+        return null
+    }
     const user = auth.currentUser
     return user ? toAuthUser(user) : null
 }
@@ -193,6 +241,9 @@ export function getCurrentUser(): AuthUser | null {
  * Check if user is authenticated
  */
 export function isAuthenticated(): boolean {
+    if (!isFirebaseAvailable() || !auth) {
+        return false
+    }
     return auth.currentUser !== null
 }
 
