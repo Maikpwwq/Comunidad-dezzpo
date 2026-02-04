@@ -1,11 +1,12 @@
-import { useState, useContext, useEffect, useMemo } from 'react'
-// import PropTypes from 'prop-types'
-// import { sharingInformationService } from '@services/sharing-information'
-// import { formatDistance, parse } from 'date-fns'
-// import { es } from 'date-fns/locale'
+/**
+ * Profile Page
+ * 
+ * Displays user profile - either own profile (authenticated) or another user's (public view).
+ * SSR-safe: Uses Zustand store instead of UserAuthContext, lazy Firebase loading.
+ */
+import { useState, useEffect, useMemo } from 'react'
 import { getUser } from '@services/users'
-import { auth } from '@services/firebase'
-import { UserAuthContext } from '@providers/UserAuthProvider'
+import { useUserStore } from '@stores/userStore'
 import { usePageContext } from '@hooks/usePageContext'
 
 // Styles & Assets
@@ -14,7 +15,6 @@ import ProfilePhoto from '@assets/img/Profile.png'
 import clsx from 'clsx'
 import styles from './Profile.module.scss'
 
-// @ts-ignore
 // @ts-ignore
 import { Comentarios } from '@features/profile'
 import { ChipsCategories, MapaPerfil, AdjuntarArchivos, CincoEstrellas } from '@components/common'
@@ -28,6 +28,8 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import Skeleton from '@mui/material/Skeleton'
+import Stack from '@mui/material/Stack'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import MailIcon from '@mui/icons-material/Mail'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
@@ -35,8 +37,6 @@ import LinkIcon from '@mui/icons-material/Link'
 
 // Types
 import type { UserFirestoreDocument, UserRole } from '@services/types'
-
-
 
 interface UserInfoState extends Partial<UserFirestoreDocument> {
     userCategoriesChips: any[]
@@ -49,33 +49,45 @@ interface UserInfoState extends Partial<UserFirestoreDocument> {
         likedsProfiles: any[]
         likedsDrafts: any[]
     }
-    // Explicitly add fields that might be missing or optional in the base type but used here
     userCreatedDrafts: any[]
     userGalleryUrl: string[]
 }
 
+/**
+ * Loading skeleton for profile
+ */
+function ProfileSkeleton() {
+    return (
+        <Container fluid className="p-4">
+            <Stack spacing={2}>
+                <Skeleton variant="circular" width={120} height={120} />
+                <Skeleton variant="text" width="40%" height={40} />
+                <Skeleton variant="text" width="60%" height={24} />
+                <Skeleton variant="rectangular" width="100%" height={200} />
+            </Stack>
+        </Container>
+    )
+}
+
 export default function Page() {
-    const { currentUser } = useContext(UserAuthContext)
     const pageContext = usePageContext()
 
-    // Safety check for auth
-    const userAuth = useMemo(() => auth?.currentUser, [])
-    const userAuthID = currentUser?.userId
-    const userAuthName = currentUser?.displayName
+    // Zustand selectors for auth state
+    const currentUserId = useUserStore((state) => state.userId)
+    const currentUserName = useUserStore((state) => state.displayName)
+    const currentUserRol = useUserStore((state) => state.rol)
 
-    const [isLoaded, setIsLoaded] = useState(false)
+    // Route params - the profile ID we want to view
+    const routeId = pageContext.routeParams?.id
 
-    // Route params can be empty if matching /app/perfil
-    const id = pageContext.routeParams?.id
+    // State
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
 
-    const [userRol] = useState<{ rol: UserRole | null }>({
-        rol: currentUser?.rol as UserRole || null,
-    })
-
-    // Logic to determine which profile to show
-    const userId = id
-    const consult = (userId && userId !== userAuthID) ? true : false
-    const userConsultId = consult ? userId : userAuthID
+    // Determine which profile to show and if viewing own profile
+    const targetUserId = routeId || currentUserId
+    const isOwnProfile = !routeId || routeId === currentUserId
+    const viewerRole = currentUserRol
 
     const [userInfo, setUserInfo] = useState<UserInfoState>({
         userName: '',
@@ -109,117 +121,85 @@ export default function Page() {
         userWebSite: '',
     })
 
-    /*
-    const determineDistanceTime = (metadata: any) => {
-        if (!metadata || !metadata.creationTime) return ''
-        const creationTime = metadata.creationTime
-        const formatedTime = parse(creationTime, 'dd-MM-yyyy', new Date())
-        const distanceTime = formatDistance(
-            formatedTime,
-            new Date(),
-            { addSuffix: true, locale: es }
-        )
-        return distanceTime
-    }
-    */
-
+    // Fetch profile data
     useEffect(() => {
-        /*
-        const LoadAuthData = (userAuth: any) => {
-            const {
-                uid,
-                email,
-                displayName,
-                phoneNumber,
-                photoURL,
-            } = userAuth
-
-            setUserInfo(prev => ({
-                ...prev,
-                userPhone: phoneNumber || prev.userPhone,
-                userPhotoUrl: photoURL || prev.userPhotoUrl,
-                userId: uid || prev.userId,
-                userMail: email || prev.userMail,
-                userName: displayName || prev.userName,
-            }))
-        }
-        */
-
-        const LoadCurrentData = (userData: UserFirestoreDocument) => {
-            const {
-                userJoined,
-                userCategories,
-                userChannelUrl,
-                userPhone,
-                userPhotoUrl,
-                userId,
-                userMail,
-                userName,
-                userGalleryUrl,
-                userProfession,
-                userExperience,
-                // userGrade,
-                userDirection,
-                userCiudad,
-                userCodigoPostal,
-                userRazonSocial,
-                userIdentification,
-                userDescription,
-                userWebSite,
-            } = userData
-
-            let chipsInfo: any[] = []
-            if (userCategories && Array.isArray(userCategories)) {
-                // Map categories to chips
-                chipsInfo = userCategories.map(chip => {
-                    const found = ListadoCategorias.find((cat: any) => cat.label === chip)
-                    return found || null
-                }).filter(item => item !== null)
+        const fetchProfile = async () => {
+            if (!targetUserId) {
+                setIsLoading(false)
+                setError('No user ID provided')
+                return
             }
 
-            setUserInfo(prev => ({
-                ...prev,
-                userChannelUrl: userChannelUrl || '',
-                userPhone: userPhone || '',
-                userPhotoUrl: userPhotoUrl || ProfilePhoto,
-                userId: userId || '',
-                userMail: userMail || '',
-                userName: userName || '',
-                userGalleryUrl: userGalleryUrl || [],
-                userJoined: userJoined || '',
-                userProfession: userProfession || '',
-                userExperience: userExperience || '',
-                userCategoriesChips: chipsInfo,
-                // userGrade: userGrade,
-                userDirection: userDirection || '',
-                userCiudad: userCiudad || '',
-                userCodigoPostal: userCodigoPostal || '',
-                userRazonSocial: userRazonSocial || '',
-                userIdentification: userIdentification || '',
-                userDescription: userDescription || '',
-                userWebSite: userWebSite || '',
-            }))
-        }
+            setIsLoading(true)
+            setError(null)
 
-        const fetchUserProfile = async () => {
-            if (userConsultId && userRol.rol) {
-                try {
-                    // Using the new getUser service
-                    const user = await getUser({ userId: userConsultId, role: userRol.rol })
-                    if (user) {
-                        LoadCurrentData(user)
-                        setIsLoaded(true)
-                    }
-                } catch (error) {
-                    console.error("Error fetching user profile:", error)
+            try {
+                // Try both roles to find the user (2 = Comerciante, 1 = Propietario)
+                // When viewing other profiles, we try comerciante first (public profiles)
+                const rolesToTry: UserRole[] = isOwnProfile && viewerRole
+                    ? [viewerRole]
+                    : [2, 1] // Try comerciante first, then propietario
+
+                let userData: UserFirestoreDocument | null = null
+
+                for (const role of rolesToTry) {
+                    userData = await getUser({ userId: targetUserId, role })
+                    if (userData) break
                 }
+
+                if (userData) {
+                    // Map categories to chips
+                    let chipsInfo: any[] = []
+                    if (userData.userCategories && Array.isArray(userData.userCategories)) {
+                        chipsInfo = userData.userCategories.map(chip => {
+                            const found = ListadoCategorias.find((cat: any) => cat.label === chip)
+                            return found || null
+                        }).filter(item => item !== null)
+                    }
+
+                    setUserInfo({
+                        userChannelUrl: userData.userChannelUrl || '',
+                        userPhone: userData.userPhone || '',
+                        userPhotoUrl: userData.userPhotoUrl || ProfilePhoto,
+                        userId: userData.userId || '',
+                        userMail: userData.userMail || '',
+                        userName: userData.userName || '',
+                        userGalleryUrl: userData.userGalleryUrl || [],
+                        userJoined: userData.userJoined || '',
+                        userProfession: userData.userProfession || '',
+                        userExperience: userData.userExperience || '',
+                        userCategoriesChips: chipsInfo,
+                        userDirection: userData.userDirection || '',
+                        userCiudad: userData.userCiudad || '',
+                        userCodigoPostal: userData.userCodigoPostal || '',
+                        userRazonSocial: userData.userRazonSocial || '',
+                        userIdentification: userData.userIdentification || '',
+                        userDescription: userData.userDescription || '',
+                        userWebSite: userData.userWebSite || '',
+                        userCreatedDrafts: [],
+                        userVotes: {
+                            reviews: [],
+                            mean: 0,
+                            votes: 0,
+                        },
+                        userLikes: {
+                            likedsProfiles: [],
+                            likedsDrafts: [],
+                        },
+                    })
+                } else {
+                    setError('User not found')
+                }
+            } catch (err) {
+                console.error('Error fetching profile:', err)
+                setError('Error loading profile')
+            } finally {
+                setIsLoading(false)
             }
         }
 
-        if (!isLoaded && userConsultId) {
-            fetchUserProfile()
-        }
-    }, [isLoaded, userConsultId, userRol.rol, userAuth])
+        fetchProfile()
+    }, [targetUserId, isOwnProfile, viewerRole])
 
     const copyUserWebSiteLink = () => {
         if (userInfo?.userWebSite) {
@@ -227,29 +207,41 @@ export default function Page() {
         }
     }
 
+    // Show loading state
+    if (isLoading) {
+        return <ProfileSkeleton />
+    }
+
+    // Show error state
+    if (error) {
+        return (
+            <Container fluid className="p-4 text-center">
+                <Typography variant="h5" color="error">{error}</Typography>
+                <Typography variant="body1" className="mt-2">
+                    The profile you're looking for could not be found.
+                </Typography>
+            </Container>
+        )
+    }
+
     return (
         <Container fluid className={clsx(styles.Container, "p-0")}>
             <Col className={clsx(styles.GreenBackground, "col-12 w-100")}>
-                <Row
-                    className={clsx(styles.HeaderRow)}
-                // sx={{ flexDirection: { sm: 'col' } }} // React-bootstrap Row doesn't support sx like MUI
-                >
-                    <div
-                        className={clsx(styles.ProfileImageContainer)}
-                    >
+                <Row className={clsx(styles.HeaderRow)}>
+                    <div className={clsx(styles.ProfileImageContainer)}>
                         <img
                             src={userInfo.userPhotoUrl || ''}
                             alt="imagen de perfil"
                             className={styles.ProfileImage}
                         />
 
-                        {!consult && (
+                        {isOwnProfile && currentUserId && (
                             <AdjuntarArchivos
                                 name={'profilePhoto'}
                                 multiple={false}
-                                idPerson={userConsultId || ''}
-                                rol={userRol.rol}
-                                route={`profiles/${userConsultId}`}
+                                idPerson={currentUserId}
+                                rol={viewerRole}
+                                route={`profiles/${currentUserId}`}
                                 functionState={setUserInfo}
                                 state={userInfo}
                             />
@@ -258,9 +250,7 @@ export default function Page() {
                 </Row>
             </Col>
             <Col className="col mx-auto pt-4" md={10} sm={12}>
-                <Box
-                    className={clsx(styles.UserInfoBox)}
-                >
+                <Box className={clsx(styles.UserInfoBox)}>
                     <Typography
                         variant="h3"
                         id="userRazonSocial"
@@ -286,7 +276,7 @@ export default function Page() {
                         {userInfo.userProfession}
                     </Typography>
                     <Typography
-                        variant="body2" // corrected 'body-2' to 'body2'
+                        variant="body2"
                         id="userExperience"
                         className={clsx(styles.Experience)}
                     >
@@ -307,13 +297,10 @@ export default function Page() {
                         >
                             Datos de contacto
                         </Typography>
-                        <Box
-                            className={clsx(styles.ContactCard)}
-                        >
+                        <Box className={clsx(styles.ContactCard)}>
                             <Typography
                                 variant="body2"
                                 className={clsx(styles.InfoPill)}
-                            // name="userMail" // Typography doesn't support name prop usually
                             >
                                 <MailIcon fontSize="large" />{' '}
                                 {userInfo.userMail}
@@ -322,7 +309,6 @@ export default function Page() {
                             <Typography
                                 variant="body2"
                                 className={clsx(styles.InfoPill)}
-                            // name="userPhone"
                             >
                                 <PhoneIphoneIcon fontSize="large" />{' '}
                                 {userInfo.userPhone}
@@ -350,13 +336,12 @@ export default function Page() {
                             <Typography
                                 variant="body2"
                                 className="ps-3 pe-3 w-auto"
-                            // name="userJoined"
                             >
                                 {userInfo.userJoined}
                             </Typography>
                         </Row>
                         <Typography
-                            className="body-1" // Assuming this involves a global CSS class
+                            className="body-1"
                             style={{
                                 textAlign: 'justify',
                             }}
@@ -392,7 +377,7 @@ export default function Page() {
 
                 <Row className="p-0 m-0 w-100 d-flex align-items-start">
                     <Col className="col-10 py-4">
-                        {(userInfo.userGalleryUrl.length > 0 || !consult) && (
+                        {(userInfo.userGalleryUrl.length > 0 || isOwnProfile) && (
                             <>
                                 <Typography
                                     variant="h5"
@@ -412,13 +397,13 @@ export default function Page() {
                                         />
                                     ))}
 
-                                    {!consult && (
+                                    {isOwnProfile && currentUserId && (
                                         <AdjuntarArchivos
                                             name={'galleryPhoto'}
                                             multiple={true}
-                                            idPerson={userConsultId || ''}
-                                            rol={userRol.rol}
-                                            route={`profiles/${userConsultId}`}
+                                            idPerson={currentUserId}
+                                            rol={viewerRole}
+                                            route={`profiles/${currentUserId}`}
                                             functionState={setUserInfo}
                                             state={userInfo}
                                         />
@@ -454,14 +439,14 @@ export default function Page() {
 
                                 <Comentarios
                                     channelUrl={userInfo.userChannelUrl || ''}
-                                    userID={userAuthID || ''}
-                                    nickname={userAuthName || ''}
+                                    userID={currentUserId || ''}
+                                    nickname={currentUserName || ''}
                                 />
                             </>
                         )}
                     </Col>
                 </Row>
             </Col>
-        </Container >
+        </Container>
     )
 }
