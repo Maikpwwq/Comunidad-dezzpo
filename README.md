@@ -4,6 +4,25 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 
 ## Tech Stack
 - **Framework**: [Vike v0.4.x](https://vike.dev/) (SSR/SSG)
+- **UI Context**: React 18 + MUI v5
+- **State**: Zustand (replacing Context/RxJS)
+- **Auth**: Firebase Auth (Google + Email)
+
+### 🛠️ EXTERNAL PROVIDERS
+
+| Provider | Purpose | Initialization Dependency |
+| --- | --- | --- |
+| **Firebase Auth** | Identity & Session | Global `AuthProvider` |
+| **Google Auth** | SSO Provider | Firebase Client SDK |
+| **Sendbird** | Real-time Messaging | Authenticated UID (Auth-only) |
+
+### 🚦 ROUTING & ACCESS CONTROL
+
+The project utilizes a **Tiered Access Model**:
+
+1. **Public (Marketing):** Unrestricted access.
+2. **Hybrid (App Guest):** Accessible by anyone, but UI adapts (e.g., `/app/portal-servicios`).
+3. **Strict (App Auth):** Requires valid Firebase session (e.g., `/app/perfil`, `/app/settings`).
 - **Frontend**: React + TypeScript
 - **Server**: Hono (via Vike-Photon)
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand)
@@ -37,25 +56,27 @@ comunidad-dezzpo/
 │   │   ├── calificaciones/+Page.tsx
 │   │   ├── presupuestos/+Page.tsx
 │   │   ├── apendice-costos/+Page.tsx
-│   │   ├── profesionales-servicios/+Page.tsx
-│   │   ├── comunidad-comerciantes/+Page.tsx
-│   │   ├── comunidad-propietarios/+Page.tsx
-│   │   └── nuevo-proyecto/
-│   │       ├── +Page.tsx
-│   │       └── +route.ts
-│   │
-│   ├── (auth)/                               # Route Group: Authentication Pages
-│   │   ├── +Layout.tsx                       # [NEW] Auth layout (minimal UI)
-│   │   ├── ingreso/+Page.tsx
-│   │   ├── registro/+Page.tsx
-│   │   ├── restaurar-contrasena/+Page.tsx
-│   │   └── aplicar/+Page.tsx
-│   │
-│   ├── app/                                  # Protected App Routes (SSR + Client)
-│   │   ├── +Layout.tsx                       # [MOVE/REFACTOR] AppLayout.jsx
-│   │   ├── +guard.ts                         # [NEW] Auth guard for /app/*
-│   │   │
-│   │   ├── perfil/
+### 📂 PROJECT STRUCTURE
+
+* `@src/styles/`: [**STRICT**] Centralized SCSS (kebab-case). Global typography and variables.
+* `@src/features/`: Complex, business-logic-heavy modules (e.g., quotes, dashboard).
+* `@src/components/`: Pure, reusable UI components (Buttons, Inputs, Layouts).
+* `@src/services/`: API and Firebase service layers.
+* `@src/stores/`: Global state management (Zustand).
+* `pages/`: Vike filesystem routing.
+
+### 🧭 DIRECTORY MAP
+
+```text
+/
+├── pages/                            # Vike Routing (Filesystem-based)
+│   ├── (app)/                        # Route Group: Authenticated App
+│   │   ├── +Layout.tsx               # App Shell (Sidebar + Navbar)
+│   │   ├── +guard.ts                 # Auth Guard Configuration
+│   │   ├── portal-servicios/         # [HYBRID] Service marketplace
+│   │   ├── perfil/                   # [HYBRID] User profiles
+│   │   │   ├── +Page.tsx             # Profile component
+│   │   │   └── +route.ts             # Dynamic route param logic
 │   │   │   ├── +Page.tsx                     # User's own profile
 │   │   │   ├── @id/+Page.tsx                 # [NEW] Dynamic public profile
 │   │   │   └── +route.ts                     # [REFACTOR] Simplified route
