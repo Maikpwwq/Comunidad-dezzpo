@@ -8,7 +8,7 @@
 import React from 'react'
 import { navigate } from 'vike/client/router'
 import Link from '@hooks/Link'
-import { auth } from '@services/firebase'
+import { useUserStore } from '@stores/userStore'
 
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
@@ -33,9 +33,9 @@ export interface NotificationBarProps {
 }
 
 export function NotificationBar({ onDrawerToggle }: NotificationBarProps): React.ReactElement {
-    // Use Firebase auth directly (Zustand migration pending)
-    const user = auth?.currentUser
-    const userPhotoUrl = user?.photoURL || ''
+    // Use Zustand store for auth state (SSR-safe)
+    const currentUserId = useUserStore((state) => state.userId)
+    const userPhotoUrl = useUserStore((state) => state.photoUrl) || ''
 
     const handleHelp = () => {
         navigate('/ayuda-pqrs')
@@ -54,7 +54,7 @@ export function NotificationBar({ onDrawerToggle }: NotificationBarProps): React
                     color: 'black',
                 }}
             >
-                {user?.uid ? (
+                {currentUserId ? (
                     <Grid
                         container
                         spacing={1}
