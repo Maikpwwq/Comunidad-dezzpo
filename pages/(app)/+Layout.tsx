@@ -17,7 +17,7 @@ import { Sidebar, Navbar } from '@components/layout'
 // Theme
 import { theme } from '@config/theme'
 // Zustand store
-import { useUserStore, useMobileMenu } from '@stores/userStore'
+import { useUserStore } from '@stores/userStore'
 // Providers
 import { SendbirdProviderWrapper, UserAuthProvider } from '@providers'
 // Styles
@@ -44,9 +44,10 @@ function Copyright(): React.ReactElement {
 }
 
 export function Layout({ children }: LayoutProps): React.ReactElement {
-    // Zustand store
+    // Zustland store - Atomic selectors to prevent re-renders
     const isAuth = useUserStore((state) => state.isAuth)
-    const { mobileOpen, updateMobileMenu } = useMobileMenu()
+    const mobileOpen = useUserStore((state) => state.mobileOpen)
+    const updateMobileMenu = useUserStore((state) => state.updateMobileMenu)
 
     // Local state for permanent drawer
     const [sidebarOpen, setSidebarOpen] = useState(true)
