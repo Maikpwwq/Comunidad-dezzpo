@@ -3,6 +3,8 @@
  *
  * Read and update user documents in Firestore.
  * Supports both Propietarios (role 1) and Comerciantes (role 2).
+ * 
+ * SSR-safe: All functions return null/empty results when Firebase is unavailable.
  */
 
 import {
@@ -15,8 +17,9 @@ import {
     query,
     where,
     type DocumentReference,
+    type CollectionReference,
 } from 'firebase/firestore'
-import { firestore } from '@services/firebase'
+import { firestore, isFirebaseAvailable } from '@services/firebase'
 import type { ReadUserParams, UpdateUserParams, UserFirestoreDocument, UserRole } from '../types'
 
 // Collection names
@@ -25,8 +28,12 @@ const COMERCIANTES_COLLECTION = 'usersComerciantesCalificados'
 
 /**
  * Get the collection reference based on user role
+ * Returns null if Firebase is not available (SSR)
  */
-function getUserCollection(role: UserRole) {
+function getUserCollection(role: UserRole): CollectionReference | null {
+    if (!isFirebaseAvailable() || !firestore) {
+        return null
+    }
     const collectionName = role === 1 ? PROPIETARIOS_COLLECTION : COMERCIANTES_COLLECTION
     return collection(firestore, collectionName)
 }
@@ -35,8 +42,14 @@ function getUserCollection(role: UserRole) {
  * Get a user document by ID and role
  */
 export async function getUser({ userId, role }: ReadUserParams): Promise<UserFirestoreDocument | null> {
+    const userCol = getUserCollection(role)
+    if (!userCol) {
+        // SSR: Firebase not available, return null
+        console.log('[SSR] getUser skipped - Firebase not available')
+        return null
+    }
+    
     try {
-        const userCol = getUserCollection(role)
         const docRef = doc(userCol, userId) as DocumentReference<UserFirestoreDocument>
         const snapshot = await getDoc(docRef)
 
@@ -54,8 +67,13 @@ export async function getUser({ userId, role }: ReadUserParams): Promise<UserFir
  * Update a user document
  */
 export async function updateUser({ userId, role, data }: UpdateUserParams): Promise<void> {
+    const userCol = getUserCollection(role)
+    if (!userCol) {
+        console.warn('[SSR] updateUser skipped - Firebase not available')
+        return
+    }
+    
     try {
-        const userCol = getUserCollection(role)
         const docRef = doc(userCol, userId)
         await updateDoc(docRef, data)
     } catch (error) {
@@ -68,8 +86,13 @@ export async function updateUser({ userId, role, data }: UpdateUserParams): Prom
  * Create or overwrite a user document
  */
 export async function setUser({ userId, role, data }: UpdateUserParams): Promise<void> {
+    const userCol = getUserCollection(role)
+    if (!userCol) {
+        console.warn('[SSR] setUser skipped - Firebase not available')
+        return
+    }
+    
     try {
-        const userCol = getUserCollection(role)
         const docRef = doc(userCol, userId)
         await setDoc(docRef, data, { merge: true })
     } catch (error) {
@@ -82,6 +105,11 @@ export async function setUser({ userId, role, data }: UpdateUserParams): Promise
  * Get users by categories (for search)
  */
 export async function getUsersByCategories(categories: string[]): Promise<UserFirestoreDocument[]> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.log('[SSR] getUsersByCategories skipped - Firebase not available')
+        return []
+    }
+    
     try {
         const userCol = collection(firestore, COMERCIANTES_COLLECTION)
         const q = query(userCol, where('userCategories', 'array-contains-any', categories))
@@ -101,8 +129,13 @@ export async function getUsersByCategories(categories: string[]): Promise<UserFi
  * Get all users from a collection
  */
 export async function getUsers(role: UserRole): Promise<UserFirestoreDocument[]> {
+    const userCol = getUserCollection(role)
+    if (!userCol) {
+        console.log('[SSR] getUsers skipped - Firebase not available')
+        return []
+    }
+    
     try {
-        const userCol = getUserCollection(role)
         const snapshot = await getDocs(userCol)
 
         return snapshot.docs.map((doc) => ({
