@@ -3,6 +3,7 @@
  *
  * Read and update draft documents in Firestore.
  * Handles project draft/request lifecycle.
+ * SSR-safe: Returns null/empty when Firebase is not available.
  */
 
 import {
@@ -17,7 +18,7 @@ import {
     orderBy,
     type DocumentReference,
 } from 'firebase/firestore'
-import { firestore } from '@services/firebase'
+import { firestore, isFirebaseAvailable } from '@services/firebase'
 import type { ReadDraftParams, UpdateDraftParams, DraftFirestoreDocument } from '../types'
 
 const DRAFTS_COLLECTION = 'drafts'
@@ -26,6 +27,11 @@ const DRAFTS_COLLECTION = 'drafts'
  * Get a draft document by ID
  */
 export async function getDraft({ draftId }: ReadDraftParams): Promise<DraftFirestoreDocument | null> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] getDraft skipped - Firebase not available')
+        return null
+    }
+
     try {
         const draftsRef = collection(firestore, DRAFTS_COLLECTION)
         const docRef = doc(draftsRef, draftId) as DocumentReference<DraftFirestoreDocument>
@@ -45,6 +51,11 @@ export async function getDraft({ draftId }: ReadDraftParams): Promise<DraftFires
  * Update a draft document
  */
 export async function updateDraft({ draftId, data }: UpdateDraftParams): Promise<void> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] updateDraft skipped - Firebase not available')
+        return
+    }
+
     try {
         const draftsRef = collection(firestore, DRAFTS_COLLECTION)
         const docRef = doc(draftsRef, draftId)
@@ -59,6 +70,11 @@ export async function updateDraft({ draftId, data }: UpdateDraftParams): Promise
  * Create or overwrite a draft document
  */
 export async function setDraft({ draftId, data }: UpdateDraftParams): Promise<void> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] setDraft skipped - Firebase not available')
+        return
+    }
+
     try {
         const draftsRef = collection(firestore, DRAFTS_COLLECTION)
         const docRef = doc(draftsRef, draftId)
@@ -73,6 +89,11 @@ export async function setDraft({ draftId, data }: UpdateDraftParams): Promise<vo
  * Get drafts by user ID
  */
 export async function getDraftsByUser(userId: string): Promise<DraftFirestoreDocument[]> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] getDraftsByUser skipped - Firebase not available')
+        return []
+    }
+
     try {
         const draftsRef = collection(firestore, DRAFTS_COLLECTION)
         const q = query(
@@ -96,6 +117,11 @@ export async function getDraftsByUser(userId: string): Promise<DraftFirestoreDoc
  * Get all drafts
  */
 export async function getAllDrafts(): Promise<DraftFirestoreDocument[]> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] getAllDrafts skipped - Firebase not available')
+        return []
+    }
+
     try {
         const draftsRef = collection(firestore, DRAFTS_COLLECTION)
         const snapshot = await getDocs(draftsRef)

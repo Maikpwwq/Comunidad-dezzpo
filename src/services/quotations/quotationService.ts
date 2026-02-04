@@ -3,6 +3,7 @@
  *
  * Read and update quotation documents in Firestore.
  * Handles professional quotes/proposals lifecycle with ServiceResponse<T> pattern.
+ * SSR-safe: Returns error responses when Firebase is not available.
  */
 
 import {
@@ -16,7 +17,7 @@ import {
     where,
     type DocumentReference,
 } from 'firebase/firestore'
-import { firestore } from '@services/firebase'
+import { firestore, isFirebaseAvailable } from '@services/firebase'
 import type { 
     ReadQuotationParams, 
     UpdateQuotationParams, 
@@ -37,9 +38,28 @@ function mapFirestoreErrorCode(code?: string): ServiceErrorCode {
 }
 
 /**
+ * SSR-safe error response
+ */
+function ssrErrorResponse<T>(): ServiceResponse<T> {
+    return {
+        success: false,
+        data: null,
+        error: {
+            code: 'INTERNAL_ERROR',
+            message: 'Firebase not available (SSR)'
+        }
+    }
+}
+
+/**
  * Get a quotation document by ID
  */
 export async function getQuotation({ quotationId }: ReadQuotationParams): Promise<ServiceResponse<QuotationFirestoreDocument>> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] getQuotation skipped - Firebase not available')
+        return ssrErrorResponse()
+    }
+
     try {
         const quotationsRef = collection(firestore, QUOTATIONS_COLLECTION)
         const docRef = doc(quotationsRef, quotationId) as DocumentReference<QuotationFirestoreDocument>
@@ -78,6 +98,11 @@ export async function getQuotation({ quotationId }: ReadQuotationParams): Promis
  * Update a quotation document
  */
 export async function updateQuotation({ quotationId, data }: UpdateQuotationParams): Promise<ServiceResponse<void>> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] updateQuotation skipped - Firebase not available')
+        return ssrErrorResponse()
+    }
+
     try {
         const quotationsRef = collection(firestore, QUOTATIONS_COLLECTION)
         const docRef = doc(quotationsRef, quotationId)
@@ -104,6 +129,11 @@ export async function updateQuotation({ quotationId, data }: UpdateQuotationPara
  * Create or overwrite a quotation document
  */
 export async function setQuotation({ quotationId, data }: UpdateQuotationParams): Promise<ServiceResponse<void>> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] setQuotation skipped - Firebase not available')
+        return ssrErrorResponse()
+    }
+
     try {
         const quotationsRef = collection(firestore, QUOTATIONS_COLLECTION)
         const docRef = doc(quotationsRef, quotationId)
@@ -130,6 +160,11 @@ export async function setQuotation({ quotationId, data }: UpdateQuotationParams)
  * Get quotations by draft ID
  */
 export async function getQuotationsByDraft(draftId: string): Promise<ServiceResponse<QuotationFirestoreDocument[]>> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] getQuotationsByDraft skipped - Firebase not available')
+        return ssrErrorResponse()
+    }
+
     try {
         const quotationsRef = collection(firestore, QUOTATIONS_COLLECTION)
         const q = query(quotationsRef, where('quotationDraftId', '==', draftId))
@@ -162,6 +197,11 @@ export async function getQuotationsByDraft(draftId: string): Promise<ServiceResp
  * Get quotations by comerciante ID
  */
 export async function getQuotationsByComerciante(comercianteId: string): Promise<ServiceResponse<QuotationFirestoreDocument[]>> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] getQuotationsByComerciante skipped - Firebase not available')
+        return ssrErrorResponse()
+    }
+
     try {
         const quotationsRef = collection(firestore, QUOTATIONS_COLLECTION)
         const q = query(quotationsRef, where('quotationComercianteId', '==', comercianteId))

@@ -3,24 +3,7 @@
  *
  * Generic hook for querying Firestore collections with real-time updates.
  * Supports filtering, ordering, and pagination.
- *
- * @example
- * ```tsx
- * // Simple collection query
- * const { data, loading, error } = useFirestoreQuery<User>({
- *   collection: 'users',
- *   where: [['role', '==', 1]],
- *   orderBy: ['createdAt', 'desc'],
- *   limit: 10
- * })
- *
- * // Real-time subscription
- * const { data } = useFirestoreQuery<Draft>({
- *   collection: 'drafts',
- *   where: [['userId', '==', currentUser.userId]],
- *   realtime: true
- * })
- * ```
+ * SSR-safe: Returns empty data when Firebase is not available.
  */
 
 import { useState, useEffect, useCallback } from 'react'
@@ -37,7 +20,7 @@ import {
     type WhereFilterOp,
     type OrderByDirection,
 } from 'firebase/firestore'
-import { firestore } from '@services/firebase'
+import { firestore, isFirebaseAvailable } from '@services/firebase'
 
 export type WhereClause = [string, WhereFilterOp, unknown]
 export type OrderByClause = [string, OrderByDirection?]
@@ -85,6 +68,11 @@ export function useFirestoreQuery<T extends DocumentData = DocumentData>({
 
     // Build query constraints
     const buildQuery = useCallback(() => {
+        // SSR guard: Return null if Firebase not available
+        if (!isFirebaseAvailable() || !firestore) {
+            return null
+        }
+
         const constraints: QueryConstraint[] = []
 
         if (whereClauses) {
@@ -109,11 +97,23 @@ export function useFirestoreQuery<T extends DocumentData = DocumentData>({
     const fetchData = useCallback(async () => {
         if (skip) return
 
+        // SSR guard
+        if (!isFirebaseAvailable() || !firestore) {
+            setData([])
+            setLoading(false)
+            return
+        }
+
         setLoading(true)
         setError(null)
 
         try {
             const q = buildQuery()
+            if (!q) {
+                setData([])
+                setLoading(false)
+                return
+            }
             const snapshot = await getDocs(q)
             const results = snapshot.docs.map((doc) => ({
                 id: doc.id,
@@ -136,9 +136,21 @@ export function useFirestoreQuery<T extends DocumentData = DocumentData>({
             return
         }
 
+        // SSR guard
+        if (!isFirebaseAvailable() || !firestore) {
+            setData([])
+            setLoading(false)
+            return
+        }
+
         if (realtime) {
             setLoading(true)
             const q = buildQuery()
+            if (!q) {
+                setData([])
+                setLoading(false)
+                return
+            }
             const unsubscribe = onSnapshot(
                 q,
                 (snapshot) => {

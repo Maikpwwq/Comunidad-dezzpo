@@ -1,5 +1,5 @@
 import { doc, setDoc } from 'firebase/firestore'
-import { firestore } from '@services/firebase'
+import { firestore, isFirebaseAvailable } from '@services/firebase'
 
 interface AsesoriaInfo {
     asesoriaTitulo: string
@@ -13,6 +13,12 @@ interface UpdateAsesoriaParams {
 }
 
 export const updateAsesoriaToFirestore = async ({ updateInfo, docId }: UpdateAsesoriaParams) => {
+    // SSR guard
+    if (!isFirebaseAvailable() || !firestore) {
+        console.warn('[SSR] updateAsesoriaToFirestore skipped - Firebase not available')
+        return false
+    }
+
     try {
         const asesoriaRef = doc(firestore, 'asesorias', docId)
         await setDoc(asesoriaRef, updateInfo, { merge: true })
