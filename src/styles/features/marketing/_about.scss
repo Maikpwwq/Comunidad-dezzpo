@@ -1,15 +1,7 @@
 @use '@styles/_variables' as *;
 
 .about-page {
-    .bg-mission-vision {
-         background: var(--background-light-gray-color) url('/assets/img/BackgoundHexagonal.png') no-repeat center !important;
-         background-size: 100% 100% !important;
-         
-         // Used in multiple sections
-         &.nosotros-mision-vision {
-             background: var(--background-light-gray-color) url('/assets/img/Nosotros2.png') no-repeat center !important;
-         }
-    }
+    // Removed conflicting bg-mission-vision block
 
     .section-base {
          background-attachment: scroll;

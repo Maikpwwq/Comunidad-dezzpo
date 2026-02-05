@@ -48,7 +48,7 @@ export default function Page() {
             </Container>
             {/* Misión y Visión Section */}
             <Container fluid className="p-0">
-                <Row className="nosotros-mision-vision bg-mission-vision m-0" id="Acerca-de-nosotros">
+                <Row className="nosotros-mision-vision m-0" id="Acerca-de-nosotros">
                     <Col className="d-flex flex-column align-items-center p-4" md={10}>
                         <Row className="right w-100 p-4 d-flex flex-row justify-content-end align-content-start">
                             <Col md={6} className="d-flex flex-row justify-content-start">
