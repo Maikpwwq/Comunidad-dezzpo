@@ -16,7 +16,10 @@ async function onRenderHtml(pageContext: PageContextServer) {
 
   // Support SPA mode (no SSR)
   let pageHtml = ''
-  if (Page) {
+  // Enable SSR by default, disable if config.ssr === false
+  const ssrEnabled = (pageContext.config as any).ssr !== false
+
+  if (Page && ssrEnabled) {
     // Cast Page to React component type for JSX usage
     const PageComponent = Page as React.ComponentType<Record<string, unknown>>
     const Layout = pageContext.config.Layout || ((({ children }) => <>{children}</>) as any)

@@ -57,6 +57,9 @@ export default {
     },
     Layout: {
       env: { server: true, client: true }
+    },
+    ssr: {
+      env: { config: true }
     }
   }
 } satisfies Config
