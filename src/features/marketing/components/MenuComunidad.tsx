@@ -87,7 +87,7 @@ export function MenuComunidad(): React.ReactElement {
     )
 
     return (
-        <Container fluid className="p-0">
+        <Container fluid className="p-0" id="menu-comunidad">
             {/* Top Bar (Dark) */}
             <div className={clsx(styles.TopBar, "d-none d-md-block")}>
                 <Container>

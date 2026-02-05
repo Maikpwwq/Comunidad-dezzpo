@@ -53,9 +53,13 @@ export default function Page() {
                                         <img
                                             src={sponsor.logo}
                                             alt={`Logo ${sponsor.name}`}
-                                            height={sponsor.height}
                                             className={`img-fluid ${sponsor.className || ''}`}
-                                            style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }}
+                                            style={{
+                                                filter: 'brightness(0) invert(1)',
+                                                opacity: 0.9,
+                                                maxHeight: sponsor.height,
+                                                width: 'auto'
+                                            }}
                                         />
                                     </a>
                                 </li>
