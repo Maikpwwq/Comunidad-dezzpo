@@ -9,7 +9,6 @@ import React, { useState, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
 import Link from '@hooks/Link'
 import { styled, alpha } from '@mui/material/styles'
-import IcoMoon from 'react-icomoon'
 import type { SelectChangeEvent } from '@mui/material/Select'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
@@ -17,6 +16,9 @@ import Box from '@mui/material/Box'
 
 import iconSet from '@assets/icomoon/selection.json'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+
+// Lazy load IcoMoon to prevent SSR crashes
+const IcoMoon = React.lazy(() => import('react-icomoon'))
 
 // Logo
 import LogoMenuComunidadDezzpo from '@public/assets/img/logo/Logo-Comunidad-Dezzpo.png'
@@ -67,6 +69,11 @@ export interface SearchBarProps {
 
 export function SearchBar({ className }: SearchBarProps): React.ReactElement {
     const [searchInput, setSearchInput] = useState<string[]>([])
+    const [isMounted, setIsMounted] = useState(false)
+
+    React.useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     const handleSearch = useCallback((query: string) => {
         const handleSpacedText = query.replace(/ /g, '+')
@@ -107,15 +114,19 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
             </Link>
             <Search sx={{ maxWidth: '300px', width: '100% !important' }}>
                 <SearchIconWrapper>
-                    <IcoMoon
-                        iconSet={iconSet}
-                        icon="LupaFomularioIcono"
-                        style={{
-                            height: '28px',
-                            marginRight: '8px',
-                            width: 'auto',
-                        }}
-                    />
+                    {isMounted && (
+                        <React.Suspense fallback={null}>
+                            <IcoMoon
+                                iconSet={iconSet}
+                                icon="LupaFomularioIcono"
+                                style={{
+                                    height: '28px',
+                                    marginRight: '8px',
+                                    width: 'auto',
+                                }}
+                            />
+                        </React.Suspense>
+                    )}
                 </SearchIconWrapper>
                 <StyledSelect
                     sx={{
@@ -135,7 +146,8 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
                     }}
                 >
                     <MenuItem value="">Seleccionar categoría</MenuItem>
-                    {ListadoCategorias?.map((item: any) => {
+                    {/* Render list only on client to avoid SSR overhead and potential Icon instantiation crashes */}
+                    {isMounted && ListadoCategorias?.map((item: any) => {
                         const { key, label, icon: IconComponent } = item
                         return (
                             <MenuItem value={label} key={key}>
