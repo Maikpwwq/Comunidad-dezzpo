@@ -69,8 +69,7 @@ export function CategoriasSlider(): React.ReactElement {
                                 key={imgIdx}
                                 src={imgSrc}
                                 alt="Categorias Populares entre la Comunidad"
-                                height="170"
-                                style={{ width: '33%', padding: 0 }}
+                                className={styles.SliderImage}
                             />
                         ))}
                     </Row>

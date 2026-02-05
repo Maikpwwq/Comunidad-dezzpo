@@ -7,3 +7,16 @@
         color: var(--content-text-light-gray-color) !important;
     }
 }
+
+.SliderImage {
+    width: 33.333%;
+    height: 200px;
+    object-fit: cover;
+    padding: 4px;
+    border-radius: 8px;
+    transition: transform $transition-fast;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}
