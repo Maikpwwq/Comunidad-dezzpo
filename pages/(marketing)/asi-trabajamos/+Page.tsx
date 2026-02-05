@@ -70,15 +70,15 @@ export default function Page() {
 
             {/* Propietario Section */}
             <Container fluid className="p-0 bg-dark">
-                <Row className="asi-trabajamos-propietario m-0 w-100 py-5 justify-content-center">
-                    <Col className="p-5" lg={8} md={10}>
-                        <div className="text-center">
-                            <h2 className="headline-xl text-blanco mb-4">PROPIETARIO</h2>
+                <Row className="asi-trabajamos-propietario m-0 w-100 py-5 justify-content-center justify-content-lg-end">
+                    <Col className="p-5" lg={6} md={10}>
+                        <div className="text-center me-lg-5">
+                            <h2 className="headline-xl text-blanco mb-4">Propietario</h2>
                             <p className="body-1 text-blanco" style={{ maxWidth: '900px', margin: '0 auto' }}>
-                                SOMOS UNA COMUNIDAD DE COMERCIANTES PROFESIONALES, CONTRATA PERSONAL
-                                CALIFICADO MANTENIMIENTO GENERAL RESIDENCIAL Y DE PROPIEDAD HORIZONTAL,
-                                CONSULTA PÚBLICAMENTE LOS PERFILES Y LA REPUTACIÓN DE LOS PRESTADORES DE
-                                SERVICIOS. AHORA TUS PROYECTOS Y REMODELACIONES MÁS RÁPIDO Y SIMPLE QUE NUNCA
+                                Somos una comunidad de comerciantes profesionales, contrata personal
+                                calificado mantenimiento general residencial y de propiedad horizontal,
+                                consulta públicamente los perfiles y la reputación de los prestadores de
+                                servicios. Ahora tus proyectos y remodelaciones más rápido y simple que nunca
                             </p>
                         </div>
                     </Col>
