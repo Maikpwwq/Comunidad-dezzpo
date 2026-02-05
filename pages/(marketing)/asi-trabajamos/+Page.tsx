@@ -109,8 +109,8 @@ export default function Page() {
             </Container>
 
             {/* Calificaciones Section */}
-            <Container className="py-5">
-                <Row className="asi-trabajamos-calificaciones m-0 w-100 justify-content-center">
+            <Container fluid className="p-0">
+                <Row className="asi-trabajamos-calificaciones m-0 w-100 justify-content-center py-5">
                     <Col lg={8} md={10}>
                         <InfoSection
                             title="CALIFICACIONES"
