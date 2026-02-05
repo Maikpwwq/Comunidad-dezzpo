@@ -12,7 +12,7 @@ export function DatosContacto(): React.ReactElement {
     return (
         <Col className="p-4 pb-0">
             <Col className="datos-contacto pt-0">
-                <h2 className="headline-l text-blanco">Ponte en Contacto</h2>
+                <h2 className="headline-l" style={{ color: 'var(--primary-titles-text-color)' }}>Ponte en Contacto</h2>
                 <div className="pt-3 w-100 d-flex flex-column gap-3">
                     <ContactItem type="phone" variant="page" />
                     <ContactItem type="address" variant="page" />
