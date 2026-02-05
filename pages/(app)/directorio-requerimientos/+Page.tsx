@@ -6,6 +6,8 @@
  * SSR-safe: Uses draftService which has Firestore guards.
  */
 import { useState, useEffect } from 'react'
+import { navigate } from 'vike/client/router'
+import { useUserStore } from '@stores/userStore'
 import { getAllDrafts } from '@services/drafts'
 // Components
 import { DraftCard } from '@features/quotes'
@@ -30,6 +32,16 @@ interface Draft {
 export default function Page() {
     const [draftsData, setDraftsData] = useState<Draft[]>([])
     const [isLoaded, setIsLoaded] = useState(false)
+    const userId = useUserStore((state) => state.userId)
+
+    const handleApplyClick = () => {
+        if (!userId) {
+            navigate('/ingreso')
+        } else {
+            // Logic for logged in users (optional for now)
+            console.log('User is logged in')
+        }
+    }
 
     useEffect(() => {
         if (!isLoaded) {
@@ -55,7 +67,10 @@ export default function Page() {
                     <h1 className="type-hero-title">
                         Directorio de Requerimientos
                     </h1>
-                    <Button className="body-1 btn-round btn-high">
+                    <Button
+                        className="body-1 btn-round btn-high"
+                        onClick={handleApplyClick}
+                    >
                         Aplica a un requerimiento
                     </Button>
                 </header>
