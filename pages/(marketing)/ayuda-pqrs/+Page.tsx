@@ -89,7 +89,7 @@ export default function Page() {
                         </Col>
 
                         <Col className="p-4" lg={6} md={12}>
-                            <div className="bg-white p-5 rounded-3 shadow-sm h-100">
+                            <div className="bg-white p-5 rounded-3 shadow-sm">
                                 <h3 className="headline-xl mb-4 text-center">Servicio al Cliente</h3>
                                 <p className="body-1 mb-4">
                                     Si no estás seguro cómo la comunidad funciona,
