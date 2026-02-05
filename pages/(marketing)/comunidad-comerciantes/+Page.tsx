@@ -1,21 +1,12 @@
-/**
- * Comunidad Comerciantes Page
- *
- * Converted to TypeScript.
- * NOTE: Imports Registro component from pages/(auth)/registro/+Page.tsx
- */
-// Styles
+
+import React from 'react'
 import clsx from 'clsx'
-// Components
 import Registro from '../../../pages/(auth)/registro/+Page'
 import { InfoSection } from '@components/layout/InfoSection'
-// Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
-// Icon
 import IcoMoon from 'react-icomoon'
 import iconSet from '@assets/icomoon/selection.json'
 
-// Benefits data
 const benefits = [
     {
         title: 'Alcance y visibilidad',
@@ -34,6 +25,26 @@ const benefits = [
         description: 'Adopta herramientas de gestión estratégica CEO, tendrás un Informe de resultados en tiempo real.',
     },
 ]
+
+const StepCard = ({ number, color, className, text }: { number: number, color: string, className?: string, text: React.ReactNode }) => (
+    <Col className={`${className} p-0 mb-4 me-2`} lg={3} md={4} sm={10}>
+        <div className="d-flex flex-column align-items-center text-center">
+            <h3
+                className="headline-l text-white d-flex align-items-center justify-content-center mb-3"
+                style={{
+                    backgroundColor: color,
+                    width: '60px',
+                    height: '60px',
+                    borderRadius: '50%',
+                    margin: '0 auto'
+                }}
+            >
+                {number}
+            </h3>
+            <p className="body-1 p-2">{text}</p>
+        </div>
+    </Col>
+)
 
 export default function Page() {
     return (
@@ -69,6 +80,37 @@ export default function Page() {
                         </div>
                     </Col>
                     <Registro showLogo={false} />
+                </Row>
+            </Container>
+
+            <Container>
+                <Row className="py-5 justify-content-center">
+                    <InfoSection
+                        title="Cómo funciona"
+                        description="Encuentra nuevos clientes en tres sencillos pasos"
+                        centered
+                    >
+                        <Row className="ms-1 me-1 w-100 justify-content-center mt-4">
+                            <StepCard
+                                number={1}
+                                color="#ec6f27"
+                                className="buscar-ofertas"
+                                text={<>Observa las ofertas indicadas para ti. Filtra por ubicación y <strong>postulate.</strong></>}
+                            />
+                            <StepCard
+                                number={2}
+                                color="#e42620"
+                                className="carga-presupuesto"
+                                text={<>Diligencia el <strong>presupuesto.</strong> Haz una <strong>cotización</strong> detallada.</>}
+                            />
+                            <StepCard
+                                number={3}
+                                color="#c6b61e"
+                                className="califica-propietario"
+                                text={<>Califica y comenta. Dejanos conocer tu <strong>experiencia.</strong></>}
+                            />
+                        </Row>
+                    </InfoSection>
                 </Row>
             </Container>
 
@@ -136,4 +178,3 @@ export default function Page() {
         </div>
     )
 }
-
