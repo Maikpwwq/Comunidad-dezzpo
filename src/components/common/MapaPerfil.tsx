@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useGoogleMaps } from '@hooks/useGoogleMaps'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import { Container, Row, Col } from 'react-bootstrap'
 
 interface MapaPerfilProps {
     userInfo: {

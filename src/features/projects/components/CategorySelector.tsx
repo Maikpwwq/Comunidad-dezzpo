@@ -6,10 +6,12 @@
  */
 
 import React, { useCallback } from 'react'
-import Box from '@mui/material/Box'
-import Select from '@mui/material/Select'
+import {
+    Box,
+    Select,
+    MenuItem
+} from '@mui/material'
 import type { SelectChangeEvent } from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
 import { styled } from '@mui/material/styles'
 
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'

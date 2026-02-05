@@ -7,11 +7,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import AutoComplete from 'react-google-autocomplete'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import { Row, Col, Container, Button, Form } from 'react-bootstrap'
 import clsx from 'clsx'
 
 import styles from './Ubicacion.module.scss'

@@ -12,11 +12,7 @@ import { updateAsesoriaToFirestore } from '@services/asesoriaService'
 // Components
 import { Link } from '@hooks'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import { Row, Col, Container, Button, Form } from 'react-bootstrap'
 // MUI
 import ChatIcon from '@mui/icons-material/Chat'
 import EmailIcon from '@mui/icons-material/Email'

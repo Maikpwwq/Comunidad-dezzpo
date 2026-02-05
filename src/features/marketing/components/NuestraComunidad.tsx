@@ -11,8 +11,7 @@ import clsx from 'clsx'
 
 import styles from './NuestraComunidad.module.scss'
 
-import Container from 'react-bootstrap/Container'
-import Col from 'react-bootstrap/Col'
+import { Container, Col } from 'react-bootstrap'
 
 export function NuestraComunidad(): React.ReactElement {
     return (

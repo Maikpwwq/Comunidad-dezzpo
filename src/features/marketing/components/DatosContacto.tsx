@@ -8,8 +8,7 @@
 import React from 'react'
 import IcoMoon from 'react-icomoon'
 import iconSet from '@assets/icomoon/selection.json'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import { Row, Col } from 'react-bootstrap'
 
 // Contact data configuration
 const contactData = {

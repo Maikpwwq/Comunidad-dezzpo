@@ -6,9 +6,7 @@
  */
 
 import React, { useMemo } from 'react'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 import clsx from 'clsx'
 
 import styles from './CategoriasServicios.module.scss'

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
-import Col from 'react-bootstrap/Col'
-import Table from '@mui/material/Table'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
-import Box from '@mui/material/Box'
+import { Col } from 'react-bootstrap'
+import {
+    Table,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell,
+    Box
+} from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { type SelectChangeEvent } from '@mui/material/Select'
