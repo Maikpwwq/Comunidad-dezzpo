@@ -12,6 +12,11 @@
   * *Whitelisted:* `portal-servicios`, `suscripciones`, `directorio-requerimientos`, `perfil`.
   * *Constraint:* Navigation components (`Sidebar`, `NavBar`) must toggle visibility based on `user.role` or `null` state.
 
+  *   *Constraint:* Navigation components (`Sidebar`, `NavBar`) must toggle visibility based on `user.role` or `null` state.
+  *   **SSR Safety:** All components in hybrid routes MUST be SSR-safe.
+      *   **Forbidden:** Module-level instantiation of React components (e.g., in data files).
+      *   **Forbidden:** Direct usage of `firebase.auth()` in component render paths (use `useUserStore`).
+
 ### 🧬 DYNAMIC DATA REQUIREMENTS
 
 * **Profile Hydration:** For `/app/perfil/[id]`, the `id` must be extracted from the Vike `pageContext`.

@@ -151,9 +151,7 @@ const ListadoCategorias = [
         label: 'Automatización',
         rol: 'Técnico en automatización',
         variant: 'outlined',
-        icon: (
-            <PrecisionManufacturing fontSize="medium" className="mx-2 my-1" />
-        ),
+        icon: PrecisionManufacturing,
     },
     {
         key: 13,

@@ -25,12 +25,38 @@ All `/app/*` routes are protected by `+guard.ts`:
 import { redirect } from 'vike/abort'
 import type { GuardSync } from 'vike/types'
 
+// Whitelist of public routes within the app shell
+const PUBLIC_APP_ROUTES = [
+  '/app/portal-servicios',
+  '/app/directorio-requerimientos',
+  '/app/suscripciones',
+  // Dynamic routes like /app/perfil/@id are handled by logic, not exact match
+]
+
 export const guard: GuardSync = (pageContext): void => {
-  if (!pageContext.isAuthenticated) {
-    throw redirect(`/ingreso?returnTo=${pageContext.urlPathname}`)
-  }
+  const { urlPathname, isAuthenticated } = pageContext
+
+  // 1. Allow if user is authenticated
+  if (isAuthenticated) return
+
+  // 2. Allow if route is in public whitelist
+  if (PUBLIC_APP_ROUTES.some(route => urlPathname.startsWith(route))) return
+
+  // 3. Allow public profile viewing (but not own profile /app/perfil)
+  if (urlPathname.startsWith('/app/perfil/') && urlPathname.split('/').length > 3) return
+
+  // 4. Otherwise, redirect to login
+  throw redirect(`/ingreso?returnTo=${urlPathname}`)
 }
 ```
+
+### Hybrid Route Strategy (SSR Warning)
+Routes like `portal-servicios` work for both Guests and Users. This means:
+1.  **NO client-only logic guards** that block rendering (white screen).
+2.  **SSR Safety is Critical**: Components must not access `window`, `localStorage`, or `firebase.auth()` directly during the initial render.
+    *   Use `useEffect` for browser-apis.
+    *   Use `useUserStore` (Zustand) for auth state.
+    *   **Data Files**: Do NOT instantiate React components at the module level (e.g., `icon: <Icon />`). Export the component reference (`icon: Icon`) and instantiate it in the component tree.
 
 ---
 

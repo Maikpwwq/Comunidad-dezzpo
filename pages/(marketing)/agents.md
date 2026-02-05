@@ -12,6 +12,9 @@
 export default {
   prerender: true,  // ← Enable SSG for all marketing pages
 } satisfies Config
+
+> **Note**: Some public-facing pages (like `portal-servicios`) live in `pages/app/` as **Hybrid Routes**. They allow guest access but use the App Layout, not the Marketing Layout.
+
 ```
 
 ---
