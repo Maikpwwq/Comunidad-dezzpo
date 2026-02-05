@@ -7,9 +7,7 @@ import { searchByName } from '@services/search'
 import { UserCard } from '@features/profile'
 // UI Libs
 import { Row, Col, Container, Button } from 'react-bootstrap'
-import Skeleton from '@mui/material/Skeleton'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
+import { Skeleton, Stack, Typography } from '@mui/material'
 // Types
 import type { UserFirestoreDocument } from '@services/types'
 const PortalSkeleton = () => {

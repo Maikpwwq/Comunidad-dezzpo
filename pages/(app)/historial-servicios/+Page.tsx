@@ -3,7 +3,6 @@
  *
  * Converted to TypeScript.
  */
-// Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
 import Table from '@mui/material/Table'

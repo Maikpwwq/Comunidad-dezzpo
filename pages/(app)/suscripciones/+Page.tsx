@@ -8,8 +8,7 @@
 // Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
+import { Button, Typography } from '@mui/material'
 const beneficiosPropietarios = [
     { title: 'Servicio 24 horas para urgencias' },
     { title: 'Todos los servicios disponibles' },

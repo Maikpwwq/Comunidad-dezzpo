@@ -4,7 +4,7 @@
  * Displays user profile - either own profile (authenticated) or another user's (public view).
  * SSR-safe: Uses Zustand store instead of UserAuthContext, lazy Firebase loading.
  */
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { getUser } from '@services/users'
 import { useUserStore } from '@stores/userStore'
 import { usePageContext } from '@hooks/usePageContext'
@@ -22,12 +22,14 @@ import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 // UI Libs
 import { Row, Col, Container } from 'react-bootstrap'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
-import Skeleton from '@mui/material/Skeleton'
-import Stack from '@mui/material/Stack'
+import {
+    Box,
+    Button,
+    Tooltip,
+    Typography,
+    Skeleton,
+    Stack
+} from '@mui/material'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import MailIcon from '@mui/icons-material/Mail'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
