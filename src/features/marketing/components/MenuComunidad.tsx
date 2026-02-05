@@ -53,16 +53,16 @@ export function MenuComunidad(): React.ReactElement {
         <>
             {menuLinks.map((item, index) => (
                 <div key={index} className={clsx(styles.Dropdown, "ms-4")} style={{ minWidth: '118px' }}>
-                    <Link href={item.href} className={clsx(styles.NavLink)}>
+                    <Link href={item.href} className={clsx(styles.NavLink, "body-1")}>
                         {item.name}
                         <ArrowDropDown />
                     </Link>
-                    <div className={clsx(styles.DropdownContent, "p-0")}>
+                    <div className={clsx(styles.DropdownContent)}>
                         {item.dropdownContents?.map((content, idx) => (
                             <Link
                                 key={idx}
                                 href={content.href}
-                                className="p-2 pb-0"
+                                className="body-2"
                                 onClick={handleClose}
                             >
                                 {content.name}
@@ -76,7 +76,7 @@ export function MenuComunidad(): React.ReactElement {
                 <Link
                     key={`static-${index}`}
                     href={item.href}
-                    className={clsx(styles.NavLink, "ms-4", isMobile && "mb-2")}
+                    className={clsx(styles.NavLink, "ms-4 body-1", isMobile && "mb-2")}
                     style={item.name === 'Apendice de costos' ? { maxWidth: '150px' } : undefined}
                 >
                     {item.name}
@@ -88,16 +88,16 @@ export function MenuComunidad(): React.ReactElement {
 
     return (
         <Container fluid className="p-0">
-            {/* Top Bar (Dark) - Legacy "Franja Gris" */}
+            {/* Top Bar (Dark) */}
             <div className={clsx(styles.TopBar, "d-none d-md-block")}>
                 <Container>
                     <Row className="justify-content-end align-items-center">
                         <div className="d-flex">
-                            <Link href="/app/portal-servicios" className="d-flex align-items-center me-4 text-white">
+                            <Link href="/app/portal-servicios" className="d-flex align-items-center me-4 text-white hover-underline">
                                 <Storefront className="me-2" fontSize="small" />
                                 <strong>Directorio Comerciantes</strong>
                             </Link>
-                            <Link href="/ingreso" className="d-flex align-items-center text-white">
+                            <Link href="/ingreso" className="d-flex align-items-center text-white hover-underline">
                                 <Login className="me-2" fontSize="small" />
                                 <strong>Ingresar</strong>
                             </Link>
@@ -115,7 +115,7 @@ export function MenuComunidad(): React.ReactElement {
                             <Link
                                 href="/"
                                 className={clsx(styles.NavLink, "p-0 d-flex flex-row justify-content-start bg-transparent")}
-                                style={{ minHeight: 'auto', backgroundColor: 'transparent' }} // Override specific navlink defaults for logo
+                                style={{ minHeight: 'auto', backgroundColor: 'transparent', boxShadow: 'none' }}
                                 onClick={handleClose}
                             >
                                 <img
@@ -135,7 +135,7 @@ export function MenuComunidad(): React.ReactElement {
                         <Col xs={6} className="d-flex d-md-none justify-content-end">
                             <IconButton
                                 aria-label="mobile-more"
-                                className={clsx(styles.MobileMenu)} // Reusing style for toggle button visibility logic
+                                className={clsx(styles.MobileMenu)}
                                 onClick={handleToggleMenu}
                                 sx={{ color: '#28a745' }}
                             >
@@ -160,7 +160,7 @@ export function MenuComunidad(): React.ReactElement {
                 <nav className={clsx(styles.MobileMenu, "col-12 pt-2 pb-2")}>
                     <div className="d-flex flex-column p-4">
                         <div className="mb-4 d-flex justify-content-center">
-                            <Link href="/ingreso" className="btn btn-light w-100 rounded-pill fw-bold">
+                            <Link href="/ingreso" className="btn btn-light w-100 rounded-pill fw-bold body-1">
                                 <Login className="me-2" /> Ingresar
                             </Link>
                         </div>
