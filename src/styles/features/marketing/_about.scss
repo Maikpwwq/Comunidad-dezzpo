@@ -32,7 +32,8 @@
 
     .nosotros-mision-vision {
         @extend .section-base;
-        // background defined in specific class or override
+        background: var(--background-light-gray-color) url('/assets/img/Nosotros2.png') no-repeat center !important;
+        background-size: cover !important;
         min-height: 400px;
         color: var(--primary-titles-text-color);
         width: 100vw !important;
