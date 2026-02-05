@@ -31,15 +31,21 @@ async function onRenderHtml(pageContext: PageContextServer) {
   if (Page && ssrEnabled) {
     // Cast Page to React component type for JSX usage
     const PageComponent = Page as React.ComponentType<Record<string, unknown>>
-    const Layout = pageContext.config.Layout || ((({ children }) => <>{children}</>) as any)
-    const page = (
-      <PageShell pageContext={pageContext}>
-        <Layout>
-          <PageComponent {...pageProps} />
-        </Layout>
-      </PageShell>
-    )
-    pageHtml = renderToString(page)
+    const Layout = pageContext.config.Layout || ((({ children }: { children: React.ReactNode }) => <>{children}</>) as any)
+
+    try {
+      const page = (
+        <PageShell pageContext={pageContext}>
+          <Layout>
+            <PageComponent {...pageProps} />
+          </Layout>
+        </PageShell>
+      )
+      pageHtml = renderToString(page)
+    } catch (error) {
+      console.error('[SSR] Error rendering page, falling back to CSR:', error)
+      // pageHtml remains empty, triggering client-side render
+    }
   }
 
   // Extract document metadata from page exports
