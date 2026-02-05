@@ -8,10 +8,12 @@
 import React, { useState } from 'react'
 // MUI
 import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Link from '@mui/material/Link'
+import {
+    Box,
+    Typography,
+    Link,
+    CssBaseline
+} from '@mui/material'
 // Layout components
 import { Sidebar, Navbar } from '@components/layout'
 // Theme

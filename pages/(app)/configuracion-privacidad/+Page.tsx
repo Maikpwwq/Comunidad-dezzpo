@@ -4,16 +4,16 @@
  * Converted to TypeScript.
  */
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import Button from '@mui/material/Button'
-import Table from '@mui/material/Table'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
+import {
+    Button,
+    Table,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell
+} from '@mui/material'
 // Privacy settings data
 const privacySettings = [
     { setting: 'Quién puede ver las publicaciones de tu perfil', value: 'Público' },

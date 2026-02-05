@@ -5,10 +5,12 @@ import {
     type GridColDef,
     type GridValidRowModel,
 } from '@mui/x-data-grid'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Paper from '@mui/material/Paper'
-import LinearProgress from '@mui/material/LinearProgress'
+import {
+    Box,
+    Typography,
+    Paper,
+    LinearProgress
+} from '@mui/material'
 
 interface DataTableProps<R extends GridValidRowModel> extends Omit<DataGridProps<R>, 'rows' | 'columns'> {
     rows: R[]

@@ -13,13 +13,16 @@ import { getHeaderConfig } from './navigation.config'
 import type { UserRole } from './types'
 
 // MUI Components
-import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Grid from '@mui/material/Grid'
-import Tab from '@mui/material/Tab'
-import Tabs from '@mui/material/Tabs'
-import IconButton from '@mui/material/IconButton'
-import useMediaQuery from '@mui/material/useMediaQuery'
+// MUI Components
+import {
+    AppBar,
+    Toolbar,
+    Grid,
+    Tab,
+    Tabs,
+    IconButton,
+    useMediaQuery
+} from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
 // MUI Icons

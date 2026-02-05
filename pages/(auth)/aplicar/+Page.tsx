@@ -5,7 +5,7 @@
  */
 // Styles
 // Bootstrap
-import Container from 'react-bootstrap/Container'
+import { Container } from 'react-bootstrap'
 export default function Page() {
     return (
         <Container fluid className="p-0">

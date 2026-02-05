@@ -5,12 +5,10 @@
  * Migrated from src/app/pages/suscripciones/+Page.jsx
  */
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+// Bootstrap
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
+import { Button, Typography } from '@mui/material'
 const beneficiosPropietarios = [
     { title: 'Servicio 24 horas para urgencias' },
     { title: 'Todos los servicios disponibles' },
@@ -58,16 +56,15 @@ export default function Page() {
                             </ul>
                         </Col>
                         <Col md={4}>
-                            <Button>
-                                <a
-                                    className="chat-with-us body-1"
-                                    href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{ textDecoration: 'none', color: 'inherit' }}
-                                >
-                                    SOLICITAR
-                                </a>
+                            <Button
+                                className="chat-with-us body-1"
+                                href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ textDecoration: 'none', color: 'inherit' }}
+                                sx={{ color: 'inherit' }}
+                            >
+                                SOLICITAR
                             </Button>
                         </Col>
                     </Row>
@@ -92,16 +89,15 @@ export default function Page() {
                             </ul>
                         </Col>
                         <Col md={4}>
-                            <Button>
-                                <a
-                                    className="chat-with-us body-1"
-                                    href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{ textDecoration: 'none', color: 'inherit' }}
-                                >
-                                    SOLICITAR
-                                </a>
+                            <Button
+                                className="chat-with-us body-1"
+                                href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ textDecoration: 'none', color: 'inherit' }}
+                                sx={{ color: 'inherit' }}
+                            >
+                                SOLICITAR
                             </Button>
                         </Col>
                     </Row>

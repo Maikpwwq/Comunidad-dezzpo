@@ -7,9 +7,7 @@
 // Components
 import { ProjectSearchForm } from '@features/projects'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 export default function Page() {
     return (
         <div className="budgets-page">

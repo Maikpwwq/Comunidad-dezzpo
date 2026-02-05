@@ -9,19 +9,19 @@ import React, { useState, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
 import Link from '@hooks/Link'
 import { styled, alpha } from '@mui/material/styles'
-import type { SelectChangeEvent } from '@mui/material/Select'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import Box from '@mui/material/Box'
+import {
+    Select,
+    MenuItem,
+    Box,
+    type SelectChangeEvent
+} from '@mui/material'
 
 import iconSet from '@assets/icomoon/selection.json'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { CategoryIcons } from '@assets/data/CategoryIcons'
 
 // Lazy load IcoMoon to prevent SSR crashes
 const IcoMoon = React.lazy(() => import('react-icomoon'))
-
-// Logo
-import LogoMenuComunidadDezzpo from '@public/assets/img/logo/Logo-Comunidad-Dezzpo.png'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -105,7 +105,7 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
         >
             <Link href="/app/portal-servicios" className="activo body-2 p-2 d-flex flex-row">
                 <img
-                    src={LogoMenuComunidadDezzpo}
+                    src="/assets/img/logo/Logo-Comunidad-Dezzpo.png"
                     alt="Logo Comunidad Dezzpo"
                     className="logo-comunidad-dezzpo me-2"
                     height="55px"
@@ -146,9 +146,11 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
                     }}
                 >
                     <MenuItem value="">Seleccionar categoría</MenuItem>
-                    {/* Render list only on client to avoid SSR overhead and potential Icon instantiation crashes */}
+                    {/* Render list only on client to avoid SSR overhead */}
                     {isMounted && ListadoCategorias?.map((item: any) => {
-                        const { key, label, icon: IconComponent } = item
+                        const { key, label, iconName } = item
+                        // Dynamically resolve icon from map
+                        const IconComponent = CategoryIcons[iconName]
                         return (
                             <MenuItem value={label} key={key}>
                                 {IconComponent && (

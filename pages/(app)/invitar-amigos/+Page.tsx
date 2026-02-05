@@ -5,12 +5,9 @@
  */
 import { useAuth } from '@hooks/useAuth'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
+import { Button, Typography } from '@mui/material'
 export default function Page() {
     const { currentUser } = useAuth()
     const copyReferedLink = () => {

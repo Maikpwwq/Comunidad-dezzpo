@@ -6,13 +6,9 @@
  */
 import { useState } from 'react'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
+import { Button, Box, TextField } from '@mui/material'
 export default function Page() {
     const [certificationDate, setCertificationDate] = useState('')
     const [certificationHour, setCertificationHour] = useState('12:00')

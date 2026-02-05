@@ -13,16 +13,19 @@ import { getSidebarConfig } from './navigation.config'
 import type { UserRole } from './types'
 
 // MUI Components
-import Drawer from '@mui/material/Drawer'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
-import Avatar from '@mui/material/Avatar'
-import IconButton from '@mui/material/IconButton'
+// MUI Components
+import {
+    Drawer,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Box,
+    Divider,
+    Avatar,
+    IconButton
+} from '@mui/material'
 
 // MUI Icons
 import PersonIcon from '@mui/icons-material/Person'

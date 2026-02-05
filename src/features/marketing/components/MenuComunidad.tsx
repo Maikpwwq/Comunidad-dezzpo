@@ -27,12 +27,10 @@ import LogoMenuComunidadDezzpo from '/assets/img/logo/Logo-Comunidad-Dezzpo.png'
 import IsoLogoMenuComunidadDezzpo from '/assets/img/logo/IsoLogo-Dezzpo-Verde.png'
 
 // Bootstrap
-import Container from 'react-bootstrap/Container'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
+import { Container, Col, Row } from 'react-bootstrap'
 
 // MUI
-import IconButton from '@mui/material/IconButton'
+import { IconButton } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import Login from '@mui/icons-material/Login'

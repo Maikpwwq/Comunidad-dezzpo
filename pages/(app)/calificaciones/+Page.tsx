@@ -6,14 +6,14 @@
  */
 import { useState } from 'react'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import Button from '@mui/material/Button'
-import TextareaAutosize from '@mui/material/TextareaAutosize'
-import Rating from '@mui/material/Rating'
-import FormLabel from '@mui/material/FormLabel'
+import {
+    Button,
+    TextareaAutosize,
+    Rating,
+    FormLabel
+} from '@mui/material'
 interface RateState {
     gestion: number
     calidad: number

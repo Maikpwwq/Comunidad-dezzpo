@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react'
 import { usePageContext } from '@hooks/usePageContext'
 import { getQuotation } from '@services/quotations'
 import type { QuotationFirestoreDocument } from '@services/types'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Table from '@mui/material/Table'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
-import Typography from '@mui/material/Typography'
+import { Container, Row, Col } from 'react-bootstrap'
+import {
+    Table,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell,
+    Typography
+} from '@mui/material'
 interface QuotationInfoState extends Partial<QuotationFirestoreDocument> {
     description?: string
     scope?: string

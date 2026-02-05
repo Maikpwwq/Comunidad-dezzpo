@@ -29,15 +29,11 @@ import PageIngreso from '../../(auth)/ingreso/+Page'
 import TablaSubCategoriaCantidades from './TablaSubCategoriaCantidades'
 // Styles
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+// Bootstrap
+import { Row, Col, Container, Button, Form } from 'react-bootstrap'
 // MUI
-import Box from '@mui/material/Box'
-import Modal from '@mui/material/Modal'
-import Typography from '@mui/material/Typography'
+// MUI
+import { Box, Modal, Typography } from '@mui/material'
 import AddLocationIcon from '@mui/icons-material/AddLocation'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'

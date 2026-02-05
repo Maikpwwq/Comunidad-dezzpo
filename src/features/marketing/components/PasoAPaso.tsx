@@ -7,12 +7,15 @@
 
 import React from 'react'
 import { styled } from '@mui/material/styles'
-import Stack from '@mui/material/Stack'
-import Stepper from '@mui/material/Stepper'
-import Step from '@mui/material/Step'
-import StepLabel from '@mui/material/StepLabel'
-import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector'
-import type { StepIconProps } from '@mui/material/StepIcon'
+import {
+    Stack,
+    Stepper,
+    Step,
+    StepLabel,
+    StepConnector,
+    stepConnectorClasses
+} from '@mui/material'
+import type { StepIconProps } from '@mui/material'
 import CategoryIcon from '@mui/icons-material/Category'
 import BuildCircleIcon from '@mui/icons-material/BuildCircle'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'

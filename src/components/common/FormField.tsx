@@ -1,8 +1,11 @@
 import React from 'react'
-import FormControl, { type FormControlProps } from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import FormHelperText from '@mui/material/FormHelperText'
-import Box from '@mui/material/Box'
+import {
+    FormControl,
+    FormLabel,
+    FormHelperText,
+    Box,
+    type FormControlProps
+} from '@mui/material'
 
 export interface FormFieldProps extends FormControlProps {
     label?: string

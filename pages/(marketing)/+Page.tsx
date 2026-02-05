@@ -11,15 +11,16 @@ import { navigate } from 'vike/client/router'
 import { ProjectSearchForm } from '@features/projects'
 import { NuestraComunidad, Subscribe } from '@features/marketing'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+// Bootstrap
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
 import { useTheme } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import MobileStepper from '@mui/material/MobileStepper'
-import Typography from '@mui/material/Typography'
+import {
+    Box,
+    Button,
+    MobileStepper,
+    Typography
+} from '@mui/material'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 // Swipeable views

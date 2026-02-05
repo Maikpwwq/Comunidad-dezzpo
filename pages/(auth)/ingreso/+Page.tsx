@@ -20,16 +20,17 @@ import { SnackBarAlert } from '@components/common'
 import clsx from 'clsx'
 import styles from './Login.module.scss'
 // MUI
-import Paper from '@mui/material/Paper'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { Paper, Box, Typography } from '@mui/material'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+// Bootstrap
+import {
+    Row,
+    Col,
+    Container,
+    Button,
+    Form
+} from 'react-bootstrap'
 // Types
 interface PageProps {
     showLogo?: boolean

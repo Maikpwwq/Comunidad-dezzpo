@@ -7,13 +7,9 @@ import { useState } from 'react'
 import { auth } from '@services/firebase'
 import { updatePassword } from 'firebase/auth'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
+import { Button, Box, TextField } from '@mui/material'
 interface PasswordState {
     newPassword: string
     againNewPassword: string

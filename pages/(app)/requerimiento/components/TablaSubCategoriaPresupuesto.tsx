@@ -1,14 +1,16 @@
 import React from 'react'
 
 // Bootstrap
-import Col from 'react-bootstrap/Col'
+import { Col } from 'react-bootstrap'
 
 // MUI
-import Table from '@mui/material/Table'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
+import {
+    Table,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell
+} from '@mui/material'
 
 // Types
 export interface SubCategoryItem {

@@ -8,9 +8,8 @@
  */
 
 import React from 'react'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Typography from '@mui/material/Typography'
+import { Row, Col } from 'react-bootstrap'
+import { Typography } from '@mui/material'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 

@@ -1,9 +1,12 @@
 import React from 'react'
-import Container, { type ContainerProps } from '@mui/material/Container'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Link from '@mui/material/Link'
+import {
+    Container,
+    type ContainerProps,
+    Box,
+    Typography,
+    Breadcrumbs,
+    Link
+} from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 
 interface BreadcrumbItem {

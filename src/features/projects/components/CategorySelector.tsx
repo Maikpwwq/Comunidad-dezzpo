@@ -6,13 +6,16 @@
  */
 
 import React, { useCallback } from 'react'
-import Box from '@mui/material/Box'
-import Select from '@mui/material/Select'
+import {
+    Box,
+    Select,
+    MenuItem
+} from '@mui/material'
 import type { SelectChangeEvent } from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
 import { styled } from '@mui/material/styles'
 
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { CategoryIcons } from '@assets/data/CategoryIcons'
 import type { ProjectDraftInfo } from '../types'
 
 const StyledSelect = styled(Select)(({ theme }) => ({
@@ -78,10 +81,10 @@ export function CategorySelector({
                     seleccionar categoria
                 </MenuItem>
                 {ListadoCategorias?.map((item) => {
-                    const { key, label, icon: IconComponent } = item
+                    const { key, label, iconName } = item as any
+                    const IconComponent = CategoryIcons[iconName]
                     return (
                         <MenuItem value={label} key={key}>
-                            {/* @ts-ignore */}
                             {IconComponent && <IconComponent sx={{ mr: 1 }} fontSize="small" />}
                             {label}
                         </MenuItem>

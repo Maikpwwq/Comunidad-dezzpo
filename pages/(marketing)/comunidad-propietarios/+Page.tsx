@@ -9,10 +9,7 @@ import { Link } from '@hooks'
 import Registro from '../../../pages/(auth)/registro/+Page'
 import { ProjectSearchForm } from '@features/projects'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
+import { Row, Col, Container, Button } from 'react-bootstrap'
 // Verification list items
 const verificationList = [
     'Verifica Adecuadamente La Identidad.',

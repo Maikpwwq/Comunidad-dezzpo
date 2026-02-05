@@ -6,12 +6,14 @@
  */
 
 import React, { useState, useCallback } from 'react'
-import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import Typography from '@mui/material/Typography'
+import {
+    Button,
+    Card,
+    CardHeader,
+    CardContent,
+    CardActions,
+    Typography
+} from '@mui/material'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
 

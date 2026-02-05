@@ -9,13 +9,10 @@ import { sendPasswordResetEmail, confirmPasswordReset } from 'firebase/auth'
 // Components
 import { Link } from '@hooks'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+// Bootstrap
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
+import { Button, Box, TextField } from '@mui/material'
 interface ResetEmailState {
     resetEmail: string
     code: string | null

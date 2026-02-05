@@ -5,9 +5,8 @@
  */
 // Styles
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+// Bootstrap
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
 import DownloadIcon from '@mui/icons-material/Download'
 // Legal documents data

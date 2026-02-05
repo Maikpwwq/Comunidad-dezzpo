@@ -11,9 +11,8 @@ import IcoMoon from 'react-icomoon'
 import { FOOTER_LINKS, SOCIAL_LINKS } from './navigation.config'
 
 // Bootstrap Components (legacy support)
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+// Bootstrap Components (legacy support)
+import { Container, Row, Col } from 'react-bootstrap'
 
 // Branding
 import LogoFooterComunidadDezzpo from '@assets/img/IsologoFooter.png'

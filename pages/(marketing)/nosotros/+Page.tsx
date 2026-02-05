@@ -11,12 +11,10 @@ import iconSet from '@assets/icomoon/selection.json'
 import RoadMap2 from '@assets/img/RoadMap2.png'
 import Hitos from '@assets/img/Hitos.png'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
+// Bootstrap
+import { Row, Col, Container, Button } from 'react-bootstrap'
 // MUI
-import Typography from '@mui/material/Typography'
+import { Typography } from '@mui/material'
 // Values list
 const values = [
     'Disciplina',

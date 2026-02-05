@@ -10,10 +10,8 @@ import { getAllDrafts } from '@services/drafts'
 // Components
 import { DraftCard } from '@features/quotes'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
+// Bootstrap
+import { Row, Col, Container, Button } from 'react-bootstrap'
 
 interface Draft {
     id?: string

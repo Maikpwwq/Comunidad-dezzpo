@@ -12,9 +12,7 @@ import User2 from '@assets/img/iconos/User2.svg'
 import BlogEntrada3 from '@assets/img/BlogEntrada3.png'
 import User3 from '@assets/img/iconos/User3.svg'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // Testimonial data
 const testimonials = [
     {

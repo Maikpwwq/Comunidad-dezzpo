@@ -10,14 +10,16 @@ import { navigate } from 'vike/client/router'
 import Link from '@hooks/Link'
 import { useUserStore } from '@stores/userStore'
 
-import AppBar from '@mui/material/AppBar'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import Grid from '@mui/material/Grid'
-import Badge from '@mui/material/Badge'
-import IconButton from '@mui/material/IconButton'
-import Toolbar from '@mui/material/Toolbar'
-import Tooltip from '@mui/material/Tooltip'
+import {
+    AppBar,
+    Avatar,
+    Button,
+    Grid,
+    Badge,
+    IconButton,
+    Toolbar,
+    Tooltip
+} from '@mui/material'
 
 import MenuIcon from '@mui/icons-material/Menu'
 import HelpIcon from '@mui/icons-material/Help'

@@ -5,10 +5,8 @@
  */
 // Styles
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
-import Container from 'react-bootstrap/Container'
+// Bootstrap
+import { Row, Col, Button, Container } from 'react-bootstrap'
 // MUI
 import ChatIcon from '@mui/icons-material/Chat'
 // Stats data

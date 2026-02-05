@@ -9,9 +9,7 @@ import LogoBictia from '/assets/img/LogoBictia.png'
 import LogoMisionTic2022 from '/assets/img/LogoMisionTic2022.png'
 import LogoTecnoparque from '/assets/img/LogoTecnoparque.png'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // Sponsors data
 const sponsors = [
     {

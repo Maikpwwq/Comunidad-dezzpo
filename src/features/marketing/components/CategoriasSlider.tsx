@@ -7,14 +7,12 @@
 
 import React, { useState, useCallback } from 'react'
 import { useTheme } from '@mui/material/styles'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import MobileStepper from '@mui/material/MobileStepper'
+import { Button, Box, MobileStepper } from '@mui/material'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay, bindKeyboard } from 'react-swipeable-views-utils'
-import Row from 'react-bootstrap/Row'
+import { Row } from 'react-bootstrap'
 import clsx from 'clsx'
 
 import styles from './CategoriasSlider.module.scss'
