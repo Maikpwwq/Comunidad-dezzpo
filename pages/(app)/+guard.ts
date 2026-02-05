@@ -16,6 +16,7 @@ const PUBLIC_APP_ROUTES = [
   '/perfil',
   '/suscripciones',
   '/directorio-requerimientos',
+  '/ver-requerimiento',
 ]
 
 export const guard: GuardSync = (pageContext): void => {
