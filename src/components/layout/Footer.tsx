@@ -106,11 +106,13 @@ function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
                         </div>
 
                         {/* Contact Info (Right) */}
-                        <h3 className={clsx(styles.Headline, "mb-3")}>Contáctenos</h3>
-                        <div className={clsx(styles.TextBody)}>
-                            <ContactItem type="email" variant="footer" />
-                            <ContactItem type="phone" variant="footer" />
-                            <ContactItem type="address" variant="footer" />
+                        <div className={clsx(styles.Column)}>
+                            <h3 className={clsx(styles.Headline, "mb-3")}>Contáctenos</h3>
+                            <div className={clsx(styles.TextBody, "d-flex flex-column")}>
+                                <ContactItem type="email" variant="footer" />
+                                <ContactItem type="phone" variant="footer" />
+                                <ContactItem type="address" variant="footer" />
+                            </div>
                         </div>
                     </div>
 
