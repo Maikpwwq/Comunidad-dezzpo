@@ -95,7 +95,7 @@ export default function Page() {
                         <span className="pitch-propietarios">
                             <h2 className="headline-xl">POLÍTICA INTEGRAL HSEQ</h2>
                         </span>
-                        <p className="body-2">
+                        <p className="body-2 text-optimal-width mx-auto text-center pb-5">
                             Propendemos por mitigar el impacto ambiental. Nuestro propósito es
                             asegurar la creación de valor y perduración en el tiempo. Usamos
                             controles, técnicas y productos de calidad, alcanzando con nuestro
