@@ -122,7 +122,7 @@ export default function Page() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            CHAT EN VIVO
+                                            Chat en vivo
                                         </a>
                                     </Button>
                                 </div>
