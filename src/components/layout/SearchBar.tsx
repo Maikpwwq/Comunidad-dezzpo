@@ -9,7 +9,6 @@ import React, { useState, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
 import Link from '@hooks/Link'
 import { styled, alpha } from '@mui/material/styles'
-import IcoMoon from 'react-icomoon'
 import type { SelectChangeEvent } from '@mui/material/Select'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
@@ -17,6 +16,9 @@ import Box from '@mui/material/Box'
 
 import iconSet from '@assets/icomoon/selection.json'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+
+// Lazy load IcoMoon to prevent SSR crashes
+const IcoMoon = React.lazy(() => import('react-icomoon'))
 
 // Logo
 import LogoMenuComunidadDezzpo from '@public/assets/img/logo/Logo-Comunidad-Dezzpo.png'
@@ -113,15 +115,17 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
             <Search sx={{ maxWidth: '300px', width: '100% !important' }}>
                 <SearchIconWrapper>
                     {isMounted && (
-                        <IcoMoon
-                            iconSet={iconSet}
-                            icon="LupaFomularioIcono"
-                            style={{
-                                height: '28px',
-                                marginRight: '8px',
-                                width: 'auto',
-                            }}
-                        />
+                        <React.Suspense fallback={null}>
+                            <IcoMoon
+                                iconSet={iconSet}
+                                icon="LupaFomularioIcono"
+                                style={{
+                                    height: '28px',
+                                    marginRight: '8px',
+                                    width: 'auto',
+                                }}
+                            />
+                        </React.Suspense>
                     )}
                 </SearchIconWrapper>
                 <StyledSelect
