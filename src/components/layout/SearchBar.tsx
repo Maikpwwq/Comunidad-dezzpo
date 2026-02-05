@@ -20,9 +20,6 @@ import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 // Lazy load IcoMoon to prevent SSR crashes
 const IcoMoon = React.lazy(() => import('react-icomoon'))
 
-// Logo
-import LogoMenuComunidadDezzpo from '@public/assets/img/logo/Logo-Comunidad-Dezzpo.png'
-
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -105,7 +102,7 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
         >
             <Link href="/app/portal-servicios" className="activo body-2 p-2 d-flex flex-row">
                 <img
-                    src={LogoMenuComunidadDezzpo}
+                    src="/assets/img/logo/Logo-Comunidad-Dezzpo.png"
                     alt="Logo Comunidad Dezzpo"
                     className="logo-comunidad-dezzpo me-2"
                     height="55px"
