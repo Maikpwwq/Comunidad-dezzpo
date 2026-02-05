@@ -66,7 +66,7 @@ export default function Page() {
             {/* Hero / Registration Section */}
             <Container fluid className="p-0">
                 <Row className="comunidad-propietarios-titulo m-0 align-items-center" style={{ minHeight: '600px' }}>
-                    <Col lg={6} md={12} className="p-5 d-flex justify-content-center">
+                    <Col lg={6} md={12} className="p-5 d-flex justify-content-start">
                         <div className="opacidad-negro p-5 rounded-3 w-100" style={{ maxWidth: '600px' }}>
                             <h1 className="type-hero-title text-blanco mb-4">
                                 Regístrate como <br /> Propietario
@@ -142,7 +142,7 @@ export default function Page() {
                                 Únete a miles de propietarios que ya han transformado sus espacios con Dezzpo.
                                 Encuentra el profesional ideal para tu proyecto con total seguridad.
                             </p>
-                            <Button className="btn-round btn-middle btn-white text-dark fw-bold px-4">
+                            <Button className="btn-round btn-middle btn-primary text-white fw-bold px-4">
                                 Saber más
                             </Button>
                         </div>
@@ -165,7 +165,7 @@ export default function Page() {
                         <p className="body-1 text-secondary mb-4">
                             Nuestro equipo de soporte está listo para ayudarte en cada paso.
                         </p>
-                        <Button className="btn-round btn-middle btn-outline-dark px-5">
+                        <Button className="btn-round btn-middle btn-primary text-white px-5">
                             Contáctanos
                         </Button>
                     </Col>
