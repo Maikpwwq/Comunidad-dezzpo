@@ -112,15 +112,17 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
             </Link>
             <Search sx={{ maxWidth: '300px', width: '100% !important' }}>
                 <SearchIconWrapper>
-                    <IcoMoon
-                        iconSet={iconSet}
-                        icon="LupaFomularioIcono"
-                        style={{
-                            height: '28px',
-                            marginRight: '8px',
-                            width: 'auto',
-                        }}
-                    />
+                    {isMounted && (
+                        <IcoMoon
+                            iconSet={iconSet}
+                            icon="LupaFomularioIcono"
+                            style={{
+                                height: '28px',
+                                marginRight: '8px',
+                                width: 'auto',
+                            }}
+                        />
+                    )}
                 </SearchIconWrapper>
                 <StyledSelect
                     sx={{
