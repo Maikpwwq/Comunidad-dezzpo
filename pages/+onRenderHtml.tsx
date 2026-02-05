@@ -16,8 +16,17 @@ async function onRenderHtml(pageContext: PageContextServer) {
 
   // Support SPA mode (no SSR)
   let pageHtml = ''
-  // Enable SSR by default, disable if config.ssr === false
-  const ssrEnabled = (pageContext.config as any).ssr !== false
+
+  // Debug SSR Config
+  console.log(`[SSR] Rendering ${pageContext.urlPathname}`)
+  console.log(`[SSR] Config.ssr:`, (pageContext.config as any).ssr)
+
+  // Force disable SSR for problematic pages (Rescue Hatch)
+  const NO_SSR_PATHS = ['/app/suscripciones', '/app/directorio-requerimientos']
+  const forceNoSSR = NO_SSR_PATHS.some(path => pageContext.urlPathname.startsWith(path))
+
+  // Enable SSR by default, disable if config.ssr === false OR forced off
+  const ssrEnabled = (pageContext.config as any).ssr !== false && !forceNoSSR
 
   if (Page && ssrEnabled) {
     // Cast Page to React component type for JSX usage
