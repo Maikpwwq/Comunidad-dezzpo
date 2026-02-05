@@ -10,7 +10,7 @@ import { Snackbar, Alert } from '@mui/material'
 
 export interface SnackBarAlertProps {
     message: string
-    onClose: () => void
+    onClose: (event?: any, reason?: string) => void
     severity: 'success' | 'error' | 'warning' | 'info'
     open: boolean
     autoHideDuration?: number
