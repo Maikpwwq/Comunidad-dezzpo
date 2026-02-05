@@ -67,6 +67,11 @@ export interface SearchBarProps {
 
 export function SearchBar({ className }: SearchBarProps): React.ReactElement {
     const [searchInput, setSearchInput] = useState<string[]>([])
+    const [isMounted, setIsMounted] = useState(false)
+
+    React.useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     const handleSearch = useCallback((query: string) => {
         const handleSpacedText = query.replace(/ /g, '+')
@@ -135,7 +140,8 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
                     }}
                 >
                     <MenuItem value="">Seleccionar categoría</MenuItem>
-                    {ListadoCategorias?.map((item: any) => {
+                    {/* Render list only on client to avoid SSR overhead and potential Icon instantiation crashes */}
+                    {isMounted && ListadoCategorias?.map((item: any) => {
                         const { key, label, icon: IconComponent } = item
                         return (
                             <MenuItem value={label} key={key}>
