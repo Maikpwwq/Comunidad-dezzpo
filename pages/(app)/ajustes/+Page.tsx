@@ -11,12 +11,14 @@ import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 // Styles
 // UI Libs
 import { Row, Col, Container } from 'react-bootstrap'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import FormGroup from '@mui/material/FormGroup'
-import TextareaAutosize from '@mui/material/TextareaAutosize'
-import Modal from '@mui/material/Modal'
-import Typography from '@mui/material/Typography'
+import {
+    Button,
+    TextField,
+    FormGroup,
+    TextareaAutosize,
+    Modal,
+    Typography
+} from '@mui/material'
 interface UserEditInfo {
     userName: string
     userMail: string
