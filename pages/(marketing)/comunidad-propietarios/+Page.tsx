@@ -142,7 +142,7 @@ export default function Page() {
                                 Únete a miles de propietarios que ya han transformado sus espacios con Dezzpo.
                                 Encuentra el profesional ideal para tu proyecto con total seguridad.
                             </p>
-                            <Button className="btn-round btn-middle btn-white text-dark fw-bold px-4">
+                            <Button className="btn-round btn-middle btn-primary text-white fw-bold px-4">
                                 Saber más
                             </Button>
                         </div>
@@ -165,7 +165,7 @@ export default function Page() {
                         <p className="body-1 text-secondary mb-4">
                             Nuestro equipo de soporte está listo para ayudarte en cada paso.
                         </p>
-                        <Button className="btn-round btn-middle btn-outline-dark px-5">
+                        <Button className="btn-round btn-middle btn-primary text-white px-5">
                             Contáctanos
                         </Button>
                     </Col>
