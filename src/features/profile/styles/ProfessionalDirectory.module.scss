@@ -1,5 +1,5 @@
 // Import design tokens (Source of Truth)
-@import '@styles/variables';
+@use '@styles/_variables' as *;
 
 .directory-wrapper {
   // 1. Base Layout (Mobile First)
