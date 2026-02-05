@@ -99,11 +99,12 @@ export default function Page() {
                             brindar mayor confianza a los propietarios y acceder fácilmente a
                             proyectos de mayor complejidad.
                         </p>
-                        <p className="text-blanco body-1" style={{ maxWidth: '75ch' }}>
+                        <p className="text-dark body-1" style={{ maxWidth: '75ch' }}>
                             Juntos programamos una visita de inspección para validar entre otras
                             cosas, certificados y diplomas, equipos y técnica requerida. ¿Listo
                             para solicitar una? Regístrese e ingrese con su usuario para comenzar.
                         </p>
+
                     </Col>
                 </Row>
             </Container>
