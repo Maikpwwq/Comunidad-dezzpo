@@ -4,15 +4,12 @@
  * Converted to TypeScript.
  */
 // Styles
-// Styles
+import React from 'react';
 // Components
 import { Link } from '@hooks'
 import { ProjectSearchForm } from '@features/projects'
 import { InfoSection } from '@components/layout/InfoSection'
 // Assets
-import RegisterImg from '@assets/img/Ingresar_registro.png'
-import SearchImg from '@assets/img/Buscador-Dezzpo.png'
-import CheckImg from '@assets/img/iconos/BtnGreen.svg'
 // Bootstrap
 import { Row, Col, Container, Button } from 'react-bootstrap'
 
@@ -38,19 +35,29 @@ const checklistItems = [
 
 const ChecklistItem = ({ text }: { text: string }) => (
     <div className="d-flex align-items-center mb-3">
-        <span className="text-secondary fw-bold fs-5 me-2">✓</span>
+        <span className="text-verde fw-bold fs-5 me-2">✓</span>
         <span className="body-1 text-blanco">{text}</span>
     </div>
 )
 
-const StepCard = ({ title, description, image }: { title: string, description: string, image: string }) => (
-    <div className="d-flex flex-column align-items-center text-center px-3">
-        <div className="mb-4" style={{ width: '80px', height: '80px' }}>
-            <img src={image} alt={title} className="w-100 h-100 object-fit-contain" />
+const StepCard = ({ number, color, className, text }: { number: number, color: string, className?: string, text: React.ReactNode }) => (
+    <Col className={`${className} p-0 mb-4 me-2`} lg={3} md={4} sm={10}>
+        <div className="d-flex flex-column align-items-center text-center">
+            <h3
+                className="headline-l text-white d-flex align-items-center justify-content-center mb-3"
+                style={{
+                    backgroundColor: color,
+                    width: '60px',
+                    height: '60px',
+                    borderRadius: '50%',
+                    margin: '0 auto'
+                }}
+            >
+                {number}
+            </h3>
+            <p className="body-1 p-2">{text}</p>
         </div>
-        <h3 className="headline-m mb-2">{title}</h3>
-        <p className="body-1 text-secondary">{description}</p>
-    </div>
+    </Col>
 )
 
 export default function Page() {
@@ -58,7 +65,7 @@ export default function Page() {
         <div className="owners-page">
             {/* Hero / Registration Section */}
             <Container fluid className="p-0">
-                <Row className="comunidad-propietarios-registro m-0 align-items-center" style={{ minHeight: '600px' }}>
+                <Row className="comunidad-propietarios-titulo m-0 align-items-center" style={{ minHeight: '600px' }}>
                     <Col lg={6} md={12} className="p-5 d-flex justify-content-center">
                         <div className="opacidad-negro p-5 rounded-3 w-100" style={{ maxWidth: '600px' }}>
                             <h1 className="type-hero-title text-blanco mb-4">
@@ -75,19 +82,17 @@ export default function Page() {
                             </Button>
                         </div>
                     </Col>
-                    <Col lg={6} md={12} className="d-none d-lg-block p-0">
-                        {/* Optional: Add an image here or keep empty for background image relevance */}
-                    </Col>
+                    {/* Background image is handled by CSS in .comunidad-propietarios-titulo */}
                 </Row>
             </Container>
             {/* Search Section */}
             <Container fluid className="p-0">
-                <Row className="comunidad-propietarios-buscador m-0 py-5 bg-light">
-                    <Col className="text-center py-5">
+                <Row className="comunidad-propietarios-buscador m-0 py-5 bg-light position-relative" style={{ zIndex: 1 }}>
+                    <Col className="text-start py-5 ps-lg-5" lg={6} md={8} sm={12}>
                         <Container>
-                            <h2 className="headline-xl text-dark mb-4">¿Qué proyecto tienes en mente?</h2>
-                            <Row className="justify-content-center">
-                                <Col lg={8}>
+                            <h2 className="headline-xl text-dark mb-4 ms-3">¿Qué proyecto tienes en mente?</h2>
+                            <Row className="justify-content-start">
+                                <Col lg={12}>
                                     <ProjectSearchForm simple={false} />
                                 </Col>
                             </Row>
@@ -104,27 +109,23 @@ export default function Page() {
                         description="Encuentra al profesional ideal en tres sencillos pasos"
                         centered
                     >
-                        <Col md={4} className="mb-4 mb-md-0">
+                        <Row className="ms-1 me-1 w-100 justify-content-center mt-4">
                             <StepCard
-                                title="Publica tu proyecto"
-                                description="Cuéntanos qué necesitas y recibe propuestas de expertos."
-                                image={RegisterImg}
+                                number={1}
+                                color="#0f71b7"
+                                text={<>Publica tu proyecto. Cuéntanos qué necesitas y recibe <strong>propuestas</strong> de expertos.</>}
                             />
-                        </Col>
-                        <Col md={4} className="mb-4 mb-md-0">
                             <StepCard
-                                title="Compara y elige"
-                                description="Revisa perfiles, calificaciones y presupuestos."
-                                image={SearchImg}
+                                number={2}
+                                color="#30347b"
+                                text={<>Compara y elige. Revisa perfiles, <strong>calificaciones</strong> y presupuestos.</>}
                             />
-                        </Col>
-                        <Col md={4}>
                             <StepCard
-                                title="Contrata seguro"
-                                description="Acuerda los detalles y comienza tu proyecto con tranquilidad."
-                                image={CheckImg}
+                                number={3}
+                                color="#149ba1"
+                                text={<>Contrata seguro. Acuerda los detalles y comienza tu proyecto con <strong>tranquilidad.</strong></>}
                             />
-                        </Col>
+                        </Row>
                     </InfoSection>
                 </Row>
             </Container>
@@ -141,7 +142,7 @@ export default function Page() {
                                 Únete a miles de propietarios que ya han transformado sus espacios con Dezzpo.
                                 Encuentra el profesional ideal para tu proyecto con total seguridad.
                             </p>
-                            <Button className="btn-round btn-middle btn-white text-primary fw-bold px-4">
+                            <Button className="btn-round btn-middle btn-white text-dark fw-bold px-4">
                                 Saber más
                             </Button>
                         </div>
@@ -164,7 +165,7 @@ export default function Page() {
                         <p className="body-1 text-secondary mb-4">
                             Nuestro equipo de soporte está listo para ayudarte en cada paso.
                         </p>
-                        <Button className="btn-round btn-middle btn-outline-primary px-5">
+                        <Button className="btn-round btn-middle btn-outline-dark px-5">
                             Contáctanos
                         </Button>
                     </Col>

@@ -122,10 +122,10 @@ export function ProjectSearchForm({
                                 </strong>
                             </Link>
 
-                            <Typography variant="body1" className="mt-3 pt-2 pb-2">
+                            <Typography variant="body1" className={clsx(styles.BodyText, "mt-3 pt-2 pb-2")}>
                                 O prueba
                             </Typography>
-                            <Typography variant="body2" className="mb-3">
+                            <Typography variant="body2" className={clsx(styles.BodyText, "mb-3")}>
                                 Registrar un nuevo requerimiento
                             </Typography>
                         </>
