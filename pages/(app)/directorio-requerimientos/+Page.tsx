@@ -10,7 +10,6 @@ import { getAllDrafts } from '@services/drafts'
 // Components
 import { DraftCard } from '@features/quotes'
 // Bootstrap
-// Bootstrap
 import { Row, Col, Container, Button } from 'react-bootstrap'
 
 interface Draft {
