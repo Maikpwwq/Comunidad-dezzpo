@@ -57,15 +57,16 @@ export default function Page() {
 
             {/* Vinculate Section */}
             <Container fluid className="p-0">
-                <Row className="asi-trabajamos-vinculate m-0 w-100 align-items-center py-5">
-                    <Col className="text-center" lg={12}>
-                        <div className="p-5 d-inline-block rounded-3 bg-light">
+                <Row className="asi-trabajamos-vinculate m-0 w-100 align-items-center py-5 justify-content-center justify-content-lg-end">
+                    <Col className="text-center" lg={5} md={8} sm={12}>
+                        <div className="p-5 d-inline-block rounded-3 bg-light me-lg-5">
                             <span className="headline-xl opacidad-negro d-block mb-4">PERFIL COMERCIANTE</span>
                             <Button className="btn btn-vinculate btn-lg px-5">Vincúlate</Button>
                         </div>
                     </Col>
                 </Row>
             </Container>
+
 
             {/* Propietario Section */}
             <Container fluid className="p-0 bg-dark">
