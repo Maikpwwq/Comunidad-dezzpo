@@ -9,8 +9,7 @@ import { useAuth } from '@hooks/useAuth'
 // Bootstrap
 import { Container, Row, Col } from 'react-bootstrap'
 // MUI
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import { Typography, Box } from '@mui/material'
 export default function Page() {
     const { currentUser } = useAuth()
     // If we have a user, show chat. Otherwise show login prompt or empty state.

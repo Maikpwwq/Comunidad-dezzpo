@@ -11,9 +11,7 @@ import TablaSubCategoriaPresupuesto from '../components/TablaSubCategoriaPresupu
 // Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
+import { Button, TextField, Typography } from '@mui/material'
 // CSS
 export default function Page() {
     const { currentUser } = useAuth()

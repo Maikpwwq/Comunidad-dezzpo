@@ -1,6 +1,5 @@
 import React from 'react'
-import Button, { type ButtonProps } from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
+import { Button, CircularProgress, type ButtonProps } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 export interface ActionButtonProps extends ButtonProps {

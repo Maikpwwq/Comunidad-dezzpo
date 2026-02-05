@@ -7,8 +7,8 @@
 
 import React, { useCallback } from 'react'
 import { navigate } from 'vike/client/router'
-import Button from 'react-bootstrap/Button'
-import Box from '@mui/material/Box'
+import { Button } from 'react-bootstrap'
+import { Box } from '@mui/material'
 
 export interface SliderActionProps {
     /** Custom title text */

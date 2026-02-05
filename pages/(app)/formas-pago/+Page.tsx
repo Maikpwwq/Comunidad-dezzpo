@@ -7,16 +7,18 @@ import { useState } from 'react'
 // Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
+import {
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    Table,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell
+} from '@mui/material'
 import type { SelectChangeEvent } from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import Table from '@mui/material/Table'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
 // Payment method options
 const paymentMethods = [
     { value: 'Tarjetas', label: 'Tarjeta Débito o Crédito' },

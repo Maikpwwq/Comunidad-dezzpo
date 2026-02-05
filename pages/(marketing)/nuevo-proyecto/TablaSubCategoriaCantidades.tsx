@@ -6,11 +6,12 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    Box
+    Box,
+    MenuItem,
+    FormControl,
+    Select,
+    type SelectChangeEvent
 } from '@mui/material'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select, { type SelectChangeEvent } from '@mui/material/Select'
 
 interface CategoriaSelection {
     subCategoria: string

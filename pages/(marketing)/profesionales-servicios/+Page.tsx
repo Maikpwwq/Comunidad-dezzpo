@@ -7,9 +7,8 @@
 // Components
 import { NuestraComunidad, CategoriasServicios } from '@features/marketing'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+// Bootstrap
+import { Row, Col, Container } from 'react-bootstrap'
 export default function Page() {
     return (
         <>

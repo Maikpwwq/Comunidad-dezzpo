@@ -9,9 +9,7 @@ import { updatePassword } from 'firebase/auth'
 // Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
+import { Button, Box, TextField } from '@mui/material'
 interface PasswordState {
     newPassword: string
     againNewPassword: string

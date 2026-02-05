@@ -8,16 +8,18 @@ import { setQuotation } from '@services/quotations'
 import type { QuotationFirestoreDocument } from '@services/types'
 // UI Libs
 import { Row, Col, Container } from 'react-bootstrap'
-import Button from '@mui/material/Button'
-import TextareaAutosize from '@mui/material/TextareaAutosize'
-import Table from '@mui/material/Table'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableRow from '@mui/material/TableRow'
-import TableCell from '@mui/material/TableCell'
+import {
+    Button,
+    TextareaAutosize,
+    Table,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell,
+    Typography
+} from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
-import Typography from '@mui/material/Typography'
 interface Activity {
     id: string
     item: string
@@ -40,7 +42,8 @@ interface CotizacionState {
     valorSubtotal: number
 }
 export default function Page() {
-    const { currentUser } = useContext(UserAuthContext)
+    const userAuth = useContext(UserAuthContext)
+    const currentUser = userAuth?.currentUser
     const userAuthID = currentUser?.userId || ''
     const pageContext = usePageContext()
     const draftId = pageContext.routeParams?.draftId as string
@@ -250,7 +253,7 @@ export default function Page() {
                                 <TableRow key={actividad.id || index}>
                                     <TableCell>
                                         <RemoveCircleIcon
-                                            onClick={(e) => handleRemoveTableRow(e, index)}
+                                            onClick={(e: React.MouseEvent) => handleRemoveTableRow(e, index)}
                                             style={{ cursor: 'pointer' }}
                                         />
                                     </TableCell>

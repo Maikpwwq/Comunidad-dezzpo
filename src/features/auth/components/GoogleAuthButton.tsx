@@ -8,11 +8,10 @@
 import React from 'react'
 
 // MUI
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { Box, Typography } from '@mui/material'
 
 // Bootstrap
-import Button from 'react-bootstrap/Button'
+import { Button } from 'react-bootstrap'
 
 // Assets
 import LogoGmail from '@assets/img/G.jpg'

@@ -9,10 +9,12 @@ import React, { useState, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
 import Link from '@hooks/Link'
 import { styled, alpha } from '@mui/material/styles'
-import type { SelectChangeEvent } from '@mui/material/Select'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import Box from '@mui/material/Box'
+import {
+    Select,
+    MenuItem,
+    Box,
+    type SelectChangeEvent
+} from '@mui/material'
 
 import iconSet from '@assets/icomoon/selection.json'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'

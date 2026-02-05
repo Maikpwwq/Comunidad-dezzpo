@@ -13,16 +13,18 @@ import clsx from 'clsx'
 import styles from './ProjectSearchForm.module.scss'
 
 // MUI
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { Box, Typography } from '@mui/material'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 
 // Bootstrap
-import Container from 'react-bootstrap/Container'
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import InputGroup from 'react-bootstrap/InputGroup'
+// Bootstrap
+import {
+    Container,
+    Col,
+    Form,
+    Button,
+    InputGroup
+} from 'react-bootstrap'
 
 // Local
 import { CategorySelector } from './CategorySelector'

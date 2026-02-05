@@ -7,7 +7,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { googleLoader } from '@services/utils/googleMapsLoader'
-import Box from '@mui/material/Box'
+import { Box } from '@mui/material'
 
 export interface UserLocationInfo {
     userId?: string

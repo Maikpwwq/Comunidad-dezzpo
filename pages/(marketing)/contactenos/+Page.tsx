@@ -12,10 +12,8 @@ import SelectorContactenos from '@assets/img/SelectorContactenos.png'
 // Components
 import { DatosContacto } from '@features/marketing'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
+// Bootstrap
+import { Row, Col, Container, Button } from 'react-bootstrap'
 interface ContactFormData {
     name: string
     email: string

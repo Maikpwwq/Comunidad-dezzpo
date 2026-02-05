@@ -6,8 +6,7 @@
 // Bootstrap
 import { Container, Row, Col } from 'react-bootstrap'
 // MUI
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import { Typography, Box } from '@mui/material'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 export default function Page() {
     return (

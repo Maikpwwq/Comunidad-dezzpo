@@ -6,9 +6,7 @@
  */
 
 import React from 'react'
-import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import { Container, Box, Button } from '@mui/material'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import clsx from 'clsx'

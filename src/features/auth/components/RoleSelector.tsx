@@ -8,9 +8,8 @@
 import React from 'react'
 
 // Bootstrap
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import ToggleButton from 'react-bootstrap/ToggleButton'
-import Form from 'react-bootstrap/Form'
+// Bootstrap
+import { ToggleButtonGroup, ToggleButton, Form } from 'react-bootstrap'
 
 // Types
 import type { UserRoleNumeric } from '../types'

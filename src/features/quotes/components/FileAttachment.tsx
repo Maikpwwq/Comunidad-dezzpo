@@ -11,9 +11,11 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
+import {
+    Box,
+    Button,
+    Tooltip
+} from '@mui/material'
 import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
 
 import { firestore, storage, isFirebaseAvailable } from '@services/firebase'
