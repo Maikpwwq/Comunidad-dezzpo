@@ -4,9 +4,7 @@
  * Displays user notifications.
  */
 // Bootstrap
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import { Container, Row, Col } from 'react-bootstrap'
 // MUI
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'

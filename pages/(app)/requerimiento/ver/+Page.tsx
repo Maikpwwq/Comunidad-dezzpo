@@ -10,9 +10,7 @@ import type { DraftFirestoreDocument, QuotationFirestoreDocument } from '@servic
 // Components
 import TablaSubCategoriaPresupuesto from '../components/TablaSubCategoriaPresupuesto'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
 import Button from '@mui/material/Button'
 import Table from '@mui/material/Table'

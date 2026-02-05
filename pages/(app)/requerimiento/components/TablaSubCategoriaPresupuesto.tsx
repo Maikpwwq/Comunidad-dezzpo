@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Bootstrap
-import Col from 'react-bootstrap/Col'
+import { Col } from 'react-bootstrap'
 
 // MUI
 import Table from '@mui/material/Table'

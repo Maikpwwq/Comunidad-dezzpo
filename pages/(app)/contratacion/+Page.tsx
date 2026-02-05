@@ -5,7 +5,7 @@
  * Service contract management page.
  */
 // Bootstrap
-import Container from 'react-bootstrap/Container'
+import { Container } from 'react-bootstrap'
 interface PageProps {
     draftId?: string
     quotationId?: string

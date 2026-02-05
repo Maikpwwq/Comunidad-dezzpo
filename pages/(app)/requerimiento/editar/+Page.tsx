@@ -9,9 +9,7 @@ import { getDraft, updateDraft } from '@services/drafts'
 import { AdjuntarArchivos } from '@components/common'
 import TablaSubCategoriaPresupuesto from '../components/TablaSubCategoriaPresupuesto'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'

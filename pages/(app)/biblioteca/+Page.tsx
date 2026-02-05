@@ -5,9 +5,7 @@
  * Downloads, reference materials, and resources for users.
  */
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
 import Typography from '@mui/material/Typography'
 import Table from '@mui/material/Table'

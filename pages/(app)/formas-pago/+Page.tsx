@@ -5,9 +5,7 @@
  */
 import { useState } from 'react'
 // Bootstrap
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 // MUI
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
