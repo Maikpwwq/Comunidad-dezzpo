@@ -86,13 +86,13 @@ export default function Page() {
 
             {/* Certificación Section */}
             <Container fluid className="p-0">
-                <Row className="asi-trabajamos-certificaciones m-0 w-100 py-5 align-items-center">
-                    <Col lg={4} md={12} className="text-center text-lg-end p-5">
-                        <span className="headline-xl text-blanco">
-                            CERTIFICACIÓN
-                        </span>
-                    </Col>
-                    <Col lg={8} md={12} className="p-5">
+                <div className="asi-trabajamos-certificaciones w-100 py-5 d-flex flex-column align-items-center">
+                    <div className="text-center p-5">
+                        <h2 className="headline-xl text-blanco">
+                            Certificación
+                        </h2>
+                    </div>
+                    <div className="p-5 pt-0">
                         <p className="text-blanco body-1 mb-4" style={{ maxWidth: '75ch' }}>
                             Aumente sus posibilidades laborales, pregunta a nuestro equipo por
                             nuestra insignia de validación de habilidades. Esto te permitirá
@@ -104,9 +104,8 @@ export default function Page() {
                             cosas, certificados y diplomas, equipos y técnica requerida. ¿Listo
                             para solicitar una? Regístrese e ingrese con su usuario para comenzar.
                         </p>
-
-                    </Col>
-                </Row>
+                    </div>
+                </div>
             </Container>
 
             {/* Calificaciones Section */}
