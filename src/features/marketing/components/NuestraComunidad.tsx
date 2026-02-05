@@ -13,7 +13,7 @@ import styles from './NuestraComunidad.module.scss'
 
 import { Container, Col } from 'react-bootstrap'
 
-export function NuestraComunidad(): React.ReactElement {
+export const NuestraComunidad = React.memo(function NuestraComunidad(): React.ReactElement {
     return (
         <Container fluid className="p-0 community-page">
             <Col id="popular-categorias" className="m-4 p-4">
@@ -29,6 +29,6 @@ export function NuestraComunidad(): React.ReactElement {
             </Col>
         </Container>
     )
-}
+})
 
 export default NuestraComunidad
