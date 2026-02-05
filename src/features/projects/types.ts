@@ -9,7 +9,7 @@ export interface CategoryItem {
     label: string
     rol: string
     variant: 'outlined' | 'filled'
-    icon: React.ReactElement
+    icon: React.ElementType
 }
 
 export interface SubCategoryItem {

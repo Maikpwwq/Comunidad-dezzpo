@@ -9,71 +9,6 @@
  */
 
 // ============================================================================
-// Legacy Pages (src/index/pages/)
-// ============================================================================
-
-declare module '#@/index/pages/*/+Page' {
-  const Component: React.ComponentType<Record<string, unknown>>
-  export default Component
-}
-
-declare module '#@/index/pages/index/Subscribe' {
-  const Component: React.ComponentType
-  export default Component
-}
-
-// New @pages alias pattern
-declare module '@pages/*/+Page' {
-  const Component: React.ComponentType<Record<string, unknown>>
-  export default Component
-}
-
-declare module '@pages/*' {
-  const Component: React.ComponentType<Record<string, unknown>>
-  export default Component
-}
-
-declare module '@pages/index/Subscribe' {
-  const Component: React.ComponentType
-  export default Component
-}
-
-declare module '@pages/nuevo-proyecto/+Page' {
-  const Component: React.ComponentType
-  export default Component
-}
-
-declare module '@pages/apendice-costos/tabla/tabla' {
-  const Component: React.ComponentType<{ dataTable: unknown[] }>
-  export default Component
-}
-
-declare module '@pages/apendice-costos/apendice-costos.json' {
-  const value: unknown[]
-  export default value
-}
-
-// ============================================================================
-// Legacy App Pages (src/app/pages/)
-// ============================================================================
-
-declare module '#@/app/pages/*/+Page' {
-  const Component: React.ComponentType<Record<string, unknown>>
-  export default Component
-}
-
-// New @app/pages alias pattern
-declare module '@app/pages/*/+Page' {
-  const Component: React.ComponentType<Record<string, unknown>>
-  export default Component
-}
-
-declare module '@app/pages/*' {
-  const Component: React.ComponentType<Record<string, unknown>>
-  export default Component
-}
-
-// ============================================================================
 // Legacy Components
 // ============================================================================
 
@@ -579,14 +514,14 @@ declare module '#@/index/components/ListadoCategorias' {
 
 // New @index alias pattern
 declare module '@index/components/ListadoCategorias' {
-  import type { ReactNode } from 'react'
+  import type { ElementType } from 'react'
   
   interface CategoriaItem {
     key: number
     label: string
     rol: string
     variant: 'outlined' | 'filled'
-    icon: ReactNode
+    icon: ElementType
   }
   export const ListadoCategorias: CategoriaItem[]
 }

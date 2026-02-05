@@ -78,10 +78,11 @@ export function CategorySelector({
                     seleccionar categoria
                 </MenuItem>
                 {ListadoCategorias?.map((item) => {
-                    const { key, label, icon } = item
+                    const { key, label, icon: IconComponent } = item
                     return (
                         <MenuItem value={label} key={key}>
-                            {icon}
+                            {/* @ts-ignore */}
+                            {IconComponent && <IconComponent sx={{ mr: 1 }} fontSize="small" />}
                             {label}
                         </MenuItem>
                     )
