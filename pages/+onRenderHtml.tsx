@@ -69,14 +69,7 @@ async function onRenderHtml(pageContext: PageContextServer) {
       name="keywords"
       content="Contratistas de mantenimiento residencial confiables, Red profesional confiable, Contratista calificado ideal, Proyecto en tu hogar a un clic"
     />
-    <meta
-      name="google-site-verification"
-      content="REnHKEnAbLteNvAbM-6EA7glPZ716CIqVB0kr3WGqqk"
-    />
-    <meta
-      name="google-site-verification"
-      content="hETiKkAOYvSL4UH3cG1jqhdDDa6y0FxvWbvp737mgN4"
-    />
+    <meta name="google-site-verification" content="YR9BPQLIFQ3lXvQgOQNJp6b6llUUWUHwM3toS-US5P8" />
     <link
       rel="icon"
       type="image/png"
