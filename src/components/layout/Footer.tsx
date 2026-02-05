@@ -9,6 +9,7 @@ import React from 'react'
 import { Link } from '@hooks'
 import IcoMoon from 'react-icomoon'
 import { FOOTER_LINKS, SOCIAL_LINKS } from './navigation.config'
+import { ContactItem } from '@components/molecules/ContactItem'
 
 // Bootstrap Components (legacy support)
 // Bootstrap Components (legacy support)
@@ -105,13 +106,11 @@ function Footer({ variant = 'marketing' }: FooterProps): React.ReactElement {
                         </div>
 
                         {/* Contact Info (Right) */}
-                        <div className={clsx(styles.Column)}>
-                            <h3 className={clsx(styles.Headline, "mb-3")}>Contáctenos</h3>
-                            <ul className={clsx(styles.TextBody, "list-unstyled")}>
-                                <li className="mb-2">📧 comunidad.dezzpo@gmail.com</li>
-                                <li className="mb-2">📱 +57 320 484 2897</li>
-                                <li className="mb-2">📍 Bogotá, Colombia</li>
-                            </ul>
+                        <h3 className={clsx(styles.Headline, "mb-3")}>Contáctenos</h3>
+                        <div className={clsx(styles.TextBody)}>
+                            <ContactItem type="email" variant="footer" />
+                            <ContactItem type="phone" variant="footer" />
+                            <ContactItem type="address" variant="footer" />
                         </div>
                     </div>
 

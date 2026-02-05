@@ -1,0 +1,76 @@
+@use '@styles/_variables' as *;
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    text-decoration: none;
+    transition: color $transition-fast;
+    cursor: pointer;
+
+    // INTERACTIVE HOVER
+    &:hover {
+        color: var(--primary-green-text-color) !important;
+        text-decoration: none;
+        
+        .icon {
+            color: var(--primary-green-text-color);
+        }
+    }
+
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        transition: color $transition-fast;
+    }
+
+    &.variant-footer {
+        color: var(--content-text-white-color);
+        font-size: $font-size-sm;
+        margin-bottom: $spacing-2;
+        
+        .icon {
+            color: var(--content-text-white-color);
+            // Footer icons might need specific sizing
+            font-size: 21px; 
+            margin-right: 8px;
+        }
+
+        &:hover {
+             color: var(--background-yellow-color) !important;
+             .icon {
+                 color: var(--background-yellow-color);
+             }
+        }
+    }
+
+    &.variant-page {
+        padding: $spacing-3;
+        border: 1.5px solid var(--selected-border-light-gray-color);
+        border-radius: $radius-lg; // 20px
+        color: var(--primary-black-text-color);
+        width: 100%;
+        margin-bottom: $spacing-3;
+        background: var(--background-white-color);
+        
+        .icon {
+            color: var(--primary-blue-light-color); // Dezzpo Blue/Teal
+            font-size: 24px;
+            margin-right: $spacing-3;
+        }
+
+        .text {
+             display: flex;
+             flex-direction: column;
+        }
+
+        &:hover {
+            background-color: var(--selected-shadow-border-blue-light-color);
+            border-color: var(--primary-green-text-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    }
+}
