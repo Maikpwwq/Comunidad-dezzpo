@@ -66,7 +66,7 @@ export default function Page() {
             {/* Hero / Registration Section */}
             <Container fluid className="p-0">
                 <Row className="comunidad-propietarios-titulo m-0 align-items-center" style={{ minHeight: '600px' }}>
-                    <Col lg={6} md={12} className="p-5 d-flex justify-content-center">
+                    <Col lg={6} md={12} className="p-5 d-flex justify-content-start">
                         <div className="opacidad-negro p-5 rounded-3 w-100" style={{ maxWidth: '600px' }}>
                             <h1 className="type-hero-title text-blanco mb-4">
                                 Regístrate como <br /> Propietario
