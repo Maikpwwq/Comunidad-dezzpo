@@ -21,8 +21,12 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 The project utilizes a **Tiered Access Model**:
 
 1. **Public (Marketing):** Unrestricted access.
-2. **Hybrid (App Guest):** Accessible by anyone, but UI adapts (e.g., `/app/portal-servicios`).
-3. **Strict (App Auth):** Requires valid Firebase session (e.g., `/app/perfil`, `/app/settings`).
+3. **Hybrid (App Guest):** Accessible by anyone w/ App Shell. UI adapts to auth state.
+    - `/app/portal-servicios`
+    - `/app/directorio-requerimientos`
+    - `/app/suscripciones` 
+    - `/app/perfil/[id]` (Public View)
+4. **Strict (App Auth):** Requires valid session (e.g., `/app/messages`, `/app/settings`).
 - **Frontend**: React + TypeScript
 - **Server**: Hono (via Vike-Photon)
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand)
