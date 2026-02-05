@@ -44,7 +44,7 @@ export default function Page() {
             <Container fluid className="p-0">
                 <Row className="comunidad-propietarios-registro m-0 d-flex flex-column">
                     <Col className="m-0" style={{ paddingLeft: '0px' }}>
-                        <h1 className="text-blanco type-hero-title">COMUNIDAD PROPIETARIOS</h1>
+                        <h1 className="text-blanco type-hero-title">Comunidad de Propietarios</h1>
                         <Registro />
                     </Col>
                     <Col md={8}>
