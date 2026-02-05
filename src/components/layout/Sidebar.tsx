@@ -71,7 +71,7 @@ const styles = {
         px: 3,
         color: 'rgba(255, 255, 255, 0.7)',
         '&:hover, &:focus': {
-            bgcolor: '#bababa',
+            bgcolor: 'var(--background-gray-color)',
         },
     },
     itemCategory: {

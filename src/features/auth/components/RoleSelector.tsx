@@ -43,7 +43,7 @@ export function RoleSelector({ onSelect, selectedRole, className = '' }: RoleSel
                 value={selectedRole ?? undefined}
             >
                 <ToggleButton
-                    className={clsx(styles.RoleButton, "body-1 p-3 btn-round btn-high w-auto d-flex flex-row align-items-center justify-content-center")}
+                    className={clsx(styles.RoleButton, "body-1 p-3 btn-round w-auto d-flex flex-row align-items-center justify-content-center")}
                     variant="light" // Use light base to avoid blue primary flash
                     value={1}
                     id="formBasicRolPropietarioInmobiliario"
@@ -53,7 +53,7 @@ export function RoleSelector({ onSelect, selectedRole, className = '' }: RoleSel
                 </ToggleButton>
                 <br className="mb-2 mt-2" />
                 <ToggleButton
-                    className={clsx(styles.RoleButton, "body-1 p-3 btn-round btn-middle w-auto d-flex flex-row align-items-center justify-content-center")}
+                    className={clsx(styles.RoleButton, "body-1 p-3 btn-round w-auto d-flex flex-row align-items-center justify-content-center")}
                     variant="light"
                     value={2}
                     id="formBasicRolComercianteCalificado"

@@ -11,7 +11,7 @@
  * - Improved share fallback
  */
 
-import React, { useState, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { navigate } from 'vike/client/router'
 import clsx from 'clsx'
 
@@ -22,7 +22,6 @@ import { useUserStore } from '@stores/userStore'
 
 // MUI Components
 import {
-    Box,
     Button,
     Card,
     CardHeader,
@@ -30,10 +29,8 @@ import {
     CardActions,
     Avatar,
     IconButton,
-    Typography,
-    Collapse
+    Typography
 } from '@mui/material'
-import { red } from '@mui/material/colors'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
 
@@ -64,7 +61,7 @@ export function DraftCard({
     const userRole = useUserStore((state) => state.rol)
 
     // Local state
-    const [expanded] = useState(false)
+
 
     // Computed
     const draftLink = `/app/ver-requerimiento/${draftId}`
@@ -112,81 +109,69 @@ export function DraftCard({
     return (
         <Card
             className={clsx(styles.Card)}
-            elevation={16}
+        // Elevation removed for modern shadow
         >
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                <Box className="w-100" sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <CardHeader
-                        className={clsx(styles.Header)}
-                        avatar={
-                            <Avatar sx={{ bgcolor: red[500] }} aria-label="draft avatar">
-                                CD
-                            </Avatar>
-                        }
-                        action={
-                            <Typography variant="caption" display="block" gutterBottom color="text.secondary">
-                                Publicado hace {draftCreated}
-                            </Typography>
-                        }
-                        title={draftPropietarioResidente}
-                    />
+            <CardHeader
+                className={clsx(styles.Header)}
+                avatar={
+                    <Avatar className={clsx(styles.Avatar)} aria-label="draft avatar">
+                        CD
+                    </Avatar>
+                }
+                action={
+                    <Typography variant="caption" display="block" gutterBottom color="text.secondary">
+                        Publicado hace {draftCreated}
+                    </Typography>
+                }
+                title={<span className={styles['text-owner']}>{draftPropietarioResidente}</span>}
+            />
 
-                    <CardContent sx={{ textAlign: 'left' }} className={clsx(styles.Content)}>
-                        <Typography variant="h6">{draftName}</Typography>
-                        <Typography variant="subtitle1">{draftCategory}</Typography>
-                        <Typography variant="body1">$ {draftTotal}</Typography>
-                        <Typography variant="body1" color="text.secondary">
-                            {draftDescription}
-                        </Typography>
-                    </CardContent>
+            <CardContent className={clsx(styles.Content)}>
+                <h4 className={styles['text-title']}>{draftName}</h4>
+                <div className={styles['tag-category']}>{draftCategory}</div>
+                <p className={styles['text-price']}>$ {draftTotal}</p>
+                <p className={styles['text-description']}>
+                    {draftDescription}
+                </p>
+            </CardContent>
 
-                    <CardActions
-                        className={clsx(styles.Actions)}
-                        disableSpacing
+            <CardActions
+                className={clsx(styles.Actions)}
+                disableSpacing
+            >
+                <Button className={clsx(styles['btn-text'])} onClick={handleVerRequerimiento}>
+                    Ver requerimiento
+                </Button>
+
+                {/* Edit button - only for owner propietario */}
+                {isPropietario && isOwner && (
+                    <Button
+                        className={clsx(styles['btn-text'])}
+                        onClick={handleEditar}
                     >
-                        <Button className={clsx(styles.BodyText)} onClick={handleVerRequerimiento}>
-                            Ver requerimiento
-                        </Button>
+                        Editar
+                    </Button>
+                )}
 
-                        {/* Edit button - only for owner propietario */}
-                        {isPropietario && isOwner && (
-                            <Button
-                                className={clsx(styles.BodyText, styles.ActionButton)}
-                                onClick={handleEditar}
-                            >
-                                Editar
-                            </Button>
-                        )}
+                {/* Apply button - only for commerciantes when slots available */}
+                {isCommerciante && canApply && (
+                    <Button className="btn-primary-gradient btn-round" size="small" onClick={handleAplicar}>
+                        Aplicar
+                    </Button>
+                )}
 
-                        {/* Apply button - only for commerciantes when slots available */}
-                        {isCommerciante && canApply && (
-                            <Button className={clsx(styles.ActionButton, styles.Primary)} onClick={handleAplicar}>
-                                Aplicar
-                            </Button>
-                        )}
+                <IconButton
+                    className={clsx(styles.FavoriteButton)}
+                    aria-label="add to favorites"
+                    onClick={handleFavorite}
+                >
+                    <FavoriteIcon />
+                </IconButton>
 
-                        <IconButton
-                            className={clsx(styles.FavoriteButton)}
-                            aria-label="add to favorites"
-                            onClick={handleFavorite}
-                        >
-                            <FavoriteIcon />
-                        </IconButton>
-
-                        <IconButton aria-label="share" onClick={handleShare}>
-                            <ShareIcon />
-                        </IconButton>
-                    </CardActions>
-                </Box>
-            </Box>
-
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography>Más detalles...</Typography>
-                    </CardContent>
-                </Collapse>
-            </Box>
+                <IconButton aria-label="share" onClick={handleShare}>
+                    <ShareIcon />
+                </IconButton>
+            </CardActions>
         </Card>
     )
 }

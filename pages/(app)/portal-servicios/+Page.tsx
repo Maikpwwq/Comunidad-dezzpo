@@ -10,19 +10,33 @@ import { Row, Col, Container, Button } from 'react-bootstrap'
 import { Skeleton, Stack, Typography } from '@mui/material'
 // Types
 import type { UserFirestoreDocument } from '@services/types'
+
+// Styles
+import styles from '@features/profile/styles/ProfessionalDirectory.module.scss'
+
 const PortalSkeleton = () => {
+    // Render a grid of skeletons to match the layout
     return (
-        <Stack spacing={1}>
-            <Skeleton variant="rectangular" width={210} height={118} />
-            <Skeleton variant="circular" width={40} height={40} />
-            <Skeleton variant="rectangular" width={210} height={60} />
-            <Skeleton variant="rounded" width={210} height={60} />
-        </Stack>
+        <div className={styles['directory-wrapper']}>
+            {Array.from(new Array(6)).map((_, index) => (
+                <Stack key={index} spacing={1} sx={{ p: 2, border: '1px solid #e0e0e0', borderRadius: '16px' }}>
+                    <Stack direction="row" spacing={2} alignItems="center">
+                        <Skeleton variant="circular" width={40} height={40} />
+                        <Skeleton variant="text" width="60%" height={24} />
+                    </Stack>
+                    <Skeleton variant="text" width="100%" height={20} />
+                    <Skeleton variant="text" width="80%" height={20} />
+                    <Skeleton variant="rectangular" width="100%" height={40} sx={{ borderRadius: '20px', mt: 2 }} />
+                </Stack>
+            ))}
+        </div>
     )
 }
+
 interface SearchDataState {
     docSnap?: UserFirestoreDocument[]
 }
+
 export default function Page() {
     const pageContext = usePageContext()
     const searchInput = pageContext.routeParams?.searchInput
@@ -30,17 +44,10 @@ export default function Page() {
     const [isLoaded, setIsLoaded] = useState(false)
     const [searchData, setSearchData] = useState<SearchDataState>({})
     const [usersData, setUsersData] = useState<UserFirestoreDocument[]>([])
+
     const fetchInitialUsers = async () => {
         try {
             // Role 2: Comerciantes Calificados based on legacy 'userSelectedRol = 2'
-            // The service expects { role: number }, adjusting call if necessary based on service definition
-            // Looking at previous usages, getUsers(2) was used in legacy but new service might take object or just val.
-            // Checking service usage in other files... users service usually takes an object now or strict args.
-            // Let's assume the new service signature compatible or we fix it.
-            // Actually, in `perfil`, we used `getUser({ userId, role })`. 
-            // `getUsers` likely takes a role. Let's start with passing 2 and see if we need to adjust.
-            // If strictly typed service requires UserRole enum, we might need to cast or use specific value.
-            // Assuming for now generic usage until verification.
             const users = await getUsers(2 as any);
             if (users) {
                 setUsersData(users as UserFirestoreDocument[]);
@@ -49,6 +56,7 @@ export default function Page() {
             console.error('Error fetching users:', error);
         }
     };
+
     const fetchSearchResults = async (query: string) => {
         try {
             const results = await searchByName(query);
@@ -68,35 +76,39 @@ export default function Page() {
             setIsLoaded(true);
         }
     }
+
     // search reloaded
     useEffect(() => {
         setIsLoaded(false)
     }, [searchInput])
+
     useEffect(() => {
         if (!isLoaded) {
-            // console.log('portal-servicios', searchInput, isLoaded)
             if (typeof searchInput === 'string' && spacedText) {
                 fetchSearchResults(spacedText);
             }
         }
     }, [searchInput, isLoaded, spacedText])
+
     useEffect(() => {
         fetchInitialUsers();
     }, [])
+
     const handleNewProject = () => {
         navigate('/nuevo-proyecto')
     }
+
     return (
         <Container fluid className="p-0 h-100">
             <Row className="m-0 w-100 d-flex">
                 <Col className="pt-4 pb-2 p-0">
                     <h1 className="type-hero-title">
-                        Directorio Profesionales{'  '}
+                        Directorio de Profesionales{'  '}
                         <Button
                             className="body-1 ms-4 btn-round btn-high"
                             onClick={handleNewProject}
                         >
-                            Publica un proyecto gratis
+                            Publica un proyecto
                         </Button>
                     </h1>
                     <SearchBar />
@@ -108,8 +120,9 @@ export default function Page() {
                             <br />
                             <span className="subtitle">{spacedText}</span>
                         </Typography>
-                        <Row className="pt-2 p-0">
-                            <Suspense fallback={<PortalSkeleton />}>
+
+                        <Suspense fallback={<PortalSkeleton />}>
+                            <section className={styles['directory-wrapper']}>
                                 {searchData?.docSnap &&
                                     searchData?.docSnap.length > 0 ? (
                                     searchData?.docSnap.map((user) => (
@@ -119,47 +132,50 @@ export default function Page() {
                                         />
                                     ))
                                 ) : (
-                                    <Typography
-                                        variant="body1"
-                                        fontSize={'1.125rem'}
-                                    >
-                                        No se encontraron resultados de la
-                                        busqueda para la categoria!
-                                        <br />
-                                        {spacedText}
-                                    </Typography>
+                                    <div style={{ gridColumn: '1 / -1' }}>
+                                        <Typography
+                                            variant="body1"
+                                            fontSize={'1.125rem'}
+                                        >
+                                            No se encontraron resultados de la
+                                            busqueda para la categoria!
+                                            <br />
+                                            {spacedText}
+                                        </Typography>
+                                    </div>
                                 )}
-                            </Suspense>
-                        </Row>
+                            </section>
+                        </Suspense>
                     </Row>
                 ) : null}
             </Row>
-            <Row className="m-0 w-100 d-flex">
-                <Col className="col-10 pt-4 pb-4 p-0" xs={12}>
-                    <Col className="pb-2 p-0">
-                        <h3 className="headline-l">
-                            Todos los profesionales
-                        </h3>
-                    </Col>
-                    <p className="body-2 px-2">
-                        Directorio de comerciantes calificados, contratistas
-                        independientes y empresas del sector. <br />
-                        Encuentra todo lo mejor en asisitencia técnica!
-                    </p>
-                    <Row className="m-0 w-100 d-flex">
-                        <Suspense fallback={<PortalSkeleton />}>
-                            {usersData &&
-                                usersData.length > 0 &&
-                                usersData.map((user) => (
-                                    <UserCard
-                                        key={user.userId || user.uid}
-                                        {...user}
-                                    />
-                                ))}
-                        </Suspense>
-                    </Row>
-                </Col>
-            </Row>
+
+            <section className="col-12 pt-4 pb-4 p-0">
+                <div className="pb-2 p-0">
+                    <h3 className="headline-l">
+                        Todos los profesionales
+                    </h3>
+                </div>
+                <p className="body-2 px-2">
+                    Directorio de comerciantes calificados, contratistas
+                    independientes y empresas del sector. <br />
+                    Encuentra todo lo mejor en asisitencia técnica!
+                </p>
+
+                <Suspense fallback={<PortalSkeleton />}>
+                    <section className={styles['directory-wrapper']}>
+                        {usersData &&
+                            usersData.length > 0 &&
+                            usersData.map((user) => (
+                                <UserCard
+                                    key={user.userId || user.uid}
+                                    {...user}
+                                />
+                            ))}
+                    </section>
+                </Suspense>
+            </section>
         </Container>
     )
 }
+

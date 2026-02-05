@@ -9,4 +9,5 @@ import type { Config } from 'vike/types'
 export default {
   // No pre-rendering - content is user-specific
   prerender: false,
+  filesystemRoutingRoot: '/app',
 } satisfies Config

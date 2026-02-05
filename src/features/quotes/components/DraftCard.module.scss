@@ -1,57 +1,88 @@
 @use '@styles/_variables' as *;
 
 .Card {
-    width: 100%;
+    /* Modern shadow standard */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid var(--selected-border-light-gray-color);
+    border-radius: 20px !important;
+    transition: transform $transition-fast, box-shadow $transition-fast;
     display: flex;
     flex-direction: column;
-    border-radius: 20px;
-    padding-top: $spacing-3;
-    padding-bottom: $spacing-3;
-    
-    // Legacy .card-draft overrides
-    margin-bottom: $spacing-4;
+    height: 100%;
+    background-color: var(--background-white-color);
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+        border-color: var(--primary-green-text-color);
+    }
 }
 
 .Header {
     align-items: flex-start;
+    gap: $spacing-2;
 }
 
 .Avatar {
-    background-color: #f44336; // red[500] from MUI, considered replacing with token if available
+    // Keep avatar specific styling if needed, or rely on MUI default + override
+    background-color : var(--primary-green-text-color) !important; 
+}
+
+.text-owner {
+    font-weight: 600;
+    color: var(--primary-titles-text-color);
+    font-size: $font-size-md;
 }
 
 .Content {
     text-align: left;
     padding: $spacing-3;
+    flex-grow: 1;
+}
+
+.text-title {
+    font-family: var(--font-helvetica-bold);
+    font-size: $font-size-lg;
+    color: var(--primary-titles-text-color);
+    margin: 0 0 $spacing-2 0;
+}
+
+.tag-category {
+    display: inline-block;
+    background: var(--selected-shadow-border-blue-light-color);
+    color: var(--primary-green-text-color);
+    padding: 2px 10px;
+    border-radius: 8px;
+    font-size: $font-size-sm;
+    margin: $spacing-2 0;
+}
+
+.text-price {
+    font-weight: 700;
+    color: var(--primary-black-text-color);
+    font-size: $font-size-md;
+    margin-bottom: $spacing-2;
+}
+
+.text-description {
+     color: var(--secondary-text-gray-color);
+    font-size: $font-size-md; 
+    line-height: 1.5;
 }
 
 .Actions {
     display: flex;
-    padding: 0;
-    padding-top: $spacing-3;
-    margin: $spacing-3;
-    margin-top: 0;
-    border-top: solid 1.5px var(--selected-border-light-gray-color);
+    padding: $spacing-3;
+    margin-top: auto; // Push to bottom
+    border-top: 1px solid var(--selected-border-light-gray-color);
+    justify-content: space-between;
+    gap: $spacing-2;
 }
 
-.BodyText {
-    font-family: $font-family-base !important;
-    font-size: $font-size-md !important;
-    color: var(--primary-black-text-color) !important;
-}
-
-.ActionButton {
-    width: auto;
-    
-    &.Primary {
-        background-color: var(--background-main-green-color);
-        color: var(--content-text-white-color);
-        border-radius: $radius-full;
-        
-        &:hover {
-             background-color: var(--background-hover-green-color);
-        }
-    }
+.btn-text {
+    text-transform: none;
+    font-weight: 600;
+    color: var(--primary-green-text-color) !important;
 }
 
 .FavoriteButton {

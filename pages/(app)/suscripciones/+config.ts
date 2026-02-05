@@ -1,4 +1,5 @@
 export default {
   title: 'Suscripciones | Comunidad Dezzpo',
-  description: 'Planes de beneficios y suscripciones para la comunidad.'
+  description: 'Planes de beneficios y suscripciones para la comunidad.',
+  ssr: false,
 }

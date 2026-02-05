@@ -1,0 +1,19 @@
+// Import design tokens (Source of Truth)
+@use '@styles/_variables' as *;
+
+.directory-wrapper {
+  // 1. Base Layout (Mobile First)
+  display: grid;
+  grid-template-columns: 1fr; 
+  gap: $spacing-4; // 1.5rem
+  padding: $spacing-4;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  // 2. Multiplatform (Dynamic Responsive)
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: $spacing-5; // Increased spacing for desktop
+  }
+}

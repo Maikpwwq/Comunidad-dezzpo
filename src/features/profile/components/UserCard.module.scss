@@ -1,62 +1,55 @@
+// Import design tokens (Source of Truth)
 @use '@styles/_variables' as *;
 
-.Card {
-    width: 100%;
-    border-radius: 20px;
+.professional-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-white-color);
+  border: 1px solid var(--selected-border-light-gray-color);
+  border-radius: $radius-lg; // Modern, smooth radius
+  padding: $spacing-4;
+  transition: transform $transition-fast, box-shadow $transition-fast;
+
+  // 3. Accessibility & Visual States
+  &:hover, &:focus-within {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    border-color: var(--primary-green-text-color);
+  }
+
+  .card-header {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: $spacing-3;
+    margin-bottom: $spacing-3;
+    padding: 0; // Reset MUI alignment if needed
+  }
 }
 
-.Header {
-    align-items: flex-start;
+.text-name {
+  // Using hierarchy defined in @AllFontStyles.tsx
+  font-family: var(--font-helvetica-bold);
+  font-size: $font-size-lg;
+  color: var(--primary-titles-text-color);
+  margin: 0;
 }
 
-.Avatar {
-    background-color: var(--background-light-gray-color);
-    
-    &.Default {
-        background-color: var(--background-hover-green-color);
-    }
+.description {
+  margin-bottom: $spacing-3;
+  color: var(--secondary-text-gray-color);
+  // body-2 inheritance
+  font-size: $font-size-md; 
 }
 
-.AvatarText {
-    font-size: 0.35rem;
+.avatar-text {
+  font-size: 0.6rem;
+  line-height: 1;
+  text-align: center;
 }
 
-.Content {
-    text-align: left;
-    padding: $spacing-3;
-}
-
-.Description {
-    overflow-y: auto; 
-    max-height: 100px;
-}
-
-.Chips {
-    margin-top: $spacing-3;
-}
-
-.Actions {
+.actions {
     display: flex;
-    padding: 0;
-    padding-top: $spacing-3;
-    margin: $spacing-3;
-    margin-top: 0;
-    border-top: solid 1.5px var(--selected-border-light-gray-color);
-}
-
-.ActionButton {
-    color: var(--primary-black-text-color) !important;
-    font-family: $font-family-base !important;
-    font-size: $font-size-md !important;
-    
-    &.Quote {
-        width: auto;
-        padding-right: 10px;
-    }
-}
-
-.FavoriteButton {
-    margin-left: auto;
+    justify-content: space-between;
+    margin-top: auto; // Push to bottom
+    gap: $spacing-2;
 }

@@ -26,10 +26,6 @@ import { updateUser } from '@services/users'
 // MUI Components
 import {
     Button,
-    Card,
-    CardHeader,
-    CardContent,
-    CardActions,
     Avatar,
     IconButton,
     Typography
@@ -138,86 +134,85 @@ export function UserCard({
     }, [userCategories])
 
     return (
-        <Card className={clsx(styles.Card)} elevation={16}>
-            <CardHeader
-                className={clsx(styles.Header)}
-                avatar={
-                    <Avatar src={userPhotoUrl || ''} sx={bgAvatar} aria-label="user avatar">
-                        <Typography className={clsx(styles.AvatarText)}>
-                            Comunidad Dezzpo
-                        </Typography>
-                    </Avatar>
-                }
-                action={
-                    <Typography variant="caption" display="block" gutterBottom color="text.secondary">
-                        Se unió el <br />
-                        {userJoined}
-                    </Typography>
-                }
-                title={userRazonSocial}
-                subheader={userProfession}
-            />
-
-            <CardContent sx={{ textAlign: 'left' }} className={clsx(styles.Content)}>
-                <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    className={clsx(styles.Description)}
+        <article className={styles['professional-card']}>
+            <header className={styles['card-header']}>
+                <Avatar
+                    src={userPhotoUrl || ''}
+                    sx={bgAvatar}
+                    aria-label="user avatar"
                 >
+                    <Typography className={styles['avatar-text']}>
+                        Comunidad Dezzpo
+                    </Typography>
+                </Avatar>
+                <div>
+                    <h3 className={styles['text-name']}>{userRazonSocial}</h3>
+                    <Typography variant="caption" display="block" color="text.secondary">
+                        {userProfession} • Se unió el {userJoined}
+                    </Typography>
+                </div>
+            </header>
+
+            <div className={styles['description']}>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     {userDescription}
                 </Typography>
 
                 {chips.length > 0 && (
-                    <Typography variant="body2" color="text.secondary" className={clsx(styles.Chips)}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                         {chips.map((chip) => chip.label).join(', ')}
                     </Typography>
                 )}
 
                 {userExperience && (
-                    <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
+                    <Typography variant="caption" display="block" color="text.secondary">
                         Experiencia: {userExperience}
                     </Typography>
                 )}
 
                 {userDirection && (
-                    <Typography variant="body1" color="text.secondary">
-                        Ubicación: {userDirection}
+                    <Typography variant="caption" display="block" color="text.secondary">
+                        {userDirection}
                     </Typography>
                 )}
-            </CardContent>
+            </div>
 
-            <CardActions
-                className={clsx(styles.Actions)}
-                disableSpacing
-            >
-                <Button className={clsx(styles.ActionButton)} onClick={handleVerSitio}>
+            <div className={styles['actions']}>
+                <Button
+                    className="btn-round btn-low"
+                    onClick={handleVerSitio}
+                    fullWidth
+                    size="small"
+                >
                     Ver sitio
                 </Button>
 
                 {isAuthenticated && (
                     <>
                         <Button
-                            className={clsx(styles.ActionButton, styles.Quote)}
+                            className="btn-round btn-high"
                             onClick={handleCotizarVisitaTecnica}
+                            fullWidth
+                            size="small"
                         >
-                            Cotizar Visita Técnica
+                            Cotizar
                         </Button>
 
                         <IconButton
-                            className={clsx(styles.FavoriteButton)}
                             aria-label="add to favorites"
                             onClick={handleFavorite}
+                            size="small"
                         >
-                            <FavoriteIcon />
+                            <FavoriteIcon fontSize="small" />
                         </IconButton>
                     </>
                 )}
 
-                <IconButton aria-label="share" onClick={handleShare}>
-                    <ShareIcon />
+                <IconButton aria-label="share" onClick={handleShare} size="small">
+                    <ShareIcon fontSize="small" />
                 </IconButton>
-            </CardActions>
-        </Card>
+            </div>
+        </article>
     )
 }
 
