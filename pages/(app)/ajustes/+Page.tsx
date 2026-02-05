@@ -10,9 +10,7 @@ import { SnackBarAlert, ChipsCategories } from '@components/common'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 // Styles
 // UI Libs
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import FormGroup from '@mui/material/FormGroup'
@@ -44,7 +42,7 @@ interface UserEditInfo {
 interface AlertState {
     open: boolean
     message: string
-    severity: 'success' | 'error' | 'warning' | 'info' | 'default'
+    severity: 'success' | 'error' | 'warning' | 'info'
 }
 export default function Page() {
     const { currentUser } = useAuth()
@@ -457,7 +455,7 @@ export default function Page() {
                                     <ChipsCategories
                                         setUserEditInfo={setUserEditInfo}
                                         userEditInfo={userEditInfo}
-                                        listadoCategorias={ListadoCategorias}
+                                        listadoCategorias={ListadoCategorias as any[]}
                                         saved={saved}
                                     />
                                 </Col>

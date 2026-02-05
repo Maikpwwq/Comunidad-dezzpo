@@ -1,17 +1,12 @@
 import { useState, useEffect, Suspense } from 'react'
 import { navigate } from 'vike/client/router'
 import { usePageContext } from '@hooks/usePageContext'
-// @ts-ignore
 import { SearchBar } from '@components/layout'
 import { getUsers } from '@services/users'
 import { searchByName } from '@services/search'
-// @ts-ignore
 import { UserCard } from '@features/profile'
 // UI Libs
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
+import { Row, Col, Container, Button } from 'react-bootstrap'
 import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'

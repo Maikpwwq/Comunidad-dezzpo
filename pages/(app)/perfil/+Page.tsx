@@ -21,9 +21,7 @@ import { ChipsCategories, MapaPerfil, AdjuntarArchivos, CincoEstrellas } from '@
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 // UI Libs
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import { Row, Col, Container } from 'react-bootstrap'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
