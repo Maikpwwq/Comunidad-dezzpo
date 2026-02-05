@@ -9,10 +9,10 @@
 }
 
 .SliderImage {
-    width: 33.333%;
-    height: 200px;
+    width: 100%; // Width controlled by Col parent
+    height: 330px;
     object-fit: cover;
-    padding: 4px;
+    padding: 2px; // Reduced padding
     border-radius: 8px;
     transition: transform $transition-fast;
 

@@ -12,7 +12,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay, bindKeyboard } from 'react-swipeable-views-utils'
-import { Row } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import clsx from 'clsx'
 
 import styles from './CategoriasSlider.module.scss'
@@ -65,12 +65,13 @@ export function CategoriasSlider(): React.ReactElement {
                 {categoriesImages.map((categoria, index) => (
                     <Row key={index}>
                         {categoria.map((imgSrc, imgIdx) => (
-                            <img
-                                key={imgIdx}
-                                src={imgSrc}
-                                alt="Categorias Populares entre la Comunidad"
-                                className={styles.SliderImage}
-                            />
+                            <Col xs={4} key={imgIdx} className="p-0">
+                                <img
+                                    src={imgSrc}
+                                    alt="Categorias Populares entre la Comunidad"
+                                    className={styles.SliderImage}
+                                />
+                            </Col>
                         ))}
                     </Row>
                 ))}
