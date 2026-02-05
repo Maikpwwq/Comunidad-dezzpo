@@ -5,7 +5,6 @@
  * Migrated from src/app/pages/suscripciones/+Page.jsx
  */
 // Bootstrap
-// Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
 import { Button, Typography } from '@mui/material'
