@@ -35,27 +35,27 @@ const sponsors = [
 export default function Page() {
     return (
         <Container fluid className="sponsors-page p-0">
-            <Row className="containerPatrocinadores">
-                <Col className="col-10 align-items-start">
-                    <div className="patrocinadoresMensaje">
-                        <span className="tituloDocumento">
-                            <h1 className="type-hero-title">
-                                Estos son algunos de <br /> nuestros patrocinadores
-                            </h1>
-                        </span>
-                        <ul className="p-description flex-row align-items-center">
+            <Row className="containerPatrocinadores m-0 d-flex align-items-center" style={{ minHeight: '600px' }}>
+                <Col className="col-12 d-flex justify-content-center">
+                    <div className="patrocinadoresMensaje text-center opacidad-negro p-5 rounded-3">
+                        <h1 className="type-hero-title text-blanco mb-5">
+                            Estos son algunos de <br /> nuestros patrocinadores
+                        </h1>
+                        <ul className="list-unstyled d-flex flex-wrap justify-content-center align-items-center gap-5 m-0 p-0">
                             {sponsors.map((sponsor) => (
                                 <li key={sponsor.name}>
                                     <a
                                         href={sponsor.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        className="d-block transition-transform hover-scale"
                                     >
                                         <img
                                             src={sponsor.logo}
                                             alt={`Logo ${sponsor.name}`}
                                             height={sponsor.height}
-                                            className={`my-3 ${sponsor.className || ''}`}
+                                            className={`img-fluid ${sponsor.className || ''}`}
+                                            style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }}
                                         />
                                     </a>
                                 </li>

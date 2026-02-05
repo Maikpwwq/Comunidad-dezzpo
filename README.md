@@ -24,6 +24,7 @@ The project utilizes a **Tiered Access Model**:
 3. **Hybrid (App Guest):** Accessible by anyone w/ App Shell. UI adapts to auth state.
     - `/app/portal-servicios`
     - `/app/directorio-requerimientos`
+    - `/app/ver-requerimiento/[id]`
     - `/app/suscripciones` 
     - `/app/perfil/[id]` (Public View)
 4. **Strict (App Auth):** Requires valid session (e.g., `/app/messages`, `/app/settings`).

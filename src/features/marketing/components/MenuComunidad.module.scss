@@ -1,19 +1,19 @@
-@use '@styles/_variables' as *;
+
 
 // Top Bar styles (Dark background)
 .TopBar {
-    background-color: #333333; // Legacy dark color
+    background-color: var(--primary-color-dark); // Use variable if available, or fallback
     color: var(--content-text-white-color);
-    font-size: 14px;
-    padding: 5px 0;
+    padding: $spacing-1 0;
     position: relative;
-    z-index: 1100;
-    
+    z-index: 1040; // Bootstrap fixed header z-index is 1030
+
     a {
         color: var(--content-text-white-color);
-        font-size: 13px;
+        font-size: 0.85rem; // Equivalent to ~13-14px
         text-decoration: none;
-        
+        transition: color $transition-fast;
+
         &:hover {
             color: var(--primary-green-text-color);
         }
@@ -21,23 +21,11 @@
 }
 
 .MainNavbar {
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    padding: 10px 0;
+    background-color: var(--background-white-color);
+    box-shadow: $box-shadow-sm;
+    padding: $spacing-2 0;
     position: relative;
-    z-index: 1100;
-}
-
-.Container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 0 auto;
-
-    @media screen and (max-width: 600px) {
-        display: none !important;
-    }
+    z-index: 1040;
 }
 
 .MobileMenu {
@@ -50,7 +38,7 @@
         height: 100%;
         top: 80px;
         left: 0;
-        z-index: 1200;
+        z-index: 1050;
         background-color: var(--background-main-green-color);
         display: flex;
         flex-direction: column;
@@ -59,12 +47,10 @@
 }
 
 .Logo {
-    height: 55px; // Increased size to match reference
+    height: 55px;
     width: auto;
 
     &.Isologo {
-        height: 55px;
-        width: auto;
         padding-left: $spacing-3;
         @media screen and (max-width: 600px) {
             display: none !important;
@@ -77,62 +63,73 @@
     text-align: center;
     color: var(--primary-black-text-color);
     text-decoration: none;
-    min-height: 40px;
+    min-height: 48px; // Touch target size
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 30px;
+    border-radius: 30px; // Pill shape
     transition: all $transition-fast;
 
-    &:hover {
+    &:hover, &:focus {
         background-color: var(--background-main-green-color);
         color: var(--content-text-white-color) !important;
+        
+        // Ensure icon color changes on hover if nested
+        svg {
+            color: var(--content-text-white-color);
+        }
     }
 
     &.Active {
         color: var(--primary-black-text-color);
-        font-weight: bold;
+        font-weight: 600;
     }
 }
 
 .Dropdown {
     position: relative;
     max-width: 150px;
-    transition: background-color 0.3s;
 
+    // Show dropdown on hover
     &:hover .DropdownContent {
         display: flex;
         flex-direction: column;
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
     }
 }
 
 .DropdownContent {
-    display: none;
+    display: none; // Fallback
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all $transition-fast ease-in-out;
+    
     position: absolute;
     top: 100%;
     left: 0;
     background-color: white;
     min-width: 220px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    z-index: 100;
-    padding: 10px 0;
+    box-shadow: $box-shadow-md;
+    border-radius: $border-radius-md;
+    z-index: 1050;
+    padding: $spacing-2 0;
     overflow: hidden;
 
     a {
-        font-size: 14px;
         color: var(--content-text-color);
         text-decoration: none;
         width: 100%;
-        padding: 8px 15px;
+        padding: $spacing-2 $spacing-3;
         display: block;
+        transition: background-color $transition-fast;
 
         &:hover {
-            background-color: #f8f9fa;
+            background-color: var(--background-light-gray-color, #f8f9fa);
             color: var(--primary-green-text-color);
-            text-decoration: none;
         }
     }
 }
+

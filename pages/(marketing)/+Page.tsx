@@ -59,86 +59,97 @@ export default function Page() {
     return (
         <div className="home-container">
             <Container fluid className="p-0 pt-4">
-                <Box sx={{ width: '100%', flexGrow: 1 }}>
-                    <CustomSwipeableViews
-                        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                        index={activeStep}
-                        onChangeIndex={handleStepChange}
-                        enableMouseEvents
+                <Row className="m-0 w-100 banner-comunidad d-flex justify-content-center">
+                    <Col className="image-container" lg={2} md={3} sm={12} xs={11}>
+                        {/* Image placeholder / spacing column if image is background */}
+                    </Col>
+                    <Col
+                        id="contenedorBanner"
+                        className="m-0 p-0 pt-4 d-flex flex-column justify-content-center align-items-center"
+                        xl={5}
+                        lg={5}
+                        md={5}
+                        sm={10}
+                        xs={11}
                     >
-                        {/* Banner Principal */}
-                        <Row className="m-0 w-100 banner-comunidad d-flex justify-content-center">
-                            <Col className="image-container" lg={2} md={3} sm={12} xs={11}>
-                                {/* Image placeholder / spacing column if image is background */}
-                            </Col>
-                            <Col
-                                id="contenedorBanner"
-                                className="m-0 p-0 pt-4 d-flex flex-column justify-content-center align-items-center"
-                                xl={5}
-                                lg={5}
-                                md={5}
-                                sm={10}
-                                xs={11}
+                        <Box className="slogan p-0 ps-4">
+                            <h1 className="type-hero-title">
+                                <strong>Bienvenido</strong>
+                            </h1>
+                            <Typography variant="body2" className="mb-4 mt-2">
+                                ¡Encuentra al instante el personal profesional ideal para cada proyecto en el hogar!
+                            </Typography>
+                            <Typography
+                                variant="subtitle1"
+                                className="text-verde btn btn-round btn-high"
+                                sx={{ backgroundColor: 'transparent !important', border: '2px solid var(--background-main-green-color)' }}
+                                onClick={handleClick}
                             >
-                                <Box className="slogan p-0 ps-4">
-                                    <h1 className="type-hero-title">
-                                        <strong>Bienvenido</strong>
-                                    </h1>
-                                    <Typography variant="body2" className="mb-4 mt-2">
-                                        ¡Encuentra al instante el personal profesional ideal para cada proyecto en el hogar!
-                                    </Typography>
-                                    <Typography
-                                        variant="subtitle1"
-                                        className="text-verde btn btn-round btn-high"
-                                        sx={{ backgroundColor: 'transparent !important', border: '2px solid var(--background-main-green-color)' }}
-                                        onClick={handleClick}
+                                Unete a la Comunidad
+                            </Typography>
+                        </Box>
+                    </Col>
+                    <Col className="col m-4 p-0 d-flex justify-content-center flex-column" xl={4} lg={4} md={4} sm={12} xs={12}>
+                        <Box sx={{ width: '100%', position: 'relative' }}>
+                            <CustomSwipeableViews
+                                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                                index={activeStep}
+                                onChangeIndex={handleStepChange}
+                                enableMouseEvents
+                                style={{ width: '100%' }}
+                            >
+                                {/* Step 1: Search Form */}
+                                <div style={{ width: '100%', overflow: 'hidden' }}>
+                                    <ProjectSearchForm simple={false} />
+                                </div>
+
+                                {/* Step 2: Subscribe Section */}
+                                <div style={{ width: '100%', overflow: 'hidden' }}>
+                                    <Subscribe />
+                                </div>
+                            </CustomSwipeableViews>
+
+                            <MobileStepper
+                                sx={{
+                                    ...styles.stepper,
+                                    bottom: '0',
+                                    justifyContent: 'center',
+                                    paddingTop: 2
+                                }}
+                                steps={maxSteps}
+                                activeStep={activeStep}
+                                nextButton={
+                                    <Button
+                                        size="large"
+                                        onClick={handleNext}
+                                        className="arrow-next"
+                                        disabled={activeStep === maxSteps - 1}
                                     >
-                                        Unete a la Comunidad
-                                    </Typography>
-                                </Box>
-                            </Col>
-                            <Col className="col m-4 p-0 d-flex justify-content-center" xl={4} lg={4} md={4} sm={12} xs={12}>
-                                <ProjectSearchForm simple={false} />
-                            </Col>
-                        </Row>
-                        {/* Subscribe Section */}
-                        <Subscribe />
-                    </CustomSwipeableViews>
-                    <MobileStepper
-                        sx={styles.stepper}
-                        className="pb-4 mb-4"
-                        steps={maxSteps}
-                        activeStep={activeStep}
-                        nextButton={
-                            <Button
-                                size="large"
-                                onClick={handleNext}
-                                className="arrow-next"
-                                disabled={activeStep === maxSteps - 1}
-                            >
-                                {theme.direction === 'rtl' ? (
-                                    <KeyboardArrowLeft fontSize="large" />
-                                ) : (
-                                    <KeyboardArrowRight fontSize="large" />
-                                )}
-                            </Button>
-                        }
-                        backButton={
-                            <Button
-                                size="large"
-                                onClick={handleBack}
-                                className="arrow-back"
-                                disabled={activeStep === 0}
-                            >
-                                {theme.direction === 'rtl' ? (
-                                    <KeyboardArrowRight fontSize="large" />
-                                ) : (
-                                    <KeyboardArrowLeft fontSize="large" />
-                                )}
-                            </Button>
-                        }
-                    />
-                </Box>
+                                        {theme.direction === 'rtl' ? (
+                                            <KeyboardArrowLeft fontSize="large" />
+                                        ) : (
+                                            <KeyboardArrowRight fontSize="large" />
+                                        )}
+                                    </Button>
+                                }
+                                backButton={
+                                    <Button
+                                        size="large"
+                                        onClick={handleBack}
+                                        className="arrow-back"
+                                        disabled={activeStep === 0}
+                                    >
+                                        {theme.direction === 'rtl' ? (
+                                            <KeyboardArrowRight fontSize="large" />
+                                        ) : (
+                                            <KeyboardArrowLeft fontSize="large" />
+                                        )}
+                                    </Button>
+                                }
+                            />
+                        </Box>
+                    </Col>
+                </Row>
             </Container>
             {/* Description Banner */}
             <Container fluid className="p-0">

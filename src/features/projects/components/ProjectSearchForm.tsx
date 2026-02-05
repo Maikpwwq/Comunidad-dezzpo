@@ -131,7 +131,7 @@ export function ProjectSearchForm({
                         </>
                     )}
 
-                    <Form className="p-4 pt-0" id="formularioServicios">
+                    <Form className="p-4 py-0" id="formularioServicios">
                         {/* Project Type */}
                         <Form.Group className="mb-3" controlId="formTipoProyecto">
                             <InputGroup>

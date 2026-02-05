@@ -5,92 +5,19 @@
  * Migrated from src/index/components/datos_contacto/DatosContacto.jsx
  */
 
-import React from 'react'
-import IcoMoon from 'react-icomoon'
-import iconSet from '@assets/icomoon/selection.json'
-import { Row, Col } from 'react-bootstrap'
-
-// Contact data configuration
-const contactData = {
-    phone: {
-        icon: 'TelefonoContactoIcono',
-        number: '+57 3204842897',
-        whatsappLink: 'https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20...',
-        label: 'Office',
-    },
-    address: {
-        icon: 'DireccionDomicilioIcono',
-        lines: ['Dirección Cll 159 No. 8c-45', 'Piso 5'],
-    },
-    email: {
-        icon: 'EmailIcono',
-        address: 'comunidad.dezzpo@gmail.com',
-    },
-}
+import { Col } from 'react-bootstrap'
+import { ContactItem } from '@components/molecules/ContactItem'
 
 export function DatosContacto(): React.ReactElement {
     return (
         <Col className="p-4 pb-0">
             <Col className="datos-contacto pt-0">
-                <h2 className="headline-l text-blanco">Ponte en Contacto</h2>
-                <ul className="lista-contacto pt-3 w-100 align-items-end">
-                    {/* Phone */}
-                    <Row className="border-top m-0 w-100 d-flex">
-                        <IcoMoon
-                            iconSet={iconSet as any}
-                            icon={contactData.phone.icon}
-                            style={{ height: '21px', marginRight: '8px', width: 'auto' }}
-                        />
-                        <Col className="m-0 p-0 body-1 align-items-end pt-2 pb-2">
-                            <li>
-                                +57{' '}
-                                <a
-                                    className="chat-with-us body-1"
-                                    href={contactData.phone.whatsappLink}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    3204842897
-                                </a>
-                                - {contactData.phone.label}
-                            </li>
-                        </Col>
-                    </Row>
-
-                    {/* Address */}
-                    <Row className="border-top m-0 w-100 d-flex">
-                        <IcoMoon
-                            iconSet={iconSet as any}
-                            icon={contactData.address.icon}
-                            style={{ height: '21px', marginRight: '8px', width: 'auto' }}
-                        />
-                        <Col className="m-0 p-0 body-1 align-items-end pt-2 pb-2">
-                            {contactData.address.lines.map((line, idx) => (
-                                <li key={idx}>{line}</li>
-                            ))}
-                        </Col>
-                    </Row>
-
-                    {/* Email */}
-                    <Row className="border-top m-0 w-100 d-flex">
-                        <Col className="m-0 p-0 pt-2 pb-2 body-1 align-items-end">
-                            <li>
-                                <IcoMoon
-                                    iconSet={iconSet as any}
-                                    icon={contactData.email.icon}
-                                    style={{ height: '21px', marginRight: '8px', width: 'auto' }}
-                                />
-                                <a
-                                    className="chat-with-us"
-                                    href={`mailto:${contactData.email.address}`}
-                                    title="Correo Comunidad Dezzpo"
-                                >
-                                    {contactData.email.address}
-                                </a>
-                            </li>
-                        </Col>
-                    </Row>
-                </ul>
+                <h2 className="headline-l" style={{ color: 'var(--primary-titles-text-color)' }}>Ponte en Contacto</h2>
+                <div className="pt-3 w-100 d-flex flex-column gap-3">
+                    <ContactItem type="phone" variant="page" />
+                    <ContactItem type="address" variant="page" />
+                    <ContactItem type="email" variant="page" />
+                </div>
             </Col>
         </Col>
     )

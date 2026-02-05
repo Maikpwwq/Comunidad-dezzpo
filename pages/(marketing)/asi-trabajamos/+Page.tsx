@@ -4,7 +4,9 @@
  * Converted to TypeScript.
  */
 // Styles
-// Bootstrap
+import clsx from 'clsx'
+// Components
+import { InfoSection } from '@components/layout/InfoSection'
 // Bootstrap
 import { Row, Col, Button, Container } from 'react-bootstrap'
 // MUI
@@ -30,121 +32,127 @@ export default function Page() {
             <div className="asi-trabajamos-registro" />
             {/* Chat Section */}
             <Container fluid className="p-0">
-                <Row className="asi-trabajamos-chat m-0 w-100 d-flex justify-content-end">
-                    <Col className="col d-flex" md={6} sm={12}>
-                        <h1 className="chat-asesor type-hero-title">
-                            Contacta Con Un Asesor
-                            <br />
-                            en Tiempo Real En Nuestro Chat <ChatIcon className="ms-1" />
-                        </h1>
-                        <br />
-                        <Button className="btn btn-round btn-high btn-avanzar">
-                            <a
-                                className="body-1"
-                                href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                CHAT EN VIVO
-                            </a>
-                        </Button>
-                    </Col>
-                </Row>
-            </Container>
-            {/* Vinculate Section */}
-            <Container fluid className="p-0">
-                <Row className="asi-trabajamos-vinculate m-0 w-100 d-flex justify-content-end">
-                    <Col className="col d-flex center" lg={4} md={8} sm={12}>
-                        <span className="headline-xl opacidad-negro p-4">PERFIL COMERCIANTE</span>
-                        <div className="pt-4">
-                            <Button className="btn btn-vinculate">Vinculate</Button>
+                <Row className="asi-trabajamos-chat m-0 w-100 d-flex align-items-center" style={{ minHeight: '600px' }}>
+                    <Col className="d-flex justify-content-end pe-md-5" md={12}>
+                        <div className="text-end p-5" style={{ maxWidth: '800px' }}>
+                            <h1 className="type-hero-title mb-4">
+                                Contacta Con Un Asesor
+                                <br />
+                                en Tiempo Real En Nuestro Chat <ChatIcon className="ms-1" style={{ fontSize: 'inherit' }} />
+                            </h1>
+                            <Button className="btn btn-round btn-high btn-avanzar mt-3">
+                                <a
+                                    className="body-1 text-white text-decoration-none"
+                                    href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    CHAT EN VIVO
+                                </a>
+                            </Button>
                         </div>
                     </Col>
                 </Row>
             </Container>
-            {/* Propietario Section */}
+
+            {/* Vinculate Section */}
             <Container fluid className="p-0">
-                <Row className="asi-trabajamos-propietario m-0 w-100 d-flex justify-content-end">
-                    <Col className="col d-flex m-0 p-0 ps-4 pe-4" lg={6} md={12} sm={12}>
-                        <h2 className="headline-xl text-blanco">PROPIETARIO</h2>
-                        <p className="body-2 m-0 p-0 ps-4 pe-4 ms-4 me-4 text-blanco">
-                            SOMOS UNA COMUNIDAD DE COMERCIANTES PROFESIONALES, CONTRATA PERSONAL
-                            CALIFICADO MANTENIMIENTO GENERAL RESIDENCIAL Y DE PROPIEDAD HORIZONTAL,
-                            CONSULTA PÚBLICAMENTE LOS PERFILES Y LA REPUTACIÓN DE LOS PRESTADORES DE
-                            SERVICIOS. AHORA TUS PROYECTOS Y REMODELACIONES MÁS RÁPIDO Y SIMPLE QUE NUNCA
-                        </p>
+                <Row className="asi-trabajamos-vinculate m-0 w-100 align-items-center py-5 justify-content-center justify-content-lg-end">
+                    <Col className="text-center" lg={5} md={8} sm={12}>
+                        <div className="p-5 d-inline-block rounded-3 bg-light me-lg-5">
+                            <span className="headline-xl opacidad-negro d-block mb-4">PERFIL COMERCIANTE</span>
+                            <Button className="btn btn-vinculate btn-lg px-5">Vincúlate</Button>
+                        </div>
                     </Col>
                 </Row>
             </Container>
+
+
+            {/* Propietario Section */}
+            <Container fluid className="p-0 bg-dark">
+                <Row className="asi-trabajamos-propietario m-0 w-100 py-5 justify-content-center justify-content-lg-end">
+                    <Col className="p-5" lg={6} md={10}>
+                        <div className="text-center me-lg-5">
+                            <h2 className="headline-xl text-blanco mb-4">Propietario</h2>
+                            <p className="body-1 text-blanco" style={{ maxWidth: '900px', margin: '0 auto' }}>
+                                Somos una comunidad de comerciantes profesionales, contrata personal
+                                calificado mantenimiento general residencial y de propiedad horizontal,
+                                consulta públicamente los perfiles y la reputación de los prestadores de
+                                servicios. Ahora tus proyectos y remodelaciones más rápido y simple que nunca
+                            </p>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+
             {/* Certificación Section */}
             <Container fluid className="p-0">
-                <Row className="asi-trabajamos-certificaciones m-0 w-100">
-                    <Col className="d-flex flex-column align-items-center" md={12}>
-                        <Col
-                            className="certificaciones-titulo d-flex mb-4 mt-4 p-0 align-items-center"
-                            style={{ minHeight: '8em' }}
-                            lg={4}
-                            md={6}
-                            sm={10}
-                            xs={12}
-                        >
-                            <span className="pt-4 p-0 mt-4 text-blanco certificacion-titulo headline-xl">
-                                CERTIFICACIÓN
-                            </span>
-                        </Col>
-                        <Col className="p-0 w-100 d-flex flex-column align-items-start">
-                            <p className="text-blanco m-4 p-4 body-1" style={{ maxWidth: '75ch' }}>
-                                Aumente sus posibilidades laborales, pregunta a nuestro equipo por
-                                nuestra insignia de validación de habilidades. Esto te permitirá
-                                brindar mayor confianza a los propietarios y acceder fácilmente a
-                                proyectos de mayor complejidad.
-                            </p>
-                            <p className="text-blanco m-4 p-4 body-1" style={{ maxWidth: '75ch' }}>
-                                Juntos programamos una visita de inspección para validar entre otras
-                                cosas, certificados y diplomas, equipos y técnica requerida. ¿Listo
-                                para solicitar una? Regístrese e ingrese con su usuario para comenzar.
-                            </p>
-                        </Col>
-                    </Col>
-                </Row>
+                <div className="asi-trabajamos-certificaciones w-100 py-5 d-flex flex-column align-items-center">
+                    <div className="text-center p-5">
+                        <h2 className="headline-xl text-blanco">
+                            Certificación
+                        </h2>
+                    </div>
+                    <div className="p-5 pt-0">
+                        <p className="text-blanco body-1 mb-4" style={{ maxWidth: '75ch' }}>
+                            Aumente sus posibilidades laborales, pregunta a nuestro equipo por
+                            nuestra insignia de validación de habilidades. Esto te permitirá
+                            brindar mayor confianza a los propietarios y acceder fácilmente a
+                            proyectos de mayor complejidad.
+                        </p>
+                        <p className="text-dark body-1" style={{ maxWidth: '75ch' }}>
+                            Juntos programamos una visita de inspección para validar entre otras
+                            cosas, certificados y diplomas, equipos y técnica requerida. ¿Listo
+                            para solicitar una? Regístrese e ingrese con su usuario para comenzar.
+                        </p>
+                    </div>
+                </div>
             </Container>
+
             {/* Calificaciones Section */}
             <Container fluid className="p-0">
-                <Row className="asi-trabajamos-calificaciones m-0 p-4 w-100 d-flex flex-column align-items-end">
-                    <Col className="mt-4" lg={6} md={6} sm={12}>
-                        <h2 className="headline-xl text-blanco">CALIFICACIONES</h2>
-                        <p className="body-1 text-blanco">
-                            La valoración debe darse con base en los siguientes tres aspectos:
-                            <br />
-                            {`>`} Gestión {`>`} Calidad {`>`} Oportunidad
-                        </p>
-                        <br />
-                        <ul className="ps-0 body-2">
-                            <li>Estado de observaciones generales y evaluación del desempeño:</li>
-                            <br />
-                            {ratingCriteria.map((criteria, index) => (
-                                <li key={index}>- {criteria}</li>
-                            ))}
-                        </ul>
+                <Row className="asi-trabajamos-calificaciones m-0 w-100 justify-content-center py-5">
+                    <Col lg={8} md={10}>
+                        <InfoSection
+                            title="CALIFICACIONES"
+                            className="text-white mb-4"
+                            description="La valoración debe darse con base en los siguientes tres aspectos:"
+                        >
+                            <div className="w-100 my-3 text-center">
+                                <strong className="headline-m text-verde">Gestión {'>'} Calidad {'>'} Oportunidad</strong>
+                            </div>
+                        </InfoSection>
+
+                        <div className="bg-dark p-4 rounded-3 text-white">
+                            <p className="body-2 mb-3">Estado de observaciones generales y evaluación del desempeño:</p>
+                            <ul className="list-unstyled">
+                                {ratingCriteria.map((criteria, index) => (
+                                    <li key={index} className="body-2 mb-2 d-flex">
+                                        <span className="me-2 text-verde">•</span>
+                                        {criteria}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </Col>
-                    <Col className="col-12" style={{ minHeight: '200px' }} />
-                    <Col className="col-12" style={{ minHeight: '200px' }} />
                 </Row>
             </Container>
+
             {/* Estadísticas Section */}
-            <Container fluid className="p-0">
-                <Row className="asi-trabajamos-estadisticas m-0">
-                    <Row className="headline-l">
-                        <ul>
+            <Container fluid className="p-0 bg-light">
+                <Row className="asi-trabajamos-estadisticas m-0 py-5 justify-content-center">
+                    <Col lg={10}>
+                        <Row className="text-center">
                             {stats.map((stat) => (
-                                <li key={stat.label}>
-                                    <span className="text-black">{stat.value}</span>
-                                    <br />
-                                    {stat.label}
-                                </li>
+                                <Col key={stat.label} md={3} sm={6} className="mb-4 mb-md-0">
+                                    <div className="p-3">
+                                        <span className="headline-xl d-block mb-2 text-primary">{stat.value}</span>
+                                        <span className="body-1 text-muted fw-bold">{stat.label}</span>
+                                    </div>
+                                </Col>
                             ))}
-                        </ul>
-                    </Row>
+                        </Row>
+                    </Col>
                 </Row>
             </Container>
         </div>

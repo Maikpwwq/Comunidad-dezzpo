@@ -185,20 +185,9 @@ export default function Page() {
                                     } else {
                                         j++
                                         i = 0
-                                        // Push to next array if needed, logic copied from legacy
                                         if (!response[j]) {
                                             response[j] = []
                                         }
-                                        response[j]!.push(element)
-                                        i++ // Increment i? Legacy code: "j++; i=0;" then loop continues. 
-                                        // Wait, legacy code:
-                                        // } else { j++; i = 0; }
-                                        // It dropped the element on the switch iteration! 
-                                        // "data.map((element) => { if (i<6) { ... i++ } else { j++; i=0; } })"
-                                        // If i reached 6, it goes to else, increments j, resets i to 0. BUT DOES NOT PUSH THE CURRENT ELEMENT.
-                                        // This looks like a bug in legacy code or I misread it.
-                                        // " else { j++; i=0; }" -> The element is LOST.
-                                        // I will FIX IT here.
                                         response[j]!.push(element)
                                         i++
                                     }
@@ -291,8 +280,8 @@ export default function Page() {
                         Number(draftInfo.draftCategory) === 0) && (
                             <Row className="nuevo-proyecto-buscador">
                                 <Col className="align-items-start p-4 m-4" md={5} sm={8}>
-                                    <Col className="opacidad-negro p-0">
-                                        <p className="headline-l text-blanco m-4 p-0">
+                                    <Col className="opacidad-negro p-4 rounded-3 text-blanco">
+                                        <p className="headline-m m-0">
                                             Con ayuda de la comunidad haz realidad la casa que deseas.
                                             Encuentra un profesional Seguro y Confiable, para cada trabajo. Desde
                                             iluminación y pequeños arreglos, hasta diseños de ingeniería y
@@ -312,7 +301,7 @@ export default function Page() {
                         <>
                             <Row className="w-100 m-0">
                                 <Col className="p-4" lg={8} md={10}>
-                                    <p className="body-1">
+                                    <p className="body-1 text-dark">
                                         Al seleccionar categorías podrás ir agregando uno a uno todos los
                                         servicios que vas a solicitar. Luego en el siguiente paso podrás modificar la cantidad de
                                         obra que requieres.
@@ -378,12 +367,12 @@ export default function Page() {
                         setDraftInfo={setDraftInfo}
                         draftInfo={draftInfo}
                     />
-                    <Typography variant="h3" className="p-description w-100 center mt-4 mb-4">
-                        Elije tus ajustes
+                    <Typography variant="h3" className="headline-l w-100 center mt-4 mb-4">
+                        Elige tus ajustes
                     </Typography>
                     <Col className="p-4 align-items-start card-frame" xl={6} lg={8} md={10} sm={12}>
                         <Form className="m-4">
-                            <p className="body-1">
+                            <p className="body-1 text-dark">
                                 Crea una oferta. <br />
                                 Dejanos conocer un poco más hacerca del proyecto que vas a postular. * Campos requeridos
                             </p>
@@ -419,7 +408,7 @@ export default function Page() {
                             {showMore && (
                                 <Box>
                                     <Form.Group className="mb-3" controlId="formNewProjectSize">
-                                        <Form.Label className="body-">Escoge el tamaño</Form.Label>
+                                        <Form.Label className="body-2">Escoge el tamaño</Form.Label>
                                         <Form.Select name="draftSize" value={draftInfo.draftSize} onChange={handleChange}>
                                             <option>Selecciona el tamaño del proyecto</option>
                                             <option value="sencillo">Sencillo</option>
@@ -430,7 +419,7 @@ export default function Page() {
                                         </Form.Select>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formNewProjectProperty">
-                                        <Form.Label className="body-">¿Qué tipo de propiedad es?</Form.Label>
+                                        <Form.Label className="body-2">¿Qué tipo de propiedad es?</Form.Label>
                                         <Form.Select name="draftProperty" value={draftInfo.draftProperty} onChange={handleChange}>
                                             <option>Selecciona el tipo de propiedad</option>
                                             <option value="Colonial">Propiedad Colonial (1800 - 1920)</option>
@@ -440,7 +429,7 @@ export default function Page() {
                                         </Form.Select>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formNewProjectRooms">
-                                        <Form.Label className="body-">¿Cuantas habitaciones y/o espacios seran intervenidos?</Form.Label>
+                                        <Form.Label className="body-2">¿Cuantas habitaciones y/o espacios seran intervenidos?</Form.Label>
                                         <Form.Control
                                             type="text"
                                             placeholder="Por favor especifica"
@@ -450,7 +439,7 @@ export default function Page() {
                                         />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formNewProjectPlans">
-                                        <Form.Label className="body-">¿Han sido diseñados planos arquitectonicos?</Form.Label>
+                                        <Form.Label className="body-2">¿Han sido diseñados planos arquitectonicos?</Form.Label>
                                         <Form.Select name="draftPlans" value={draftInfo.draftPlans} onChange={handleChange}>
                                             <option>Selecciona el estado actual</option>
                                             <option value="Aproved">Aprobados</option>
@@ -461,7 +450,7 @@ export default function Page() {
                                         </Form.Select>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formNewProjectPermissions">
-                                        <Form.Label className="body-">¿Cúal es el estado de los permisos?</Form.Label>
+                                        <Form.Label className="body-2">¿Cúal es el estado de los permisos?</Form.Label>
                                         <Form.Select name="draftPermissions" value={draftInfo.draftPermissions} onChange={handleChange}>
                                             <option>Selecciona el estado actual</option>
                                             <option value="Aproved">Aprobados</option>
@@ -499,7 +488,7 @@ export default function Page() {
             )}
             {activeStep === 2 && (
                 <Col className="nuevo-proyecto-buscador-3 align-items-baseline p-2 ps-4">
-                    <Typography variant="h3" className="p-description w-100 center">
+                    <Typography variant="h3" className="headline-l w-100 center">
                         Programa la visita
                     </Typography>
                     <Col className="p-4 align-items-start card-frame" xl={6} lg={8} md={10} sm={12}>

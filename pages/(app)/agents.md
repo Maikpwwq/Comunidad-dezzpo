@@ -30,6 +30,7 @@ const PUBLIC_APP_ROUTES = [
   '/app/portal-servicios',
   '/app/directorio-requerimientos',
   '/app/suscripciones',
+  '/app/ver-requerimiento',
   // Dynamic routes like /app/perfil/@id are handled by logic, not exact match
 ]
 
@@ -51,7 +52,7 @@ export const guard: GuardSync = (pageContext): void => {
 ```
 
 ### Hybrid Route Strategy (SSR Warning)
-Routes like `portal-servicios` work for both Guests and Users. This means:
+Routes like `portal-servicios` and `ver-requerimiento` work for both Guests and Users. This means:
 1.  **NO client-only logic guards** that block rendering (white screen).
 2.  **SSR Safety is Critical**: Components must not access `window`, `localStorage`, or `firebase.auth()` directly during the initial render.
     *   Use `useEffect` for browser-apis.

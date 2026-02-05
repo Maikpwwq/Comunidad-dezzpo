@@ -4,7 +4,9 @@
  * Converted to TypeScript.
  */
 // Styles
-// Bootstrap
+import clsx from 'clsx'
+// Components
+import { InfoSection } from '@components/layout/InfoSection'
 // Bootstrap
 import { Row, Col, Container, Button } from 'react-bootstrap'
 // MUI
@@ -37,93 +39,97 @@ export default function Page() {
     return (
         <div className="help-page">
             <Container fluid className="p-0">
-                <Row className="ayuda-pqrs-titulo m-0 w-100 d-flex flex-row justify-content-start">
-                    <Col className="align-items-start m-4" lg={4} md={6} sm={10}>
-                        <Col className="opacidad-negro center">
-                            <h1 className="type-hero-title text-blanco">
+                <Row className="ayuda-pqrs-titulo m-0 w-100 d-flex flex-row justify-content-start align-items-center" style={{ minHeight: '500px' }}>
+                    <Col className="align-items-start m-4 ps-md-5" lg={6} md={8} sm={10}>
+                        <div className="opacidad-negro p-4 rounded-3" style={{ backdropFilter: 'blur(5px)' }}>
+                            <h1 className="type-hero-title text-blanco mb-3">
                                 ¿Qué tipo de profesional necesitas?
                             </h1>
-                            <p className="p-description">
+                            <p className="headline-l text-blanco p-description mb-0">
                                 ¿De qué manera podemos ayudarte?
                                 <br />
                                 Preguntas frecuentes.
                             </p>
-                        </Col>
+                        </div>
                     </Col>
                 </Row>
             </Container>
-            <Container fluid className="p-0">
-                <Row className="ayuda-pqrs-preguntas m-0 w-100">
-                    <Row className="p-4 align-items-baseline">
-                        <Col className="col p-4" lg={5} sm={12}>
-                            <span className="titulo-sin-margen">
-                                <h3 className="headline-l">Propietarios FAQ's</h3>
-                            </span>
-                            <ul className="body-1">
+            <Container fluid className="p-0 bg-light">
+                <Row className="ayuda-pqrs-preguntas m-0 w-100 py-5 justify-content-center">
+                    <Col lg={10} className="d-flex flex-wrap">
+                        <Col className="p-4" lg={6} md={12}>
+                            <h3 className="headline-l mb-4 color-green">Propietarios FAQ's</h3>
+                            <ul className="list-unstyled mb-5">
                                 {propietariosFaq.map((item) => (
-                                    <li key={item}>
-                                        <a href="#">{item}</a>
+                                    <li key={item} className="mb-2">
+                                        <a href="#" className="body-1 text-dark text-decoration-none hover-underline">{item}</a>
                                     </li>
                                 ))}
                             </ul>
-                            <span className="titulo-sin-margen">
-                                <h3 className="headline-l">Comerciantes calificados FAQ's</h3>
-                            </span>
-                            <ul className="body-1">
+
+                            <h3 className="headline-l mb-4 color-green">Comerciantes calificados FAQ's</h3>
+                            <ul className="list-unstyled mb-5">
                                 {comerciantesFaq.map((item) => (
-                                    <li key={item}>
-                                        <a href="#">{item}</a>
+                                    <li key={item} className="mb-2">
+                                        <a href="#" className="body-1 text-dark text-decoration-none hover-underline">{item}</a>
                                     </li>
                                 ))}
                             </ul>
-                            <span className="titulo-sin-margen">
-                                <h3 className="headline-l">
-                                    Y aquí, más todas las preguntas frecuentes
-                                </h3>
-                            </span>
-                            <ul className="body-1">
+
+                            <h3 className="headline-l mb-4 color-green">
+                                Y aquí, más todas las preguntas frecuentes
+                            </h3>
+                            <ul className="list-unstyled">
                                 {generalFaq.map((item) => (
-                                    <li key={item}>
-                                        <a href="#">{item}</a>
+                                    <li key={item} className="mb-2">
+                                        <a href="#" className="body-1 text-dark text-decoration-none hover-underline">{item}</a>
                                     </li>
                                 ))}
                             </ul>
                         </Col>
-                        <Col className="col justify-content-start p-4" lg={5} sm={12} xs={12}>
-                            <span className="titulo-sin-margen">
-                                <h3 className="headline-l">Servicio al Cliente</h3>
-                            </span>
-                            <p className="body-1">
-                                Si no estás seguro cómo la comunidad funciona,
-                                <br />
-                                o tienes una pregunta que no haya sido resuelta
-                                <br />
-                                en nuestra sección de preguntas frecuentes,
-                                <br />
-                                nuestro equipo estará dispuesto a ayudar,
-                                <br />
-                                respondiendo a tus mensajes de lunes a viernes
-                            </p>
-                            <p className="p-description">
-                                RESUELVE TUS DUDAS
-                                <br />
-                                COMUNÍCATE CON
-                                <br />
-                                UN ASESOR <ChatIcon className="ms-1" />
-                            </p>
-                            <br />
-                            <Button className="btn btn-round btn-high btn-avanzar">
-                                <a
-                                    className="body-1"
-                                    href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+
+                        <Col className="p-4" lg={6} md={12}>
+                            <div className="bg-white p-5 rounded-3 shadow-sm">
+                                <h3 className="headline-xl mb-4 text-center">Servicio al Cliente</h3>
+                                <p className="body-1 mb-4">
+                                    Si no estás seguro cómo la comunidad funciona,
+                                    <br />
+                                    o tienes una pregunta que no haya sido resuelta
+                                    <br />
+                                    en nuestra sección de preguntas frecuentes,
+                                    <br />
+                                    nuestro equipo estará dispuesto a ayudar,
+                                    <br />
+                                    respondiendo a tus mensajes de lunes a viernes
+                                </p>
+
+                                <InfoSection
+                                    title="RESUELVE TUS DUDAS"
+                                    centered
+                                    className="mb-4"
+                                    description=""
                                 >
-                                    CHAT EN VIVO
-                                </a>
-                            </Button>
+                                    <div className="text-center w-100">
+                                        <span className="headline-m d-block mb-2">COMUNÍCATE CON UN ASESOR <ChatIcon className="ms-1" /></span>
+                                    </div>
+                                </InfoSection>
+
+                                <div className="text-center mt-4">
+                                    <Button className="btn btn-round btn-high btn-avanzar">
+                                        <a
+                                            className="body-1 text-white text-decoration-none"
+                                            href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            Chat en vivo
+                                        </a>
+                                    </Button>
+                                </div>
+                            </div>
                         </Col>
-                    </Row>
+
+                    </Col>
                 </Row>
             </Container>
         </div>
