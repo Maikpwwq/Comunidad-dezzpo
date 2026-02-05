@@ -21,7 +21,7 @@ if (isProd) {
     '@emotion/react',
     '@emotion/styled',
     // Third-party UI libraries
-    'react-bootstrap',
+    // 'react-bootstrap', // Commented out to fix SSR named import element type error (let Node handle CJS interop)
     'date-fns',
     '@sendbird/uikit-react',
     'react-swipeable-views',
