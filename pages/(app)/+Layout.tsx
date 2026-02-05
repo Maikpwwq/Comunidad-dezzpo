@@ -64,11 +64,77 @@ export function Layout({ children }: LayoutProps): React.ReactElement {
     return (
         <ThemeProvider theme={theme}>
             <UserAuthProvider>
-                <SendbirdProviderWrapper>
+                {isAuth ? (
+                    <SendbirdProviderWrapper>
+                        <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+                            <CssBaseline />
+
+                            {/* Sidebar Navigation */}
+                            <Box
+                                component="nav"
+                                sx={{
+                                    width: { md: drawerWidth },
+                                    flexShrink: { sm: 0 },
+                                }}
+                            >
+                                {/* Mobile temporary drawer */}
+                                {mobileOpen && (
+                                    <Sidebar
+                                        open={mobileOpen}
+                                        onClose={handleMobileClose}
+                                        variant="temporary"
+                                    />
+                                )}
+
+                                {/* Desktop permanent drawer */}
+                                <Box
+                                    sx={{
+                                        display: {
+                                            md: 'block',
+                                            sm: 'none',
+                                            xs: 'none',
+                                        },
+                                    }}
+                                >
+                                    <Sidebar
+                                        open={sidebarOpen}
+                                        onClose={() => setSidebarOpen(false)}
+                                        variant="permanent"
+                                    />
+                                </Box>
+                            </Box>
+
+                            {/* Main Content Area */}
+                            <Box
+                                sx={{
+                                    flex: 1,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }}
+                                style={{ overflowX: 'auto' }}
+                            >
+                                <Navbar onMenuToggle={handleMenuToggle} />
+
+                                <Box
+                                    className="p-0"
+                                    component="main"
+                                    sx={{ flex: 1, py: 6, px: 4, bgcolor: '#ffffff' }}
+                                >
+                                    {children}
+                                </Box>
+
+                                <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
+                                    <Copyright />
+                                </Box>
+                            </Box>
+                        </Box>
+                    </SendbirdProviderWrapper>
+                ) : (
+                    // Guest Layout (No Sendbird)
                     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
                         <CssBaseline />
 
-                        {/* Sidebar Navigation */}
+                        {/* Sidebar Navigation (Guest)*/}
                         <Box
                             component="nav"
                             sx={{
@@ -77,7 +143,7 @@ export function Layout({ children }: LayoutProps): React.ReactElement {
                             }}
                         >
                             {/* Mobile temporary drawer */}
-                            {mobileOpen && isAuth && (
+                            {mobileOpen && (
                                 <Sidebar
                                     open={mobileOpen}
                                     onClose={handleMobileClose}
@@ -127,7 +193,7 @@ export function Layout({ children }: LayoutProps): React.ReactElement {
                             </Box>
                         </Box>
                     </Box>
-                </SendbirdProviderWrapper>
+                )}
             </UserAuthProvider>
         </ThemeProvider>
     )
