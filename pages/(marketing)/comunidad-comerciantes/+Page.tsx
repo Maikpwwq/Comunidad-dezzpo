@@ -55,7 +55,7 @@ export default function Page() {
             <Container fluid className="p-0">
                 <Row className="comunidad-comerciantes-registro p-4 m-0">
                     <Col md={6} lg={6}>
-                        <h1 className="type-hero-title center">COMUNIDAD COMERCIANTES</h1>
+                        <h1 className="type-hero-title center">Comunidad de Comerciantes</h1>
                     </Col>
                     <Registro showLogo={false} />
                 </Row>

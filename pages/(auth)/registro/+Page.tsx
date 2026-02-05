@@ -89,113 +89,113 @@ export default function Page({
             handleSave()
         }
     }
-    return (
+
     const formContent = (
-            <Col className={clsx(styles.FormWrapper, "m-0 p-0 mb-4 mt-4")} lg={4} md={5} sm={10} xs={10}>
-                <Paper elevation={16} className={clsx(styles.FormCard, "pt-4 pb-4")}>
-                    <Form action="" className="p-2" onSubmit={handleEmailSignup}>
-                        <Col className="d-flex pt-4 pb-4">
-                            <h1 className="type-hero-title">
-                                Registrate
-                            </h1>
-                            {/* Step 1: Role Selection */}
-                            {step === 1 ? (
-                                <RoleSelector
-                                    onSelect={handleSelectRole}
-                                    selectedRole={role}
+        <Col className={clsx(styles.FormWrapper, "m-0 p-0 mb-4 mt-4")} lg={4} md={5} sm={10} xs={10}>
+            <Paper elevation={16} className={clsx(styles.FormCard, "pt-4 pb-4")}>
+                <Form action="" className="p-2" onSubmit={handleEmailSignup}>
+                    <Col className="d-flex pt-4 pb-4">
+                        <h1 className="type-hero-title">
+                            Registrate
+                        </h1>
+                        {/* Step 1: Role Selection */}
+                        {step === 1 ? (
+                            <RoleSelector
+                                onSelect={handleSelectRole}
+                                selectedRole={role}
+                            />
+                        ) : (
+                            <>
+                                {/* Step 2: Registration Form */}
+                                <Form.Label className="mb-0 body-1 pt-4">
+                                    {role === 1 ? 'Soy propietario/residente' : 'Soy comerciante calificado'}
+                                </Form.Label>
+                                <GoogleAuthButton
+                                    onClick={handleGoogleSignup}
+                                    label="Registrarse con Gmail"
                                 />
-                            ) : (
-                                <>
-                                    {/* Step 2: Registration Form */}
-                                    <Form.Label className="mb-0 body-1 pt-4">
-                                        {role === 1 ? 'Soy propietario/residente' : 'Soy comerciante calificado'}
-                                    </Form.Label>
-                                    <GoogleAuthButton
-                                        onClick={handleGoogleSignup}
-                                        label="Registrarse con Gmail"
-                                    />
-                                    <Col className="d-flex flex-column align-items-center" lg={10} md={12} sm={10} xs={12}>
-                                        <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                            <Form.Label className="mb-0 body-1">Nombre de usuario</Form.Label>
-                                            <Form.Control
-                                                className={clsx(styles.Input)}
-                                                type="text"
-                                                placeholder="elija su usuario"
-                                                value={name}
-                                                onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                            <Form.Label className="mb-0 body-1">Email</Form.Label>
-                                            <Form.Control
-                                                className={clsx(styles.Input)}
-                                                type="email"
-                                                placeholder="registre una cuenta de email válida"
-                                                value={email}
-                                                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                            <Form.Label className="mb-0 body-1">Contraseña</Form.Label>
-                                            <Form.Control
-                                                className={clsx(styles.Input)}
-                                                type="password"
-                                                placeholder="registre una clave"
-                                                value={password}
-                                                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                            <Form.Label className="mb-0 body-1">Confirmar contraseña</Form.Label>
-                                            <Form.Control
-                                                className={clsx(styles.Input)}
-                                                type="password"
-                                                placeholder="de nuevo la clave"
-                                                value={confirmPassword}
-                                                onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col className="pt-4 pb-3">
-                                        <a
-                                            href="https://drive.google.com/file/d/1R3uRi3zZ0MmjN3VoUp3GvLGvZ3bCaT6e/view?usp=sharing"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            <h3 className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")}>
-                                                Aviso tratamiento de datos personales <DownloadIcon fontSize="small" />.
-                                            </h3>
-                                        </a>
-                                        <br />
-                                        <Button
-                                            onClick={() => setStep(1)}
-                                            className="mb-4 btn-round btn-middle w-auto"
-                                            variant="secondary"
-                                        >
-                                            <KeyboardBackspaceIcon /> Volver atrás
-                                        </Button>
-                                        <span className="mt-1" style={{ marginBottom: '1rem' }} />
-                                        <Button
-                                            className="btn-buscador btn-round btn-high body-1"
-                                            variant="primary"
-                                            type="submit"
-                                            disabled={isLoading}
-                                        >
-                                            {isLoading ? 'Cargando...' : 'Crear Cuenta'}
-                                        </Button>
-                                    </Col>
-                                </>
-                            )}
-                            <p className="body-1 pt-2">
-                                <Link className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")} href="/ingreso/">
-                                    Ingresar
-                                </Link>
-                            </p>
-                        </Col>
-                    </Form>
-                </Paper>
-            </Col>
-        )
+                                <Col className="d-flex flex-column align-items-center" lg={10} md={12} sm={10} xs={12}>
+                                    <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
+                                        <Form.Label className="mb-0 body-1">Nombre de usuario</Form.Label>
+                                        <Form.Control
+                                            className={clsx(styles.Input)}
+                                            type="text"
+                                            placeholder="elija su usuario"
+                                            value={name}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
+                                        <Form.Label className="mb-0 body-1">Email</Form.Label>
+                                        <Form.Control
+                                            className={clsx(styles.Input)}
+                                            type="email"
+                                            placeholder="registre una cuenta de email válida"
+                                            value={email}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
+                                        <Form.Label className="mb-0 body-1">Contraseña</Form.Label>
+                                        <Form.Control
+                                            className={clsx(styles.Input)}
+                                            type="password"
+                                            placeholder="registre una clave"
+                                            value={password}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
+                                        <Form.Label className="mb-0 body-1">Confirmar contraseña</Form.Label>
+                                        <Form.Control
+                                            className={clsx(styles.Input)}
+                                            type="password"
+                                            placeholder="de nuevo la clave"
+                                            value={confirmPassword}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col className="pt-4 pb-3">
+                                    <a
+                                        href="https://drive.google.com/file/d/1R3uRi3zZ0MmjN3VoUp3GvLGvZ3bCaT6e/view?usp=sharing"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <h3 className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")}>
+                                            Aviso tratamiento de datos personales <DownloadIcon fontSize="small" />.
+                                        </h3>
+                                    </a>
+                                    <br />
+                                    <Button
+                                        onClick={() => setStep(1)}
+                                        className="mb-4 btn-round btn-middle w-auto"
+                                        variant="secondary"
+                                    >
+                                        <KeyboardBackspaceIcon /> Volver atrás
+                                    </Button>
+                                    <span className="mt-1" style={{ marginBottom: '1rem' }} />
+                                    <Button
+                                        className="btn-buscador btn-round btn-high body-1"
+                                        variant="primary"
+                                        type="submit"
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? 'Cargando...' : 'Crear Cuenta'}
+                                    </Button>
+                                </Col>
+                            </>
+                        )}
+                        <p className="body-1 pt-2">
+                            <Link className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")} href="/ingreso/">
+                                Ingresar
+                            </Link>
+                        </p>
+                    </Col>
+                </Form>
+            </Paper>
+        </Col>
+    )
 
     if (!showLogo) {
         return formContent
