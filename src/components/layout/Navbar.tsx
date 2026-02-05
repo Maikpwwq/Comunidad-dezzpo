@@ -150,6 +150,11 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                             {headerItems.map((item) => (
                                 <Tab
                                     key={item.id}
+                                    sx={{
+                                        '&:hover': {
+                                            '--bs-link-color-rgb': 'var(--bs-link-hover-color-rgb)',
+                                        },
+                                    }}
                                     label={
                                         <>
                                             {ICON_MAP[item.icon]}
