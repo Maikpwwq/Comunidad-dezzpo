@@ -56,9 +56,8 @@ export default function Page() {
                 <Row className="asesorias-titulo m-0 w-100">
                     <Col className="align-items-end" lg={6} md={8} sm={10} xs={12}>
                         <Col className="opacidad-negro">
-                            <h1 className="type-hero-title text-blanco">ASESORÍAS EN VIVO</h1>
-                            <br />
-                            <p className="asesoria-message p-description">
+                            <h1 className="type-hero-title text-blanco mb-4">ASESORÍAS EN VIVO</h1>
+                            <p className="body-1 text-blanco mb-4">
                                 Consulta a un profesional de la comunidad, y resuelve ya las dudas
                                 que tengas en cuanto a técnicas, especificaciones de materiales,
                                 alcance, tiempo y costo, de tu nuevo proyecto.
@@ -68,24 +67,25 @@ export default function Page() {
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="asesorias-preguntas m-0 w-100">
+                <Row className="asesorias-preguntas m-0 w-100 py-5">
                     <Col className="row">
                         <Col className="col pb-4" md={6} sm={12}>
-                            <h2 className="headline-xl">¿Requieres de una asesoría?</h2>
-                            <p className="body-1">
+                            <h2 className="headline-xl mb-3">¿Requieres de una asesoría?</h2>
+                            <p className="body-1 mb-4">
                                 Nuestra comunidad de comerciantes calificados te ayudarán con tus
                                 inquietudes.
                             </p>
-                            <h2 className="headline-xl">Realiza una pregunta a un profesional</h2>
-                            <p className="body-1">Obtén ayuda gratuita de la comunidad.</p>
-                            <br />
+                            <h2 className="headline-xl mb-3">Realiza una pregunta a un profesional</h2>
+                            <p className="body-1 mb-4">Obtén ayuda gratuita de la comunidad.</p>
+
                             <Form className="pb-4">
                                 <Form.Group className="mb-3" controlId="formasesoriaSelect">
-                                    <Form.Label className="body-2">Seleccionar categoría</Form.Label>
+                                    <Form.Label className="body-2 fw-bold">Seleccionar categoría</Form.Label>
                                     <Form.Select
                                         name="asesoriaSelect"
                                         value={asesoriaInfo.asesoriaSelect}
                                         onChange={handleChange}
+                                        className="body-2"
                                     >
                                         <optgroup>
                                             <option value="">Selecciona</option>
@@ -96,7 +96,7 @@ export default function Page() {
                                     </Form.Select>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formAsesoriaTitulo">
-                                    <Form.Label className="body-2">
+                                    <Form.Label className="body-2 fw-bold">
                                         Dale un título a tu pregunta
                                     </Form.Label>
                                     <Form.Control
@@ -105,12 +105,13 @@ export default function Page() {
                                         name="asesoriaTitulo"
                                         value={asesoriaInfo.asesoriaTitulo}
                                         onChange={handleChange}
+                                        className="body-2"
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formAsesoriaDescription">
-                                    <Form.Label className="body-2">¿Qué quisieras conocer?</Form.Label>
+                                    <Form.Label className="body-2 fw-bold">¿Qué quisieras conocer?</Form.Label>
                                     <br />
-                                    <Form.Text className="text-muted">
+                                    <Form.Text className="text-muted body-2">
                                         Recuerda entre más detallado puedas describirlo mejores
                                         respuestas obtendrás.
                                     </Form.Text>
@@ -121,10 +122,11 @@ export default function Page() {
                                         name="asesoriaDescription"
                                         value={asesoriaInfo.asesoriaDescription}
                                         onChange={handleChange}
+                                        className="body-2"
                                     />
                                 </Form.Group>
                                 <Button
-                                    className="btn btn-round btn-high btn-avanzar"
+                                    className="btn btn-round btn-high btn-avanzar body-2 fw-bold px-4"
                                     onClick={handleSubmit}
                                 >
                                     PUBLICAR
@@ -132,12 +134,12 @@ export default function Page() {
                             </Form>
                         </Col>
                         <Col className="col pt-4 pb-4" md={6} sm={12}>
-                            <span className="chat-asesor headline-xl mb-4">
+                            <h3 className="headline-xl mb-4">
                                 Contacta Con Un Asesor
                                 <br />
                                 en Tiempo Real En Nuestro Chat <ChatIcon className="ms-1" />
-                            </span>
-                            <Button className="btn btn-round btn-high btn-avanzar">
+                            </h3>
+                            <Button className="btn btn-round btn-high btn-avanzar body-2 fw-bold px-4">
                                 <a
                                     className="body-1 ps-3 text-blanco"
                                     href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."

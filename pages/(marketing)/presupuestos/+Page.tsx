@@ -32,16 +32,18 @@ export default function Page() {
             <Container fluid className="p-0">
                 <Row className="presupuestos-mensaje-buscador align-items-center p-lg-5 p-4">
                     <Col className="mb-4" lg={6} md={12}>
-                        <h2 className="headline-l text-blanco mb-3">
-                            Publica tu proyecto gratis, los profesionales disponibles te
-                            contactarán para ofrecer su presupuesto
-                        </h2>
-                        <p className="body-1 text-blanco">
-                            Anuncia gratuitamente un trabajo.
-                            <br />
-                            Lee comentarios, recibe cotizaciones y sigue las recomendaciones
-                            para contratar.
-                        </p>
+                        <div className="opacidad-negro p-4 rounded-3">
+                            <h2 className="headline-l text-blanco mb-3">
+                                Publica tu proyecto gratis, los profesionales disponibles te
+                                contactarán para ofrecer su presupuesto
+                            </h2>
+                            <p className="body-1 text-blanco m-0">
+                                Anuncia gratuitamente un trabajo.
+                                <br />
+                                Lee comentarios, recibe cotizaciones y sigue las recomendaciones
+                                para contratar.
+                            </p>
+                        </div>
                     </Col>
                     <Col lg={6} md={12} className="d-flex justify-content-center">
                         <div className="w-100" style={{ maxWidth: '600px' }}>

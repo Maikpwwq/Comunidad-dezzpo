@@ -27,6 +27,8 @@ export function SliderAction({
     navigateTo = '/nuevo-proyecto',
     onClick,
 }: SliderActionProps): React.ReactElement {
+    const [isVisible, setIsVisible] = React.useState(false);
+
     const handleClick = useCallback(() => {
         if (onClick) {
             onClick()
@@ -34,6 +36,37 @@ export function SliderAction({
             navigate(navigateTo)
         }
     }, [onClick, navigateTo])
+
+    React.useEffect(() => {
+        const menuElement = document.getElementById('menu-comunidad');
+        if (!menuElement) {
+            // Fallback: If menu not found, show by default or use scroll threshold
+            setIsVisible(true);
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[0];
+                if (entry) {
+                    setIsVisible(!entry.isIntersecting);
+                }
+            },
+            {
+                root: null, // viewport
+                threshold: 0, // as soon as even 1px is visible vs not
+            }
+        );
+
+        observer.observe(menuElement);
+
+        return () => {
+            if (menuElement) observer.unobserve(menuElement);
+        };
+    }, []);
+
+    // If not visible, render nothing or hidden class
+    if (!isVisible) return <></>;
 
     return (
         <Box
