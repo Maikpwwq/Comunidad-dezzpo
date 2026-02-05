@@ -18,7 +18,7 @@ interface CategoryItem {
     key: number
     label: string
     rol: string
-    icon: React.ReactNode
+    icon: React.ElementType
 }
 
 export interface CategoriasServiciosProps {
@@ -49,7 +49,7 @@ export function CategoriasServicios({
         <ul className={styles.CategoryList}>
             {items.map((categoria) => (
                 <li key={categoria.key}>
-                    {categoria.icon} {'> '}
+                    <categoria.icon fontSize="small" className="mx-2 my-1" /> {'> '}
                     {categoria.label} {'> '}
                     {categoria.rol}
                 </li>
