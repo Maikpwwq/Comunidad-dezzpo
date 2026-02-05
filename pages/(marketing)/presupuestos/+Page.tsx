@@ -8,50 +8,45 @@
 import { ProjectSearchForm } from '@features/projects'
 // Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
+
 export default function Page() {
     return (
         <div className="budgets-page">
             <Container fluid className="p-0">
-                <Row className="presupuestos-mensaje">
-                    <Col className="align-items-end" lg={4} md={6} sm={10}>
-                        <Col className="opacidad-negro text-blanco">
-                            <p className="p-description">
-                                Solicítalo online, en menos tiempo, totalmente gratuito y sin
-                                compromiso.
-                            </p>
-                            <p className="body-1">
-                                Contamos con los mejores precios del mercado de reformas, conocer
+                <Row className="presupuestos-mensaje d-flex align-items-center" style={{ minHeight: '500px' }}>
+                    <Col className="p-lg-5 p-4" lg={6} md={8} sm={12}>
+                        <div className="opacidad-negro p-4 rounded-3 text-blanco">
+                            <h2 className="headline-xl mb-4 text-blanco">
+                                Solicítalo online, en menos tiempo, totalmente gratuito y sin compromiso.
+                            </h2>
+                            <p className="body-1 text-blanco">
+                                Contamos con los mejores precios del mercado de reformas, conoce
                                 el costo que tiene desarrollar tu proyecto ahora, y procede a
                                 elegir el que te brinde más confianza, mayor calidad, y el mejor
-                                costo
+                                costo.
                             </p>
-                        </Col>
+                        </div>
                     </Col>
                 </Row>
             </Container>
             <Container fluid className="p-0">
-                <Row className="presupuestos-mensaje-buscador align-items-start p-4">
-                    <Col className="m-0" lg={4} md={8} sm={8} xs={10}>
-                        <p className="p-description text-blanco">
+                <Row className="presupuestos-mensaje-buscador align-items-center p-lg-5 p-4">
+                    <Col className="mb-4" lg={6} md={12}>
+                        <h2 className="headline-l text-blanco mb-3">
                             Publica tu proyecto gratis, los profesionales disponibles te
                             contactarán para ofrecer su presupuesto
-                        </p>
-                        <p className="body-2 text-blanco">
+                        </h2>
+                        <p className="body-1 text-blanco">
                             Anuncia gratuitamente un trabajo.
                             <br />
                             Lee comentarios, recibe cotizaciones y sigue las recomendaciones
                             para contratar.
                         </p>
                     </Col>
-                    <Col
-                        className="col m-4 p-0"
-                        xl={4}
-                        lg={6}
-                        md={8}
-                        sm={12}
-                        xs={12}
-                    >
-                        <ProjectSearchForm simple={false} />
+                    <Col lg={6} md={12} className="d-flex justify-content-center">
+                        <div className="w-100" style={{ maxWidth: '600px' }}>
+                            <ProjectSearchForm simple={false} />
+                        </div>
                     </Col>
                 </Row>
             </Container>
