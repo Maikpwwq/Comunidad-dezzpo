@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { CategoryIcons } from '@assets/data/CategoryIcons'
 import Chip from '@mui/material/Chip'
 import Paper from '@mui/material/Paper'
 import TagFacesIcon from '@mui/icons-material/TagFaces'
@@ -12,7 +13,7 @@ export interface CategoryItem {
     key: number
     label: string
     variant?: 'filled' | 'outlined'
-    icon?: React.ElementType
+    iconName?: string
     [key: string]: any
 }
 
@@ -43,7 +44,7 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
             const initialCategories: CategoryItem[] = listadoCategorias.map(cat => ({
                 key: cat.key,
                 label: cat.label,
-                icon: cat.icon,
+                iconName: (cat as any).iconName,
                 variant: userEditInfo.userCategories.includes(cat.label) ? 'filled' : 'outlined'
             })) as CategoryItem[]
             setCategoriesState(initialCategories)
@@ -111,13 +112,13 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
             component="ul"
         >
             {categoriesState.map((data) => {
-                const IconComponent = data.icon as React.ElementType
+                const IconComponent = CategoryIcons[data.iconName as string]
                 const IconToRender = data.label === 'React' ? <TagFacesIcon /> : (IconComponent ? <IconComponent fontSize="medium" className="mx-2 my-1" /> : undefined)
                 return (
                     <ListItem key={data.key}>
                         <Chip
                             // className="caption"
-                            icon={IconToRender as any}
+                            icon={IconToRender as React.ReactElement}
                             color="primary"
                             label={data.label}
                             variant={data.variant || 'outlined'}

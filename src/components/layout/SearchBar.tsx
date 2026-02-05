@@ -16,6 +16,7 @@ import Box from '@mui/material/Box'
 
 import iconSet from '@assets/icomoon/selection.json'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { CategoryIcons } from '@assets/data/CategoryIcons'
 
 // Lazy load IcoMoon to prevent SSR crashes
 const IcoMoon = React.lazy(() => import('react-icomoon'))
@@ -143,9 +144,11 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
                     }}
                 >
                     <MenuItem value="">Seleccionar categoría</MenuItem>
-                    {/* Render list only on client to avoid SSR overhead and potential Icon instantiation crashes */}
+                    {/* Render list only on client to avoid SSR overhead */}
                     {isMounted && ListadoCategorias?.map((item: any) => {
-                        const { key, label, icon: IconComponent } = item
+                        const { key, label, iconName } = item
+                        // Dynamically resolve icon from map
+                        const IconComponent = CategoryIcons[iconName]
                         return (
                             <MenuItem value={label} key={key}>
                                 {IconComponent && (

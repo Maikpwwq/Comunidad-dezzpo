@@ -13,12 +13,13 @@ import clsx from 'clsx'
 
 import styles from './CategoriasServicios.module.scss'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { CategoryIcons } from '@assets/data/CategoryIcons'
 
 interface CategoryItem {
     key: number
     label: string
     rol: string
-    icon: React.ElementType
+    iconName: string
 }
 
 export interface CategoriasServiciosProps {
@@ -47,13 +48,19 @@ export function CategoriasServicios({
 
     const renderCategoryList = (items: CategoryItem[]) => (
         <ul className={styles.CategoryList}>
-            {items.map((categoria) => (
-                <li key={categoria.key}>
-                    <categoria.icon fontSize="small" className="mx-2 my-1" /> {'> '}
-                    {categoria.label} {'> '}
-                    {categoria.rol}
-                </li>
-            ))}
+            {items.map((categoria) => {
+                const IconComponent = CategoryIcons[categoria.iconName]
+                return (
+                    <li key={categoria.key}>
+                        {IconComponent && (
+                            <IconComponent fontSize="small" className="mx-2 my-1" />
+                        )}
+                        {' > '}
+                        {categoria.label} {' > '}
+                        {categoria.rol}
+                    </li>
+                )
+            })}
         </ul>
     )
 
