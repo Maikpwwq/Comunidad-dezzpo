@@ -53,10 +53,10 @@ export default function Page() {
             <div className="p-4">
                 <header className={styles['page-header']}>
                     <h1 className="type-hero-title">
-                        Directorio Requerimientos
+                        Directorio de Requerimientos
                     </h1>
                     <Button className="body-1 btn-round btn-high">
-                        Aplica gratis a un requerimiento
+                        Aplica a un requerimiento
                     </Button>
                 </header>
 

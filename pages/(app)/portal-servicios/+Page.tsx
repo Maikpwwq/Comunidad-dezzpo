@@ -103,12 +103,12 @@ export default function Page() {
             <Row className="m-0 w-100 d-flex">
                 <Col className="pt-4 pb-2 p-0">
                     <h1 className="type-hero-title">
-                        Directorio Profesionales{'  '}
+                        Directorio de Profesionales{'  '}
                         <Button
                             className="body-1 ms-4 btn-round btn-high"
                             onClick={handleNewProject}
                         >
-                            Publica un proyecto gratis
+                            Publica un proyecto
                         </Button>
                     </h1>
                     <SearchBar />
