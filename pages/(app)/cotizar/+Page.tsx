@@ -181,7 +181,7 @@ export default function Page() {
                 <Typography
                     variant="h6"
                     align="left"
-                    className="p-description pb-2 w-100"
+                    className="body-1 pb-2 w-100"
                 >
                     Descripción del servicio:
                 </Typography>
@@ -239,13 +239,13 @@ export default function Page() {
                                 className="w-100"
                                 sx={{ display: 'table' }}
                             >
-                                <TableCell></TableCell>
-                                <TableCell>Ítem</TableCell>
-                                <TableCell>Actividad</TableCell>
-                                <TableCell>Unidad Medida</TableCell>
-                                <TableCell>Cantidad</TableCell>
-                                <TableCell>Precio unitario</TableCell>
-                                <TableCell>Valor sin IVA</TableCell>
+                                <TableCell className="headline-s"></TableCell>
+                                <TableCell className="headline-s">Ítem</TableCell>
+                                <TableCell className="headline-s">Actividad</TableCell>
+                                <TableCell className="headline-s">Unidad Medida</TableCell>
+                                <TableCell className="headline-s">Cantidad</TableCell>
+                                <TableCell className="headline-s">Precio unitario</TableCell>
+                                <TableCell className="headline-s">Valor sin IVA</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

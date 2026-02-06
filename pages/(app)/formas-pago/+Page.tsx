@@ -67,14 +67,14 @@ export default function Page() {
                                 <TableHead>
                                     <TableRow>
                                         {ticketColumns.map((col) => (
-                                            <TableCell key={col}>{col}</TableCell>
+                                            <TableCell key={col} className="headline-s">{col}</TableCell>
                                         ))}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     <TableRow>
                                         {ticketColumns.map((col) => (
-                                            <TableCell key={col}>DATA...</TableCell>
+                                            <TableCell key={col} className="body-2">DATA...</TableCell>
                                         ))}
                                     </TableRow>
                                 </TableBody>

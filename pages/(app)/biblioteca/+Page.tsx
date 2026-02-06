@@ -32,12 +32,12 @@ export default function Page() {
             <Row className="m-0 w-100">
                 <Col className="col-10 d-flex align-items-start justify-content-start">
                     <Row className="p-4" md={10}>
-                        <Typography className="headline-xl">Descargar documentos</Typography>
-                        <p className="body-1">
+                        <Typography className="type-section-title">Descargar documentos</Typography>
+                        <p className="type-body">
                             Encuentra aquí, plantillas para redactar tus documentos, material de
                             consulta, enlaces útiles y más.
                         </p>
-                        <p className="body-1">
+                        <p className="type-body">
                             Al ejecutar un nuevo proyecto siempre edite e imprima primero los
                             documentos anexos, como lo son cotizaciones y contratos.
                         </p>
@@ -47,15 +47,15 @@ export default function Page() {
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell className="table-head">Título</TableCell>
-                                        <TableCell className="table-head">Descargar</TableCell>
+                                        <TableCell className="headline-s">Título</TableCell>
+                                        <TableCell className="headline-s">Descargar</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {documentosA.map((item, index) => (
                                         <TableRow key={index}>
-                                            <TableCell className="body-1">{item.title}</TableCell>
-                                            <TableCell className="body-1">Pdf</TableCell>
+                                            <TableCell className="type-body">{item.title}</TableCell>
+                                            <TableCell className="type-body">Pdf</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -63,20 +63,20 @@ export default function Page() {
                         </Col>
                     </Row>
                     <Row className="p-4" md={10}>
-                        <Typography className="headline-xl">Material de consulta</Typography>
+                        <Typography className="type-section-title">Material de consulta</Typography>
                         <Col className="col-10 p-4">
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell className="table-head">Título</TableCell>
-                                        <TableCell className="table-head">Descargar</TableCell>
+                                        <TableCell className="headline-s">Título</TableCell>
+                                        <TableCell className="headline-s">Descargar</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {documentosB.map((item, index) => (
                                         <TableRow key={index}>
-                                            <TableCell className="body-1">{item.title}</TableCell>
-                                            <TableCell className="body-1">Pdf</TableCell>
+                                            <TableCell className="type-body">{item.title}</TableCell>
+                                            <TableCell className="type-body">Pdf</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -84,14 +84,14 @@ export default function Page() {
                         </Col>
                     </Row>
                     <Row className="p-4" md={10}>
-                        <Typography className="headline-xl">Canal de YouTube</Typography>
-                        <p className="body-1">
+                        <Typography className="type-section-title">Canal de YouTube</Typography>
+                        <p className="type-body">
                             Hemos recopilado unas listas de videos, las cuales pueden ser de gran
                             utilidad, para especificar los detalles y acabados del servicio
                         </p>
                     </Row>
                     <Row className="p-4" md={10}>
-                        <Typography className="headline-xl">Libreta de direcciones</Typography>
+                        <Typography className="type-section-title">Libreta de direcciones</Typography>
                         <span className="btn btn-round btn-high">Tiendas</span>
                     </Row>
                 </Col>

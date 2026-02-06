@@ -125,7 +125,7 @@ export default function Page() {
         <Container fluid className="p-0">
             <Row className="h-100 pt-4 pb-4">
                 <Col className="col-10">
-                    <Typography variant="h5" className="headline-xl">
+                    <Typography variant="h5" className="type-hero-title mb-4">
                         Detalle Requerimiento
                     </Typography>
                     <Button
@@ -145,7 +145,7 @@ export default function Page() {
                                 gutterBottom
                                 variant="h6"
                                 align="left"
-                                className="p-description w-100"
+                                className="headline-m w-100 mb-2"
                             >
                                 Presupuesto
                             </Typography>
@@ -335,7 +335,7 @@ export default function Page() {
                     />
                     <Row>
                         <Col>
-                            <div className="headline-l">
+                            <div className="type-section-title mb-3">
                                 COTIZACIONES
                                 {requerimientoInfo.draftApply && requerimientoInfo.draftApply.length < 4 && (
                                     <Button

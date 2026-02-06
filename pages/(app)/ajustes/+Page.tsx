@@ -428,7 +428,7 @@ export default function Page() {
                         <Row className="">
                             <Typography
                                 variant="h6"
-                                className="p-description pb-4 pt-4 w-100"
+                                className="type-section-title pb-4 pt-4 w-100"
                             >
                                 {userRol.rol === 2
                                     ? 'Servicios ofrecidos'
@@ -445,12 +445,12 @@ export default function Page() {
                                         : 'Registra tu presentación (max. 400 caracteres).'
                                 }
                                 minRows={4}
-                                className="w-100"
+                                className="w-100 type-body"
                                 style={{ borderRadius: '30px' }}
                             />
                             {userRol.rol === 2 ? (
                                 <Col className="pt-2">
-                                    <p className="body-1 m-0">
+                                    <p className="type-body m-0">
                                         Selecciona hasta cuatro categorias para
                                         mostrar en tu perfil de usuario
                                     </p>
@@ -478,11 +478,11 @@ export default function Page() {
                     <Col className="col-10">
                         <Typography
                             variant="h6"
-                            className="p-description pb-4 pt-4 w-100"
+                            className="type-section-title pb-4 pt-4 w-100"
                         >
                             Confirma tu identidad
                         </Typography>
-                        <Typography variant="body1" className="body-1">
+                        <Typography variant="body1" className="type-body">
                             Adjunta tu documento de identificación para...
                         </Typography>
                     </Col>

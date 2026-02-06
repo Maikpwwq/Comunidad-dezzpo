@@ -29,7 +29,7 @@ export default function Page() {
                             />
                         ) : (
                             <Box p={3}>
-                                <Typography>Cargando chat...</Typography>
+                                <Typography className="body-1">Cargando chat...</Typography>
                             </Box>
                         )}
                     </Box>

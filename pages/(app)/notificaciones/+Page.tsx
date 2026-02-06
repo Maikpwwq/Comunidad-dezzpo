@@ -27,10 +27,10 @@ export default function Page() {
                         }}
                     >
                         <NotificationsNoneIcon sx={{ fontSize: 60, mb: 2, opacity: 0.5 }} />
-                        <Typography variant="h6">
+                        <Typography className="headline-s">
                             No tienes notificaciones nuevas
                         </Typography>
-                        <Typography variant="body2">
+                        <Typography className="body-2">
                             Te avisaremos cuando haya actualizaciones importantes.
                         </Typography>
                     </Box>

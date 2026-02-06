@@ -68,17 +68,17 @@ export default function Page() {
                         Directorio de Requerimientos
                     </h1>
                     <Button
-                        className="body-1 btn-round btn-high"
+                        className="type-body btn-round btn-high"
                         onClick={handleApplyClick}
                     >
                         Aplica a un requerimiento
                     </Button>
                 </header>
 
-                <h3 className="headline-l">
+                <h3 className="type-section-title">
                     Buscar Requerimientos: Obtener o Aplicar con Cotizaciones
                 </h3>
-                <p className="body-2">Requerimientos activos</p>
+                <p className="type-body-sm">Requerimientos activos</p>
 
                 <section className={styles['grid-container']}>
                     {draftsData.map((draft) => (

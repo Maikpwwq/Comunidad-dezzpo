@@ -27,13 +27,13 @@ export default function Page() {
                             Bienvenido al módulo de evaluación y Certificación por Competencias
                             Laborales
                         </h1>
-                        <p className="body-1 p-4">
+                        <p className="type-body p-4">
                             El desempeño real de las personas se compara con un referente que es
                             la Norma de Competencia Laboral y/o el esquema de certificación, así
                             tu experiencia es promovida y reconocida. Con el apoyo de la
                             Dirección del Sistema Nacional de Formación para el Trabajo DSNFT
                         </p>
-                        <p className="body-1 p-4">
+                        <p className="type-body p-4">
                             La insignia de validación de habilidades, aumentan las posibilidades
                             laborales, al permitir brindar mayor confianza a los propietarios, y
                             acceder fácilmente a proyectos de mayor complejidad
@@ -52,7 +52,7 @@ export default function Page() {
                                 alignItems: 'center',
                             }}
                         >
-                            <p className="body-1">Certificación</p>
+                            <p className="type-body">Certificación</p>
                             <br />
                             <TextField
                                 id="date"

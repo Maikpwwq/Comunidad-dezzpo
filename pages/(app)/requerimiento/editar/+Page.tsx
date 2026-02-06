@@ -104,7 +104,7 @@ export default function Page() {
         <Container fluid className="p-0">
             <Row className="h-100 pt-4 pb-4">
                 <Col className="col-10 card-frame">
-                    <Typography variant="h5" className="headline-xl p-4">
+                    <Typography variant="h5" className="type-hero-title p-4">
                         Editar Requerimiento
                     </Typography>
                     <Row className="p-0 pt-4 pb-4 w-100 align-items-start">
@@ -113,7 +113,7 @@ export default function Page() {
                                 gutterBottom
                                 variant="h6"
                                 align="left"
-                                className="p-description w-100"
+                                className="headline-m w-100"
                             >
                                 Presupuesto
                             </Typography>
@@ -130,7 +130,7 @@ export default function Page() {
                                 gutterBottom
                                 variant="h6"
                                 align="left"
-                                className="p-description w-100"
+                                className="headline-m w-100"
                             >
                                 Categoria servicio
                             </Typography>
