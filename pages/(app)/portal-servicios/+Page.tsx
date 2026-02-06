@@ -105,7 +105,7 @@ export default function Page() {
                     <h1 className="type-hero-title">
                         Directorio de Profesionales{'  '}
                         <Button
-                            className="body-1 ms-4 btn-round btn-high"
+                            className="type-body ms-4 btn-round btn-high"
                             onClick={handleNewProject}
                         >
                             Publica un proyecto
@@ -115,10 +115,10 @@ export default function Page() {
                 </Col>
                 {searchInput ? (
                     <Row className="">
-                        <Typography className="body-1" component="div">
+                        <Typography className="type-body" component="div">
                             Buscar comerciantes Calificados por categoria:{' '}
                             <br />
-                            <span className="subtitle">{spacedText}</span>
+                            <span className="headline-s">{spacedText}</span>
                         </Typography>
 
                         <Suspense fallback={<PortalSkeleton />}>
@@ -134,7 +134,7 @@ export default function Page() {
                                 ) : (
                                     <div style={{ gridColumn: '1 / -1' }}>
                                         <Typography
-                                            variant="body1"
+                                            className="type-body"
                                             fontSize={'1.125rem'}
                                         >
                                             No se encontraron resultados de la
@@ -152,11 +152,11 @@ export default function Page() {
 
             <section className="col-12 pt-4 pb-4 p-0">
                 <div className="pb-2 p-0">
-                    <h3 className="headline-l">
+                    <h3 className="type-section-title">
                         Todos los profesionales
                     </h3>
                 </div>
-                <p className="body-2 px-2">
+                <p className="type-body-sm px-2">
                     Directorio de comerciantes calificados, contratistas
                     independientes y empresas del sector. <br />
                     Encuentra todo lo mejor en asisitencia técnica!

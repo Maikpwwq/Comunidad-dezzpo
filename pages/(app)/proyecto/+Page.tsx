@@ -2,7 +2,8 @@ export default function Page() {
     return (
         <>
             {/* TODO - Proyecto */}
-            <h1>Proyecto</h1>
+            {/* TODO - Proyecto */}
+            <h1 className="type-hero-title">Proyecto</h1>
         </>
     )
 }

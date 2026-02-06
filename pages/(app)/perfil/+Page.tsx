@@ -300,7 +300,7 @@ export default function Page() {
                         <Box className={clsx(styles.ContactCard)}>
                             <Typography
                                 variant="body2"
-                                className={clsx(styles.InfoPill)}
+                                className={clsx(styles.InfoPill, "body-2")}
                             >
                                 <MailIcon fontSize="large" />{' '}
                                 {userInfo.userMail}
@@ -308,7 +308,7 @@ export default function Page() {
 
                             <Typography
                                 variant="body2"
-                                className={clsx(styles.InfoPill)}
+                                className={clsx(styles.InfoPill, "body-2")}
                             >
                                 <PhoneIphoneIcon fontSize="large" />{' '}
                                 {userInfo.userPhone}

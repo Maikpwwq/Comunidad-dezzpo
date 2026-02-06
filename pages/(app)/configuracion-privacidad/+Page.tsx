@@ -33,16 +33,16 @@ export default function Page() {
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Configuración</TableCell>
-                                        <TableCell>Privacidad</TableCell>
-                                        <TableCell>Editar</TableCell>
+                                        <TableCell className="headline-s">Configuración</TableCell>
+                                        <TableCell className="headline-s">Privacidad</TableCell>
+                                        <TableCell className="headline-s">Editar</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {privacySettings.map((item) => (
                                         <TableRow key={item.setting}>
-                                            <TableCell>{item.setting}</TableCell>
-                                            <TableCell>{item.value}</TableCell>
+                                            <TableCell className="body-2">{item.setting}</TableCell>
+                                            <TableCell className="body-2">{item.value}</TableCell>
                                             <TableCell>
                                                 <Button>Editar</Button>
                                             </TableCell>

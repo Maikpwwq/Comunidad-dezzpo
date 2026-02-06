@@ -62,7 +62,7 @@ export default function Page() {
             <Row className="m-0 w-100 d-flex pt-4 pb-4">
                 <Col className="col-10">
                     <h1 className="type-hero-title">Calificaciones</h1>
-                    <p className="p-description">Evaluación del desempeño</p>
+                    <p className="body-1 mb-4">Evaluación del desempeño</p>
                     <p className="body-1">
                         Valore el usuario según los siguientes tres aspectos:
                     </p>

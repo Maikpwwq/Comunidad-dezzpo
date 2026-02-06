@@ -50,17 +50,17 @@ export default function Page() {
                             El plan de beneficios con la membresía incluye
                         </h1>
                         <Col md={8}>
-                            <Typography variant="h4" className="p-description">
+                            <Typography variant="h4" className="type-section-title">
                                 Como Propietario{' '}
                             </Typography>
-                            <span className="subtitle">
+                            <span className="type-body-lg d-block mb-3">
                                 Adquiere nuestro servicio de afiliacion + plus
                             </span>
-                            <ul className="body-1">
+                            <ul className="type-body">
                                 {beneficiosPropietarios.map((item, index) => {
                                     const { title } = item
                                     return (
-                                        <li className="body-1" key={index}>
+                                        <li className="type-body" key={index}>
                                             {title}
                                         </li>
                                     )
@@ -69,7 +69,7 @@ export default function Page() {
                         </Col>
                         <Col md={4}>
                             <Button
-                                className="chat-with-us body-1"
+                                className="chat-with-us type-body"
                                 href="https://wa.me/573204842897?text=Hola%20estoy%20interesado%20en%20saber%20acerca%20de%20como%20Dezzpo%20..."
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -85,17 +85,17 @@ export default function Page() {
                     </Row>
                     <Row className="m-0 pt-4 w-100 d-flex">
                         <Col md={8}>
-                            <Typography variant="h4" className="p-description">
+                            <Typography variant="h4" className="type-section-title">
                                 Como Comerciante Calificado{' '}
                             </Typography>
-                            <span className="subtitle">
+                            <span className="type-body-lg d-block mb-3">
                                 Adquiere Un Membresia Pagada
                             </span>
-                            <ul className="body-1">
+                            <ul className="type-body">
                                 {beneficiosComerciantes.map((item, index) => {
                                     const { title } = item
                                     return (
-                                        <li className="body-1" key={index}>
+                                        <li className="type-body" key={index}>
                                             {title}
                                         </li>
                                     )

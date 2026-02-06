@@ -36,14 +36,14 @@ export default function Page() {
                                     <TableHead>
                                         <TableRow>
                                             {section.columns.map((col) => (
-                                                <TableCell key={col}>{col}</TableCell>
+                                                <TableCell key={col} className="headline-s">{col}</TableCell>
                                             ))}
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
                                             {section.columns.map((col) => (
-                                                <TableCell key={col}>DATA...</TableCell>
+                                                <TableCell key={col} className="body-2">DATA...</TableCell>
                                             ))}
                                         </TableRow>
                                     </TableBody>
