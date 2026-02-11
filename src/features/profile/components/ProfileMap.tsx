@@ -50,12 +50,12 @@ export function ProfileMap({
                 const map = new google.maps.Map(mapRef.current, {
                     center: latLng,
                     zoom,
-                    // auth_referrer_policy: 'origin',
+                    mapId: 'DEZZPO_PROFILE_MAP',
                 })
 
                 const geocoder = new google.maps.Geocoder()
                 const infowindow = new google.maps.InfoWindow()
-                const marker = new google.maps.Marker({
+                const marker = new google.maps.marker.AdvancedMarkerElement({
                     position: latLng,
                     map,
                 })
@@ -65,7 +65,7 @@ export function ProfileMap({
                 if (response.results[0] && userInfo.userId) {
                     const infoContent = `${userInfo.userRazonSocial || userInfo.userName}, ${userInfo.userDirection}`
                     infowindow.setContent(infoContent)
-                    infowindow.open(map, marker)
+                    infowindow.open({ anchor: marker, map })
                 }
             } catch (error) {
                 console.error('Error loading map:', error)

@@ -62,6 +62,7 @@ export function Ubicacion({
                 const mapOptions = {
                     center: DEFAULT_COORDS,
                     zoom: 8,
+                    mapId: 'DEZZPO_UBICACION_MAP',
                 }
 
                 const map = new google.maps.Map(mapRef.current, mapOptions)
@@ -69,7 +70,7 @@ export function Ubicacion({
                 map.addListener('click', (e: google.maps.MapMouseEvent) => {
                     if (!e.latLng) return
 
-                    new google.maps.Marker({
+                    new google.maps.marker.AdvancedMarkerElement({
                         position: e.latLng,
                         map: map,
                     })
@@ -85,12 +86,12 @@ export function Ubicacion({
                                 content: formattedAddress,
                             })
 
-                            const marker = new google.maps.Marker({
+                            const marker = new google.maps.marker.AdvancedMarkerElement({
                                 position: coordenadas,
                                 map: map,
                             })
 
-                            infowindow.open(map, marker)
+                            infowindow.open({ anchor: marker, map })
                             setLocationInfo((prev) => ({
                                 ...prev,
                                 street: formattedAddress,
