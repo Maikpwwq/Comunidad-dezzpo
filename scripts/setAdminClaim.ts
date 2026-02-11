@@ -5,21 +5,25 @@
  * Requires the Firebase Admin SDK and a service account key.
  *
  * Usage:
- *   npx ts-node scripts/setAdminClaim.ts <UID>
+ *   pnpm dlx ts-node scripts/setAdminClaim.ts <UID>
  *
  * Prerequisites:
  *   1. serviceAccountKey.json must exist in the project root
- *   2. npm install firebase-admin (dev dependency)
+ *   2. pnpm install firebase-admin (dev dependency)
  */
 
 import * as admin from 'firebase-admin'
 import { readFileSync } from 'fs'
-import { resolve } from 'path'
+import { fileURLToPath } from 'url'
+import { dirname, resolve } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const uid = process.argv[2]
 
 if (!uid) {
-    console.error('Usage: npx ts-node scripts/setAdminClaim.ts <UID>')
+    console.error('Usage: pnpm dlx ts-node scripts/setAdminClaim.ts <UID>')
     console.error('  <UID> = Firebase Auth user ID to grant admin access')
     process.exit(1)
 }

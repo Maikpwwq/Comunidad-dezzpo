@@ -31,14 +31,14 @@ service cloud.firestore {
     // Only the document owner can write their own profile.
     // Admins can read and update any user (for verification, bans, etc.).
     // =========================================================================
-    match /propietarios/{userId} {
+    match /usersPropietariosResidentes/{userId} {
       allow read: if true;
       allow create: if isOwner(userId);
       allow update: if isOwner(userId) || isAdmin();
       allow delete: if false;
     }
 
-    match /comerciantes/{userId} {
+    match /usersComerciantesCalificados/{userId} {
       allow read: if true;
       allow create: if isOwner(userId);
       allow update: if isOwner(userId) || isAdmin();

@@ -5,7 +5,7 @@
  * Refactored from legacy Navigator.jsx (534 lines -> modular component).
  */
 
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { navigate } from 'vike/client/router'
 import { Link } from '@hooks'
 import { useUserStore } from '@stores/userStore'
@@ -41,6 +41,9 @@ import TuneIcon from '@mui/icons-material/Tune'
 import PaymentIcon from '@mui/icons-material/Payment'
 import LockResetIcon from '@mui/icons-material/LockReset'
 import LogoutIcon from '@mui/icons-material/Logout'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import GroupIcon from '@mui/icons-material/Group'
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
 
 // Branding
 import LogoMenuComunidadDezzpo from '/assets/img/logo/IsoLogo-Dezzpo-Verde.png'
@@ -62,6 +65,9 @@ const ICON_MAP: Record<string, React.ReactNode> = {
     TuneIcon: <TuneIcon />,
     PaymentIcon: <PaymentIcon />,
     LockResetIcon: <LockResetIcon />,
+    DashboardIcon: <DashboardIcon />,
+    GroupIcon: <GroupIcon />,
+    VerifiedUserIcon: <VerifiedUserIcon />,
 }
 
 /** Style tokens */
@@ -106,10 +112,27 @@ function Sidebar({ open, onClose, userInfo, variant = 'permanent' }: SidebarProp
         role: roleFromStore(),
     }
 
-    // Get navigation config based on role
+    // Check admin claim from Firebase Auth
+    const [isAdmin, setIsAdmin] = useState(false)
+    useEffect(() => {
+        async function checkAdmin() {
+            try {
+                const { auth } = await import('@services/firebase/client')
+                if (auth?.currentUser) {
+                    const result = await auth.currentUser.getIdTokenResult()
+                    setIsAdmin(result.claims.admin === true)
+                }
+            } catch {
+                // silently ignore
+            }
+        }
+        if (user.userId) checkAdmin()
+    }, [user.userId])
+
+    // Get navigation config based on role + admin status
     const navSections = useMemo(
-        () => getSidebarConfig(user.role),
-        [user.role]
+        () => getSidebarConfig(user.role, isAdmin),
+        [user.role, isAdmin]
     )
 
     /** Resolve route with userId placeholder */

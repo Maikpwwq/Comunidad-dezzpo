@@ -89,6 +89,17 @@ export const GUEST_SIDEBAR: NavSectionConfig[] = [
     },
 ]
 
+/** Sidebar navigation for admin users — appended to role-based sidebar */
+export const ADMIN_SIDEBAR: NavSectionConfig = {
+    id: 'admin',
+    title: 'Administración',
+    items: [
+        { id: 'admin-dashboard', label: 'Dashboard', route: '/admin/dashboard', icon: 'DashboardIcon' },
+        { id: 'admin-usuarios', label: 'Usuarios', route: '/admin/usuarios', icon: 'GroupIcon' },
+        { id: 'admin-verificacion', label: 'Verificación', route: '/admin/verificacion', icon: 'VerifiedUserIcon' },
+    ],
+}
+
 /** Header tabs for comerciante role */
 export const COMERCIANTE_HEADER: NavItemConfig[] = [
     { id: 'perfil', label: 'Ver tu perfil', route: '/app/perfil/:userId', icon: 'PersonIcon' },
@@ -132,16 +143,23 @@ export const SOCIAL_LINKS = [
     { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/dezzpo-inc/', icon: 'LinkedinSocialIcono' },
 ]
 
-/** Get sidebar config based on user role */
-export function getSidebarConfig(role: 'guest' | 'propietario' | 'comerciante'): NavSectionConfig[] {
+/** Get sidebar config based on user role and admin status */
+export function getSidebarConfig(role: 'guest' | 'propietario' | 'comerciante', isAdmin = false): NavSectionConfig[] {
+    let sections: NavSectionConfig[]
     switch (role) {
         case 'comerciante':
-            return COMERCIANTE_SIDEBAR
+            sections = [...COMERCIANTE_SIDEBAR]
+            break
         case 'propietario':
-            return PROPIETARIO_SIDEBAR
+            sections = [...PROPIETARIO_SIDEBAR]
+            break
         default:
-            return GUEST_SIDEBAR
+            sections = [...GUEST_SIDEBAR]
     }
+    if (isAdmin) {
+        sections.push(ADMIN_SIDEBAR)
+    }
+    return sections
 }
 
 /** Get header config based on user role */
