@@ -7,7 +7,7 @@ import { getDraft, updateDraft } from '@services/drafts'
 // Components
 // @ts-ignore
 import { AdjuntarArchivos } from '@components/common'
-import TablaSubCategoriaPresupuesto from '../components/TablaSubCategoriaPresupuesto'
+import TablaSubCategoriaPresupuesto from '../../requerimiento/components/TablaSubCategoriaPresupuesto'
 // Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
