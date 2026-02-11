@@ -8,7 +8,7 @@ import { getDraft } from '@services/drafts'
 import { getQuotation } from '@services/quotations'
 import type { DraftFirestoreDocument, QuotationFirestoreDocument } from '@services/types'
 // Components
-import TablaSubCategoriaPresupuesto from '../components/TablaSubCategoriaPresupuesto'
+import TablaSubCategoriaPresupuesto from '../../requerimiento/components/TablaSubCategoriaPresupuesto'
 // Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
