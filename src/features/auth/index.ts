@@ -13,7 +13,7 @@
 export { useAuthActions } from './hooks'
 
 // Components
-export { RoleSelector, GoogleAuthButton } from './components'
+export { RoleSelector, GoogleAuthButton, OrDivider } from './components'
 
 // Types
 export type {

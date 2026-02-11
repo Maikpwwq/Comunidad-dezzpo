@@ -11,6 +11,7 @@ import {
     useAuthActions,
     RoleSelector,
     GoogleAuthButton,
+    OrDivider,
     type UserRoleNumeric,
     type DraftInfo,
 } from '@features/auth'
@@ -114,6 +115,7 @@ export default function Page({
                                     onClick={handleGoogleSignup}
                                     label="Registrarse con Gmail"
                                 />
+                                <OrDivider />
                                 <Col className="d-flex flex-column align-items-center" lg={10} md={12} sm={10} xs={12}>
                                     <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
                                         <Form.Label className="mb-0 body-1">Nombre de usuario</Form.Label>
