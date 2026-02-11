@@ -54,6 +54,7 @@
     "@mui/icons-material": "^6.5.0",
     "@mui/material": "^6.5.0",
     "@mui/x-data-grid": "^7.29.12",
+    "recharts": "^2.15.3",
     "@photonjs/express": "^0.1.13",
     "@photonjs/hono": "^0.1.12",
     "@photonjs/vercel": "^0.1.22",

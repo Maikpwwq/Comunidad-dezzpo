@@ -13,30 +13,35 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
+    function isAdmin() {
+      return isAuthenticated() && request.auth.token.admin == true;
+    }
+
     // =========================================================================
     // Subscriptions — public create (email only), admin read
     // =========================================================================
     match /subscriptions/{subscriptionId} {
       allow create: if request.resource.data.email is string;
-      allow read: if isAuthenticated() && request.auth.token.admin == true;
+      allow read: if isAdmin();
     }
 
     // =========================================================================
     // Users (propietarios / comerciantes)
     // Any authenticated user can read profiles.
     // Only the document owner can write their own profile.
+    // Admins can read and update any user (for verification, bans, etc.).
     // =========================================================================
     match /propietarios/{userId} {
       allow read: if true;
       allow create: if isOwner(userId);
-      allow update: if isOwner(userId);
+      allow update: if isOwner(userId) || isAdmin();
       allow delete: if false;
     }
 
     match /comerciantes/{userId} {
       allow read: if true;
       allow create: if isOwner(userId);
-      allow update: if isOwner(userId);
+      allow update: if isOwner(userId) || isAdmin();
       allow delete: if false;
     }
 
@@ -44,6 +49,7 @@ service cloud.firestore {
     // Drafts (service requirements posted by propietarios)
     // Readable by all authenticated users (marketplace listing).
     // Only the creator (draftPropietarioResidente) can write.
+    // Admins can read all drafts for reporting.
     // =========================================================================
     match /drafts/{draftId} {
       allow read: if isAuthenticated();
@@ -56,8 +62,6 @@ service cloud.firestore {
 
     // =========================================================================
     // Quotations (proposals sent by comerciantes)
-    // Readable by the comerciante who sent it or the propietario who owns the draft.
-    // Only the comerciante can create; updates allowed by either party.
     // =========================================================================
     match /quotations/{quotationId} {
       allow read: if isAuthenticated();
@@ -68,24 +72,23 @@ service cloud.firestore {
 
     // =========================================================================
     // Contracts (created when a quotation is accepted)
-    // Readable by client or provider.
-    // Created by the client; updatable by either party (for status, rated).
+    // Readable by client, provider, or admin.
     // =========================================================================
     match /contracts/{contractId} {
       allow read: if isAuthenticated()
         && (resource.data.clientId == request.auth.uid
-            || resource.data.providerId == request.auth.uid);
+            || resource.data.providerId == request.auth.uid
+            || isAdmin());
       allow create: if isAuthenticated();
       allow update: if isAuthenticated()
         && (resource.data.clientId == request.auth.uid
-            || resource.data.providerId == request.auth.uid);
+            || resource.data.providerId == request.auth.uid
+            || isAdmin());
       allow delete: if false;
     }
 
     // =========================================================================
     // Asesorias (technical advisory Q&A)
-    // Readable by all authenticated users.
-    // Creatable by propietarios; updatable by anyone (to add responses).
     // =========================================================================
     match /asesorias/{asesoriaId} {
       allow read: if isAuthenticated();
