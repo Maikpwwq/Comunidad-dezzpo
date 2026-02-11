@@ -1,13 +1,104 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // =========================================================================
+    // Helper functions
+    // =========================================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // =========================================================================
+    // Subscriptions — public create (email only), admin read
+    // =========================================================================
     match /subscriptions/{subscriptionId} {
       allow create: if request.resource.data.email is string;
-      allow read: if request.auth != null && request.auth.token.admin == true;
+      allow read: if isAuthenticated() && request.auth.token.admin == true;
     }
-    
+
+    // =========================================================================
+    // Users (propietarios / comerciantes)
+    // Any authenticated user can read profiles.
+    // Only the document owner can write their own profile.
+    // =========================================================================
+    match /propietarios/{userId} {
+      allow read: if true;
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    match /comerciantes/{userId} {
+      allow read: if true;
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    // =========================================================================
+    // Drafts (service requirements posted by propietarios)
+    // Readable by all authenticated users (marketplace listing).
+    // Only the creator (draftPropietarioResidente) can write.
+    // =========================================================================
+    match /drafts/{draftId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated()
+        && (resource.data.draftPropietarioResidente == request.auth.uid
+            || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['draftApply']));
+      allow delete: if false;
+    }
+
+    // =========================================================================
+    // Quotations (proposals sent by comerciantes)
+    // Readable by the comerciante who sent it or the propietario who owns the draft.
+    // Only the comerciante can create; updates allowed by either party.
+    // =========================================================================
+    match /quotations/{quotationId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated();
+      allow delete: if false;
+    }
+
+    // =========================================================================
+    // Contracts (created when a quotation is accepted)
+    // Readable by client or provider.
+    // Created by the client; updatable by either party (for status, rated).
+    // =========================================================================
+    match /contracts/{contractId} {
+      allow read: if isAuthenticated()
+        && (resource.data.clientId == request.auth.uid
+            || resource.data.providerId == request.auth.uid);
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated()
+        && (resource.data.clientId == request.auth.uid
+            || resource.data.providerId == request.auth.uid);
+      allow delete: if false;
+    }
+
+    // =========================================================================
+    // Asesorias (technical advisory Q&A)
+    // Readable by all authenticated users.
+    // Creatable by propietarios; updatable by anyone (to add responses).
+    // =========================================================================
+    match /asesorias/{asesoriaId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated();
+      allow delete: if false;
+    }
+
+    // =========================================================================
+    // Catch-all: deny everything else
+    // =========================================================================
     match /{document=**} {
-      allow read, write;
+      allow read, write: if false;
     }
   }
 }

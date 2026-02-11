@@ -126,6 +126,44 @@ export async function getUsersByCategories(categories: string[]): Promise<UserFi
 }
 
 /**
+ * Get a user by their userName field (for vanity URLs).
+ * Searches comerciantes (role 2) first, then propietarios (role 1).
+ * Returns the user document and the role it was found in, or null if not found.
+ */
+export async function getUserByUsername(
+    username: string
+): Promise<{ user: UserFirestoreDocument; role: UserRole } | null> {
+    if (!isFirebaseAvailable() || !firestore) {
+        console.log('[SSR] getUserByUsername skipped - Firebase not available')
+        return null
+    }
+
+    const rolesToTry: UserRole[] = [2, 1] // Comerciante first, then propietario
+
+    for (const role of rolesToTry) {
+        const userCol = getUserCollection(role)
+        if (!userCol) continue
+
+        try {
+            const q = query(userCol, where('userName', '==', username))
+            const snapshot = await getDocs(q)
+
+            if (!snapshot.empty) {
+                const docSnap = snapshot.docs[0]!
+                return {
+                    user: { ...docSnap.data(), userId: docSnap.id } as UserFirestoreDocument,
+                    role,
+                }
+            }
+        } catch (error) {
+            console.error(`Error querying userName in role ${role}:`, error)
+        }
+    }
+
+    return null
+}
+
+/**
  * Get all users from a collection
  */
 export async function getUsers(role: UserRole): Promise<UserFirestoreDocument[]> {

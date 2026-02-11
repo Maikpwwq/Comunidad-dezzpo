@@ -5,7 +5,7 @@
  * SSR-safe: Uses Zustand store instead of UserAuthContext, lazy Firebase loading.
  */
 import { useState, useEffect } from 'react'
-import { getUser } from '@services/users'
+import { getUser, getUserByUsername } from '@services/users'
 import { useUserStore } from '@stores/userStore'
 import { usePageContext } from '@hooks/usePageContext'
 
@@ -77,16 +77,17 @@ export default function Page() {
     const currentUserName = useUserStore((state) => state.displayName)
     const currentUserRol = useUserStore((state) => state.rol)
 
-    // Route params - the profile ID we want to view
+    // Route params - the profile ID or username we want to view
     const routeId = pageContext.routeParams?.id
+    const routeUsername = pageContext.routeParams?.username
 
     // State
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
     // Determine which profile to show and if viewing own profile
-    const targetUserId = routeId || currentUserId
-    const isOwnProfile = !routeId || routeId === currentUserId
+    const targetUserId = routeUsername ? undefined : (routeId || currentUserId)
+    const isOwnProfile = !routeId && !routeUsername || routeId === currentUserId
     const viewerRole = currentUserRol
 
     const [userInfo, setUserInfo] = useState<UserInfoState>({
@@ -124,6 +125,59 @@ export default function Page() {
     // Fetch profile data
     useEffect(() => {
         const fetchProfile = async () => {
+            // Handle vanity URL (username lookup)
+            if (routeUsername) {
+                setIsLoading(true)
+                setError(null)
+                try {
+                    const result = await getUserByUsername(routeUsername)
+                    if (result) {
+                        const { user: userData } = result
+                        // Map categories to chips
+                        let chipsInfo: any[] = []
+                        if (userData.userCategories && Array.isArray(userData.userCategories)) {
+                            chipsInfo = userData.userCategories.map(chip => {
+                                const found = ListadoCategorias.find((cat: any) => cat.label === chip)
+                                return found || null
+                            }).filter(item => item !== null)
+                        }
+
+                        setUserInfo({
+                            userChannelUrl: userData.userChannelUrl || '',
+                            userPhone: userData.userPhone || '',
+                            userPhotoUrl: userData.userPhotoUrl || ProfilePhoto,
+                            userId: userData.userId || '',
+                            userMail: userData.userMail || '',
+                            userName: userData.userName || '',
+                            userGalleryUrl: userData.userGalleryUrl || [],
+                            userJoined: userData.userJoined || '',
+                            userProfession: userData.userProfession || '',
+                            userExperience: userData.userExperience || '',
+                            userCategoriesChips: chipsInfo,
+                            userDirection: userData.userDirection || '',
+                            userCiudad: userData.userCiudad || '',
+                            userCodigoPostal: userData.userCodigoPostal || '',
+                            userRazonSocial: userData.userRazonSocial || '',
+                            userIdentification: userData.userIdentification || '',
+                            userDescription: userData.userDescription || '',
+                            userWebSite: userData.userWebSite || '',
+                            userCreatedDrafts: [],
+                            userVotes: { reviews: [], mean: 0, votes: 0 },
+                            userLikes: { likedsProfiles: [], likedsDrafts: [] },
+                        })
+                    } else {
+                        setError('User not found')
+                    }
+                } catch (err) {
+                    console.error('Error fetching profile by username:', err)
+                    setError('Error loading profile')
+                } finally {
+                    setIsLoading(false)
+                }
+                return
+            }
+
+            // Handle ID-based lookup (existing logic)
             if (!targetUserId) {
                 setIsLoading(false)
                 setError('No user ID provided')
@@ -135,10 +189,9 @@ export default function Page() {
 
             try {
                 // Try both roles to find the user (2 = Comerciante, 1 = Propietario)
-                // When viewing other profiles, we try comerciante first (public profiles)
                 const rolesToTry: UserRole[] = isOwnProfile && viewerRole
                     ? [viewerRole]
-                    : [2, 1] // Try comerciante first, then propietario
+                    : [2, 1]
 
                 let userData: UserFirestoreDocument | null = null
 
@@ -148,7 +201,6 @@ export default function Page() {
                 }
 
                 if (userData) {
-                    // Map categories to chips
                     let chipsInfo: any[] = []
                     if (userData.userCategories && Array.isArray(userData.userCategories)) {
                         chipsInfo = userData.userCategories.map(chip => {
@@ -177,15 +229,8 @@ export default function Page() {
                         userDescription: userData.userDescription || '',
                         userWebSite: userData.userWebSite || '',
                         userCreatedDrafts: [],
-                        userVotes: {
-                            reviews: [],
-                            mean: 0,
-                            votes: 0,
-                        },
-                        userLikes: {
-                            likedsProfiles: [],
-                            likedsDrafts: [],
-                        },
+                        userVotes: { reviews: [], mean: 0, votes: 0 },
+                        userLikes: { likedsProfiles: [], likedsDrafts: [] },
                     })
                 } else {
                     setError('User not found')
@@ -199,7 +244,7 @@ export default function Page() {
         }
 
         fetchProfile()
-    }, [targetUserId, isOwnProfile, viewerRole])
+    }, [targetUserId, routeUsername, isOwnProfile, viewerRole])
 
     const copyUserWebSiteLink = () => {
         if (userInfo?.userWebSite) {
