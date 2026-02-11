@@ -98,6 +98,17 @@ export const UserAuthProvider: React.FC<UserAuthProviderProps> = ({ children }) 
                     isAuth: true,
                 })
 
+                // Check admin custom claim and sync to Zustand
+                import('@services/firebase/client').then(({ auth }) => {
+                    if (auth?.currentUser) {
+                        auth.currentUser.getIdTokenResult().then((result) => {
+                            useUserStore.getState().updateUser({
+                                isAdmin: result.claims.admin === true,
+                            })
+                        }).catch(() => { })
+                    }
+                })
+
                 // Recover role from localStorage (legacy pattern)
                 const storedRole = localStorage.getItem('role')
                 if (storedRole) {

@@ -25,6 +25,7 @@ export interface UserState {
   photoUrl: string | null
   rol: 1 | 2 | null // 1 = Propietario, 2 = Comerciante
   isAuth: boolean
+  isAdmin: boolean
   mobileOpen: boolean
 }
 
@@ -44,6 +45,7 @@ const initialState: UserState = {
   photoUrl: null,
   rol: null,
   isAuth: false,
+  isAdmin: false,
   mobileOpen: false,
 }
 
@@ -100,6 +102,7 @@ export const useUserStore = create<UserState & UserActions>()(
         email: state.email,
         rol: state.rol,
         isAuth: state.isAuth,
+        isAdmin: state.isAdmin,
       }),
     }
   )

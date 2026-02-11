@@ -5,7 +5,7 @@
  * Refactored from legacy Navigator.jsx (534 lines -> modular component).
  */
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { navigate } from 'vike/client/router'
 import { Link } from '@hooks'
 import { useUserStore } from '@stores/userStore'
@@ -112,22 +112,8 @@ function Sidebar({ open, onClose, userInfo, variant = 'permanent' }: SidebarProp
         role: roleFromStore(),
     }
 
-    // Check admin claim from Firebase Auth
-    const [isAdmin, setIsAdmin] = useState(false)
-    useEffect(() => {
-        async function checkAdmin() {
-            try {
-                const { auth } = await import('@services/firebase/client')
-                if (auth?.currentUser) {
-                    const result = await auth.currentUser.getIdTokenResult()
-                    setIsAdmin(result.claims.admin === true)
-                }
-            } catch {
-                // silently ignore
-            }
-        }
-        if (user.userId) checkAdmin()
-    }, [user.userId])
+    // Read admin status from Zustand store (set by UserAuthProvider + persisted)
+    const isAdmin = useUserStore((state) => state.isAdmin)
 
     // Get navigation config based on role + admin status
     const navSections = useMemo(
