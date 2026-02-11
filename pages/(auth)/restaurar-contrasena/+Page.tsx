@@ -1,130 +1,161 @@
 /**
  * Restaurar Contraseña (Password Reset) Page
  *
- * Converted to TypeScript.
+ * Refactored with standardized typography and modern auth-family styling.
  */
 import { useState } from 'react'
 import { auth } from '@services/firebase'
-import { sendPasswordResetEmail, confirmPasswordReset } from 'firebase/auth'
+import { sendPasswordResetEmail } from 'firebase/auth'
 // Components
 import { Link } from '@hooks'
-// Bootstrap
-// Bootstrap
-import { Row, Col, Container } from 'react-bootstrap'
+// Styles
+import clsx from 'clsx'
+import styles from './ResetPassword.module.scss'
 // MUI
-import { Button, Box, TextField } from '@mui/material'
-interface ResetEmailState {
-    resetEmail: string
-    code: string | null
-    newPassword: string | undefined
-}
+import { Paper, Box, TextField, Button, Alert } from '@mui/material'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
+// Bootstrap
+import { Container, Row } from 'react-bootstrap'
+
 export default function Page() {
-    const [resetEmail, setResetEmail] = useState<ResetEmailState>({
-        resetEmail: '',
-        code: null,
-        newPassword: undefined,
-    })
-    const [formStatus, setFormStatus] = useState<1 | 2>(1)
+    const [email, setEmail] = useState('')
+    const [sent, setSent] = useState(false)
     const [error, setError] = useState<string | null>(null)
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setResetEmail({
-            ...resetEmail,
-            [event.target.name]: event.target.value,
-        })
-    }
-    const handleClick = async () => {
+    const [isLoading, setIsLoading] = useState(false)
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!email.trim()) return
+        if (!auth) {
+            setError('Servicio de autenticación no disponible.')
+            return
+        }
         setError(null)
+        setIsLoading(true)
         try {
-            await sendPasswordResetEmail(auth, resetEmail.resetEmail)
-            setFormStatus(2)
+            await sendPasswordResetEmail(auth, email.trim())
+            setSent(true)
         } catch (err) {
-            setError('Error al enviar el correo de restauración.')
+            setError('No pudimos enviar el correo. Verifica que la dirección sea correcta.')
             console.error('Reset email error:', err)
+        } finally {
+            setIsLoading(false)
         }
     }
-    const handleConfirm = async () => {
-        if (!resetEmail.code || !resetEmail.newPassword) return
-        setError(null)
-        try {
-            await confirmPasswordReset(auth, resetEmail.code, resetEmail.newPassword)
-            setFormStatus(1)
-            // TODO: Navigate to login or show success message
-        } catch (err) {
-            setError('Error al restaurar la contraseña con este código.')
-            console.error('Confirm reset error:', err)
-        }
-    }
+
     return (
-        <Container fluid className="p-0 h-100">
-            <Row className="m-0 w-100 d-flex pt-4 pb-4">
-                <Col className="col-10">
-                    <h1 className="type-hero-title pb-4">Recuperar contraseña</h1>
-                    <Box
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        {formStatus === 1 && (
-                            <>
-                                <p className="body-1 pb-4 m-0">
-                                    Ingresa la cuenta de correo con la que te has registrado
-                                </p>
-                                <TextField
-                                    sx={{ minWidth: '300px' }}
-                                    id="resetEmail"
-                                    name="resetEmail"
-                                    label="Ingresa tu cuenta de correo"
-                                    value={resetEmail.resetEmail}
-                                    onChange={handleChange}
-                                    variant="standard"
-                                    type="email"
-                                />
-                                <Button className="my-4" type="submit" onClick={handleClick}>
-                                    Enviar correo de restablecimiento
-                                </Button>
-                            </>
-                        )}
-                        {formStatus === 2 && (
-                            <>
-                                <p className="body-1 pb-4 m-0">
-                                    Ingresa el código que recibiste en tu correo y la nueva contraseña
-                                </p>
-                                <TextField
-                                    sx={{ minWidth: '300px' }}
-                                    id="code"
-                                    name="code"
-                                    label="Ingresar el código recibido"
-                                    value={resetEmail.code || ''}
-                                    onChange={handleChange}
-                                    variant="standard"
-                                />
-                                <TextField
-                                    sx={{ minWidth: '300px' }}
-                                    id="newPassword"
-                                    name="newPassword"
-                                    label="Ingresa tu nueva contraseña segura"
-                                    value={resetEmail.newPassword || ''}
-                                    onChange={handleChange}
-                                    variant="standard"
-                                    type="password"
-                                />
-                                <Button className="my-4" type="submit" onClick={handleConfirm}>
-                                    Confirmar cambio de contraseña
-                                </Button>
-                            </>
-                        )}
-                        {error && <p className="body-1 text-danger">{error}</p>}
+        <Container fluid className={clsx(styles.Container, 'p-0')}>
+            <Row className={clsx(styles.MainRow, 'm-0')}>
+                <Paper elevation={16} className={styles.FormCard || ''}>
+                    {!sent ? (
+                        /* ── Step 1: Request reset ─────────────────── */
+                        <Box
+                            component="form"
+                            onSubmit={handleSubmit}
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: 2.5,
+                                px: 2,
+                            }}
+                        >
+                            <h1 className="type-hero-title" style={{ margin: 0 }}>
+                                Recuperar contraseña
+                            </h1>
+                            <p className="type-body" style={{ margin: 0, color: 'var(--content-text-color)' }}>
+                                Ingresa el correo con el que te registraste y te enviaremos
+                                un enlace para restablecer tu contraseña.
+                            </p>
+
+                            <TextField
+                                className={styles.Input || ''}
+                                id="resetEmail"
+                                label="Correo electrónico"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                variant="outlined"
+                                type="email"
+                                fullWidth
+                                autoFocus
+                            />
+
+                            {error && (
+                                <Alert severity="error" sx={{ width: '100%', borderRadius: '12px' }}>
+                                    {error}
+                                </Alert>
+                            )}
+
+                            <Button
+                                className={styles.SubmitButton || ''}
+                                type="submit"
+                                variant="contained"
+                                fullWidth
+                                disabled={isLoading || !email.trim()}
+                                disableElevation
+                            >
+                                {isLoading ? 'Enviando...' : 'Enviar enlace de recuperación'}
+                            </Button>
+
+                            <Link className={styles.Link || ''} href="/ingreso/">
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                    <KeyboardBackspaceIcon fontSize="small" />
+                                    <span className="type-caption">Volver a iniciar sesión</span>
+                                </Box>
+                            </Link>
+                        </Box>
+                    ) : (
+                        /* ── Step 2: Success confirmation ──────────── */
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: 2,
+                                px: 2,
+                            }}
+                        >
+                            <CheckCircleOutlineIcon className={styles.SuccessIcon || ''} />
+                            <h2 className="type-section-title" style={{ margin: 0 }}>
+                                ¡Correo enviado!
+                            </h2>
+                            <p className="type-body" style={{ margin: 0, color: 'var(--content-text-color)', textAlign: 'center' }}>
+                                Enviamos un enlace de recuperación a <strong>{email}</strong>.
+                                Revisa tu bandeja de entrada y sigue las instrucciones.
+                            </p>
+                            <p className="type-caption" style={{ margin: 0, color: 'var(--content-text-light-gray-color)' }}>
+                                ¿No lo ves? Revisa la carpeta de spam.
+                            </p>
+
+                            <Button
+                                className={styles.SubmitButton || ''}
+                                variant="contained"
+                                disableElevation
+                                onClick={() => { setSent(false); setEmail('') }}
+                                sx={{ mt: 1 }}
+                            >
+                                Enviar otro correo
+                            </Button>
+
+                            <Link className={styles.Link || ''} href="/ingreso/">
+                                <span className="type-caption">Volver a iniciar sesión</span>
+                            </Link>
+                        </Box>
+                    )}
+
+                    {/* ── Registration nudge ───────────────────── */}
+                    <Box sx={{ mt: 3, pt: 2, borderTop: '1px solid var(--auth-divider-color)', textAlign: 'center' }}>
+                        <p className="type-caption" style={{ margin: 0 }}>
+                            ¿Eres nuevo?{' '}
+                            <Link className={styles.Link || ''} href="/registro/">
+                                Crea tu cuenta
+                            </Link>
+                        </p>
                     </Box>
-                    <p className="body-1 pt-2 m-0">
-                        Eres nuevo, crea fácil una cuenta,
-                        <Link className="body-2 btn-TEXT text-verde-2" href="/registro/">
-                            {' Registrarme'}
-                        </Link>
-                    </p>
-                </Col>
+                </Paper>
             </Row>
         </Container>
     )
 }
+

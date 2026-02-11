@@ -3,4 +3,4 @@
  */
 
 export { RoleSelector } from './RoleSelector'
-export { GoogleAuthButton } from './GoogleAuthButton'
+export { GoogleAuthButton, OrDivider } from './GoogleAuthButton'

@@ -75,6 +75,12 @@
     --notificaciones-evaluado-background-color: #e0dcff;
     --notificaciones-publicado-color: #1e7559;
     --notificaciones-publicado-background-color: #c5e4dc;
+    /* Auth / Google button */
+    --auth-google-btn-border: #dadce0;
+    --auth-google-btn-text: #3c4043;
+    --auth-google-btn-hover-bg: #f7f8f8;
+    --auth-divider-color: #d0d0d0;
+    --auth-divider-text: #999999;
 }
 
 // No usar estan fuera de la paleta de colores
@@ -210,6 +216,30 @@ $gray-500: #adb5bd;
 $gray-900: #212529;
 
 $primary-blue: #1ec7e6; // var(--primary-blue-light-color) required for sass:color functions
+
+// Brand Teal Palette (Admin & Identity)
+$brand-teal: #00897B;
+$brand-teal-dark: #00695C;
+$brand-teal-deep: #004D40;
+$brand-teal-light: #1ec7e6;
+
+// Admin surfaces
+$admin-surface: #F5F7FA;
+$admin-selected-bg: rgba(30, 199, 230, 0.15);
+
+// Semantic chip colors
+$chip-role-propietario-bg: #E8F5E9;
+$chip-role-propietario-color: #2E7D32;
+$chip-role-comerciante-bg: #E3F2FD;
+$chip-role-comerciante-color: #1565C0;
+$chip-status-active-bg: #E8F5E9;
+$chip-status-active-color: #2E7D32;
+$chip-status-banned-bg: #FFEBEE;
+$chip-status-banned-color: #C62828;
+
+// Danger / Warning
+$danger-red: #C62828;
+$danger-red-dark: #B71C1C;
 
 $spacing-1: 0.25rem;
 $spacing-2: 0.5rem;

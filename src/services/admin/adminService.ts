@@ -15,7 +15,8 @@ import {
     Timestamp,
     getCountFromServer,
 } from 'firebase/firestore'
-import { firestore, isFirebaseAvailable } from '@services/firebase'
+import { sendPasswordResetEmail } from 'firebase/auth'
+import { auth, firestore, isFirebaseAvailable } from '@services/firebase'
 
 // Collection references
 const PROPIETARIOS = 'usersPropietariosResidentes'
@@ -241,5 +242,54 @@ export async function updateVerificationStatus(
         'identityVerification.status': status,
         'identityVerification.reviewedAt': new Date().toISOString(),
         ...(reason ? { 'identityVerification.rejectionReason': reason } : {}),
+    })
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Admin User Actions
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Sends a password reset email to the specified user.
+ * Uses Firebase Auth's sendPasswordResetEmail (client-side).
+ */
+export async function sendPasswordResetForUser(email: string): Promise<void> {
+    if (!auth) throw new Error('Firebase Auth not available')
+    await sendPasswordResetEmail(auth, email)
+}
+
+/**
+ * Bans a user by setting their Firestore status to 'banned'.
+ */
+export async function banUser(
+    uid: string,
+    role: 'Propietario' | 'Comerciante',
+): Promise<void> {
+    if (!isFirebaseAvailable() || !firestore) return
+
+    const colName = role === 'Propietario' ? PROPIETARIOS : COMERCIANTES
+    const docRef = doc(firestore, colName, uid)
+
+    await updateDoc(docRef, {
+        status: 'banned',
+        bannedAt: new Date().toISOString(),
+    })
+}
+
+/**
+ * Unbans a user by restoring their Firestore status to 'active'.
+ */
+export async function unbanUser(
+    uid: string,
+    role: 'Propietario' | 'Comerciante',
+): Promise<void> {
+    if (!isFirebaseAvailable() || !firestore) return
+
+    const colName = role === 'Propietario' ? PROPIETARIOS : COMERCIANTES
+    const docRef = doc(firestore, colName, uid)
+
+    await updateDoc(docRef, {
+        status: 'active',
+        bannedAt: null,
     })
 }
