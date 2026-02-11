@@ -85,12 +85,20 @@ export type ServiceResponse<T> =
   - Minimal client-side JavaScript.
   - No auth guards blocking render.
 
-### App Context (`pages/app`)
+### App Context (`pages/(app)`)
 - **Focus**: Client-side interactivity, Authentication, User Data.
 - **Constraints**:
   - CSR / SPA behavior.
   - strict `+guard.ts` protection.
   - Heavy use of Zustand stores.
+
+### Admin Context (`pages/(admin)`)
+- **Focus**: Platform governance, data sovereignty, trust & safety.
+- **Constraints**:
+  - **Admin Guard**: `useAdminGuard` hook checks `getIdTokenResult().claims.admin === true`. Non-admins are redirected to `/`.
+  - **Isolated Bundle**: Admin layout is separate from the main app layout. No Sendbird, no user sidebar.
+  - **Firestore Admin Predicate**: `isAdmin()` in Firestore rules grants read/update on user collections.
+  - **Never expose admin logic in main app bundle**: Admin service (`@services/admin`) must only be imported within `(admin)/*` pages.
 
 ## 5. Visual Guide
 
@@ -98,57 +106,57 @@ export type ServiceResponse<T> =
 ### File Structure
 ```
 comunidad-dezzpo/
-├── pages/                                    # Vike root pages directory
-│   ├── +config.ts                            # [NEW] Global Vike v1 config
-│   ├── +Layout.tsx                           # [NEW] Root layout wrapper
-│   ├── +onRenderClient.tsx                   # [MOVE] from src/index/renderer
-│   ├── +onRenderHtml.tsx                     # [MOVE] from src/index/renderer
-│   ├── +Head.tsx                             # [NEW] Shared <head> meta
+├── pages/
+│   ├── +config.ts                            # Global Vike v1 config
+│   ├── +Layout.tsx                           # Root layout wrapper
 │   │
-│   ├── (marketing)/                          # Route Group: Marketing Pages (SSR/SSG)
-│   │   ├── +Layout.tsx                       # [NEW] Marketing layout (header/footer)
+│   ├── (marketing)/                          # Route Group: Marketing (SSR/SSG)
+│   │   ├── +Layout.tsx
 │   │   └── ... (Public pages)
 │   │
-│   ├── (auth)/                               # Route Group: Authentication Pages
-│   │   ├── +Layout.tsx                       # [NEW] Auth layout (minimal UI)
-│   │   └── ... (Login, Register pages)
+│   ├── (auth)/                               # Route Group: Authentication
+│   │   ├── +Layout.tsx
+│   │   └── ... (Login, Register)
 │   │
-│   ├── app/                                  # Protected App Routes (SSR + Client)
-│   │   ├── +Layout.tsx                       # [MOVE/REFACTOR] AppLayout.jsx
-│   │   ├── +guard.ts                         # [NEW] Auth guard for /app/*
+│   ├── (app)/                                # Route Group: Protected App (CSR)
+│   │   ├── +Layout.tsx                       # App Shell (Sidebar + Navbar)
+│   │   ├── +guard.ts                         # Auth guard
 │   │   └── ... (Dashboard, Profile, Quotes)
 │   │
-│   ├── src/
-│   │   ├── components/                       # [RESTRUCTURE] Atomic Design
-│   │   │   ├── atoms/
-│   │   │   ├── molecules/
-│   │   │   ├── organisms/
-│   │   │   └── templates/
-│   │   │
-│   │   ├── features/                         # [NEW] Feature modules
-│   │   │   ├── auth/
-│   │   │   ├── profile/
-│   │   │   ├── budget/
-│   │   │   ├── chat/
-│   │   │   └── requirements/
-│   │   │
-│   │   ├── services/                         # [REFACTOR] TypeScript services
-│   │   ├── hooks/                            # [NEW] Shared hooks
-│   │   ├── stores/                           # [REFACTOR] RxJS state
-│   │   ├── types/                            # [NEW] Shared TypeScript types
-│   │   ├── assets/                           # [KEEP] Static assets
-│   │   └── styles/                           # [NEW] Global styles
+│   ├── (admin)/                              # Route Group: Admin Control Tower
+│   │   ├── +Layout.tsx                       # Admin guard + sidebar
+│   │   ├── agents.md                         # Admin-specific constraints
+│   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts
+│   │   ├── usuarios/+Page.tsx                # MUI DataGrid + drawer
+│   │   └── verificacion/+Page.tsx            # Identity verification queue
 │   │
-│   ├── server/                               # [KEEP] Express server
-│   ├── vite.config.ts
-│   ├── tsconfig.json
-│   └── package.json
+├── src/
+│   ├── components/                           # Atomic Design components
+│   ├── features/                             # Feature modules
+│   ├── services/                             # Data layer
+│   │   ├── admin/                            # Admin-only service
+│   │   │   ├── adminService.ts               # Stats, users, verification queries
+│   │   │   └── index.ts
+│   │   ├── firebase/
+│   │   └── users/
+│   ├── hooks/                                # Shared hooks
+│   │   ├── useAuth.ts
+│   │   └── useAdminGuard.ts                  # Firebase custom claims check
+│   ├── stores/                               # Zustand stores
+│   └── styles/                               # Global styles
+│
+├── scripts/
+│   └── setAdminClaim.ts                      # One-time admin setup
+├── vite.config.ts
+├── tsconfig.json
+└── package.json
 ```
 
 ## 6. Sub-Agent Orchestration
 This file acts as the primary orchestrator. For specific domain constraints, refer to:
 - **Marketing Pages**: [pages/(marketing)/agents.md](pages/(marketing)/agents.md)
 - **App/Dashboard**: [pages/(app)/agents.md](pages/(app)/agents.md)
+- **Admin Panel**: [pages/(admin)/agents.md](pages/(admin)/agents.md)
 
 ## 7. Learned Lessons
 
