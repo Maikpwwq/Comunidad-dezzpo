@@ -7,5 +7,6 @@ export {
     updateUser,
     setUser,
     getUsersByCategories,
+    getUserByUsername,
     getUsers,
 } from './userService'

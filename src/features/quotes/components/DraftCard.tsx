@@ -9,9 +9,10 @@
  * - Zustand selectors instead of UserAuthContext
  * - Removed unused commented code
  * - Improved share fallback
+ * - Functional handleFavorite with Firestore toggle
  */
 
-import React, { useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
 import clsx from 'clsx'
 
@@ -19,6 +20,10 @@ import styles from './DraftCard.module.scss'
 
 // Zustand store
 import { useUserStore } from '@stores/userStore'
+
+// Firebase
+import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
+import { firestore } from '@services/firebase'
 
 // MUI Components
 import {
@@ -29,7 +34,8 @@ import {
     CardActions,
     Avatar,
     IconButton,
-    Typography
+    Typography,
+    Snackbar
 } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
@@ -44,6 +50,7 @@ export interface DraftCardProps {
     draftCategory: string
     draftCreated?: string
     draftApply?: string[]
+    isLiked?: boolean
 }
 
 export function DraftCard({
@@ -55,13 +62,16 @@ export function DraftCard({
     draftCategory,
     draftCreated,
     draftApply = [],
+    isLiked: initialIsLiked = false,
 }: DraftCardProps): React.ReactElement {
     // Zustand selectors (replacing UserAuthContext)
     const currentUserId = useUserStore((state) => state.userId)
     const userRole = useUserStore((state) => state.rol)
 
     // Local state
-
+    const [isLiked, setIsLiked] = useState(initialIsLiked)
+    const [snackOpen, setSnackOpen] = useState(false)
+    const [snackMessage, setSnackMessage] = useState('')
 
     // Computed
     const draftLink = `/app/ver-requerimiento/${draftId}`
@@ -69,6 +79,11 @@ export function DraftCard({
     const isPropietario = userRole === 1
     const isCommerciante = userRole === 2
     const canApply = draftApply.length < 4
+
+    // Determine collection name based on user role
+    const getUserCollection = (role: number | null): string => {
+        return role === 1 ? 'usersPropietariosResidentes' : 'usersComerciantesCalificados'
+    }
 
     // Handlers
     const handleVerRequerimiento = useCallback(() => {
@@ -83,23 +98,44 @@ export function DraftCard({
         navigate(`/app/editar-requerimiento/${draftId}`)
     }, [draftId])
 
-    const handleFavorite = useCallback(() => {
-        // TODO: Implement favorite functionality
-        console.log('Add to favorites:', draftId)
-    }, [draftId])
+    const handleFavorite = useCallback(async () => {
+        if (!currentUserId) {
+            navigate('/sign-in')
+            return
+        }
+
+        if (!firestore || !userRole) return
+
+        const collectionName = getUserCollection(userRole)
+        const userRef = doc(firestore, collectionName, currentUserId)
+
+        try {
+            await updateDoc(userRef, {
+                savedDrafts: isLiked ? arrayRemove(draftId) : arrayUnion(draftId)
+            })
+            setIsLiked(!isLiked)
+            setSnackMessage(isLiked ? 'Eliminado de favoritos' : 'Guardado en favoritos')
+            setSnackOpen(true)
+        } catch (error) {
+            console.error('Error updating favorites:', error)
+            setSnackMessage('Error al actualizar favoritos')
+            setSnackOpen(true)
+        }
+    }, [draftId, currentUserId, isLiked, userRole])
 
     const handleShare = useCallback(async () => {
         try {
             const shareData = {
                 title: draftName,
                 text: draftDescription,
-                url: draftLink,
+                url: window.location.origin + draftLink,
             }
             if (navigator.share) {
                 await navigator.share(shareData)
             } else {
-                await navigator.clipboard.writeText(draftLink)
-                console.log('Link copied to clipboard')
+                await navigator.clipboard.writeText(shareData.url)
+                setSnackMessage('¡Enlace copiado!')
+                setSnackOpen(true)
             }
         } catch (error) {
             console.error('Share error:', error)
@@ -164,6 +200,7 @@ export function DraftCard({
                     className={clsx(styles.FavoriteButton)}
                     aria-label="add to favorites"
                     onClick={handleFavorite}
+                    sx={{ color: isLiked ? 'error.main' : 'action.active' }}
                 >
                     <FavoriteIcon />
                 </IconButton>
@@ -172,6 +209,13 @@ export function DraftCard({
                     <ShareIcon />
                 </IconButton>
             </CardActions>
+
+            <Snackbar
+                open={snackOpen}
+                autoHideDuration={2000}
+                onClose={() => setSnackOpen(false)}
+                message={snackMessage}
+            />
         </Card>
     )
 }

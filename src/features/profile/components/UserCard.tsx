@@ -7,7 +7,8 @@
  * Changes:
  * - TypeScript conversion with interfaces
  * - Zustand selectors instead of UserAuthContext
- * - Extracted useShareAction hook pattern
+ * - Fixed handleFavorite to update CURRENT user's likedsProfiles
+ * - Share fallback with clipboard toast
  */
 
 import React, { useState, useEffect, useCallback } from 'react'
@@ -20,15 +21,17 @@ import styles from './UserCard.module.scss'
 // Zustand store
 import { useUserStore } from '@stores/userStore'
 
-// Services
-import { updateUser } from '@services/users'
+// Firebase
+import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
+import { firestore } from '@services/firebase'
 
 // MUI Components
 import {
     Button,
     Avatar,
     IconButton,
-    Typography
+    Typography,
+    Snackbar
 } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
@@ -44,6 +47,7 @@ export interface UserCardProps {
     userExperience?: string
     userDescription?: string
     userCategories?: string[]
+    isLiked?: boolean
 }
 
 interface CategoryChip {
@@ -61,13 +65,18 @@ export function UserCard({
     userExperience,
     userDescription,
     userCategories = [],
+    isLiked: initialIsLiked = false,
 }: UserCardProps): React.ReactElement {
     // Zustand selectors (replacing UserAuthContext)
     const currentUserId = useUserStore((state) => state.userId)
+    const userRole = useUserStore((state) => state.rol)
     const isAuthenticated = !!currentUserId
 
     // Local state
     const [chips, setChips] = useState<CategoryChip[]>([])
+    const [isLiked, setIsLiked] = useState(initialIsLiked)
+    const [snackOpen, setSnackOpen] = useState(false)
+    const [snackMessage, setSnackMessage] = useState('')
 
     // Computed
     const userLink = `/app/perfil/${userId}`
@@ -75,6 +84,11 @@ export function UserCard({
     const bgAvatar = userPhotoUrl
         ? { bgcolor: 'var(--background-light-gray-color)' }
         : { bgcolor: 'var(--background-hover-green-color)' }
+
+    // Determine collection name based on user role
+    const getUserCollection = (role: number | null): string => {
+        return role === 1 ? 'usersPropietariosResidentes' : 'usersComerciantesCalificados'
+    }
 
     // Handlers
     const handleVerSitio = useCallback(() => {
@@ -87,38 +101,46 @@ export function UserCard({
     }, [userId])
 
     const handleFavorite = useCallback(async () => {
-        if (!currentUserId) return
+        if (!currentUserId) {
+            navigate('/sign-in')
+            return
+        }
+
+        if (!firestore || !userRole) return
+
+        // Update the CURRENT user's likedsProfiles (not the target user's doc)
+        const collectionName = getUserCollection(userRole)
+        const currentUserRef = doc(firestore, collectionName, currentUserId)
 
         try {
-            const userEditInfo = {
-                userLikes: {
-                    likedsProfiles: [currentUserId],
-                    likedsDrafts: [],
-                },
-            }
-            await updateUser({
-                userId: userId,
-                role: 2,
-                data: userEditInfo,
+            await updateDoc(currentUserRef, {
+                'userLikes.likedsProfiles': isLiked
+                    ? arrayRemove(userId)
+                    : arrayUnion(userId)
             })
+            setIsLiked(!isLiked)
+            setSnackMessage(isLiked ? 'Eliminado de favoritos' : 'Guardado en favoritos')
+            setSnackOpen(true)
         } catch (error) {
             console.error('Error adding favorite:', error)
+            setSnackMessage('Error al actualizar favoritos')
+            setSnackOpen(true)
         }
-    }, [userId, currentUserId])
+    }, [userId, currentUserId, isLiked, userRole])
 
     const handleShare = useCallback(async () => {
         try {
             const shareData = {
                 title: userRazonSocial,
                 text: userDescription ?? '',
-                url: userLink,
+                url: window.location.origin + userLink,
             }
             if (navigator.share) {
                 await navigator.share(shareData)
             } else {
-                // Fallback: copy to clipboard
-                await navigator.clipboard.writeText(userLink)
-                console.log('Link copied to clipboard')
+                await navigator.clipboard.writeText(shareData.url)
+                setSnackMessage('¡Enlace copiado!')
+                setSnackOpen(true)
             }
         } catch (error) {
             console.error('Share error:', error)
@@ -202,6 +224,7 @@ export function UserCard({
                             aria-label="add to favorites"
                             onClick={handleFavorite}
                             size="small"
+                            sx={{ color: isLiked ? 'error.main' : 'action.active' }}
                         >
                             <FavoriteIcon fontSize="small" />
                         </IconButton>
@@ -212,6 +235,13 @@ export function UserCard({
                     <ShareIcon fontSize="small" />
                 </IconButton>
             </div>
+
+            <Snackbar
+                open={snackOpen}
+                autoHideDuration={2000}
+                onClose={() => setSnackOpen(false)}
+                message={snackMessage}
+            />
         </article>
     )
 }
