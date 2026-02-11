@@ -15,6 +15,8 @@ import { useAuth } from '@hooks/useAuth'
 // Services
 import { getUser, updateUser } from '@services/users'
 import type { UserRole } from '@services/types'
+import { storage } from '@services/firebase'
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 
 // Components
 import { Ubicacion } from '@features/marketing'
@@ -27,7 +29,17 @@ import {
     TextField,
     TextareaAutosize,
     Modal,
+    Select,
+    MenuItem,
+    InputLabel,
+    FormControl,
+    Chip,
+    LinearProgress,
 } from '@mui/material'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom'
+import ErrorIcon from '@mui/icons-material/Error'
+import UploadFileIcon from '@mui/icons-material/UploadFile'
 
 // Styles
 import styles from './Ajustes.module.scss'
@@ -77,6 +89,13 @@ export default function Page() {
     })
 
     const [locationModalOpen, setLocationModalOpen] = useState(false)
+
+    // Identity verification state
+    const [idDocType, setIdDocType] = useState<string>('cedula')
+    const [idDocUrl, setIdDocUrl] = useState<string>('')
+    const [idVerificationStatus, setIdVerificationStatus] = useState<'none' | 'pending' | 'verified' | 'rejected'>('none')
+    const [uploadProgress, setUploadProgress] = useState<number>(0)
+    const [isUploading, setIsUploading] = useState(false)
 
     const [userEditInfo, setUserEditInfo] = useState<UserEditInfo>({
         userName: '',
@@ -140,6 +159,14 @@ export default function Page() {
                         userWebSite: (userData as any).userWebSite || '',
                     })
                     setIsLoaded(true)
+
+                    // Load identity verification data if present
+                    const idVerification = (userData as any).identityVerification
+                    if (idVerification) {
+                        setIdDocType(idVerification.docType || 'cedula')
+                        setIdDocUrl(idVerification.docUrl || '')
+                        setIdVerificationStatus(idVerification.status || 'none')
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error)
@@ -446,14 +473,121 @@ export default function Page() {
                 <div className={styles['settings-card']}>
                     <div className={styles['card-header']}>
                         <h2 className={styles['card-title']}>Confirma tu Identidad</h2>
+                        {idVerificationStatus === 'verified' && (
+                            <Chip icon={<CheckCircleIcon />} label="Verificado" color="success" size="small" />
+                        )}
+                        {idVerificationStatus === 'pending' && (
+                            <Chip icon={<HourglassBottomIcon />} label="En revisión" color="warning" size="small" />
+                        )}
+                        {idVerificationStatus === 'rejected' && (
+                            <Chip icon={<ErrorIcon />} label="Rechazado" color="error" size="small" />
+                        )}
                     </div>
-                    <p className="type-body">
+                    <p className="type-body" style={{ marginBottom: '1rem' }}>
                         Adjunta tu documento de identificación para verificar tu cuenta
                         y acceder a funcionalidades avanzadas.
                     </p>
-                    <Button className="btn-round btn-low" size="small" disabled>
-                        Próximamente
-                    </Button>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <FormControl size="small" fullWidth>
+                            <InputLabel id="id-doc-type-label">Tipo de documento</InputLabel>
+                            <Select
+                                labelId="id-doc-type-label"
+                                value={idDocType}
+                                label="Tipo de documento"
+                                onChange={(e) => setIdDocType(e.target.value)}
+                                disabled={idVerificationStatus === 'verified'}
+                            >
+                                <MenuItem value="cedula">Cédula de Ciudadanía</MenuItem>
+                                <MenuItem value="pasaporte">Pasaporte</MenuItem>
+                                <MenuItem value="cedula_extranjeria">Cédula de Extranjería</MenuItem>
+                                <MenuItem value="nit">NIT</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        {idDocUrl && (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.5rem', border: '1px solid #e0e0e0', borderRadius: '8px' }}>
+                                <img
+                                    src={idDocUrl}
+                                    alt="Documento"
+                                    style={{ width: 60, height: 40, objectFit: 'cover', borderRadius: '4px' }}
+                                />
+                                <div style={{ flex: 1 }}>
+                                    <p className="type-body" style={{ margin: 0, fontSize: '0.875rem', fontWeight: 500 }}>Documento cargado</p>
+                                    <p className="type-body" style={{ margin: 0, fontSize: '0.75rem', color: '#888' }}>{idDocType === 'cedula' ? 'Cédula de Ciudadanía' : idDocType === 'pasaporte' ? 'Pasaporte' : idDocType === 'cedula_extranjeria' ? 'Cédula de Extranjería' : 'NIT'}</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {isUploading && (
+                            <LinearProgress variant="determinate" value={uploadProgress} sx={{ borderRadius: 2 }} />
+                        )}
+
+                        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                            <Button
+                                component="label"
+                                className="btn-round btn-low"
+                                size="small"
+                                startIcon={<UploadFileIcon />}
+                                disabled={isUploading || idVerificationStatus === 'verified'}
+                            >
+                                {idDocUrl ? 'Reemplazar documento' : 'Subir documento'}
+                                <input
+                                    type="file"
+                                    accept="image/*,.pdf"
+                                    hidden
+                                    onChange={async (e) => {
+                                        const file = e.target.files?.[0]
+                                        if (!file || !storage || !userAuthID) return
+
+                                        setIsUploading(true)
+                                        setUploadProgress(0)
+
+                                        const ext = file.name.split('.').pop()
+                                        const storageRef = ref(storage, `identity-docs/${userAuthID}/${idDocType}.${ext}`)
+                                        const uploadTask = uploadBytesResumable(storageRef, file)
+
+                                        uploadTask.on(
+                                            'state_changed',
+                                            (snapshot) => {
+                                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                                                setUploadProgress(progress)
+                                            },
+                                            (error) => {
+                                                console.error('Upload error:', error)
+                                                setAlert({ open: true, message: 'Error al subir el documento', severity: 'error' })
+                                                setIsUploading(false)
+                                            },
+                                            async () => {
+                                                const url = await getDownloadURL(uploadTask.snapshot.ref)
+                                                setIdDocUrl(url)
+                                                setIdVerificationStatus('pending')
+                                                setIsUploading(false)
+
+                                                // Save metadata to Firestore
+                                                if (userRol.rol) {
+                                                    await updateUser({
+                                                        userId: userAuthID,
+                                                        role: userRol.rol,
+                                                        data: {
+                                                            identityVerification: {
+                                                                docType: idDocType,
+                                                                docUrl: url,
+                                                                status: 'pending',
+                                                                submittedAt: new Date().toISOString(),
+                                                            },
+                                                        } as any,
+                                                    })
+                                                }
+
+                                                setAlert({ open: true, message: '¡Documento cargado! En revisión.', severity: 'success' })
+                                            },
+                                        )
+                                    }}
+                                />
+                            </Button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
