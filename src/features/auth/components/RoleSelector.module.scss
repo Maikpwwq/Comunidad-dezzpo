@@ -6,13 +6,16 @@
     border: 1px solid var(--background-light-gray-color) !important;
     border-radius: 30px !important;
     padding: 12px 28px !important;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.25s ease-in-out;
     min-width: 220px;
     font-weight: 500;
 
     &:hover {
-        background-color: var(--selected-border-light-gray-color);
-        color: var(--primary-green-text-color) !important;
+        background-color: var(--logo-comunidad-dezzpo-color) !important;
+        border-color: var(--logo-comunidad-dezzpo-color) !important;
+        color: $white !important;
+        transform: scale(1.03);
+        box-shadow: 0 4px 12px rgba(32, 157, 161, 0.3);
     }
 
     // Bootstrap ToggleButton adds 'active' class to the label when selected
