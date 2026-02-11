@@ -42,7 +42,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { useUserStore } from '@stores/userStore'
 
 // Environment
-const EPAYCO_PUBLIC_KEY = import.meta.env.VITE_EPAYCO_PUBLIC_KEY || ''
+const EPAYCO_PUBLIC_KEY = import.meta.env.VITE_APP_EPAYCO_PUBLIC_KEY || ''
 // Note: VITE_EPAYCO_TEST env var will be consumed when ePayco integration is complete
 
 // Payment method type icons

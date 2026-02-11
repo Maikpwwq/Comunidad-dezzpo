@@ -49,6 +49,12 @@ Disallow: /suscripciones
 Allow: /portal-servicios
 Allow: /perfil/*
 
+# Admin Pages - Disallow (restricted to admins only)
+Disallow: /admin/
+Disallow: /admin/dashboard
+Disallow: /admin/usuarios
+Disallow: /admin/verificacion
+
 # API and system paths
 Disallow: /api/
 Disallow: /_*

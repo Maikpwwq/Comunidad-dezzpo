@@ -23,7 +23,7 @@ export const MapaPerfil: React.FC<MapaPerfilProps> = ({ userInfo }) => {
         zoom: 12,
     })
 
-    const markerRef = useRef<google.maps.Marker | null>(null)
+    const markerRef = useRef<google.maps.marker.AdvancedMarkerElement | null>(null)
     const infoWindowRef = useRef<google.maps.InfoWindow | null>(null)
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export const MapaPerfil: React.FC<MapaPerfilProps> = ({ userInfo }) => {
 
                     if (infoWindowRef.current && markerRef.current) {
                         infoWindowRef.current.setContent(infoGroup)
-                        infoWindowRef.current.open(map, markerRef.current)
+                        infoWindowRef.current.open({ anchor: markerRef.current, map })
                     }
                 }
             }).catch(e => console.error("Geocoding failed", e))

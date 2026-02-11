@@ -28,6 +28,10 @@ The project utilizes a **Tiered Access Model**:
     - `/app/suscripciones` 
     - `/app/perfil/[id]` (Public View)
 4. **Strict (App Auth):** Requires valid session (e.g., `/app/messages`, `/app/settings`).
+5. **Admin (Custom Claims):** Requires `claims.admin === true` via Firebase custom claims.
+    - `/admin/dashboard` — KPI Command Center
+    - `/admin/usuarios` — User Management (DataGrid)
+    - `/admin/verificacion` — Identity Verification Queue
 - **Frontend**: React + TypeScript
 - **Server**: Hono (via Vike-Photon)
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand)
@@ -40,26 +44,23 @@ The project utilizes a **Tiered Access Model**:
 ```
 comunidad-dezzpo/
 ├── pages/                                    # Vike root pages directory
-│   ├── +config.ts                            # [NEW] Global Vike v1 config
-│   ├── +Layout.tsx                           # [NEW] Root layout wrapper
-│   ├── +onRenderClient.tsx                   # [MOVE] from src/index/renderer
-│   ├── +onRenderHtml.tsx                     # [MOVE] from src/index/renderer
-│   ├── +Head.tsx                             # [NEW] Shared <head> meta
+│   ├── +config.ts                            # Global Vike v1 config
+│   ├── +Layout.tsx                           # Root layout wrapper
+│   ├── +onRenderClient.tsx                   # Client renderer
+│   ├── +onRenderHtml.tsx                     # HTML renderer
+│   ├── +Head.tsx                             # Shared <head> meta
 │   │
 │   ├── (marketing)/                          # Route Group: Marketing Pages (SSR/SSG)
-│   │   ├── +Layout.tsx                       # [NEW] Marketing layout (header/footer)
-│   │   ├── +Page.tsx                         # [RENAME] Home page
-│   │   ├── nosotros/+Page.tsx
-│   │   ├── contactenos/+Page.tsx
-│   │   ├── asi-trabajamos/+Page.tsx
-│   │   ├── blog/+Page.tsx
-│   │   ├── legal/+Page.tsx
-│   │   ├── prensa/+Page.tsx
-│   │   ├── patrocinadores/+Page.tsx
-│   │   ├── ayuda-pqrs/+Page.tsx
-│   │   ├── asesorias/+Page.tsx
-│   │   ├── calificaciones/+Page.tsx
-│   │   ├── presupuestos/+Page.tsx
+│   │   ├── +Layout.tsx                       # Marketing layout (header/footer)
+│   │   └── ...                               # Public pages
+│   │
+│   ├── (admin)/                              # Route Group: Admin Control Tower
+│   │   ├── +Layout.tsx                       # Admin guard + sidebar layout
+│   │   ├── agents.md                         # Admin constraints
+│   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts charts
+│   │   ├── usuarios/+Page.tsx                # MUI DataGrid + side drawer
+│   │   └── verificacion/+Page.tsx            # Identity verification queue
+│   │
 │   │   ├── apendice-costos/+Page.tsx
 ### 📂 PROJECT STRUCTURE
 
@@ -178,6 +179,7 @@ pnpm preview
 | **Profile** | ✅ Migrated | Uses `@features/profile`, `userService`, Zustand store |
 | **Quotes** | ✅ Migrated | Uses `@features/quotes`, `quotationService`, `draftService` |
 | **CSS Standardization** | ✅ Migrated | Enforced `kebab-case`, asset class mapping in place |
+| **Admin Control Tower** | ✅ Implemented | `useAdminGuard`, KPI dashboard (Recharts), User DataGrid, Identity verification queue |
 
 ## Service Standards
 

@@ -27,7 +27,7 @@ export interface UseGoogleMapsReturn {
     /** Error if loading failed */
     error: Error | null
     /** Add a marker to the map */
-    addMarker: (lat: number, lng: number, title?: string) => google.maps.Marker | null
+    addMarker: (lat: number, lng: number, title?: string) => google.maps.marker.AdvancedMarkerElement | null
 }
 
 const DEFAULT_CENTER = { lat: 4.624335, lng: -74.063644 } // Bogotá, Colombia
@@ -65,6 +65,7 @@ export function useGoogleMaps(options: MapOptions = {}): UseGoogleMapsReturn {
                 const mapInstance = new google.maps.Map(mapRef.current, {
                     center,
                     zoom,
+                    mapId: 'DEZZPO_MAP',
                 })
 
                 // Add click handler if provided
@@ -96,10 +97,10 @@ export function useGoogleMaps(options: MapOptions = {}): UseGoogleMapsReturn {
 
     // Add marker helper
     const addMarker = useCallback(
-        (lat: number, lng: number, title?: string): google.maps.Marker | null => {
+        (lat: number, lng: number, title?: string): google.maps.marker.AdvancedMarkerElement | null => {
             if (!map) return null
 
-            return new google.maps.Marker({
+            return new google.maps.marker.AdvancedMarkerElement({
                 position: { lat, lng },
                 map,
                 ...(title && { title }),
