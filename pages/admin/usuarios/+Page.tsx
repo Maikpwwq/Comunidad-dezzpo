@@ -19,13 +19,22 @@ import {
     IconButton,
     Paper,
     Avatar,
+    Snackbar,
+    Alert,
+    CircularProgress,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
 import PersonIcon from '@mui/icons-material/Person'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { DataGrid, type GridColDef } from '@mui/x-data-grid'
-import { getAllUsers, type AdminUserRow } from '@services/admin'
+import {
+    getAllUsers,
+    sendPasswordResetForUser,
+    banUser,
+    unbanUser,
+    type AdminUserRow,
+} from '@services/admin'
 
 /* ── Brand palette ─────────────────────────────────────────────── */
 const BRAND = {
@@ -90,6 +99,9 @@ export default function Page() {
     const [loading, setLoading] = useState(true)
     const [selectedUser, setSelectedUser] = useState<AdminUserRow | null>(null)
     const [searchQuery, setSearchQuery] = useState('')
+    const [actionLoading, setActionLoading] = useState(false)
+    const [confirmDialog, setConfirmDialog] = useState<{ type: 'password' | 'ban' | 'unban'; user: AdminUserRow } | null>(null)
+    const [snackbar, setSnackbar] = useState<{ message: string; severity: 'success' | 'error' } | null>(null)
 
     useEffect(() => {
         async function load() {
@@ -118,8 +130,40 @@ export default function Page() {
     const handleCopyUid = useCallback(() => {
         if (selectedUser) {
             navigator.clipboard.writeText(selectedUser.uid)
+            setSnackbar({ message: 'UID copiado al portapapeles', severity: 'success' })
         }
     }, [selectedUser])
+
+    const handleConfirmAction = useCallback(async () => {
+        if (!confirmDialog) return
+        setActionLoading(true)
+
+        try {
+            const { type, user } = confirmDialog
+
+            if (type === 'password') {
+                await sendPasswordResetForUser(user.email)
+                setSnackbar({ message: `Email de restablecimiento enviado a ${user.email}`, severity: 'success' })
+            } else if (type === 'ban') {
+                await banUser(user.uid, user.role)
+                // Update local state
+                setUsers((prev) => prev.map((u) => u.uid === user.uid ? { ...u, status: 'banned' } : u))
+                setSelectedUser((prev) => prev && prev.uid === user.uid ? { ...prev, status: 'banned' } : prev)
+                setSnackbar({ message: `${user.name} ha sido baneado`, severity: 'success' })
+            } else if (type === 'unban') {
+                await unbanUser(user.uid, user.role)
+                setUsers((prev) => prev.map((u) => u.uid === user.uid ? { ...u, status: 'active' } : u))
+                setSelectedUser((prev) => prev && prev.uid === user.uid ? { ...prev, status: 'active' } : prev)
+                setSnackbar({ message: `${user.name} ha sido reactivado`, severity: 'success' })
+            }
+        } catch (err) {
+            console.error('Action failed:', err)
+            setSnackbar({ message: `Error: ${err instanceof Error ? err.message : 'Operación fallida'}`, severity: 'error' })
+        } finally {
+            setActionLoading(false)
+            setConfirmDialog(null)
+        }
+    }, [confirmDialog])
 
     return (
         <Box>
@@ -280,30 +324,111 @@ export default function Page() {
                             <Button
                                 variant="outlined"
                                 size="small"
-                                disabled
+                                onClick={() => setConfirmDialog({ type: 'password', user: selectedUser })}
                                 sx={{
                                     borderColor: BRAND.teal,
                                     color: BRAND.teal,
                                     '&:hover': { borderColor: BRAND.tealDark, bgcolor: 'rgba(0,137,123,0.04)' },
                                 }}
                             >
-                                Reset Password
+                                Cambiar Contraseña
                             </Button>
-                            <Button
-                                variant="contained"
-                                size="small"
-                                disabled
-                                sx={{
-                                    bgcolor: '#C62828',
-                                    '&:hover': { bgcolor: '#B71C1C' },
-                                }}
-                            >
-                                Banear Usuario
-                            </Button>
+                            {selectedUser.status === 'banned' ? (
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    onClick={() => setConfirmDialog({ type: 'unban', user: selectedUser })}
+                                    sx={{
+                                        bgcolor: BRAND.teal,
+                                        '&:hover': { bgcolor: BRAND.tealDark },
+                                    }}
+                                >
+                                    Reactivar Usuario
+                                </Button>
+                            ) : (
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    onClick={() => setConfirmDialog({ type: 'ban', user: selectedUser })}
+                                    sx={{
+                                        bgcolor: '#C62828',
+                                        '&:hover': { bgcolor: '#B71C1C' },
+                                    }}
+                                >
+                                    Banear Usuario
+                                </Button>
+                            )}
                         </DialogActions>
                     </>
                 )}
             </Dialog>
+
+            {/* ── Confirmation Dialog ──────────────────────────── */}
+            <Dialog
+                open={!!confirmDialog}
+                onClose={() => !actionLoading && setConfirmDialog(null)}
+                maxWidth="xs"
+                fullWidth
+                PaperProps={{ sx: { borderRadius: 3 } }}
+            >
+                <DialogTitle sx={{ fontWeight: 600 }}>
+                    {confirmDialog?.type === 'password' && '¿Enviar email de restablecimiento?'}
+                    {confirmDialog?.type === 'ban' && '¿Banear este usuario?'}
+                    {confirmDialog?.type === 'unban' && '¿Reactivar este usuario?'}
+                </DialogTitle>
+                <DialogContent>
+                    <Typography variant="body2" color="text.secondary">
+                        {confirmDialog?.type === 'password' && (
+                            <>Se enviará un email de restablecimiento de contraseña a <strong>{confirmDialog.user.email}</strong>.  El usuario recibirá un enlace para crear una nueva contraseña.</>
+                        )}
+                        {confirmDialog?.type === 'ban' && (
+                            <>El usuario <strong>{confirmDialog.user.name}</strong> será baneado y no podrá acceder a la plataforma.</>
+                        )}
+                        {confirmDialog?.type === 'unban' && (
+                            <>El usuario <strong>{confirmDialog.user.name}</strong> será reactivado y podrá acceder nuevamente.</>
+                        )}
+                    </Typography>
+                </DialogContent>
+                <DialogActions sx={{ px: 3, pb: 2, gap: 1 }}>
+                    <Button
+                        onClick={() => setConfirmDialog(null)}
+                        disabled={actionLoading}
+                        size="small"
+                    >
+                        Cancelar
+                    </Button>
+                    <Button
+                        variant="contained"
+                        size="small"
+                        onClick={handleConfirmAction}
+                        disabled={actionLoading}
+                        sx={{
+                            bgcolor: confirmDialog?.type === 'ban' ? '#C62828' : BRAND.teal,
+                            '&:hover': { bgcolor: confirmDialog?.type === 'ban' ? '#B71C1C' : BRAND.tealDark },
+                        }}
+                        startIcon={actionLoading ? <CircularProgress size={16} color="inherit" /> : undefined}
+                    >
+                        {actionLoading ? 'Procesando…' : 'Confirmar'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            {/* ── Snackbar feedback ────────────────────────────── */}
+            <Snackbar
+                open={!!snackbar}
+                autoHideDuration={5000}
+                onClose={() => setSnackbar(null)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    onClose={() => setSnackbar(null)}
+                    severity={snackbar?.severity ?? 'success'}
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {snackbar?.message}
+                </Alert>
+            </Snackbar>
         </Box>
     )
 }
