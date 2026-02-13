@@ -100,9 +100,9 @@ comunidad-dezzpo/
 │   │   │   ├── editar/@id/+Page.tsx
 │   │   │   └── ver/@id/+Page.tsx
 │   │   │
-│   │   ├── requerimiento/                    # Requirements flow
-│   │   │   ├── editar/@id/+Page.tsx
-│   │   │   └── ver/@id/+Page.tsx
+│   │   ├── requerimiento/                    # Requirements components/utils
+│   │   ├── editar-requerimiento/@draftId/    # Edit Requirement
+│   │   ├── ver-requerimiento/@draftId/       # View Requirement
 │   │   │
 │   │   ├── mensajes/+Page.tsx                # Sendbird Chat integration
 │   │   ├── notificaciones/+Page.tsx
