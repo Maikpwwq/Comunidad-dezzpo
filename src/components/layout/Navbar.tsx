@@ -153,12 +153,14 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                                     sx={{
                                         color: 'inherit',
                                         textDecoration: 'none',
+                                        minHeight: 48,
+                                        px: 2, // Ensure background covers padding
+                                        mx: 0, // No margin
                                         '&:hover, &.Mui-selected': {
                                             backgroundColor: 'var(--background-gray-color)',
-                                            color: 'inherit',
+                                            color: 'var(--primary-green-text-color)', // text-green
                                             textDecoration: 'none',
                                         },
-                                        minHeight: 48, // Standard touch target
                                     }}
                                     label={
                                         <>
