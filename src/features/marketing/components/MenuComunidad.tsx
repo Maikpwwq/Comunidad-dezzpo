@@ -59,7 +59,12 @@ export function MenuComunidad(): React.ReactElement {
                         onClick={handleClose}
                     >
                         {item.name}
-                        <ArrowDropDown />
+                        <ArrowDropDown
+                            onClick={(e) => {
+                                e.preventDefault()
+                                e.stopPropagation()
+                            }}
+                        />
                     </Link>
                     <div className={clsx(styles.DropdownContent)}>
                         {item.dropdownContents?.map((content, idx) => (
