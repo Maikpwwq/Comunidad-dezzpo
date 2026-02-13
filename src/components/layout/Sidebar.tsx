@@ -130,6 +130,9 @@ function Sidebar({ open, onClose, userInfo, variant = 'permanent' }: SidebarProp
     const handleNav = (route: string): void => {
         const resolvedRoute = resolveRoute(route)
         navigate(resolvedRoute)
+        if (onClose) {
+            onClose()
+        }
     }
 
     /** Handle sign out */
