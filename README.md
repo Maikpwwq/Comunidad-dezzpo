@@ -54,14 +54,18 @@ comunidad-dezzpo/
 │   │   ├── +Layout.tsx                       # Marketing layout (header/footer)
 │   │   └── ...                               # Public pages
 │   │
-│   ├── (admin)/                              # Route Group: Admin Control Tower
-│   │   ├── +Layout.tsx                       # Admin guard + sidebar layout
-│   │   ├── agents.md                         # Admin constraints
-│   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts charts
-│   │   ├── usuarios/+Page.tsx                # MUI DataGrid + side drawer
-│   │   └── verificacion/+Page.tsx            # Identity verification queue
+│   ├── (auth)/                               # Route Group: Authentication
+│   │   ├── +Layout.tsx                       # Auth layout (centered card)
+│   │   ├── ingreso/+Page.tsx                 # Login
+│   │   ├── registro/+Page.tsx                # Registration
+│   │   └── restaurar-contrasena/+Page.tsx    # Password reset flow
 │   │
-│   │   ├── apendice-costos/+Page.tsx
+│   ├── admin/                                # Protected Admin Dashboard
+│   │   ├── +Layout.tsx                       # Admin guard + sidebar layout
+│   │   ├── dashboard/+Page.tsx               # KPI Command Center
+│   │   ├── usuarios/+Page.tsx                # User Management (DataGrid)
+│   │   ├── verificacion/+Page.tsx            # Identity Verification Queue
+│   │   └── apendice-costos/+Page.tsx         # Cost Appendix Management
 ### 📂 PROJECT STRUCTURE
 
 * `@src/styles/`: [**STRICT**] Centralized SCSS (kebab-case). Global typography and variables.
@@ -84,11 +88,11 @@ comunidad-dezzpo/
 │   │   │   ├── +Page.tsx             # Profile component
 │   │   │   └── +route.ts             # Dynamic route param logic
 │   │   │   ├── +Page.tsx                     # User's own profile
-│   │   │   ├── @id/+Page.tsx                 # [NEW] Dynamic public profile
-│   │   │   └── +route.ts                     # [REFACTOR] Simplified route
+│   │   │   ├── @id/+Page.tsx                 # Vanity URL profile
+│   │   │   └── +route.ts                     # Route resolver
 │   │   │
 │   │   ├── ajustes/
-│   │   │   ├── +Page.tsx                     # Settings page
+│   │   │   ├── +Page.tsx                     # Settings grid
 │   │   │   └── @id/+Page.tsx                 # [OPTIONAL] Admin edit
 │   │   │
 │   │   ├── cotizar/                          # Quote/Budget flow
@@ -104,41 +108,42 @@ comunidad-dezzpo/
 │   │   ├── notificaciones/+Page.tsx
 │   │   ├── portal-servicios/+Page.tsx
 │   │   ├── directorio-requerimientos/+Page.tsx
-│   │   ├── historial-servicios/+Page.tsx
+│   │   ├── historial-servicios/+Page.tsx     # [NEW] Service history & status
 │   │   ├── biblioteca/+Page.tsx
-│   │   ├── calificaciones/+Page.tsx
+│   │   ├── calificaciones/+Page.tsx          # [NEW] Contract-gated ratings
 │   │   ├── certificaciones/+Page.tsx
 │   │   ├── contratacion/+Page.tsx
-│   │   ├── contratar/+Page.tsx
+│   │   ├── contratar/+Page.tsx               # [NEW] Contract creation
 │   │   ├── proyecto/+Page.tsx
 │   │   ├── suscripciones/+Page.tsx
-│   │   ├── formas-pago/+Page.tsx
+│   │   ├── formas-pago/+Page.tsx             # [NEW] Payment methods (ePayco)
 │   │   ├── invitar-amigos/+Page.tsx
 │   │   ├── cambiar-clave/+Page.tsx
-│   │   └── configuracion-privacidad/+Page.tsx
+│   │   ├── configuracion-privacidad/+Page.tsx # [NEW] Privacy toggles
+│   │   └── asesorias/+Page.tsx               # [NEW] Advisory Q&A
 │   │   │
-│   │   └── _error/+Page.tsx                  # [MOVE] Error page
+│   │   └── _error/+Page.tsx                  # Error page
 │   │
 │   ├── src/
-│   │   ├── components/                       # [RESTRUCTURE] Atomic Design
+│   │   ├── components/                       # Atomic Design
 │   │   │   ├── atoms/                        # Basic UI elements
 │   │   │   ├── molecules/                    # Combined atoms
 │   │   │   ├── organisms/                    # Complex components
 │   │   │   └── templates/                    # Page templates
 │   │   │
-│   │   ├── features/                         # [NEW] Feature modules
+│   │   ├── features/                         # Feature modules
 │   │   │   ├── auth/
 │   │   │   ├── profile/
 │   │   │   ├── budget/
 │   │   │   ├── chat/
 │   │   │   └── requirements/
 │   │   │
-│   │   ├── services/                         # [REFACTOR] TypeScript services
+│   │   ├── services/                         # Service Layer
 │   │   │   ├── firebase/
 │   │   │   ├── firestore/
 │   │   │   └── sendbird/
 │   │   │
-│   │   ├── hooks/                            # [NEW] Shared hooks
+│   │   ├── hooks/                            # Custom hooks
 │   │   ├── stores/                           # [REFACTOR] RxJS state
 │   │   ├── types/                            # [NEW] Shared TypeScript types
 │   │   ├── assets/                           # [KEEP] Static assets
