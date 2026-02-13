@@ -209,9 +209,21 @@
             padding-left: 2rem; // Indent sub-items
             
             &:hover {
-                background-color: transparent; // Remove dark bg
-                text-decoration: underline; // Add underline instead
-                color: var(--content-text-white-color);
+                background-color: var(--background-light-gray-color, #f8f9fa); // Subtle hover
+                color: var(--primary-green-text-color);
+                text-decoration: none;
+            }
+
+            // Active state
+            &:global(.is-active) {
+                background-color: var(--background-main-green-color);
+                color: var(--content-text-white-color) !important;
+                font-weight: 600;
+                
+                &:hover {
+                    background-color: var(--background-main-green-color); // Keep green on hover if active
+                    color: var(--content-text-white-color);
+                }
             }
         }
     }
@@ -226,7 +238,27 @@
         }
 
         &:hover {
-            background-color: transparent; // No pill bg on mobile
+            background-color: var(--background-light-gray-color, #f8f9fa);
+            color: var(--primary-green-text-color);
+            
+            svg {
+                color: var(--primary-green-text-color);
+            }
+        }
+
+        // Active state
+        &:global(.is-active) {
+            background-color: var(--background-main-green-color);
+            color: var(--content-text-white-color) !important;
+            
+            svg {
+                color: var(--content-text-white-color);
+            }
+
+            &:hover {
+                background-color: var(--background-main-green-color);
+                color: var(--content-text-white-color);
+            }
         }
     }
 }
