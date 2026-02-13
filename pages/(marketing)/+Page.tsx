@@ -54,7 +54,7 @@ export default function Page() {
         setActiveStep(step)
     }
     const handleClick = () => {
-        navigate('/registro/')
+        navigate('/app/portal-servicios')
     }
     return (
         <div className="home-container">
@@ -85,7 +85,7 @@ export default function Page() {
                                 sx={{ backgroundColor: 'transparent !important', border: '2px solid var(--background-main-green-color)' }}
                                 onClick={handleClick}
                             >
-                                Unete a la Comunidad
+                                Portal de servicios
                             </Typography>
                         </Box>
                     </Col>

@@ -5,14 +5,13 @@ import { AdjuntarArchivos } from '@components/common'
 import { v4 as uuidv4 } from 'uuid'
 import { navigate } from 'vike/client/router'
 import { usePageContext } from '@hooks/usePageContext'
+import { CategoriasService } from '@/services'
 import { useAuth } from '@hooks/useAuth'
 // Firebase
 import {
     collection,
     doc,
     setDoc,
-    getDocs,
-    // DocumentData,
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
 // Components
@@ -143,79 +142,48 @@ export default function Page() {
     }
     useEffect(() => {
         if (!isLoaded) {
-            const categoriasFromFirestore = async () => {
-                if (!isFirebaseAvailable() || !firestore) {
-                    console.warn('[SSR] categoriasFromFirestore skipped - Firebase not available')
-                    return undefined
-                }
-                try {
-                    // 'aPTAljOeD48FbniBg6Lw' main document categories
-                    const categoriaRef = collection(firestore, 'categoriasServicios')
-                    const subCategoriaRef = collection(
-                        doc(categoriaRef, 'aPTAljOeD48FbniBg6Lw'),
-                        String(draftInfo.draftCategory)
-                    )
-                    const categoriaData = await getDocs(subCategoriaRef)
-                    return categoriaData
-                } catch (err) {
-                    console.log(
-                        'Error al obtener los datos de la colleccion categorias: ',
-                        err
-                    )
-                }
-            }
             if (!!draftInfo.draftProject && draftInfo.draftCategory !== 0) {
-                categoriasFromFirestore()
-                    .then((docSnap) => {
-                        if (docSnap) {
-                            const data = docSnap.docs.map((element) => ({
-                                ...element.data(),
-                            }))
-                            if (data.length > 0) {
-                                let i = 0
-                                let j = 0
-                                let response: any[][] = [[], [], [], [], [], []]
-                                data.forEach((element) => {
-                                    if (i < 6) {
-                                        if (!response[j]) {
-                                            response[j] = []
-                                        }
-                                        response[j]!.push(element)
-                                        i++
-                                    } else {
-                                        j++
-                                        i = 0
-                                        if (!response[j]) {
-                                            response[j] = []
-                                        }
-                                        response[j]!.push(element)
-                                        i++
-                                    }
-                                })
-                                if (response[0] && response[0].length > 0) {
-                                    setCategoriaInfo((prev: any) => ({
-                                        ...prev,
-                                        data: response,
-                                        subCatLength: Math.ceil(data.length / 6),
-                                    }))
-                                    setIsLoaded(true)
-                                }
+                const fetchCategories = async () => {
+                    try {
+                        const items = await CategoriasService.getCategoryItems(String(draftInfo.draftCategory))
+
+                        if (items && items.length > 0) {
+                            // Chunk items into groups of 6 for pagination/grid
+                            const chunkSize = 6
+                            const pages: any[] = []
+                            for (let i = 0; i < items.length; i += chunkSize) {
+                                pages.push(items.slice(i, i + chunkSize))
                             }
+
+                            setCategoriaInfo((prev: any) => ({
+                                ...prev,
+                                data: pages,
+                                subCatLength: pages.length,
+                            }))
+                            setIsLoaded(true)
                         } else {
-                            console.log('No info found in collections')
+                            console.log('No info found for category:', draftInfo.draftCategory)
+                            // Initialize with empty state to avoid loading indefinitely
+                            setCategoriaInfo((prev: any) => ({
+                                ...prev,
+                                data: [],
+                                subCatLength: 0,
+                            }))
+                            setIsLoaded(true)
                         }
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                    })
+                    } catch (error) {
+                        console.error('Error fetching categories:', error)
+                        setIsLoaded(true)
+                    }
+                }
+
+                fetchCategories()
             }
         }
     }, [
-        // categoriaInfo, // Removed to avoid loops
         isLoaded,
-        // categoriaRef, // unstable ref
         draftInfo.draftCategory,
-        draftInfo.draftProject,
+        draftInfo.draftProject, // Kept draftProject as it was in the original dependency array, assuming 'tipoProyecto' was a typo in the instruction
     ])
     const handleShowMore = () => {
         setShowMore(!showMore)

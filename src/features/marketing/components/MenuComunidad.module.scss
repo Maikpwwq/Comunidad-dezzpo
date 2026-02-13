@@ -104,13 +104,32 @@
     position: relative;
     max-width: 150px;
 
+    // Bridge the gap between trigger and content
+    &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 20px; // Bridge gap
+        background: transparent;
+        display: none; // Only show on hover? Actually always present but transparent
+    }
+
     // Show dropdown on hover
-    &:hover .DropdownContent {
-        display: flex;
-        flex-direction: column;
-        opacity: 1;
-        transform: translateY(0);
-        visibility: visible;
+    &:hover {
+        .DropdownContent {
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        
+        // Show bridge when hovering
+        &::after {
+            display: block;
+        }
     }
 }
 
@@ -143,6 +162,103 @@
         &:hover {
             background-color: var(--background-light-gray-color, #f8f9fa);
             color: var(--primary-green-text-color);
+        }
+    }
+    // Bridge the gap - removed from here, moved to .Dropdown
+    &::before {
+        display: none;
+    }
+}
+
+// Mobile overrides
+.MobileNavDrawer {
+    .Dropdown {
+        max-width: 100%;
+        width: 100%;
+        
+        // Ensure hover/focus works for visibility on mobile (tap behavior)
+        &:hover, &:focus-within {
+            .DropdownContent {
+                display: block; // Use block flow
+                visibility: visible;
+                opacity: 1;
+                transform: none;
+                position: static; // Stack in the flow
+                box-shadow: none;
+                background-color: transparent; // No highlight
+                width: 100%;
+                padding: 0;
+            }
+            
+            // Hide the bridge on mobile to prevent overlay issues
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    .DropdownContent {
+        // Reset absolute positioning properties
+        top: auto;
+        left: auto;
+        min-width: 100%;
+        border-radius: 0;
+        
+        a {
+            color: var(--content-text-white-color);
+            padding-left: 2rem; // Indent sub-items
+            
+            &:hover {
+                background-color: var(--background-light-gray-color, #f8f9fa); // Subtle hover
+                color: var(--primary-green-text-color);
+                text-decoration: none;
+            }
+
+            // Active state
+            &:global(.is-active) {
+                background-color: var(--background-main-green-color);
+                color: var(--content-text-white-color) !important;
+                font-weight: 600;
+                
+                &:hover {
+                    background-color: var(--background-main-green-color); // Keep green on hover if active
+                    color: var(--content-text-white-color);
+                }
+            }
+        }
+    }
+
+
+    .NavLink {
+        color: var(--content-text-white-color);
+        justify-content: flex-start; // Align left
+        
+        svg {
+            color: var(--content-text-white-color);
+        }
+
+        &:hover {
+            background-color: var(--background-light-gray-color, #f8f9fa);
+            color: var(--primary-green-text-color);
+            
+            svg {
+                color: var(--primary-green-text-color);
+            }
+        }
+
+        // Active state
+        &:global(.is-active) {
+            background-color: var(--background-main-green-color);
+            color: var(--content-text-white-color) !important;
+            
+            svg {
+                color: var(--content-text-white-color);
+            }
+
+            &:hover {
+                background-color: var(--background-main-green-color);
+                color: var(--content-text-white-color);
+            }
         }
     }
 }

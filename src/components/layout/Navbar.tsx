@@ -154,11 +154,16 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                                         color: 'inherit',
                                         textDecoration: 'none',
                                         minHeight: 48,
-                                        px: 2, // Ensure background covers padding
-                                        mx: 0, // No margin
+                                        px: 3,
+                                        mx: 0,
+                                        whiteSpace: 'nowrap',
+                                        textTransform: 'none',
+                                        minWidth: 'auto',
+                                        fontWeight: 600,
+                                        fontSize: '0.9rem',
                                         '&:hover, &.Mui-selected': {
                                             backgroundColor: 'var(--background-gray-color)',
-                                            color: 'var(--primary-green-text-color)', // text-green
+                                            color: 'var(--primary-green-text-color)',
                                             textDecoration: 'none',
                                         },
                                     }}
