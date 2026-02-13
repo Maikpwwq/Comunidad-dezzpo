@@ -30,7 +30,7 @@ export default function Page() {
                             descuentos y llévate premios.
                         </p>
                     </Col>
-                    <Button className="me-6 btn btn-buscador" onClick={copyReferedLink} style={{ color: 'white' }}>
+                    <Button className="me-6 btn btn-buscador text-blanco" onClick={copyReferedLink}>
                         Copiar tu Link
                     </Button>
                 </Col>
