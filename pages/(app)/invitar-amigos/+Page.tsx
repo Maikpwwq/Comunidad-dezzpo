@@ -11,7 +11,7 @@ import { Button, Typography } from '@mui/material'
 export default function Page() {
     const { currentUser } = useAuth()
     const copyReferedLink = () => {
-        const referenced = `www.dezzpo.com/app/perfil/${currentUser?.userId}`
+        const referenced = `https://comunidad-dezzpo.vercel.app/app/perfil/${currentUser?.userId}`
         navigator.clipboard.writeText(referenced)
     }
     return (
@@ -30,7 +30,7 @@ export default function Page() {
                             descuentos y llévate premios.
                         </p>
                     </Col>
-                    <Button className="me-6 btn btn-buscador" onClick={copyReferedLink}>
+                    <Button className="me-6 btn btn-buscador text-blanco" onClick={copyReferedLink}>
                         Copiar tu Link
                     </Button>
                 </Col>

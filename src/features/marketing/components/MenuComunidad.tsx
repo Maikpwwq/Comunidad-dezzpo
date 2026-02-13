@@ -52,7 +52,7 @@ export function MenuComunidad(): React.ReactElement {
     const renderMenuItems = (isMobile = false) => (
         <>
             {menuLinks.map((item, index) => (
-                <div key={index} className={clsx(styles.Dropdown, "ms-4")} style={{ minWidth: '118px' }}>
+                <div key={index} className={clsx(styles.Dropdown, styles.MenuItem)} style={{ minWidth: '118px' }}>
                     <Link href={item.href} className={clsx(styles.NavLink, "body-1")}>
                         {item.name}
                         <ArrowDropDown />
@@ -76,7 +76,7 @@ export function MenuComunidad(): React.ReactElement {
                 <Link
                     key={`static-${index}`}
                     href={item.href}
-                    className={clsx(styles.NavLink, "ms-4 body-1", isMobile && "mb-2")}
+                    className={clsx(styles.NavLink, styles.MenuItem, "body-1", isMobile && "mb-2")}
                     style={item.name === 'Apendice de costos' ? { maxWidth: '150px' } : undefined}
                 >
                     {item.name}
@@ -135,7 +135,6 @@ export function MenuComunidad(): React.ReactElement {
                         <Col xs={6} className="d-flex d-md-none justify-content-end">
                             <IconButton
                                 aria-label="mobile-more"
-                                className={clsx(styles.MobileMenu)}
                                 onClick={handleToggleMenu}
                                 sx={{ color: '#28a745' }}
                             >
@@ -156,8 +155,9 @@ export function MenuComunidad(): React.ReactElement {
             </div>
 
             {/* Mobile Navigation Drawer */}
+            {/* Mobile Navigation Drawer */}
             {isOpen && (
-                <nav className={clsx(styles.MobileMenu, "col-12 pt-2 pb-2")}>
+                <nav className={clsx(styles.MobileNavDrawer, "col-12 pt-2 pb-2")}>
                     <div className="d-flex flex-column p-4">
                         <div className="mb-4 d-flex justify-content-center">
                             <Link href="/ingreso" className="btn btn-light w-100 rounded-pill fw-bold body-1">

@@ -151,9 +151,14 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                                 <Tab
                                     key={item.id}
                                     sx={{
-                                        '&:hover': {
-                                            '--bs-link-color-rgb': 'var(--bs-link-hover-color-rgb)',
+                                        color: 'inherit',
+                                        textDecoration: 'none',
+                                        '&:hover, &.Mui-selected': {
+                                            backgroundColor: 'var(--background-gray-color)',
+                                            color: 'inherit',
+                                            textDecoration: 'none',
                                         },
+                                        minHeight: 48, // Standard touch target
                                     }}
                                     label={
                                         <>
