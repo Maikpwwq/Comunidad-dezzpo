@@ -10,39 +10,49 @@ import { useState, useEffect } from 'react'
 import { Link } from '@hooks'
 import {
     TableCards,
-    apendiceCostosData,
     type CategoriaItem,
 } from '@features/marketing'
+import { CategoriasService } from '@/services'
 // Bootstrap
-import { Row, Col, Container } from 'react-bootstrap'
+import { Row, Col, Container, Spinner } from 'react-bootstrap'
 // MUI
 import {
     Table,
     TableHead,
     TableBody,
     TableRow,
-    TableCell
+    TableCell,
+    Box
 } from '@mui/material'
 // FAQ Links
 const faqLinks = [
-    '¿Cuánto cuesta instalar nuevas tomacorrientes?',
-    '¿Cuánto cuesta instalar una ducha eléctrica?',
-    '¿Cuánto cuesta diagnosticar un fallo eléctrico?',
-    '¿Cuánto cuesta remodelar una habitación?',
-    '¿Cuánto cuesta instalar nuevas iluminaciones y lámparas?',
+    { text: '¿Cuánto cuesta instalar nuevas tomacorrientes?', href: '#' },
+    { text: '¿Cuánto cuesta instalar una ducha eléctrica?', href: '#' },
+    { text: '¿Cuánto cuesta diagnosticar un fallo eléctrico?', href: '#' },
+    { text: '¿Cuánto cuesta remodelar una habitación?', href: '#' },
+    { text: '¿Cuánto cuesta instalar nuevas iluminaciones y lámparas?', href: '#' },
 ]
 export default function Page() {
     const [categoriaInfo, setCategoriaInfo] = useState<CategoriaItem[]>([])
+    const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
-        // Load from config
-        if (apendiceCostosData) {
-            setCategoriaInfo(apendiceCostosData)
+        const loadData = async () => {
+            try {
+                const data = await CategoriasService.getAllCostos()
+                setCategoriaInfo(data)
+            } catch (error) {
+                console.error('Failed to load costos data', error)
+            } finally {
+                setIsLoading(false)
+            }
         }
+        loadData()
     }, [])
     const formatCurrency = (value: number) => {
         return parseInt(String(value)).toLocaleString('es-CO', {
             style: 'currency',
             currency: 'COP',
+            maximumFractionDigits: 0
         })
     }
     return (
@@ -60,56 +70,83 @@ export default function Page() {
             </Container>
             <Container fluid className="p-0">
                 <Row className="m-0 w-100 d-flex ps-4 pe-4">
-                    <TableCards dataTable={categoriaInfo} />
-                    <Table
-                        sx={{
-                            display: { sm: 'grid', xs: 'grid' },
-                            overflowX: 'scroll',
-                        }}
-                    >
-                        <TableHead>
-                            <TableRow className="w-100" sx={{ display: 'table' }}>
-                                <TableCell>Subcategoría</TableCell>
-                                <TableCell>Unidad Medida</TableCell>
-                                <TableCell>Descripción</TableCell>
-                                <TableCell>Precio unitario bajo</TableCell>
-                                <TableCell>Precio unitario alto</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {categoriaInfo.map((categoria, index) => {
-                                if (categoria.subCategoria === undefined) {
-                                    return (
-                                        <TableRow key={categoria.subSistema || index}>
-                                            <TableCell className="center headline-l w-100">
-                                                {categoria.subSistema}
-                                            </TableCell>
+                    {isLoading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center', p: 5, width: '100%' }}>
+                            <Spinner animation="border" role="status" variant="primary">
+                                <span className="visually-hidden">Cargando...</span>
+                            </Spinner>
+                        </Box>
+                    ) : (
+                        <>
+                            {/* Mobile View */}
+                            <div className="d-block d-md-none w-100">
+                                <TableCards dataTable={categoriaInfo} />
+                            </div>
+                            {/* Desktop View */}
+                            <div className="d-none d-md-block w-100">
+                                <Table
+                                    sx={{
+                                        minWidth: 650,
+                                        '& .MuiTableCell-root': {
+                                            borderColor: 'rgba(0,0,0,0.1)'
+                                        }
+                                    }}
+                                >
+                                    <TableHead>
+                                        <TableRow sx={{ backgroundColor: '#f8f9fa' }}>
+                                            <TableCell sx={{ fontWeight: 'bold' }}>Subcategoría</TableCell>
+                                            <TableCell sx={{ fontWeight: 'bold' }}>Unidad Medida</TableCell>
+                                            <TableCell sx={{ fontWeight: 'bold' }}>Descripción</TableCell>
+                                            <TableCell sx={{ fontWeight: 'bold' }}>Precio bajo</TableCell>
+                                            <TableCell sx={{ fontWeight: 'bold' }}>Precio alto</TableCell>
                                         </TableRow>
-                                    )
-                                }
-                                const precioBajo = (categoria.subCategoriaPrecio || 0) * 1.05
-                                const precioAlto = (categoria.subCategoriaPrecio || 0) * 1.65
-                                return (
-                                    <TableRow key={categoria.subCategoria}>
-                                        <TableCell>{categoria.subCategoria}</TableCell>
-                                        <TableCell>{categoria.subCategoriaCantidad}</TableCell>
-                                        <TableCell>{categoria.subCategoriaDescription}</TableCell>
-                                        <TableCell>{formatCurrency(precioBajo)}</TableCell>
-                                        <TableCell>{formatCurrency(precioAlto)}</TableCell>
-                                    </TableRow>
-                                )
-                            })}
-                        </TableBody>
-                    </Table>
+                                    </TableHead>
+                                    <TableBody>
+                                        {categoriaInfo.map((categoria, index) => {
+                                            // Header Row (SubSistema)
+                                            if (categoria.subSistema) {
+                                                return (
+                                                    <TableRow key={`${categoria.subSistema}-${index}`} sx={{ backgroundColor: '#e9ecef' }}>
+                                                        <TableCell colSpan={5} sx={{ fontWeight: 'bold', fontSize: '1.1rem', py: 2 }}>
+                                                            {categoria.subSistema}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                )
+                                            }
+
+                                            // Data Row
+                                            if (categoria.subCategoria) {
+                                                const precioBajo = (categoria.subCategoriaPrecio || 0) * 1.05
+                                                const precioAlto = (categoria.subCategoriaPrecio || 0) * 1.65
+
+                                                return (
+                                                    <TableRow key={`${categoria.subCategoria}-${index}`} hover>
+                                                        <TableCell>{categoria.subCategoria}</TableCell>
+                                                        <TableCell>{categoria.subCategoriaCantidad}</TableCell>
+                                                        <TableCell>{categoria.subCategoriaDescription}</TableCell>
+                                                        <TableCell>{formatCurrency(precioBajo)}</TableCell>
+                                                        <TableCell>{formatCurrency(precioAlto)}</TableCell>
+                                                    </TableRow>
+                                                )
+                                            }
+                                            return null
+                                        })}
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </>
+                    )}
                 </Row>
             </Container>
             <Container fluid className="p-0">
                 <Row className="apendiceCostosPreguntas m-0 w-100">
                     <Col>
-                        <ul className="body-2">
-                            {faqLinks.map((question) => (
-                                <li key={question}>
-                                    <Link href="/apendice-costos">{question}</Link>
+                        <ul>
+                            {faqLinks.map((item, idx) => (
+                                <li key={idx} className="mb-2">
+                                    <Link href={item.href} className="body-2 text-decoration-none">
+                                        {item.text}
+                                    </Link>
                                 </li>
                             ))}
                         </ul>

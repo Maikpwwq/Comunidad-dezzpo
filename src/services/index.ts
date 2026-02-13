@@ -34,6 +34,7 @@ export * from './utils'
 
 // Firebase Auth services
 export * from './firebase'
+export * from './categoriasService'
 
 // Sendbird services
 export * from './sendbird'
