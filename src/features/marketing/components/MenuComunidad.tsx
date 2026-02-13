@@ -52,7 +52,7 @@ export function MenuComunidad(): React.ReactElement {
     const renderMenuItems = (isMobile = false) => (
         <>
             {menuLinks.map((item, index) => (
-                <div key={index} className={clsx(styles.Dropdown, "ms-4")} style={{ minWidth: '118px' }}>
+                <div key={index} className={clsx(styles.Dropdown, styles.MenuItem)} style={{ minWidth: '118px' }}>
                     <Link href={item.href} className={clsx(styles.NavLink, "body-1")}>
                         {item.name}
                         <ArrowDropDown />
@@ -76,7 +76,7 @@ export function MenuComunidad(): React.ReactElement {
                 <Link
                     key={`static-${index}`}
                     href={item.href}
-                    className={clsx(styles.NavLink, "ms-4 body-1", isMobile && "mb-2")}
+                    className={clsx(styles.NavLink, styles.MenuItem, "body-1", isMobile && "mb-2")}
                     style={item.name === 'Apendice de costos' ? { maxWidth: '150px' } : undefined}
                 >
                     {item.name}
