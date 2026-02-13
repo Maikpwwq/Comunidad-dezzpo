@@ -145,6 +145,70 @@
             color: var(--primary-green-text-color);
         }
     }
+    // Bridge the gap between trigger and content
+    &::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background: transparent;
+    }
+}
+
+// Mobile overrides
+.MobileNavDrawer {
+    .Dropdown {
+        max-width: 100%;
+        width: 100%;
+        
+        // Ensure hover/focus works for visibility on mobile (tap behavior)
+        &:hover, &:focus-within {
+            .DropdownContent {
+                display: block; // Use block flow
+                visibility: visible;
+                opacity: 1;
+                transform: none;
+                position: static; // Stack in the flow
+                box-shadow: none;
+                background-color: rgba(255, 255, 255, 0.1); // Slight highlight
+                width: 100%;
+                padding: 0;
+            }
+        }
+    }
+
+    .DropdownContent {
+        // Reset absolute positioning properties
+        top: auto;
+        left: auto;
+        min-width: 100%;
+        border-radius: 0;
+        
+        a {
+            color: var(--content-text-white-color);
+            padding-left: 2rem; // Indent sub-items
+            
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+                color: var(--content-text-white-color);
+            }
+        }
+    }
+
+    .NavLink {
+        color: var(--content-text-white-color);
+        justify-content: flex-start; // Align left
+        
+        svg {
+            color: var(--content-text-white-color);
+        }
+
+        &:hover {
+            background-color: transparent; // No pill bg on mobile
+        }
+    }
 }
 
 .MenuItem {
