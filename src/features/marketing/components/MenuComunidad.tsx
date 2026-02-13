@@ -53,7 +53,11 @@ export function MenuComunidad(): React.ReactElement {
         <>
             {menuLinks.map((item, index) => (
                 <div key={index} className={clsx(styles.Dropdown, styles.MenuItem)} style={{ minWidth: '118px' }}>
-                    <Link href={item.href} className={clsx(styles.NavLink, "body-1")}>
+                    <Link
+                        href={item.href}
+                        className={clsx(styles.NavLink, "body-1")}
+                        onClick={handleClose}
+                    >
                         {item.name}
                         <ArrowDropDown />
                     </Link>

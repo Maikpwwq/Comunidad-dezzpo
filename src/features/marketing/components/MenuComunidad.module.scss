@@ -104,13 +104,32 @@
     position: relative;
     max-width: 150px;
 
+    // Bridge the gap between trigger and content
+    &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 20px; // Bridge gap
+        background: transparent;
+        display: none; // Only show on hover? Actually always present but transparent
+    }
+
     // Show dropdown on hover
-    &:hover .DropdownContent {
-        display: flex;
-        flex-direction: column;
-        opacity: 1;
-        transform: translateY(0);
-        visibility: visible;
+    &:hover {
+        .DropdownContent {
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        
+        // Show bridge when hovering
+        &::after {
+            display: block;
+        }
     }
 }
 
@@ -145,15 +164,9 @@
             color: var(--primary-green-text-color);
         }
     }
-    // Bridge the gap between trigger and content
+    // Bridge the gap - removed from here, moved to .Dropdown
     &::before {
-        content: '';
-        position: absolute;
-        top: -10px;
-        left: 0;
-        width: 100%;
-        height: 10px;
-        background: transparent;
+        display: none;
     }
 }
 
@@ -172,9 +185,14 @@
                 transform: none;
                 position: static; // Stack in the flow
                 box-shadow: none;
-                background-color: rgba(255, 255, 255, 0.1); // Slight highlight
+                background-color: transparent; // No highlight
                 width: 100%;
                 padding: 0;
+            }
+            
+            // Hide the bridge on mobile to prevent overlay issues
+            &::after {
+                display: none;
             }
         }
     }
@@ -191,11 +209,13 @@
             padding-left: 2rem; // Indent sub-items
             
             &:hover {
-                background-color: rgba(0, 0, 0, 0.1);
+                background-color: transparent; // Remove dark bg
+                text-decoration: underline; // Add underline instead
                 color: var(--content-text-white-color);
             }
         }
     }
+
 
     .NavLink {
         color: var(--content-text-white-color);
