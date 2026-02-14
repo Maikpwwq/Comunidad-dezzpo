@@ -50,33 +50,23 @@ interface LocalProjectData {
 
 export function ProjectSearchForm({
     draftInfo,
-    setDraftInfo,
     simple = true,
     setIsLoaded: parentSetIsLoaded,
 }: ProjectSearchFormProps): React.ReactElement {
-    const [isLoaded, setIsLoaded] = useState(false)
     const [projectData, setProjectData] = useState<LocalProjectData>({
         draftCategory: 0,
         tipoProyecto: '',
     })
 
-    // Sync local state to parent when both fields are set
+    // Sync local state to parent when draftInfo (prop) changes
     useEffect(() => {
-        if (
-            !isLoaded &&
-            draftInfo &&
-            setDraftInfo &&
-            projectData.draftCategory &&
-            projectData.tipoProyecto
-        ) {
-            setDraftInfo({
-                ...draftInfo,
-                draftCategory: projectData.draftCategory,
-                draftProject: projectData.tipoProyecto,
+        if (draftInfo && (draftInfo.draftCategory !== projectData.draftCategory || draftInfo.draftProject !== projectData.tipoProyecto)) {
+            setProjectData({
+                draftCategory: draftInfo.draftCategory || 0,
+                tipoProyecto: (draftInfo.draftProject as ProjectType) || '',
             })
-            setIsLoaded(true)
         }
-    }, [projectData, draftInfo, setDraftInfo, isLoaded])
+    }, [draftInfo])
 
     const handleProjectTypeChange = useCallback(
         (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -85,7 +75,6 @@ export function ProjectSearchForm({
                 tipoProyecto: e.target.value as ProjectType | '',
             }))
             // Update local or parent loading state
-            setIsLoaded(false)
             if (parentSetIsLoaded) parentSetIsLoaded(false)
         },
         [parentSetIsLoaded]
@@ -99,7 +88,7 @@ export function ProjectSearchForm({
     }, [])
 
     const handleSubmit = useCallback(() => {
-        const route = `/nuevo-proyecto/${projectData.tipoProyecto}/${projectData.draftCategory}`
+        const route = `/nuevo-proyecto?type=${projectData.tipoProyecto}&category=${projectData.draftCategory}`
         navigate(route)
     }, [projectData])
 
@@ -163,7 +152,7 @@ export function ProjectSearchForm({
                             <CategorySelector
                                 setDraftInfo={handleCategoryChange}
                                 draftInfo={projectData as ProjectDraftInfo}
-                                setIsLoaded={setIsLoaded}
+                                setIsLoaded={parentSetIsLoaded || (() => { })}
                             />
                         </Form.Group>
 
