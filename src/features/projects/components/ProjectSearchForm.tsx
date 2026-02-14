@@ -12,11 +12,12 @@ import clsx from 'clsx'
 
 import styles from './ProjectSearchForm.module.scss'
 
+import { OrDivider } from '@features/auth'
+
 // MUI
 import { Box, Typography } from '@mui/material'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 
-// Bootstrap
 // Bootstrap
 import {
     Container,
@@ -108,24 +109,21 @@ export function ProjectSearchForm({
         <Container fluid className="p-0">
             <Col className="col-12">
                 <div className={clsx(styles.Container, "p-4 center ms-2 me-2")}>
-                    <h3 className={clsx(styles.Headline, "pt-2 pb-2 text-center")}>Solicitar servicios</h3>
+                    <h3 className="type-section-title pt-2 pb-2 text-center">Solicitar servicios</h3>
 
                     {!simple && (
                         <>
                             <Link
                                 href="/app/portal-servicios"
-                                className={clsx(styles.NavLink, styles.BodyText, "me-0 mt-2 px-4 w-auto")}
+                                className={clsx(styles.NavLink, "type-body me-0 mt-2 px-4 w-auto")}
                             >
                                 <StorefrontIcon className="me-1" />
                                 <strong>
-                                    Visitar Directorio <br /> de Comerciantes
+                                    Directorio de Comerciantes
                                 </strong>
                             </Link>
-
-                            <Typography variant="body1" className={clsx(styles.BodyText, "mt-3 pt-2 pb-2")}>
-                                O prueba
-                            </Typography>
-                            <Typography variant="body2" className={clsx(styles.BodyText, "mb-3")}>
+                            <OrDivider />
+                            <Typography className="type-body-sm mb-3">
                                 Registrar un nuevo requerimiento
                             </Typography>
                         </>
@@ -135,7 +133,7 @@ export function ProjectSearchForm({
                         {/* Project Type */}
                         <Form.Group className="mb-3" controlId="formTipoProyecto">
                             <InputGroup>
-                                <Form.Label className={clsx(styles.BodyText, "mb-0")}>
+                                <Form.Label className="type-body mb-0">
                                     ¿Qué tipo de proyecto es?
                                 </Form.Label>
                             </InputGroup>
@@ -158,7 +156,7 @@ export function ProjectSearchForm({
                         {/* Category */}
                         <Form.Group className="mb-2" controlId="formCategoriaProfesional">
                             <InputGroup>
-                                <Form.Label className={clsx(styles.BodyText, "mb-0")}>
+                                <Form.Label className="type-body mb-0">
                                     ¿Qué tipo de profesional necesitas?
                                 </Form.Label>
                             </InputGroup>
@@ -173,7 +171,7 @@ export function ProjectSearchForm({
                         <Form.Group>
                             <Col className="pt-4 pb-2">
                                 <Button
-                                    className={clsx(styles.SubmitButton, styles.BodyText)}
+                                    className={clsx(styles.SubmitButton, "type-body")}
                                     variant="primary"
                                     onClick={handleSubmit}
                                     disabled={!isValid}
