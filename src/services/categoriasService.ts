@@ -145,6 +145,7 @@ export const CategoriasService = {
         let sourceList = ListadoCategorias
         if (searchQuery) {
             const query = searchQuery.toLowerCase()
+            
             sourceList = ListadoCategorias.filter((cat: any) => 
                 (cat.label && cat.label.toLowerCase().includes(query)) ||
                 (cat.rol && cat.rol.toLowerCase().includes(query))
@@ -160,8 +161,6 @@ export const CategoriasService = {
         const batch = sourceList.slice(startIndex, endIndex)
         const mainDocId = 'aPTAljOeD48FbniBg6Lw'
         const batchData: CategoriaItem[] = []
-
-        console.log(`Fetching batch: ${startIndex} to ${endIndex} of ${totalCategories}`)
 
         const promises = batch.map(async (cat: any) => {
             const categoryName = cat.label
@@ -197,6 +196,11 @@ export const CategoriasService = {
 
         const nextIndex = endIndex < totalCategories ? endIndex : null
         const hasMore = endIndex < totalCategories
+
+        // Recursively fetch if we found no items but there are more categories to check
+        if (batchData.length === 0 && hasMore && nextIndex !== null) {
+            return await CategoriasService.getCostosBatch(nextIndex, batchSize, searchQuery)
+        }
 
         return {
             data: batchData,

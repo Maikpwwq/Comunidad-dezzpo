@@ -113,7 +113,7 @@ export default function Page() {
                                 gutterBottom
                                 variant="h6"
                                 align="left"
-                                className="headline-m w-100"
+                                className="type-card-title w-100"
                             >
                                 Presupuesto
                             </Typography>
@@ -130,7 +130,7 @@ export default function Page() {
                                 gutterBottom
                                 variant="h6"
                                 align="left"
-                                className="headline-m w-100"
+                                className="type-card-title w-100"
                             >
                                 Categoria servicio
                             </Typography>
@@ -174,7 +174,7 @@ export default function Page() {
                                 gutterBottom
                                 variant="h6"
                                 align="left"
-                                className="p-description w-100"
+                                className="type-card-title w-100"
                             >
                                 Ubicacion
                             </Typography>
@@ -297,7 +297,7 @@ export default function Page() {
                             />
                             <Typography
                                 variant="h6"
-                                className="p-description w-100 p-1"
+                                className="type-card-title w-100 p-1"
                             >
                                 Archivos adjuntos
                             </Typography>

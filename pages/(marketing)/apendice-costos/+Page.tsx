@@ -110,18 +110,20 @@ export default function Page() {
     return (
         <div className="cost-appendix-page">
             <Container fluid className="p-0">
-                <Row className="apendiceCostosTitulo m-0 w-100 d-flex justify-content-end align-items-center">
-                    <Col lg={4} md={6} sm={10} xs={12}>
-                        <h1 className="titulo type-hero-title mb-3">
+                <Row className="apendiceCostosTitulo m-0 w-100 d-flex flex-column align-items-center justify-content-center pt-5 pb-4">
+                    <Col xs={12} className="text-center">
+                        <h1 className="titulo type-hero-title mb-4">
                             Costeo de Servicios
                             <br />
                             Comunes
                         </h1>
-                        <Box sx={{ mb: 4, display: 'flex', justifyContent: 'center' }}>
+                    </Col>
+                    <Col lg={6} md={8} sm={10} xs={12}>
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                placeholder="Buscar por categoría o rol..."
+                                placeholder="Buscar por categoría o rol (ej: Pintura)"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 InputProps={{
@@ -133,6 +135,7 @@ export default function Page() {
                                     sx: {
                                         borderRadius: '50px',
                                         backgroundColor: 'white',
+                                        boxShadow: '0px 4px 10px rgba(0,0,0,0.1)',
                                         '& fieldset': { borderColor: 'rgba(0, 0, 0, 0.1)' },
                                     }
                                 }}
