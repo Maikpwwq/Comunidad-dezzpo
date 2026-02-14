@@ -98,6 +98,16 @@ service cloud.firestore {
     }
 
     // =========================================================================
+    // Categorias de Servicios (Cost Data)
+    // Publicly readable for the calculator/appendix page.
+    // Admin write only.
+    // =========================================================================
+    match /categoriasServicios/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // =========================================================================
     // Catch-all: deny everything else
     // =========================================================================
     match /{document=**} {
