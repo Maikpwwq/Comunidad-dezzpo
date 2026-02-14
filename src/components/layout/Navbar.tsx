@@ -154,16 +154,20 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                                         color: 'inherit',
                                         textDecoration: 'none',
                                         minHeight: 48,
-                                        px: 3,
-                                        mx: 0,
+                                        px: { xs: 2, md: 4 }, // Increased padding for desktop
+                                        mx: 0.5, // Added small margin between tabs
                                         whiteSpace: 'nowrap',
                                         textTransform: 'none',
                                         minWidth: 'auto',
                                         fontWeight: 600,
                                         fontSize: '0.9rem',
-                                        '&:hover, &.Mui-selected': {
-                                            backgroundColor: 'var(--background-gray-color)',
-                                            color: 'var(--primary-green-text-color)',
+                                        '&:hover': {
+                                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                            textDecoration: 'none',
+                                        },
+                                        '&.Mui-selected': {
+                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                            color: '#ffffff', // Ensure high contrast for selected state
                                             textDecoration: 'none',
                                         },
                                     }}

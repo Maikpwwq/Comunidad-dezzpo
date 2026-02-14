@@ -9,8 +9,6 @@ import { getQuotation } from '@services/quotations'
 import type { DraftFirestoreDocument, QuotationFirestoreDocument } from '@services/types'
 // Components
 import TablaSubCategoriaPresupuesto from '../../requerimiento/components/TablaSubCategoriaPresupuesto'
-// Bootstrap
-import { Row, Col, Container } from 'react-bootstrap'
 // MUI
 import {
     Button,
@@ -19,9 +17,31 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    Typography
+    Typography,
+    Grid,
+    Card,
+    CardContent,
+    CardHeader,
+    Box,
+    Divider,
+    Stack,
+    Chip,
+    Avatar,
+    Container
 } from '@mui/material'
+// Icons
+import DownloadIcon from '@mui/icons-material/Download'
+import AddIcon from '@mui/icons-material/Add'
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import WorkIcon from '@mui/icons-material/Work'
+import EditIcon from '@mui/icons-material/Edit'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import EventIcon from '@mui/icons-material/Event'
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+import HomeWorkIcon from '@mui/icons-material/HomeWork'
 // CSS
+
 export default function Page() {
     const { currentUser } = useAuth()
     const userAuthID = currentUser?.userId
@@ -29,6 +49,7 @@ export default function Page() {
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams
     const [isLoaded, setIsLoaded] = useState(false)
+
     interface CotizacionesState {
         appliedQuotations: QuotationFirestoreDocument[]
     }
@@ -38,9 +59,9 @@ export default function Page() {
     const [requerimientoInfo, setRequerimientoInfo] = useState<Omit<Partial<DraftFirestoreDocument>, 'draftSubCategory'> & {
         draftName: string
         draftCategory: string
-        draftSubCategory: any[] // Legacy array
+        draftSubCategory: any[]
         draftTotal: number
-        draftApply: string[] // Array of quotation IDs
+        draftApply: string[]
     }>({
         draftName: '',
         draftCategory: '',
@@ -48,31 +69,21 @@ export default function Page() {
         draftTotal: 0,
         draftApply: [] as string[],
     })
+
     const fetchDraftData = async () => {
         if (!draftId) return;
         try {
             const draft = await getDraft({ draftId });
             if (draft) {
-                // Map draft data to state
                 setRequerimientoInfo(prev => ({
                     ...prev,
                     ...draft,
-                    // Ensure defaults for critical fields
                     draftSubCategory: (draft.draftSubCategory as any) || [],
                     draftTotal: typeof draft.draftTotal === 'string' ? parseFloat(draft.draftTotal) : (draft.draftTotal || 0),
-                    draftApply: draft.draftApply && Array.isArray(draft.draftApply) ? draft.draftApply : [] // Type guard
+                    draftApply: draft.draftApply && Array.isArray(draft.draftApply) ? draft.draftApply : []
                 } as any));
-                // Handle applied quotations
-                // Logic: "appliedQuotations = (draft.draftApply && draft.draftApply.length > 0) ? draft.draftApply[0] : null;"
-                // This logic seems to fetch only the FIRST applied quotation?
-                // Legacy code:
-                // const appliedQuotations = (draft.draftApply && draft.draftApply.length > 0) ? draft.draftApply[0] : null;
-                // if (appliedQuotations) { ... getQuotation ... setCotizacionesInfo ... appliedQuotations: [quoteResponse.data] }
-                // So it only shows ONE quotation?
-                // The table maps over "cotizacionesInfo.appliedQuotations".
-                // So yes, it seems it supports only one or the view logic is limited.
-                // I will reproduce legacy behavior.
-                const appliedQuotationIds = draft.draftApply || [] // get safe array
+
+                const appliedQuotationIds = draft.draftApply || []
                 const firstQuotationId = appliedQuotationIds.length > 0 ? appliedQuotationIds[0] : null
                 if (firstQuotationId) {
                     try {
@@ -93,11 +104,13 @@ export default function Page() {
             console.error('Error fetching draft:', error);
         }
     };
+
     useEffect(() => {
         if (!isLoaded && draftId) {
             fetchDraftData();
         }
     }, [draftId, isLoaded]);
+
     const handleDescargarAdjuntos = () => { }
     const handleSeeQuotation = (e: React.MouseEvent, quotationId: string) => {
         e.preventDefault()
@@ -109,358 +122,299 @@ export default function Page() {
     }
     const handleHire = (e: React.MouseEvent, quotationId: string, proponentId: string) => {
         e.preventDefault()
-        // Legacy passed state: { draftId, quotationId, proponentId }
-        // Vike navigate doesn't support state.
-        // We will pass via query params.
-        // The destination page MUST be updated to read from query params if it uses useLocation/state.
-        // Assuming we will migrate 'contratar' page later, we will use query params here 
-        // and when migrating 'contratar' we will ensure it reads from query params.
         navigate(`/app/contratar?draftId=${draftId}&quotationId=${quotationId}&proponentId=${proponentId}`)
     }
     const handleCotizar = () => {
         const draftParamId = requerimientoInfo.draftId || draftId
         navigate(`/app/cotizacion/${draftParamId}`)
     }
+
+    // Helper for key-value display
+    const InfoRow = ({ label, value, icon }: { label: string, value: React.ReactNode, icon?: React.ReactNode }) => (
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
+            {icon && <Box sx={{ color: 'var(--primary-green-text-color)', mr: 1, mt: 0.5 }}>{icon}</Box>}
+            <Box>
+                <Typography variant="subtitle2" color="text.secondary" sx={{ fontWeight: 600, lineHeight: 1.2 }}>
+                    {label}
+                </Typography>
+                <Typography variant="body1" color="text.primary">
+                    {value || '-'}
+                </Typography>
+            </Box>
+        </Box>
+    )
+
     return (
-        <Container fluid className="p-0">
-            <Row className="h-100 pt-4 pb-4">
-                <Col className="col-10">
-                    <Typography variant="h5" className="type-hero-title mb-4">
+        <Container maxWidth="xl" sx={{ py: 4 }}>
+            {/* Header */}
+            <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+                <Box>
+                    <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', fontWeight: 'bold' }}>
                         Detalle Requerimiento
                     </Typography>
-                    <Button
-                        className="btn-TEXT text-blanco"
-                        variant="contained"
-                    // Note: Legacy used variant="primary" which might be invalid Mui or Bootstrap mix? 
-                    // Mui uses "contained", "outlined", "text". Bootstrap uses "primary".
-                    // Legacy imported Button from '@mui/material/Button'. Mui Button doesn't have "primary" variant.
-                    // But probably ignored or mapped to default.
-                    // I'll use "contained" for primary look.
-                    >
-                        REALIZA UNA PREGUNTA ABIERTA AL PROPIETARÍO
-                    </Button>
-                    <Row className="p-0 pt-4 pb-4 w-100 align-items-start">
-                        <Col className="col" md={6} sm={12}>
-                            <Typography
-                                gutterBottom
-                                variant="h6"
-                                align="left"
-                                className="headline-m w-100 mb-2"
-                            >
-                                Presupuesto
+                    <Chip
+                        label={requerimientoInfo.draftCategory || 'General'}
+                        color="primary"
+                        variant="outlined"
+                        sx={{ borderColor: 'var(--primary-green-text-color)', color: 'var(--primary-green-text-color)', fontWeight: 600 }}
+                    />
+                </Box>
+                <Button
+                    variant="contained"
+                    startIcon={<QuestionAnswerIcon />}
+                    sx={{
+                        bgcolor: 'var(--primary-blue-light-color)',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        '&:hover': { bgcolor: 'var(--background-blue-color)' }
+                    }}
+                >
+                    PREGUNTAR AL PROPIETARIO
+                </Button>
+            </Box>
+
+            <Grid container spacing={4}>
+                {/* Left Column: Service Information */}
+                <Grid item xs={12} md={7} lg={8}>
+                    {/* Main Info Card */}
+                    <Card sx={{ mb: 4, borderRadius: 2, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+                        <CardHeader
+                            title="Información del Servicio"
+                            avatar={<WorkIcon sx={{ color: 'white' }} />}
+                            sx={{
+                                bgcolor: 'var(--logo-comunidad-dezzpo-color)',
+                                color: 'white',
+                                '& .MuiCardHeader-title': { fontWeight: 'bold', fontSize: '1.25rem' }
+                            }}
+                        />
+                        <CardContent sx={{ p: 3 }}>
+                            <Grid container spacing={3}>
+                                <Grid item xs={12}>
+                                    <Box sx={{ bgcolor: 'var(--background-nav-bar-sigmi-color)', p: 2, borderRadius: 2, mb: 3 }}>
+                                        <Typography variant="h6" gutterBottom color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+                                            {requerimientoInfo.draftName}
+                                        </Typography>
+                                        <InfoRow label="Descripción" value={requerimientoInfo.draftDescription} />
+                                    </Box>
+                                </Grid>
+
+                                <Grid item xs={12} sm={6}>
+                                    <InfoRow
+                                        icon={<AttachMoneyIcon />}
+                                        label="Presupuesto Total"
+                                        value={
+                                            <Typography variant="h5" color="success.main" fontWeight="bold">
+                                                ${requerimientoInfo.draftTotal?.toLocaleString()}
+                                            </Typography>
+                                        }
+                                    />
+                                    <InfoRow
+                                        label="Tipo de Proyecto"
+                                        value={requerimientoInfo.draftProject}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <InfoRow label="Propietario" value={requerimientoInfo.draftPropietarioResidente} />
+                                    <InfoRow label="Categoría" value={requerimientoInfo.draftCategory} />
+                                </Grid>
+                            </Grid>
+
+                            <Divider sx={{ my: 3 }} />
+
+                            <Typography variant="h6" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <LocationOnIcon sx={{ mr: 1, color: 'var(--secondary-blue-text-color)' }} /> Ubicación
                             </Typography>
-                            <Row className="m-0 w-100 pb-2 d-flex">
-                                <Typography
-                                    variant="body1"
-                                    // name="draftTotal" // Typography doesn't support name
-                                    className="w-100 detail-pill ps-3"
-                                >
-                                    Total: $
-                                    {requerimientoInfo.draftTotal}
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={4}>
+                                    <Typography variant="subtitle2" color="text.secondary">Ciudad</Typography>
+                                    <Typography variant="body1" fontWeight={500}>{requerimientoInfo.draftCity}</Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Typography variant="subtitle2" color="text.secondary">Dirección</Typography>
+                                    <Typography variant="body1" fontWeight={500}>{requerimientoInfo.draftDirection}</Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Typography variant="subtitle2" color="text.secondary">Código Postal</Typography>
+                                    <Typography variant="body1" fontWeight={500}>{requerimientoInfo.draftPostalCode}</Typography>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card>
+
+                    {/* Breakdown Table */}
+                    <Box sx={{ mt: 4 }}>
+                        <Typography variant="h6" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', mb: 2 }}>
+                            Desglose de Costos
+                        </Typography>
+                        <TablaSubCategoriaPresupuesto
+                            draftSubCategory={requerimientoInfo.draftSubCategory}
+                            draftTotal={requerimientoInfo.draftTotal}
+                        />
+                    </Box>
+                </Grid>
+
+                {/* Right Column: Details & Times */}
+                <Grid item xs={12} md={5} lg={4}>
+                    <Card sx={{ borderRadius: 2, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', position: 'sticky', top: 24 }}>
+                        <CardHeader
+                            title="Detalles y Tiempos"
+                            avatar={<EventIcon sx={{ color: 'white' }} />}
+                            sx={{
+                                bgcolor: 'var(--background-dark-blue-color)',
+                                color: 'white',
+                                '& .MuiCardHeader-title': { fontWeight: 'bold', fontSize: '1.25rem' }
+                            }}
+                        />
+                        <CardContent sx={{ p: 3 }}>
+                            <Box sx={{ mb: 4 }}>
+                                <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', borderBottom: '1px solid #eee', pb: 1, mb: 2 }}>
+                                    Programación
                                 </Typography>
-                            </Row>
-                            <Typography
-                                gutterBottom
-                                variant="h6"
-                                align="left"
-                                className="p-description w-100"
-                            >
-                                Categoria servicio
-                            </Typography>
-                            <Row className="m-0 w-100 pb-2 d-flex">
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Titulo:
-                                    {requerimientoInfo.draftName}
+                                <Stack spacing={2}>
+                                    <InfoRow label="Fecha de Publicación" value={requerimientoInfo.draftCreatedAt || requerimientoInfo.draftCreated} />
+                                    <InfoRow label="Prioridad" value={(requerimientoInfo as any).draftPriority} />
+                                    <InfoRow label="Calendario Asignado" value={(requerimientoInfo as any).draftBestScheduleDate} />
+                                    <InfoRow label="Disponibilidad Horaria" value={(requerimientoInfo as any).draftBestScheduleTime} />
+                                </Stack>
+                            </Box>
+
+                            <Box sx={{ mb: 4 }}>
+                                <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', borderBottom: '1px solid #eee', pb: 1, mb: 2 }}>
+                                    Propiedad
                                 </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Categoria:
-                                    {requerimientoInfo.draftCategory}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Tipo Proyecto:
-                                    {requerimientoInfo.draftProject}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Descripción:
-                                    {requerimientoInfo.draftDescription}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3"
-                                >
-                                    Propietario:
-                                    {requerimientoInfo.draftPropietarioResidente}
-                                </Typography>
-                            </Row>
-                            <Typography
-                                gutterBottom
-                                variant="h6"
-                                align="left"
-                                className="p-description w-100"
-                            >
-                                Ubicacion
-                            </Typography>
-                            <Row className="m-0 w-100 pb-2 d-flex">
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Ciudad:
-                                    {requerimientoInfo.draftCity}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Dirección:
-                                    {requerimientoInfo.draftDirection}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3"
-                                >
-                                    Codigo Postal:
-                                    {requerimientoInfo.draftPostalCode}
-                                </Typography>
-                            </Row>
-                        </Col>
-                        <Col className="col" md={6} sm={12}>
-                            <Typography
-                                gutterBottom
-                                variant="h6"
-                                align="left"
-                                className="p-description w-100"
-                            >
-                                Programación
-                            </Typography>
-                            <Row className="m-0 w-100 pb-2 d-flex">
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    FECHA DE PUBLICACIÓN:
-                                    {requerimientoInfo.draftCreatedAt || requerimientoInfo.draftCreated}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Prioridad:
-                                    {(requerimientoInfo as any).draftPriority}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Calendario asignado:
-                                    {(requerimientoInfo as any).draftBestScheduleDate}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Disponibilidad de horario:
-                                    {(requerimientoInfo as any).draftBestScheduleTime}
-                                </Typography>
-                            </Row>
-                            <Typography
-                                gutterBottom
-                                variant="h6"
-                                align="left"
-                                className="p-description w-100"
-                            >
-                                Descripción Propiedad
-                            </Typography>
-                            <Row className="m-0 w-100 pb-2 d-flex">
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Tipo propiedad:
-                                    {(requerimientoInfo as any).draftProperty}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Cantidad Obra:
-                                    {(requerimientoInfo as any).draftRooms}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3 mb-2"
-                                >
-                                    Planos:
-                                    {(requerimientoInfo as any).draftPlans}
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    className="w-100 detail-pill ps-3"
-                                >
-                                    Permisos:
-                                    {(requerimientoInfo as any).draftPermissions}
-                                </Typography>
-                            </Row>
-                            <Row className="m-0 w-100 pb-2 d-flex">
-                                <Typography
-                                    variant="h6"
-                                    className="p-description w-100 p-1"
-                                >
-                                    Archivos adjuntos
+                                <Stack spacing={2}>
+                                    <InfoRow
+                                        icon={<HomeWorkIcon fontSize="small" />}
+                                        label="Tipo Propiedad"
+                                        value={(requerimientoInfo as any).draftProperty}
+                                    />
+                                    <InfoRow label="Cantidad Obra" value={(requerimientoInfo as any).draftRooms} />
+                                    <InfoRow label="Planos" value={(requerimientoInfo as any).draftPlans} />
+                                    <InfoRow label="Permisos" value={(requerimientoInfo as any).draftPermissions} />
+                                </Stack>
+                            </Box>
+
+                            <Box>
+                                <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', borderBottom: '1px solid #eee', pb: 1, mb: 2 }}>
+                                    Adjuntos
                                 </Typography>
                                 <Button
-                                    className="btn btn-round btn-high"
+                                    variant="outlined"
+                                    color="primary"
+                                    fullWidth
+                                    startIcon={<DownloadIcon />}
                                     onClick={handleDescargarAdjuntos}
+                                    sx={{ borderRadius: 2, textTransform: 'none' }}
                                 >
-                                    Descargar
+                                    Descargar Archivos
                                 </Button>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <TablaSubCategoriaPresupuesto
-                        draftSubCategory={requerimientoInfo.draftSubCategory}
-                        draftTotal={requerimientoInfo.draftTotal}
-                    />
-                    <Row>
-                        <Col>
-                            <div className="type-section-title mb-3">
-                                COTIZACIONES
-                                {requerimientoInfo.draftApply && requerimientoInfo.draftApply.length < 4 && (
-                                    <Button
-                                        className="btn-TEXT text-blanco"
-                                        variant="contained" // "primary" replacement
-                                        onClick={handleCotizar}
-                                    >
-                                        + ASIGNAR NUEVA COTIZACION
-                                    </Button>
-                                )}
-                            </div>
-                            <Table
-                                sx={{
-                                    display: { sm: 'grid', xs: 'grid' },
-                                    overflowX: 'scroll',
-                                }}
-                            >
-                                <TableHead>
-                                    <TableRow
-                                        className="w-100 ps-4"
-                                        sx={{ display: 'table' }}
-                                    >
-                                        <TableCell>
-                                            Comerciante calificado
-                                        </TableCell>
-                                        <TableCell>Alcance</TableCell>
-                                        <TableCell>Descripción</TableCell>
-                                        <TableCell></TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {cotizacionesInfo.appliedQuotations &&
-                                        cotizacionesInfo.appliedQuotations
-                                            .length > 0 &&
-                                        cotizacionesInfo.appliedQuotations.map(
-                                            (item) => {
-                                                const {
-                                                    quotationId,
-                                                    // quotationComercianteId? -> proponentId in legacy
-                                                    // legacy used 'proponentId'. 'QuotationFirestoreDocument' has 'quotationComercianteId'.
-                                                    // I should map or use any if logic relies on legacy names.
-                                                    // Legacy item destructure: { proponentId, scope, description, quotationId }
-                                                    // Mapped from QuoteResponse.
-                                                    // I assume Quote Document has these fields?
-                                                    // Types say: quotationPrice, quotationDescription, quotationComercianteId.
-                                                    // This implies legacy 'proponentId' = 'quotationComercianteId'
-                                                    // 'scope' = ? maybe missing from types?
-                                                    // 'description' = 'quotationDescription'
-                                                    // Checking types again... types.ts:
-                                                    // quotationPrice, quotationDescription, quotationStatus.
-                                                    // If legacy used 'scope', I should handle it.
-                                                    // I will cast item to any to access legacy fields for now.
-                                                } = item
-                                                const legacyItem = item as any
-                                                const proponentId = legacyItem.proponentId || item.quotationComercianteId
-                                                const scope = legacyItem.scope // ??
-                                                const description = legacyItem.description || item.quotationDescription
-                                                return (
-                                                    <TableRow
-                                                        key={quotationId}
-                                                    >
-                                                        <TableCell>
-                                                            {proponentId}
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            {scope}
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            {description}
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            {userAuthID ==
-                                                                proponentId ? (
-                                                                <Button
-                                                                    className="btn btn-round btn-middle"
-                                                                    onClick={(e) =>
-                                                                        handleEditQuotation(
-                                                                            e,
-                                                                            quotationId
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    AJUSTAR
-                                                                </Button>
-                                                            ) : (
-                                                                <Button
-                                                                    className="btn btn-round btn-high"
-                                                                    onClick={(e) =>
-                                                                        handleSeeQuotation(
-                                                                            e,
-                                                                            quotationId
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    VER
-                                                                    COTIZACION
-                                                                </Button>
-                                                            )}
-                                                            {/* USUARIO PROPIETARIO INMOBILIARIO PUEDE CONTRATAR */}
-                                                            {rolAuth ===
-                                                                1 && (
-                                                                    <Button
-                                                                        className="btn btn-round btn-middle"
-                                                                        onClick={(e) =>
-                                                                            handleHire(
-                                                                                e,
-                                                                                quotationId,
-                                                                                proponentId
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        CONTRATAR
-                                                                    </Button>
-                                                                )}
-                                                        </TableCell>
-                                                    </TableRow>
-                                                )
-                                            }
-                                        )}
-                                </TableBody>
-                            </Table>
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
+                            </Box>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
+
+            {/* Quotations Section */}
+            <Box sx={{ mt: 6 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+                    <Typography variant="h5" sx={{ color: 'var(--primary-titles-text-color)', fontWeight: 'bold' }}>
+                        COTIZACIONES
+                    </Typography>
+                    {requerimientoInfo.draftApply && requerimientoInfo.draftApply.length < 4 && (
+                        <Button
+                            variant="contained"
+                            color="success"
+                            startIcon={<AddIcon />}
+                            onClick={handleCotizar}
+                            sx={{ color: 'white', fontWeight: 'bold' }}
+                        >
+                            ASIGNAR NUEVA COTIZACION
+                        </Button>
+                    )}
+                </Box>
+
+                <Card sx={{ borderRadius: 2, boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+                    <Table size="small">
+                        <TableHead sx={{ bgcolor: 'var(--background-light-gray-color)' }}>
+                            <TableRow>
+                                <TableCell sx={{ fontWeight: 'bold' }}>Comerciante Calificado</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold' }}>Alcance</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold' }}>Descripción</TableCell>
+                                <TableCell align="center" sx={{ fontWeight: 'bold' }}>Acciones</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {cotizacionesInfo.appliedQuotations && cotizacionesInfo.appliedQuotations.length > 0 ? (
+                                cotizacionesInfo.appliedQuotations.map((item) => {
+                                    const { quotationId } = item
+                                    const legacyItem = item as any
+                                    const proponentId = legacyItem.proponentId || item.quotationComercianteId
+                                    const scope = legacyItem.scope
+                                    const description = legacyItem.description || item.quotationDescription
+
+                                    return (
+                                        <TableRow key={quotationId} hover>
+                                            <TableCell>
+                                                <Stack direction="row" spacing={1} alignItems="center">
+                                                    <Avatar sx={{ width: 24, height: 24, bgcolor: 'var(--primary-blue-light-color)' }}>
+                                                        {proponentId ? proponentId.charAt(0).toUpperCase() : '?'}
+                                                    </Avatar>
+                                                    <Typography variant="body2">{proponentId}</Typography>
+                                                </Stack>
+                                            </TableCell>
+                                            <TableCell>{scope}</TableCell>
+                                            <TableCell>{description}</TableCell>
+                                            <TableCell align="center">
+                                                <Stack direction="row" spacing={1} justifyContent="center">
+                                                    {userAuthID === proponentId ? (
+                                                        <Button
+                                                            size="small"
+                                                            variant="contained"
+                                                            color="warning"
+                                                            startIcon={<EditIcon />}
+                                                            onClick={(e) => handleEditQuotation(e, quotationId)}
+                                                            sx={{ color: 'white' }}
+                                                        >
+                                                            AJUSTAR
+                                                        </Button>
+                                                    ) : (
+                                                        <Button
+                                                            size="small"
+                                                            variant="contained"
+                                                            // className="btn-high" equivalent color
+                                                            sx={{ bgcolor: 'var(--primary-green-text-color)', color: 'white', '&:hover': { bgcolor: 'var(--secondary-green-text-color)' } }}
+                                                            startIcon={<VisibilityIcon />}
+                                                            onClick={(e) => handleSeeQuotation(e, quotationId)}
+                                                        >
+                                                            VER
+                                                        </Button>
+                                                    )}
+                                                    {rolAuth === 1 && (
+                                                        <Button
+                                                            size="small"
+                                                            variant="contained"
+                                                            color="primary"
+                                                            onClick={(e) => handleHire(e, quotationId, proponentId)}
+                                                        >
+                                                            CONTRATAR
+                                                        </Button>
+                                                    )}
+                                                </Stack>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                })
+                            ) : (
+                                <TableRow>
+                                    <TableCell colSpan={4} align="center" sx={{ py: 3, color: 'text.secondary' }}>
+                                        No hay cotizaciones asignadas aún.
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </Card>
+            </Box>
         </Container>
     )
 }
