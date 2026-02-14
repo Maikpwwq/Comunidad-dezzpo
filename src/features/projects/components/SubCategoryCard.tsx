@@ -74,14 +74,17 @@ export function SubCategoryCard({
 
     return (
         <Card className="card-categorie mb-4 me-4">
-            <CardHeader title={subCategoria} />
+            <CardHeader
+                title={subCategoria}
+                titleTypographyProps={{ className: 'headline-s' }}
+            />
             <CardContent className="pt-0 pb-0">
                 {subCategoriaDescription && (
-                    <Typography variant="body2" color="text.secondary" className="pb-2">
+                    <Typography className="type-body-sm pb-2" color="text.secondary">
                         {subCategoriaDescription}
                     </Typography>
                 )}
-                <Typography variant="body1">
+                <Typography className="type-body">
                     Precio:{' '}
                     {formattedPrice.toLocaleString('es-CO', {
                         style: 'currency',
@@ -89,7 +92,7 @@ export function SubCategoryCard({
                     })}
                 </Typography>
                 {subCategoriaCantidad && (
-                    <Typography variant="body1">
+                    <Typography className="type-body">
                         Cantidad: {subCategoriaCantidad}
                     </Typography>
                 )}
