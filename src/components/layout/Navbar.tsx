@@ -139,7 +139,7 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                     </Grid>
 
                     {/* Navigation Tabs */}
-                    <Grid item xs>
+                    <Grid item xs sx={{ paddingTop: '0 !important' }}>
                         <Tabs
                             value={activeTab}
                             onChange={handleTabChange}
@@ -154,6 +154,7 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                                         color: 'inherit',
                                         textDecoration: 'none',
                                         minHeight: 48,
+                                        pt: { xs: 0, md: 2 },
                                         px: { xs: 2, md: 4 }, // Increased padding for desktop
                                         mx: 0.5, // Added small margin between tabs
                                         whiteSpace: 'nowrap',
@@ -162,7 +163,7 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                                         fontWeight: 600,
                                         fontSize: '0.9rem',
                                         '&:hover': {
-                                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                            backgroundColor: 'var(--background-gray-color)',
                                             textDecoration: 'none',
                                         },
                                         '&.Mui-selected': {

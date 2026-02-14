@@ -142,6 +142,18 @@ export default function Page() {
     }
     useEffect(() => {
         if (!isLoaded) {
+            const searchParams = new URLSearchParams(window.location.search)
+            const type = searchParams.get('type')
+            const category = searchParams.get('category')
+
+            if (type && category && (draftInfo.draftProject !== type || String(draftInfo.draftCategory) !== category)) {
+                setDraftInfo(prev => ({
+                    ...prev,
+                    draftProject: type,
+                    draftCategory: category
+                }))
+            }
+
             if (!!draftInfo.draftProject && draftInfo.draftCategory !== 0) {
                 const fetchCategories = async () => {
                     try {
@@ -183,7 +195,7 @@ export default function Page() {
     }, [
         isLoaded,
         draftInfo.draftCategory,
-        draftInfo.draftProject, // Kept draftProject as it was in the original dependency array, assuming 'tipoProyecto' was a typo in the instruction
+        draftInfo.draftProject
     ])
     const handleShowMore = () => {
         setShowMore(!showMore)
