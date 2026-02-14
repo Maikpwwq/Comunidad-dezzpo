@@ -125,6 +125,87 @@ export const CategoriasService = {
     },
 
     /**
+     * Get costs data in batches for pagination/infinite scroll.
+     * Uses ListadoCategorias as the source of truth for order.
+     * @param startIndex Index to start fetching from ListadoCategorias
+     * @param batchSize Number of categories to fetch
+     * @param searchQuery Optional search query to filter categories
+     */
+    getCostosBatch: async (startIndex: number = 0, batchSize: number = 5, searchQuery?: string): Promise<{
+        data: CategoriaItem[],
+        nextIndex: number | null,
+        hasMore: boolean
+    }> => {
+        if (!firestore) {
+            console.warn('Firestore not initialized')
+            return { data: [], nextIndex: null, hasMore: false }
+        }
+
+        // Filter categories if query provided
+        let sourceList = ListadoCategorias
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase()
+            sourceList = ListadoCategorias.filter((cat: any) => 
+                (cat.label && cat.label.toLowerCase().includes(query)) ||
+                (cat.rol && cat.rol.toLowerCase().includes(query))
+            )
+        }
+
+        const totalCategories = sourceList.length
+        if (startIndex >= totalCategories) {
+            return { data: [], nextIndex: null, hasMore: false }
+        }
+
+        const endIndex = Math.min(startIndex + batchSize, totalCategories)
+        const batch = sourceList.slice(startIndex, endIndex)
+        const mainDocId = 'aPTAljOeD48FbniBg6Lw'
+        const batchData: CategoriaItem[] = []
+
+        console.log(`Fetching batch: ${startIndex} to ${endIndex} of ${totalCategories}`)
+
+        const promises = batch.map(async (cat: any) => {
+            const categoryName = cat.label
+            try {
+                const subColRef = collection(
+                    firestore!,
+                    'categoriasServicios',
+                    mainDocId,
+                    categoryName
+                )
+                const snapshot = await getDocs(subColRef)
+
+                if (!snapshot.empty) {
+                    const items = snapshot.docs.map(d => d.data() as CategoriaItem)
+                    return [
+                        { subSistema: categoryName },
+                        ...items
+                    ]
+                }
+                return []
+            } catch (err) {
+                console.error(`Error fetching category: ${categoryName}`, err)
+                return []
+            }
+        })
+
+        const results = await Promise.all(promises)
+        results.forEach(items => {
+            if (items.length > 0) {
+                batchData.push(...items)
+            }
+        })
+
+        const nextIndex = endIndex < totalCategories ? endIndex : null
+        const hasMore = endIndex < totalCategories
+
+        return {
+            data: batchData,
+            nextIndex,
+            hasMore
+        }
+    },
+
+    /**
      * Get items for a specific category (used in Nuevo Proyecto)
      * @param categoryName Name of the category (e.g. "Pintura")
      */
@@ -134,9 +215,9 @@ export const CategoriasService = {
         try {
             const mainDocId = 'aPTAljOeD48FbniBg6Lw'
             const subColRef = collection(
-                firestore, 
-                'categoriasServicios', 
-                mainDocId, 
+                firestore,
+                'categoriasServicios',
+                mainDocId,
                 categoryName
             )
             const snapshot = await getDocs(subColRef)

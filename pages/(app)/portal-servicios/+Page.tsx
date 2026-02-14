@@ -2,8 +2,8 @@ import { useState, useEffect, Suspense } from 'react'
 import { navigate } from 'vike/client/router'
 import { usePageContext } from '@hooks/usePageContext'
 import { SearchBar } from '@components/layout'
-import { getUsers } from '@services/users'
-import { searchByName } from '@services/search'
+import { getUsers } from '@services/users' // Assuming this is correct
+import { searchByCategories } from '@services/search' // Changed import
 import { UserCard } from '@features/profile'
 // UI Libs
 import { Row, Col, Container, Button } from 'react-bootstrap'
@@ -59,10 +59,15 @@ export default function Page() {
 
     const fetchSearchResults = async (query: string) => {
         try {
-            const results = await searchByName(query);
-            if (results && results.length > 0) {
+            // Use searchByCategories to search in 'userCategories' array
+            const results = await searchByCategories({
+                query: '',
+                categories: [query], // Pass the category as an array
+            });
+
+            if (results && results.users && results.users.length > 0) {
                 setSearchData({
-                    docSnap: results as UserFirestoreDocument[],
+                    docSnap: results.users,
                 });
             } else {
                 console.log('No matching users found in search.');
@@ -118,7 +123,7 @@ export default function Page() {
                         <Typography className="type-body" component="div">
                             Buscar comerciantes Calificados por categoria:{' '}
                             <br />
-                            <span className="headline-s">{spacedText}</span>
+                            <span className="type-card-title">{spacedText}</span>
                         </Typography>
 
                         <Suspense fallback={<PortalSkeleton />}>
@@ -156,7 +161,7 @@ export default function Page() {
                         Todos los profesionales
                     </h3>
                 </div>
-                <p className="type-body-sm px-2">
+                <p className="type-caption px-2">
                     Directorio de comerciantes calificados, contratistas
                     independientes y empresas del sector. <br />
                     Encuentra todo lo mejor en asisitencia técnica!
