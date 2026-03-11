@@ -1,97 +1,51 @@
 /**
  * SearchBar Component
  *
- * Category search bar for portal-servicios.
- * Migrated from src/app/components/SearchBar.tsx
+ * Searchable category selector for portal-servicios.
+ * Uses MUI Autocomplete with brand-styled dropdown.
  */
 
 import React, { useState, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
 import Link from '@hooks/Link'
-import { styled, alpha } from '@mui/material/styles'
 import {
-    Select,
-    MenuItem,
+    Autocomplete,
+    TextField,
     Box,
-    type SelectChangeEvent
+    Paper,
+    InputAdornment,
+    Typography
 } from '@mui/material'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import SearchIcon from '@mui/icons-material/Search'
 
-import iconSet from '@assets/icomoon/selection.json'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 import { CategoryIcons } from '@assets/data/CategoryIcons'
 
-// Lazy load IcoMoon to prevent SSR crashes
-const IcoMoon = React.lazy(() => import('react-icomoon'))
-
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 1),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.5),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-    },
-}))
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}))
-
-const StyledSelect = styled(Select)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '100%',
-        },
-    },
-}))
+/** Shape of each category option */
+interface CategoryOption {
+    key: number
+    label: string
+    iconName?: string
+    [k: string]: any
+}
 
 export interface SearchBarProps {
-    /** Additional className */
     className?: string
 }
 
 export function SearchBar({ className }: SearchBarProps): React.ReactElement {
-    const [searchInput, setSearchInput] = useState<string[]>([])
-    const [isMounted, setIsMounted] = useState(false)
+    const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null)
 
-    React.useEffect(() => {
-        setIsMounted(true)
-    }, [])
-
-    const handleSearch = useCallback((query: string) => {
-        const handleSpacedText = query.replace(/ /g, '+')
-        navigate(`/app/portal-servicios/${handleSpacedText}`)
-    }, [])
-
-    const handleChange = useCallback(
-        (event: SelectChangeEvent<unknown>) => {
-            const values = event.target.value as string[]
-            if (values.length > 0) {
-                const lastValue = values[values.length - 1]
-                if (lastValue) {
-                    setSearchInput([lastValue])
-                    handleSearch(lastValue)
-                }
+    const handleCategorySelect = useCallback(
+        (_event: React.SyntheticEvent, value: CategoryOption | null) => {
+            setSelectedCategory(value)
+            if (value) {
+                const encoded = value.label.replace(/ /g, '+')
+                navigate(`/app/portal-servicios/${encoded}`)
             }
         },
-        [handleSearch]
+        []
     )
 
     return (
@@ -112,56 +66,129 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
                     width="55px"
                 />
             </Link>
-            <Search sx={{ maxWidth: '300px', width: '100% !important' }}>
-                <SearchIconWrapper>
-                    {isMounted && (
-                        <React.Suspense fallback={null}>
-                            <IcoMoon
-                                iconSet={iconSet}
-                                icon="LupaFomularioIcono"
-                                style={{
-                                    height: '28px',
-                                    marginRight: '8px',
-                                    width: 'auto',
+
+            <Autocomplete
+                id="search-select-category"
+                options={ListadoCategorias as CategoryOption[]}
+                getOptionLabel={(option) => option.label}
+                value={selectedCategory}
+                onChange={handleCategorySelect}
+                popupIcon={<ArrowDropDownIcon />}
+                noOptionsText={
+                    <Box sx={{ py: 2, textAlign: 'center' }}>
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: 'var(--secondary-text-gray-color)',
+                                fontStyle: 'italic',
+                            }}
+                        >
+                            No se encontraron categorías
+                        </Typography>
+                    </Box>
+                }
+                PaperComponent={(props) => (
+                    <Paper
+                        {...props}
+                        sx={{
+                            borderRadius: '20px',
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+                            border: '1px solid var(--selected-border-light-gray-color)',
+                            mt: 0.5,
+                            overflow: 'hidden',
+                        }}
+                    />
+                )}
+                renderOption={(props, option) => {
+                    const IconComponent = CategoryIcons[option.iconName as string]
+                    const isSelected = selectedCategory?.key === option.key
+                    return (
+                        <Box
+                            component="li"
+                            {...props}
+                            key={option.key}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1.5,
+                                px: 2,
+                                py: 1,
+                                cursor: 'pointer',
+                                backgroundColor: isSelected
+                                    ? 'var(--background-main-green-color) !important'
+                                    : 'transparent',
+                                color: isSelected ? '#fff' : 'inherit',
+                                '&:hover': {
+                                    backgroundColor: isSelected
+                                        ? 'var(--background-main-green-color) !important'
+                                        : 'rgba(0, 0, 0, 0.04)',
+                                },
+                                transition: 'background-color 0.15s ease',
+                            }}
+                        >
+                            {IconComponent && (
+                                <Box
+                                    component={IconComponent}
+                                    sx={{
+                                        fontSize: '1.4rem',
+                                        color: isSelected
+                                            ? '#fff'
+                                            : 'var(--primary-green-text-color)',
+                                        flexShrink: 0,
+                                    }}
+                                />
+                            )}
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    fontWeight: isSelected ? 600 : 400,
+                                    color: 'inherit',
                                 }}
-                            />
-                        </React.Suspense>
-                    )}
-                </SearchIconWrapper>
-                <StyledSelect
-                    sx={{
-                        borderStyle: 'solid',
-                        borderWidth: '1px',
-                        minWidth: '250px',
-                        borderColor: 'white',
-                    }}
-                    className="w-100 text-gris"
-                    id="search-select-category"
-                    name="searchInput"
-                    multiple
-                    value={searchInput}
-                    onChange={handleChange}
-                    inputProps={{
-                        'aria-label': 'search',
-                    }}
-                >
-                    <MenuItem value="">Seleccionar categoría</MenuItem>
-                    {/* Render list only on client to avoid SSR overhead */}
-                    {isMounted && ListadoCategorias?.map((item: any) => {
-                        const { key, label, iconName } = item
-                        // Dynamically resolve icon from map
-                        const IconComponent = CategoryIcons[iconName]
-                        return (
-                            <MenuItem value={label} key={key}>
-                                {IconComponent && (
-                                    <Box component={IconComponent} sx={{ mr: 1, fontSize: '1.5rem' }} className="mx-2 my-1" />
-                                )}
-                                {label}
-                            </MenuItem>
-                        )
-                    })}
-                </StyledSelect>
-            </Search>
+                            >
+                                {option.label}
+                            </Typography>
+                        </Box>
+                    )
+                }}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        placeholder="Buscar categoría..."
+                        size="small"
+                        InputProps={{
+                            ...params.InputProps,
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon
+                                        sx={{
+                                            color: 'var(--primary-green-text-color)',
+                                            fontSize: '1.4rem',
+                                        }}
+                                    />
+                                </InputAdornment>
+                            ),
+                        }}
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '20px',
+                                backgroundColor: '#fff',
+                                minWidth: '250px',
+                                '& fieldset': {
+                                    borderColor: 'var(--selected-border-light-gray-color)',
+                                },
+                                '&:hover fieldset': {
+                                    borderColor: 'var(--primary-green-text-color)',
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: 'var(--primary-green-text-color)',
+                                    borderWidth: '2px',
+                                },
+                            },
+                        }}
+                    />
+                )}
+                sx={{ minWidth: 280, maxWidth: 350 }}
+            />
         </Box>
     )
 }
