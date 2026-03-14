@@ -39,7 +39,10 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
 
     // Sync state when props change or component mounts
     useEffect(() => {
-        if (listadoCategorias && userEditInfo?.userCategories) {
+        if (!listadoCategorias || listadoCategorias.length === 0) return
+
+        if (userEditInfo?.userCategories) {
+            // Editable mode: mark selected categories as 'filled'
             const initialCategories: CategoryItem[] = listadoCategorias.map(cat => ({
                 key: cat.key,
                 label: cat.label,
@@ -47,6 +50,15 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
                 variant: userEditInfo.userCategories.includes(cat.label) ? 'filled' : 'outlined'
             })) as CategoryItem[]
             setCategoriesState(initialCategories)
+        } else {
+            // Read-only mode: show all chips as filled (no userEditInfo)
+            const readOnlyCategories: CategoryItem[] = listadoCategorias.map(cat => ({
+                key: cat.key,
+                label: cat.label,
+                iconName: (cat as any).iconName,
+                variant: 'filled' as const
+            })) as CategoryItem[]
+            setCategoriesState(readOnlyCategories)
         }
     }, [listadoCategorias, userEditInfo?.userCategories, saved]) // Re-sync on save or prop change
 

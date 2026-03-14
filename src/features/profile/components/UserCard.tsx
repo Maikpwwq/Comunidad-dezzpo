@@ -163,7 +163,7 @@ export function UserCard({
                     sx={bgAvatar}
                     aria-label="user avatar"
                 >
-                    <Typography className={styles['avatar-text']}>
+                    <Typography className={styles['avatar-text'] || ''}>
                         Comunidad Dezzpo
                     </Typography>
                 </Avatar>
@@ -205,6 +205,7 @@ export function UserCard({
                     onClick={handleVerSitio}
                     fullWidth
                     size="small"
+                    sx={{ py: 0.5, px: 1, whiteSpace: 'nowrap' }}
                 >
                     Ver sitio
                 </Button>
@@ -216,6 +217,7 @@ export function UserCard({
                             onClick={handleCotizarVisitaTecnica}
                             fullWidth
                             size="small"
+                            sx={{ py: 0.5, px: 1.5 }}
                         >
                             Cotizar
                         </Button>
