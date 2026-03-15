@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import type { ContactEmail, ContactPhone, SocialLink } from '@services/types'
 
 /**
  * User Authentication Store
@@ -27,6 +28,9 @@ export interface UserState {
   isAuth: boolean
   isAdmin: boolean
   mobileOpen: boolean
+  emails: ContactEmail[]
+  phones: ContactPhone[]
+  socialLinks: SocialLink[]
 }
 
 export interface UserActions {
@@ -36,6 +40,16 @@ export interface UserActions {
   updateMobileMenu: (open: boolean) => void
   clearUser: () => void
   hydrate: (data: Partial<UserState>) => void
+  // Multi-channel contact actions
+  updateContact: (type: 'emails' | 'phones', index: number, data: Partial<ContactEmail> | Partial<ContactPhone>) => void
+  addContact: (type: 'emails' | 'phones', entry: ContactEmail | ContactPhone) => void
+  removeContact: (type: 'emails' | 'phones', index: number) => void
+  setPrimaryContact: (type: 'emails' | 'phones', index: number) => void
+  // Social links actions
+  setSocialLinks: (links: SocialLink[]) => void
+  addSocialLink: (link: SocialLink) => void
+  updateSocialLink: (id: string, updates: Partial<SocialLink>) => void
+  removeSocialLink: (id: string) => void
 }
 
 const initialState: UserState = {
@@ -47,6 +61,9 @@ const initialState: UserState = {
   isAuth: false,
   isAdmin: false,
   mobileOpen: false,
+  emails: [],
+  phones: [],
+  socialLinks: [],
 }
 
 /**
@@ -91,6 +108,60 @@ export const useUserStore = create<UserState & UserActions>()(
           ...state,
           ...data,
         })),
+
+      updateContact: (type, index, data) =>
+        set((state) => {
+          const arr = [...state[type]]
+          arr[index] = { ...arr[index], ...data } as any
+          return { ...state, [type]: arr }
+        }),
+
+      addContact: (type, entry) =>
+        set((state) => ({
+          ...state,
+          [type]: [...state[type], entry],
+        })),
+
+      removeContact: (type, index) =>
+        set((state) => {
+          const arr = [...state[type]]
+          // Prevent removing primary contact
+          if ((arr[index] as any)?.isPrimary) return state
+          arr.splice(index, 1)
+          return { ...state, [type]: arr }
+        }),
+
+      setPrimaryContact: (type, index) =>
+        set((state) => {
+          const arr = state[type].map((item, i) => ({
+            ...item,
+            isPrimary: i === index,
+          }))
+          return { ...state, [type]: arr }
+        }),
+
+      setSocialLinks: (links) =>
+        set((state) => ({ ...state, socialLinks: links })),
+
+      addSocialLink: (link) =>
+        set((state) => ({
+          ...state,
+          socialLinks: [...state.socialLinks, link],
+        })),
+
+      updateSocialLink: (id, updates) =>
+        set((state) => ({
+          ...state,
+          socialLinks: state.socialLinks.map((sl) =>
+            sl.id === id ? { ...sl, ...updates } : sl
+          ),
+        })),
+
+      removeSocialLink: (id) =>
+        set((state) => ({
+          ...state,
+          socialLinks: state.socialLinks.filter((sl) => sl.id !== id),
+        })),
     }),
     {
       name: 'user-storage',
@@ -103,6 +174,9 @@ export const useUserStore = create<UserState & UserActions>()(
         rol: state.rol,
         isAuth: state.isAuth,
         isAdmin: state.isAdmin,
+        emails: state.emails,
+        phones: state.phones,
+        socialLinks: state.socialLinks,
       }),
     }
   )
@@ -119,6 +193,9 @@ export const useCurrentUser = () =>
     email: state.email,
     photoUrl: state.photoUrl,
     rol: state.rol,
+    emails: state.emails,
+    phones: state.phones,
+    socialLinks: state.socialLinks,
   }))
 
 export const useIsAuthenticated = () => useUserStore((state) => state.isAuth)

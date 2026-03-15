@@ -91,6 +91,7 @@ export default defineConfig({
       { find: '@services', replacement: path.resolve(__dirname, 'src/services') },
       { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
       { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
+      { find: '@utilities', replacement: path.resolve(__dirname, 'src/utilities') },
       { find: '@config', replacement: path.resolve(__dirname, 'src/config') },
 
       // Assets

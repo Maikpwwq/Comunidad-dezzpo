@@ -110,6 +110,79 @@
     border-radius: 20px;
 }
 
+/* Dynamic Contact List */
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 12px;
+    background: var(--background-light-gray-color, #f9f9f9);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        background: #f0f7f0;
+    }
+
+    &--primary {
+        background: #e8f5e9;
+        box-shadow: inset 0 0 0 1.5px var(--background-main-green-color, #4caf50);
+    }
+}
+
+.contact-row__input {
+    flex: 1;
+    min-width: 0;
+}
+
+.contact-row__type {
+    min-width: 110px;
+}
+
+.primary-indicator {
+    color: var(--background-main-green-color, #4caf50);
+    cursor: pointer;
+    transition: transform 0.15s ease;
+
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+
+.primary-indicator--inactive {
+    color: var(--text-secondary-color, #bbb);
+}
+
+.contact-add-btn {
+    align-self: flex-start;
+    border-radius: 20px !important;
+    text-transform: none !important;
+    font-weight: 500 !important;
+    color: var(--background-main-green-color, #4caf50) !important;
+    border-color: var(--background-main-green-color, #4caf50) !important;
+    margin-top: 0.25rem;
+
+    &:hover {
+        background: rgba(76, 175, 80, 0.08) !important;
+    }
+}
+
+.contact-section-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary-color, #666);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
 /* Description */
 .description-textarea {
     width: 100%;
@@ -125,6 +198,73 @@
         outline: 2px solid var(--primary-color, #3b82f6);
         border-color: transparent;
     }
+}
+
+/* ──────────────── Social Links Card ──────────────── */
+.social-card {
+    border-radius: 20px;
+    box-shadow: 0px 16px 16px 0px rgba(0, 0, 0, 0.2);
+    background: var(--background-white-color, #fff);
+    padding: 1.5rem;
+}
+
+.social-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 14px;
+    background: var(--background-light-gray-color, #f9f9f9);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        background: #f0f7f0;
+    }
+}
+
+.social-row__platform {
+    min-width: 130px;
+}
+
+.social-row__url {
+    flex: 1;
+    min-width: 0;
+}
+
+.social-row__label {
+    min-width: 120px;
+    max-width: 160px;
+}
+
+.social-visibility-toggle {
+    color: var(--background-main-green-color, #4caf50);
+    transition: opacity 0.15s ease;
+
+    &--hidden {
+        opacity: 0.35;
+        color: var(--text-secondary-color, #bbb);
+    }
+}
+
+.social-add-btn {
+    align-self: flex-start;
+    border-radius: 20px !important;
+    text-transform: none !important;
+    font-weight: 600 !important;
+    color: var(--background-white-color, #fff) !important;
+    background: var(--background-main-green-color, #4caf50) !important;
+    margin-top: 0.5rem;
+
+    &:hover {
+        background: var(--primary-green-text-color, #388e3c) !important;
+    }
+}
+
+.social-url-error {
+    font-size: 0.7rem;
+    color: #d32f2f;
+    margin-top: -0.25rem;
+    padding-left: 0.75rem;
 }
 
 /* Location row */

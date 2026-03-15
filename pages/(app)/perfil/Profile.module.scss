@@ -110,3 +110,41 @@
     cursor: pointer;
     padding: 0.25rem; // p-1
 }
+
+/* ──────────── Social Links ──────────── */
+.SocialLinksGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.SocialLinkChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    background: var(--background-category-card-grey-color, #f5f5f5);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    color: var(--content-text-color, #333);
+    font-size: 0.875rem;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+
+    &:hover {
+        background: #e8f5e9;
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.15);
+        transform: translateY(-1px);
+        color: var(--primary-green-text-color, #388e3c);
+    }
+}
+
+.SocialLinkChipName {
+    font-weight: 600;
+}
+
+.SocialLinkChipLabel {
+    font-weight: 300;
+    color: var(--content-text-color, #666);
+    font-size: 0.8rem;
+}

@@ -101,6 +101,40 @@ export interface SendbirdConfig {
 }
 
 // =============================================================================
+// Contact Types
+// =============================================================================
+
+export interface ContactEmail {
+    address: string
+    isPrimary: boolean
+    verified: boolean
+}
+
+export interface ContactPhone {
+    number: string
+    isPrimary: boolean
+    type: 'personal' | 'trabajo'
+}
+
+export type SocialPlatform =
+    | 'WhatsApp'
+    | 'Instagram'
+    | 'LinkedIn'
+    | 'Facebook'
+    | 'TikTok'
+    | 'Web'
+    | 'X'
+
+export interface SocialLink {
+    id: string
+    platform: SocialPlatform
+    url: string
+    label?: string
+    isVisible: boolean
+    priority: number
+}
+
+// =============================================================================
 // Firestore Document Types (extended from services/types.ts)
 // =============================================================================
 
@@ -117,6 +151,9 @@ export interface UserFirestoreDocument {
     userCodigoPostal?: string
     userTel?: string
     userImage?: string
+    emails?: ContactEmail[]
+    phones?: ContactPhone[]
+    socialLinks?: SocialLink[]
 }
 
 export interface DraftFirestoreDocument {

@@ -21,6 +21,8 @@ import {
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
 import type { ReadUserParams, UpdateUserParams, UserFirestoreDocument, UserRole } from '../types'
+import { migrateContactFields } from '@utilities/contactUtils'
+import { migrateLegacySocialFields } from '@utilities/socialUtils'
 
 // Collection names
 const PROPIETARIOS_COLLECTION = 'usersPropietariosResidentes'
@@ -39,7 +41,8 @@ function getUserCollection(role: UserRole): CollectionReference | null {
 }
 
 /**
- * Get a user document by ID and role
+ * Get a user document by ID and role.
+ * Normalizes legacy flat contact and social fields into structured arrays.
  */
 export async function getUser({ userId, role }: ReadUserParams): Promise<UserFirestoreDocument | null> {
     const userCol = getUserCollection(role)
@@ -54,7 +57,11 @@ export async function getUser({ userId, role }: ReadUserParams): Promise<UserFir
         const snapshot = await getDoc(docRef)
 
         if (snapshot.exists()) {
-            return { ...snapshot.data(), userId: snapshot.id }
+            const raw = { ...snapshot.data(), userId: snapshot.id }
+            // Normalize legacy fields → structured arrays
+            const { emails, phones } = migrateContactFields(raw)
+            const socialLinks = migrateLegacySocialFields(raw)
+            return { ...raw, emails, phones, socialLinks }
         }
         return null
     } catch (error) {

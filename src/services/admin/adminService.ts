@@ -17,6 +17,7 @@ import {
 } from 'firebase/firestore'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth, firestore, isFirebaseAvailable } from '@services/firebase'
+import { getPrimaryEmail } from '@utilities/contactUtils'
 
 // Collection references
 const PROPIETARIOS = 'usersPropietariosResidentes'
@@ -149,7 +150,7 @@ export async function getAllUsers(): Promise<AdminUserRow[]> {
         users.push({
             uid: doc.id,
             name: d.userName || '—',
-            email: d.userMail || '—',
+            email: getPrimaryEmail(d.emails) || d.userMail || '—',
             role: 'Propietario',
             status: d.status || 'active',
             lastLogin: d.lastLogin || '—',
@@ -163,7 +164,7 @@ export async function getAllUsers(): Promise<AdminUserRow[]> {
         users.push({
             uid: doc.id,
             name: d.userName || '—',
-            email: d.userMail || '—',
+            email: getPrimaryEmail(d.emails) || d.userMail || '—',
             role: 'Comerciante',
             status: d.status || 'active',
             lastLogin: d.lastLogin || '—',
@@ -211,7 +212,7 @@ export async function getPendingVerifications(): Promise<VerificationItem[]> {
                 items.push({
                     uid: doc.id,
                     name: d.userName || '—',
-                    email: d.userMail || '—',
+                    email: getPrimaryEmail(d.emails) || d.userMail || '—',
                     role: roleName,
                     docType: iv.docType || '—',
                     docUrl: iv.docUrl || '',
