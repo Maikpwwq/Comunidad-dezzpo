@@ -97,18 +97,36 @@
 }
 
 .GalleryImage {
-    height: 400px;
+    width: 300px;
+    height: 300px;
     display: block;
-    max-width: 400px;
-    overflow: hidden;
-    width: auto;
-    border-radius: 5%;
-    padding: 0.5rem; // p-2
+    object-fit: cover;
+    border-radius: 12px;
+    padding: 0.5rem;
 }
 
 .LinkIcon {
     cursor: pointer;
-    padding: 0.25rem; // p-1
+    padding: 0.25rem;
+}
+
+/* ──────────── Habilidades Chips Override ──────────── */
+.ChipsSection {
+    :global(.MuiChip-root) {
+        border-color: var(--primary-green-text-color, #2e7d32);
+        color: var(--primary-green-text-color, #2e7d32);
+        font-weight: 600;
+
+        &:global(.MuiChip-filled) {
+            background-color: var(--background-main-green-color, #4caf50);
+            color: #fff;
+            border-color: var(--background-main-green-color, #4caf50);
+        }
+    }
+
+    :global(.MuiChip-icon) {
+        color: inherit;
+    }
 }
 
 /* ──────────── Social Links ──────────── */
