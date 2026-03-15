@@ -406,7 +406,7 @@ export default function Page() {
                                     {visibleLinks.map((sl) => (
                                         <a
                                             key={sl.id}
-                                            href={sl.url}
+                                            href={sl.url.match(/^https?:\/\//) ? sl.url : `https://${sl.url}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={styles.SocialLinkChip || ''}
@@ -477,10 +477,12 @@ export default function Page() {
                                     Habilidades
                                 </Typography>
 
-                                <ChipsCategories
-                                    listadoCategorias={userInfo.userCategoriesChips}
-                                    editableContent={false}
-                                />
+                                <div className={styles.ChipsSection || ''}>
+                                    <ChipsCategories
+                                        listadoCategorias={userInfo.userCategoriesChips}
+                                        editableContent={false}
+                                    />
+                                </div>
                             </>
                         )}
                     </Col>
