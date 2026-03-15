@@ -14,9 +14,16 @@ import { useAuth } from '@hooks/useAuth'
 
 // Services
 import { getUser, updateUser } from '@services/users'
-import type { UserRole } from '@services/types'
+import type { UserRole, ContactEmail, ContactPhone, SocialLink } from '@services/types'
 import { storage } from '@services/firebase'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { createEmptyEmail, createEmptyPhone } from '@utilities/contactUtils'
+import {
+    createEmptySocialLink,
+    validateSocialUrl,
+    PLATFORM_CONFIG,
+    PLATFORM_LIST,
+} from '@utilities/socialUtils'
 
 // Components
 import { Ubicacion } from '@features/marketing'
@@ -35,11 +42,19 @@ import {
     FormControl,
     Chip,
     LinearProgress,
+    IconButton,
+    Tooltip,
 } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom'
 import ErrorIcon from '@mui/icons-material/Error'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
+import StarIcon from '@mui/icons-material/Star'
+import StarBorderIcon from '@mui/icons-material/StarBorder'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 
 // Styles
 import styles from './Ajustes.module.scss'
@@ -96,6 +111,12 @@ export default function Page() {
     const [idVerificationStatus, setIdVerificationStatus] = useState<'none' | 'pending' | 'verified' | 'rejected'>('none')
     const [uploadProgress, setUploadProgress] = useState<number>(0)
     const [isUploading, setIsUploading] = useState(false)
+
+    // Multi-channel contacts state
+    const [emails, setEmails] = useState<ContactEmail[]>([])
+    const [phones, setPhones] = useState<ContactPhone[]>([])
+    const [socialLinks, setSocialLinks] = useState<SocialLink[]>([])
+    const [socialUrlErrors, setSocialUrlErrors] = useState<Record<string, boolean>>({})
 
     const [userEditInfo, setUserEditInfo] = useState<UserEditInfo>({
         userName: '',
@@ -158,6 +179,12 @@ export default function Page() {
                         userDescription: (userData as any).userDescription || '',
                         userWebSite: (userData as any).userWebSite || '',
                     })
+
+                    // Load multi-channel contacts (already migrated by getUser)
+                    setEmails(userData.emails || [])
+                    setPhones(userData.phones || [])
+                    setSocialLinks(userData.socialLinks || [])
+
                     setIsLoaded(true)
 
                     // Load identity verification data if present
@@ -220,6 +247,131 @@ export default function Page() {
         }
     }, [userAuthID, userRol.rol, userEditInfo])
 
+    // ── Contact list handlers ──────────────────────────────────────────────
+    const handleEmailChange = (index: number, value: string) => {
+        setEmails((prev) => prev.map((e, i) => (i === index ? { ...e, address: value } : e)))
+    }
+
+    const handlePhoneChange = (index: number, field: 'number' | 'type', value: string) => {
+        setPhones((prev) =>
+            prev.map((p, i) =>
+                i === index ? { ...p, [field]: value } : p
+            )
+        )
+    }
+
+    const handleSetPrimaryEmail = (index: number) => {
+        setEmails((prev) => prev.map((e, i) => ({ ...e, isPrimary: i === index })))
+    }
+
+    const handleSetPrimaryPhone = (index: number) => {
+        setPhones((prev) => prev.map((p, i) => ({ ...p, isPrimary: i === index })))
+    }
+
+    const handleAddEmail = () => setEmails((prev) => [...prev, createEmptyEmail()])
+    const handleAddPhone = () => setPhones((prev) => [...prev, createEmptyPhone()])
+
+    const handleRemoveEmail = (index: number) => {
+        if (emails[index]?.isPrimary) return
+        setEmails((prev) => prev.filter((_, i) => i !== index))
+    }
+
+    const handleRemovePhone = (index: number) => {
+        if (phones[index]?.isPrimary) return
+        setPhones((prev) => prev.filter((_, i) => i !== index))
+    }
+
+    const handleSaveContacts = useCallback(async () => {
+        if (!userRol.rol) {
+            setAlert({ open: true, message: 'Error: Rol no identificado.', severity: 'error' })
+            return
+        }
+
+        // Build combined payload: regular fields + contact arrays
+        const contactFields = [
+            'userName', 'userIdentification', 'userWebSite', 'userRazonSocial',
+            ...(userRol.rol === 2 ? ['userProfession', 'userExperience'] : []),
+        ]
+        const sectionData: Record<string, any> = {}
+        for (const field of contactFields) {
+            sectionData[field] = userEditInfo[field]
+        }
+        sectionData.emails = emails
+        sectionData.phones = phones
+
+        try {
+            await updateUser({
+                userId: userAuthID,
+                role: userRol.rol,
+                data: sectionData,
+            })
+            setAlert({ open: true, message: '¡Información actualizada correctamente!', severity: 'success' })
+        } catch (error) {
+            console.error('Error updating contacts:', error)
+            setAlert({ open: true, message: 'Error al actualizar. Intenta de nuevo.', severity: 'error' })
+        }
+    }, [userAuthID, userRol.rol, userEditInfo, emails, phones])
+
+    // ── Social links handlers ────────────────────────────────────────────
+    const handleSocialChange = (id: string, field: string, value: any) => {
+        setSocialLinks((prev) =>
+            prev.map((sl) => {
+                if (sl.id !== id) return sl
+                const updated = { ...sl, [field]: value }
+                // Real-time URL validation when URL or platform changes
+                if (field === 'url' || field === 'platform') {
+                    const platform = field === 'platform' ? value : sl.platform
+                    const url = field === 'url' ? value : sl.url
+                    setSocialUrlErrors((prev) => ({
+                        ...prev,
+                        [id]: url ? !validateSocialUrl(platform, url) : false,
+                    }))
+                }
+                return updated
+            })
+        )
+    }
+
+    const handleAddSocial = () => {
+        const maxPriority = socialLinks.reduce((max, sl) => Math.max(max, sl.priority), -1)
+        setSocialLinks((prev) => [...prev, createEmptySocialLink(maxPriority + 1)])
+    }
+
+    const handleRemoveSocial = (id: string) => {
+        setSocialLinks((prev) => prev.filter((sl) => sl.id !== id))
+        setSocialUrlErrors((prev) => {
+            const next = { ...prev }
+            delete next[id]
+            return next
+        })
+    }
+
+    const handleSaveSocial = useCallback(async () => {
+        if (!userRol.rol) {
+            setAlert({ open: true, message: 'Error: Rol no identificado.', severity: 'error' })
+            return
+        }
+
+        // Check for validation errors before saving
+        const hasErrors = Object.values(socialUrlErrors).some(Boolean)
+        if (hasErrors) {
+            setAlert({ open: true, message: 'Corrige las URLs inválidas antes de guardar.', severity: 'warning' })
+            return
+        }
+
+        try {
+            await updateUser({
+                userId: userAuthID,
+                role: userRol.rol,
+                data: { socialLinks } as any,
+            })
+            setAlert({ open: true, message: '¡Redes sociales actualizadas!', severity: 'success' })
+        } catch (error) {
+            console.error('Error updating social links:', error)
+            setAlert({ open: true, message: 'Error al actualizar. Intenta de nuevo.', severity: 'error' })
+        }
+    }, [userAuthID, userRol.rol, socialLinks, socialUrlErrors])
+
     const isComerciante = userRol.rol === 2
 
     return (
@@ -243,11 +395,7 @@ export default function Page() {
                         <Button
                             className="btn btn-primary"
                             size="small"
-                            onClick={() => handleSaveSection([
-                                'userName', 'userPhone', 'userIdentification',
-                                'userWebSite', 'userRazonSocial',
-                                ...(isComerciante ? ['userProfession', 'userExperience'] : []),
-                            ])}
+                            onClick={handleSaveContacts}
                         >
                             Guardar
                         </Button>
@@ -255,10 +403,6 @@ export default function Page() {
 
                     {/* Read-only info */}
                     <div className={styles['info-pills']}>
-                        <div className={styles['info-pill']}>
-                            <span className={styles['info-pill__label']}>Correo</span>
-                            <span className={styles['info-pill__value']}>{userEditInfo.userMail || '—'}</span>
-                        </div>
                         <div className={styles['info-pill']}>
                             <span className={styles['info-pill__label']}>Activo desde</span>
                             <span className={styles['info-pill__value']}>{userEditInfo.userJoined || '—'}</span>
@@ -276,15 +420,116 @@ export default function Page() {
                             size="small"
                             fullWidth
                         />
-                        <div className={styles['field-row']}>
-                            <TextField
-                                id="userPhone"
-                                name="userPhone"
-                                label="Celular"
-                                value={userEditInfo.userPhone}
-                                onChange={handleChange}
+
+                        {/* ── Emails dynamic list ── */}
+                        <span className={styles['contact-section-label']}>Correos electrónicos</span>
+                        <div className={styles['contact-list']}>
+                            {emails.map((email, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`${styles['contact-row']} ${email.isPrimary ? styles['contact-row--primary'] : ''}`}
+                                >
+                                    <TextField
+                                        className={styles['contact-row__input'] || ''}
+                                        value={email.address}
+                                        onChange={(e) => handleEmailChange(idx, e.target.value)}
+                                        placeholder="correo@ejemplo.com"
+                                        size="small"
+                                        type="email"
+                                    />
+                                    <Tooltip title={email.isPrimary ? 'Correo principal' : 'Establecer como principal'}>
+                                        <IconButton
+                                            size="small"
+                                            onClick={() => handleSetPrimaryEmail(idx)}
+                                            className={email.isPrimary ? (styles['primary-indicator'] || '') : (styles['primary-indicator--inactive'] || '')}
+                                        >
+                                            {email.isPrimary ? <StarIcon /> : <StarBorderIcon />}
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title={email.isPrimary ? 'No puedes eliminar el principal' : 'Eliminar'}>
+                                        <span>
+                                            <IconButton
+                                                size="small"
+                                                onClick={() => handleRemoveEmail(idx)}
+                                                disabled={email.isPrimary}
+                                            >
+                                                <DeleteOutlineIcon fontSize="small" />
+                                            </IconButton>
+                                        </span>
+                                    </Tooltip>
+                                </div>
+                            ))}
+                            <Button
+                                variant="outlined"
                                 size="small"
-                            />
+                                className={styles['contact-add-btn'] || ''}
+                                startIcon={<AddCircleOutlineIcon />}
+                                onClick={handleAddEmail}
+                            >
+                                Agregar correo
+                            </Button>
+                        </div>
+
+                        {/* ── Phones dynamic list ── */}
+                        <span className={styles['contact-section-label']}>Teléfonos</span>
+                        <div className={styles['contact-list']}>
+                            {phones.map((phone, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`${styles['contact-row']} ${phone.isPrimary ? styles['contact-row--primary'] : ''}`}
+                                >
+                                    <TextField
+                                        className={styles['contact-row__input'] || ''}
+                                        value={phone.number}
+                                        onChange={(e) => handlePhoneChange(idx, 'number', e.target.value)}
+                                        placeholder="+57 300 000 0000"
+                                        size="small"
+                                        type="tel"
+                                    />
+                                    <FormControl size="small" className={styles['contact-row__type'] || ''}>
+                                        <Select
+                                            value={phone.type}
+                                            onChange={(e) => handlePhoneChange(idx, 'type', e.target.value)}
+                                        >
+                                            <MenuItem value="personal">Personal</MenuItem>
+                                            <MenuItem value="trabajo">Trabajo</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    <Tooltip title={phone.isPrimary ? 'Teléfono principal' : 'Establecer como principal'}>
+                                        <IconButton
+                                            size="small"
+                                            onClick={() => handleSetPrimaryPhone(idx)}
+                                            className={phone.isPrimary ? (styles['primary-indicator'] || '') : (styles['primary-indicator--inactive'] || '')}
+                                        >
+                                            {phone.isPrimary ? <StarIcon /> : <StarBorderIcon />}
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title={phone.isPrimary ? 'No puedes eliminar el principal' : 'Eliminar'}>
+                                        <span>
+                                            <IconButton
+                                                size="small"
+                                                onClick={() => handleRemovePhone(idx)}
+                                                disabled={phone.isPrimary}
+                                            >
+                                                <DeleteOutlineIcon fontSize="small" />
+                                            </IconButton>
+                                        </span>
+                                    </Tooltip>
+                                </div>
+                            ))}
+                            <Button
+                                variant="outlined"
+                                size="small"
+                                className={styles['contact-add-btn'] || ''}
+                                startIcon={<AddCircleOutlineIcon />}
+                                onClick={handleAddPhone}
+                            >
+                                Agregar teléfono
+                            </Button>
+                        </div>
+
+                        {/* ── Other fields ── */}
+                        <div className={styles['field-row']}>
                             <TextField
                                 id="userIdentification"
                                 name="userIdentification"
@@ -293,16 +538,15 @@ export default function Page() {
                                 onChange={handleChange}
                                 size="small"
                             />
+                            <TextField
+                                id="userWebSite"
+                                name="userWebSite"
+                                label="Sitio web"
+                                value={userEditInfo.userWebSite}
+                                onChange={handleChange}
+                                size="small"
+                            />
                         </div>
-                        <TextField
-                            id="userWebSite"
-                            name="userWebSite"
-                            label="Sitio web"
-                            value={userEditInfo.userWebSite}
-                            onChange={handleChange}
-                            size="small"
-                            fullWidth
-                        />
 
                         {isComerciante && (
                             <>
@@ -587,6 +831,92 @@ export default function Page() {
                                 />
                             </Button>
                         </div>
+                    </div>
+                </div>
+
+                {/* ===================== Card 5: Redes Sociales ===================== */}
+                <div className={`${styles['settings-card']} ${styles['settings-card--full']} ${styles['social-card']}`}>
+                    <div className={styles['card-header']}>
+                        <h2 className={styles['card-title']}>Redes Sociales</h2>
+                        <Button
+                            className="btn btn-primary"
+                            size="small"
+                            onClick={handleSaveSocial}
+                        >
+                            Guardar
+                        </Button>
+                    </div>
+                    <p className="type-body" style={{ marginBottom: '1rem' }}>
+                        Agrega tus redes sociales y canales de comunicación. Los visitantes solo verán las que estén visibles.
+                    </p>
+
+                    <div className={styles['contact-list']}>
+                        {socialLinks.map((link) => (
+                            <div key={link.id}>
+                                <div className={styles['social-row']}>
+                                    <FormControl size="small" className={styles['social-row__platform'] || ''}>
+                                        <Select
+                                            value={link.platform}
+                                            onChange={(e) => handleSocialChange(link.id, 'platform', e.target.value)}
+                                        >
+                                            {PLATFORM_LIST.map((p) => (
+                                                <MenuItem key={p} value={p}>{PLATFORM_CONFIG[p].name}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                    <TextField
+                                        className={styles['social-row__url'] || ''}
+                                        value={link.url}
+                                        onChange={(e) => handleSocialChange(link.id, 'url', e.target.value)}
+                                        placeholder={PLATFORM_CONFIG[link.platform].placeholder}
+                                        size="small"
+                                        error={socialUrlErrors[link.id] ?? false}
+                                    />
+                                    <TextField
+                                        className={styles['social-row__label'] || ''}
+                                        value={link.label || ''}
+                                        onChange={(e) => handleSocialChange(link.id, 'label', e.target.value)}
+                                        placeholder="Etiqueta"
+                                        size="small"
+                                    />
+                                    <Tooltip title={link.isVisible ? 'Visible en perfil' : 'Oculto en perfil'}>
+                                        <IconButton
+                                            size="small"
+                                            onClick={() => handleSocialChange(link.id, 'isVisible', !link.isVisible)}
+                                            className={
+                                                link.isVisible
+                                                    ? (styles['social-visibility-toggle'] || '')
+                                                    : (styles['social-visibility-toggle--hidden'] || '')
+                                            }
+                                        >
+                                            {link.isVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="Eliminar">
+                                        <IconButton
+                                            size="small"
+                                            onClick={() => handleRemoveSocial(link.id)}
+                                        >
+                                            <DeleteOutlineIcon fontSize="small" />
+                                        </IconButton>
+                                    </Tooltip>
+                                </div>
+                                {socialUrlErrors[link.id] && (
+                                    <span className={styles['social-url-error'] || ''}>
+                                        URL no válida para {PLATFORM_CONFIG[link.platform].name}
+                                    </span>
+                                )}
+                            </div>
+                        ))}
+                        <Button
+                            variant="contained"
+                            size="small"
+                            className={styles['social-add-btn'] || ''}
+                            startIcon={<AddCircleOutlineIcon />}
+                            onClick={handleAddSocial}
+                        >
+                            Agregar red social
+                        </Button>
                     </div>
                 </div>
             </div>

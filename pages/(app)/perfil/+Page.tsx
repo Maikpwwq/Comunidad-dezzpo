@@ -8,6 +8,9 @@ import { useState, useEffect } from 'react'
 import { getUser, getUserByUsername } from '@services/users'
 import { useUserStore } from '@stores/userStore'
 import { usePageContext } from '@hooks/usePageContext'
+import { getPrimaryEmail, getPrimaryPhone } from '@utilities/contactUtils'
+import { PLATFORM_CONFIG } from '@utilities/socialUtils'
+import type { ContactEmail, ContactPhone, SocialLink } from '@services/types'
 
 // Styles & Assets
 // @ts-ignore
@@ -34,6 +37,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import MailIcon from '@mui/icons-material/Mail'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import LinkIcon from '@mui/icons-material/Link'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
 // Types
 import type { UserFirestoreDocument, UserRole } from '@services/types'
@@ -51,6 +55,9 @@ interface UserInfoState extends Partial<UserFirestoreDocument> {
     }
     userCreatedDrafts: any[]
     userGalleryUrl: string[]
+    emails: ContactEmail[]
+    phones: ContactPhone[]
+    socialLinks: SocialLink[]
 }
 
 /**
@@ -120,6 +127,9 @@ export default function Page() {
             likedsDrafts: [],
         },
         userWebSite: '',
+        emails: [],
+        phones: [],
+        socialLinks: [],
     })
 
     // Fetch profile data
@@ -164,6 +174,9 @@ export default function Page() {
                             userCreatedDrafts: [],
                             userVotes: { reviews: [], mean: 0, votes: 0 },
                             userLikes: { likedsProfiles: [], likedsDrafts: [] },
+                            emails: userData.emails || [],
+                            phones: userData.phones || [],
+                            socialLinks: userData.socialLinks || [],
                         })
                     } else {
                         setError('User not found')
@@ -231,6 +244,9 @@ export default function Page() {
                         userCreatedDrafts: [],
                         userVotes: { reviews: [], mean: 0, votes: 0 },
                         userLikes: { likedsProfiles: [], likedsDrafts: [] },
+                        emails: userData.emails || [],
+                        phones: userData.phones || [],
+                        socialLinks: userData.socialLinks || [],
                     })
                 } else {
                     setError('User not found')
@@ -348,7 +364,7 @@ export default function Page() {
                                 className={clsx(styles.InfoPill, "body-2")}
                             >
                                 <MailIcon fontSize="large" />{' '}
-                                {userInfo.userMail}
+                                {getPrimaryEmail(userInfo.emails) || userInfo.userMail || '—'}
                             </Typography>
 
                             <Typography
@@ -356,9 +372,59 @@ export default function Page() {
                                 className={clsx(styles.InfoPill, "body-2")}
                             >
                                 <PhoneIphoneIcon fontSize="large" />{' '}
-                                {userInfo.userPhone}
+                                {getPrimaryPhone(userInfo.phones) || userInfo.userPhone || '—'}
                             </Typography>
                         </Box>
+                    </Col>
+                </Row>
+
+                {/* ── Social Links Section ── */}
+                <Row className="p-0 m-0 w-100 d-flex align-items-start">
+                    <Col md={10} className="col-10 pt-2 pb-4">
+                        <Typography
+                            variant="h5"
+                            className={clsx(styles.SectionTitle)}
+                            align="left"
+                        >
+                            Redes Sociales
+                        </Typography>
+                        {(() => {
+                            const visibleLinks = (userInfo.socialLinks || [])
+                                .filter((sl) => sl.isVisible)
+                                .sort((a, b) => a.priority - b.priority)
+
+                            if (visibleLinks.length === 0) {
+                                return (
+                                    <Typography variant="body2" className="body-2" style={{ color: '#888' }}>
+                                        No hay canales de comunicación configurados
+                                    </Typography>
+                                )
+                            }
+
+                            return (
+                                <div className={styles.SocialLinksGrid || ''}>
+                                    {visibleLinks.map((sl) => (
+                                        <a
+                                            key={sl.id}
+                                            href={sl.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={styles.SocialLinkChip || ''}
+                                        >
+                                            <span className={styles.SocialLinkChipName || ''}>
+                                                {PLATFORM_CONFIG[sl.platform].name}
+                                            </span>
+                                            {sl.label && (
+                                                <span className={styles.SocialLinkChipLabel || ''}>
+                                                    {sl.label}
+                                                </span>
+                                            )}
+                                            <OpenInNewIcon fontSize="small" />
+                                        </a>
+                                    ))}
+                                </div>
+                            )
+                        })()}
                     </Col>
                 </Row>
 

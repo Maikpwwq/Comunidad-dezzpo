@@ -63,6 +63,7 @@
       "@services/*": ["src/services/*"],
       "@types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
+      "@utilities/*": ["src/utilities/*"],
 
       /* Component layers */
       "@components": ["src/components/index.ts"],

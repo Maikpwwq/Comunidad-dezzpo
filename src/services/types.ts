@@ -7,6 +7,58 @@
 import type { DocumentData } from 'firebase/firestore'
 
 // =============================================================================
+// Contact Types
+// =============================================================================
+
+/**
+ * Structured email contact entry.
+ * Replaces the legacy flat `userMail` string.
+ */
+export interface ContactEmail {
+    address: string
+    isPrimary: boolean
+    verified: boolean
+}
+
+/**
+ * Structured phone contact entry.
+ * Replaces the legacy flat `userPhone` string.
+ */
+export interface ContactPhone {
+    number: string
+    isPrimary: boolean
+    type: 'personal' | 'trabajo'
+}
+
+// =============================================================================
+// Social Link Types
+// =============================================================================
+
+/**
+ * Supported social & communication platforms.
+ */
+export type SocialPlatform =
+    | 'WhatsApp'
+    | 'Instagram'
+    | 'LinkedIn'
+    | 'Facebook'
+    | 'TikTok'
+    | 'Web'
+    | 'X'
+
+/**
+ * Social link entry stored as a Firestore map array.
+ */
+export interface SocialLink {
+    id: string
+    platform: SocialPlatform
+    url: string
+    label?: string
+    isVisible: boolean
+    priority: number
+}
+
+// =============================================================================
 // User Types
 // =============================================================================
 
@@ -44,6 +96,12 @@ export interface UserFirestoreDocument extends DocumentData {
     }
     savedDrafts?: string[]
     privacySettings?: PrivacySettings
+    /** Structured email contacts array. */
+    emails?: ContactEmail[]
+    /** Structured phone contacts array. */
+    phones?: ContactPhone[]
+    /** Social / communication links array. */
+    socialLinks?: SocialLink[]
 }
 
 export type UserRole = 1 | 2 // 1 = Propietario, 2 = Comerciante
