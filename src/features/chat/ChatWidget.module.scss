@@ -1,0 +1,250 @@
+/* ==========================================================================
+   ChatWidget — Floating RAG Chat
+   ========================================================================== */
+
+/* ── FAB (Floating Action Button) ── */
+.ChatFab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1200;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: var(--background-main-green-color, #4caf50);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: scale(1.08);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    svg {
+        font-size: 28px;
+    }
+}
+
+/* ── Chat Panel ── */
+.ChatPanel {
+    position: fixed;
+    bottom: 92px;
+    right: 24px;
+    z-index: 1201;
+    width: 380px;
+    max-height: 520px;
+    border-radius: 20px;
+    background: var(--background-card-white-color, #fff);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.25s ease-out;
+
+    @media (max-width: 480px) {
+        width: calc(100vw - 32px);
+        right: 16px;
+        bottom: 84px;
+        max-height: 60vh;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Header ── */
+.ChatHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: var(--background-main-green-color, #4caf50);
+    color: #fff;
+
+    h3 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    span {
+        font-size: 12px;
+        opacity: 0.85;
+    }
+}
+
+.CloseBtn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        opacity: 0.75;
+    }
+}
+
+/* ── Messages Area ── */
+.MessagesArea {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 200px;
+    max-height: 340px;
+
+    @media (max-width: 480px) {
+        max-height: 40vh;
+    }
+}
+
+/* ── Message Bubbles ── */
+.MessageBubble {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    word-wrap: break-word;
+
+    a {
+        color: var(--primary-green-text-color, #2e7d32);
+        text-decoration: underline;
+        font-weight: 600;
+    }
+}
+
+.UserBubble {
+    align-self: flex-end;
+    background: var(--background-main-green-color, #4caf50);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+
+.AssistantBubble {
+    align-self: flex-start;
+    background: var(--background-category-card-grey-color, #f0f0f0);
+    color: var(--primary-text-color, #333);
+    border-bottom-left-radius: 4px;
+}
+
+/* ── Loading dots ── */
+.LoadingDots {
+    display: flex;
+    gap: 4px;
+    padding: 12px 16px;
+    align-self: flex-start;
+
+    span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--background-main-green-color, #4caf50);
+        animation: bounce 1.2s infinite ease-in-out;
+
+        &:nth-child(2) { animation-delay: 0.2s; }
+        &:nth-child(3) { animation-delay: 0.4s; }
+    }
+}
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+/* ── Input Area ── */
+.InputArea {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-top: 1px solid var(--background-category-card-grey-color, #e0e0e0);
+    gap: 8px;
+
+    input {
+        flex: 1;
+        border: 1px solid var(--background-category-card-grey-color, #ddd);
+        border-radius: 24px;
+        padding: 10px 16px;
+        font-size: 13.5px;
+        outline: none;
+        transition: border-color 0.2s;
+
+        &:focus {
+            border-color: var(--background-main-green-color, #4caf50);
+        }
+
+        &::placeholder {
+            color: #aaa;
+        }
+    }
+}
+
+.SendBtn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: var(--background-main-green-color, #4caf50);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+        opacity: 0.85;
+    }
+
+    svg {
+        font-size: 18px;
+    }
+}
+
+/* ── Empty State ── */
+.EmptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 8px;
+    color: #aaa;
+    padding: 32px 16px;
+    text-align: center;
+
+    svg {
+        font-size: 40px;
+        opacity: 0.4;
+    }
+
+    p {
+        margin: 0;
+        font-size: 13px;
+    }
+}

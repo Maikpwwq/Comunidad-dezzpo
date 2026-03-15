@@ -22,6 +22,7 @@ import { theme } from '@config/theme'
 import { useUserStore } from '@stores/userStore'
 // Providers
 import { SendbirdProviderWrapper, UserAuthProvider } from '@providers'
+import ChatWidget from '@features/chat/ChatWidget'
 // Styles
 
 
@@ -196,6 +197,9 @@ export function Layout({ children }: LayoutProps): React.ReactElement {
                         </Box>
                     </Box>
                 )}
+
+                {/* RAG Chat Widget — global, available on all app pages */}
+                <ChatWidget />
             </UserAuthProvider>
         </ThemeProvider>
     )
