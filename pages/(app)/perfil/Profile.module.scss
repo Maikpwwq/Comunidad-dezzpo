@@ -97,7 +97,8 @@
 }
 
 .GalleryImage {
-    width: 300px;
+    width: 100%;
+    max-width: 800px;
     aspect-ratio: 1;
     display: block;
     object-fit: contain;
@@ -120,6 +121,11 @@
 
         &:global(.MuiChip-filled) {
             background-color: var(--background-category-card-grey-color, #e0e0e0);
+            color: var(--primary-green-text-color, #2e7d32);
+        }
+
+        &:global(.Mui-disabled) {
+            opacity: 1;
             color: var(--primary-green-text-color, #2e7d32);
         }
     }

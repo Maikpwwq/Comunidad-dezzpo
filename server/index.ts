@@ -36,6 +36,12 @@ function startServer() {
     framework: 'vike-photon' 
   }))
 
+  // 5. RAG Chat API (Gemini + Supabase pgvector)
+  app.post('/api/v1/chat', async (c) => {
+    const { chatHandler } = await import('./api/chat.js')
+    return chatHandler(c)
+  })
+
   // 5. Unified Server Start
   const port = process.env.PORT || 3000
   return serve(app, {
