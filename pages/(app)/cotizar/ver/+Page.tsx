@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { usePageContext } from '@hooks/usePageContext'
 import { getQuotation } from '@services/quotations'
 import type { QuotationFirestoreDocument } from '@services/types'
@@ -9,8 +9,14 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    Typography
+    Typography,
+    Button,
+    CircularProgress,
 } from '@mui/material'
+import DownloadIcon from '@mui/icons-material/Download'
+import QuotationPdfTemplate from '@features/quotes/components/QuotationPdfTemplate'
+import type { QuotationPdfData } from '@features/quotes/components/QuotationPdfTemplate'
+
 interface QuotationInfoState extends Partial<QuotationFirestoreDocument> {
     description?: string
     scope?: string
@@ -24,6 +30,7 @@ interface QuotationInfoState extends Partial<QuotationFirestoreDocument> {
     quotationPrice?: number
     quotationStatus?: 'pending' | 'accepted' | 'rejected'
 }
+
 export default function Page() {
     const pageContext = usePageContext()
     const { quotationId } = pageContext.routeParams as { quotationId: string }
@@ -39,6 +46,11 @@ export default function Page() {
         garantia: '',
         valorSubtotal: 0,
     })
+
+    // PDF generation state
+    const [isGenerating, setIsGenerating] = useState(false)
+    const pdfRef = useRef<HTMLDivElement>(null)
+
     const fetchQuotationData = async () => {
         if (!quotationId || quotationId.trim() === '') return;
         try {
@@ -52,17 +64,13 @@ export default function Page() {
                     quotationPrice,
                     quotationStatus,
                     ...rest
-                } = response.data as any; // Using any to destructure unknown properties from data if they exist
-                // Map response data to state structure
-                // Note: The legacy code mapped 'description' from 'quotationDescription' if available, 
-                // but usually legacy code had mixed naming. 
-                // We keep the mapping similar to legacy but type safe.
+                } = response.data as any;
                 setQuotationInfo({
                     ...quotationInfo,
                     quotationId: quotationId,
                     quotationComercianteId,
                     quotationCreatedAt,
-                    description: quotationDescription || rest.description || '', // Fallback to rest if name differs
+                    description: quotationDescription || rest.description || '',
                     quotationDraftId,
                     quotationPrice,
                     quotationStatus,
@@ -82,19 +90,86 @@ export default function Page() {
             console.error('Error fetching quotation:', error);
         }
     };
+
     useEffect(() => {
         fetchQuotationData();
     }, [quotationId]);
+
+    // ── PDF Download Handler ─────────────────────────────────────────────
+    const handleDownloadPdf = useCallback(async () => {
+        if (!pdfRef.current || isGenerating) return
+
+        setIsGenerating(true)
+        try {
+            // Dynamically import html2pdf.js to keep it out of the main bundle
+            const html2pdfModule = await import('html2pdf.js')
+            const html2pdf = html2pdfModule.default || html2pdfModule
+
+            const fileName = `Cotizacion_${quotationInfo.quotationId || 'sin-id'}.pdf`
+
+            await html2pdf()
+                .set({
+                    margin: 0,
+                    filename: fileName,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: {
+                        scale: 2,
+                        useCORS: true,
+                        letterRendering: true,
+                    },
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
+                        orientation: 'portrait',
+                    },
+                    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+                } as any)
+                .from(pdfRef.current)
+                .save()
+        } catch (error) {
+            console.error('Error generating PDF:', error)
+        } finally {
+            setIsGenerating(false)
+        }
+    }, [quotationInfo, isGenerating])
+
     return (
         <Container
             fluid
             className="m-0 p-0 h-100 d-flex justify-content-center"
         >
             <Col className="col-8 pb-4 pt-4 align-items-start">
-                <Row className="m-0 w-100 pb-2 d-flex">
+                <Row className="m-0 w-100 pb-2 d-flex" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography variant="h5" className="w-auto pb-4">
                         Consulta los detalles de la cotización
                     </Typography>
+                    <Button
+                        variant="contained"
+                        startIcon={
+                            isGenerating
+                                ? <CircularProgress size={18} sx={{ color: '#fff' }} />
+                                : <DownloadIcon />
+                        }
+                        disabled={isGenerating}
+                        onClick={handleDownloadPdf}
+                        sx={{
+                            borderRadius: '50px',
+                            backgroundColor: 'var(--background-main-green-color, #4caf50)',
+                            textTransform: 'none',
+                            fontWeight: 600,
+                            px: 3,
+                            '&:hover': {
+                                backgroundColor: 'var(--primary-green-text-color, #388e3c)',
+                            },
+                            '&.Mui-disabled': {
+                                backgroundColor: 'var(--background-main-green-color, #4caf50)',
+                                opacity: 0.7,
+                                color: '#fff',
+                            },
+                        }}
+                    >
+                        {isGenerating ? 'Generando...' : 'Descargar Cotización'}
+                    </Button>
                 </Row>
                 <Typography variant="h6" className="p-description w-auto">
                     Descripción del servicio:
@@ -254,6 +329,20 @@ export default function Page() {
                     {quotationInfo.garantia}
                 </Typography>
             </Col>
+
+            {/* Hidden PDF template — positioned offscreen for html2pdf capture */}
+            <div
+                style={{
+                    position: 'absolute',
+                    left: '-9999px',
+                    top: 0,
+                    zIndex: -1,
+                    overflow: 'hidden',
+                }}
+                aria-hidden="true"
+            >
+                <QuotationPdfTemplate ref={pdfRef} data={quotationInfo as QuotationPdfData} />
+            </div>
         </Container>
     )
 }
