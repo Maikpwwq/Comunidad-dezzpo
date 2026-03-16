@@ -4,7 +4,7 @@ import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { compress } from 'hono/compress'
 import { apply, serve } from '@photonjs/hono'
-import { chatHandler } from './api/chat.js'
+import { chatHandler } from './api/chat.ts'
 
 /**
  * Refined Hono Server for Comunidad Dezzpo
@@ -19,7 +19,6 @@ function startServer() {
   app.use('/api/*', cors())
 
   // 2. Custom Firebase Admin Middleware (Example Translation)
-  // If you had an Express middleware for Firebase Auth, translate it here:
   app.use('/api/*', async (c, next) => {
     const authHeader = c.req.header('Authorization')
     if (authHeader?.startsWith('Bearer ')) {
@@ -28,17 +27,15 @@ function startServer() {
     await next()
   })
 
-  // 3. Vike & Extension Integration
-  // This automatically handles SSR and Vike-specific routing
-  apply(app)
+  // ── API Routes (MUST be before apply() / Vike catch-all) ───────────────
 
-  // 4. API Route Implementation
+  // Health check
   app.get('/api/v1/status', (c) => c.json({ 
     status: 'online', 
     framework: 'vike-photon' 
   }))
 
-  // 5. RAG Chat API (Gemini + Supabase pgvector)
+  // RAG Chat API (Gemini + Supabase pgvector)
   app.post('/api/v1/chat', async (c) => {
     try {
       return await chatHandler(c)
@@ -48,7 +45,10 @@ function startServer() {
     }
   })
 
-  // 5. Unified Server Start
+  // ── Vike SSR (catch-all — must be LAST) ────────────────────────────────
+  apply(app)
+
+  // Server Start
   const port = process.env.PORT || 3000
   return serve(app, {
     port: Number(port),
