@@ -95,7 +95,9 @@ export default function ChatWidget() {
             })
 
             if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`)
+                const errorBody = await response.text()
+                console.error('[ChatWidget] Server error:', response.status, errorBody)
+                throw new Error(`HTTP ${response.status}: ${errorBody}`)
             }
 
             // Stream the text response

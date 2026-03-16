@@ -64,6 +64,23 @@ Tu comportamiento:
 
 export async function chatHandler(c: Context) {
     try {
+        // Debug: check env vars are loaded
+        const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY
+        const supaUrl = process.env.VITE_APP_SUPABASE_PROJECT_URL
+        const supaKey = process.env.VITE_APP_SUPABASE_SECRET_KEY
+
+        if (!apiKey) {
+            console.error('[chat API] Missing GOOGLE_GENERATIVE_AI_API_KEY')
+            return c.json({ error: 'Missing Google AI API key' }, 500)
+        }
+        if (!supaUrl || !supaKey) {
+            console.error('[chat API] Missing Supabase env vars')
+            return c.json({ error: 'Missing Supabase credentials' }, 500)
+        }
+
+        // Ensure the AI SDK picks up the key
+        process.env.GOOGLE_GENERATIVE_AI_API_KEY = apiKey
+
         const body = await c.req.json()
         const { messages, currentPathname } = body
 
@@ -81,34 +98,37 @@ export async function chatHandler(c: Context) {
         }
 
         const queryText = lastUserMessage.content as string
+        console.log('[chat API] Query:', queryText, '| Pathname:', currentPathname)
 
         // Step 1: Generate embedding for the user query
-        // gemini-embedding-001 outputs 3072d; truncate to 768 to match Supabase vector column
         const { embedding: rawEmbedding } = await embed({
             model: google.textEmbeddingModel('gemini-embedding-001'),
             value: queryText,
         })
         const queryEmbedding = rawEmbedding.slice(0, 768)
+        console.log('[chat API] Embedding generated:', queryEmbedding.length, 'dims')
 
         const db = getSupabase()
 
         // Step 2a: Retrieve context filtered by pathname (local context)
         const localDocs: RetrievedDoc[] = []
         if (currentPathname && currentPathname !== '/') {
-            const { data } = await db.rpc('match_dezzpo_documents', {
-                query_embedding: JSON.stringify(queryEmbedding),
+            const { data, error: rpcError } = await db.rpc('match_dezzpo_documents', {
+                query_embedding: queryEmbedding,
                 match_count: 3,
                 filter_pathname: currentPathname,
             } as any)
+            if (rpcError) console.error('[chat API] Local RPC error:', rpcError)
             if (data) localDocs.push(...(data as RetrievedDoc[]))
         }
 
         // Step 2b: Retrieve global fallback (no pathname filter)
-        const { data: globalData } = await db.rpc('match_dezzpo_documents', {
-            query_embedding: JSON.stringify(queryEmbedding),
+        const { data: globalData, error: globalError } = await db.rpc('match_dezzpo_documents', {
+            query_embedding: queryEmbedding,
             match_count: 2,
             filter_pathname: null,
         } as any)
+        if (globalError) console.error('[chat API] Global RPC error:', globalError)
         const globalDocs: RetrievedDoc[] = (globalData as unknown as RetrievedDoc[]) || []
 
         // Merge and deduplicate by id, local docs first
@@ -120,6 +140,7 @@ export async function chatHandler(c: Context) {
                 allDocs.push(doc)
             }
         }
+        console.log('[chat API] Retrieved', allDocs.length, 'docs')
 
         // Step 3: Build context block with citations
         const contextBlock = allDocs.length > 0
@@ -150,11 +171,12 @@ Recuerda: responde SOLO con base en el contexto anterior. Si la pregunta no pued
 
         // Return Vercel AI SDK compatible stream response
         return result.toTextStreamResponse()
-    } catch (error) {
-        console.error('[chat API] Error:', error)
+    } catch (error: any) {
+        console.error('[chat API] Error:', error?.message || error)
         return c.json(
-            { error: 'Internal server error during chat processing' },
+            { error: error?.message || 'Internal server error during chat processing' },
             500
         )
     }
 }
+
