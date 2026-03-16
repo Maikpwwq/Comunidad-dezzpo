@@ -15,7 +15,7 @@
 import type { Context } from 'hono'
 import { createClient } from '@supabase/supabase-js'
 import { google } from '@ai-sdk/google'
-import { streamText, embed } from 'ai'
+import { generateText, embed } from 'ai'
 
 // Bridge VITE_APP_ env vars to AI SDK expected names
 process.env.GOOGLE_GENERATIVE_AI_API_KEY ??= process.env.VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY
@@ -162,15 +162,17 @@ ${contextBlock}
 
 Recuerda: responde SOLO con base en el contexto anterior. Si la pregunta no puede responderse con este contexto, indícalo.`
 
-        // Step 4: Stream response via Gemini 1.5 Pro
-        const result = streamText({
-            model: google('gemini-1.5-pro'),
+        // Step 4: Generate response via Gemini 2.0 Flash (non-streaming for Vercel/Hono compatibility)
+        const result = await generateText({
+            model: google('gemini-2.0-flash'),
             system: systemWithContext,
             messages,
         })
 
-        // Return Vercel AI SDK compatible stream response
-        return result.toTextStreamResponse()
+        console.log('[chat API] Generated', result.text.length, 'chars')
+
+        // Return plain text response
+        return c.text(result.text)
     } catch (error: any) {
         console.error('[chat API] Error:', error?.message || error)
         return c.json(
