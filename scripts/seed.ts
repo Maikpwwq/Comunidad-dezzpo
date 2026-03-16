@@ -122,21 +122,33 @@ async function seed() {
         process.exit(0)
     }
 
-    // Generate embeddings in batches (Google API limits ~100 per request)
-    console.log('🧠 [3/4] Generating embeddings with Google Text Embedding 004...')
-    const BATCH_SIZE = 50
+    // Generate embeddings in batches with rate-limit delay
+    // gemini-embedding-001 outputs 3072 dims; we truncate to 768 (Matryoshka-safe)
+    console.log('🧠 [3/4] Generating embeddings (gemini-embedding-001 → truncate to 768d)...')
+    const BATCH_SIZE = 20  // Smaller batches to respect free-tier rate limits
+    const TARGET_DIMS = 768
     const allEmbeddings: number[][] = []
+    const totalBatches = Math.ceil(allChunks.length / BATCH_SIZE)
 
     for (let i = 0; i < allChunks.length; i += BATCH_SIZE) {
         const batch = allChunks.slice(i, i + BATCH_SIZE)
         const { embeddings } = await embedMany({
-            model: (google.textEmbeddingModel as any)('gemini-embedding-001', {
-                outputDimensionality: 768,
-            }),
+            model: google.textEmbeddingModel('gemini-embedding-001'),
             values: batch.map((c) => c.content),
         })
-        allEmbeddings.push(...embeddings)
-        console.log(`   ✓ Batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(allChunks.length / BATCH_SIZE)}`)
+
+        // Truncate each embedding from 3072 → 768 dimensions
+        const truncated = embeddings.map((emb) => emb.slice(0, TARGET_DIMS))
+        allEmbeddings.push(...truncated)
+
+        const batchNum = Math.floor(i / BATCH_SIZE) + 1
+        console.log(`   ✓ Batch ${batchNum}/${totalBatches} (${truncated[0].length}d)`)
+
+        // Rate-limit delay: free tier = 100 req/min. Wait 35s between batches.
+        if (batchNum < totalBatches) {
+            console.log('   ⏳ Waiting 35s (free-tier rate limit)...')
+            await new Promise((r) => setTimeout(r, 35_000))
+        }
     }
 
     // Upsert to Supabase

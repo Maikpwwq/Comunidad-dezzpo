@@ -83,12 +83,12 @@ export async function chatHandler(c: Context) {
         const queryText = lastUserMessage.content as string
 
         // Step 1: Generate embedding for the user query
-        const { embedding: queryEmbedding } = await embed({
-            model: (google.textEmbeddingModel as any)('gemini-embedding-001', {
-                outputDimensionality: 768,
-            }),
+        // gemini-embedding-001 outputs 3072d; truncate to 768 to match Supabase vector column
+        const { embedding: rawEmbedding } = await embed({
+            model: google.textEmbeddingModel('gemini-embedding-001'),
             value: queryText,
         })
+        const queryEmbedding = rawEmbedding.slice(0, 768)
 
         const db = getSupabase()
 
