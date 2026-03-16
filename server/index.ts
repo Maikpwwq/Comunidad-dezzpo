@@ -4,6 +4,7 @@ import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { compress } from 'hono/compress'
 import { apply, serve } from '@photonjs/hono'
+import { chatHandler } from './api/chat.js'
 
 /**
  * Refined Hono Server for Comunidad Dezzpo
@@ -39,8 +40,12 @@ function startServer() {
 
   // 5. RAG Chat API (Gemini + Supabase pgvector)
   app.post('/api/v1/chat', async (c) => {
-    const { chatHandler } = await import('./api/chat.js')
-    return chatHandler(c)
+    try {
+      return await chatHandler(c)
+    } catch (err: any) {
+      console.error('[/api/v1/chat] Route error:', err?.message || err)
+      return c.json({ error: err?.message || 'Chat route failed' }, 500)
+    }
   })
 
   // 5. Unified Server Start
