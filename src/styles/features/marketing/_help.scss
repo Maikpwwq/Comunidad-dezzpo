@@ -1,14 +1,15 @@
 @use '@styles/_variables' as *;
 
+.ayuda-pqrs-titulo {
+    background: var(--background-light-gray-color) url('/assets/img/Ayuda&PQRS1.png') no-repeat center;
+    background-attachment: scroll;
+    background-size: cover;
+    min-height: 550px;
+    height: auto;
+    width: 100%;
+}
+
 .help-page {
-    .ayuda-pqrs-titulo {
-        background: var(--background-light-gray-color) url('/assets/img/Ayuda&PQRS1.png') no-repeat center;
-        background-attachment: scroll;
-        background-size: cover;
-        min-height: 550px;
-        height: auto;
-        width: 100%;
-    }
 
     .ayuda-pqrs-preguntas {
         background: var(--background-light-gray-color) url('/assets/img/Ayuda&PQRS2.png') no-repeat center;
