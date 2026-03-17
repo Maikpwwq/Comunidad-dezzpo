@@ -146,6 +146,9 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                             textColor="inherit"
                             variant={isMobile ? 'scrollable' : 'standard'}
                             scrollButtons={isMobile ? 'auto' : false}
+                            sx={{
+                                backgroundColor: 'var(--background-main-green-color)',
+                            }}
                         >
                             {headerItems.map((item) => (
                                 <Tab
@@ -166,6 +169,7 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                                         '&:hover': {
                                             backgroundColor: 'var(--background-hover-green-color)',
                                             textDecoration: 'none',
+                                            color: '#ffffff',
                                         },
                                         '&.Mui-selected': {
                                             backgroundColor: 'rgba(255, 255, 255, 0.2)',
