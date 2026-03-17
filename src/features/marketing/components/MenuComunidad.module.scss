@@ -232,6 +232,7 @@
     .NavLink {
         color: var(--content-text-white-color);
         justify-content: flex-start; // Align left
+        width: fit-content;
         
         svg {
             color: var(--content-text-white-color);

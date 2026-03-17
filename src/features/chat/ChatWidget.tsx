@@ -152,9 +152,17 @@ export default function ChatWidget() {
                 <div className={styles.ChatPanel}>
                     {/* Header */}
                     <div className={styles.ChatHeader}>
-                        <div>
-                            <h3>Asistente Dezzpo</h3>
-                            <span>Respuestas basadas en nuestra base de conocimiento</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <img
+                                src="/assets/img/logo/Logo-Comunidad-Dezzpo.png"
+                                alt="Logo Comunidad Dezzpo"
+                                height="33px"
+                                width="33px"
+                            />
+                            <div>
+                                <h3>Asistente BOB</h3>
+                                <span>Respuestas basadas en nuestra base de conocimiento</span>
+                            </div>
                         </div>
                         <button className={styles.CloseBtn} onClick={toggleChat}>
                             <CloseIcon fontSize="small" />
@@ -166,18 +174,17 @@ export default function ChatWidget() {
                         {messages.length === 0 && (
                             <div className={styles.EmptyState}>
                                 <SmartToyIcon />
-                                <p>¡Hola! Soy el asistente de Comunidad Dezzpo. Pregúntame sobre servicios, comerciantes o cualquier tema.</p>
+                                <p>¡Hola! Soy BOB, el asistente de Comunidad Dezzpo. Pregúntame sobre servicios, comerciantes o temas de la plataforma.</p>
                             </div>
                         )}
 
                         {messages.map((msg) => (
                             <div
                                 key={msg.id}
-                                className={`${styles.MessageBubble} ${
-                                    msg.role === 'user'
+                                className={`${styles.MessageBubble} ${msg.role === 'user'
                                         ? styles.UserBubble
                                         : styles.AssistantBubble
-                                }`}
+                                    }`}
                                 dangerouslySetInnerHTML={{
                                     __html: formatChatMessage(msg.content),
                                 }}

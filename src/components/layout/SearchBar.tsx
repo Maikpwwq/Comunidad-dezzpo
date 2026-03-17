@@ -89,7 +89,7 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
                 }
                 PaperComponent={(props) => (
                     <Paper
-                        {...props}
+                        {...(props as any)}
                         sx={{
                             borderRadius: '20px',
                             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
@@ -153,6 +153,7 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
                 renderInput={(params) => (
                     <TextField
                         {...params}
+                        InputLabelProps={params.InputLabelProps as any}
                         placeholder="Buscar categoría..."
                         size="small"
                         InputProps={{
