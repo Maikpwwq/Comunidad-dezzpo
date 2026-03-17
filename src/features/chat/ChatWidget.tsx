@@ -156,12 +156,12 @@ export default function ChatWidget() {
                             <img
                                 src="/assets/img/logo/Logo-Comunidad-Dezzpo.png"
                                 alt="Logo Comunidad Dezzpo"
-                                height="33px"
-                                width="33px"
+                                height="48px"
+                                width="48px"
                             />
                             <div>
-                                <h3>Asistente BOB</h3>
-                                <span>Respuestas basadas en nuestra base de conocimiento</span>
+                                <h3>Asistente Bob</h3>
+                                <span>Fuente: Documentación oficial de Dezzpo.</span>
                             </div>
                         </div>
                         <button className={styles.CloseBtn} onClick={toggleChat}>
@@ -174,7 +174,7 @@ export default function ChatWidget() {
                         {messages.length === 0 && (
                             <div className={styles.EmptyState}>
                                 <SmartToyIcon />
-                                <p>¡Hola! Soy BOB, el asistente de Comunidad Dezzpo. Pregúntame sobre servicios, comerciantes o temas de la plataforma.</p>
+                                <p>¡Hola! Soy Bob, el asistente de Comunidad Dezzpo. Pregúntame sobre servicios, comerciantes o temas de la plataforma.</p>
                             </div>
                         )}
 
@@ -182,8 +182,8 @@ export default function ChatWidget() {
                             <div
                                 key={msg.id}
                                 className={`${styles.MessageBubble} ${msg.role === 'user'
-                                        ? styles.UserBubble
-                                        : styles.AssistantBubble
+                                    ? styles.UserBubble
+                                    : styles.AssistantBubble
                                     }`}
                                 dangerouslySetInnerHTML={{
                                     __html: formatChatMessage(msg.content),
