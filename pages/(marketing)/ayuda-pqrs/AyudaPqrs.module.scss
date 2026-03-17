@@ -1,0 +1,281 @@
+/**
+ * AyudaPqrs.module.scss
+ *
+ * Modern FAQ page with accordion pattern, gradient hero,
+ * and AI chatbot integration card.
+ */
+
+// ── Hero Section ─────────────────────────────────────────────────────────────
+
+.HeroSection {
+    position: relative;
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 40%, #2dd4bf 100%);
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at 20% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 50%);
+        pointer-events: none;
+    }
+}
+
+.HeroContent {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+}
+
+.HeroTitle {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+}
+
+.HeroSubtitle {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+// ── Main Content ─────────────────────────────────────────────────────────────
+
+.ContentWrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+}
+
+// ── Tab Navigation ───────────────────────────────────────────────────────────
+
+.TabBar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.Tab {
+    padding: 0.75rem 1.25rem;
+    border: none;
+    background: none;
+    color: #6b7280;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s ease;
+    border-radius: 6px 6px 0 0;
+
+    &:hover {
+        color: #0d9488;
+        background: rgba(13, 148, 136, 0.04);
+    }
+}
+
+.TabActive {
+    color: #0d9488;
+    border-bottom-color: #0d9488;
+}
+
+// ── FAQ Accordion ────────────────────────────────────────────────────────────
+
+.FaqList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.AccordionItem {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px !important;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+
+    &::before {
+        display: none !important; // Remove MUI default divider
+    }
+
+    &:hover {
+        border-color: #0d9488;
+        box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08);
+    }
+}
+
+.AccordionItemExpanded {
+    border-color: #0d9488;
+    box-shadow: 0 4px 16px rgba(13, 148, 136, 0.12);
+}
+
+.AccordionSummary {
+    padding: 0.25rem 1.25rem !important;
+    min-height: 56px !important;
+
+    &:global(.Mui-expanded) {
+        min-height: 56px !important;
+    }
+}
+
+.AccordionQuestion {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1f2937;
+    line-height: 1.5;
+}
+
+.AccordionDetails {
+    padding: 0 1.25rem 1.25rem !important;
+    border-top: 1px solid #f3f4f6;
+}
+
+.AccordionAnswer {
+    font-size: 0.9rem;
+    color: #4b5563;
+    line-height: 1.7;
+    padding-top: 0.75rem;
+
+    a {
+        color: #0d9488;
+        font-weight: 500;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// ── AI Chatbot Card ──────────────────────────────────────────────────────────
+
+.AiCardWrapper {
+    margin-top: 3rem;
+}
+
+.AiCard {
+    background: linear-gradient(135deg, #f0fdfa 0%, #e0f7f5 50%, #d1faf4 100%);
+    border: 1px solid #99f6e4;
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        right: -40px;
+        top: -40px;
+        width: 180px;
+        height: 180px;
+        background: radial-gradient(circle, rgba(13, 148, 136, 0.08) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+    }
+}
+
+.AiIconBox {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #0d9488, #14b8a6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+}
+
+.AiCardContent {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.AiCardTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f766e;
+    margin-bottom: 0.5rem;
+}
+
+.AiCardDescription {
+    font-size: 0.9rem;
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.AiCardBtn {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    padding: 0.75rem 1.75rem !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    text-transform: none !important;
+    background: linear-gradient(135deg, #0d9488, #0f766e) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3) !important;
+    transition: all 0.2s ease !important;
+
+    &:hover {
+        box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4) !important;
+        transform: translateY(-1px);
+    }
+}
+
+// ── Expand Icon ──────────────────────────────────────────────────────────────
+
+.ExpandIcon {
+    color: #0d9488;
+    transition: transform 0.2s ease;
+}
+
+// ── Section Counter Badge ────────────────────────────────────────────────────
+
+.CountBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(13, 148, 136, 0.1);
+    color: #0d9488;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-left: 0.5rem;
+}
