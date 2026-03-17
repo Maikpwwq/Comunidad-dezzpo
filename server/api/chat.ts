@@ -162,9 +162,9 @@ ${contextBlock}
 
 Recuerda: responde SOLO con base en el contexto anterior. Si la pregunta no puede responderse con este contexto, indícalo.`
 
-        // Step 4: Generate response via Gemini 2.0 Flash (non-streaming for Vercel/Hono compatibility)
+        // Step 4: Generate response via Gemini 2.5 Flash (free tier: 5 RPM, 20 RPD)
         const result = await generateText({
-            model: google('gemini-2.0-flash'),
+            model: google('gemini-2.5-flash'),
             system: systemWithContext,
             messages,
         })
