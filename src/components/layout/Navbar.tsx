@@ -154,8 +154,8 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                                         color: 'inherit',
                                         textDecoration: 'none',
                                         minHeight: 48,
-                                        pt: { xs: 0, md: 2 },
-                                        px: { xs: 2, md: 4 }, // Increased padding for desktop
+                                        py: { xs: 0, md: 1 },
+                                        px: { xs: 2, md: 2 }, // Increased padding for desktop
                                         mx: 0.5, // Added small margin between tabs
                                         whiteSpace: 'nowrap',
                                         textTransform: 'none',
