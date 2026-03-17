@@ -109,7 +109,7 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
             elevation={0}
             sx={{ zIndex: 0 }}
         >
-            <Toolbar sx={{ p: 0 }}>
+            <Toolbar sx={{ p: 0, backgroundColor: 'var(--background-main-green-color)' }}>
                 <Grid
                     container
                     sx={{ p: 2, pb: 0 }}

@@ -46,7 +46,7 @@ export const categoriesImages: string[][] = [
     [
         '/assets/img/categories/Construcción obra.jpg',
         '/assets/img/categories/Construcción obra2.jpg',
-        '/assets/img/categories/Construcción obra3.webp',
+        '/assets/img/categories/Construccion obra3.webp',
     ],
     [
         '/assets/img/categories/Control de acceso.jpg',
@@ -59,9 +59,9 @@ export const categoriesImages: string[][] = [
         '/assets/img/categories/Demoliciones.jpg',
     ],
     [
-        '/assets/img/categories/Diseño e impresión.webp',
-        '/assets/img/categories/Diseño e impresión2.webp',
-        '/assets/img/categories/Diseño e impresión3.webp',
+        '/assets/img/categories/Diseño e impresion.webp',
+        '/assets/img/categories/Diseño e impresion2.webp',
+        '/assets/img/categories/Diseño e impresion3.webp',
     ],
     [
         '/assets/img/categories/Drenajes e inundaciones.jpg',
@@ -80,7 +80,7 @@ export const categoriesImages: string[][] = [
     ],
     [
         '/assets/img/categories/EstudioSuelos.jpg',
-        '/assets/img/categories/Gasodomésticos.webp',
+        '/assets/img/categories/Gasodomesticos.webp',
         '/assets/img/categories/Gasodomésticos2.jpg',
     ],
     [
@@ -106,7 +106,7 @@ export const categoriesImages: string[][] = [
     [
         '/assets/img/categories/Jardinería.jpg',
         '/assets/img/categories/Jardinería2.jpg',
-        '/assets/img/categories/Lavandería.webp',
+        '/assets/img/categories/Lavanderia.webp',
     ],
     [
         '/assets/img/categories/Limpieza Tanques de agua.jpg',
@@ -136,10 +136,10 @@ export const categoriesImages: string[][] = [
     [
         '/assets/img/categories/Pintura2.webp',
         '/assets/img/categories/Pintura3.jpg',
-        '/assets/img/categories/Plomería.webp',
+        '/assets/img/categories/Plomeria.webp',
     ],
     [
-        '/assets/img/categories/Plomería2.webp',
+        '/assets/img/categories/Plomeria2.webp',
         '/assets/img/categories/plomero3.webp',
         '/assets/img/categories/Reformas Baños.webp',
     ],
