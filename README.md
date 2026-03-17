@@ -7,6 +7,8 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 - **UI Context**: React 18 + MUI v5
 - **State**: Zustand (replacing Context/RxJS)
 - **Auth**: Firebase Auth (Google + Email)
+- **Server**: Hono (via vike-photon / @photonjs/hono)
+- **AI/RAG**: Gemini 2.5 Flash + Supabase pgvector + AI SDK
 
 ### 🛠️ EXTERNAL PROVIDERS
 
@@ -37,6 +39,7 @@ The project utilizes a **Tiered Access Model**:
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand)
 - **UI Library**: [MUI v6](https://mui.com/)
 - **Backend/Services**: Firebase (Auth, Firestore, Storage)
+- **AI/RAG Chatbot**: Gemini 2.5 Flash (via @ai-sdk/google) + Supabase pgvector
 - **Deployment**: Vercel (Serverless Functions)
 
 ## Project Structure
@@ -160,21 +163,59 @@ comunidad-dezzpo/
 
 ### Development
 ```bash
-# Install dependencies
-pnpm install
-
-# Start dev server
-pnpm dev
+pnpm install    # Install dependencies
+pnpm dev        # Start dev server on :3000
 ```
 
-### Build
+### Build & Deploy
 ```bash
-# Build for production
-pnpm build
-
-# Preview build
-pnpm preview
+pnpm build      # Build for production
+pnpm preview    # Preview build locally
+git push        # Auto-deploys to Vercel
 ```
+
+### RAG Chatbot — Knowledge Seeding
+```bash
+# Seed from web scraping (Firecrawl → Supabase)
+pnpm dlx tsx scripts/seed.ts
+
+# Seed from knowledge files (knowledge/*.md → Supabase)
+pnpm dlx tsx scripts/seed-knowledge.ts
+```
+
+## RAG Chatbot Architecture
+
+The app includes an AI-powered chatbot ("Asistente Dezzpo") for context-aware Q&A.
+
+### Stack
+| Layer | Technology | Details |
+|-------|------------|-------|
+| **LLM** | Gemini 2.5 Flash | `@ai-sdk/google` via AI SDK |
+| **Embeddings** | gemini-embedding-001 | 3072d → truncated to 768d (Matryoshka) |
+| **Vector DB** | Supabase pgvector | `dezzpo_documents` table, HNSW index |
+| **Server** | Hono API route | `POST /api/v1/chat` (generateText) |
+| **Frontend** | Native fetch + ReadableStream | `ChatWidget.tsx` → Zustand |
+
+### How It Works
+1. User sends message → `ChatWidget` POSTs to `/api/v1/chat`
+2. Server embeds query with `gemini-embedding-001` (768d)
+3. Supabase RPC `match_dezzpo_documents` finds relevant chunks (pathname-filtered + global)
+4. System prompt + context injected → Gemini 2.5 Flash generates response
+5. Response returned as plain text to widget
+
+### Knowledge System
+- **`knowledge/dezzpo-core.md`**: Editable business knowledge. Each `##` section = 1 chunk.
+- **`scripts/seed-knowledge.ts`**: Reads `knowledge/*.md`, embeds, inserts to Supabase.
+- **`scripts/seed.ts`**: Firecrawl scrapes site, chunks, embeds, inserts to Supabase.
+- Knowledge entries are tagged `source: 'knowledge/*'` and can be re-seeded independently.
+
+### Environment Variables (Required)
+| Variable | Purpose |
+|----------|---------|
+| `VITE_APP_SUPABASE_PROJECT_URL` | Supabase project URL |
+| `VITE_APP_SUPABASE_SECRET_KEY` | Supabase service role key |
+| `VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY` | Gemini API key |
+| `VITE_APP_FIRECRAWL_API_KEY` | Firecrawl API key (for seed.ts) |
 
 ## Migration Status
 
@@ -260,7 +301,13 @@ Located in `src/styles/components/_buttons.scss`.
 ### Dev Reference
 View live typography samples at `/dev/typography`.
 
+## Server Architecture Notes
+
+- **API routes MUST be defined BEFORE `apply(app)`** in `server/index.ts`. Vike's `apply()` registers a catch-all SSR handler that intercepts all routes.
+- **Static imports only** for API handlers — dynamic imports fail on Vercel's bundled output.
+- **`dotenv/config`** is imported at top of `server/index.ts` for local env loading.
+- **`VITE_APP_*` env vars** are bridged to standard names in `server/api/chat.ts`.
+
 ## Legal
 
 Developed by **Dezzpo Inc.** | [Website](https://www.dezzpo.com/)
-

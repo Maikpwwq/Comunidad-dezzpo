@@ -146,7 +146,13 @@ comunidad-dezzpo/
 │   └── styles/                               # Global styles
 │
 ├── scripts/
-│   └── setAdminClaim.ts                      # One-time admin setup
+│   ├── seed.ts                           # Firecrawl scraper → Supabase embeddings
+│   ├── seed-knowledge.ts                 # Knowledge .md → Supabase embeddings
+│   └── setAdminClaim.ts                  # One-time admin setup
+│
+├── knowledge/                            # RAG chatbot knowledge base
+│   └── dezzpo-core.md                    # Editable business info (## = chunk)
+│
 ├── vite.config.ts
 ├── tsconfig.json
 └── package.json
@@ -157,6 +163,33 @@ This file acts as the primary orchestrator. For specific domain constraints, ref
 - **Marketing Pages**: [pages/(marketing)/agents.md](pages/(marketing)/agents.md)
 - **App/Dashboard**: [pages/(app)/agents.md](pages/(app)/agents.md)
 - **Admin Panel**: [pages/(admin)/agents.md](pages/(admin)/agents.md)
+
+## 7. RAG Chatbot Constraints
+
+### Server Routing (CRITICAL)
+- **API routes MUST be registered BEFORE `apply(app)`** in `server/index.ts`.
+- Vike's `apply()` is a catch-all SSR handler. Routes defined AFTER it are never reached.
+- **Static imports only** for API handlers — dynamic `import()` fails on Vercel's bundled output.
+
+### Chat API (`server/api/chat.ts`)
+- Uses `generateText()` (not `streamText`) for Vercel/Hono compatibility.
+- Model: `gemini-2.5-flash` (free tier: 5 RPM, 20 RPD). Check rate limits before changing.
+- Embeddings: `gemini-embedding-001` → truncated from 3072d to 768d (Matryoshka-safe).
+- Env bridging: `VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY` → `GOOGLE_GENERATIVE_AI_API_KEY`.
+- Supabase RPC: `match_dezzpo_documents` with pathname filtering + global fallback.
+
+### Knowledge System
+- **`knowledge/dezzpo-core.md`**: User-editable. Each `##` section = 1 vector chunk.
+- **`scripts/seed-knowledge.ts`**: Reads `knowledge/*.md`, embeds, upserts to Supabase.
+- Only replaces entries tagged `source: 'knowledge/*'` — Firecrawl data is preserved.
+- Rate limit: 35s delay between embedding batches (Gemini free tier: 100 RPM).
+
+### ChatWidget (`src/features/chat/ChatWidget.tsx`)
+- Global mount in `pages/(app)/+Layout.tsx`.
+- State via `useChatStore` (Zustand): `isOpen`, `currentPathname`, `toggleChat()`, `setOpen()`.
+- Uses native `fetch` + `ReadableStream` (not `useChat` — AI SDK v6 incompatible).
+- Sends `currentPathname` for context-aware retrieval.
+- Any page can trigger the chatbot via: `useChatStore.getState().setOpen(true)`.
 
 ## 7. Learned Lessons
 
@@ -243,4 +276,3 @@ File: `src/styles/components/_buttons.scss`
 
 ### Dev Reference
 Live samples: `/dev/typography`
-

@@ -58,3 +58,23 @@
 - Use **path aliases** (`@services/admin`, `@hooks/useAdminGuard`) — no relative imports
 - All new code must be `.tsx` / `.ts` — no `.jsx`
 - Zero `any` policy — use explicit types for all Firestore data
+
+## 7. RAG Chatbot Admin Context
+
+### Knowledge Base Management
+- **Knowledge file**: `knowledge/dezzpo-core.md` — editable business info for the AI chatbot
+- **Seed command**: `pnpm dlx tsx scripts/seed-knowledge.ts` — embeds knowledge into Supabase
+- **Web scraper**: `pnpm dlx tsx scripts/seed.ts` — re-crawls site with Firecrawl
+- Knowledge entries tagged `source: 'knowledge/*'` are replaced on re-seed; Firecrawl data is preserved
+
+### Environment Variables (Server)
+| Variable | Purpose |
+|----------|---------|
+| `VITE_APP_SUPABASE_PROJECT_URL` | Supabase project URL |
+| `VITE_APP_SUPABASE_SECRET_KEY` | Supabase service role key |
+| `VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY` | Gemini API key (2.5 Flash) |
+
+### Monitoring
+- Check Gemini quota at: https://aistudio.google.com/ → Rate Limits
+- Free tier limits: `gemini-2.5-flash` (5 RPM, 20 RPD), `gemini-embedding-001` (100 RPM)
+- Supabase vector table: `dezzpo_documents` (768-dim pgvector, HNSW index)

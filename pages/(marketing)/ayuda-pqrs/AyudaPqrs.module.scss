@@ -15,24 +15,17 @@
     justify-content: center;
     text-align: center;
     padding: 3rem 1.5rem;
-    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 40%, #2dd4bf 100%);
+    // Background image comes from global class `ayuda-pqrs-titulo`
+    // This module handles layout only
     overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background:
-            radial-gradient(circle at 20% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 50%);
-        pointer-events: none;
-    }
 }
 
 .HeroContent {
     position: relative;
     z-index: 1;
     max-width: 700px;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
 }
 
 .HeroTitle {
