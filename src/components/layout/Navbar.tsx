@@ -162,8 +162,9 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                                         minWidth: 'auto',
                                         fontWeight: 600,
                                         fontSize: '0.9rem',
+                                        backgroundColor: 'var(--background-main-green-color)',
                                         '&:hover': {
-                                            backgroundColor: 'var(--background-gray-color)',
+                                            backgroundColor: 'var(--background-hover-green-color)',
                                             textDecoration: 'none',
                                         },
                                         '&.Mui-selected': {
