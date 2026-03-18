@@ -10,6 +10,8 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
 
   // 2. Multiplatform (Dynamic Responsive)
   @media (min-width: 768px) {
