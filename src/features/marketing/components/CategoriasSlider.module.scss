@@ -10,11 +10,16 @@
 
 .SliderImage {
     width: 100%; // Width controlled by Col parent
-    height: 330px;
+    aspect-ratio: 1; // Square on mobile
     object-fit: cover;
-    padding: 2px; // Reduced padding
+    padding: 2px;
     border-radius: 8px;
     transition: transform $transition-fast;
+
+    @media (min-width: 768px) {
+        aspect-ratio: auto;
+        height: 330px;
+    }
 
     &:hover {
         transform: scale(1.02);

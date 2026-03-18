@@ -104,8 +104,8 @@ export default function Page() {
     }
 
     return (
-        <Container fluid className="p-0 h-100">
-            <Row className="m-0 w-100 d-flex">
+        <Container fluid className="p-0 h-100" style={{ overflowX: 'hidden' }}>
+            <Row className="m-0 d-flex">
                 <Col className="pt-4 pb-2 p-0">
                     <h1 className="type-hero-title">
                         Directorio de Profesionales{'  '}
@@ -155,7 +155,7 @@ export default function Page() {
                 ) : null}
             </Row>
 
-            <section className="col-12 pt-4 pb-4 p-0">
+            <section className="col-12 pt-4 pb-4 px-2 px-md-3" style={{ overflow: 'hidden' }}>
                 <div className="pb-2 p-0">
                     <h3 className="type-section-title">
                         Todos los profesionales

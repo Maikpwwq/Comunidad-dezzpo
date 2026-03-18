@@ -54,7 +54,7 @@ export function CategoriasSlider(): React.ReactElement {
     const isRtl = theme.direction === 'rtl'
 
     return (
-        <Box sx={{ width: '80%', sm: { width: '100%' }, flexGrow: 1 }}>
+        <Box sx={{ width: { xs: '100%', md: '80%' }, flexGrow: 1 }}>
             <AutoPlaySwipeableViews
                 axis={isRtl ? 'x-reverse' : 'x'}
                 index={activeStep}
