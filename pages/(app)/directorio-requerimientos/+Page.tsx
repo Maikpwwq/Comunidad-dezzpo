@@ -50,6 +50,14 @@ export default function Page() {
         }
     }
 
+    const getDraftTotalValue = (draft: any) => {
+        let total = Number(draft.draftTotal) || 0
+        if (total === 0 && Array.isArray(draft.draftSubCategory)) {
+            total = draft.draftSubCategory.reduce((sum: number, item: any) => sum + (Number(item.subCategoriaPrecioFinal) || 0), 0)
+        }
+        return total
+    }
+
     // Fetch all drafts
     useEffect(() => {
         if (!isLoaded) {
@@ -147,7 +155,7 @@ export default function Page() {
                                     draftPropietarioResidente={String(draft.draftPropietarioResidente || '')}
                                     draftName={draft.draftName || ''}
                                     draftDescription={draft.draftDescription || ''}
-                                    draftTotal={Number(draft.draftTotal) || 0}
+                                    draftTotal={getDraftTotalValue(draft)}
                                     draftCategory={draft.draftCategory || ''}
                                     draftCreated={String(draft.draftCreated || '')}
                                     draftApply={draft.draftApply || []}
@@ -175,7 +183,7 @@ export default function Page() {
                             draftPropietarioResidente={String(draft.draftPropietarioResidente || '')}
                             draftName={draft.draftName || ''}
                             draftDescription={draft.draftDescription || ''}
-                            draftTotal={Number(draft.draftTotal) || 0}
+                            draftTotal={getDraftTotalValue(draft)}
                             draftCategory={draft.draftCategory || ''}
                             draftCreated={String(draft.draftCreated || '')}
                             draftApply={draft.draftApply || []}

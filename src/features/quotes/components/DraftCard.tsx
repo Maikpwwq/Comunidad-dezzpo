@@ -24,6 +24,7 @@ import { useUserStore } from '@stores/userStore'
 // Firebase
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import { firestore } from '@services/firebase'
+import { getUser } from '@services/users'
 
 // MUI Components
 import {
@@ -72,6 +73,25 @@ export function DraftCard({
     const [isLiked, setIsLiked] = useState(initialIsLiked)
     const [snackOpen, setSnackOpen] = useState(false)
     const [snackMessage, setSnackMessage] = useState('')
+    const [ownerName, setOwnerName] = useState<string>(draftPropietarioResidente)
+
+    React.useEffect(() => {
+        let isMounted = true
+        const fetchOwner = async () => {
+            if (!draftPropietarioResidente) return
+            try {
+                // Propietarios are role 1
+                const userData = await getUser({ userId: draftPropietarioResidente, role: 1 })
+                if (isMounted && userData?.userName) {
+                    setOwnerName(userData.userName)
+                }
+            } catch (error) {
+                console.error('Error fetching owner name', error)
+            }
+        }
+        fetchOwner()
+        return () => { isMounted = false }
+    }, [draftPropietarioResidente])
 
     // Computed
     const draftLink = `/app/ver-requerimiento/${draftId}`
@@ -159,7 +179,7 @@ export function DraftCard({
                         Publicado hace {draftCreated}
                     </Typography>
                 }
-                title={<span className={styles['text-owner']}>{draftPropietarioResidente}</span>}
+                title={<span className={styles['text-owner']}>{ownerName}</span>}
             />
 
             <CardContent className={clsx(styles.Content)}>

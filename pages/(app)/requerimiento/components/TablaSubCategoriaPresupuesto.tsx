@@ -5,6 +5,7 @@ import { Col } from 'react-bootstrap'
 
 // MUI
 import {
+    Box,
     Table,
     TableHead,
     TableBody,
@@ -37,29 +38,27 @@ const TablaSubCategoriaPresupuesto: React.FC<TablaSubCategoriaPresupuestoProps> 
 }) => {
     // Normalize props to support both naming conventions (legacy editar uses requerimiento*)
     const items = draftSubCategory || requerimientoCategorias || []
-    const total = draftTotal || requerimientoTotal || 0
+    const baseTotal = draftTotal || requerimientoTotal || 0
+    const computedTotal = items.reduce((sum, item) => sum + (Number(item.subCategoriaPrecioFinal) || 0), 0)
+    const displayTotal = computedTotal > 0 ? computedTotal : baseTotal
 
     return (
         <Col className="ms-4 p-4">
             <p className="p-description">
                 Compara precios de los mejores profesionales calificados
             </p>
-            <Table
-                sx={{
-                    display: { sm: 'grid', xs: 'grid' },
-                    overflowX: 'scroll',
-                }}
-            >
-                <TableHead>
-                    <TableRow className="w-100" sx={{ display: 'table' }}>
-                        <TableCell>Sub Categoria</TableCell>
-                        <TableCell>Unidad Medida</TableCell>
-                        <TableCell>Description</TableCell>
-                        <TableCell>Precio unitario</TableCell>
-                        <TableCell>Cantidad</TableCell>
-                        <TableCell>Precio</TableCell>
-                    </TableRow>
-                </TableHead>
+            <Box sx={{ overflowX: 'auto', width: '100%' }}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Sub Categoria</TableCell>
+                            <TableCell>Unidad Medida</TableCell>
+                            <TableCell>Description</TableCell>
+                            <TableCell>Precio unitario</TableCell>
+                            <TableCell>Cantidad</TableCell>
+                            <TableCell>Precio</TableCell>
+                        </TableRow>
+                    </TableHead>
                 <TableBody>
                     {items.length > 0 &&
                         items.map((selection, index) => {
@@ -110,7 +109,7 @@ const TablaSubCategoriaPresupuesto: React.FC<TablaSubCategoriaPresupuestoProps> 
                         <TableCell></TableCell>
                         <TableCell> Precio Total</TableCell>
                         <TableCell>
-                            {parseInt(String(total)).toLocaleString(
+                            {parseInt(String(displayTotal)).toLocaleString(
                                 'es-CO',
                                 {
                                     style: 'currency',
@@ -120,7 +119,8 @@ const TablaSubCategoriaPresupuesto: React.FC<TablaSubCategoriaPresupuestoProps> 
                         </TableCell>
                     </TableRow>
                 </TableBody>
-            </Table>
+                </Table>
+            </Box>
         </Col>
     )
 }
