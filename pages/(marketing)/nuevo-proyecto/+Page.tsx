@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { navigate } from 'vike/client/router'
 import { usePageContext } from '@hooks/usePageContext'
 import { CategoriasService } from '@/services'
+import { getUser } from '@services/users'
 import { useAuth } from '@hooks/useAuth'
 // Firebase
 import {
@@ -80,6 +81,7 @@ export default function Page() {
     const [hideRegister] = useState(!!currentUser?.isAuth)
     const [showMore, setShowMore] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
+    const [userAddress, setUserAddress] = useState('')
     // Firestore refs removed from top level to avoid SSR crash
 
     // Categoria State
@@ -198,6 +200,28 @@ export default function Page() {
         draftInfo.draftCategory,
         draftInfo.draftProject
     ])
+
+    // Fetch logged in user's address
+    useEffect(() => {
+        const fetchAddress = async () => {
+            if (currentUser?.isAuth && userId) {
+                try {
+                    const userRole = (currentUser as any)?.role === 2 ? 2 : 1;
+                    const userData = await getUser({ userId, role: userRole })
+                    if (userData?.userDirection) {
+                        const addr = userData.userCiudad 
+                            ? `${userData.userDirection}, ${userData.userCiudad}` 
+                            : userData.userDirection
+                        setUserAddress(addr)
+                    }
+                } catch (e) {
+                    console.error('Error fetching user address:', e)
+                }
+            }
+        }
+        fetchAddress()
+    }, [currentUser, userId])
+
     const handleShowMore = () => {
         setShowMore(!showMore)
     }
@@ -232,6 +256,11 @@ export default function Page() {
         if (activeStep > 0) {
             let active = activeStep - 1
             setActiveStep(active)
+        } else {
+            // If on step 0, 'volver atras' should return to the previous page
+            if (typeof window !== 'undefined') {
+                window.history.back()
+            }
         }
     }
     const handleUpdateDraftInfo = (info: ProjectDraftInfo) => {
@@ -239,6 +268,13 @@ export default function Page() {
             ...prev,
             ...info,
         }))
+        if (typeof window !== 'undefined') {
+            const url = new URL(window.location.href)
+            let changed = false
+            if (info.draftProject) { url.searchParams.set('type', String(info.draftProject)); changed = true }
+            if (info.draftCategory) { url.searchParams.set('category', String(info.draftCategory)); changed = true }
+            if (changed) window.history.replaceState({}, '', url.toString())
+        }
     }
     const handleUpdateCategoriaInfo = (info: CategorySelectionState) => {
         setCategoriaInfo((prev) => ({
@@ -323,6 +359,9 @@ export default function Page() {
                                                     draftProject: undefined,
                                                     draftCategory: 0,
                                                 }))
+                                                if (typeof window !== 'undefined') {
+                                                    window.history.replaceState({}, '', window.location.pathname)
+                                                }
                                                 setIsLoaded(false)
                                             }}
                                         >
@@ -529,8 +568,24 @@ export default function Page() {
                                 />
                             </Form.Group>
                             <Form.Group className="m-4" controlId="formNewProjectPostalCode">
-                                <Form.Label className="body-2">
+                                <Form.Label className="body-2 w-100">
                                     Registra la dirección donde se requiere el servicio.
+                                    {userAddress && (
+                                        <div className="mt-2 mb-2">
+                                            <Form.Check 
+                                                type="checkbox"
+                                                id="use-registered-address"
+                                                label={`Usar mi dirección: ${userAddress}`}
+                                                checked={draftInfo.draftDirection === userAddress}
+                                                onChange={(e) => {
+                                                    setDraftInfo(prev => ({
+                                                        ...prev,
+                                                        draftDirection: e.target.checked ? userAddress : '',
+                                                    }))
+                                                }}
+                                            />
+                                        </div>
+                                    )}
                                     <Row className="w-100 flex justify-content-start" style={{ flexWrap: 'wrap' }}>
                                         <Form.Control
                                             type="text"

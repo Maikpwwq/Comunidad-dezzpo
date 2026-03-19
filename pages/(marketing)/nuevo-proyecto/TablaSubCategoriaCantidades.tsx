@@ -96,23 +96,18 @@ const TablaSubCategoriaCantidades = (props: Props) => {
             <p className="p-description">
                 Compara precios de los mejores profesionales calificados
             </p>
-            <Table
-                className=""
-                sx={{
-                    display: { sm: 'grid', xs: 'grid' },
-                    overflowX: 'scroll',
-                }}
-            >
-                <TableHead>
-                    <TableRow className="w-100" sx={{ display: 'table' }}>
-                        <TableCell>Sub Categoria</TableCell>
-                        <TableCell>Unidad Medida</TableCell>
-                        <TableCell>Description</TableCell>
-                        <TableCell>Precio unitario</TableCell>
-                        <TableCell>Cantidad</TableCell>
-                        <TableCell>Precio</TableCell>
-                    </TableRow>
-                </TableHead>
+            <Box sx={{ overflowX: 'auto', width: '100%' }}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Sub Categoria</TableCell>
+                            <TableCell>Unidad Medida</TableCell>
+                            <TableCell>Description</TableCell>
+                            <TableCell>Precio unitario</TableCell>
+                            <TableCell>Cantidad</TableCell>
+                            <TableCell>Precio</TableCell>
+                        </TableRow>
+                    </TableHead>
                 <TableBody>
                     {categoriaInfo.selected.length > 0 &&
                         categoriaInfo.selected.map(
@@ -229,7 +224,8 @@ const TablaSubCategoriaCantidades = (props: Props) => {
                         </TableCell>
                     </TableRow>
                 </TableBody>
-            </Table>
+                </Table>
+            </Box>
         </Col>
     )
 }

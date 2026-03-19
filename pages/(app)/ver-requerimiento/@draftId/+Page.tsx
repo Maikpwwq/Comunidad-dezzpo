@@ -61,6 +61,7 @@ export default function Page() {
     const [cotizacionesInfo, setCotizacionesInfo] = useState<CotizacionesState>({
         appliedQuotations: [],
     })
+    const [ownerName, setOwnerName] = useState<string>('')
     const [requerimientoInfo, setRequerimientoInfo] = useState<Omit<Partial<DraftFirestoreDocument>, 'draftSubCategory'> & {
         draftName: string
         draftCategory: string
@@ -86,11 +87,31 @@ export default function Page() {
                     draftSubCategory: (draft.draftSubCategory as any) || [],
                     draftTotal: typeof draft.draftTotal === 'string' ? parseFloat(draft.draftTotal) : (draft.draftTotal || 0),
                     draftApply: draft.draftApply && Array.isArray(draft.draftApply) ? draft.draftApply : []
-                } as any));
+                } as any))
 
-                // Initialize agreedAmount from draft total
-                const total = typeof draft.draftTotal === 'string' ? parseFloat(draft.draftTotal) : (draft.draftTotal || 0)
+                // Initialize agreedAmount from draft total or calculate dynamically if 0
+                let total = typeof draft.draftTotal === 'string' ? parseFloat(draft.draftTotal) : (draft.draftTotal || 0)
+                if (total === 0 && Array.isArray(draft.draftSubCategory)) {
+                    total = draft.draftSubCategory.reduce((sum, item: any) => sum + (Number(item.subCategoriaPrecioFinal) || 0), 0)
+                    // Also update it in requerimientoInfo so the Desglose table gets the computed value
+                    setRequerimientoInfo(prev => ({ ...prev, draftTotal: total }))
+                }
                 setAgreedAmount(total)
+
+                if (draft.draftPropietarioResidente) {
+                    try {
+                        const { getUser } = await import('@services/users')
+                        const userData = await getUser({ userId: draft.draftPropietarioResidente, role: 1 })
+                        if (userData?.userName) {
+                            setOwnerName(userData.userName)
+                        } else {
+                            setOwnerName(draft.draftPropietarioResidente)
+                        }
+                    } catch (e) {
+                        console.error('Error fetching owner name:', e)
+                        setOwnerName(draft.draftPropietarioResidente)
+                    }
+                }
 
                 const appliedQuotationIds = draft.draftApply || []
                 const firstQuotationId = appliedQuotationIds.length > 0 ? appliedQuotationIds[0] : null
@@ -253,7 +274,7 @@ export default function Page() {
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    <InfoRow label="Propietario" value={requerimientoInfo.draftPropietarioResidente} />
+                                    <InfoRow label="Propietario" value={ownerName || requerimientoInfo.draftPropietarioResidente} />
                                     <InfoRow label="Categoría" value={requerimientoInfo.draftCategory} />
                                 </Grid>
                             </Grid>
@@ -359,7 +380,7 @@ export default function Page() {
                     <Typography variant="h5" sx={{ color: 'var(--primary-titles-text-color)', fontWeight: 'bold' }}>
                         COTIZACIONES
                     </Typography>
-                    {requerimientoInfo.draftApply && requerimientoInfo.draftApply.length < 4 && (
+                    {rolAuth !== 1 && requerimientoInfo.draftApply && requerimientoInfo.draftApply.length < 4 && (
                         <Button
                             variant="contained"
                             color="success"
