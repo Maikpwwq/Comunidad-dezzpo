@@ -27,7 +27,10 @@ import {
     Stack,
     Chip,
     Avatar,
-    Container
+    Container,
+    TextField,
+    IconButton,
+    InputAdornment,
 } from '@mui/material'
 // Icons
 import DownloadIcon from '@mui/icons-material/Download'
@@ -49,6 +52,8 @@ export default function Page() {
     const pageContext = usePageContext()
     const { draftId } = pageContext.routeParams
     const [isLoaded, setIsLoaded] = useState(false)
+    const [agreedAmount, setAgreedAmount] = useState<number>(0)
+    const [isEditingAmount, setIsEditingAmount] = useState(false)
 
     interface CotizacionesState {
         appliedQuotations: QuotationFirestoreDocument[]
@@ -83,6 +88,10 @@ export default function Page() {
                     draftApply: draft.draftApply && Array.isArray(draft.draftApply) ? draft.draftApply : []
                 } as any));
 
+                // Initialize agreedAmount from draft total
+                const total = typeof draft.draftTotal === 'string' ? parseFloat(draft.draftTotal) : (draft.draftTotal || 0)
+                setAgreedAmount(total)
+
                 const appliedQuotationIds = draft.draftApply || []
                 const firstQuotationId = appliedQuotationIds.length > 0 ? appliedQuotationIds[0] : null
                 if (firstQuotationId) {
@@ -93,6 +102,11 @@ export default function Page() {
                                 ...prev,
                                 appliedQuotations: [response.data!],
                             }));
+                            // Update agreedAmount from quotation if available
+                            const quotationTotal = (response.data as any).quotationTotal
+                            if (typeof quotationTotal === 'number' && quotationTotal > 0) {
+                                setAgreedAmount(quotationTotal)
+                            }
                         }
                     } catch (e) {
                         console.error('Error fetching quotation', e)
@@ -120,9 +134,9 @@ export default function Page() {
         e.preventDefault()
         navigate(`/app/editar-cotizacion/${quotationId}`)
     }
-    const handleHire = (e: React.MouseEvent, quotationId: string, proponentId: string) => {
+    const handleHire = (e: React.MouseEvent, quotationId: string, proponentId: string, finalAmount: number) => {
         e.preventDefault()
-        navigate(`/app/contratar?draftId=${draftId}&quotationId=${quotationId}&proponentId=${proponentId}`)
+        navigate(`/app/contratar?draftId=${draftId}&quotationId=${quotationId}&proponentId=${proponentId}&amount=${finalAmount}`)
     }
     const handleCotizar = () => {
         const draftParamId = requerimientoInfo.draftId || draftId
@@ -199,15 +213,40 @@ export default function Page() {
                                 </Grid>
 
                                 <Grid item xs={12} sm={6}>
-                                    <InfoRow
-                                        icon={<AttachMoneyIcon />}
-                                        label="Presupuesto Total"
-                                        value={
-                                            <Typography variant="h5" color="success.main" fontWeight="bold">
-                                                ${requerimientoInfo.draftTotal?.toLocaleString()}
+                                    <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
+                                        <Box sx={{ color: 'var(--primary-green-text-color)', mr: 1, mt: 0.5 }}><AttachMoneyIcon /></Box>
+                                        <Box>
+                                            <Typography variant="subtitle2" color="text.secondary" sx={{ fontWeight: 600, lineHeight: 1.2 }}>
+                                                Monto Acordado
                                             </Typography>
-                                        }
-                                    />
+                                            {isEditingAmount ? (
+                                                <TextField
+                                                    type="number"
+                                                    size="small"
+                                                    value={agreedAmount}
+                                                    onChange={(e) => setAgreedAmount(parseFloat(e.target.value) || 0)}
+                                                    onBlur={() => setIsEditingAmount(false)}
+                                                    onKeyDown={(e) => { if (e.key === 'Enter') setIsEditingAmount(false) }}
+                                                    autoFocus
+                                                    InputProps={{
+                                                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                                                    }}
+                                                    sx={{ mt: 0.5, maxWidth: 200 }}
+                                                />
+                                            ) : (
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <Typography variant="h5" color="success.main" fontWeight="bold">
+                                                        ${agreedAmount.toLocaleString('es-CO')}
+                                                    </Typography>
+                                                    {rolAuth === 1 && (
+                                                        <IconButton size="small" onClick={() => setIsEditingAmount(true)} title="Editar monto">
+                                                            <EditIcon fontSize="small" />
+                                                        </IconButton>
+                                                    )}
+                                                </Box>
+                                            )}
+                                        </Box>
+                                    </Box>
                                     <InfoRow
                                         label="Tipo de Proyecto"
                                         value={requerimientoInfo.draftProject}
@@ -394,7 +433,7 @@ export default function Page() {
                                                             size="small"
                                                             variant="contained"
                                                             color="primary"
-                                                            onClick={(e) => handleHire(e, quotationId, proponentId)}
+                                                            onClick={(e) => handleHire(e, quotationId, proponentId, agreedAmount)}
                                                         >
                                                             CONTRATAR
                                                         </Button>

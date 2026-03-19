@@ -191,7 +191,44 @@ This file acts as the primary orchestrator. For specific domain constraints, ref
 - Sends `currentPathname` for context-aware retrieval.
 - Any page can trigger the chatbot via: `useChatStore.getState().setOpen(true)`.
 
-## 7. Learned Lessons
+## 8. Smart Contract & Payment Constraints
+
+### Contract Lifecycle (STRICT)
+```
+pending_payment → active → completed → disputed
+```
+- Contracts are **always** created with `status: 'pending_payment'`.
+- Transition to `active` happens **only** after successful ePayco payment confirmation.
+- **Never** set `status: 'active'` directly on contract creation.
+
+### Payment Security (CRITICAL)
+- **Private keys MUST stay server-side**: `VITE_APP_EPAYCO_PRIVATE_KEY` is consumed only in `server/api/payment/signature.ts`.
+- **Signature generation**: `md5(custId^privateKey^invoice^amount^currency)` — NEVER on the client.
+- **ePayco SDK**: Loaded from CDN, configured with public key only.
+- The payment signature route (`POST /api/v1/payment/signature`) MUST be registered BEFORE `apply(app)` in `server/index.ts`.
+
+### Contract Service (`@services/contracts`)
+| Function | Returns | Purpose |
+|----------|---------|---------|
+| `createContract({ data })` | `string \| null` | Creates contract (auto-ID), returns contractId |
+| `getContract(contractId)` | `ContractFirestoreDocument \| null` | Fetch single contract |
+| `updateContract({ contractId, data })` | `void` | Update status, rated flag, etc. |
+| `getContractsByClient(clientId)` | `ContractFirestoreDocument[]` | Propietario's contracts |
+| `getContractsByProvider(providerId)` | `ContractFirestoreDocument[]` | Comerciante's contracts |
+| `getCompletedContracts(userId)` | `ContractFirestoreDocument[]` | Both roles, status=completed |
+
+### Role-Adaptive Pages
+- `/app/formas-pago`: Propietarios see pending payments + payment methods. Comerciantes see earnings summary + contract history.
+- `/app/contratacion`: Only the `clientId` (Propietario) sees the PAGAR button.
+
+### Environment Variables (Payment)
+| Variable | Scope | Purpose |
+|----------|-------|---------|
+| `VITE_APP_EPAYCO_PUBLIC_KEY` | Client + Server | ePayco checkout initialization |
+| `VITE_APP_EPAYCO_PRIVATE_KEY` | Server ONLY | Signature generation |
+| `VITE_APP_PAYCO_TEST` | Server | Test mode flag (`true`/`false`) |
+
+## 9. Learned Lessons
 
 ### Vike Configuration (2026-01-27)
 - **Deprecation of `+config.h.ts`**: Vike now prefers `+config.ts`.

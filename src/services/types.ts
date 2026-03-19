@@ -222,9 +222,10 @@ export interface ContractFirestoreDocument extends DocumentData {
     clientId: string
     providerId: string
     quotationId: string
-    status: 'active' | 'completed' | 'disputed'
+    status: 'pending_payment' | 'active' | 'completed' | 'disputed'
     createdAt: string
     agreedAmount: number
+    objectDescription?: string
     rated?: boolean
 }
 
