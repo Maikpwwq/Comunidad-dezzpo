@@ -18,7 +18,8 @@ import { firestore, isFirebaseAvailable } from '@services/firebase'
 import { DirectionalButton } from '@components/common'
 import {
     ProjectSearchForm,
-    SubCategoryCard
+    SubCategoryCard,
+    CategorySelector
 } from '@features/projects'
 // Features
 import { PasoAPaso, Ubicacion } from '@features/marketing'
@@ -32,7 +33,7 @@ import TablaSubCategoriaCantidades from './TablaSubCategoriaCantidades'
 import { Row, Col, Container, Button, Form } from 'react-bootstrap'
 // MUI
 // MUI
-import { Box, Modal, Typography } from '@mui/material'
+import { Box, Modal, Typography, Chip } from '@mui/material'
 import AddLocationIcon from '@mui/icons-material/AddLocation'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -280,17 +281,54 @@ export default function Page() {
                     {!!draftInfo.draftProject && Number(draftInfo.draftCategory) !== 0 && (
                         <>
                             <Row className="w-100 m-0">
-                                <Col className="p-4" lg={8} md={10}>
+                                <Col className="p-4" lg={10} md={12}>
                                     <p className="body-1 text-dark">
                                         Al seleccionar categorías podrás ir agregando uno a uno todos los
                                         servicios que vas a solicitar. Luego en el siguiente paso podrás modificar la cantidad de
                                         obra que requieres.
                                     </p>
-                                    <ProjectSearchForm
-                                        setDraftInfo={handleUpdateDraftInfo}
-                                        draftInfo={draftInfo}
-                                        setIsLoaded={setIsLoaded}
-                                    />
+                                    {/* Compact inline category selector */}
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 2,
+                                            flexWrap: 'wrap',
+                                            p: 2,
+                                            borderRadius: 2,
+                                            bgcolor: 'var(--background-light-gray-color)',
+                                            border: '1px solid #e0e0e0',
+                                        }}
+                                    >
+                                        <Chip
+                                            label={draftInfo.draftProject}
+                                            color="primary"
+                                            size="small"
+                                            sx={{ fontWeight: 600 }}
+                                        />
+                                        <Box sx={{ flex: 1, minWidth: 200 }}>
+                                            <CategorySelector
+                                                setDraftInfo={handleUpdateDraftInfo}
+                                                draftInfo={draftInfo}
+                                                setIsLoaded={setIsLoaded}
+                                                className=""
+                                            />
+                                        </Box>
+                                        <Button
+                                            size="sm"
+                                            variant="outline-secondary"
+                                            onClick={() => {
+                                                setDraftInfo(prev => ({
+                                                    ...prev,
+                                                    draftProject: undefined,
+                                                    draftCategory: 0,
+                                                }))
+                                                setIsLoaded(false)
+                                            }}
+                                        >
+                                            Cambiar tipo
+                                        </Button>
+                                    </Box>
                                 </Col>
                             </Row>
                             <Row className="categorias w-100 m-0 p-4">
