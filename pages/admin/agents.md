@@ -33,7 +33,7 @@
 | Function | Returns | Purpose |
 |----------|---------|---------|
 | `getAdminStats()` | `AdminStats` | Total users, new users (30d), revenue potential |
-| `getContractStats()` | `ContractStats` | Contracts by status (active/completed/disputed) |
+| `getContractStats()` | `ContractStats` | Contracts by status (pending_payment/active/completed/disputed) |
 | `getAllUsers()` | `AdminUserRow[]` | All users from both collections |
 | `getPendingVerifications()` | `VerificationItem[]` | Users with `identityVerification.status == 'pending'` |
 | `updateVerificationStatus()` | `void` | Approve/reject with optional reason |
@@ -78,3 +78,25 @@
 - Check Gemini quota at: https://aistudio.google.com/ → Rate Limits
 - Free tier limits: `gemini-2.5-flash` (5 RPM, 20 RPD), `gemini-embedding-001` (100 RPM)
 - Supabase vector table: `dezzpo_documents` (768-dim pgvector, HNSW index)
+
+## 8. Contract & Payment Monitoring (Admin)
+
+### Contract Lifecycle
+```
+pending_payment → active (after ePayco payment) → completed → disputed
+```
+
+### Key Metrics for Dashboard
+| Metric | Source | Query |
+|--------|--------|-------|
+| Pending Payments | `contracts` | `where('status', '==', 'pending_payment')` |
+| Active Contracts | `contracts` | `where('status', '==', 'active')` |
+| Completed Value | `contracts` | `where('status', '==', 'completed')` → sum `agreedAmount` |
+| Disputed Contracts | `contracts` | `where('status', '==', 'disputed')` |
+
+### Payment Environment Variables
+| Variable | Purpose |
+|----------|---------|
+| `VITE_APP_EPAYCO_PUBLIC_KEY` | ePayco public key |
+| `VITE_APP_EPAYCO_PRIVATE_KEY` | ePayco private key (server-only) |
+| `VITE_APP_PAYCO_TEST` | Test mode flag |

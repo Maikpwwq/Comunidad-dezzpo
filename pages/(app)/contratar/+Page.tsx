@@ -84,9 +84,10 @@ export default function Page() {
                     clientId: currentUserId,
                     providerId,
                     quotationId,
-                    status: 'active',
+                    status: 'pending_payment',
                     createdAt: new Date().toISOString(),
                     agreedAmount,
+                    objectDescription: draft?.draftDescription || draft?.draftName || '',
                 },
             })
 
@@ -103,9 +104,9 @@ export default function Page() {
             setSnackMessage('¡Contrato creado exitosamente!')
             setSnackOpen(true)
 
-            // 3. Navigate to service history after a brief delay
+            // 3. Navigate to payment gateway
             setTimeout(() => {
-                navigate('/app/historial-servicios')
+                navigate(`/app/contratacion?contractId=${contractId}`)
             }, 1500)
         } catch (err) {
             console.error('Error creating contract:', err)

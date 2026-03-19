@@ -2,21 +2,10 @@
  * Formas de Pago (Payment Methods) Page
  *
  * ePayco integration scaffold for Colombian marketplace payments.
- * Uses ePayco.js tokenizer for PCI-compliant card tokenization.
+ * Role-adaptive: Propietarios see payment methods + pending contracts.
+ * Comerciantes see earnings summary and payout configuration.
  *
- * WHY ePayco over MercadoPago:
- * - Native Split Payments API for marketplace commission distribution
- * - Lower base commission: ~2.99% + $900 COP vs MercadoPago's ~3.49% + $900 COP
- * - Colombian company with deep local payment method support (PSE, Nequi, Daviplata, Efecty)
- * - Built-in anti-fraud module (ePayco Control)
- * - Simpler split payment activation (no OAuth per seller)
- *
- * Integration flow:
- * 1. Load ePayco.js script from CDN
- * 2. Initialize with public key: ePayco.checkout.configure({ key: VITE_EPAYCO_PUBLIC_KEY })
- * 3. Tokenize card: ePayco.token.create(cardInfo) → returns token
- * 4. Store token in Firestore: users/{uid}/paymentMethods subcollection
- * 5. On payment: use token + ePayco Split Payments API server-side
+ * Integration: ePayco Standard Checkout + Split Payments
  */
 import React, { useState, useEffect } from 'react'
 import { Container, Spinner, Alert } from 'react-bootstrap'
@@ -32,18 +21,26 @@ import {
     Chip,
     Divider,
     Snackbar,
+    Box,
+    Stack,
 } from '@mui/material'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import PaymentsIcon from '@mui/icons-material/Payments'
 import AddIcon from '@mui/icons-material/Add'
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
+import { navigate } from 'vike/client/router'
 
-// Store
+// Store & Auth
 import { useUserStore } from '@stores/userStore'
+import { useAuth } from '@hooks/useAuth'
+
+// Services
+import { getContractsByClient, getContractsByProvider } from '@services/contracts'
+import type { ContractFirestoreDocument } from '@services/types'
 
 // Environment
 const EPAYCO_PUBLIC_KEY = import.meta.env.VITE_APP_EPAYCO_PUBLIC_KEY || ''
-// Note: VITE_EPAYCO_TEST env var will be consumed when ePayco integration is complete
 
 // Payment method type icons
 const methodIcons: Record<string, React.ReactNode> = {
@@ -59,6 +56,14 @@ const availableMethodTypes = [
     { type: 'cash', label: 'Efectivo', sublabel: 'Efecty, Baloto, puntos de corresponsal' },
 ]
 
+// Status labels
+const statusLabels: Record<string, { label: string; color: 'warning' | 'success' | 'info' | 'error' }> = {
+    pending_payment: { label: 'Pendiente', color: 'warning' },
+    active: { label: 'Activo', color: 'success' },
+    completed: { label: 'Completado', color: 'info' },
+    disputed: { label: 'Disputa', color: 'error' },
+}
+
 interface SavedPaymentMethod {
     id: string
     type: string
@@ -69,19 +74,42 @@ interface SavedPaymentMethod {
 
 export default function Page() {
     const currentUserId = useUserStore((state) => state.userId)
+    const { currentUser } = useAuth()
+    const userRole = currentUser?.role // 1=propietario, 2=comerciante
+
     const [savedMethods, _setSavedMethods] = useState<SavedPaymentMethod[]>([])
+    const [contracts, setContracts] = useState<ContractFirestoreDocument[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [snackOpen, setSnackOpen] = useState(false)
     const [snackMessage, setSnackMessage] = useState('')
 
-    // Check if ePayco is configured
     const isEpaycoConfigured = !!EPAYCO_PUBLIC_KEY
+    const isPropietario = userRole === 1
+    const isComerciante = userRole === 2
 
+    // Fetch contracts based on role
     useEffect(() => {
-        // TODO: Fetch saved payment methods from users/{uid}/paymentMethods subcollection
-        // For now, show empty state
-        setIsLoading(false)
-    }, [currentUserId])
+        const fetchData = async () => {
+            if (!currentUserId) {
+                setIsLoading(false)
+                return
+            }
+            try {
+                let data: ContractFirestoreDocument[] = []
+                if (isPropietario) {
+                    data = await getContractsByClient(currentUserId)
+                } else if (isComerciante) {
+                    data = await getContractsByProvider(currentUserId)
+                }
+                setContracts(data)
+            } catch (err) {
+                console.error('Error fetching contracts:', err)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+        fetchData()
+    }, [currentUserId, isPropietario, isComerciante])
 
     const handleAddMethod = (type: string) => {
         if (!isEpaycoConfigured) {
@@ -89,15 +117,12 @@ export default function Page() {
             setSnackOpen(true)
             return
         }
-
-        // TODO: Integration point for ePayco tokenizer
-        // 1. Load ePayco.js: <script src="https://checkout.epayco.co/checkout.js" />
-        // 2. Call: var handler = ePayco.checkout.configure({ key: EPAYCO_PUBLIC_KEY, test: EPAYCO_TEST_MODE })
-        // 3. For card tokenization: handler.open({ ... cardData })
-        // 4. On success callback: save token to Firestore subcollection
-
         setSnackMessage(`Integración de ${type} próximamente con ePayco`)
         setSnackOpen(true)
+    }
+
+    const handlePayContract = (contractId: string) => {
+        navigate(`/app/contratacion?contractId=${contractId}`)
     }
 
     if (!currentUserId) {
@@ -116,10 +141,20 @@ export default function Page() {
         )
     }
 
+    const pendingContracts = contracts.filter(c => c.status === 'pending_payment')
+    const paidContracts = contracts.filter(c => c.status !== 'pending_payment')
+
+    // Earnings calculation for comerciantes
+    const totalEarnings = isComerciante
+        ? contracts.filter(c => c.status === 'completed').reduce((sum, c) => sum + c.agreedAmount, 0)
+        : 0
+
     return (
         <Container fluid className="p-0">
             <div className="p-4" style={{ maxWidth: 900, margin: '0 auto' }}>
-                <h1 className="type-hero-title">Formas de Pago</h1>
+                <h1 className="type-hero-title">
+                    {isPropietario ? 'Formas de Pago' : 'Gestión Financiera'}
+                </h1>
 
                 {!isEpaycoConfigured && (
                     <Alert variant="info" className="mt-3">
@@ -129,12 +164,78 @@ export default function Page() {
                     </Alert>
                 )}
 
+                {/* Comerciante: Earnings Summary */}
+                {isComerciante && (
+                    <Paper elevation={1} sx={{ p: 3, mt: 3, borderRadius: 2, bgcolor: 'var(--background-light-gray-color)' }}>
+                        <Typography variant="h6" gutterBottom>Resumen de Ingresos</Typography>
+                        <Stack direction="row" spacing={4} sx={{ mt: 2 }}>
+                            <Box>
+                                <Typography variant="subtitle2" color="text.secondary">Total Acumulado</Typography>
+                                <Typography variant="h4" fontWeight="bold" sx={{ color: 'var(--primary-green-text-color)' }}>
+                                    ${totalEarnings.toLocaleString('es-CO')} COP
+                                </Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="subtitle2" color="text.secondary">Contratos Activos</Typography>
+                                <Typography variant="h4" fontWeight="bold">
+                                    {contracts.filter(c => c.status === 'active').length}
+                                </Typography>
+                            </Box>
+                        </Stack>
+                    </Paper>
+                )}
+
+                {/* Propietario: Pending Payments */}
+                {isPropietario && pendingContracts.length > 0 && (
+                    <Paper elevation={1} sx={{ p: 3, mt: 3, borderRadius: 2, border: '2px solid var(--primary-green-text-color)' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                            <ReceiptLongIcon sx={{ color: 'var(--primary-green-text-color)' }} />
+                            <Typography variant="h6">Pagos Pendientes</Typography>
+                            <Chip label={pendingContracts.length} size="small" color="warning" />
+                        </Box>
+                        <Table size="small">
+                            <TableHead sx={{ bgcolor: 'var(--background-light-gray-color)' }}>
+                                <TableRow>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Descripción</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Monto</TableCell>
+                                    <TableCell align="center" sx={{ fontWeight: 'bold' }}>Acción</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {pendingContracts.map((c) => (
+                                    <TableRow key={c.contractId} hover>
+                                        <TableCell>{c.objectDescription || c.draftId}</TableCell>
+                                        <TableCell>
+                                            <Typography fontWeight={600} color="success.main">
+                                                ${c.agreedAmount.toLocaleString('es-CO')}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Button
+                                                size="small"
+                                                variant="contained"
+                                                onClick={() => handlePayContract(c.contractId!)}
+                                                sx={{
+                                                    bgcolor: 'var(--primary-green-text-color)',
+                                                    color: 'white',
+                                                    '&:hover': { bgcolor: 'var(--secondary-green-text-color)' },
+                                                }}
+                                            >
+                                                PAGAR
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </Paper>
+                )}
+
                 {/* Saved Payment Methods */}
                 <Paper elevation={1} sx={{ p: 3, mt: 3, borderRadius: 2 }}>
                     <Typography variant="h6" gutterBottom>
                         Métodos Guardados
                     </Typography>
-
                     {savedMethods.length === 0 ? (
                         <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
                             No tienes métodos de pago guardados.
@@ -180,7 +281,6 @@ export default function Page() {
                         Agregar Método de Pago
                     </Typography>
                     <Divider sx={{ mb: 2 }} />
-
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                         {availableMethodTypes.map((method) => (
                             <div
@@ -218,28 +318,44 @@ export default function Page() {
                     </div>
                 </Paper>
 
-                {/* Payment History */}
+                {/* Contract / Payment History */}
                 <Paper elevation={1} sx={{ p: 3, mt: 2, borderRadius: 2 }}>
                     <Typography variant="h6" gutterBottom>
-                        Historial de Pagos
+                        {isPropietario ? 'Historial de Pagos' : 'Historial de Contratos'}
                     </Typography>
                     <Table size="small">
-                        <TableHead>
+                        <TableHead sx={{ bgcolor: 'var(--background-light-gray-color)' }}>
                             <TableRow>
-                                <TableCell>Fecha</TableCell>
-                                <TableCell>Concepto</TableCell>
-                                <TableCell>Monto</TableCell>
-                                <TableCell>Estado</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold' }}>Fecha</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold' }}>Concepto</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold' }}>Monto</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold' }}>Estado</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
-                                <TableCell colSpan={4} align="center">
-                                    <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
-                                        No hay transacciones registradas.
-                                    </Typography>
-                                </TableCell>
-                            </TableRow>
+                            {paidContracts.length > 0 ? (
+                                paidContracts.map((c) => {
+                                    const info = statusLabels[c.status] || { label: c.status, color: 'info' as const }
+                                    return (
+                                        <TableRow key={c.contractId} hover>
+                                            <TableCell>{new Date(c.createdAt).toLocaleDateString('es-CO')}</TableCell>
+                                            <TableCell>{c.objectDescription || c.draftId}</TableCell>
+                                            <TableCell>${c.agreedAmount.toLocaleString('es-CO')}</TableCell>
+                                            <TableCell>
+                                                <Chip label={info.label} color={info.color} size="small" />
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                })
+                            ) : (
+                                <TableRow>
+                                    <TableCell colSpan={4} align="center">
+                                        <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
+                                            No hay transacciones registradas.
+                                        </Typography>
+                                    </TableCell>
+                                </TableRow>
+                            )}
                         </TableBody>
                     </Table>
                 </Paper>

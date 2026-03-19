@@ -44,6 +44,7 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import GroupIcon from '@mui/icons-material/Group'
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
 
 // Branding
 import LogoMenuComunidadDezzpo from '/assets/img/logo/IsoLogo-Dezzpo-Verde.png'
@@ -68,6 +69,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
     DashboardIcon: <DashboardIcon />,
     GroupIcon: <GroupIcon />,
     VerifiedUserIcon: <VerifiedUserIcon />,
+    ReceiptLongIcon: <ReceiptLongIcon />,
 }
 
 /** Style tokens */

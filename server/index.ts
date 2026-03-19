@@ -5,6 +5,7 @@ import { logger } from 'hono/logger'
 import { compress } from 'hono/compress'
 import { apply, serve } from '@photonjs/hono'
 import { chatHandler } from './api/chat.ts'
+import { paymentSignatureHandler } from './api/payment/signature.ts'
 
 /**
  * Refined Hono Server for Comunidad Dezzpo
@@ -42,6 +43,16 @@ function startServer() {
     } catch (err: any) {
       console.error('[/api/v1/chat] Route error:', err?.message || err)
       return c.json({ error: err?.message || 'Chat route failed' }, 500)
+    }
+  })
+
+  // ePayco Payment Signature (server-side signature generation)
+  app.post('/api/v1/payment/signature', async (c) => {
+    try {
+      return await paymentSignatureHandler(c)
+    } catch (err: any) {
+      console.error('[/api/v1/payment/signature] Route error:', err?.message || err)
+      return c.json({ error: err?.message || 'Payment signature failed' }, 500)
     }
   })
 

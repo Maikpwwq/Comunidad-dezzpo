@@ -35,7 +35,7 @@ export const Subscribe: React.FC = () => {
     return (
         <Row className={clsx(styles.Section, "m-0 w-100 p-4")}>
             <Col lg={8} sm={10} className="mx-auto text-center">
-                <div className={clsx(styles.TextContainer, 'opacidad-negro')}>
+                <div className={clsx(styles.TextContainer)}>
                     <Typography variant="h4" className={clsx(styles.Title, "mb-3")}>
                         Suscríbete a nuestro boletín
                     </Typography>

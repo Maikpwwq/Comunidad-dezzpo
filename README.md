@@ -216,6 +216,50 @@ The app includes an AI-powered chatbot ("Asistente Dezzpo") for context-aware Q&
 | `VITE_APP_SUPABASE_SECRET_KEY` | Supabase service role key |
 | `VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY` | Gemini API key |
 | `VITE_APP_FIRECRAWL_API_KEY` | Firecrawl API key (for seed.ts) |
+| `VITE_APP_EPAYCO_PUBLIC_KEY` | ePayco public key (checkout) |
+| `VITE_APP_EPAYCO_PRIVATE_KEY` | ePayco private key (server-side signatures) |
+| `VITE_APP_PAYCO_TEST` | ePayco test mode (`true`/`false`) |
+
+## Smart Contract & Payment Flow
+
+The marketplace connects Propietarios (clients) and Comerciantes (providers) through a contract-based payment system using **ePayco** (Colombian payment gateway).
+
+### Contract Lifecycle
+```
+pending_payment → active (after payment) → completed → disputed
+```
+
+### Flow
+1. **Negotiation** (`/app/ver-requerimiento/@draftId`): Propietario reviews quotations and edits the agreed amount.
+2. **Contract Creation** (`/app/contratar`): Creates a Firestore `contracts` document with `status: 'pending_payment'`.
+3. **Payment** (`/app/contratacion?contractId=XYZ`): Fetches contract summary, calls server-side `/api/v1/payment/signature` for ePayco cryptographic signature, opens ePayco Standard Checkout.
+4. **Wallet** (`/app/formas-pago`): Role-adaptive view — Propietarios see pending payments, Comerciantes see earnings summary.
+
+### Contract Schema
+```typescript
+interface ContractFirestoreDocument {
+    contractId?: string
+    draftId: string
+    clientId: string
+    providerId: string
+    quotationId: string
+    status: 'pending_payment' | 'active' | 'completed' | 'disputed'
+    createdAt: string
+    agreedAmount: number
+    objectDescription?: string
+    rated?: boolean
+}
+```
+
+### Payment API
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/v1/payment/signature` | POST | Server-side ePayco signature generation (MD5 hash with private key) |
+
+### ePayco Integration
+- **SDK**: Loaded from CDN (`checkout.epayco.co/checkout.js`)
+- **Signature**: `md5(custId^privateKey^invoice^amount^currency)` — generated server-side only
+- **Test Mode**: Controlled by `VITE_APP_PAYCO_TEST` env var
 
 ## Migration Status
 
@@ -307,6 +351,9 @@ View live typography samples at `/dev/typography`.
 - **Static imports only** for API handlers — dynamic imports fail on Vercel's bundled output.
 - **`dotenv/config`** is imported at top of `server/index.ts` for local env loading.
 - **`VITE_APP_*` env vars** are bridged to standard names in `server/api/chat.ts`.
+- **Registered API routes:**
+  - `POST /api/v1/chat` — RAG chatbot (Gemini + Supabase pgvector)
+  - `POST /api/v1/payment/signature` — ePayco payment signature generation
 
 ## Legal
 
