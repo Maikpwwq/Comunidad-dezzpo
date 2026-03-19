@@ -50,6 +50,7 @@ interface LocalProjectData {
 
 export function ProjectSearchForm({
     draftInfo,
+    setDraftInfo: parentSetDraftInfo,
     simple = true,
     setIsLoaded: parentSetIsLoaded,
 }: ProjectSearchFormProps): React.ReactElement {
@@ -88,9 +89,20 @@ export function ProjectSearchForm({
     }, [])
 
     const handleSubmit = useCallback(() => {
+        // If used inside nuevo-proyecto (setDraftInfo provided), update state directly
+        // instead of navigating to the same page (which causes DOM crash)
+        if (parentSetDraftInfo) {
+            parentSetDraftInfo({
+                draftCategory: projectData.draftCategory,
+                draftProject: projectData.tipoProyecto,
+            } as ProjectDraftInfo)
+            if (parentSetIsLoaded) parentSetIsLoaded(false)
+            return
+        }
+        // Otherwise, navigate to nuevo-proyecto from external pages
         const route = `/nuevo-proyecto?type=${projectData.tipoProyecto}&category=${projectData.draftCategory}`
         navigate(route)
-    }, [projectData])
+    }, [projectData, parentSetDraftInfo, parentSetIsLoaded])
 
     const isValid = projectData.tipoProyecto && projectData.draftCategory !== 0
 
