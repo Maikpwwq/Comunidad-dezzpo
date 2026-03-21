@@ -11,6 +11,7 @@ import { Link } from '@hooks'
 import { useUserStore } from '@stores/userStore'
 import { getSidebarConfig } from './navigation.config'
 import type { UserRole } from './types'
+import { logout } from '@services/firebase'
 
 // MUI Components
 // MUI Components
@@ -138,7 +139,12 @@ function Sidebar({ open, onClose, userInfo, variant = 'permanent' }: SidebarProp
     }
 
     /** Handle sign out */
-    const handleSignOut = (): void => {
+    const handleSignOut = async (): Promise<void> => {
+        try {
+            await logout()
+        } catch (error) {
+            console.error('Error during Firebase logout:', error)
+        }
         clearUser()
         navigate('/')
     }
