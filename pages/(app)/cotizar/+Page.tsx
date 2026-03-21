@@ -16,7 +16,8 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    Typography
+    Typography,
+    Box
 } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
@@ -174,14 +175,12 @@ export default function Page() {
         >
             <Col className="col-10 p-4 card-frame">
                 <Row className="m-0 w-100 pb-2 d-flex">
-                    <Typography variant="h5" className="w-auto pb-4">
+                    <Typography className="type-section-title w-auto pb-4">
                         Detalles de la cotización
                     </Typography>
                 </Row>
                 <Typography
-                    variant="h6"
-                    align="left"
-                    className="body-1 pb-2 w-100"
+                    className="type-card-title pb-2 w-100"
                 >
                     Descripción del servicio:
                 </Typography>
@@ -195,9 +194,7 @@ export default function Page() {
                     className="ps-3 information-pill w-100"
                 />
                 <Typography
-                    variant="h6"
-                    align="left"
-                    className="p-description w-100 mt-3"
+                    className="type-card-title w-100 mt-3"
                 >
                     Alcance del servicio:
                 </Typography>
@@ -211,9 +208,7 @@ export default function Page() {
                     className="ps-3 information-pill w-100"
                 />
                 <Typography
-                    variant="h6"
-                    align="left"
-                    className="p-description w-100 mt-3"
+                    className="type-card-title w-100 mt-3"
                 >
                     Procedimiento a desarrollar:
                 </Typography>
@@ -227,25 +222,21 @@ export default function Page() {
                     className="ps-3 information-pill w-100"
                 />
                 <Typography
-                    variant="h6"
-                    className="p-description pt-3 w-100"
+                    className="type-card-title pt-3 mb-3 w-100"
                 >
                     Tabla de valores
                 </Typography>
-                <Row className="m-0 w-100 d-flex">
+                <Box sx={{ width: '100%', overflowX: 'auto', mb: 3 }}>
                     <Table>
                         <TableHead>
-                            <TableRow
-                                className="w-100"
-                                sx={{ display: 'table' }}
-                            >
-                                <TableCell className="headline-s"></TableCell>
-                                <TableCell className="headline-s">Ítem</TableCell>
-                                <TableCell className="headline-s">Actividad</TableCell>
-                                <TableCell className="headline-s">Unidad Medida</TableCell>
-                                <TableCell className="headline-s">Cantidad</TableCell>
-                                <TableCell className="headline-s">Precio unitario</TableCell>
-                                <TableCell className="headline-s">Valor sin IVA</TableCell>
+                            <TableRow>
+                                <TableCell className="type-body fw-bold"></TableCell>
+                                <TableCell className="type-body fw-bold">Ítem</TableCell>
+                                <TableCell className="type-body fw-bold">Actividad</TableCell>
+                                <TableCell className="type-body fw-bold">Unidad Medida</TableCell>
+                                <TableCell className="type-body fw-bold">Cantidad</TableCell>
+                                <TableCell className="type-body fw-bold">Precio unitario</TableCell>
+                                <TableCell className="type-body fw-bold">Valor sin IVA</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -327,11 +318,9 @@ export default function Page() {
                             </TableRow>
                         </TableBody>
                     </Table>
-                </Row>
+                </Box>
                 <Typography
-                    variant="h6"
-                    align="left"
-                    className="p-description w-100"
+                    className="type-card-title w-100 mt-3"
                 >
                     Tiempo Ejecución:
                 </Typography>
@@ -345,9 +334,7 @@ export default function Page() {
                     className="ps-3 information-pill w-100"
                 />
                 <Typography
-                    variant="h6"
-                    align="left"
-                    className="p-description w-100 mt-3"
+                    className="type-card-title w-100 mt-3"
                 >
                     Condiciones de Negociación:
                 </Typography>
@@ -361,9 +348,7 @@ export default function Page() {
                     className="ps-3 information-pill w-100"
                 />
                 <Typography
-                    variant="h6"
-                    align="left"
-                    className="p-description w-100 mt-3"
+                    className="type-card-title w-100 mt-3"
                 >
                     Garantía:
                 </Typography>
@@ -380,8 +365,16 @@ export default function Page() {
                     <Col className="">
                         <Button
                             type="submit"
-                            className="btn btn-primary"
+                            variant="contained"
                             onClick={handleEnviar}
+                            sx={{
+                                color: 'white',
+                                bgcolor: 'var(--background-main-green-color)',
+                                '&:hover': {
+                                    bgcolor: '#0d6efd',
+                                    color: 'white'
+                                }
+                            }}
                         >
                             Enviar
                         </Button>

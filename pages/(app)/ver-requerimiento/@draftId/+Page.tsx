@@ -184,7 +184,7 @@ export default function Page() {
             {/* Header */}
             <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
                 <Box>
-                    <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', fontWeight: 'bold' }}>
+                    <Typography className="type-hero-title" component="h1" gutterBottom sx={{ color: 'var(--primary-titles-text-color)' }}>
                         Detalle Requerimiento
                     </Typography>
                     <Chip
@@ -216,17 +216,17 @@ export default function Page() {
                         <CardHeader
                             title="Información del Servicio"
                             avatar={<WorkIcon sx={{ color: 'white' }} />}
+                            titleTypographyProps={{ className: 'type-section-title', sx: { color: 'inherit' } }}
                             sx={{
                                 bgcolor: 'var(--logo-comunidad-dezzpo-color)',
-                                color: 'white',
-                                '& .MuiCardHeader-title': { fontWeight: 'bold', fontSize: '1.25rem' }
+                                color: 'white'
                             }}
                         />
                         <CardContent sx={{ p: 3 }}>
                             <Grid container spacing={3}>
                                 <Grid item xs={12}>
                                     <Box sx={{ bgcolor: 'var(--background-nav-bar-sigmi-color)', p: 2, borderRadius: 2, mb: 3 }}>
-                                        <Typography variant="h6" gutterBottom color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography className="type-card-title" gutterBottom color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
                                             {requerimientoInfo.draftName}
                                         </Typography>
                                         <InfoRow label="Descripción" value={requerimientoInfo.draftDescription} />
@@ -237,7 +237,7 @@ export default function Page() {
                                     <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
                                         <Box sx={{ color: 'var(--primary-green-text-color)', mr: 1, mt: 0.5 }}><AttachMoneyIcon /></Box>
                                         <Box>
-                                            <Typography variant="subtitle2" color="text.secondary" sx={{ fontWeight: 600, lineHeight: 1.2 }}>
+                                            <Typography className="type-body-sm fw-bold mb-1" color="text.secondary" sx={{ lineHeight: 1.2 }}>
                                                 Monto Acordado
                                             </Typography>
                                             {isEditingAmount ? (
@@ -256,8 +256,8 @@ export default function Page() {
                                                 />
                                             ) : (
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                    <Typography variant="h5" color="success.main" fontWeight="bold">
-                                                        ${agreedAmount.toLocaleString('es-CO')}
+                                                    <Typography className="type-section-title" color="success.main">
+                                                        {agreedAmount.toLocaleString('es-CO')}
                                                     </Typography>
                                                     {rolAuth === 1 && (
                                                         <IconButton size="small" onClick={() => setIsEditingAmount(true)} title="Editar monto">
@@ -281,21 +281,21 @@ export default function Page() {
 
                             <Divider sx={{ my: 3 }} />
 
-                            <Typography variant="h6" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', display: 'flex', alignItems: 'center', mb: 2 }}>
+                            <Typography className="type-card-title" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', display: 'flex', alignItems: 'center', mb: 2 }}>
                                 <LocationOnIcon sx={{ mr: 1, color: 'var(--secondary-blue-text-color)' }} /> Ubicación
                             </Typography>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={4}>
-                                    <Typography variant="subtitle2" color="text.secondary">Ciudad</Typography>
-                                    <Typography variant="body1" fontWeight={500}>{requerimientoInfo.draftCity}</Typography>
+                                    <Typography className="type-body-sm" color="text.secondary">Ciudad</Typography>
+                                    <Typography className="type-body fw-bold">{requerimientoInfo.draftCity}</Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <Typography variant="subtitle2" color="text.secondary">Dirección</Typography>
-                                    <Typography variant="body1" fontWeight={500}>{requerimientoInfo.draftDirection}</Typography>
+                                    <Typography className="type-body-sm" color="text.secondary">Dirección</Typography>
+                                    <Typography className="type-body fw-bold">{requerimientoInfo.draftDirection}</Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                    <Typography variant="subtitle2" color="text.secondary">Código Postal</Typography>
-                                    <Typography variant="body1" fontWeight={500}>{requerimientoInfo.draftPostalCode}</Typography>
+                                    <Typography className="type-body-sm" color="text.secondary">Código Postal</Typography>
+                                    <Typography className="type-body fw-bold">{requerimientoInfo.draftPostalCode}</Typography>
                                 </Grid>
                             </Grid>
                         </CardContent>
@@ -303,7 +303,7 @@ export default function Page() {
 
                     {/* Breakdown Table */}
                     <Box sx={{ mt: 4 }}>
-                        <Typography variant="h6" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', mb: 2 }}>
+                        <Typography className="type-card-title" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', mb: 2 }}>
                             Desglose de Costos
                         </Typography>
                         <TablaSubCategoriaPresupuesto
@@ -319,15 +319,15 @@ export default function Page() {
                         <CardHeader
                             title="Detalles y Tiempos"
                             avatar={<EventIcon sx={{ color: 'white' }} />}
+                            titleTypographyProps={{ className: 'type-section-title', sx: { color: 'inherit' } }}
                             sx={{
                                 bgcolor: 'var(--background-dark-blue-color)',
-                                color: 'white',
-                                '& .MuiCardHeader-title': { fontWeight: 'bold', fontSize: '1.25rem' }
+                                color: 'white'
                             }}
                         />
                         <CardContent sx={{ p: 3 }}>
                             <Box sx={{ mb: 4 }}>
-                                <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', borderBottom: '1px solid #eee', pb: 1, mb: 2 }}>
+                                <Typography className="type-card-title" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', borderBottom: '1px solid #eee', pb: 1, mb: 2 }}>
                                     Programación
                                 </Typography>
                                 <Stack spacing={2}>
@@ -339,7 +339,7 @@ export default function Page() {
                             </Box>
 
                             <Box sx={{ mb: 4 }}>
-                                <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', borderBottom: '1px solid #eee', pb: 1, mb: 2 }}>
+                                <Typography className="type-card-title" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', borderBottom: '1px solid #eee', pb: 1, mb: 2 }}>
                                     Propiedad
                                 </Typography>
                                 <Stack spacing={2}>
@@ -355,7 +355,7 @@ export default function Page() {
                             </Box>
 
                             <Box>
-                                <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', borderBottom: '1px solid #eee', pb: 1, mb: 2 }}>
+                                <Typography className="type-card-title" gutterBottom sx={{ color: 'var(--primary-titles-text-color)', borderBottom: '1px solid #eee', pb: 1, mb: 2 }}>
                                     Adjuntos
                                 </Typography>
                                 <Button
@@ -377,10 +377,10 @@ export default function Page() {
             {/* Quotations Section */}
             <Box sx={{ mt: 6 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-                    <Typography variant="h5" sx={{ color: 'var(--primary-titles-text-color)', fontWeight: 'bold' }}>
+                    <Typography className="type-section-title" sx={{ color: 'var(--primary-titles-text-color)' }}>
                         COTIZACIONES
                     </Typography>
-                    {rolAuth !== 1 && requerimientoInfo.draftApply && requerimientoInfo.draftApply.length < 4 && (
+                    {Number(rolAuth) === 2 && userAuthID !== requerimientoInfo.draftPropietarioResidente && requerimientoInfo.draftApply && requerimientoInfo.draftApply.length < 4 && (
                         <Button
                             variant="contained"
                             color="success"
@@ -388,7 +388,7 @@ export default function Page() {
                             onClick={handleCotizar}
                             sx={{ color: 'white', fontWeight: 'bold' }}
                         >
-                            ASIGNAR NUEVA COTIZACION
+                            ASIGNAR NUEVA COTIZACIÓN
                         </Button>
                     )}
                 </Box>
@@ -400,6 +400,7 @@ export default function Page() {
                                 <TableCell sx={{ fontWeight: 'bold' }}>Comerciante Calificado</TableCell>
                                 <TableCell sx={{ fontWeight: 'bold' }}>Alcance</TableCell>
                                 <TableCell sx={{ fontWeight: 'bold' }}>Descripción</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold' }}>Valor Cotizado</TableCell>
                                 <TableCell align="center" sx={{ fontWeight: 'bold' }}>Acciones</TableCell>
                             </TableRow>
                         </TableHead>
@@ -411,6 +412,7 @@ export default function Page() {
                                     const proponentId = legacyItem.proponentId || item.quotationComercianteId
                                     const scope = legacyItem.scope
                                     const description = legacyItem.description || item.quotationDescription
+                                    const valorCotizado = legacyItem.valorSubtotal || item.quotationPrice || 0
 
                                     return (
                                         <TableRow key={quotationId} hover>
@@ -424,6 +426,11 @@ export default function Page() {
                                             </TableCell>
                                             <TableCell>{scope}</TableCell>
                                             <TableCell>{description}</TableCell>
+                                            <TableCell>
+                                                <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'success.main' }}>
+                                                    {Number(valorCotizado).toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}
+                                                </Typography>
+                                            </TableCell>
                                             <TableCell align="center">
                                                 <Stack direction="row" spacing={1} justifyContent="center">
                                                     {userAuthID === proponentId ? (

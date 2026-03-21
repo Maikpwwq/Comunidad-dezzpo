@@ -93,7 +93,7 @@ const TablaSubCategoriaCantidades = (props: Props) => {
 
     return (
         <Col className="w-100">
-            <p className="p-description">
+            <p className="type-body-lg text-dark fw-bold">
                 Compara precios de los mejores profesionales calificados
             </p>
             <Box sx={{ overflowX: 'auto', width: '100%' }}>

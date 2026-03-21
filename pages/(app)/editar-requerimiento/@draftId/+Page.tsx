@@ -209,9 +209,7 @@ export default function Page() {
                         <Col className="col" md={6} sm={12}>
                             <Typography
                                 gutterBottom
-                                variant="h6"
-                                align="left"
-                                className="p-description w-100"
+                                className="type-card-title w-100 mb-3"
                             >
                                 Programación
                             </Typography>
