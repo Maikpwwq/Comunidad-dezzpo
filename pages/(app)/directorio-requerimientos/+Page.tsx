@@ -115,7 +115,7 @@ export default function Page() {
                         Directorio de Requerimientos
                     </h1>
                     <Button
-                        className="type-body btn-round btn-high"
+                        className="btn-primary-gradient"
                         onClick={handleApplyClick}
                     >
                         Aplica a un requerimiento
