@@ -10,7 +10,7 @@
 
 import React, { useState } from 'react'
 // Sendbird UIKit (uncomment when ready)
-// import { OpenChannel } from '@sendbird/uikit-react'
+import OpenChannel from '@sendbird/uikit-react/OpenChannel'
 
 
 export interface ComentarPerfilProps {
@@ -30,14 +30,7 @@ export function ComentarPerfil({ channelUrl }: ComentarPerfilProps): React.React
         <div className="comentar-perfil">
             <div className="comentar-perfil_container">
                 <div className="comentar-perfil_conversation-container">
-                    {/* TODO: Activate Sendbird OpenChannel when ready */}
-                    {/* <OpenChannel channelUrl={currentChannelUrl} /> */}
-
-                    {/* Placeholder content */}
-                    <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>
-                        <p>Comentarios del perfil</p>
-                        <small>Integración de chat próximamente</small>
-                    </div>
+                    <OpenChannel channelUrl={currentChannelUrl} />
                 </div>
             </div>
         </div>

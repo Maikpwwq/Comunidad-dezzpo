@@ -13,9 +13,8 @@ import clsx from 'clsx'
 import styles from './Comentarios.module.scss'
 import '@sendbird/uikit-react/dist/index.css'
 
-// Uncomment when ready for Sendbird integration
-// import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
-// import { ComentarPerfil } from './ComentarPerfil'
+import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider'
+import { ComentarPerfil } from './ComentarPerfil'
 
 export interface ComentariosProps {
     /** Sendbird channel URL */
@@ -28,8 +27,8 @@ export interface ComentariosProps {
 
 export function Comentarios({
     channelUrl,
-    // userID,
-    // nickname,
+    userID,
+    nickname,
 }: ComentariosProps): React.ReactElement {
     // Debug log (remove in production)
     if (import.meta.env.DEV && channelUrl) {
@@ -37,7 +36,7 @@ export function Comentarios({
     }
 
     // Sendbird App ID from environment
-    // const _appId = import.meta.env.VITE_APP_SENDBIRD_APPID
+    const appId = import.meta.env.VITE_APP_SENDBIRD_APPID
 
     return (
         <Container fixed className={clsx(styles.Container)}>
@@ -45,21 +44,20 @@ export function Comentarios({
                 // sx={{ bgcolor: '#cfe8fc' }} // Moved to SCSS
                 className={clsx(styles.CommentCard)}
             >
-                {/* TODO: Uncomment when Sendbird is configured
-                <SendbirdProvider
-                    appId={appId}
-                    userId={userID}
-                    nickname={nickname}
-                >
-                    <ComentarPerfil channelUrl={channelUrl} />
-                </SendbirdProvider>
-                */}
-
-                {/* Placeholder content */}
-                <Box className={clsx(styles.Placeholder)}>
-                    <p>Sección de comentarios</p>
-                    <small>Integración de Sendbird próximamente</small>
-                </Box>
+                {!userID ? (
+                    <Box className={clsx(styles.Placeholder)} sx={{ p: 4, textAlign: 'center' }}>
+                        <p style={{ fontWeight: 'bold', color: 'var(--primary-titles-text-color)' }}>Sección de comentarios</p>
+                        <small>Debes iniciar sesión para ver y publicar comentarios en este perfil.</small>
+                    </Box>
+                ) : (
+                    <SendbirdProvider
+                        appId={appId}
+                        userId={userID}
+                        nickname={nickname || 'Usuario'}
+                    >
+                        <ComentarPerfil channelUrl={channelUrl || ''} />
+                    </SendbirdProvider>
+                )}
             </Box>
         </Container>
     )

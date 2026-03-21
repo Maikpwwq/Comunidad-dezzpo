@@ -24,6 +24,7 @@ import { useUserStore } from '@stores/userStore'
 // Firebase
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import { firestore } from '@services/firebase'
+import { getOrCreateDirectChannel } from '@services/sendbird'
 
 // MUI Components
 import {
@@ -95,10 +96,25 @@ export function UserCard({
         navigate(userLink)
     }, [userLink])
 
-    const handleCotizarVisitaTecnica = useCallback(() => {
-        // TODO: Redirect to pay transaction
-        console.log('Cotizar visita técnica for:', userId)
-    }, [userId])
+    const [isCreatingChannel, setIsCreatingChannel] = useState(false)
+
+    const handleCotizarVisitaTecnica = useCallback(async () => {
+        if (!currentUserId) {
+            navigate('/sign-in')
+            return
+        }
+        try {
+            setIsCreatingChannel(true)
+            const channelUrl = await getOrCreateDirectChannel(currentUserId, userId, userRazonSocial)
+            window.location.assign(`/app/mensajes?channel=${channelUrl}`)
+        } catch (error) {
+            console.error('Error creating direct channel:', error)
+            setSnackMessage('Hubo un error al iniciar la conversación.')
+            setSnackOpen(true)
+        } finally {
+            setIsCreatingChannel(false)
+        }
+    }, [currentUserId, userId, userRazonSocial])
 
     const handleFavorite = useCallback(async () => {
         if (!currentUserId) {
@@ -217,9 +233,10 @@ export function UserCard({
                             onClick={handleCotizarVisitaTecnica}
                             fullWidth
                             size="small"
+                            disabled={isCreatingChannel}
                             sx={{ py: 0.5, px: 1.5 }}
                         >
-                            Cotizar
+                            {isCreatingChannel ? 'Abriendo chat...' : 'Cotizar'}
                         </Button>
 
                         <IconButton

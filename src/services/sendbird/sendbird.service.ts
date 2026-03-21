@@ -6,7 +6,7 @@ import { getDraft, updateDraft } from '@services/drafts'
 // import { getContract, updateContract } from '@services/contracts'
 
 const appId = import.meta.env.VITE_APP_SENDBIRD_APPID
-const MODERATOR_ID = '847329'
+const MODERATOR_ID = import.meta.env.VITE_APP_SENDBIRD_MODERATOR_ID
 
 let sbInstance: SendbirdChat | null = null
 
@@ -148,5 +148,37 @@ export const getOrCreateContractChannel = async (
     } catch (error) {
         console.error('Error creating Contract Channel:', error)
         throw new Error('Hubo un problema al inicializar el chat del contrato.')
+    }
+}
+
+/**
+ * Gets or dynamically creates a programmatic Direct Message Channel.
+ * Used for the "Cotizar" button on user profiles directly.
+ */
+export const getOrCreateDirectChannel = async (
+    currentUserId: string,
+    targetUserId: string,
+    targetUserName: string
+): Promise<string> => {
+    const sb = await ensureConnection(currentUserId)
+
+    const params: GroupChannelCreateParams = {
+        invitedUserIds: [currentUserId, targetUserId, MODERATOR_ID],
+        isDistinct: true, // Use distinct to reuse existing 1-on-1 channels
+        customType: 'direct_quote',
+        name: `Cotización Directa - ${targetUserName}`,
+        data: JSON.stringify({
+            type: 'direct',
+            targetUserId,
+            title: `Cotización con ${targetUserName}`
+        })
+    }
+
+    try {
+        const channel = await (sb as any).groupChannel.createChannel(params)
+        return channel.url
+    } catch (error) {
+        console.error('Error creating Direct Channel:', error)
+        throw new Error('Hubo un problema al inicializar el chat.')
     }
 }
