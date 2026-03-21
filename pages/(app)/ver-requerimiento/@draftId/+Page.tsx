@@ -6,6 +6,7 @@ import { useAuth } from '@hooks/useAuth'
 // Services
 import { getDraft } from '@services/drafts'
 import { getQuotation } from '@services/quotations'
+import { getOrCreateDraftChannel } from '@services/sendbird'
 import type { DraftFirestoreDocument, QuotationFirestoreDocument } from '@services/types'
 // Components
 import TablaSubCategoriaPresupuesto from '../../requerimiento/components/TablaSubCategoriaPresupuesto'
@@ -164,6 +165,23 @@ export default function Page() {
         navigate(`/app/cotizacion/${draftParamId}`)
     }
 
+    const [isCreatingChannel, setIsCreatingChannel] = useState(false)
+
+    const handleAskOwner = async () => {
+        if (!userAuthID || !requerimientoInfo.draftPropietarioResidente) return
+        try {
+            setIsCreatingChannel(true)
+            const draftParamId = requerimientoInfo.draftId || draftId
+            const channelUrl = await getOrCreateDraftChannel(draftParamId, userAuthID, requerimientoInfo.draftPropietarioResidente)
+            window.location.assign(`/app/mensajes?channel=${channelUrl}`)
+        } catch (error) {
+            console.error('Error creating channel:', error)
+            alert(error instanceof Error ? error.message : 'Hubo un error al comunicar con el chat.')
+        } finally {
+            setIsCreatingChannel(false)
+        }
+    }
+
     // Helper for key-value display
     const InfoRow = ({ label, value, icon }: { label: string, value: React.ReactNode, icon?: React.ReactNode }) => (
         <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
@@ -197,6 +215,8 @@ export default function Page() {
                 <Button
                     variant="contained"
                     startIcon={<QuestionAnswerIcon />}
+                    onClick={handleAskOwner}
+                    disabled={isCreatingChannel}
                     sx={{
                         bgcolor: 'var(--primary-blue-light-color)',
                         color: 'white',
@@ -204,7 +224,7 @@ export default function Page() {
                         '&:hover': { bgcolor: 'var(--background-blue-color)' }
                     }}
                 >
-                    PREGUNTAR AL PROPIETARIO
+                    {isCreatingChannel ? 'ABRIENDO CHAT...' : 'PREGUNTAR AL PROPIETARIO'}
                 </Button>
             </Box>
 

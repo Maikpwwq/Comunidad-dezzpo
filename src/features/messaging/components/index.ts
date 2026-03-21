@@ -4,3 +4,4 @@
 
 export { SendbirdChat } from './SendbirdChat'
 export type { SendbirdChatProps } from './SendbirdChat'
+export { default as MessagingDashboard } from './MessagingDashboard'

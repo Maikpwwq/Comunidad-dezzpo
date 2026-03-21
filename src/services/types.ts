@@ -59,6 +59,19 @@ export interface SocialLink {
 }
 
 // =============================================================================
+// Property Types
+// =============================================================================
+
+export interface Property {
+    id: string
+    name: string
+    address: string
+    city: string
+    postalCode: string
+    isMain: boolean
+}
+
+// =============================================================================
 // User Types
 // =============================================================================
 
@@ -102,6 +115,8 @@ export interface UserFirestoreDocument extends DocumentData {
     phones?: ContactPhone[]
     /** Social / communication links array. */
     socialLinks?: SocialLink[]
+    /** Propietario properties array. */
+    properties?: Property[]
 }
 
 export type UserRole = 1 | 2 // 1 = Propietario, 2 = Comerciante
@@ -136,6 +151,7 @@ export interface DraftFirestoreDocument extends DocumentData {
     draftImages?: string[]
     draftApply?: string[]
     status?: 'open' | 'closed'
+    channel_url?: string
 }
 
 export interface ReadDraftParams {
@@ -227,6 +243,7 @@ export interface ContractFirestoreDocument extends DocumentData {
     agreedAmount: number
     objectDescription?: string
     rated?: boolean
+    channel_url?: string
 }
 
 export interface CreateContractParams {

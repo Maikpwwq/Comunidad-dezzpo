@@ -14,7 +14,7 @@ import { useAuth } from '@hooks/useAuth'
 
 // Services
 import { getUser, updateUser } from '@services/users'
-import type { UserRole, ContactEmail, ContactPhone, SocialLink } from '@services/types'
+import type { UserRole, ContactEmail, ContactPhone, SocialLink, Property } from '@services/types'
 import { storage } from '@services/firebase'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { createEmptyEmail, createEmptyPhone } from '@utilities/contactUtils'
@@ -27,6 +27,7 @@ import {
 
 // Components
 import { Ubicacion } from '@features/marketing'
+import PropertiesManager from '@features/profile/components/PropertiesManager'
 import { SnackBarAlert, ChipsCategories } from '@components/common'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
@@ -117,6 +118,7 @@ export default function Page() {
     const [phones, setPhones] = useState<ContactPhone[]>([])
     const [socialLinks, setSocialLinks] = useState<SocialLink[]>([])
     const [socialUrlErrors, setSocialUrlErrors] = useState<Record<string, boolean>>({})
+    const [properties, setProperties] = useState<Property[]>([])
 
     const [userEditInfo, setUserEditInfo] = useState<UserEditInfo>({
         userName: '',
@@ -184,6 +186,7 @@ export default function Page() {
                     setEmails(userData.emails || [])
                     setPhones(userData.phones || [])
                     setSocialLinks(userData.socialLinks || [])
+                    setProperties(userData.properties || [])
 
                     setIsLoaded(true)
 
@@ -920,6 +923,14 @@ export default function Page() {
                     </div>
                 </div>
             </div>
+
+            {/* Propietario Only: Properties Manager */}
+            {userRol.rol === 1 && (
+                <PropertiesManager
+                    userId={userAuthID}
+                    initialProperties={properties}
+                />
+            )}
 
             {/* Mobile sticky save footer */}
             <div className={styles['mobile-save-footer']}>
