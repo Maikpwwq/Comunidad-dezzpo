@@ -151,6 +151,7 @@ export interface DraftFirestoreDocument extends DocumentData {
     draftImages?: string[]
     draftApply?: string[]
     status?: 'open' | 'closed'
+    channel_url?: string
 }
 
 export interface ReadDraftParams {
@@ -242,6 +243,7 @@ export interface ContractFirestoreDocument extends DocumentData {
     agreedAmount: number
     objectDescription?: string
     rated?: boolean
+    channel_url?: string
 }
 
 export interface CreateContractParams {

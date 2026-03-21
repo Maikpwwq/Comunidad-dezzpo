@@ -29,6 +29,7 @@ import type {
 
 // Import auth instance - may be null during SSR
 import { auth, isFirebaseAvailable } from './client'
+import { syncSendbirdUser } from '@services/sendbird'
 
 // Lazy-initialize Google provider only on client
 let googleProvider: GoogleAuthProvider | null = null
@@ -88,9 +89,13 @@ export async function signInWithEmail(
     try {
         const { email, password } = credentials
         const result = await signInWithEmailAndPassword(auth, email, password)
+        const authUser = toAuthUser(result.user)
+        // Fire and forget Sendbird sync
+        syncSendbirdUser(authUser.uid, authUser.displayName || 'Usuario', authUser.photoURL || undefined).catch(console.error)
+        
         return {
             success: true,
-            data: toAuthUser(result.user),
+            data: authUser,
             error: null,
         }
     } catch (error) {
@@ -126,9 +131,13 @@ export async function signInWithGoogle(): Promise<ServiceResponse<AuthUser>> {
 
     try {
         const result = await signInWithPopup(auth, getGoogleProvider())
+        const authUser = toAuthUser(result.user)
+        // Fire and forget Sendbird sync
+        syncSendbirdUser(authUser.uid, authUser.displayName || 'Usuario', authUser.photoURL || undefined).catch(console.error)
+
         return {
             success: true,
-            data: toAuthUser(result.user),
+            data: authUser,
             error: null,
         }
     } catch (error) {
@@ -162,9 +171,13 @@ export async function registerWithEmail(
             await updateProfile(result.user, { displayName })
         }
 
+        const authUser = toAuthUser(result.user)
+        // Fire and forget Sendbird sync
+        syncSendbirdUser(authUser.uid, authUser.displayName || 'Usuario', authUser.photoURL || undefined).catch(console.error)
+
         return {
             success: true,
-            data: toAuthUser(result.user),
+            data: authUser,
             error: null,
         }
     } catch (error) {
