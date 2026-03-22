@@ -104,6 +104,15 @@ export const ADMIN_SIDEBAR: NavSectionConfig = {
     ],
 }
 
+/** Single Admin portal link for the App Sidebar */
+export const APP_ADMIN_LINK_SIDEBAR: NavSectionConfig = {
+    id: 'admin',
+    title: 'Administración',
+    items: [
+        { id: 'admin-portal', label: 'Centro de Control', route: '/admin/dashboard', icon: 'AdminPanelSettingsIcon' }
+    ],
+}
+
 /** Header tabs for comerciante role */
 export const COMERCIANTE_HEADER: NavItemConfig[] = [
     { id: 'perfil', label: 'Ver tu perfil', route: '/app/perfil/:userId', icon: 'PersonIcon' },
@@ -161,7 +170,7 @@ export function getSidebarConfig(role: 'guest' | 'propietario' | 'comerciante', 
             sections = [...GUEST_SIDEBAR]
     }
     if (isAdmin) {
-        sections.push(ADMIN_SIDEBAR)
+        sections.push(APP_ADMIN_LINK_SIDEBAR)
     }
     return sections
 }

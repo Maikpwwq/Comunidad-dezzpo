@@ -12,50 +12,20 @@ import {
     Box,
     CssBaseline,
     Drawer,
-    List,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
     Toolbar,
     AppBar,
     Typography,
     IconButton,
     CircularProgress,
-    Divider,
-    Avatar,
 } from '@mui/material'
-import DashboardIcon from '@mui/icons-material/Dashboard'
-import PeopleIcon from '@mui/icons-material/People'
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
 import MenuIcon from '@mui/icons-material/Menu'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import { theme } from '@config/theme'
 import { UserAuthProvider } from '@providers'
 import { useAdminGuard } from '@hooks/useAdminGuard'
-import { navigate } from 'vike/client/router'
 
-/* ── Brand palette ─────────────────────────────────────────────── */
-const BRAND = {
-    teal: '#00897B',
-    tealDark: '#00695C',
-    tealDeep: '#004D40',
-    tealLight: '#1ec7e6',
-    sidebarBg: 'linear-gradient(180deg, #00695C 0%, #004D40 100%)',
-    appBarBg: '#00897B',
-    surface: '#F5F7FA',
-    selectedBg: 'rgba(30, 199, 230, 0.15)',
-    selectedColor: '#1ec7e6',
-    hoverBg: 'rgba(255, 255, 255, 0.08)',
-}
+import { AdminSidebar, BRAND, DRAWER_WIDTH } from '@features/admin/components/AdminSidebar'
 
-const DRAWER_WIDTH = 260
 
-const adminNav = [
-    { label: 'Dashboard', icon: <DashboardIcon />, path: '/admin/dashboard' },
-    { label: 'Usuarios', icon: <PeopleIcon />, path: '/admin/usuarios' },
-    { label: 'Verificación', icon: <VerifiedUserIcon />, path: '/admin/verificacion' },
-]
 
 interface LayoutProps {
     children: React.ReactNode
@@ -89,97 +59,7 @@ function AdminContent({ children }: LayoutProps): React.ReactElement {
         )
     }
 
-    const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
 
-    const drawerContent = (
-        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            {/* Sidebar header */}
-            <Toolbar
-                sx={{
-                    justifyContent: 'center',
-                    gap: 1.5,
-                    py: 2.5,
-                }}
-            >
-                <Avatar sx={{ bgcolor: 'rgba(30, 199, 230, 0.2)', width: 40, height: 40 }}>
-                    <AdminPanelSettingsIcon sx={{ color: BRAND.tealLight, fontSize: 24 }} />
-                </Avatar>
-                <Box>
-                    <Typography variant="subtitle1" fontWeight={700} color="#fff">
-                        Panel de Administración
-                    </Typography>
-                    <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)' }}>
-                        Centro de Control
-                    </Typography>
-                </Box>
-            </Toolbar>
-
-            <Divider sx={{ borderColor: 'rgba(255,255,255,0.12)' }} />
-
-            {/* Navigation */}
-            <List sx={{ px: 1.5, pt: 2, flex: 1 }}>
-                {adminNav.map((item) => {
-                    const isSelected = currentPath === item.path
-                    return (
-                        <ListItemButton
-                            key={item.path}
-                            selected={isSelected}
-                            onClick={() => {
-                                navigate(item.path)
-                                setMobileOpen(false)
-                            }}
-                            sx={{
-                                borderRadius: 2,
-                                mb: 0.5,
-                                py: 1.2,
-                                color: 'rgba(255,255,255,0.7)',
-                                transition: 'all 0.2s ease',
-                                '&:hover': {
-                                    bgcolor: BRAND.hoverBg,
-                                    color: '#fff',
-                                },
-                                '&.Mui-selected': {
-                                    bgcolor: BRAND.selectedBg,
-                                    color: BRAND.selectedColor,
-                                    '& .MuiListItemIcon-root': { color: BRAND.selectedColor },
-                                    '&:hover': { bgcolor: BRAND.selectedBg },
-                                },
-                            }}
-                        >
-                            <ListItemIcon sx={{ minWidth: 40, color: 'inherit' }}>
-                                {item.icon}
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={item.label}
-                                primaryTypographyProps={{ fontWeight: isSelected ? 600 : 400, fontSize: '0.9rem' }}
-                            />
-                        </ListItemButton>
-                    )
-                })}
-            </List>
-
-            {/* Back to app */}
-            <Divider sx={{ borderColor: 'rgba(255,255,255,0.12)' }} />
-            <List sx={{ px: 1.5, pb: 2 }}>
-                <ListItemButton
-                    onClick={() => navigate('/app/ajustes')}
-                    sx={{
-                        borderRadius: 2,
-                        color: 'rgba(255,255,255,0.6)',
-                        '&:hover': { bgcolor: BRAND.hoverBg, color: '#fff' },
-                    }}
-                >
-                    <ListItemIcon sx={{ minWidth: 40, color: 'inherit' }}>
-                        <ArrowBackIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                        primary="Volver al App"
-                        primaryTypographyProps={{ fontSize: '0.85rem' }}
-                    />
-                </ListItemButton>
-            </List>
-        </Box>
-    )
 
     return (
         <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: BRAND.surface }}>
@@ -239,7 +119,7 @@ function AdminContent({ children }: LayoutProps): React.ReactElement {
                         },
                     }}
                 >
-                    {drawerContent}
+                    <AdminSidebar onCloseMobile={() => setMobileOpen(false)} />
                 </Drawer>
 
                 {/* Desktop permanent drawer */}
@@ -256,7 +136,7 @@ function AdminContent({ children }: LayoutProps): React.ReactElement {
                     }}
                     open
                 >
-                    {drawerContent}
+                    <AdminSidebar />
                 </Drawer>
             </Box>
 
