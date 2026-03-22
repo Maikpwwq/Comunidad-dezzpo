@@ -46,6 +46,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import GroupIcon from '@mui/icons-material/Group'
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 
 // Branding
 import LogoMenuComunidadDezzpo from '/assets/img/logo/IsoLogo-Dezzpo-Verde.png'
@@ -71,6 +72,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
     GroupIcon: <GroupIcon />,
     VerifiedUserIcon: <VerifiedUserIcon />,
     ReceiptLongIcon: <ReceiptLongIcon />,
+    AdminPanelSettingsIcon: <AdminPanelSettingsIcon />,
 }
 
 /** Style tokens */
@@ -117,6 +119,8 @@ function Sidebar({ open, onClose, userInfo, variant = 'permanent' }: SidebarProp
 
     // Read admin status from Zustand store (set by UserAuthProvider + persisted)
     const isAdmin = useUserStore((state) => state.isAdmin)
+
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
 
     // Get navigation config based on role + admin status
     const navSections = useMemo(
@@ -207,20 +211,47 @@ function Sidebar({ open, onClose, userInfo, variant = 'permanent' }: SidebarProp
                             </ListItemText>
                         </ListItem>
 
-                        {section.items.map((item) => (
-                            <ListItem
-                                disablePadding
-                                key={item.id}
-                                onClick={() => handleNav(item.route)}
-                            >
-                                <ListItemButton sx={styles.item}>
-                                    <ListItemIcon sx={{ color: styles.iconColor }}>
-                                        {ICON_MAP[item.icon] ?? <PersonIcon />}
-                                    </ListItemIcon>
-                                    <ListItemText>{item.label}</ListItemText>
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
+                        {section.items.map((item) => {
+                            const resolvedRoute = resolveRoute(item.route)
+                            const isSelected = currentPath === resolvedRoute || currentPath.startsWith(`${resolvedRoute}/`)
+                            
+                            return (
+                                <ListItem
+                                    disablePadding
+                                    key={item.id}
+                                    onClick={() => handleNav(item.route)}
+                                >
+                                    <ListItemButton 
+                                        selected={isSelected}
+                                        sx={{
+                                            ...styles.item,
+                                            ...(isSelected && {
+                                                bgcolor: 'rgba(255, 255, 255, 0.12)',
+                                                color: '#fff',
+                                            }),
+                                            '&.Mui-selected': {
+                                                bgcolor: 'rgba(255, 255, 255, 0.12)',
+                                                color: '#fff',
+                                            },
+                                            '&.Mui-selected:hover': {
+                                                bgcolor: 'var(--background-gray-color)',
+                                            }
+                                        }}
+                                    >
+                                        <ListItemIcon sx={{ color: isSelected ? '#fff' : styles.iconColor }}>
+                                            {ICON_MAP[item.icon] ?? <PersonIcon />}
+                                        </ListItemIcon>
+                                        <ListItemText 
+                                            primaryTypographyProps={{ 
+                                                fontWeight: isSelected ? 700 : 400 
+                                            }}
+                                        >
+                                            {item.label}
+                                        </ListItemText>
+                                    </ListItemButton>
+                                </ListItem>
+                            )
+                        })}
 
                         <Divider sx={{ mt: 2 }} />
                     </Box>

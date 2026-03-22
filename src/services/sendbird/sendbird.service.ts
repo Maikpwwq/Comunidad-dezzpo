@@ -2,7 +2,6 @@ import SendbirdChat from '@sendbird/chat'
 import { GroupChannelModule } from '@sendbird/chat/groupChannel'
 import type { GroupChannelCreateParams } from '@sendbird/chat/groupChannel'
 import { OpenChannelModule } from '@sendbird/chat/openChannel'
-import type { OpenChannelCreateParams } from '@sendbird/chat/openChannel'
 import { getDraft, updateDraft } from '@services/drafts'
 // Need to import contracts if the user implements Phase 2 of this backend logic.
 // import { getContract, updateContract } from '@services/contracts'
@@ -193,13 +192,19 @@ export const createOpenChannelForUser = async (
     merchantId: string,
     merchantName: string
 ): Promise<string> => {
-    // We connect with the moderator to orchestrate open channels
-    const sb = await ensureConnection(MODERATOR_ID)
+    // To bypass the need for an active Client SDK Session Token for the Moderator,
+    // we use the Sendbird Platform API (Server-to-Server) to orchestrate channel creation natively.
+    const apiToken = import.meta.env.VITE_APP_SENDBIRD_APPTOKEN
+    const apiUrl = import.meta.env.VITE_APP_SENDBIRD_API_URL
 
-    const params: OpenChannelCreateParams = {
+    if (!apiToken || !apiUrl) {
+        throw new Error('Faltan credenciales de la API de Sendbird en el entorno.')
+    }
+
+    const payload = {
         name: `Comentarios: ${merchantName}`,
-        customType: 'profile_comment',
-        operatorUserIds: [merchantId, MODERATOR_ID],
+        custom_type: 'profile_comment',
+        operator_ids: [merchantId, MODERATOR_ID],
         data: JSON.stringify({
             type: 'profile',
             merchantId,
@@ -208,10 +213,25 @@ export const createOpenChannelForUser = async (
     }
 
     try {
-        const channel = await (sb as any).openChannel.createChannel(params)
-        return channel.url
+        const response = await fetch(`${apiUrl}/v3/open_channels`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json, charset=utf8',
+                'Api-Token': apiToken
+            },
+            body: JSON.stringify(payload)
+        })
+
+        if (!response.ok) {
+            const errData = await response.json()
+            console.error('Sendbird API Error:', errData)
+            throw new Error(`Error de API: ${errData.message}`)
+        }
+
+        const channelData = await response.json()
+        return channelData.channel_url
     } catch (error) {
-        console.error('Error creating Open Channel for profile:', error)
+        console.error('Error creating Open Channel via Platform API:', error)
         throw new Error('Hubo un problema al crear el canal de comentarios abierto.')
     }
 }

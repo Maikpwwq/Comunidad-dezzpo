@@ -5,7 +5,7 @@
  * Refactored from legacy Header.jsx (271 lines -> modular component).
  */
 
-import React, { useState, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { navigate } from 'vike/client/router'
 import { Link } from '@hooks'
 import { useUserStore } from '@stores/userStore'
@@ -58,7 +58,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-    const [activeTab, setActiveTab] = useState(0)
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
 
     // Get user from Zustand store with selectors (flat state, not nested)
     const userId = useUserStore((state) => state.userId)
@@ -92,9 +92,18 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
         return route.replace(':userId', user.userId)
     }
 
+    // Resolve active tab index dynamically from URL
+    const activeTabIndex = useMemo(() => {
+        const index = headerItems.findIndex(item => {
+            const resolved = resolveRoute(item.route)
+            // Exact match or sub-route match (e.g. /app/mensajes/123)
+            return currentPath === resolved || currentPath.startsWith(`${resolved}/`)
+        })
+        return index !== -1 ? index : false
+    }, [currentPath, headerItems, user.userId])
+
     /** Handle tab navigation */
     const handleTabChange = (_event: React.SyntheticEvent, newValue: number): void => {
-        setActiveTab(newValue)
         const item = headerItems[newValue]
         if (item) {
             navigate(resolveRoute(item.route))
@@ -141,7 +150,7 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
                     {/* Navigation Tabs */}
                     <Grid item xs sx={{ paddingTop: '0 !important' }}>
                         <Tabs
-                            value={activeTab}
+                            value={activeTabIndex}
                             onChange={handleTabChange}
                             textColor="inherit"
                             variant={isMobile ? 'scrollable' : 'standard'}
