@@ -16,7 +16,7 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 | --- | --- | --- |
 | **Firebase Auth** | Identity & Session | Global `AuthProvider` |
 | **Google Auth** | SSO Provider | Firebase Client SDK |
-| **Sendbird** | Real-time Messaging | Authenticated UID (Auth-only) |
+| **Sendbird** | Real-time Messaging | Authenticated UID (Auth-only). Programmatic orchestration via `@services/sendbird/sendbird.service.ts`. Synchronizes Firebase profiles (Avatar/Nickname) automatically. |
 
 ### 🚦 ROUTING & ACCESS CONTROL
 

@@ -99,6 +99,8 @@ export const ADMIN_SIDEBAR: NavSectionConfig = {
         { id: 'admin-dashboard', label: 'Dashboard', route: '/admin/dashboard', icon: 'DashboardIcon' },
         { id: 'admin-usuarios', label: 'Usuarios', route: '/admin/usuarios', icon: 'GroupIcon' },
         { id: 'admin-verificacion', label: 'Verificación', route: '/admin/verificacion', icon: 'VerifiedUserIcon' },
+        { id: 'admin-contratos', label: 'Contratos', route: '/admin/contratos', icon: 'ReceiptLongIcon' },
+        { id: 'admin-requerimientos', label: 'Requerimientos', route: '/admin/requerimientos', icon: 'AssignmentIcon' },
     ],
 }
 

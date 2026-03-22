@@ -94,6 +94,15 @@ return (
 
 ---
 
+## Messaging Subsystem
+
+- **Provider**: Sendbird Chat v4 (Core) + UIKit v3
+- **Orchestration**: All programmatic group channels (e.g., Draft Negotiation, Contracts, Direct Quotes) must be created or retrieved via `src/services/sendbird/sendbird.service.ts`.
+- **UI Dashboard**: The primary user hub for chats is the segmented two-column layout at `/app/mensajes/+Page.tsx`, customized using UIKit's `renderConversationList`.
+- **Navigation**: Use URL query params (`?channel=URL`) when redirecting a user after spawning a new channel.
+
+---
+
 ## Migration Pattern
 
 ```typescript

@@ -65,6 +65,13 @@ The `/ayuda-pqrs` page was redesigned as a modern FAQ center:
 
 ---
 
+## Public Profiles & Messaging
+
+The public profiles (e.g. `/app/perfil/[id]`) are **Hybrid Routes**. They render the `Comentarios.tsx` module which wraps the Sendbird `OpenChannel`. 
+> **CRITICAL Security Constraint**: To prevent unauthorized spam and malicious usage from saboteurs, `Comentarios.tsx` **MUST** enforce authentication before rendering the `<SendbirdProvider>`. If the user is a guest (`!userID`), they should see a disabled placeholder state, not the chat interface.
+
+---
+
 ## Presupuestos → Nuevo Proyecto Flow
 
 The `/presupuestos` page is **informative** with a "Solicitar Servicios" form:
