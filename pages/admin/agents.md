@@ -18,7 +18,7 @@
 ### Bundle Isolation
 - Admin service (`@services/admin`) must **only** be imported inside `(admin)/*` pages
 - Never import admin components or services in `(app)/*` or `(marketing)/*` routes
-- The admin layout does **not** initialize Sendbird
+- The admin layout does **not** initialize Sendbird UI components. However, the root moderator ID (`847329`) is programmatically invited to all private negotiation channels for oversight.
 
 ## 2. Route Structure
 

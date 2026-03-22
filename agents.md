@@ -7,7 +7,8 @@
 ### ⚡ PROVIDER & AUTH CONSTRAINTS
 
 * **Firebase Auth Hydration:** All `/app/*` routes must account for the "Initializing" state. **Forbidden:** Hard-redirecting to `/login` before `onAuthStateChanged` has resolved.
-* **Sendbird Initialization:** The Messaging Provider **must not** initialize for anonymous guests. Wrap all Sendbird logic in an `isAuth` check to prevent `null` user crashes.
+* **Sendbird Initialization:** The Messaging Provider **must not** initialize for anonymous guests. Wrap all Sendbird UI logic (e.g., `Comentarios.tsx`) in an `isAuth` check (`if (!userID)`) to prevent `null` user crashes and saboteur spam.
+* **Sendbird Channel Orchestration:** Always use `@services/sendbird/sendbird.service.ts` (`getOrCreateDraftChannel`, `getOrCreateDirectChannel`) to generate or retrieve programmatic Group/Open channels. **Forbidden:** Direct instantiation of the Sendbird Core SDK (`sb.groupChannel.createChannel`) from UI components.
 * **Hybrid Access Logic:** Specific `/app/` routes are designated as **Hybrid** (Guest + Auth).
   *   *Whitelisted:* `portal-servicios`, `suscripciones`, `directorio-requerimientos`, `perfil`, `ver-requerimiento`.
   *   *Constraint:* Navigation components (`Sidebar`, `NavBar`) must toggle visibility based on `user.role` or `null` state.

@@ -17,6 +17,7 @@ import {
 } from 'firebase/firestore'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth, firestore, isFirebaseAvailable } from '@services/firebase'
+import { createOpenChannelForUser } from '@services/sendbird/sendbird.service'
 import { getPrimaryEmail } from '@utilities/contactUtils'
 
 // Collection references
@@ -137,6 +138,7 @@ export interface AdminUserRow {
     status: string
     lastLogin: string
     joined: string
+    channelUrl?: string
 }
 
 export async function getAllUsers(): Promise<AdminUserRow[]> {
@@ -155,6 +157,7 @@ export async function getAllUsers(): Promise<AdminUserRow[]> {
             status: d.status || 'active',
             lastLogin: d.lastLogin || '—',
             joined: d.userJoined || '—',
+            channelUrl: d.userChannelUrl || '',
         })
     })
 
@@ -169,6 +172,7 @@ export async function getAllUsers(): Promise<AdminUserRow[]> {
             status: d.status || 'active',
             lastLogin: d.lastLogin || '—',
             joined: d.userJoined || '—',
+            channelUrl: d.userChannelUrl || '',
         })
     })
 
@@ -293,4 +297,115 @@ export async function unbanUser(
         status: 'active',
         bannedAt: null,
     })
+}
+
+/**
+ * Bulk creation of missing Sendbird OpenChannels for Comerciantes.
+ */
+export async function backfillOpenChannels(): Promise<{ processed: number; errors: number }> {
+    if (!isFirebaseAvailable() || !firestore) throw new Error('Firebase no está disponible')
+
+    const comCol = collection(firestore, COMERCIANTES)
+    const comSnap = await getDocs(comCol)
+    
+    let processed = 0
+    let errors = 0
+
+    // Fetch in sequence to respect Sendbird rate limits
+    for (const d of comSnap.docs) {
+        const data = d.data()
+        // If they lack a channel URL
+        if (!data.userChannelUrl || data.userChannelUrl.trim() === '') {
+            try {
+                const name = data.userName || 'Usuario'
+                const channelUrl = await createOpenChannelForUser(d.id, name)
+                
+                // Update Firestore
+                await updateDoc(d.ref, {
+                    userChannelUrl: channelUrl
+                })
+                
+                processed++
+                // Quick sleep to respect SDK API limits
+                await new Promise(r => setTimeout(r, 200))
+            } catch (err) {
+                console.error(`Error backfilling channel for ${d.id}:`, err)
+                errors++
+            }
+        }
+    }
+
+    return { processed, errors }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Admin Oversight Features (Contracts & Drafts)
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface AdminContractRow {
+    id: string
+    draftId: string
+    clientId: string
+    providerId: string
+    status: string
+    agreedAmount: number
+    createdAt: string
+    channelUrl?: string
+}
+
+export async function getAllContracts(): Promise<AdminContractRow[]> {
+    if (!isFirebaseAvailable() || !firestore) return []
+    const snap = await getDocs(collection(firestore, CONTRACTS))
+    return snap.docs.map((doc) => {
+        const d = doc.data()
+        return {
+            id: doc.id,
+            draftId: d.draftId || '—',
+            clientId: d.clientId || '—',
+            providerId: d.providerId || '—',
+            status: d.status || 'unknown',
+            agreedAmount: Number(d.agreedAmount) || 0,
+            createdAt: d.createdAt || '—',
+            channelUrl: d.channel_url,
+        }
+    })
+}
+
+export interface AdminDraftRow {
+    id: string
+    name: string
+    ownerId: string
+    category: string
+    status: string
+    budget: number
+    createdAt: string
+    channelUrl?: string
+}
+
+export async function getAllDrafts(): Promise<AdminDraftRow[]> {
+    if (!isFirebaseAvailable() || !firestore) return []
+    const snap = await getDocs(collection(firestore, DRAFTS))
+    return snap.docs.map((doc) => {
+        const d = doc.data()
+        return {
+            id: doc.id,
+            name: d.draftName || 'Sin título',
+            ownerId: d.draftPropietarioResidente || '—',
+            category: d.draftCategory || '—',
+            status: d.status || 'open',
+            budget: Number(d.draftTotal || d.draftPresupuesto || 0),
+            createdAt: d.draftCreatedAt || '—',
+            channelUrl: d.channel_url,
+        }
+    })
+}
+
+export async function getQuotesForDraftAdmin(draftId: string) {
+    if (!isFirebaseAvailable() || !firestore) return []
+    const q = query(
+        collection(firestore, 'quotations'),
+        where('quotationDraftId', '==', draftId)
+    )
+    const snap = await getDocs(q)
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }))
 }

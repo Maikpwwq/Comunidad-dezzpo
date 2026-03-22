@@ -106,7 +106,7 @@ function AdminContent({ children }: LayoutProps): React.ReactElement {
                 </Avatar>
                 <Box>
                     <Typography variant="subtitle1" fontWeight={700} color="#fff">
-                        Admin Panel
+                        Panel de Administración
                     </Typography>
                     <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)' }}>
                         Centro de Control
@@ -216,7 +216,7 @@ function AdminContent({ children }: LayoutProps): React.ReactElement {
                             }}
                         />
                         <Typography variant="h6" color="text.primary" fontWeight={600} noWrap>
-                            Centro de Control — Dezzpo
+                            Centro de Control — Comunidad Dezzpo
                         </Typography>
                     </Box>
                 </Toolbar>

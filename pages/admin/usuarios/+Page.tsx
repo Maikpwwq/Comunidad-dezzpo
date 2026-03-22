@@ -33,28 +33,29 @@ import {
     sendPasswordResetForUser,
     banUser,
     unbanUser,
+    backfillOpenChannels,
     type AdminUserRow,
 } from '@services/admin'
 
 /* ── Brand palette ─────────────────────────────────────────────── */
 const BRAND = {
-    teal: '#00897B',
-    tealDark: '#00695C',
-    tealLight: '#1ec7e6',
-    gradientHeader: 'linear-gradient(135deg, #00897B 0%, #00695C 100%)',
-    surface: '#FAFBFC',
+    teal: 'var(--brand-teal)',
+    tealDark: 'var(--brand-teal-dark)',
+    tealLight: 'var(--primary-blue-light-color)',
+    gradientHeader: 'linear-gradient(135deg, var(--brand-teal) 0%, var(--brand-teal-dark) 100%)',
+    surface: 'var(--admin-surface)',
 }
 
 /* ── Role / Status chip colour map ─────────────────────────────── */
 const roleChipSx = (role: string) =>
     role === 'Propietario'
-        ? { bgcolor: '#E8F5E9', color: '#2E7D32', fontWeight: 600 }
-        : { bgcolor: '#E3F2FD', color: '#1565C0', fontWeight: 600 }
+        ? { bgcolor: 'var(--status-active-bg)', color: 'var(--status-active-color)', fontWeight: 600 }
+        : { bgcolor: 'var(--status-completed-bg)', color: 'var(--status-completed-color)', fontWeight: 600 }
 
 const statusChipSx = (status: string) =>
     status === 'active'
-        ? { bgcolor: '#E8F5E9', color: '#2E7D32', fontWeight: 600 }
-        : { bgcolor: '#FFEBEE', color: '#C62828', fontWeight: 600 }
+        ? { bgcolor: 'var(--status-active-bg)', color: 'var(--status-active-color)', fontWeight: 600 }
+        : { bgcolor: 'var(--status-disputed-bg)', color: 'var(--status-disputed-color)', fontWeight: 600 }
 
 /* ── DataGrid columns ──────────────────────────────────────────── */
 const columns: GridColDef<AdminUserRow>[] = [
@@ -91,6 +92,29 @@ const columns: GridColDef<AdminUserRow>[] = [
         ),
     },
     { field: 'joined', headerName: 'Registro', width: 130 },
+    {
+        field: 'channelUrl',
+        headerName: 'Canal',
+        width: 100,
+        renderCell: (params) => {
+            if (params.row.role === 'Propietario') {
+                return <span style={{ color: '#999', fontSize: '0.75rem' }}>N/A</span>
+            }
+            const ok = !!params.value && params.value !== ''
+            return (
+                <Chip
+                    label={ok ? 'Asignado' : 'Faltante'}
+                    size="small"
+                    sx={{
+                        bgcolor: ok ? '#E8F5E9' : '#FFF3E0',
+                        color: ok ? '#2E7D32' : '#E65100',
+                        fontWeight: 600,
+                        fontSize: '0.7rem',
+                    }}
+                />
+            )
+        }
+    },
 ]
 
 /* ── Page ───────────────────────────────────────────────────────── */
@@ -100,7 +124,7 @@ export default function Page() {
     const [selectedUser, setSelectedUser] = useState<AdminUserRow | null>(null)
     const [searchQuery, setSearchQuery] = useState('')
     const [actionLoading, setActionLoading] = useState(false)
-    const [confirmDialog, setConfirmDialog] = useState<{ type: 'password' | 'ban' | 'unban'; user: AdminUserRow } | null>(null)
+    const [confirmDialog, setConfirmDialog] = useState<{ type: 'password' | 'ban' | 'unban' | 'backfill'; user?: AdminUserRow } | null>(null)
     const [snackbar, setSnackbar] = useState<{ message: string; severity: 'success' | 'error' } | null>(null)
 
     useEffect(() => {
@@ -141,6 +165,16 @@ export default function Page() {
         try {
             const { type, user } = confirmDialog
 
+            if (type === 'backfill') {
+                const { processed, errors } = await backfillOpenChannels()
+                setSnackbar({ message: `Generación completada: ${processed} asignados, ${errors} errores. Recargando...`, severity: 'success' })
+                const data = await getAllUsers()
+                setUsers(data)
+                return
+            }
+
+            if (!user) return
+
             if (type === 'password') {
                 await sendPasswordResetForUser(user.email)
                 setSnackbar({ message: `Email de restablecimiento enviado a ${user.email}`, severity: 'success' })
@@ -171,29 +205,46 @@ export default function Page() {
                 Gestión de Usuarios
             </Typography>
 
-            {/* Search Bar */}
-            <Paper
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 1,
-                    p: 1,
-                    mb: 2,
-                    borderRadius: 2,
-                }}
-                elevation={0}
-                variant="outlined"
-            >
-                <SearchIcon color="action" />
-                <TextField
-                    placeholder="Buscar por nombre, email o UID…"
-                    variant="standard"
-                    fullWidth
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    InputProps={{ disableUnderline: true }}
-                />
-            </Paper>
+            {/* Search Bar & Actions */}
+            <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+                <Paper
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                        p: 1,
+                        flex: 1,
+                        borderRadius: 2,
+                    }}
+                    elevation={0}
+                    variant="outlined"
+                >
+                    <SearchIcon color="action" />
+                    <TextField
+                        placeholder="Buscar por nombre, email o UID…"
+                        variant="standard"
+                        fullWidth
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        InputProps={{ disableUnderline: true }}
+                    />
+                </Paper>
+                <Button
+                    variant="contained"
+                    onClick={() => setConfirmDialog({ type: 'backfill' })}
+                    sx={{
+                        bgcolor: BRAND.teal,
+                        color: '#fff',
+                        borderRadius: 2,
+                        textTransform: 'none',
+                        fontWeight: 600,
+                        px: 3,
+                        '&:hover': { bgcolor: BRAND.tealDark }
+                    }}
+                >
+                    Asignar Canales Faltantes
+                </Button>
+            </Box>
 
             {/* DataGrid */}
             <Paper sx={{ height: 560, borderRadius: 2 }} elevation={0} variant="outlined">
@@ -375,17 +426,21 @@ export default function Page() {
                     {confirmDialog?.type === 'password' && '¿Enviar email de restablecimiento?'}
                     {confirmDialog?.type === 'ban' && '¿Banear este usuario?'}
                     {confirmDialog?.type === 'unban' && '¿Reactivar este usuario?'}
+                    {confirmDialog?.type === 'backfill' && '¿Mapear canales faltantes?'}
                 </DialogTitle>
                 <DialogContent>
                     <Typography variant="body2" color="text.secondary">
-                        {confirmDialog?.type === 'password' && (
+                        {confirmDialog?.type === 'password' && confirmDialog.user && (
                             <>Se enviará un email de restablecimiento de contraseña a <strong>{confirmDialog.user.email}</strong>.  El usuario recibirá un enlace para crear una nueva contraseña.</>
                         )}
-                        {confirmDialog?.type === 'ban' && (
+                        {confirmDialog?.type === 'ban' && confirmDialog.user && (
                             <>El usuario <strong>{confirmDialog.user.name}</strong> será baneado y no podrá acceder a la plataforma.</>
                         )}
-                        {confirmDialog?.type === 'unban' && (
+                        {confirmDialog?.type === 'unban' && confirmDialog.user && (
                             <>El usuario <strong>{confirmDialog.user.name}</strong> será reactivado y podrá acceder nuevamente.</>
+                        )}
+                        {confirmDialog?.type === 'backfill' && (
+                            <>Se iterará sobre todos los perfiles de Comerciantes. Si se detectan campos vacíos, se generará dinámicamente un canal público en Sendbird y se guardará la referencia. Esta acción puede tomar varios segundos o minutos si hay muchos usuarios.</>
                         )}
                     </Typography>
                 </DialogContent>

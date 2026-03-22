@@ -1,6 +1,8 @@
 import SendbirdChat from '@sendbird/chat'
 import { GroupChannelModule } from '@sendbird/chat/groupChannel'
 import type { GroupChannelCreateParams } from '@sendbird/chat/groupChannel'
+import { OpenChannelModule } from '@sendbird/chat/openChannel'
+import type { OpenChannelCreateParams } from '@sendbird/chat/openChannel'
 import { getDraft, updateDraft } from '@services/drafts'
 // Need to import contracts if the user implements Phase 2 of this backend logic.
 // import { getContract, updateContract } from '@services/contracts'
@@ -17,7 +19,7 @@ export const getSendbirdInstance = (): SendbirdChat | null => {
     if (!sbInstance && appId) {
         sbInstance = SendbirdChat.init({
             appId,
-            modules: [new GroupChannelModule()],
+            modules: [new GroupChannelModule(), new OpenChannelModule()],
         })
     }
     return sbInstance
@@ -180,5 +182,36 @@ export const getOrCreateDirectChannel = async (
     } catch (error) {
         console.error('Error creating Direct Channel:', error)
         throw new Error('Hubo un problema al inicializar el chat.')
+    }
+}
+
+/**
+ * Gets or dynamically creates a programmatic Open Channel for a Merchant's Profile.
+ * Used for the comments section.
+ */
+export const createOpenChannelForUser = async (
+    merchantId: string,
+    merchantName: string
+): Promise<string> => {
+    // We connect with the moderator to orchestrate open channels
+    const sb = await ensureConnection(MODERATOR_ID)
+
+    const params: OpenChannelCreateParams = {
+        name: `Comentarios: ${merchantName}`,
+        customType: 'profile_comment',
+        operatorUserIds: [merchantId, MODERATOR_ID],
+        data: JSON.stringify({
+            type: 'profile',
+            merchantId,
+            title: `Comentarios de ${merchantName}`
+        })
+    }
+
+    try {
+        const channel = await (sb as any).openChannel.createChannel(params)
+        return channel.url
+    } catch (error) {
+        console.error('Error creating Open Channel for profile:', error)
+        throw new Error('Hubo un problema al crear el canal de comentarios abierto.')
     }
 }
