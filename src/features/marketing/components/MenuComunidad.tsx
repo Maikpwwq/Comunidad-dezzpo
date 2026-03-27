@@ -140,14 +140,21 @@ export function MenuComunidad(): React.ReactElement {
                             </Link>
                         </Col>
 
-                        {/* Mobile Toggle */}
-                        <Col xs={6} className="d-flex d-md-none justify-content-end">
+                        {/* Mobile Links & Toggle */}
+                        <Col xs={6} className="d-flex d-md-none justify-content-end align-items-center">
+                            <Link 
+                                href="/app/portal-servicios" 
+                                className="d-flex align-items-center me-3"
+                                style={{ color: '#28a745' }}
+                            >
+                                <Storefront sx={{ fontSize: '28px' }} />
+                            </Link>
                             <IconButton
                                 aria-label="mobile-more"
                                 onClick={handleToggleMenu}
-                                sx={{ color: '#28a745' }}
+                                sx={{ color: '#28a745', p: 0 }}
                             >
-                                <MenuIcon sx={{ fontSize: '30px' }} />
+                                <MenuIcon sx={{ fontSize: '32px' }} />
                             </IconButton>
                         </Col>
 

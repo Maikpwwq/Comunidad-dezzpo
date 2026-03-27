@@ -155,31 +155,33 @@ export default function Page() {
                 ) : null}
             </Row>
 
-            <section className="col-12 pt-4 pb-4 px-2 px-md-3" style={{ overflow: 'hidden' }}>
-                <div className="pb-2 p-0">
-                    <h3 className="type-section-title">
-                        Todos los profesionales
-                    </h3>
-                </div>
-                <p className="type-caption px-2">
-                    Directorio de comerciantes calificados, contratistas
-                    independientes y empresas del sector. <br />
-                    Encuentra todo lo mejor en asisitencia técnica!
-                </p>
+            <Row className="m-0 w-100 pt-4 pb-4" style={{ overflow: 'hidden' }}>
+                <Col xs={12} className="p-0">
+                    <div className="pb-2 p-0 px-3">
+                        <h3 className="type-section-title">
+                            Todos los profesionales
+                        </h3>
+                    </div>
+                    <p className="type-caption px-3">
+                        Directorio de comerciantes calificados, contratistas
+                        independientes y empresas del sector. <br />
+                        Encuentra todo lo mejor en asisitencia técnica!
+                    </p>
 
-                <Suspense fallback={<PortalSkeleton />}>
-                    <section className={styles['directory-wrapper']}>
-                        {usersData &&
-                            usersData.length > 0 &&
-                            usersData.map((user) => (
-                                <UserCard
-                                    key={user.userId || user.uid}
-                                    {...user}
-                                />
-                            ))}
-                    </section>
-                </Suspense>
-            </section>
+                    <Suspense fallback={<PortalSkeleton />}>
+                        <section className={styles['directory-wrapper']}>
+                            {usersData &&
+                                usersData.length > 0 &&
+                                usersData.map((user) => (
+                                    <UserCard
+                                        key={user.userId || user.uid}
+                                        {...user}
+                                    />
+                                ))}
+                        </section>
+                    </Suspense>
+                </Col>
+            </Row>
         </Container>
     )
 }
