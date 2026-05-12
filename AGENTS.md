@@ -45,7 +45,7 @@ import { useAuth } from '../../../hooks/useAuth'
 ### No Legacy Patterns
 - **RXJS IS BANNED**: Do not use RxJS Subjects. Use Zustand.
 - **NO .jsx FILES**: All new code must be `.tsx` or `.ts`.
-- **NO Legacy Wrappers**: Do not use old HOCs or `PageShell` wrappers inside features.
+- **NO Legacy Wrappers**: Do not use old HOCs or duplicate root concerns inside features. The real `PageShell` at `pages/PageShell.tsx` is the only place for root `ThemeProvider`, `CssBaseline`, and `UserAuthProvider` (plus `PageContextProvider`).
 
 ## 2. State Management Rules (Zustand)
 
@@ -93,23 +93,25 @@ export type ServiceResponse<T> =
   - strict `+guard.ts` protection.
   - Heavy use of Zustand stores.
 
-### Admin Context (`pages/(admin)`)
+### Admin Context (`pages/admin`)
 - **Focus**: Platform governance, data sovereignty, trust & safety.
 - **Constraints**:
   - **Admin Guard**: `useAdminGuard` hook checks `getIdTokenResult().claims.admin === true`. Non-admins are redirected to `/`.
   - **Isolated Bundle**: Admin layout is separate from the main app layout. No Sendbird, no user sidebar.
   - **Firestore Admin Predicate**: `isAdmin()` in Firestore rules grants read/update on user collections.
-  - **Never expose admin logic in main app bundle**: Admin service (`@services/admin`) must only be imported within `(admin)/*` pages.
+  - **Never expose admin logic in main app bundle**: Admin service (`@services/admin`) must only be imported within `pages/admin/*` routes.
 
 ## 5. Visual Guide
 
-### File Structure
 ### File Structure
 ```
 comunidad-dezzpo/
 ├── pages/
 │   ├── +config.ts                            # Global Vike v1 config
 │   ├── +Layout.tsx                           # Root layout wrapper
+│   ├── +onRenderHtml.tsx                     # SSR + Emotion critical CSS → <head>
+│   ├── +onRenderClient.tsx                   # CSR/hydration + Emotion CacheProvider
+│   ├── PageShell.tsx                         # ThemeProvider, CssBaseline, auth, page context
 │   │
 │   ├── (marketing)/                          # Route Group: Marketing (SSR/SSG)
 │   │   ├── +Layout.tsx
@@ -119,19 +121,21 @@ comunidad-dezzpo/
 │   │   ├── +Layout.tsx
 │   │   └── ... (Login, Register)
 │   │
-│   ├── (app)/                                # Route Group: Protected App (CSR)
+│   ├── (app)/                                # Route Group: App shell + hybrid/auth routes
 │   │   ├── +Layout.tsx                       # App Shell (Sidebar + Navbar)
 │   │   ├── +guard.ts                         # Auth guard
 │   │   └── ... (Dashboard, Profile, Quotes)
 │   │
-│   ├── (admin)/                              # Route Group: Admin Control Tower
+│   ├── admin/                                # Admin Control Tower
 │   │   ├── +Layout.tsx                       # Admin guard + sidebar
-│   │   ├── agents.md                         # Admin-specific constraints
+│   │   ├── AGENTS.md                         # Admin-specific constraints
 │   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts
 │   │   ├── usuarios/+Page.tsx                # MUI DataGrid + drawer
 │   │   └── verificacion/+Page.tsx            # Identity verification queue
 │   │
 ├── src/
+│   ├── emotion/
+│   │   └── createEmotionCache.ts             # Emotion cache key + client singleton
 │   ├── components/                           # Atomic Design components
 │   ├── features/                             # Feature modules
 │   ├── services/                             # Data layer
@@ -161,9 +165,9 @@ comunidad-dezzpo/
 
 ## 6. Sub-Agent Orchestration
 This file acts as the primary orchestrator. For specific domain constraints, refer to:
-- **Marketing Pages**: [pages/(marketing)/agents.md](pages/(marketing)/agents.md)
-- **App/Dashboard**: [pages/(app)/agents.md](pages/(app)/agents.md)
-- **Admin Panel**: [pages/(admin)/agents.md](pages/(admin)/agents.md)
+- **Marketing Pages**: [pages/(marketing)/AGENTS.md](pages/(marketing)/AGENTS.md)
+- **App/Dashboard**: [pages/(app)/AGENTS.md](pages/(app)/AGENTS.md)
+- **Admin Panel**: [pages/admin/AGENTS.md](pages/admin/AGENTS.md)
 
 ## 7. RAG Chatbot Constraints
 
@@ -186,7 +190,7 @@ This file acts as the primary orchestrator. For specific domain constraints, ref
 - Rate limit: 35s delay between embedding batches (Gemini free tier: 100 RPM).
 
 ### ChatWidget (`src/features/chat/ChatWidget.tsx`)
-- Global mount in `pages/(app)/+Layout.tsx`.
+- Global mount in `pages/(app)/+Layout.tsx` (inside the app route group layout, under root `PageShell`).
 - State via `useChatStore` (Zustand): `isOpen`, `currentPathname`, `toggleChat()`, `setOpen()`.
 - Uses native `fetch` + `ReadableStream` (not `useChat` — AI SDK v6 incompatible).
 - Sends `currentPathname` for context-aware retrieval.
@@ -248,14 +252,23 @@ pending_payment → active → completed → disputed
   - **Server Entry**: Logic resides in `server/index.ts` using `@photonjs/hono`.
   - **Vite Version**: Must be v7+ for `vike-photon` compatibility.
 
-## 8. Package Manager Policy (STRICT)
+### MUI v6 + Emotion SSR (2026-05)
+- **Stack**: `@mui/material` / `@mui/icons-material` v6, `@mui/x-data-grid` v7, Emotion 11, `@emotion/server` for critical CSS on SSR.
+- **Do not duplicate providers**: `ThemeProvider`, `CssBaseline`, and `UserAuthProvider` live only in `pages/PageShell.tsx`. `(app)/+Layout.tsx` and `admin/+Layout.tsx` must not wrap the tree again with another theme or auth root.
+- **Render hooks**: `+onRenderHtml.tsx` and `+onRenderClient.tsx` both wrap with Emotion `CacheProvider` using `src/emotion/createEmotionCache.ts` (stable key `mui`, `prepend: true`). Server extracts Emotion chunks and injects `<style>` tags in `<head>` after Bootstrap so MUI wins cascade conflicts where both apply.
+- **Vite**: `vite.config.ts` → `ssr.noExternal` in production bundles specific deps (Sendbird, `date-fns`, `firebase`, `zustand`, etc.). MUI/Emotion are not in that list; if SSR resolution breaks after upgrades, consider re-adding them per Vite/MUI docs.
+- **Lockfile**: `pnpm.overrides` pins `@mui/system` to `6.5.0` alongside Data Grid v7. Do not remove without checking `pnpm why @mui/system`.
+- **MUI v9**: Out of scope for drive-by bumps; requires a planned migration (Grid v2, `sx`-only system props, icons/slots, Data Grid v9).
+- **Artifact**: Deep-dive and step-6 checklist — [docs/mui-emotion-ssr-vike.md](docs/mui-emotion-ssr-vike.md).
+
+## 10. Package Manager Policy (STRICT)
 - **ALWAYS use `pnpm`**.
 - **NEVER use `npm` or `npx`**.
 - Use `pnpm dlx` instead of `npx`.
 - Use `pnpm run <script>` for package scripts.
 
 
-## 9. CSS & Typography Guide (STRICT)
+## 11. CSS & Typography Guide (STRICT)
 
 ### Naming Convention
 - **Kebab-case only**: All SCSS classes must use `kebab-case`.

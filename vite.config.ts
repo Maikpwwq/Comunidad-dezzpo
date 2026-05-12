@@ -12,14 +12,6 @@ const isProd = process.env.NODE_ENV === 'production'
 const noExternal: string[] = []
 if (isProd) {
   noExternal.push(
-    // MUI requires pre-processing by Vite in production
-    '@mui/base',
-    '@mui/icons-material',
-    '@mui/material',
-    '@mui/utils',
-    '@mui/x-data-grid',
-    '@emotion/react',
-    '@emotion/styled',
     // Third-party UI libraries
     // 'react-bootstrap', // Commented out to fix SSR named import element type error (let Node handle CJS interop)
     'date-fns',

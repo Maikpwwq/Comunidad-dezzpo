@@ -1,6 +1,6 @@
 # Admin Control Tower — Agent Constraints
 
-> **SCOPE**: This file governs all pages under `pages/(admin)/*`.
+> **SCOPE**: This file governs all pages under `pages/admin/*` (URL prefix `/admin/*`).
 
 ## 1. Security Architecture
 
@@ -16,7 +16,7 @@
 - Admins **cannot** delete user documents
 
 ### Bundle Isolation
-- Admin service (`@services/admin`) must **only** be imported inside `(admin)/*` pages
+- Admin service (`@services/admin`) must **only** be imported inside `pages/admin/*` pages
 - Never import admin components or services in `(app)/*` or `(marketing)/*` routes
 - The admin layout does **not** initialize Sendbird UI components. However, the root moderator ID (`847329`) is programmatically invited to all private negotiation channels for oversight.
 
@@ -43,7 +43,16 @@
 | Package | Usage |
 |---------|-------|
 | `recharts` | Pie chart (user distribution), Bar chart (contract health) |
-| `@mui/x-data-grid` | High-performance user table with sorting, pagination, search |
+| `@mui/x-data-grid` (v7) | High-performance user table with sorting, pagination, search |
+| `@mui/material` / `@mui/icons-material` (v6) | Layout, dialogs, chips — same major line as the rest of the app |
+
+**Lockfile note:** The repo pins `@mui/system` to **6.5.0** via `pnpm.overrides` in `package.json` so Data Grid v7 does not pull a conflicting newer `@mui/system`. Before changing MUI or Data Grid majors, run `pnpm why @mui/system` and follow the official migration guides.
+
+### Theme and providers
+
+- Admin UI uses the **same** root `ThemeProvider` and `CssBaseline` as marketing and app (`pages/PageShell.tsx`). Do not wrap admin pages in a second `ThemeProvider`.
+
+---
 
 ## 5. Setup Requirements
 
@@ -53,7 +62,7 @@
 
 ## 6. Coding Constraints
 
-- Follow all global constraints from the root `agents.md`
+- Follow all global constraints from the root `AGENTS.md`
 - Use **atomic Zustand selectors** — never destructure full store
 - Use **path aliases** (`@services/admin`, `@hooks/useAdminGuard`) — no relative imports
 - All new code must be `.tsx` / `.ts` — no `.jsx`

@@ -7,200 +7,156 @@
 
 import React, { useState } from 'react'
 // MUI
-import { ThemeProvider } from '@mui/material/styles'
-import {
-    Box,
-    Typography,
-    Link,
-    CssBaseline
-} from '@mui/material'
+import { Box, Typography, Link } from '@mui/material'
 // Layout components
 import { Sidebar, Navbar } from '@components/layout'
-// Theme
-import { theme } from '@config/theme'
 // Zustand store
 import { useUserStore } from '@stores/userStore'
 // Providers
-import { SendbirdProviderWrapper, UserAuthProvider } from '@providers'
+import { SendbirdProviderWrapper } from '@providers'
 import ChatWidget from '@features/chat/ChatWidget'
-// Styles
-
 
 interface LayoutProps {
-    children: React.ReactNode
+  children: React.ReactNode
 }
 
 const drawerWidth = 256
 
 function Copyright(): React.ReactElement {
-    const showYear = new Date().getFullYear()
-    return (
-        <Typography variant="body2" color="text.secondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="#">
-                Comunidad Dezzpo Inc.
-                <br /> - Todos los derechos reservados -
-            </Link>
-            {showYear}.
-        </Typography>
-    )
+  const showYear = new Date().getFullYear()
+  return (
+    <Typography variant="body2" color="text.secondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="#">
+        Comunidad Dezzpo Inc.
+        <br /> - Todos los derechos reservados -
+      </Link>
+      {showYear}.
+    </Typography>
+  )
 }
 
 export function Layout({ children }: LayoutProps): React.ReactElement {
-    // Zustland store - Atomic selectors to prevent re-renders
-    const isAuth = useUserStore((state) => state.isAuth)
-    const mobileOpen = useUserStore((state) => state.mobileOpen)
-    const updateMobileMenu = useUserStore((state) => state.updateMobileMenu)
+  const isAuth = useUserStore((state) => state.isAuth)
+  const mobileOpen = useUserStore((state) => state.mobileOpen)
+  const updateMobileMenu = useUserStore((state) => state.updateMobileMenu)
 
-    // Local state for permanent drawer
-    const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
-    // Drawer toggle handlers
-    const handleMobileClose = () => {
-        updateMobileMenu(false)
-    }
+  const handleMobileClose = () => {
+    updateMobileMenu(false)
+  }
 
-    const handleMenuToggle = () => {
-        updateMobileMenu(!mobileOpen)
-    }
+  const handleMenuToggle = () => {
+    updateMobileMenu(!mobileOpen)
+  }
 
-    return (
-        <ThemeProvider theme={theme}>
-            <UserAuthProvider>
-                {isAuth ? (
-                    <SendbirdProviderWrapper>
-                        <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-                            <CssBaseline />
+  return (
+    <>
+      {isAuth ? (
+        <SendbirdProviderWrapper>
+          <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+            {/* Sidebar Navigation */}
+            <Box
+              component="nav"
+              sx={{
+                width: { md: drawerWidth },
+                flexShrink: { sm: 0 },
+              }}
+            >
+              {mobileOpen && (
+                <Sidebar open={mobileOpen} onClose={handleMobileClose} variant="temporary" />
+              )}
 
-                            {/* Sidebar Navigation */}
-                            <Box
-                                component="nav"
-                                sx={{
-                                    width: { md: drawerWidth },
-                                    flexShrink: { sm: 0 },
-                                }}
-                            >
-                                {/* Mobile temporary drawer */}
-                                {mobileOpen && (
-                                    <Sidebar
-                                        open={mobileOpen}
-                                        onClose={handleMobileClose}
-                                        variant="temporary"
-                                    />
-                                )}
+              <Box
+                sx={{
+                  display: {
+                    md: 'block',
+                    sm: 'none',
+                    xs: 'none',
+                  },
+                }}
+              >
+                <Sidebar
+                  open={sidebarOpen}
+                  onClose={() => setSidebarOpen(false)}
+                  variant="permanent"
+                />
+              </Box>
+            </Box>
 
-                                {/* Desktop permanent drawer */}
-                                <Box
-                                    sx={{
-                                        display: {
-                                            md: 'block',
-                                            sm: 'none',
-                                            xs: 'none',
-                                        },
-                                    }}
-                                >
-                                    <Sidebar
-                                        open={sidebarOpen}
-                                        onClose={() => setSidebarOpen(false)}
-                                        variant="permanent"
-                                    />
-                                </Box>
-                            </Box>
+            <Box
+              sx={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+              style={{ overflowX: 'auto' }}
+            >
+              <Navbar onMenuToggle={handleMenuToggle} />
 
-                            {/* Main Content Area */}
-                            <Box
-                                sx={{
-                                    flex: 1,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                }}
-                                style={{ overflowX: 'auto' }}
-                            >
-                                <Navbar onMenuToggle={handleMenuToggle} />
+              <Box className="p-0" component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#ffffff' }}>
+                {children}
+              </Box>
 
-                                <Box
-                                    className="p-0"
-                                    component="main"
-                                    sx={{ flex: 1, py: 6, px: 4, bgcolor: '#ffffff' }}
-                                >
-                                    {children}
-                                </Box>
+              <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
+                <Copyright />
+              </Box>
+            </Box>
+          </Box>
+        </SendbirdProviderWrapper>
+      ) : (
+        <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+          <Box
+            component="nav"
+            sx={{
+              width: { md: drawerWidth },
+              flexShrink: { sm: 0 },
+            }}
+          >
+            {mobileOpen && (
+              <Sidebar open={mobileOpen} onClose={handleMobileClose} variant="temporary" />
+            )}
 
-                                <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
-                                    <Copyright />
-                                </Box>
-                            </Box>
-                        </Box>
-                    </SendbirdProviderWrapper>
-                ) : (
-                    // Guest Layout (No Sendbird)
-                    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-                        <CssBaseline />
+            <Box
+              sx={{
+                display: {
+                  md: 'block',
+                  sm: 'none',
+                  xs: 'none',
+                },
+              }}
+            >
+              <Sidebar
+                open={sidebarOpen}
+                onClose={() => setSidebarOpen(false)}
+                variant="permanent"
+              />
+            </Box>
+          </Box>
 
-                        {/* Sidebar Navigation (Guest)*/}
-                        <Box
-                            component="nav"
-                            sx={{
-                                width: { md: drawerWidth },
-                                flexShrink: { sm: 0 },
-                            }}
-                        >
-                            {/* Mobile temporary drawer */}
-                            {mobileOpen && (
-                                <Sidebar
-                                    open={mobileOpen}
-                                    onClose={handleMobileClose}
-                                    variant="temporary"
-                                />
-                            )}
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+            style={{ overflowX: 'auto' }}
+          >
+            <Navbar onMenuToggle={handleMenuToggle} />
 
-                            {/* Desktop permanent drawer */}
-                            <Box
-                                sx={{
-                                    display: {
-                                        md: 'block',
-                                        sm: 'none',
-                                        xs: 'none',
-                                    },
-                                }}
-                            >
-                                <Sidebar
-                                    open={sidebarOpen}
-                                    onClose={() => setSidebarOpen(false)}
-                                    variant="permanent"
-                                />
-                            </Box>
-                        </Box>
+            <Box className="p-0" component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#ffffff' }}>
+              {children}
+            </Box>
 
-                        {/* Main Content Area */}
-                        <Box
-                            sx={{
-                                flex: 1,
-                                display: 'flex',
-                                flexDirection: 'column',
-                            }}
-                            style={{ overflowX: 'auto' }}
-                        >
-                            <Navbar onMenuToggle={handleMenuToggle} />
+            <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
+              <Copyright />
+            </Box>
+          </Box>
+        </Box>
+      )}
 
-                            <Box
-                                className="p-0"
-                                component="main"
-                                sx={{ flex: 1, py: 6, px: 4, bgcolor: '#ffffff' }}
-                            >
-                                {children}
-                            </Box>
-
-                            <Box component="footer" sx={{ p: 2, bgcolor: '#eaeff1' }}>
-                                <Copyright />
-                            </Box>
-                        </Box>
-                    </Box>
-                )}
-
-                {/* RAG Chat Widget — global, available on all app pages */}
-                <ChatWidget />
-            </UserAuthProvider>
-        </ThemeProvider>
-    )
+      <ChatWidget />
+    </>
+  )
 }

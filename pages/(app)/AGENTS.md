@@ -1,14 +1,21 @@
 # App Dashboard - AI Agent Context
 
-> **Scope**: This context applies to all pages under `pages/app/`
-> These are PROTECTED pages requiring authentication.
+> **Scope**: This context applies to all pages under `pages/(app)/` (URL prefix `/app/*`).
+> These routes use the app shell; many require authentication, and some are **hybrid** (guest + auth).
+
+---
+
+## MUI, Emotion, and root providers
+
+- **Do not add** another `ThemeProvider`, `CssBaseline`, or root `UserAuthProvider` in `(app)/+Layout.tsx` or feature code. They already wrap the whole app from `pages/PageShell.tsx`, with Emotion `CacheProvider` in `+onRenderHtml` / `+onRenderClient`.
+- Use MUI components and `sx` as usual; SSR/hydration depend on the shared Emotion cache key in `src/emotion/createEmotionCache.ts` (`mui`).
 
 ---
 
 ## Route Configuration
 
 ```typescript
-// pages/app/+config.ts
+// pages/(app)/+config.ts
 export default {
   prerender: false,  // ← Dynamic content, no SSG
 } satisfies Config
@@ -21,7 +28,7 @@ export default {
 All `/app/*` routes are protected by `+guard.ts`:
 
 ```typescript
-// pages/app/+guard.ts
+// pages/(app)/+guard.ts
 import { redirect } from 'vike/abort'
 import type { GuardSync } from 'vike/types'
 

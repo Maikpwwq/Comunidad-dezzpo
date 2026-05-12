@@ -14,7 +14,12 @@ export default {
 } satisfies Config
 ```
 
-> **Note**: Some public-facing pages (like `portal-servicios`) live in `pages/app/` as **Hybrid Routes**. They allow guest access but use the App Layout, not the Marketing Layout.
+> **Note**: Some public-facing pages (like `portal-servicios`) live in `pages/(app)/` as **Hybrid Routes**. They allow guest access but use the App Layout, not the Marketing Layout.
+
+### MUI + Emotion on marketing pages
+
+- Marketing routes still render inside the global Vike pipeline: `+onRenderHtml` wraps the tree with Emotion `CacheProvider` and `PageShell` (MUI `ThemeProvider` + `CssBaseline`), then extracts critical Emotion styles into `<head>` (after Bootstrap) for correct first paint and hydration.
+- Prefer SSR-safe patterns (no `window` / `localStorage` / direct `firebase.auth()` in the first render). Heavy client-only widgets should defer work to `useEffect` or client-only subtrees when necessary.
 
 ---
 

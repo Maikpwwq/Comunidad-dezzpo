@@ -2,9 +2,11 @@
 
 Professional network for real estate maintenance, remodeling, and finishes. We connect qualified professionals with users through a trusted marketplace.
 
+**Coding agents:** start from the repo root [`AGENTS.md`](./AGENTS.md); nested [`pages/(marketing)/AGENTS.md`](./pages/(marketing)/AGENTS.md), [`pages/(app)/AGENTS.md`](./pages/(app)/AGENTS.md), and [`pages/admin/AGENTS.md`](./pages/admin/AGENTS.md) add route-group rules. MUI + Emotion + Vike SSR details: [`docs/mui-emotion-ssr-vike.md`](./docs/mui-emotion-ssr-vike.md).
+
 ## Tech Stack
 - **Framework**: [Vike v0.4.x](https://vike.dev/) (SSR/SSG)
-- **UI Context**: React 18 + MUI v5
+- **UI**: React 18 + [MUI v6](https://mui.com/) (`@mui/material`, `@mui/icons-material`) + [@mui/x-data-grid](https://mui.com/x/react-data-grid/) v7 + **Emotion** (`@emotion/react`, `@emotion/styled`, `@emotion/server`, `@emotion/cache`) for SSR-friendly styling
 - **State**: Zustand (replacing Context/RxJS)
 - **Auth**: Firebase Auth (Google + Email)
 - **Server**: Hono (via vike-photon / @photonjs/hono)
@@ -37,7 +39,6 @@ The project utilizes a **Tiered Access Model**:
 - **Frontend**: React + TypeScript
 - **Server**: Hono (via Vike-Photon)
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **UI Library**: [MUI v6](https://mui.com/)
 - **Backend/Services**: Firebase (Auth, Firestore, Storage)
 - **AI/RAG Chatbot**: Gemini 2.5 Flash (via @ai-sdk/google) + Supabase pgvector
 - **Deployment**: Vercel (Serverless Functions)
@@ -49,8 +50,8 @@ comunidad-dezzpo/
 ├── pages/                                    # Vike root pages directory
 │   ├── +config.ts                            # Global Vike v1 config
 │   ├── +Layout.tsx                           # Root layout wrapper
-│   ├── +onRenderClient.tsx                   # Client renderer
-│   ├── +onRenderHtml.tsx                     # HTML renderer
+│   ├── +onRenderClient.tsx                   # Client renderer (Emotion CacheProvider)
+│   ├── +onRenderHtml.tsx                     # HTML renderer (Emotion critical CSS → <head>)
 │   ├── +Head.tsx                             # Shared <head> meta
 │   │
 │   ├── (marketing)/                          # Route Group: Marketing Pages (SSR/SSG)
@@ -69,9 +70,12 @@ comunidad-dezzpo/
 │   │   ├── usuarios/+Page.tsx                # User Management (DataGrid)
 │   │   ├── verificacion/+Page.tsx            # Identity Verification Queue
 │   │   └── apendice-costos/+Page.tsx         # Cost Appendix Management
+```
+
 ### 📂 PROJECT STRUCTURE
 
 * `@src/styles/`: [**STRICT**] Centralized SCSS (kebab-case). Global typography and variables.
+* `@src/emotion/`: Emotion cache factory (`createEmotionCache.ts`) shared by Vike `+onRenderHtml` / `+onRenderClient` for MUI SSR and hydration.
 * `@src/features/`: Complex, business-logic-heavy modules (e.g., quotes, dashboard).
 * `@src/components/`: Pure, reusable UI components (Buttons, Inputs, Layouts).
 * `@src/services/`: API and Firebase service layers.
@@ -173,6 +177,25 @@ pnpm build      # Build for production
 pnpm preview    # Preview build locally
 git push        # Auto-deploys to Vercel
 ```
+
+If the Vite build runs out of memory on large bundles, use a higher heap (example):
+
+```bash
+NODE_OPTIONS=--max-old-space-size=8192 pnpm build
+```
+
+### MUI, Emotion, and SSR (Vike)
+
+- **Single theme surface**: `pages/PageShell.tsx` wraps the tree with `ThemeProvider`, `CssBaseline`, `PageContextProvider`, and `UserAuthProvider`. App and admin layouts should not add a second `ThemeProvider` or duplicate auth providers.
+- **Emotion cache**: `src/emotion/createEmotionCache.ts` defines a stable cache key (`mui`) and `prepend: true`. The server creates a per-request cache; the client uses `getClientEmotionCache()` so hydration matches the server markup.
+- **Critical CSS**: `pages/+onRenderHtml.tsx` wraps the SSR tree in Emotion’s `CacheProvider`, uses `createEmotionServer` + `extractCriticalToChunks` / `constructStyleTagsFromChunks`, and injects the resulting `<style>` tags in `<head>` **after** the Bootstrap CDN link so MUI `sx` / component styles win where both apply.
+- **Client**: `pages/+onRenderClient.tsx` wraps the same structure with `CacheProvider` using the client singleton cache.
+- **Vite SSR**: `vite.config.ts` → `ssr.noExternal` (when `NODE_ENV === 'production'`) lists packages that must be bundled through Vite for SSR (for example Sendbird UIKit, `date-fns`, `firebase`, `zustand`). MUI and Emotion are not forced into that list in the current setup; if a future Vite/MUI upgrade breaks SSR resolution, consider adding `@mui/material` and `@emotion/*` back per [Vite SSR deps](https://vite.dev/config/ssr-options.html#ssr-noexternal) and [MUI server rendering](https://mui.com/material-ui/guides/server-rendering/).
+- **Dependency alignment**: `package.json` → `pnpm.overrides` pins `@mui/system` to **6.5.0** so it stays aligned with MUI v6 while using `@mui/x-data-grid` v7 (avoids duplicate incompatible `@mui/system` versions in the lockfile).
+
+Full checklist and diagrams: [`docs/mui-emotion-ssr-vike.md`](./docs/mui-emotion-ssr-vike.md).
+
+**MUI v9**: A major bump requires a dedicated migration (Grid v2, system props on `sx`, icons/slots, Data Grid v9). This repo intentionally stays on MUI v6 + Data Grid v7 until that work is scheduled.
 
 ### RAG Chatbot — Knowledge Seeding
 ```bash
