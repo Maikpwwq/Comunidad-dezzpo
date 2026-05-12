@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { usePageContext } from '@hooks/usePageContext'
 import { useAuth } from '@hooks/useAuth'
 // Services
-import { getDraft, updateDraft } from '@services/drafts'
+import { getDraft, updateDraft } from '@services/drafts/draftService'
 // Components
 // @ts-ignore
 import { AdjuntarArchivos } from '@components/common'

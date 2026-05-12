@@ -44,7 +44,7 @@ Bootstrap CDN is linked **before** Emotion’s `<style>` injection so MUI/Emotio
 | SSR HTML | `pages/+onRenderHtml.tsx` | Per-request cache, `renderToString`, extract chunks, inject tags, `emotionChunks.html` as `#root` body. |
 | CSR / hydration | `pages/+onRenderClient.tsx` | Wraps with `CacheProvider` + same `PageShell` shape. |
 | Theme / global providers | `pages/PageShell.tsx` | `ThemeProvider`, `CssBaseline`, `UserAuthProvider`, `PageContextProvider`. |
-| Vite SSR deps | `vite.config.ts` → `ssr.noExternal` | Production list bundles packages that need Vite’s SSR pipeline; MUI/Emotion are **not** forced there currently. |
+| Vite SSR deps | `vite.config.ts` → `ssr.noExternal` | **Production:** includes `@mui/*`, `@emotion/*`, Data Grid, Sendbird, `firebase`, etc., so Vite prebundles them for SSR. Omitting MUI/Emotion breaks Vercel with Node ESM `Directory import ... formatMuiErrorMessage` errors. |
 | MUI system pin | `package.json` → `pnpm.overrides` | `"@mui/system": "6.5.0"` keeps alignment with MUI v6 while using `@mui/x-data-grid` v7. |
 
 ## Completed implementation steps (1–5)
@@ -77,21 +77,19 @@ pnpm why @mui/system   # expect a single 6.5.x line while on MUI v6 + override
 
 ### C. If SSR breaks after upgrading Vite, Node, or MUI
 
-Re-evaluate `vite.config.ts` → `ssr.noExternal`. If Node externalization mis-resolves ESM/CJS for MUI or Emotion, add back (example):
+Keep **`@mui/material`**, **`@mui/system`**, **`@mui/utils`**, **`@mui/icons-material`**, **`@mui/x-data-grid`**, **`@emotion/react`**, **`@emotion/styled`**, and **`@emotion/cache`** in production `ssr.noExternal`. Dropping them commonly reproduces Vercel/Node errors such as unsupported directory imports under `@mui/utils/formatMuiErrorMessage`.
 
-- `@mui/material`
-- `@mui/system`
-- `@emotion/react`
-- `@emotion/styled`
-- `@emotion/cache`
-
-Then rebuild. See [Vite `ssr.noExternal`](https://vite.dev/config/ssr-options.html#ssr-noexternal) and [MUI server rendering](https://mui.com/material-ui/guides/server-rendering/).
+If new resolution issues appear after upgrades, see [Vite `ssr.noExternal`](https://vite.dev/config/ssr-options.html#ssr-noexternal) and [MUI server rendering](https://mui.com/material-ui/guides/server-rendering/).
 
 ### D. Deferred: MUI v9 + Data Grid v9
 
 Treat as a **separate migration project** (Grid v2, system props on `sx`, icons/slots, codemods). Do not bump `@mui/*` to v9 in the same change as SSR tweaks.
 
-### E. Optional polish
+### E. Rollup circular chunk warnings (drafts / Firebase)
+
+If the build warns that `draftService` exports are re-exported through `src/services/drafts/index.ts` while both end up in different chunks, import draft helpers **directly** from `@services/drafts/draftService` in pages and in `sendbird.service.ts`. Likewise, prefer `@services/firebase/authService` over `@services/firebase` for auth functions when the barrel re-export triggers chunk cycles with Sendbird.
+
+### F. Optional polish
 
 - Gate or remove verbose `[SSR]` `console.log` in `+onRenderHtml` for production logs.
 - Add a small Playwright (or similar) assertion that `data-emotion` exists in saved HTML for a prerendered marketing route.

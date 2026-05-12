@@ -15,7 +15,7 @@ import {
     signInWithGoogle,
     registerWithEmail as registerService,
     logout as logoutService,
-} from '@services/firebase'
+} from '@services/firebase/authService'
 import { setUser } from '@services/users'
 import { format } from 'date-fns'
 

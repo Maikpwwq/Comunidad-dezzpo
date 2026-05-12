@@ -4,7 +4,7 @@ import { navigate } from 'vike/client/router'
 import { usePageContext } from '@hooks/usePageContext'
 import { useAuth } from '@hooks/useAuth'
 // Services
-import { getDraft } from '@services/drafts'
+import { getDraft } from '@services/drafts/draftService'
 import { getQuotation } from '@services/quotations'
 import { getOrCreateDraftChannel } from '@services/sendbird'
 import type { DraftFirestoreDocument, QuotationFirestoreDocument } from '@services/types'

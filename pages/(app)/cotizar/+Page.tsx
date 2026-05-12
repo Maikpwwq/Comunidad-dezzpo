@@ -3,7 +3,7 @@ import { UserAuthContext } from '@providers/UserAuthProvider'
 import { v4 as uuidv4 } from 'uuid'
 import { usePageContext } from '@hooks/usePageContext'
 import { navigate } from 'vike/client/router'
-import { updateDraft } from '@services/drafts'
+import { updateDraft } from '@services/drafts/draftService'
 import { setQuotation } from '@services/quotations'
 import type { QuotationFirestoreDocument } from '@services/types'
 // UI Libs

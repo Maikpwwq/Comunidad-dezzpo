@@ -12,6 +12,15 @@ const isProd = process.env.NODE_ENV === 'production'
 const noExternal: string[] = []
 if (isProd) {
   noExternal.push(
+    // MUI + Emotion: must be bundled for SSR on Vercel/Node ESM (avoids directory-import errors under @mui/utils, etc.)
+    '@mui/material',
+    '@mui/icons-material',
+    '@mui/system',
+    '@mui/utils',
+    '@mui/x-data-grid',
+    '@emotion/cache',
+    '@emotion/react',
+    '@emotion/styled',
     // Third-party UI libraries
     // 'react-bootstrap', // Commented out to fix SSR named import element type error (let Node handle CJS interop)
     'date-fns',

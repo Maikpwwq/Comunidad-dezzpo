@@ -10,7 +10,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { navigate } from 'vike/client/router'
 import { useUserStore } from '@stores/userStore'
 import { useAuth } from '@hooks/useAuth'
-import { getAllDrafts } from '@services/drafts'
+import { getAllDrafts } from '@services/drafts/draftService'
 import { getUser } from '@services/users'
 // Components
 import { DraftCard } from '@features/quotes'

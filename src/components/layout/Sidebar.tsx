@@ -11,7 +11,7 @@ import { Link } from '@hooks'
 import { useUserStore } from '@stores/userStore'
 import { getSidebarConfig } from './navigation.config'
 import type { UserRole } from './types'
-import { logout } from '@services/firebase'
+import { logout } from '@services/firebase/authService'
 
 // MUI Components
 // MUI Components
