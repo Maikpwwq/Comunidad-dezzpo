@@ -106,6 +106,9 @@ export type ServiceResponse<T> =
 ### File Structure
 ```
 comunidad-dezzpo/
+├── +server.ts                               # Hono + @vikejs/hono (repo root; API then vike(app))
+├── server/
+│   └── api/                                 # chat.ts, payment/signature.ts
 ├── pages/
 │   ├── +config.ts                            # Global Vike v1 config
 │   ├── +Layout.tsx                           # Root layout wrapper
@@ -168,12 +171,12 @@ This file acts as the primary orchestrator. For specific domain constraints, ref
 - **Marketing Pages**: [pages/(marketing)/AGENTS.md](pages/(marketing)/AGENTS.md)
 - **App/Dashboard**: [pages/(app)/AGENTS.md](pages/(app)/AGENTS.md)
 - **Admin Panel**: [pages/admin/AGENTS.md](pages/admin/AGENTS.md)
+- **Server / Vercel / Vite**: [docs/server-stack-vike.md](docs/server-stack-vike.md)
 
 ## 7. RAG Chatbot Constraints
 
 ### Server Routing (CRITICAL)
-- **API routes MUST be registered BEFORE `apply(app)`** in `server/index.ts`.
-- Vike's `apply()` is a catch-all SSR handler. Routes defined AFTER it are never reached.
+- **API routes MUST be registered BEFORE `vike(app)`** in root `+server.ts`. Vike's handler is a catch-all; routes defined after it are never reached.
 - **Static imports only** for API handlers — dynamic `import()` fails on Vercel's bundled output.
 
 ### Chat API (`server/api/chat.ts`)
@@ -210,7 +213,7 @@ pending_payment → active → completed → disputed
 - **Private keys MUST stay server-side**: `VITE_APP_EPAYCO_PRIVATE_KEY` is consumed only in `server/api/payment/signature.ts`.
 - **Signature generation**: `md5(custId^privateKey^invoice^amount^currency)` — NEVER on the client.
 - **ePayco SDK**: Loaded from CDN, configured with public key only.
-- The payment signature route (`POST /api/v1/payment/signature`) MUST be registered BEFORE `apply(app)` in `server/index.ts`.
+- The payment signature route (`POST /api/v1/payment/signature`) MUST be registered BEFORE `vike(app)` in root `+server.ts`.
 
 ### Contract Service (`@services/contracts`)
 | Function | Returns | Purpose |
@@ -245,12 +248,12 @@ pending_payment → active → completed → disputed
 
 
 ### Vercel Deployment & Server Architecture (2026-01-27)
-- **Framework**: **Hono** (via `vike-photon`).
-- **Adapter**: `@photonjs/vercel` automates Vercel Serverless Function generation.
+- **Framework**: **Hono** with **`@vikejs/hono`** and Vike **root `+server.ts`** (replaces deprecated `vike-photon`).
+- **Adapter**: **`vite-plugin-vercel`** (`vercel()` in `vite.config.ts`) generates Vercel output; do not use `@photonjs/vercel` with this setup.
 - **Constraints**:
-  - **Do NOT use `vite-plugin-vercel`**: It conflicts with `vike-photon`.
-  - **Server Entry**: Logic resides in `server/index.ts` using `@photonjs/hono`.
-  - **Vite Version**: Must be v7+ for `vike-photon` compatibility.
+  - **Server entry**: Root `+server.ts` — export `{ fetch: app.fetch, prod?: { port, onReady } }` per [Vike +server](https://vike.dev/server).
+  - **API routes MUST be registered BEFORE `vike(app)`** so the Vike catch-all does not swallow them.
+  - **Vite**: v8+; plugin order `vike()` then `vercel()`. See [Vite migration](https://vite.dev/guide/migration) and [migration from vike-photon](https://vike.dev/migration/server).
 
 ### MUI v6 + Emotion SSR (2026-05)
 - **Stack**: `@mui/material` / `@mui/icons-material` v6, `@mui/x-data-grid` v7, Emotion 11, `@emotion/server` for critical CSS on SSR.
@@ -260,6 +263,7 @@ pending_payment → active → completed → disputed
 - **Lockfile**: `pnpm.overrides` pins `@mui/system` to `6.5.0` alongside Data Grid v7. Do not remove without checking `pnpm why @mui/system`.
 - **MUI v9**: Out of scope for drive-by bumps; requires a planned migration (Grid v2, `sx`-only system props, icons/slots, Data Grid v9).
 - **Artifact**: Deep-dive and step-6 checklist — [docs/mui-emotion-ssr-vike.md](docs/mui-emotion-ssr-vike.md).
+- **Server / Vercel**: [docs/server-stack-vike.md](docs/server-stack-vike.md).
 
 ## 10. Package Manager Policy (STRICT)
 - **ALWAYS use `pnpm`**.

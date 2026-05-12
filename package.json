@@ -37,10 +37,10 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "node --import tsx ./server/index.ts",
+    "dev": "vite",
     "build": "vite build",
     "prod": "vike build && node ./dist/server/index.mjs",
-    "preview": "cross-env NODE_ENV=production node --import tsx ./server/index.ts",
+    "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier . --write"
@@ -57,12 +57,10 @@
     "@mui/icons-material": "^6.5.0",
     "@mui/material": "^6.5.0",
     "@mui/x-data-grid": "^7.29.13",
-    "@photonjs/express": "^0.1.13",
-    "@photonjs/hono": "^0.1.12",
-    "@photonjs/vercel": "^0.1.23",
     "@sendbird/chat": "^4.22.2",
     "@sendbird/uikit-react": "^3.17.12",
     "@supabase/supabase-js": "^2.105.4",
+    "@vikejs/hono": "^0.2.0",
     "ai": "^6.0.177",
     "clsx": "^2.1.1",
     "compression": "^1.8.1",
@@ -86,7 +84,6 @@
     "sirv": "^3.0.2",
     "uuid": "^13.0.2",
     "vike": "^0.4.259",
-    "vike-photon": "^0.1.26",
     "zustand": "^5.0.13"
   },
   "devDependencies": {
@@ -109,7 +106,8 @@
     "sass": "^1.99.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "vite": "^7.3.3"
+    "vite": "^8.0.12",
+    "vite-plugin-vercel": "^11.1.0"
   },
   "pnpm": {
     "overrides": {

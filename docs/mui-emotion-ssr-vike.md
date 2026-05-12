@@ -45,6 +45,7 @@ Bootstrap CDN is linked **before** Emotion’s `<style>` injection so MUI/Emotio
 | CSR / hydration | `pages/+onRenderClient.tsx` | Wraps with `CacheProvider` + same `PageShell` shape. |
 | Theme / global providers | `pages/PageShell.tsx` | `ThemeProvider`, `CssBaseline`, `UserAuthProvider`, `PageContextProvider`. |
 | Vite SSR deps | `vite.config.ts` → `ssr.noExternal` | **Production:** includes `@mui/*`, `@emotion/*`, Data Grid, Sendbird, `firebase`, etc., so Vite prebundles them for SSR. Omitting MUI/Emotion breaks Vercel with Node ESM `Directory import ... formatMuiErrorMessage` errors. |
+| Node server + Vercel | Root `+server.ts` + `vite-plugin-vercel` | Hono app: register API routes **before** `vike(app)`. Self-host after `vike build`: `node ./dist/server/index.mjs` ([Vike +server](https://vike.dev/server)). |
 | MUI system pin | `package.json` → `pnpm.overrides` | `"@mui/system": "6.5.0"` keeps alignment with MUI v6 while using `@mui/x-data-grid` v7. |
 
 ## Completed implementation steps (1–5)
@@ -97,3 +98,4 @@ If the build warns that `draftService` exports are re-exported through `src/serv
 ## Agent context
 
 - Repository rules and boundaries: **`AGENTS.md`** (root) and route-group **`AGENTS.md`** under `pages/(marketing)/`, `pages/(app)/`, and `pages/admin/`.
+- **Server / Vercel / Vite**: [`docs/server-stack-vike.md`](./server-stack-vike.md).

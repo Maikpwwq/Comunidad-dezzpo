@@ -87,6 +87,7 @@
     }
   },
   "include": [
+    "+server.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.js",

@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import vike from 'vike/plugin'
+import { vercel } from 'vite-plugin-vercel/vite'
 import * as path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -42,6 +43,7 @@ export default defineConfig({
   plugins: [
     react(),
     vike({}),
+    vercel(),
   ],
 
   ssr: {
