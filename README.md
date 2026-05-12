@@ -10,7 +10,7 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 - **UI**: React 18 + [MUI v6](https://mui.com/) (`@mui/material`, `@mui/icons-material`) + [@mui/x-data-grid](https://mui.com/x/react-data-grid/) v7 + **Emotion** (`@emotion/react`, `@emotion/styled`, `@emotion/server`, `@emotion/cache`) for SSR-friendly styling
 - **State**: Zustand (replacing Context/RxJS)
 - **Auth**: Firebase Auth (Google + Email)
-- **Server**: Hono with `@vikejs/hono` (root `+server.ts`; see [Vike +server](https://vike.dev/server))
+- **Server**: Hono with `@vikejs/hono` (`pages/+server.ts`; see [Vike +server](https://vike.dev/server))
 - **AI/RAG**: Gemini 2.5 Flash + Supabase pgvector + AI SDK
 
 ### 🛠️ EXTERNAL PROVIDERS
@@ -41,7 +41,7 @@ The project utilizes a **Tiered Access Model**:
     - `/admin/verificacion` — Identity Verification Queue
 
 - **Frontend**: React + TypeScript
-- **Server**: Hono with Vike root `+server.ts` and `@vikejs/hono`
+- **Server**: Hono with Vike `pages/+server.ts` and `@vikejs/hono`
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand)
 - **Backend/Services**: Firebase (Auth, Firestore, Storage)
 - **AI/RAG Chatbot**: Gemini 2.5 Flash (via @ai-sdk/google) + Supabase pgvector
@@ -412,19 +412,19 @@ View live typography samples at `/dev/typography`.
 
 ## Vite, Vike server, and Vercel
 
-- **Vite 8** is the build tool (`vite`, `@vitejs/plugin-react-swc`). Follow [Vite migration](https://vite.dev/guide/migration) when upgrading; optional `future` flags are documented in [Vite config — future](https://vite.dev/config/shared-options.html#future).
-- **Vike** uses root **`+server.ts`** (not `pages/+server.ts`): Hono app, custom API routes registered **before** `vike(app)`, then `export default { fetch: app.fetch, prod?: { port, onReady } }` per [Vike +server](https://vike.dev/server) and [Migration from vike-photon](https://vike.dev/migration/server). **`vike-photon`** and **`@photonjs/hono`** are removed; use **`@vikejs/hono`** only.
-- **Vercel**: **`vite-plugin-vercel`** — `import { vercel } from 'vite-plugin-vercel/vite'` and register `vercel()` **after** `vike({})` in `vite.config.ts` per [Deploy > Vercel](https://vike.dev/vercel).
-- **Scripts**: `pnpm dev` runs **`vite`** (Vike dev server + HMR for `+server.ts`). Production bundle: `pnpm build`; self-host output: `pnpm prod` (`vike build` then `node ./dist/server/index.mjs`).
-- **Typecheck**: root `+server.ts` is listed in `tsconfig.json` → `include`.
+- **Vite 8** is the build tool (`vite`, `@vitejs/plugin-react-swc`). Follow [Vite migration](https://vite.dev/guide/migration) when upgrading.
+- **Vike** uses **`pages/+server.ts`**: Hono app, custom API routes registered **before** `vike(app)`, then `export default { fetch: app.fetch, prod?: { port, onReady } } satisfies Server` per [Vike +server](https://vike.dev/server) and [Migration from vike-photon](https://vike.dev/migration/server). Use **`@vikejs/hono`** only (not `vike-photon` / `@photonjs/*`).
+- **Vercel**: **`vite-plugin-vercel`** — `import { vercel } from 'vite-plugin-vercel/vite'` and register `vercel()` after `vike({})` (and after `@vitejs/plugin-react-swc`) in `vite.config.ts` per [Deploy > Vercel](https://vike.dev/vercel).
+- **Scripts**: `pnpm dev` runs **`vite`** (Vike dev server + HMR for `pages/+server.ts`). Production bundle: `pnpm build`; run the built SSR app locally: `pnpm prod` (`vike build && vike preview`).
+- **Typecheck**: `pages/+server.ts` is covered by `tsconfig.json` → `include` (`pages/**/*.ts`).
 
 Full reference: [`docs/server-stack-vike.md`](./docs/server-stack-vike.md).
 
 ## Server Architecture Notes
 
-- **API routes MUST be defined BEFORE `vike(app)`** in root `+server.ts`. The Vike middleware is a catch-all; anything registered after it never runs.
+- **API routes MUST be defined BEFORE `vike(app)`** in `pages/+server.ts`. The Vike middleware is a catch-all; anything registered after it never runs.
 - **Static imports only** for API handlers — dynamic imports fail on Vercel's bundled output.
-- **`dotenv/config`** is imported at the top of root `+server.ts` for local env loading.
+- **`dotenv/config`** is imported at the top of `pages/+server.ts` for local env loading.
 - **`VITE_APP_*` env vars** are bridged to standard names in `server/api/chat.ts`.
 - **Registered API routes:**
   - `POST /api/v1/chat` — RAG chatbot (Gemini + Supabase pgvector)

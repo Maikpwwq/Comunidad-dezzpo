@@ -176,7 +176,7 @@ This file acts as the primary orchestrator. For specific domain constraints, ref
 ## 7. RAG Chatbot Constraints
 
 ### Server Routing (CRITICAL)
-- **API routes MUST be registered BEFORE `vike(app)`** in root `+server.ts`. Vike's handler is a catch-all; routes defined after it are never reached.
+- **API routes MUST be registered BEFORE `vike(app)`** in `pages/+server.ts`. Vike's handler is a catch-all; routes defined after it are never reached.
 - **Static imports only** for API handlers — dynamic `import()` fails on Vercel's bundled output.
 
 ### Chat API (`server/api/chat.ts`)
@@ -213,7 +213,7 @@ pending_payment → active → completed → disputed
 - **Private keys MUST stay server-side**: `VITE_APP_EPAYCO_PRIVATE_KEY` is consumed only in `server/api/payment/signature.ts`.
 - **Signature generation**: `md5(custId^privateKey^invoice^amount^currency)` — NEVER on the client.
 - **ePayco SDK**: Loaded from CDN, configured with public key only.
-- The payment signature route (`POST /api/v1/payment/signature`) MUST be registered BEFORE `vike(app)` in root `+server.ts`.
+- The payment signature route (`POST /api/v1/payment/signature`) MUST be registered BEFORE `vike(app)` in `pages/+server.ts`.
 
 ### Contract Service (`@services/contracts`)
 | Function | Returns | Purpose |
@@ -248,12 +248,12 @@ pending_payment → active → completed → disputed
 
 
 ### Vercel Deployment & Server Architecture (2026-01-27)
-- **Framework**: **Hono** with **`@vikejs/hono`** and Vike **root `+server.ts`** (replaces deprecated `vike-photon`).
+- **Framework**: **Hono** with **`@vikejs/hono`** and Vike **`pages/+server.ts`** (replaces deprecated `vike-photon`).
 - **Adapter**: **`vite-plugin-vercel`** (`vercel()` in `vite.config.ts`) generates Vercel output; do not use `@photonjs/vercel` with this setup.
 - **Constraints**:
-  - **Server entry**: Root `+server.ts` — export `{ fetch: app.fetch, prod?: { port, onReady } }` per [Vike +server](https://vike.dev/server).
+  - **Server entry**: `pages/+server.ts` — export `{ fetch: app.fetch, prod?: { port, onReady } }` per [Vike +server](https://vike.dev/server). Local run of the production bundle: `pnpm prod` (`vike build && vike preview`). Vercel uses the adapter output (see [Vike > Vercel](https://vike.dev/vercel)).
   - **API routes MUST be registered BEFORE `vike(app)`** so the Vike catch-all does not swallow them.
-  - **Vite**: v8+; plugin order `vike()` then `vercel()`. See [Vite migration](https://vite.dev/guide/migration) and [migration from vike-photon](https://vike.dev/migration/server).
+  - **Vite**: v8+; plugin order `react()`, `vike({})`, `vercel()` (API routes stay in `pages/+server.ts` before `vike(app)`). See [Vite migration](https://vite.dev/guide/migration) and [migration from vike-photon](https://vike.dev/migration/server).
 
 ### MUI v6 + Emotion SSR (2026-05)
 - **Stack**: `@mui/material` / `@mui/icons-material` v6, `@mui/x-data-grid` v7, Emotion 11, `@emotion/server` for critical CSS on SSR.

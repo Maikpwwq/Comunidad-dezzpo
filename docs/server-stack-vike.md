@@ -6,7 +6,7 @@ Single reference for how this repo runs the **HTTP server**, integrates **Vike S
 
 | Removed | Replaced with |
 |--------|----------------|
-| `vike-photon` + `extends: [vikePhoton]` + `photon: { server }` in `pages/+config.ts` | Vike **native** [`+server`](https://vike.dev/server) at **repo root** `+server.ts` |
+| `vike-photon` + `extends: [vikePhoton]` + `photon: { server }` in `pages/+config.ts` | Vike **native** [`+server`](https://vike.dev/server) at **`pages/+server.ts`** |
 | `@photonjs/hono` (`apply` / `serve`) | [`@vikejs/hono`](https://vike.dev/server): `import vike from '@vikejs/hono'` then `vike(app)` |
 | `@photonjs/vercel` | [`vite-plugin-vercel`](https://vike.dev/vercel): `vercel()` in `vite.config.ts` |
 
@@ -16,18 +16,18 @@ Official guide: [Migration to +server](https://vike.dev/migration/server).
 
 | Path | Role |
 |------|------|
-| `+server.ts` | **Server entry** (project root). Creates `Hono`, mounts middleware and **API routes before** `vike(app)`, exports `{ fetch: app.fetch, prod: { port, onReady } }` (`Server` from `vike/types`). |
-| `server/api/chat.ts` | `POST /api/v1/chat` — RAG (Gemini + Supabase). Imported from `+server.ts` via `./server/api/chat.ts`. |
+| `pages/+server.ts` | **Server entry**. Creates `Hono`, mounts middleware and **API routes before** `vike(app)`, exports `{ fetch: app.fetch, prod: { port, onReady } }` (`Server` from `vike/types`). |
+| `server/api/chat.ts` | `POST /api/v1/chat` — RAG (Gemini + Supabase). Imported from `pages/+server.ts` via `../server/api/chat.ts`. |
 | `server/api/payment/signature.ts` | `POST /api/v1/payment/signature` — ePayco MD5 signature (server-only private key). |
 | `pages/+config.ts` | Global Vike page config only — **no** `vike-photon` extend, **no** `photon` block. |
 | `vite.config.ts` | `react()`, `vike({})`, `vercel()`; production `ssr.noExternal` for MUI/Emotion and other SSR-unfriendly packages. |
-| `tsconfig.json` | `include` lists `+server.ts` so `pnpm typecheck` covers the entry file. |
+| `tsconfig.json` | `include` lists `pages/**/*.ts` (covers `+server.ts`) and `server/**/*.ts` for handlers. |
 
-Handlers and helpers stay under `server/`; only the **entry** lives at the root, per the migration doc.
+Handlers stay under `server/`; the Vike **server entry** is `pages/+server.ts`, per [Vike +server](https://vike.dev/server).
 
 ## Vite config (Vercel + SSR)
 
-- Plugins: **`vike()`** then **`vercel()`** — see [Vike > Vercel](https://vike.dev/vercel).
+- Plugins: **`react()`**, **`vike({})`**, then **`vercel()`** — see [Vike > Vercel](https://vike.dev/vercel).
 - **`ssr.noExternal`**: in production, MUI, Emotion, Data Grid, Sendbird, `firebase`, `date-fns`, `zustand`, etc. are bundled for SSR so Node does not hit ESM directory-import issues (see MUI SSR doc).
 - **Vite 8**: follow [Vite migration](https://vite.dev/guide/migration) when bumping majors; `build.rollupOptions.output.manualChunks` may eventually move to Rolldown’s `codeSplitting` (tracked separately).
 
@@ -35,10 +35,10 @@ Handlers and helpers stay under `server/`; only the **entry** lives at the root,
 
 | Command | Purpose |
 |---------|---------|
-| `pnpm dev` | `vite` — dev server + HMR (including `+server.ts`). |
-| `pnpm build` | Production client + server bundles and Vercel output. |
-| `pnpm preview` | `vite preview` — preview production build locally. |
-| `pnpm prod` | `vike build && node ./dist/server/index.mjs` — run built Node server locally. |
+| `pnpm dev` | `vite` — dev server + HMR (including `pages/+server.ts`). |
+| `pnpm build` | Production client + server bundles and Vercel output (`vite build`). |
+| `pnpm preview` | `vite preview` — static client preview (see Vite docs). |
+| `pnpm prod` | `vike build && vike preview` — build then run the production SSR app locally (Vike CLI). |
 
 ## API route ordering (critical)
 
