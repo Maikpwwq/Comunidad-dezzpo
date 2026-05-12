@@ -71,7 +71,16 @@ export function useAuth(): UseAuthReturn {
 
     // Derived state
     const isAuthenticated = useMemo(() => currentUser?.isAuth ?? false, [currentUser])
-    const role = useMemo(() => currentUser?.rol ?? null, [currentUser])
+    const role = useMemo((): number | null => {
+        const r = currentUser?.rol
+        if (r == null) return null
+        if (typeof r === 'number') return r
+        if (typeof r === 'string') {
+            const n = Number(r)
+            return Number.isFinite(n) ? n : null
+        }
+        return null
+    }, [currentUser])
     const userId = useMemo(() => currentUser?.userId ?? null, [currentUser])
     const displayName = useMemo(() => currentUser?.displayName ?? null, [currentUser])
 

@@ -13,7 +13,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
-import clsx from 'clsx'
 
 // Note: Ensure vite.config.ts supports logical scss modules
 import styles from './UserCard.module.scss'

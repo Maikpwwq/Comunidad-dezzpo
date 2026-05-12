@@ -2,8 +2,6 @@
  * Projects Feature Types
  */
 
-import React from 'react'
-
 export interface CategoryItem {
     key: number
     label: string

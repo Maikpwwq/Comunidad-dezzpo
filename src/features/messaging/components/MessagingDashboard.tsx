@@ -4,7 +4,7 @@ import ChannelList from '@sendbird/uikit-react/ChannelList'
 import Channel from '@sendbird/uikit-react/Channel'
 import '@sendbird/uikit-react/dist/index.css'
 import styles from './Messaging.module.scss'
-import { GroupChannel } from '@sendbird/chat/groupChannel'
+import type { GroupChannel } from '@sendbird/chat/groupChannel'
 
 // Assuming we have the Zustand store for user info (fallback to props if not integrated yet)
 import { useAuth } from '@hooks/useAuth'
@@ -39,7 +39,7 @@ export default function MessagingDashboard({ initialChannelUrl }: MessagingDashb
         const { channel } = props
         // Filter out the current user and moderator to find the "Merchant"
         const merchant = channel.members.find(
-            (m) => m.userId !== userId && m.userId !== MODERATOR_ID
+            (m: { userId: string }) => m.userId !== userId && m.userId !== MODERATOR_ID
         )
         const chatTitle = merchant?.nickname || 'Usuario'
         const avatarUrl = merchant?.profileUrl || 'https://via.placeholder.com/150'
@@ -101,7 +101,6 @@ export default function MessagingDashboard({ initialChannelUrl }: MessagingDashb
                                         includeEmpty: true
                                     }
                                 }}
-                                // @ts-expect-error - Type mismatch between Sendbird Chat SDK versions
                                 renderChannelPreview={renderChannelPreview}
                                 // Hide default header
                                 renderHeader={() => <div style={{ display: 'none' }} />}
@@ -120,7 +119,6 @@ export default function MessagingDashboard({ initialChannelUrl }: MessagingDashb
                                         includeEmpty: true
                                     }
                                 }}
-                                // @ts-expect-error - Type mismatch between Sendbird Chat SDK versions
                                 renderChannelPreview={renderChannelPreview}
                                 renderHeader={() => <div style={{ display: 'none' }} />}
                             />

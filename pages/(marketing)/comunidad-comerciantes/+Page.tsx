@@ -1,11 +1,7 @@
-
 import React from 'react'
-import clsx from 'clsx'
 import Registro from '../../../pages/(auth)/registro/+Page'
 import { InfoSection } from '@components/layout/InfoSection'
 import { Row, Col, Container } from 'react-bootstrap'
-import IcoMoon from 'react-icomoon'
-import iconSet from '@assets/icomoon/selection.json'
 
 const benefits = [
     {
