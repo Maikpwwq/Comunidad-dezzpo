@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import vike from 'vike/plugin'
 import { vercel } from 'vite-plugin-vercel/vite'
 import * as path from 'path'
@@ -23,7 +23,10 @@ if (isProd) {
     '@emotion/react',
     '@emotion/styled',
     // Third-party UI libraries
-    // 'react-bootstrap', // Commented out to fix SSR named import element type error (let Node handle CJS interop)
+    'react-bootstrap',
+    'recharts',
+    'prop-types',
+    'clsx',
     'date-fns',
     '@sendbird/uikit-react',
     'react-swipeable-views',
