@@ -6,7 +6,7 @@ Single reference for how this repo runs the **HTTP server**, integrates **Vike S
 
 | Removed | Replaced with |
 |--------|----------------|
-| `vike-photon` + `extends: [vikePhoton]` + `photon: { server }` in `pages/+config.ts` | Vike **native** [`+server`](https://vike.dev/server) at **`pages/+server.ts`** |
+| `vike-photon` + `extends: [vikePhoton]` + `photon: { server }` in `pages/+config.ts` | Vike **native** [`+server`](https://vike.dev/server) at **`+server.ts`** |
 | `@photonjs/hono` (`apply` / `serve`) | [`@vikejs/hono`](https://vike.dev/server): `import vike from '@vikejs/hono'` then `vike(app)` |
 | `@photonjs/vercel` | [`vite-plugin-vercel`](https://vike.dev/vercel): `vercel()` in `vite.config.ts` |
 
@@ -16,14 +16,14 @@ Official guide: [Migration to +server](https://vike.dev/migration/server).
 
 | Path | Role |
 |------|------|
-| `pages/+server.ts` | **Server entry**. Creates `Hono`, mounts middleware and **API routes before** `vike(app)`, exports `{ fetch: app.fetch, prod: { port, onReady } }` (`Server` from `vike/types`). |
-| `server/api/chat.ts` | `POST /api/v1/chat` — RAG (Gemini + Supabase). Imported from `pages/+server.ts` via `../server/api/chat.ts`. |
+| `+server.ts` | **Server entry**. Creates `Hono`, mounts middleware and **API routes before** `vike(app)`, exports `{ fetch: app.fetch, prod: { port, onReady } }` (`Server` from `vike/types`). |
+| `server/api/chat.ts` | `POST /api/v1/chat` — RAG (Gemini + Supabase). Imported from `+server.ts` via `./server/api/chat.ts`. |
 | `server/api/payment/signature.ts` | `POST /api/v1/payment/signature` — ePayco MD5 signature (server-only private key). |
 | `pages/+config.ts` | Global Vike page config only — **no** `vike-photon` extend, **no** `photon` block. |
-| `vite.config.ts` | `react()`, `vike({})`, `vercel()`; production `ssr.noExternal` for MUI/Emotion and other SSR-unfriendly packages. |
-| `tsconfig.json` | `include` lists `pages/**/*.ts` (covers `+server.ts`) and `server/**/*.ts` for handlers. |
+| `vite.config.ts` | `@vitejs/plugin-react`, `vike({})`, `vercel()`; production `ssr.noExternal` for MUI/Emotion and other SSR-unfriendly packages. |
+| `tsconfig.json` | `include` lists `+server.ts`, `pages/**/*.ts`, and `server/**/*.ts` for handlers. |
 
-Handlers stay under `server/`; the Vike **server entry** is `pages/+server.ts`, per [Vike +server](https://vike.dev/server).
+Handlers stay under `server/`; the Vike **server entry** is `+server.ts` at root, per [Vike +server](https://vike.dev/server).
 
 ## Vite config (Vercel + SSR)
 

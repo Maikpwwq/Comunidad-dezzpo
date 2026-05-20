@@ -32,11 +32,13 @@ async function onRenderHtml(pageContext: PageContextServer) {
 
   if (Page && ssrEnabled) {
     const PageComponent = Page as React.ComponentType<Record<string, unknown>>
-    const Layout =
-      pageContext.config.Layout ||
-      (({ children }: { children: React.ReactNode }) => <>{children}</>) as React.ComponentType<{
-        children: React.ReactNode
-      }>
+    let LayoutComponent = pageContext.config.Layout
+    if (LayoutComponent && typeof LayoutComponent !== 'function') {
+      LayoutComponent = (LayoutComponent as any).default || (LayoutComponent as any).Layout
+    }
+    const Layout = (LayoutComponent || (({ children }: { children: React.ReactNode }) => <>{children}</>)) as React.ComponentType<{
+      children: React.ReactNode
+    }>
 
     const emotionCache = createEmotionCache()
     const emotionServer = createEmotionServer(emotionCache)
