@@ -3,8 +3,6 @@
  *
  * Converted to TypeScript.
  */
-// Styles
-import clsx from 'clsx'
 // Components
 import { InfoSection } from '@components/layout/InfoSection'
 // Bootstrap

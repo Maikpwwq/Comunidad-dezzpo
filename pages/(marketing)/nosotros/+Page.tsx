@@ -3,8 +3,6 @@
  *
  * Converted to TypeScript.
  */
-// Styles
-import clsx from 'clsx'
 // Components
 import IcoMoon from 'react-icomoon'
 import iconSet from '@assets/icomoon/selection.json'
@@ -13,8 +11,6 @@ import RoadMap2 from '@assets/img/RoadMap2.png'
 import Hitos from '@assets/img/Hitos.png'
 // Bootstrap
 import { Row, Col, Container, Button } from 'react-bootstrap'
-// MUI
-import { Typography } from '@mui/material'
 // Values list
 const values = [
     'Disciplina',

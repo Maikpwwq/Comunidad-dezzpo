@@ -28,7 +28,7 @@ import { navigate } from 'vike/client/router'
 import { useUserStore } from '@stores/userStore'
 
 // Services
-import { getDraftsByUser } from '@services/drafts'
+import { getDraftsByUser } from '@services/drafts/draftService'
 import { getContractsByClient, getContractsByProvider } from '@services/contracts'
 import { getQuotationsByComerciante } from '@services/quotations'
 import type { DraftFirestoreDocument, ContractFirestoreDocument, QuotationFirestoreDocument } from '@services/types'

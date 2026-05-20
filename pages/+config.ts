@@ -1,6 +1,5 @@
 // https://vike.dev/config
 import type { Config } from 'vike/types'
-import vikePhoton from 'vike-photon/config'
 
 /**
  * Global Vike v0.4.x Configuration
@@ -29,12 +28,6 @@ export default {
     'isAuthenticated',
     'redirectTo',
   ],
-
-  extends: [vikePhoton],
-
-  photon: {
-    server: 'server/index.ts'
-  },
 
   /**
    * Prefetch strategy for static assets

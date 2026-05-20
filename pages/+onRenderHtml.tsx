@@ -1,54 +1,65 @@
 export default onRenderHtml
 
+import React from 'react'
 import { renderToString } from 'react-dom/server'
+import { CacheProvider } from '@emotion/react'
+import createEmotionServer from '@emotion/server/create-instance'
 import { escapeInject, dangerouslySkipEscape } from 'vike/server'
 import type { PageContextServer } from 'vike/types'
 import PageShell from './PageShell'
+import { createEmotionCache } from '@/emotion/createEmotionCache'
 
 /**
  * Server-side HTML Rendering Hook (Vike v0.4.x API)
  *
  * This hook is called on the server to generate the initial HTML.
+ * MUI + Emotion: per-request cache, critical CSS extracted to <head> (see MUI server rendering guide).
  * @see https://vike.dev/onRenderHtml
+ * @see https://mui.com/material-ui/guides/server-rendering/
  */
 async function onRenderHtml(pageContext: PageContextServer) {
   const { Page, pageProps } = pageContext
 
-  // Support SPA mode (no SSR)
   let pageHtml = ''
+  let emotionStyleTags = ''
 
-  // Debug SSR Config
-  console.log(`[SSR] Rendering ${pageContext.urlPathname}`)
-  console.log(`[SSR] Config.ssr:`, (pageContext.config as any).ssr)
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`[SSR] Rendering ${pageContext.urlPathname}`)
+    console.log(`[SSR] Config.ssr:`, (pageContext.config as { ssr?: boolean }).ssr)
+  }
 
-  // Force disable SSR for problematic pages (Rescue Hatch)
-  const NO_SSR_PATHS = ['/app/suscripciones', '/app/directorio-requerimientos']
-  const forceNoSSR = NO_SSR_PATHS.some(path => pageContext.urlPathname.startsWith(path))
-
-  // Enable SSR by default, disable if config.ssr === false OR forced off
-  const ssrEnabled = (pageContext.config as any).ssr !== false && !forceNoSSR
+  const ssrEnabled = (pageContext.config as { ssr?: boolean }).ssr !== false
 
   if (Page && ssrEnabled) {
-    // Cast Page to React component type for JSX usage
     const PageComponent = Page as React.ComponentType<Record<string, unknown>>
-    const Layout = pageContext.config.Layout || ((({ children }: { children: React.ReactNode }) => <>{children}</>) as any)
+    const Layout =
+      pageContext.config.Layout ||
+      (({ children }: { children: React.ReactNode }) => <>{children}</>) as React.ComponentType<{
+        children: React.ReactNode
+      }>
+
+    const emotionCache = createEmotionCache()
+    const emotionServer = createEmotionServer(emotionCache)
 
     try {
-      const page = (
-        <PageShell pageContext={pageContext}>
-          <Layout>
-            <PageComponent {...pageProps} />
-          </Layout>
-        </PageShell>
+      const app = (
+        <CacheProvider value={emotionCache}>
+          <PageShell pageContext={pageContext}>
+            <Layout>
+              <PageComponent {...pageProps} />
+            </Layout>
+          </PageShell>
+        </CacheProvider>
       )
-      pageHtml = renderToString(page)
+      const markup = renderToString(app)
+      const emotionChunks = emotionServer.extractCriticalToChunks(markup)
+      emotionStyleTags = emotionServer.constructStyleTagsFromChunks(emotionChunks)
+      pageHtml = emotionChunks.html
     } catch (error) {
       console.error('[SSR] Error rendering page, falling back to CSR:', error)
-      // pageHtml remains empty, triggering client-side render
     }
   }
 
-  // Extract document metadata from page exports
   const { documentProps } = pageContext.exports as {
     documentProps?: { title?: string; description?: string }
   }
@@ -57,7 +68,7 @@ async function onRenderHtml(pageContext: PageContextServer) {
     (documentProps && documentProps.description) ||
     'Explora en Comunidad Dezzpo una red profesional confiable para todo tipo de trabajos, desde soluciones de mantenimiento e instalaciones pequeñas hasta acabados inmobiliarios y remodelaciones completas.'
 
-  // Construct the full HTML document
+  // Emotion critical CSS after Bootstrap so MUI `sx` / component styles win over Bootstrap where both apply.
   const documentHtml = escapeInject`<!DOCTYPE html>
 <html lang="es">
   <head>
@@ -102,6 +113,7 @@ async function onRenderHtml(pageContext: PageContextServer) {
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    ${dangerouslySkipEscape(emotionStyleTags)}
   </head>
   <body>
     <div id="root">${dangerouslySkipEscape(pageHtml)}</div>

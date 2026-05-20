@@ -32,7 +32,7 @@ export function DataTable<R extends GridValidRowModel>({
     ...props
 }: DataTableProps<R>) {
     return (
-        <Paper elevation={0} variant="outlined" sx={{ width: '100%', overflow: 'hidden', ...sx }}>
+        <Paper elevation={0} variant="outlined" sx={{ width: '100%', overflow: 'hidden', ...(sx ?? {}) }}>
             {title && (
                 <Box p={2} borderBottom={1} borderColor="divider">
                     <Typography variant="h6" component="h2">

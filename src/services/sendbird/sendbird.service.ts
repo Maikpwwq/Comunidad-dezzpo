@@ -2,7 +2,7 @@ import SendbirdChat from '@sendbird/chat'
 import { GroupChannelModule } from '@sendbird/chat/groupChannel'
 import type { GroupChannelCreateParams } from '@sendbird/chat/groupChannel'
 import { OpenChannelModule } from '@sendbird/chat/openChannel'
-import { getDraft, updateDraft } from '@services/drafts'
+import { getDraft, updateDraft } from '@services/drafts/draftService'
 // Need to import contracts if the user implements Phase 2 of this backend logic.
 // import { getContract, updateContract } from '@services/contracts'
 

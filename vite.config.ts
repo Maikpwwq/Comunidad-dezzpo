@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import vike from 'vike/plugin'
+import { vercel } from 'vite-plugin-vercel/vite'
 import * as path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -12,12 +13,13 @@ const isProd = process.env.NODE_ENV === 'production'
 const noExternal: string[] = []
 if (isProd) {
   noExternal.push(
-    // MUI requires pre-processing by Vite in production
-    '@mui/base',
-    '@mui/icons-material',
+    // MUI + Emotion: must be bundled for SSR on Vercel/Node ESM (avoids directory-import errors under @mui/utils, etc.)
     '@mui/material',
+    '@mui/icons-material',
+    '@mui/system',
     '@mui/utils',
     '@mui/x-data-grid',
+    '@emotion/cache',
     '@emotion/react',
     '@emotion/styled',
     // Third-party UI libraries
@@ -41,6 +43,7 @@ export default defineConfig({
   plugins: [
     react(),
     vike({}),
+    vercel(),
   ],
 
   ssr: {

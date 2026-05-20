@@ -1,4 +1,3 @@
-import React from 'react'
 import IcoMoon from 'react-icomoon'
 // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-explicit-any
 import iconSet from '@assets/icomoon/selection.json'

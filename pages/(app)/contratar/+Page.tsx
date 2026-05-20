@@ -13,7 +13,7 @@ import { navigate } from 'vike/client/router'
 import { useUserStore } from '@stores/userStore'
 
 // Services
-import { getDraft, updateDraft } from '@services/drafts'
+import { getDraft, updateDraft } from '@services/drafts/draftService'
 import { createContract } from '@services/contracts'
 import type { DraftFirestoreDocument } from '@services/types'
 
