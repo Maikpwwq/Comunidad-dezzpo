@@ -17,15 +17,13 @@ if (!match) {
 const chunkPath = match[1]
 console.log(`[patch-vercel-entry] Found server chunk: ${chunkPath}`)
 
-// Write the new entry.mjs that exports the Web Standard fetch handler directly
+// Write the patched entry.mjs that exports the hono/vercel handler
 const patchedContent = `import { t as server } from "${chunkPath}";
+import { handle } from 'hono/vercel';
 
-// Web Standard fetch handler for Vercel Serverless Function
-export default async function(request, context) {
-  // Pass to Hono's standard Web fetch method
-  return server.fetch(request, {}, context);
-}
+// Re-export the Vercel serverless handler directly
+export default handle(server);
 `
 
 writeFileSync(entryPath, patchedContent, 'utf-8')
-console.log('[patch-vercel-entry] ✅ Patched entry.mjs to export Web Standard fetch handler!')
+console.log('[patch-vercel-entry] ✅ Patched entry.mjs to export Hono Vercel handler!')
