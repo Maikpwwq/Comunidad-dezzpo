@@ -17,6 +17,7 @@
   *   **SSR Safety:** All components in hybrid routes MUST be SSR-safe.
       *   **Forbidden:** Module-level instantiation of React components (e.g., in data files).
       *   **Forbidden:** Direct usage of `firebase.auth()` in component render paths (use `useUserStore`).
+      *   **CJS Component Imports:** Libraries like `react-icomoon`, `react-swipeable-views`, `react-google-autocomplete` export CJS modules. When Vite bundles them via `ssr.noExternal`, `import Foo from 'lib'` may resolve to a namespace object `{ default: Fn, ... }` instead of the component function. Always use a runtime wrapper (see Section 9: CJS/ESM SSR Interop).
 
 ### 🧬 DYNAMIC DATA REQUIREMENTS
 
@@ -244,7 +245,34 @@ pending_payment → active → completed → disputed
 - **Migration Pattern**: When moving metadata from `+Page.tsx` to `+config.ts`, ensure `title` and `description` are valid config keys. This often requires defining them in the global `renderer/+config.ts` under the `meta` property.
 
 ### Build Stability
-- **Firebase Usage**: Never import `getAuth()` or `getFirestore()` directly in global scope. Always use the initialized instances exported from `services/firebase/client.ts`. Direct usage causes "No Firebase App" errors during build/SSR because the app isn't initialized yet.                                                                     
+- **Firebase Usage**: Never import `getAuth()` or `getFirestore()` directly in global scope. Always use the initialized instances exported from `services/firebase/client.ts`. Direct usage causes "No Firebase App" errors during build/SSR because the app isn't initialized yet.
+
+### CJS/ESM SSR Interop (2026-05-22)
+- **Problem:** When CJS React component libraries (`react-icomoon`, `react-swipeable-views`, `react-google-autocomplete`) are bundled via `ssr.noExternal`, Vite wraps their exports in an ESM namespace object. `import Foo from 'cjs-lib'` resolves to `{ default: FnComponent, ... }` (an object) instead of `FnComponent` (a function). React then throws `Element type is invalid: expected a string ... but got: object`.
+- **Fix Pattern — Wrapper Component:**
+  ```typescript
+  import FooModule from 'cjs-lib'
+  const Foo = (props: any) => {
+      const Comp = (FooModule as any).default?.default
+          || (FooModule as any).default || FooModule
+      return <Comp {...props} />
+  }
+  ```
+- **Fix Pattern — HOC Factory (for `autoPlay`/`bindKeyboard`):**
+  ```typescript
+  import SWModule from 'react-swipeable-views'
+  import * as SWUtils from 'react-swipeable-views-utils'
+  let _Cached: any = null
+  function getWrapped() {
+      if (_Cached) return _Cached
+      const SV = (SWModule as any).default?.default || (SWModule as any).default || SWModule
+      const utils = (SWUtils as any).default || SWUtils
+      _Cached = utils.bindKeyboard(utils.autoPlay(SV))
+      return _Cached
+  }
+  ```
+- **Affected files:** `Footer.tsx`, `ContactItem.tsx`, `nosotros/+Page.tsx`, `CategoriasSlider.tsx`, `+Page.tsx` (homepage), `Ubicacion.tsx`.
+- **Key rule:** When adding ANY new CJS React component library to `ssr.noExternal`, always verify SSR with `vike prerender`. If `got: object` errors appear, apply the wrapper pattern above.
 
 
 ### Vercel Deployment & Server Architecture (2026-01-27)

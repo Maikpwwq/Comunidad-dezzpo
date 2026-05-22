@@ -1,4 +1,10 @@
 {
-  "framework": null,
-  "buildCommand": "pnpm build"
+  "framework": "vite",
+  "buildCommand": "pnpm build",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ]
 }
