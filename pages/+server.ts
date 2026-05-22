@@ -5,8 +5,8 @@ import { logger } from 'hono/logger'
 import { compress } from 'hono/compress'
 import vike from '@vikejs/hono'
 import type { Server } from 'vike/types'
-import { chatHandler } from './server/api/chat.ts'
-import { paymentSignatureHandler } from './server/api/payment/signature.ts'
+import { chatHandler } from '../server/api/chat.ts'
+import { paymentSignatureHandler } from '../server/api/payment/signature.ts'
 
 const app = new Hono()
 
