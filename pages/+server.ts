@@ -62,4 +62,4 @@ export default {
       console.log(`🚀 Server ready at http://localhost:${port}`)
     },
   },
-} satisfies Server
+} as Server & { fetch: typeof app.fetch }
