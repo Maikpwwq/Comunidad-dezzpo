@@ -1,5 +1,6 @@
-import server from '../pages/+server'
+import { handle } from 'hono/vercel'
+import { app } from '../pages/+server'
 
 // Vercel Serverless Function entry point
-// This exposes the Hono app's fetch method to Vercel's Edge/Node runtime
-export default server.fetch
+// Using Hono's Vercel adapter to properly bridge Node's req/res to Web Standards
+export default handle(app)
