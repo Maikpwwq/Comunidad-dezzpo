@@ -17,20 +17,15 @@ if (!match) {
 const chunkPath = match[1]
 console.log(`[patch-vercel-entry] Found server chunk: ${chunkPath}`)
 
-// Let's verify that the chunk exports the 't' object which is our _server_default
-const chunkFullPath = resolve('dist/server', chunkPath)
-const chunkContent = readFileSync(chunkFullPath, 'utf-8')
-if (!chunkContent.includes('export {') || !chunkContent.includes(' t }') && !chunkContent.includes('as t')) {
-  console.warn('[patch-vercel-entry] ⚠️ Warning: Chunk does not seem to export "t" as expected.')
-}
-
-// Write the new entry.mjs that exports the Vercel handler
+// Write the new entry.mjs that exports the Web Standard fetch handler directly
 const patchedContent = `import { t as server } from "${chunkPath}";
-import { handle } from 'hono/vercel';
 
-// Re-export the Vercel serverless handler directly
-export default handle(server);
+// Web Standard fetch handler for Vercel Serverless Function
+export default async function(request, context) {
+  // Pass to Hono's standard Web fetch method
+  return server.fetch(request, {}, context);
+}
 `
 
 writeFileSync(entryPath, patchedContent, 'utf-8')
-console.log('[patch-vercel-entry] ✅ Patched entry.mjs to export Vercel handler!')
+console.log('[patch-vercel-entry] ✅ Patched entry.mjs to export Web Standard fetch handler!')
