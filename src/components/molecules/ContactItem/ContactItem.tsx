@@ -1,4 +1,8 @@
-import IcoMoon from 'react-icomoon'
+import IcoMoonModule from 'react-icomoon'
+const IcoMoon = (props: any) => {
+    const Comp = (IcoMoonModule as any).default?.default || (IcoMoonModule as any).default || IcoMoonModule
+    return <Comp {...props} />
+}
 // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-explicit-any
 import iconSet from '@assets/icomoon/selection.json'
 import clsx from 'clsx'

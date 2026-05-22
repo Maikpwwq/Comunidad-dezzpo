@@ -6,7 +6,11 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import AutoComplete from 'react-google-autocomplete'
+import AutoCompleteModule from 'react-google-autocomplete'
+const AutoComplete = (props: any) => {
+    const Comp = (AutoCompleteModule as any).default?.default || (AutoCompleteModule as any).default || AutoCompleteModule
+    return <Comp {...props} />
+}
 import { Row, Col, Container, Button, Form } from 'react-bootstrap'
 import clsx from 'clsx'
 

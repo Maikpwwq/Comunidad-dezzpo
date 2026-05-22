@@ -24,9 +24,17 @@ import {
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 // Swipeable views
-import SwipeableViews from 'react-swipeable-views'
-import { bindKeyboard } from 'react-swipeable-views-utils'
-const CustomSwipeableViews = bindKeyboard(SwipeableViews)
+import SwipeableViewsModule from 'react-swipeable-views'
+import * as SwipeableViewsUtils from 'react-swipeable-views-utils'
+let _CachedSwipeable: any = null
+function getCustomSwipeableViews() {
+    if (_CachedSwipeable) return _CachedSwipeable
+    const SV = (SwipeableViewsModule as any).default?.default || (SwipeableViewsModule as any).default || SwipeableViewsModule
+    const utils = (SwipeableViewsUtils as any).default || SwipeableViewsUtils
+    const bk = utils.bindKeyboard?.default || utils.bindKeyboard
+    _CachedSwipeable = bk(SV)
+    return _CachedSwipeable
+}
 const styles = {
     stepper: {
         position: 'relative' as const,
@@ -42,6 +50,7 @@ const styles = {
 }
 export default function Page() {
     const theme = useTheme()
+    const CustomSwipeableViews = getCustomSwipeableViews()
     const maxSteps = 2
     const [activeStep, setActiveStep] = useState(0)
     const handleNext = () => {
