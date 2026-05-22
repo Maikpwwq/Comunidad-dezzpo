@@ -68,6 +68,7 @@ export default defineConfig({
         warn(warning)
       },
       output: {
+        entryFileNames: '[name].js',
         manualChunks(id) {
           if (id.includes('node_modules')) {
              if (id.includes('firebase')) return 'firebase';
