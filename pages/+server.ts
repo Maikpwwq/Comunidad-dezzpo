@@ -1,4 +1,9 @@
-import 'dotenv/config'
+import dotenv from 'dotenv'
+try {
+  dotenv.config()
+} catch (e) {
+  // Ignore missing .env on Vercel
+}
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
