@@ -15,6 +15,23 @@ import { paymentSignatureHandler } from '../server/api/payment/signature.ts'
 
 const app = new Hono()
 
+// Ensure all request URLs are fully absolute for @universal-middleware compatibility
+app.use('*', async (c, next) => {
+  const url = c.req.url
+  if (url.startsWith('/') || !url.startsWith('http')) {
+    const host = c.req.header('host') || 'localhost'
+    const proto = c.req.header('x-forwarded-proto') || 'https'
+    const absoluteUrl = `${proto}://${host}${url.startsWith('/') ? url : '/' + url}`
+    
+    Object.defineProperty(c.req.raw, 'url', {
+      value: absoluteUrl,
+      writable: true,
+      configurable: true
+    })
+  }
+  await next()
+})
+
 app.use('*', logger())
 app.use(compress())
 app.use('/api/*', cors())
