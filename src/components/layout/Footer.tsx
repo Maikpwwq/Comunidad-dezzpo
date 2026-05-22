@@ -7,7 +7,11 @@
 
 import React from 'react'
 import { Link } from '@hooks'
-import IcoMoon from 'react-icomoon'
+import IcoMoonModule from 'react-icomoon'
+const IcoMoon = (props: any) => {
+    const Comp = (IcoMoonModule as any).default?.default || (IcoMoonModule as any).default || IcoMoonModule
+    return <Comp {...props} />
+}
 import { FOOTER_LINKS, SOCIAL_LINKS } from './navigation.config'
 import { ContactItem } from '@components/molecules/ContactItem'
 

@@ -4,7 +4,11 @@
  * Converted to TypeScript.
  */
 // Components
-import IcoMoon from 'react-icomoon'
+import IcoMoonModule from 'react-icomoon'
+const IcoMoon = (props: any) => {
+    const Comp = (IcoMoonModule as any).default?.default || (IcoMoonModule as any).default || IcoMoonModule
+    return <Comp {...props} />
+}
 import iconSet from '@assets/icomoon/selection.json'
 // Assets
 import RoadMap2 from '@assets/img/RoadMap2.png'

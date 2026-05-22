@@ -10,8 +10,8 @@ import { useTheme } from '@mui/material/styles'
 import { Button, Box, MobileStepper } from '@mui/material'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
-import SwipeableViews from 'react-swipeable-views'
-import { autoPlay, bindKeyboard } from 'react-swipeable-views-utils'
+import SwipeableViewsModule from 'react-swipeable-views'
+import * as SwipeableViewsUtils from 'react-swipeable-views-utils'
 import { Row, Col } from 'react-bootstrap'
 import clsx from 'clsx'
 
@@ -20,7 +20,16 @@ import styles from './CategoriasSlider.module.scss'
 // Category images config
 import { categoriesImages } from '../config/categoriesImages'
 
-const AutoPlaySwipeableViews = bindKeyboard(autoPlay(SwipeableViews))
+let AutoPlaySwipeableViewsComp: any = null;
+const getSwipeableViews = () => {
+    if (AutoPlaySwipeableViewsComp) return AutoPlaySwipeableViewsComp;
+    const SV = (SwipeableViewsModule as any).default?.default || (SwipeableViewsModule as any).default || SwipeableViewsModule;
+    const utils = (SwipeableViewsUtils as any).default || SwipeableViewsUtils;
+    const ap = utils.autoPlay?.default || utils.autoPlay;
+    const bk = utils.bindKeyboard?.default || utils.bindKeyboard;
+    AutoPlaySwipeableViewsComp = bk(ap(SV));
+    return AutoPlaySwipeableViewsComp;
+};
 
 const stepperStyles = {
     position: 'relative' as const,
@@ -52,6 +61,8 @@ export function CategoriasSlider(): React.ReactElement {
     }, [])
 
     const isRtl = theme.direction === 'rtl'
+
+    const AutoPlaySwipeableViews = getSwipeableViews();
 
     return (
         <Box sx={{ width: { xs: '100%', md: '80%' }, flexGrow: 1, marginX: 'auto' }}>
