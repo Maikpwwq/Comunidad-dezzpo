@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import vike from 'vike/plugin'
-import { vercel } from 'vite-plugin-vercel/vite'
+// vite-plugin-vercel removed: @vite-plugin-vercel/vike only supports Vite ^5||^6, not Vite 8
+// We use a post-build patch + api/index.ts approach instead (see scripts/patch-vercel-entry.mjs)
 import * as path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -46,7 +47,7 @@ export default defineConfig({
   plugins: [
     react(),
     vike({}),
-    vercel(),
+
   ],
 
   ssr: {
