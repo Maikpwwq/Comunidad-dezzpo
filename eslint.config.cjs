@@ -1,3 +1,4 @@
+// https://eslint.org/docs/latest/use/configure/migration-guide
 const {
     defineConfig,
     globalIgnores,
@@ -5,7 +6,6 @@ const {
 
 const globals = require("globals");
 const reactRefresh = require("eslint-plugin-react-refresh");
-// import reactRefresh from "eslint-plugin-react-refresh"; ??
 
 const {
     fixupConfigRules,

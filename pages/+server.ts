@@ -63,3 +63,5 @@ export default {
     },
   },
 } as Server & { fetch: typeof app.fetch }
+
+export { app }
