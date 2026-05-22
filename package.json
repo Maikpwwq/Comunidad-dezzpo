@@ -38,7 +38,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/patch-vercel-entry.mjs",
+    "build": "vike build && node scripts/patch-vercel-entry.mjs",
     "prod": "vike build && vike preview",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
