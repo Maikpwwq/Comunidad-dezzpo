@@ -87,6 +87,9 @@
     "zustand": "^5.0.13"
   },
   "devDependencies": {
+    "@eslint/compat": "^2.1.0",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
     "@tsconfig/vite-react": "^7.0.2",
     "@types/compression": "^1.8.1",
     "@types/google.maps": "^3.64.1",
@@ -99,14 +102,15 @@
     "@typescript-eslint/parser": "^8.59.4",
     "@vite-plugin-vercel/vike": "^9.1.0",
     "@vitejs/plugin-react": "^6.0.2",
-    "eslint": "^9.39.4",
+    "eslint": "^10.4.0",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "glob": "^13.0.6",
+    "globals": "^17.6.0",
     "prettier": "^3.8.3",
     "sass": "^1.100.0",
     "tsx": "^4.22.3",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vite": "^8.0.14",
     "vite-plugin-vercel": "^11.1.0"
   },
