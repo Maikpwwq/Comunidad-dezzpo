@@ -23,8 +23,8 @@ if (isProd) {
     '@emotion/react',
     '@emotion/styled',
     // Third-party UI libraries
-    'react-bootstrap',
-    'recharts',
+    // 'react-bootstrap', // Commented out to fix SSR named import element type error (let Node handle CJS interop)
+    // 'recharts',
     'prop-types',
     'clsx',
     'date-fns',
@@ -68,7 +68,6 @@ export default defineConfig({
         warn(warning)
       },
       output: {
-        entryFileNames: '[name].js',
         manualChunks(id) {
           if (id.includes('node_modules')) {
              if (id.includes('firebase')) return 'firebase';

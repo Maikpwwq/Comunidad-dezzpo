@@ -164,6 +164,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.59.4
         version: 8.59.4(eslint@9.39.4)(typescript@5.9.3)
+      '@vite-plugin-vercel/vike':
+        specifier: ^9.1.0
+        version: 9.1.0(vike@0.4.259(@types/express@5.0.6)(hono@4.12.21)(srvx@0.11.15)(vite@8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3)))(vite-plugin-vercel@11.1.0(@types/express@5.0.6)(hono@4.12.21)(srvx@0.11.15)(vite@8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3)))(vite@8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3))
       '@vitejs/plugin-react':
         specifier: ^6.0.2
         version: 6.0.2(vite@8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3))
@@ -304,6 +307,9 @@ packages:
 
   '@brillout/json-serializer@0.5.23':
     resolution: {integrity: sha512-nM7okvu4UaoxYshKB+903s3/UpIBdkJl++iDT3gOLnHaSqY6HbhAXTsUTxrroAAcIt6RKQfShaKjCBlzR2A1Gg==}
+
+  '@brillout/libassert@0.5.8':
+    resolution: {integrity: sha512-u/fu+jTRUdNdbLONGq1plCfh+k2/XjSbGVTfnF3rHnSPZd+ABWp0XinR5ifrFkyGOzMbzv8IiQ44lZ4U6ZGrGA==}
 
   '@brillout/picocolors@1.0.31':
     resolution: {integrity: sha512-xFCPBefU/AevF8XkwXSd/jIHA0fWw+mZ/gd5x2WOc5ysG7keHnU8m0gwY2Bvq5lvTyjwT4tiyow6fnMoYdmSqw==}
@@ -1817,6 +1823,13 @@ packages:
   '@vite-plugin-vercel/schemas@1.1.1':
     resolution: {integrity: sha512-Gkk5QUET2Rj6K0faYoYSh+R9D1XkqHJS/Eoh9emBYYimfKibtiFccVL37P4O6DBtosxoXXvxxgYT0ahVz3XF3g==}
 
+  '@vite-plugin-vercel/vike@9.1.0':
+    resolution: {integrity: sha512-bIRkX0QZGkX3Ifn9BnrNRGAlP4+gUO9SqJaVGM82ES4BssE1PgcS3Cm+W+lebzrsf7v6oCZy29anA76YwyE+cA==}
+    peerDependencies:
+      vike: ^0.4.229
+      vite: ^5.0.2 || ^6
+      vite-plugin-vercel: '*'
+
   '@vitejs/plugin-react@6.0.2':
     resolution: {integrity: sha512-DlSMqo4WhThw4vB8Mpn0Woe9J+Jfq1geJ61AKW0QEgLzGMNwtIMdxbDUzLxcun8W7NbJO0e2Jg/Nxm3cCSVzzg==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -3128,6 +3141,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@5.1.11:
+    resolution: {integrity: sha512-v+KEsUv2ps74PaSKv0gHTxTCgMXOIfBEbaqa6w6ISIGC7ZsvHN4N9oJ8d4cmf0n5oTzQz2SLmThbQWhjd/8eKg==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -3339,6 +3357,10 @@ packages:
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
+
+  qs@6.15.2:
+    resolution: {integrity: sha512-Rzq0KEyX/w/tEybncDgdkZrJgVUsUMk3xjh3t5bv3S1HTAtg+uOYt72+ZfwiQwKdysThkTBdL/rTi6HDmX9Ddw==}
+    engines: {node: '>=0.6'}
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
@@ -4200,6 +4222,8 @@ snapshots:
   '@brillout/import@0.2.6': {}
 
   '@brillout/json-serializer@0.5.23': {}
+
+  '@brillout/libassert@0.5.8': {}
 
   '@brillout/picocolors@1.0.31': {}
 
@@ -5810,6 +5834,15 @@ snapshots:
     dependencies:
       zod: 4.4.3
 
+  '@vite-plugin-vercel/vike@9.1.0(vike@0.4.259(@types/express@5.0.6)(hono@4.12.21)(srvx@0.11.15)(vite@8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3)))(vite-plugin-vercel@11.1.0(@types/express@5.0.6)(hono@4.12.21)(srvx@0.11.15)(vite@8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3)))(vite@8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3))':
+    dependencies:
+      '@brillout/libassert': 0.5.8
+      nanoid: 5.1.11
+      qs: 6.15.2
+      vike: 0.4.259(@types/express@5.0.6)(hono@4.12.21)(srvx@0.11.15)(vite@8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3))
+      vite: 8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3)
+      vite-plugin-vercel: 11.1.0(@types/express@5.0.6)(hono@4.12.21)(srvx@0.11.15)(vite@8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3))
+
   '@vitejs/plugin-react@6.0.2(vite@8.0.14(@types/node@22.19.19)(esbuild@0.28.0)(sass@1.100.0)(tsx@4.22.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
@@ -7352,6 +7385,8 @@ snapshots:
 
   nanoid@3.3.12: {}
 
+  nanoid@5.1.11: {}
+
   natural-compare@1.4.0: {}
 
   negotiator@0.6.4: {}
@@ -7577,6 +7612,10 @@ snapshots:
   proxy-from-env@2.1.0: {}
 
   punycode@2.3.1: {}
+
+  qs@6.15.2:
+    dependencies:
+      side-channel: 1.1.0
 
   queue-microtask@1.2.3: {}
 
