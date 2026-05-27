@@ -155,6 +155,7 @@ comunidad-dezzpo/
 │   └── styles/                               # Global styles
 │
 ├── scripts/
+│   ├── patch-vercel-entry.mjs            # Post-build: patches dist/server/entry.mjs for Vercel
 │   ├── seed.ts                           # Firecrawl scraper → Supabase embeddings
 │   ├── seed-knowledge.ts                 # Knowledge .md → Supabase embeddings
 │   └── setAdminClaim.ts                  # One-time admin setup
@@ -275,13 +276,18 @@ pending_payment → active → completed → disputed
 - **Key rule:** When adding ANY new CJS React component library to `ssr.noExternal`, always verify SSR with `vike prerender`. If `got: object` errors appear, apply the wrapper pattern above.
 
 
-### Vercel Deployment & Server Architecture (2026-01-27)
+### Vercel Deployment & Server Architecture (2026-05-22)
 - **Framework**: **Hono** with **`@vikejs/hono`** and Vike **`pages/+server.ts`** (replaces deprecated `vike-photon`).
-- **Adapter**: **`vite-plugin-vercel`** (`vercel()` in `vite.config.ts`) generates Vercel output; do not use `@photonjs/vercel` with this setup.
+- **Custom Vercel Adapter**: `scripts/patch-vercel-entry.mjs` patches the Vike-compiled `dist/server/entry.mjs` after build. It generates a zero-dependency Node→Web Standard adapter that translates Vercel's `(req, res)` into a Web `Request`, calls `server.fetch()`, and streams the `Response` back. **Do NOT use `hono/vercel` `handle()`** — it assumes Edge runtime and crashes on Node.js with `headers.get is not a function`.
+- **Build pipeline**: `pnpm build` runs `vike build && node scripts/patch-vercel-entry.mjs`.
+- **Static assets**: `vercel.json` sets `"outputDirectory": "dist/client"` so CSS/JS/images are served from Vercel's CDN. The catch-all rewrite `/(.*) → /api` only handles dynamic SSR routes.
+- **Serverless entry**: `api/index.ts` re-exports `dist/server/entry.mjs` (the patched file).
 - **Constraints**:
-  - **Server entry**: `pages/+server.ts` — export `{ fetch: app.fetch, prod?: { port, onReady } }` per [Vike +server](https://vike.dev/server). Local run of the production bundle: `pnpm prod` (`vike build && vike preview`). Vercel uses the adapter output (see [Vike > Vercel](https://vike.dev/vercel)).
+  - **Server entry**: `pages/+server.ts` — export `{ fetch: app.fetch, prod?: { port, onReady } }` per [Vike +server](https://vike.dev/server).
   - **API routes MUST be registered BEFORE `vike(app)`** so the Vike catch-all does not swallow them.
-  - **Vite**: v8+; plugin order `react()`, `vike({})`, `vercel()` (API routes stay in `pages/+server.ts` before `vike(app)`). See [Vite migration](https://vite.dev/guide/migration) and [migration from vike-photon](https://vike.dev/migration/server).
+  - **URL normalization middleware** in `+server.ts` converts relative URLs to absolute as a safety net.
+  - **Forbidden approaches**: Do NOT import raw TS source in `api/index.ts`, do NOT use `hono/vercel` `handle()`, do NOT use `vite-plugin-vercel` `vercel()` plugin for output generation.
+- **Full reference**: [docs/server-stack-vike.md](docs/server-stack-vike.md).
 
 ### MUI v6 + Emotion SSR (2026-05)
 - **Stack**: `@mui/material` / `@mui/icons-material` v6, `@mui/x-data-grid` v7, Emotion 11, `@emotion/server` for critical CSS on SSR.
@@ -291,7 +297,6 @@ pending_payment → active → completed → disputed
 - **Lockfile**: `pnpm.overrides` pins `@mui/system` to `6.5.0` alongside Data Grid v7. Do not remove without checking `pnpm why @mui/system`.
 - **MUI v9**: Out of scope for drive-by bumps; requires a planned migration (Grid v2, `sx`-only system props, icons/slots, Data Grid v9).
 - **Artifact**: Deep-dive and step-6 checklist — [docs/mui-emotion-ssr-vike.md](docs/mui-emotion-ssr-vike.md).
-- **Server / Vercel**: [docs/server-stack-vike.md](docs/server-stack-vike.md).
 
 ## 10. Package Manager Policy (STRICT)
 - **ALWAYS use `pnpm`**.
