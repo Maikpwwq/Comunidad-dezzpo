@@ -298,6 +298,12 @@ pending_payment → active → completed → disputed
 - **MUI v9**: Out of scope for drive-by bumps; requires a planned migration (Grid v2, `sx`-only system props, icons/slots, Data Grid v9).
 - **Artifact**: Deep-dive and step-6 checklist — [docs/mui-emotion-ssr-vike.md](docs/mui-emotion-ssr-vike.md).
 
+### React 19 & TypeScript 6.0 Compiler Modernization (2026-05)
+- **Stack**: React 19, TypeScript 6.x.
+- **TSConfig Path Mappings**: Modern TypeScript 6.0 deprecates `"baseUrl"`. To eliminate compiler warnings and IDE errors, **never** specify `"baseUrl": "."` or `"ignoreDeprecations": "5.0"`. Instead, use **relative targets** (prefixing with `./`) for all path mapping arrays (e.g. `"@/*": ["./src/*"]`).
+- **Ref Prop**: Do **not** use legacy `forwardRef` or `displayName` wrappers in components. Declare `ref` directly as a standard React component prop as supported natively in React 19.
+- **useMemo Elimination**: Do **not** use `useMemo` for simple property derivations or cheap calculations (e.g., extracting values from objects, or filtering lists of a few dozen entries). React 19's virtual DOM diffing is highly performant, and string primitive dependencies in hooks are compared by value anyway. Removing unnecessary `useMemo` hooks reduces dependency tracking and hook memory overhead.
+
 ## 10. Package Manager Policy (STRICT)
 - **ALWAYS use `pnpm`**.
 - **NEVER use `npm` or `npx`**.

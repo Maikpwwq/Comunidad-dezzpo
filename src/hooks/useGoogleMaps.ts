@@ -19,7 +19,7 @@ export interface MapOptions {
 
 export interface UseGoogleMapsReturn {
     /** Ref to attach to map container */
-    mapRef: React.RefObject<HTMLDivElement>
+    mapRef: React.RefObject<HTMLDivElement | null>
     /** Whether map is loaded */
     isLoaded: boolean
     /** Map instance (if available) */

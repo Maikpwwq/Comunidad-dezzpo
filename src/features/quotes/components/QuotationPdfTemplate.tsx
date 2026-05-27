@@ -8,7 +8,7 @@
  * Uses inline styles for PDF fidelity (no external CSS in captured DOM).
  */
 
-import React, { forwardRef } from 'react'
+import React from 'react'
 // @ts-ignore
 import LogoPNG from '@assets/img/LogoPNG.png'
 
@@ -173,115 +173,117 @@ function statusLabel(status?: string): string {
 
 // ── Component ────────────────────────────────────────────────────────────────
 
-const QuotationPdfTemplate = forwardRef<HTMLDivElement, { data: QuotationPdfData }>(
-    ({ data }, ref) => (
-        <div ref={ref} style={PAGE}>
-            {/* Header */}
-            <div style={HEADER}>
-                <img src={LogoPNG} alt="Comunidad Dezzpo" style={LOGO} />
-                <div style={{ textAlign: 'right' }}>
-                    <h1 style={TITLE}>Cotización</h1>
-                    <span style={{ fontSize: '10px', color: '#777' }}>
-                        {formatDate(data.quotationCreatedAt)}
-                    </span>
-                </div>
-            </div>
-
-            {/* Meta info */}
-            <div style={META_GRID}>
-                <span><span style={META_LABEL}>N.º Cotización:</span> {data.quotationId || '—'}</span>
-                <span><span style={META_LABEL}>Estado:</span> {statusLabel(data.quotationStatus)}</span>
-                <span><span style={META_LABEL}>Proveedor ID:</span> {data.quotationComercianteId || '—'}</span>
-                <span><span style={META_LABEL}>Requerimiento:</span> {data.quotationDraftId || '—'}</span>
-            </div>
-
-            {/* Sections */}
-            {data.description && (
-                <>
-                    <p style={SECTION_TITLE}>Descripción del Servicio</p>
-                    <p style={SECTION_BODY}>{data.description}</p>
-                </>
-            )}
-
-            {data.scope && (
-                <>
-                    <p style={SECTION_TITLE}>Alcance del Servicio</p>
-                    <p style={SECTION_BODY}>{data.scope}</p>
-                </>
-            )}
-
-            {data.procedimiento && (
-                <>
-                    <p style={SECTION_TITLE}>Procedimiento a Desarrollar</p>
-                    <p style={SECTION_BODY}>{data.procedimiento}</p>
-                </>
-            )}
-
-            {/* Itemized cost table */}
-            {data.actividades && data.actividades.length > 0 && (
-                <>
-                    <p style={SECTION_TITLE}>Tabla de Valores</p>
-                    <table style={TABLE}>
-                        <thead>
-                            <tr>
-                                <th style={TH}>Ítem</th>
-                                <th style={TH}>Actividad</th>
-                                <th style={TH}>Unidad Medida</th>
-                                <th style={TH}>Cantidad</th>
-                                <th style={TH}>Precio Unitario</th>
-                                <th style={TH}>Valor sin IVA</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.actividades.map((act, i) => (
-                                <tr key={i}>
-                                    <td style={TD}>{act.item}</td>
-                                    <td style={TD}>{act.actividadTitle}</td>
-                                    <td style={TD}>{act.unidadMedida}</td>
-                                    <td style={TD_RIGHT}>{act.cantidad}</td>
-                                    <td style={TD_RIGHT}>{formatCOP(act.precio)}</td>
-                                    <td style={TD_RIGHT}>{formatCOP(act.valor)}</td>
-                                </tr>
-                            ))}
-                            <tr style={SUBTOTAL_ROW}>
-                                <td style={TD} colSpan={4}></td>
-                                <td style={{ ...TD, fontWeight: 700 }}>VALOR SUBTOTAL</td>
-                                <td style={TD_RIGHT}>{formatCOP(data.valorSubtotal)}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </>
-            )}
-
-            {data.tiempoEjecucion && (
-                <>
-                    <p style={SECTION_TITLE}>Tiempo de Ejecución</p>
-                    <p style={SECTION_BODY}>{data.tiempoEjecucion}</p>
-                </>
-            )}
-
-            {data.condicionesNegocio && (
-                <>
-                    <p style={SECTION_TITLE}>Condiciones de Negociación</p>
-                    <p style={SECTION_BODY}>{data.condicionesNegocio}</p>
-                </>
-            )}
-
-            {data.garantia && (
-                <>
-                    <p style={SECTION_TITLE}>Garantía</p>
-                    <p style={SECTION_BODY}>{data.garantia}</p>
-                </>
-            )}
-
-            {/* Footer */}
-            <div style={FOOTER}>
-                Documento generado por Comunidad Dezzpo · {formatDate(new Date().toISOString())}
+const QuotationPdfTemplate = ({
+    data,
+    ref,
+}: {
+    data: QuotationPdfData
+    ref?: React.Ref<HTMLDivElement>
+}) => (
+    <div ref={ref} style={PAGE}>
+        {/* Header */}
+        <div style={HEADER}>
+            <img src={LogoPNG} alt="Comunidad Dezzpo" style={LOGO} />
+            <div style={{ textAlign: 'right' }}>
+                <h1 style={TITLE}>Cotización</h1>
+                <span style={{ fontSize: '10px', color: '#777' }}>
+                    {formatDate(data.quotationCreatedAt)}
+                </span>
             </div>
         </div>
-    )
-)
 
-QuotationPdfTemplate.displayName = 'QuotationPdfTemplate'
+        {/* Meta info */}
+        <div style={META_GRID}>
+            <span><span style={META_LABEL}>N.º Cotización:</span> {data.quotationId || '—'}</span>
+            <span><span style={META_LABEL}>Estado:</span> {statusLabel(data.quotationStatus)}</span>
+            <span><span style={META_LABEL}>Proveedor ID:</span> {data.quotationComercianteId || '—'}</span>
+            <span><span style={META_LABEL}>Requerimiento:</span> {data.quotationDraftId || '—'}</span>
+        </div>
+
+        {/* Sections */}
+        {data.description && (
+            <>
+                <p style={SECTION_TITLE}>Descripción del Servicio</p>
+                <p style={SECTION_BODY}>{data.description}</p>
+            </>
+        )}
+
+        {data.scope && (
+            <>
+                <p style={SECTION_TITLE}>Alcance del Servicio</p>
+                <p style={SECTION_BODY}>{data.scope}</p>
+            </>
+        )}
+
+        {data.procedimiento && (
+            <>
+                <p style={SECTION_TITLE}>Procedimiento a Desarrollar</p>
+                <p style={SECTION_BODY}>{data.procedimiento}</p>
+            </>
+        )}
+
+        {/* Itemized cost table */}
+        {data.actividades && data.actividades.length > 0 && (
+            <>
+                <p style={SECTION_TITLE}>Tabla de Valores</p>
+                <table style={TABLE}>
+                    <thead>
+                        <tr>
+                            <th style={TH}>Ítem</th>
+                            <th style={TH}>Actividad</th>
+                            <th style={TH}>Unidad Medida</th>
+                            <th style={TH}>Cantidad</th>
+                            <th style={TH}>Precio Unitario</th>
+                            <th style={TH}>Valor sin IVA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.actividades.map((act, i) => (
+                            <tr key={i}>
+                                <td style={TD}>{act.item}</td>
+                                <td style={TD}>{act.actividadTitle}</td>
+                                <td style={TD}>{act.unidadMedida}</td>
+                                <td style={TD_RIGHT}>{act.cantidad}</td>
+                                <td style={TD_RIGHT}>{formatCOP(act.precio)}</td>
+                                <td style={TD_RIGHT}>{formatCOP(act.valor)}</td>
+                            </tr>
+                        ))}
+                        <tr style={SUBTOTAL_ROW}>
+                            <td style={TD} colSpan={4}></td>
+                            <td style={{ ...TD, fontWeight: 700 }}>VALOR SUBTOTAL</td>
+                            <td style={TD_RIGHT}>{formatCOP(data.valorSubtotal)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </>
+        )}
+
+        {data.tiempoEjecucion && (
+            <>
+                <p style={SECTION_TITLE}>Tiempo de Ejecución</p>
+                <p style={SECTION_BODY}>{data.tiempoEjecucion}</p>
+            </>
+        )}
+
+        {data.condicionesNegocio && (
+            <>
+                <p style={SECTION_TITLE}>Condiciones de Negociación</p>
+                <p style={SECTION_BODY}>{data.condicionesNegocio}</p>
+            </>
+        )}
+
+        {data.garantia && (
+            <>
+                <p style={SECTION_TITLE}>Garantía</p>
+                <p style={SECTION_BODY}>{data.garantia}</p>
+            </>
+        )}
+
+        {/* Footer */}
+        <div style={FOOTER}>
+            Documento generado por Comunidad Dezzpo · {formatDate(new Date().toISOString())}
+        </div>
+    </div>
+)
 
 export default QuotationPdfTemplate

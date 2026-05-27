@@ -5,7 +5,7 @@
  * Refactored from legacy Navigator.jsx (534 lines -> modular component).
  */
 
-import React, { useMemo } from 'react'
+import React from 'react'
 import { navigate } from 'vike/client/router'
 import { Link } from '@hooks'
 import { useUserStore } from '@stores/userStore'
@@ -123,10 +123,7 @@ function Sidebar({ open, onClose, userInfo, variant = 'permanent' }: SidebarProp
     const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
 
     // Get navigation config based on role + admin status
-    const navSections = useMemo(
-        () => getSidebarConfig(user.role, isAdmin),
-        [user.role, isAdmin]
-    )
+    const navSections = getSidebarConfig(user.role, isAdmin)
 
     /** Resolve route with userId placeholder */
     const resolveRoute = (route: string): string => {

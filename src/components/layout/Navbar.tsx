@@ -5,7 +5,7 @@
  * Refactored from legacy Header.jsx (271 lines -> modular component).
  */
 
-import React, { useMemo } from 'react'
+import React from 'react'
 import { navigate } from 'vike/client/router'
 import { Link } from '@hooks'
 import { useUserStore } from '@stores/userStore'
@@ -82,10 +82,7 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
     }
 
     // Get navigation config based on role
-    const headerItems = useMemo(
-        () => getHeaderConfig(user.role),
-        [user.role]
-    )
+    const headerItems = getHeaderConfig(user.role)
 
     /** Resolve route with userId placeholder */
     const resolveRoute = (route: string): string => {
@@ -93,14 +90,15 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
     }
 
     // Resolve active tab index dynamically from URL
-    const activeTabIndex = useMemo(() => {
+    const getActiveTabIndex = (): number | false => {
         const index = headerItems.findIndex(item => {
             const resolved = resolveRoute(item.route)
             // Exact match or sub-route match (e.g. /app/mensajes/123)
             return currentPath === resolved || currentPath.startsWith(`${resolved}/`)
         })
         return index !== -1 ? index : false
-    }, [currentPath, headerItems, user.userId])
+    }
+    const activeTabIndex = getActiveTabIndex()
 
     /** Handle tab navigation */
     const handleTabChange = (_event: React.SyntheticEvent, newValue: number): void => {

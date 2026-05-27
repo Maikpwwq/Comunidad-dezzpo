@@ -7,7 +7,7 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 ## Tech Stack
 
 - **Framework**: [Vike v0.4.x](https://vike.dev/) (SSR/SSG)
-- **UI**: React 18 + [MUI v6](https://mui.com/) (`@mui/material`, `@mui/icons-material`) + [@mui/x-data-grid](https://mui.com/x/react-data-grid/) v7 + **Emotion** (`@emotion/react`, `@emotion/styled`, `@emotion/server`, `@emotion/cache`) for SSR-friendly styling
+- **UI**: React 19 + [MUI v6](https://mui.com/) (`@mui/material`, `@mui/icons-material`) + [@mui/x-data-grid](https://mui.com/x/react-data-grid/) v7 + **Emotion** (`@emotion/react`, `@emotion/styled`, `@emotion/server`, `@emotion/cache`) for SSR-friendly styling
 - **State**: Zustand (replacing Context/RxJS)
 - **Auth**: Firebase Auth (Google + Email)
 - **Server**: Hono with `@vikejs/hono` (`pages/+server.ts`; see [Vike +server](https://vike.dev/server))
@@ -319,6 +319,7 @@ interface ContractFirestoreDocument {
 | **Quotes**              | ✅ Migrated    | Uses `@features/quotes`, `quotationService`, `draftService`                           |
 | **CSS Standardization** | ✅ Migrated    | Enforced `kebab-case`, asset class mapping in place                                   |
 | **Admin Control Tower** | ✅ Implemented | `useAdminGuard`, KPI dashboard (Recharts), User DataGrid, Identity verification queue |
+| **React 19 & TS 6.0**   | ✅ Migrated    | Fully upgraded to React 19, cleaned up all useMemo/forwardRef hooks, and resolved all TS 6.0 deprecations |
 
 
 ## Service Standards

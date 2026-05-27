@@ -14,7 +14,7 @@
  * ```
  */
 
-import { useContext, useMemo, useCallback } from 'react'
+import { useContext, useCallback } from 'react'
 import { UserAuthContext } from '@providers/UserAuthProvider'
 
 export interface CurrentUser {
@@ -70,8 +70,8 @@ export function useAuth(): UseAuthReturn {
     } = context
 
     // Derived state
-    const isAuthenticated = useMemo(() => currentUser?.isAuth ?? false, [currentUser])
-    const role = useMemo((): number | null => {
+    const isAuthenticated = currentUser?.isAuth ?? false
+    const getRole = (): number | null => {
         const r = currentUser?.rol
         if (r == null) return null
         if (typeof r === 'number') return r
@@ -80,9 +80,10 @@ export function useAuth(): UseAuthReturn {
             return Number.isFinite(n) ? n : null
         }
         return null
-    }, [currentUser])
-    const userId = useMemo(() => currentUser?.userId ?? null, [currentUser])
-    const displayName = useMemo(() => currentUser?.displayName ?? null, [currentUser])
+    }
+    const role = getRole()
+    const userId = currentUser?.userId ?? null
+    const displayName = currentUser?.displayName ?? null
 
     // Memoized update function to prevent re-renders
     const memoizedUpdateUser = useCallback(

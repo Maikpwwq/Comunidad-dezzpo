@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useGoogleMaps } from '@hooks/useGoogleMaps'
 import { Container, Row, Col } from 'react-bootstrap'
 
@@ -45,15 +45,11 @@ export const MapaPerfil: React.FC<MapaPerfilProps> = ({ userInfo }) => {
     const markerRef = useRef<google.maps.marker.AdvancedMarkerElement | null>(null)
     const infoWindowRef = useRef<google.maps.InfoWindow | null>(null)
 
-    // Memoize address so geocoding only fires when fields actually change
-    const addressQuery = useMemo(
-        () =>
-            buildAddressQuery(
-                userInfo?.userDirection,
-                userInfo?.userCiudad,
-                userInfo?.userCodigoPostal
-            ),
-        [userInfo?.userDirection, userInfo?.userCiudad, userInfo?.userCodigoPostal]
+    // Compute address so geocoding only fires when fields actually change
+    const addressQuery = buildAddressQuery(
+        userInfo?.userDirection,
+        userInfo?.userCiudad,
+        userInfo?.userCodigoPostal
     )
 
     // Forward-geocode address → pan map + place marker

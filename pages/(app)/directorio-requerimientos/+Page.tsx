@@ -6,7 +6,7 @@
  * that filters drafts matching the user's registered categories.
  * SSR-safe: Uses draftService which has Firestore guards.
  */
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { navigate } from 'vike/client/router'
 import { useUserStore } from '@stores/userStore'
 import { useAuth } from '@hooks/useAuth'
@@ -92,20 +92,22 @@ export default function Page() {
     }, [userId, isComerciante])
 
     // Filter drafts matching the comerciante's categories
-    const matchingDrafts = useMemo(() => {
+    const getMatchingDrafts = () => {
         if (!isComerciante || userCategories.length === 0) return []
         return draftsData.filter((draft) => {
             const cat = (draft.draftCategory || '').toLowerCase()
             return userCategories.some((uc) => cat.includes(uc.toLowerCase()) || uc.toLowerCase().includes(cat))
         })
-    }, [draftsData, userCategories, isComerciante])
+    }
+    const matchingDrafts = getMatchingDrafts()
 
     // Remaining drafts (not in matching)
-    const otherDrafts = useMemo(() => {
+    const getOtherDrafts = () => {
         if (matchingDrafts.length === 0) return draftsData
         const matchingIds = new Set(matchingDrafts.map((d) => d.draftId || d.id))
         return draftsData.filter((d) => !matchingIds.has(d.draftId || d.id))
-    }, [draftsData, matchingDrafts])
+    }
+    const otherDrafts = getOtherDrafts()
 
     return (
         <Container fluid className="p-0 h-100">

@@ -5,7 +5,7 @@
  * Migrated from src/index/components/categorias-servicios/CategoriasServicios.jsx
  */
 
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
 import clsx from 'clsx'
 
@@ -32,7 +32,7 @@ export function CategoriasServicios({
     columns = 4,
 }: CategoriasServiciosProps): React.ReactElement {
     // Split categories into columns
-    const categoryColumns = useMemo(() => {
+    const getCategoryColumns = (): CategoryItem[][] => {
         const categorias = ListadoCategorias as CategoryItem[]
         const itemsPerColumn = Math.ceil(categorias.length / columns)
         const result: CategoryItem[][] = []
@@ -42,7 +42,8 @@ export function CategoriasServicios({
         }
 
         return result
-    }, [columns])
+    }
+    const categoryColumns = getCategoryColumns()
 
     const renderCategoryList = (items: CategoryItem[]) => (
         <ul className={styles.CategoryList}>
