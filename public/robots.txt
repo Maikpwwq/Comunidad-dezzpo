@@ -27,27 +27,30 @@ Allow: /ingreso
 Allow: /registro
 
 # Private App Pages - Disallow (require authentication)
-Disallow: /ajustes
-Disallow: /biblioteca
-Disallow: /cambiar-clave
-Disallow: /certificaciones
-Disallow: /configuracion-privacidad
-Disallow: /contratacion
-Disallow: /contratar
-Disallow: /cotizar
-Disallow: /directorio-requerimientos
-Disallow: /formas-pago
-Disallow: /historial-servicios
-Disallow: /invitar-amigos
-Disallow: /mensajes
-Disallow: /notificaciones
-Disallow: /proyecto
-Disallow: /requerimiento
-Disallow: /suscripciones
+Disallow: /app/ajustes
+Disallow: /app/biblioteca
+Disallow: /app/cambiar-clave
+Disallow: /app/certificaciones
+Disallow: /app/configuracion-privacidad
+Disallow: /app/contratacion
+Disallow: /app/contratar
+Disallow: /app/cotizar
+Disallow: /app/formas-pago
+Disallow: /app/historial-servicios
+Disallow: /app/invitar-amigos
+Disallow: /app/mensajes
+Disallow: /app/notificaciones
+Disallow: /app/proyecto
+Disallow: /app/requerimiento
+Disallow: /app/suscripciones
 
 # Public App Pages - Allow for anonymous users
-Allow: /portal-servicios
-Allow: /perfil/*
+Allow: /app/portal-servicios
+Allow: /app/directorio-requerimientos
+Allow: /app/perfil/*
+
+# Public Comerciante Micrositios
+Allow: /comerciante/*
 
 # Admin Pages - Disallow (restricted to admins only)
 Disallow: /admin/

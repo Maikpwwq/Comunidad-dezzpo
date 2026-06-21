@@ -1,0 +1,187 @@
+@use '@styles/_variables' as *;
+
+.Container {
+    width: 100%;
+    background-color: var(--background-light-gray-color, #fafafa);
+}
+
+.HeroSection {
+    background: linear-gradient(135deg, #1b4d3e 0%, #2e7d32 100%);
+    color: white;
+    padding: 4rem 1.5rem;
+    text-align: center;
+    border-bottom: 4px solid var(--primary-green-text-color);
+}
+
+.HeroTitle {
+    font-family: var(--font-helvetica-semibold);
+    font-size: 2.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.HeroSubtitle {
+    font-size: 1.25rem;
+    font-weight: 300;
+    opacity: 0.95;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.SectionTitle {
+    color: var(--primary-green-text-color, #2e7d32);
+    font-family: var(--font-helvetica-semibold);
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.Grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 1.5rem 0;
+}
+
+.Card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid rgba(0,0,0,0.06);
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+}
+
+.CardHeader {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.Avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-green-text-color);
+}
+
+.CardBody {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.BusinessName {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-titles-text-color, #333);
+}
+
+.Profession {
+    color: var(--primary-green-text-color, #2e7d32);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.Experience {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.Description {
+    font-size: 0.9rem;
+    color: var(--content-text-color, #555);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.CardFooter {
+    padding: 1.25rem 1.5rem;
+    background: #fcfcfc;
+    border-top: 1px solid rgba(0,0,0,0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.BtnPrimary {
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: none;
+    padding: 0.5rem 1.25rem;
+    background: linear-gradient(135deg, #2e7d32 0%, #1b4d3e 100%);
+    color: white !important;
+    &:hover {
+        background: linear-gradient(135deg, #1b4d3e 0%, #2e7d32 100%);
+    }
+}
+
+.BtnOutline {
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: none;
+    padding: 0.5rem 1.25rem;
+    border: 1px solid var(--primary-green-text-color);
+    color: var(--primary-green-text-color) !important;
+    &:hover {
+        background: rgba(46, 125, 50, 0.04);
+    }
+}
+
+/* ──────────── FAQ Accordion ──────────── */
+.FaqSection {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+}
+
+.FaqItem {
+    border-bottom: 1px solid #eee;
+    padding: 1.5rem 0;
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.FaqQuestion {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--primary-titles-text-color, #333);
+    margin-bottom: 0.5rem;
+}
+
+.FaqAnswer {
+    color: var(--content-text-color, #666);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.NoResults {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: white;
+    border-radius: 20px;
+    border: 1px dashed #ccc;
+}

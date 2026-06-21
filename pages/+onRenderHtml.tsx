@@ -65,8 +65,14 @@ async function onRenderHtml(pageContext: PageContextServer) {
   const { documentProps } = pageContext.exports as {
     documentProps?: { title?: string; description?: string }
   }
-  const title = (documentProps && documentProps.title) || 'Comunidad Dezzpo'
+  const title =
+    (pageContext.data as any)?.title ||
+    (pageContext.config as any).title ||
+    (documentProps && documentProps.title) ||
+    'Comunidad Dezzpo'
   const description =
+    (pageContext.data as any)?.description ||
+    (pageContext.config as any).description ||
     (documentProps && documentProps.description) ||
     'Explora en Comunidad Dezzpo una red profesional confiable para todo tipo de trabajos, desde soluciones de mantenimiento e instalaciones pequeñas hasta acabados inmobiliarios y remodelaciones completas.'
 
