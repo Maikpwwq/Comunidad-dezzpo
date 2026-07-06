@@ -28,6 +28,7 @@ interface SignatureRequestBody {
     description: string
     buyerEmail: string
     buyerName?: string
+    paymentStage?: 'full_payment' | 'deposit' | 'balance'
 }
 
 interface EpaycoCheckoutPayload {
@@ -66,7 +67,8 @@ export async function paymentSignatureHandler(c: Context): Promise<Response> {
             return c.json({ error: 'Missing required fields: contractId, amount, description' }, 400)
         }
 
-        const invoice = `DEZZPO-${body.contractId}`
+        const paymentStage = body.paymentStage || 'full_payment'
+        const invoice = `DEZZPO-${body.contractId}-${paymentStage}`
         const amountStr = body.amount.toFixed(2)
         const currency = 'COP'
 

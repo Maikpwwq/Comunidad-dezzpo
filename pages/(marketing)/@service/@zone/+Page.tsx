@@ -55,14 +55,22 @@ export default function Page() {
             userExperience = '',
             userDescription = '',
             userPhotoUrl = ProfilePhoto,
-            userSlug
+            userSlug,
+            profileTier
         } = comerciante
+
+        const isDestacado = profileTier === 'destacado'
 
         // Public profile url
         const profileUrl = userSlug ? `/comerciante/${userSlug}` : `/app/perfil/${userId}`
 
         return (
-            <div key={userId} className={styles.Card}>
+            <div key={userId} className={`${styles.Card} ${isDestacado ? styles.CardDestacado : ''}`}>
+                {isDestacado && (
+                    <div className={styles.DestacadoBadge}>
+                        <span>⭐ Destacado</span>
+                    </div>
+                )}
                 <div className={styles.CardHeader}>
                     <img src={userPhotoUrl} alt={userName} className={styles.Avatar} />
                     <div>

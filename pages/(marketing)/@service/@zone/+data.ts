@@ -116,6 +116,15 @@ async function data(pageContext: PageContextServer) {
             }
         }
 
+        // Sort destacado profiles first in both arrays
+        const tierSort = (a: any, b: any) => {
+            const aDestacado = a.profileTier === 'destacado' ? 0 : 1
+            const bDestacado = b.profileTier === 'destacado' ? 0 : 1
+            return aDestacado - bDestacado
+        }
+        directMatches.sort(tierSort)
+        otherMatches.sort(tierSort)
+
         const title = `${rolName} en ${zoneName} — Comunidad Dezzpo`
         const description = `Encuentra ${rolName.toLowerCase()} confiables en ${zoneName}. Consulta perfiles, calificaciones y datos de contacto directamente en Comunidad Dezzpo.`
 

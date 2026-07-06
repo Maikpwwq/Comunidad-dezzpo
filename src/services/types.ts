@@ -117,6 +117,8 @@ export interface UserFirestoreDocument extends DocumentData {
     socialLinks?: SocialLink[]
     /** Propietario properties array. */
     properties?: Property[]
+    /** Premium listing tier for merchants. */
+    profileTier?: 'free' | 'destacado'
 }
 
 export type UserRole = 1 | 2 // 1 = Propietario, 2 = Comerciante
@@ -244,6 +246,11 @@ export interface ContractFirestoreDocument extends DocumentData {
     objectDescription?: string
     rated?: boolean
     channel_url?: string
+    platformFeePercent?: number
+    platformFeeAmount?: number
+    comerciantePayoutAmount?: number
+    paymentMethod?: 'epayco' | 'external'
+    paymentStage?: 'full_payment' | 'deposit' | 'balance'
 }
 
 export interface CreateContractParams {

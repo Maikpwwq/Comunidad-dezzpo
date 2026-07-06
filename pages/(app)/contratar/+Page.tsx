@@ -77,6 +77,11 @@ export default function Page() {
 
         setIsSubmitting(true)
         try {
+            // Calculate fees: 10% standard platform commission
+            const platformFeePercent = 10
+            const platformFeeAmount = Number(((agreedAmount * platformFeePercent) / 100).toFixed(2))
+            const comerciantePayoutAmount = Number((agreedAmount - platformFeeAmount).toFixed(2))
+
             // 1. Create the contract
             const contractId = await createContract({
                 data: {
@@ -88,6 +93,11 @@ export default function Page() {
                     createdAt: new Date().toISOString(),
                     agreedAmount,
                     objectDescription: draft?.draftDescription || draft?.draftName || '',
+                    platformFeePercent,
+                    platformFeeAmount,
+                    comerciantePayoutAmount,
+                    paymentMethod: 'epayco',
+                    paymentStage: 'full_payment',
                 },
             })
 
