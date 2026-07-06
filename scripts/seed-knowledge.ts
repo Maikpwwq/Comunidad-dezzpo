@@ -60,7 +60,7 @@ function parseMarkdownSections(filePath: string): KnowledgeChunk[] {
     const chunks: KnowledgeChunk[] = []
 
     for (let i = 0; i < sections.length; i++) {
-        const section = sections[i].trim()
+        const section = sections[i]?.trim() || ''
         if (!section || section.startsWith('>') || section.length < 30) continue
 
         // Extract title from first line

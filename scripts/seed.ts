@@ -142,7 +142,7 @@ async function seed() {
         allEmbeddings.push(...truncated)
 
         const batchNum = Math.floor(i / BATCH_SIZE) + 1
-        console.log(`   ✓ Batch ${batchNum}/${totalBatches} (${truncated[0].length}d)`)
+        console.log(`   ✓ Batch ${batchNum}/${totalBatches} (${truncated[0]?.length || 0}d)`)
 
         // Rate-limit delay: free tier = 100 req/min. Wait 35s between batches.
         if (batchNum < totalBatches) {

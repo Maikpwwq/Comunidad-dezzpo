@@ -1,6 +1,7 @@
 import type { PageContextServer } from 'vike/types'
 import { adminFirestore } from '@services/firebase/admin'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { zoneNames } from '@assets/data/ListadoZonas'
 
 export { data }
 export type Data = Awaited<ReturnType<typeof data>>
@@ -36,20 +37,7 @@ function findCategoryBySlug(slug: string) {
     })
 }
 
-const zoneNames: Record<string, string> = {
-    'bogota': 'Bogotá',
-    'bogota-norte': 'Bogotá Norte',
-    'bogota-sur': 'Bogotá Sur',
-    'bogota-centro': 'Bogotá Centro',
-    'bogota-occidente': 'Bogotá Occidente',
-    'suba': 'Suba',
-    'usaquen': 'Usaquén',
-    'chapinero': 'Chapinero',
-    'teusaquillo': 'Teusaquillo',
-    'kennedy': 'Kennedy',
-    'engativa': 'Engativá',
-    'fontibon': 'Fontibón'
-}
+// zoneNames imported from @assets/data/ListadoZonas
 
 async function data(pageContext: PageContextServer) {
     const { service, zone } = pageContext.routeParams

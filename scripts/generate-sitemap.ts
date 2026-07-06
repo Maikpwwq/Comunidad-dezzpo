@@ -36,26 +36,13 @@ const staticUrls = [
     '/app/directorio-requerimientos'
 ]
 
-// Bogotá Zones
-const zones = [
-    'bogota', // city catch-all
-    'bogota-norte',
-    'bogota-sur',
-    'bogota-centro',
-    'bogota-occidente',
-    'suba',
-    'usaquen',
-    'chapinero',
-    'teusaquillo',
-    'kennedy',
-    'engativa',
-    'fontibon'
-]
+// zones imported from ListadoZonas
 
 // Import ListadoCategorias from ts/tsx source by reading it or using a manual list.
 // To keep it simple and ultra-reliable at build time without compile errors, let's extract labels from the file or use a fallback list.
 // Better yet, let's load it from the source file! Since tsx runs this, we can import ListadoCategorias directly!
-import { ListadoCategorias } from '../src/assets/data/ListadoCategorias'
+import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { zones } from '@assets/data/ListadoZonas'
 
 async function generateSitemap() {
     console.log('Generating sitemap.xml...')

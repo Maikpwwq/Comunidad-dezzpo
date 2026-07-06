@@ -19,6 +19,7 @@ import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth, firestore, isFirebaseAvailable } from '@services/firebase'
 import { createOpenChannelForUser } from '@services/sendbird/sendbird.service'
 import { getPrimaryEmail } from '@utilities/contactUtils'
+import { zoneNames } from '@assets/data/ListadoZonas'
 
 // Collection references
 const PROPIETARIOS = 'usersPropietariosResidentes'
@@ -414,20 +415,7 @@ export async function getQuotesForDraftAdmin(draftId: string) {
 // Geographic & Revenue / Funnel Stats (Phase 3 Monetization)
 // ─────────────────────────────────────────────────────────────────────────────
 
-const zoneNames: Record<string, string> = {
-    'bogota': 'Bogotá',
-    'bogota-norte': 'Bogotá Norte',
-    'bogota-sur': 'Bogotá Sur',
-    'bogota-centro': 'Bogotá Centro',
-    'bogota-occidente': 'Bogotá Occidente',
-    'suba': 'Suba',
-    'usaquen': 'Usaquén',
-    'chapinero': 'Chapinero',
-    'teusaquillo': 'Teusaquillo',
-    'kennedy': 'Kennedy',
-    'engativa': 'Engativá',
-    'fontibon': 'Fontibón'
-}
+// zoneNames imported from @assets/data/ListadoZonas
 
 export interface FunnelMetric {
     stage: string
@@ -488,18 +476,13 @@ export async function getGeographicDensity(): Promise<ZoneDensity[]> {
         const comCol = collection(firestore, COMERCIANTES)
         const snap = await getDocs(comCol)
         const counts: Record<string, number> = {
-            'Bogotá Norte': 0,
-            'Bogotá Sur': 0,
-            'Bogotá Centro': 0,
-            'Bogotá Occidente': 0,
-            'Suba': 0,
-            'Usaquén': 0,
-            'Chapinero': 0,
-            'Teusaquillo': 0,
-            'Kennedy': 0,
-            'Engativá': 0,
-            'Fontibón': 0,
             'Otros': 0
+        }
+
+        for (const label of Object.values(zoneNames)) {
+            if (label !== 'Bogotá') {
+                counts[label] = 0
+            }
         }
 
         snap.forEach((doc) => {

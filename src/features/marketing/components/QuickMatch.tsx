@@ -8,6 +8,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { navigate } from 'vike/client/router'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { zoneNames } from '@assets/data/ListadoZonas'
 import { Box, Typography, Paper, InputBase, IconButton } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import styles from './QuickMatch.module.scss'
@@ -31,20 +32,10 @@ function slugify(text: string): string {
         .replace(/--+/g, '-')
 }
 
-const ZONES = [
-    { slug: 'bogota', label: 'Bogotá' },
-    { slug: 'bogota-norte', label: 'Bogotá Norte' },
-    { slug: 'bogota-sur', label: 'Bogotá Sur' },
-    { slug: 'bogota-centro', label: 'Bogotá Centro' },
-    { slug: 'bogota-occidente', label: 'Bogotá Occidente' },
-    { slug: 'suba', label: 'Suba' },
-    { slug: 'usaquen', label: 'Usaquén' },
-    { slug: 'chapinero', label: 'Chapinero' },
-    { slug: 'kennedy', label: 'Kennedy' },
-    { slug: 'engativa', label: 'Engativá' },
-    { slug: 'fontibon', label: 'Fontibón' },
-    { slug: 'teusaquillo', label: 'Teusaquillo' },
-]
+const ZONES = Object.entries(zoneNames).map(([slug, label]) => ({
+    slug,
+    label
+}))
 
 // Pre-build search index
 const SEARCH_INDEX: MatchResult[] = ListadoCategorias.map((cat) => ({

@@ -1,4 +1,5 @@
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { zones } from '@assets/data/ListadoZonas'
 
 function slugify(text: string): string {
     return text
@@ -12,20 +13,7 @@ function slugify(text: string): string {
         .replace(/--+/g, '-')
 }
 
-const zones = [
-    'bogota',
-    'bogota-norte',
-    'bogota-sur',
-    'bogota-centro',
-    'bogota-occidente',
-    'suba',
-    'usaquen',
-    'chapinero',
-    'teusaquillo',
-    'kennedy',
-    'engativa',
-    'fontibon'
-]
+// zones imported from @assets/data/ListadoZonas
 
 export async function onBeforePrerenderStart() {
     const urls: string[] = []
