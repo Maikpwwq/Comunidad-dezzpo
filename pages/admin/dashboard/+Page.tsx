@@ -23,11 +23,17 @@ import {
 import {
     getAdminStats,
     getContractStats,
+    getFunnelMetrics,
+    getGeographicDensity,
+    getPlatformRevenueStats,
     type AdminStats,
     type ContractStats,
+    type FunnelMetric,
+    type ZoneDensity,
+    type RevenueStats,
 } from '@services/admin'
 
-const COLORS = ['#3f51b5', '#f50057', '#ff9800', '#4caf50']
+const COLORS = ['#3f51b5', '#f50057', '#ff9800', '#4caf50', '#009688', '#9c27b0', '#e91e63']
 
 function formatCurrency(n: number): string {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n)
@@ -36,13 +42,25 @@ function formatCurrency(n: number): string {
 export default function Page() {
     const [stats, setStats] = useState<AdminStats | null>(null)
     const [contracts, setContracts] = useState<ContractStats | null>(null)
+    const [funnel, setFunnel] = useState<FunnelMetric[]>([])
+    const [zones, setZones] = useState<ZoneDensity[]>([])
+    const [revenue, setRevenue] = useState<RevenueStats | null>(null)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function load() {
-            const [s, c] = await Promise.all([getAdminStats(), getContractStats()])
+            const [s, c, f, z, r] = await Promise.all([
+                getAdminStats(),
+                getContractStats(),
+                getFunnelMetrics(),
+                getGeographicDensity(),
+                getPlatformRevenueStats()
+            ])
             setStats(s)
             setContracts(c)
+            setFunnel(f)
+            setZones(z)
+            setRevenue(r)
             setLoading(false)
         }
         load()
@@ -176,6 +194,108 @@ export default function Page() {
                                         <Cell key={`bar-${index}`} fill={entry.fill} />
                                     ))}
                                 </Bar>
+                            </BarChart>
+                        </ResponsiveContainer>
+                    )}
+                </Paper>
+            </Box>
+
+            {/* Monetization & Conversion Section */}
+            <Typography variant="h5" fontWeight={700} sx={{ mt: 5, mb: 2 }}>
+                Monetización y Conversión
+            </Typography>
+
+            {/* Monetization KPI Cards */}
+            <Box
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' },
+                    gap: 2,
+                    mb: 4,
+                }}
+            >
+                <KPICard
+                    title="Volumen Facturado"
+                    value={revenue ? formatCurrency(revenue.totalRevenue) : undefined}
+                    loading={loading}
+                    icon={<AttachMoneyIcon sx={{ color: '#4caf50' }} />}
+                    color="#4caf50"
+                    isString
+                />
+                <KPICard
+                    title="Comisión Plataforma (10%)"
+                    value={revenue ? formatCurrency(revenue.platformFees) : undefined}
+                    loading={loading}
+                    icon={<AttachMoneyIcon sx={{ color: '#009688' }} />}
+                    color="#009688"
+                    isString
+                />
+                <KPICard
+                    title="Pagos a Comerciantes"
+                    value={revenue ? formatCurrency(revenue.merchantPayouts) : undefined}
+                    loading={loading}
+                    icon={<AttachMoneyIcon sx={{ color: '#3f51b5' }} />}
+                    color="#3f51b5"
+                    isString
+                />
+                <KPICard
+                    title="Contrato Promedio"
+                    value={revenue ? formatCurrency(revenue.avgContractAmount) : undefined}
+                    loading={loading}
+                    icon={<AttachMoneyIcon sx={{ color: '#9c27b0' }} />}
+                    color="#9c27b0"
+                    isString
+                />
+            </Box>
+
+            {/* Monetization & Conversion Charts */}
+            <Box
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+                    gap: 3,
+                    mb: 4,
+                }}
+            >
+                {/* Conversion Funnel */}
+                <Paper sx={{ p: 3, borderRadius: 2 }} elevation={0} variant="outlined">
+                    <Typography variant="h6" fontWeight={600} gutterBottom>
+                        Embudo de Conversión (Funnel)
+                    </Typography>
+                    {loading ? (
+                        <Skeleton variant="rectangular" height={280} />
+                    ) : (
+                        <ResponsiveContainer width="100%" height={280}>
+                            <BarChart layout="vertical" data={funnel} margin={{ left: 50, right: 30, top: 10, bottom: 10 }}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis type="number" allowDecimals={false} />
+                                <YAxis type="category" dataKey="stage" width={100} />
+                                <Tooltip />
+                                <Bar dataKey="count" fill="#009688" radius={[0, 4, 4, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    )}
+                </Paper>
+
+                {/* Geographic Density */}
+                <Paper sx={{ p: 3, borderRadius: 2 }} elevation={0} variant="outlined">
+                    <Typography variant="h6" fontWeight={600} gutterBottom>
+                        Densidad Geográfica de Comerciantes
+                    </Typography>
+                    {loading ? (
+                        <Skeleton variant="rectangular" height={280} />
+                    ) : zones.length === 0 ? (
+                        <Box sx={{ height: 280, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <Typography color="text.secondary">No hay datos de ubicación disponibles.</Typography>
+                        </Box>
+                    ) : (
+                        <ResponsiveContainer width="100%" height={280}>
+                            <BarChart data={zones} margin={{ top: 10, bottom: 20 }}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="zone" tick={{ fontSize: 10 }} interval={0} angle={-15} textAnchor="end" />
+                                <YAxis allowDecimals={false} />
+                                <Tooltip />
+                                <Bar dataKey="count" fill="#9c27b0" radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
                     )}

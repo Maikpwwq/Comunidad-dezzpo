@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { usePageContext } from '@hooks/usePageContext'
 import { Container } from 'react-bootstrap'
 import { Typography, Button } from '@mui/material'
@@ -9,6 +10,18 @@ import ProfilePhoto from '@assets/img/Profile.png'
 export default function Page() {
     const pageContext = usePageContext()
     const data = pageContext.data as any
+
+    useEffect(() => {
+        if (data && data.category) {
+            import('@utils/analytics').then(({ trackSearch }) => {
+                trackSearch(
+                    data.serviceName || '',
+                    data.zoneName || '',
+                    (data.directMatches?.length || 0) + (data.otherMatches?.length || 0)
+                )
+            })
+        }
+    }, [data])
 
     if (!data || !data.category) {
         return (
@@ -60,6 +73,8 @@ export default function Page() {
         } = comerciante
 
         const isDestacado = profileTier === 'destacado'
+        const hasFastResponse = comerciante.responseTime === 'fast' || comerciante.fastResponse === true || comerciante.isFastResponder || comerciante.userChannelUrl
+        const hasVerifiedPortfolio = comerciante.portfolioVerified === true || (comerciante.userGalleryUrl && comerciante.userGalleryUrl.length > 0)
 
         // Public profile url
         const profileUrl = userSlug ? `/comerciante/${userSlug}` : `/app/perfil/${userId}`
@@ -85,6 +100,22 @@ export default function Page() {
                         </div>
                     )}
                     <CincoEstrellas />
+                    
+                    {(hasFastResponse || hasVerifiedPortfolio) && (
+                        <div className={styles.TrustBadges}>
+                            {hasFastResponse && (
+                                <span className={styles.BadgeRespuestaRapida} title="Responde rápido a las consultas">
+                                    ⚡ Respuesta Rápida
+                                </span>
+                            )}
+                            {hasVerifiedPortfolio && (
+                                <span className={styles.BadgePortafolioVerificado} title="Portafolio de fotos verificado">
+                                    🛡️ Portafolio Verificado
+                                </span>
+                            )}
+                        </div>
+                    )}
+
                     <p className={styles.Description}>
                         {userDescription || 'Profesional calificado y verificado miembro del gremio Comunidad Dezzpo.'}
                     </p>

@@ -140,6 +140,11 @@ export default function Page() {
                 test: payload.test,
             })
 
+            // Track payment initiation event
+            import('@utils/analytics').then(({ trackCreateContract }) => {
+                trackCreateContract(contractId, contract.agreedAmount, contract.providerId)
+            })
+
             handler.open({
                 name: payload.name,
                 description: payload.description,

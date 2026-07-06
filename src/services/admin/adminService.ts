@@ -409,3 +409,165 @@ export async function getQuotesForDraftAdmin(draftId: string) {
     const snap = await getDocs(q)
     return snap.docs.map((d) => ({ id: d.id, ...d.data() }))
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Geographic & Revenue / Funnel Stats (Phase 3 Monetization)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const zoneNames: Record<string, string> = {
+    'bogota': 'Bogotá',
+    'bogota-norte': 'Bogotá Norte',
+    'bogota-sur': 'Bogotá Sur',
+    'bogota-centro': 'Bogotá Centro',
+    'bogota-occidente': 'Bogotá Occidente',
+    'suba': 'Suba',
+    'usaquen': 'Usaquén',
+    'chapinero': 'Chapinero',
+    'teusaquillo': 'Teusaquillo',
+    'kennedy': 'Kennedy',
+    'engativa': 'Engativá',
+    'fontibon': 'Fontibón'
+}
+
+export interface FunnelMetric {
+    stage: string
+    count: number
+}
+
+export interface ZoneDensity {
+    zone: string
+    count: number
+}
+
+export interface RevenueStats {
+    totalRevenue: number
+    platformFees: number
+    merchantPayouts: number
+    avgContractAmount: number
+}
+
+export async function getFunnelMetrics(): Promise<FunnelMetric[]> {
+    if (!isFirebaseAvailable() || !firestore) {
+        return [
+            { stage: 'Búsquedas', count: 0 },
+            { stage: 'Vistas Perfil', count: 0 },
+            { stage: 'Contactos', count: 0 },
+            { stage: 'Pagos Completados', count: 0 }
+        ]
+    }
+    try {
+        const funnelCol = collection(firestore, 'funnel_events')
+        const [searchSnap, viewSnap, contactSnap, paySnap] = await Promise.all([
+            getCountFromServer(query(funnelCol, where('eventName', '==', 'search_services'))),
+            getCountFromServer(query(funnelCol, where('eventName', '==', 'view_profile'))),
+            getCountFromServer(query(funnelCol, where('eventName', '==', 'initiate_contact'))),
+            getCountFromServer(query(funnelCol, where('eventName', '==', 'complete_payment')))
+        ])
+
+        return [
+            { stage: 'Búsquedas', count: searchSnap.data().count },
+            { stage: 'Vistas Perfil', count: viewSnap.data().count },
+            { stage: 'Contactos', count: contactSnap.data().count },
+            { stage: 'Pagos Completados', count: paySnap.data().count }
+        ]
+    } catch (err) {
+        console.error('Error fetching funnel metrics:', err)
+        return [
+            { stage: 'Búsquedas', count: 0 },
+            { stage: 'Vistas Perfil', count: 0 },
+            { stage: 'Contactos', count: 0 },
+            { stage: 'Pagos Completados', count: 0 }
+        ]
+    }
+}
+
+export async function getGeographicDensity(): Promise<ZoneDensity[]> {
+    if (!isFirebaseAvailable() || !firestore) return []
+
+    try {
+        const comCol = collection(firestore, COMERCIANTES)
+        const snap = await getDocs(comCol)
+        const counts: Record<string, number> = {
+            'Bogotá Norte': 0,
+            'Bogotá Sur': 0,
+            'Bogotá Centro': 0,
+            'Bogotá Occidente': 0,
+            'Suba': 0,
+            'Usaquén': 0,
+            'Chapinero': 0,
+            'Teusaquillo': 0,
+            'Kennedy': 0,
+            'Engativá': 0,
+            'Fontibón': 0,
+            'Otros': 0
+        }
+
+        snap.forEach((doc) => {
+            const data = doc.data()
+            const address = (data.userDirection || '').toLowerCase()
+            const ubication = (data.userUbication || '').toLowerCase()
+            const description = (data.userDescription || '').toLowerCase()
+            
+            let matched = false
+            for (const [key, label] of Object.entries(zoneNames)) {
+                if (key === 'bogota') continue
+                const zoneKeyword = key.replace('bogota-', '').toLowerCase()
+                if (address.includes(zoneKeyword) || ubication.includes(zoneKeyword) || description.includes(zoneKeyword)) {
+                    counts[label] = (counts[label] || 0) + 1
+                    matched = true
+                }
+            }
+            if (!matched) {
+                counts['Otros'] = (counts['Otros'] || 0) + 1
+            }
+        })
+
+        return Object.entries(counts)
+            .map(([zone, count]) => ({ zone, count }))
+            .filter(z => z.count > 0)
+            .sort((a, b) => b.count - a.count)
+    } catch (err) {
+        console.error('Error getting geographic density:', err)
+        return []
+    }
+}
+
+export async function getPlatformRevenueStats(): Promise<RevenueStats> {
+    if (!isFirebaseAvailable() || !firestore) {
+        return { totalRevenue: 0, platformFees: 0, merchantPayouts: 0, avgContractAmount: 0 }
+    }
+
+    try {
+        const contractsCol = collection(firestore, CONTRACTS)
+        const q = query(contractsCol, where('status', 'in', ['active', 'completed']))
+        const snap = await getDocs(q)
+        
+        let totalRevenue = 0
+        let platformFees = 0
+        let merchantPayouts = 0
+        let count = 0
+
+        snap.forEach((doc) => {
+            const data = doc.data()
+            const amount = Number(data.agreedAmount || 0)
+            const fee = Number(data.platformFeeAmount || amount * 0.10)
+            const payout = Number(data.comerciantePayoutAmount || amount - fee)
+            
+            totalRevenue += amount
+            platformFees += fee
+            merchantPayouts += payout
+            count++
+        })
+
+        return {
+            totalRevenue,
+            platformFees,
+            merchantPayouts,
+            avgContractAmount: count > 0 ? totalRevenue / count : 0
+        }
+    } catch (err) {
+        console.error('Error fetching revenue stats:', err)
+        return { totalRevenue: 0, platformFees: 0, merchantPayouts: 0, avgContractAmount: 0 }
+    }
+}
+

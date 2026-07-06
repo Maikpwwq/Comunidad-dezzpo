@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { usePageContext } from '@hooks/usePageContext'
 import { useUserStore } from '@stores/userStore'
 import { getPrimaryEmail, getPrimaryPhone } from '@utilities/contactUtils'
@@ -27,6 +28,18 @@ export default function Page() {
 
     const data = pageContext.data as any
     const comerciante = data?.comerciante
+
+    useEffect(() => {
+        if (comerciante) {
+            import('@utils/analytics').then(({ trackViewProfile }) => {
+                trackViewProfile(
+                    comerciante.userId || '',
+                    comerciante.userName || comerciante.userRazonSocial || '',
+                    comerciante.profileTier || 'free'
+                )
+            })
+        }
+    }, [comerciante])
 
     if (!comerciante) {
         return (
@@ -145,7 +158,15 @@ export default function Page() {
                                 className={clsx(styles.InfoPill, "body-2")}
                             >
                                 <MailIcon fontSize="large" />{' '}
-                                <a href={`mailto:${emailDisplay}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <a 
+                                    href={`mailto:${emailDisplay}`} 
+                                    style={{ textDecoration: 'none', color: 'inherit' }}
+                                    onClick={() => {
+                                        import('@utils/analytics').then(({ trackContact }) => {
+                                            trackContact(comerciante.userId || '', 'email')
+                                        })
+                                    }}
+                                >
                                     {emailDisplay}
                                 </a>
                             </Typography>
@@ -155,7 +176,15 @@ export default function Page() {
                                 className={clsx(styles.InfoPill, "body-2")}
                             >
                                 <PhoneIphoneIcon fontSize="large" />{' '}
-                                <a href={`tel:${phoneDisplay}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <a 
+                                    href={`tel:${phoneDisplay}`} 
+                                    style={{ textDecoration: 'none', color: 'inherit' }}
+                                    onClick={() => {
+                                        import('@utils/analytics').then(({ trackContact }) => {
+                                            trackContact(comerciante.userId || '', 'phone')
+                                        })
+                                    }}
+                                >
                                     {phoneDisplay}
                                 </a>
                             </Typography>
@@ -211,6 +240,11 @@ export default function Page() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={styles.SocialLinkChip || ''}
+                                            onClick={() => {
+                                                import('@utils/analytics').then(({ trackContact }) => {
+                                                    trackContact(comerciante.userId || '', sl.platform || 'social')
+                                                })
+                                            }}
                                         >
                                             <span className={styles.SocialLinkChipName || ''}>
                                                 {(PLATFORM_CONFIG as any)[sl.platform]?.name || sl.platform}

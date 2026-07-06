@@ -11,6 +11,9 @@ export {
     getAllContracts,
     getAllDrafts,
     getQuotesForDraftAdmin,
+    getFunnelMetrics,
+    getGeographicDensity,
+    getPlatformRevenueStats,
 } from './adminService'
 
 export type {
@@ -20,4 +23,7 @@ export type {
     VerificationItem,
     AdminContractRow,
     AdminDraftRow,
+    FunnelMetric,
+    ZoneDensity,
+    RevenueStats,
 } from './adminService'
