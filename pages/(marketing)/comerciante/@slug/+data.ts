@@ -32,15 +32,15 @@ async function data(pageContext: PageContextServer) {
 
         const doc = querySnapshot.docs[0]!
         const raw = doc.data()
-        const comerciante = { ...raw, userId: doc.id }
+        const comerciante = { ...raw, userId: doc.id } as any
 
         // Map categories to chips
         let userCategoriesChips: any[] = []
         if (comerciante.userCategories && Array.isArray(comerciante.userCategories)) {
-            userCategoriesChips = comerciante.userCategories.map(chip => {
+            userCategoriesChips = comerciante.userCategories.map((chip: any) => {
                 const found = ListadoCategorias.find((cat: any) => cat.label === chip)
                 return found || null
-            }).filter(item => item !== null)
+            }).filter((item: any) => item !== null)
         }
 
         const title = `${comerciante.userName || comerciante.userRazonSocial || 'Comerciante'} — Comunidad Dezzpo`

@@ -5,7 +5,6 @@ import { AdjuntarArchivos } from '@components/common'
 import { v4 as uuidv4 } from 'uuid'
 import { navigate } from 'vike/client/router'
 import { usePageContext } from '@hooks/usePageContext'
-import { CategoriasService } from '@/services'
 import { getUser } from '@services/users'
 import { useAuth } from '@hooks/useAuth'
 // Firebase
@@ -16,18 +15,13 @@ import {
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
 // Components
-import { DirectionalButton } from '@components/common'
 import {
-    ProjectSearchForm,
-    SubCategoryCard,
-    CategorySelector
+    ProjectSearchForm
 } from '@features/projects'
 // Features
 import { PasoAPaso, Ubicacion } from '@features/marketing'
 import PageRegistro from '../../(auth)/registro/+Page'
 import PageIngreso from '../../(auth)/ingreso/+Page'
-// Local
-import TablaSubCategoriaCantidades from './TablaSubCategoriaCantidades'
 // Styles
 // Bootstrap
 // Bootstrap
@@ -39,12 +33,7 @@ import AddLocationIcon from '@mui/icons-material/AddLocation'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-// Types
-interface CategoryItem {
-    subCategoria?: string
-    [key: string]: any
-}
-import type { ProjectDraftInfo, CategorySelectionState, SubCategoryItem } from '@features/projects'
+import type { ProjectDraftInfo } from '@features/projects'
 
 interface DraftInfo extends ProjectDraftInfo {
     draftCategory: string | number | undefined
@@ -80,22 +69,8 @@ export default function Page() {
     const paramTipoProyecto = pageContext.routeParams?.TipoProyecto
     const [hideRegister] = useState(!!currentUser?.isAuth)
     const [showMore, setShowMore] = useState(false)
-    const [isLoaded, setIsLoaded] = useState(false)
     const [userAddress, setUserAddress] = useState('')
     // Firestore refs removed from top level to avoid SSR crash
-
-    // Categoria State
-    const [categoriaInfo, setCategoriaInfo] = useState<{
-        selected: any[]
-        quatities: any[]
-        data: any[][]
-        subCatLength: number
-    }>({
-        selected: [],
-        quatities: [],
-        data: [],
-        subCatLength: 0,
-    })
     const [activeStep, setActiveStep] = useState(0)
     const [draftInfo, setDraftInfo] = useState<DraftInfo>({
         draftCategory: paramCategoriaProfesional || 0,
@@ -122,19 +97,9 @@ export default function Page() {
         draftApply: [],
     })
     const [openModal, setOpen] = useState(false)
-    const [categoriesIndex, setCategoriesIndex] = useState(0)
     const handleOpen = () => setOpen(true)
     const handleCloseModal = () => setOpen(false)
-    const handleNext = () => {
-        if (categoriesIndex < categoriaInfo.subCatLength - 1) {
-            setCategoriesIndex(categoriesIndex + 1)
-        }
-    }
-    const handleBack = () => {
-        if (categoriesIndex > 0) {
-            setCategoriesIndex(categoriesIndex - 1)
-        }
-    }
+    // navigation handlers removed
     const draftToFirestore = async (updateInfo: DraftInfo, projectID: string) => {
         if (!isFirebaseAvailable() || !firestore) {
             console.warn('[SSR] draftToFirestore skipped - Firebase not available')
@@ -144,62 +109,21 @@ export default function Page() {
         await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
     }
     useEffect(() => {
-        if (!isLoaded) {
-            const searchParams = new URLSearchParams(window.location.search)
-            const type = searchParams.get('type')
-            const category = searchParams.get('category')
+        const searchParams = new URLSearchParams(window.location.search)
+        const type = searchParams.get('type')
+        const category = searchParams.get('category')
+        const queryQ = searchParams.get('q')
 
-            if (type && category && (draftInfo.draftProject !== type || String(draftInfo.draftCategory) !== category)) {
-                setDraftInfo(prev => ({
-                    ...prev,
-                    draftProject: type,
-                    draftCategory: category
-                }))
+        setDraftInfo(prev => {
+            const nextDraft = { ...prev }
+            if (type) nextDraft.draftProject = type
+            if (category) nextDraft.draftCategory = category
+            if (queryQ && !nextDraft.draftDescription) {
+                nextDraft.draftDescription = queryQ
             }
-
-            if (!!draftInfo.draftProject && draftInfo.draftCategory !== 0) {
-                const fetchCategories = async () => {
-                    try {
-                        const items = await CategoriasService.getCategoryItems(String(draftInfo.draftCategory))
-
-                        if (items && items.length > 0) {
-                            // Chunk items into groups of 6 for pagination/grid
-                            const chunkSize = 6
-                            const pages: any[] = []
-                            for (let i = 0; i < items.length; i += chunkSize) {
-                                pages.push(items.slice(i, i + chunkSize))
-                            }
-
-                            setCategoriaInfo((prev: any) => ({
-                                ...prev,
-                                data: pages,
-                                subCatLength: pages.length,
-                            }))
-                            setIsLoaded(true)
-                        } else {
-                            console.log('No info found for category:', draftInfo.draftCategory)
-                            // Initialize with empty state to avoid loading indefinitely
-                            setCategoriaInfo((prev: any) => ({
-                                ...prev,
-                                data: [],
-                                subCatLength: 0,
-                            }))
-                            setIsLoaded(true)
-                        }
-                    } catch (error) {
-                        console.error('Error fetching categories:', error)
-                        setIsLoaded(true)
-                    }
-                }
-
-                fetchCategories()
-            }
-        }
-    }, [
-        isLoaded,
-        draftInfo.draftCategory,
-        draftInfo.draftProject
-    ])
+            return nextDraft
+        })
+    }, [])
 
     // Fetch logged in user's address
     useEffect(() => {
@@ -224,6 +148,9 @@ export default function Page() {
 
     const handleShowMore = () => {
         setShowMore(!showMore)
+    }
+    const handleAuthSuccess = () => {
+        goForward()
     }
     const handleSave = () => {
         const currentDate = new Date().toISOString().split('T')[0] || ''
@@ -254,9 +181,6 @@ export default function Page() {
             ...prev,
             [name]: value,
         }))
-        if (name === 'draftCategory') {
-            setIsLoaded(false)
-        }
     }
     const handleComeBack = () => {
         if (activeStep > 0) {
@@ -282,134 +206,336 @@ export default function Page() {
             if (changed) window.history.replaceState({}, '', url.toString())
         }
     }
-    const handleUpdateCategoriaInfo = (info: CategorySelectionState) => {
-        setCategoriaInfo((prev) => ({
-            ...prev,
-            ...info,
-        }))
-    }
-    const steps = [
-        'Categoria/Subcategoria',
-        'Elige tus ajustes',
-        'Programa la visita',
-        'Registrarse',
-    ]
+
+    const steps = !hideRegister
+        ? ['¿Qué necesitas?', 'Regístrate', 'Detalles opcionales']
+        : ['¿Qué necesitas?', 'Detalles opcionales']
     return (
         <Container fluid className="p-0 new-project-page" style={{ position: 'relative' }}>
             <PasoAPaso activeStep={activeStep} steps={steps} />
             {activeStep === 0 && (
-                <Col>
-                    {(draftInfo.draftProject === undefined ||
-                        Number(draftInfo.draftCategory) === 0) && (
-                            <Row className="nuevo-proyecto-buscador">
-                                <Col className="align-items-start p-4 m-4" md={5} sm={8}>
-                                    <Col className="opacidad-negro p-4 rounded-3 text-blanco">
-                                        <p className="type-body-lg m-0">
-                                            Con ayuda de la comunidad haz realidad la casa que deseas.
-                                            Encuentra un profesional Seguro y Confiable, para cada trabajo. Desde
-                                            iluminación y pequeños arreglos, hasta diseños de ingeniería y
-                                            remodelaciones completas.
-                                        </p>
-                                    </Col>
-                                </Col>
-                                <Col className="col m-4 p-0" xl={4} lg={6} md={8} sm={12} xs={12}>
-                                    <ProjectSearchForm
-                                        setDraftInfo={handleUpdateDraftInfo}
-                                        draftInfo={draftInfo}
+                <Col className="p-4">
+                    <Row className="justify-content-center">
+                        <Col xl={6} lg={8} md={10} sm={12} className="card-frame p-4">
+                            <Typography className="type-section-title w-100 center mb-4">
+                                ¿Qué necesitas?
+                            </Typography>
+                            <Form>
+                                <Form.Group className="mb-3" controlId="formQuickDescription">
+                                    <Form.Label className="type-body-sm fw-bold">
+                                        Describe brevemente lo que necesitas *
+                                    </Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        style={{ height: '100px' }}
+                                        placeholder="Ej: Se me rompió un tubo en el baño y necesito un plomero urgente"
+                                        name="draftDescription"
+                                        value={draftInfo.draftDescription}
+                                        onChange={handleChange}
                                     />
-                                </Col>
-                            </Row>
-                        )}
-                    {!!draftInfo.draftProject && Number(draftInfo.draftCategory) !== 0 && (
-                        <>
-                            <Row className="w-100 m-0">
-                                <Col className="p-4" lg={10} md={12}>
-                                    <p className="type-body text-dark">
-                                        Al seleccionar categorías podrás ir agregando uno a uno todos los
-                                        servicios que vas a solicitar. Luego en el siguiente paso podrás modificar la cantidad de
-                                        obra que requieres.
-                                    </p>
-                                    {/* Compact inline category selector */}
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: 2,
-                                            flexWrap: 'wrap',
-                                            p: 2,
-                                            borderRadius: 2,
-                                            bgcolor: 'var(--background-light-gray-color)',
-                                            border: '1px solid #e0e0e0',
-                                        }}
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="formQuickZone">
+                                    <Form.Label className="type-body-sm fw-bold">
+                                        ¿En qué zona de Bogotá? *
+                                    </Form.Label>
+                                    <Form.Select
+                                        name="draftCity"
+                                        value={draftInfo.draftCity}
+                                        onChange={handleChange}
                                     >
-                                        <Chip
-                                            label={draftInfo.draftProject}
-                                            color="primary"
-                                            size="small"
-                                            sx={{ fontWeight: 600 }}
-                                        />
-                                        <Box sx={{ flex: 1, minWidth: 200 }}>
-                                            <CategorySelector
-                                                setDraftInfo={handleUpdateDraftInfo}
-                                                draftInfo={draftInfo}
-                                                setIsLoaded={setIsLoaded}
-                                                className=""
+                                        <option value="">Selecciona tu zona</option>
+                                        <option value="Bogotá">Bogotá (toda la ciudad)</option>
+                                        <option value="Bogotá Norte">Bogotá Norte</option>
+                                        <option value="Bogotá Sur">Bogotá Sur</option>
+                                        <option value="Bogotá Centro">Bogotá Centro</option>
+                                        <option value="Bogotá Occidente">Bogotá Occidente</option>
+                                        <option value="Suba">Suba</option>
+                                        <option value="Usaquén">Usaquén</option>
+                                        <option value="Chapinero">Chapinero</option>
+                                        <option value="Kennedy">Kennedy</option>
+                                        <option value="Engativá">Engativá</option>
+                                        <option value="Fontibón">Fontibón</option>
+                                        <option value="Teusaquillo">Teusaquillo</option>
+                                    </Form.Select>
+                                </Form.Group>
+
+                                {/* Category selector — reuse existing inline version */}
+                                <Form.Group className="mb-3" controlId="formQuickCategory">
+                                    <Form.Label className="type-body-sm fw-bold">
+                                        ¿Qué tipo de servicio? *
+                                    </Form.Label>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                                        {draftInfo.draftProject && (
+                                            <Chip
+                                                label={draftInfo.draftProject}
+                                                color="primary"
+                                                size="small"
+                                                sx={{ fontWeight: 600, alignSelf: 'flex-start' }}
                                             />
-                                        </Box>
-                                        <Button
-                                            size="sm"
-                                            variant="outline-secondary"
-                                            onClick={() => {
-                                                setDraftInfo(prev => ({
-                                                    ...prev,
-                                                    draftProject: undefined,
-                                                    draftCategory: 0,
-                                                }))
-                                                if (typeof window !== 'undefined') {
-                                                    window.history.replaceState({}, '', window.location.pathname)
-                                                }
-                                                setIsLoaded(false)
-                                            }}
-                                        >
-                                            Cambiar tipo
-                                        </Button>
+                                        )}
+                                        <ProjectSearchForm
+                                            setDraftInfo={handleUpdateDraftInfo}
+                                            draftInfo={draftInfo}
+                                        />
                                     </Box>
-                                </Col>
-                            </Row>
-                            <Row className="categorias w-100 m-0 p-4">
-                                <Col className="p-0 pt-4 col-10 categorias-contenedor">
-                                    <Row className="w-100 m-0">
-                                        {categoriaInfo.data[categoriesIndex] &&
-                                            categoriaInfo.data[categoriesIndex]!.map((item: CategoryItem, index: number) => {
-                                                return (
-                                                    item.subCategoria ? (
-                                                        <SubCategoryCard
-                                                            key={index}
-                                                            item={item as unknown as SubCategoryItem}
-                                                            setCategoriaInfo={handleUpdateCategoriaInfo}
-                                                            categoriaInfo={categoriaInfo}
-                                                        />
-                                                    ) : null
-                                                )
-                                            })}
-                                    </Row>
-                                    <DirectionalButton
-                                        handleNext={handleNext}
-                                        handleBack={handleBack}
-                                    />
-                                </Col>
-                            </Row>
-                            <Col className="col-10">
+                                </Form.Group>
+
                                 <Row className="pt-4 pb-4 w-100 justify-content-center">
                                     <Button
                                         onClick={goForward}
-                                        style={{ paddingRight: '10px' }}
+                                        className="btn-primary-gradient p-2 ps-4 pe-4 w-auto"
+                                        variant="primary"
+                                        disabled={!draftInfo.draftDescription.trim()}
+                                    >
+                                        Continuar
+                                    </Button>
+                                </Row>
+                            </Form>
+                        </Col>
+                    </Row>
+                </Col>
+            )}
+            {/* Step 1 (unauthenticated): Registration / Login */}
+            {!hideRegister && activeStep === 1 && (
+                <Row className="nuevo-proyecto-mensaje w-100 m-0">
+                    <Col className="p-4 col-12 text-center">
+                        <h3 className="type-hero-title text-dark">
+                            Ingresa tus datos de contacto para continuar
+                        </h3>
+                        <p className="type-body text-muted">
+                            Regístrate o inicia sesión para guardar tu requerimiento y recibir cotizaciones de comerciantes calificados.
+                        </p>
+                    </Col>
+                    <PageRegistro
+                        setDraftInfo={(info: any) => setDraftInfo(info)}
+                        draftInfo={draftInfo}
+                        handleSave={handleAuthSuccess}
+                        showLogo={false}
+                    />
+                    <PageIngreso
+                        setDraftInfo={(info: any) => setDraftInfo(info)}
+                        draftInfo={draftInfo}
+                        handleSave={handleAuthSuccess}
+                        showLogo={false}
+                    />
+                    <Col className="col-12 text-center pb-4">
+                        <Button
+                            onClick={handleComeBack}
+                            className="btn-round btn-middle w-auto"
+                            variant="secondary"
+                        >
+                            <KeyboardBackspaceIcon /> Volver atrás
+                        </Button>
+                    </Col>
+                </Row>
+            )}
+
+            {/* Step 1 (authenticated) or Step 2 (unauthenticated): Detalles opcionales (Enrichment) */}
+            {((hideRegister && activeStep === 1) || (!hideRegister && activeStep === 2)) && (
+                <Col className="p-4">
+                    <Row className="justify-content-center">
+                        <Col xl={8} lg={10} md={12} className="card-frame p-4">
+                            <Typography className="type-section-title w-100 center mb-4">
+                                Detalles opcionales de tu proyecto
+                            </Typography>
+                            <Form>
+                                {/* Title / Name */}
+                                <Form.Group className="mb-3" controlId="formNewProjectName">
+                                    <Form.Label className="type-body-sm fw-bold">Dale un título descriptivo a tu requerimiento</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ej: Pintar fachada de dos pisos"
+                                        name="draftName"
+                                        value={draftInfo.draftName}
+                                        onChange={handleChange}
+                                    />
+                                </Form.Group>
+
+                                {/* Toggle optional details */}
+                                <Typography color="text.secondary" className="type-body-sm fw-bold pb-2" onClick={handleShowMore} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    {showMore ? 'Ocultar especificaciones detalladas' : 'Especificar tamaño, tipo de propiedad, habitaciones, planos...'}
+                                    {showMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                                </Typography>
+
+                                {showMore && (
+                                    <Box className="ps-3 border-start border-2 border-success mb-3">
+                                        <Form.Group className="mb-3" controlId="formNewProjectSize">
+                                            <Form.Label className="type-body-sm fw-bold">Escoge el tamaño</Form.Label>
+                                            <Form.Select name="draftSize" value={draftInfo.draftSize} onChange={handleChange}>
+                                                <option value="">Selecciona el tamaño del proyecto</option>
+                                                <option value="sencillo">Sencillo</option>
+                                                <option value="mediano">Mediano</option>
+                                                <option value="doble">Doble</option>
+                                                <option value="grande">Grande</option>
+                                                <option value="Otra">Otro</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formNewProjectProperty">
+                                            <Form.Label className="type-body-sm fw-bold">¿Qué tipo de propiedad es?</Form.Label>
+                                            <Form.Select name="draftProperty" value={draftInfo.draftProperty} onChange={handleChange}>
+                                                <option value="">Selecciona el tipo de propiedad</option>
+                                                <option value="Colonial">Propiedad Colonial (1800 - 1920)</option>
+                                                <option value="SubUrbana">Propiedad suburbana (1920-1960)</option>
+                                                <option value="Moderna">Propiedad moderna (1960-presente)</option>
+                                                <option value="Otra">Otra</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formNewProjectRooms">
+                                            <Form.Label className="type-body-sm fw-bold">¿Cuántas habitaciones y/o espacios serán intervenidos?</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Ej: Sala y comedor"
+                                                name="draftRooms"
+                                                value={draftInfo.draftRooms}
+                                                onChange={handleChange}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formNewProjectPlans">
+                                            <Form.Label className="type-body-sm fw-bold">¿Han sido diseñados planos arquitectónicos?</Form.Label>
+                                            <Form.Select name="draftPlans" value={draftInfo.draftPlans} onChange={handleChange}>
+                                                <option value="">Selecciona el estado actual</option>
+                                                <option value="Aproved">Aprobados</option>
+                                                <option value="Aplied">Aplicado</option>
+                                                <option value="NotAplied">Sin aplicar aún</option>
+                                                <option value="NotSure">No estoy seguro</option>
+                                                <option value="NotNeed">No son necesarios</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formNewProjectPermissions">
+                                            <Form.Label className="type-body-sm fw-bold">¿Cuál es el estado de los permisos?</Form.Label>
+                                            <Form.Select name="draftPermissions" value={draftInfo.draftPermissions} onChange={handleChange}>
+                                                <option value="">Selecciona el estado actual</option>
+                                                <option value="Aproved">Aprobados</option>
+                                                <option value="Aplied">Aplicado</option>
+                                                <option value="NotAplied">Sin aplicar aún</option>
+                                                <option value="NotSure">No estoy seguro</option>
+                                                <option value="NotNeed">No son necesarios</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                    </Box>
+                                )}
+
+                                {/* Date and Time schedule */}
+                                <Form.Group className="mb-3" controlId="formNewProjectBestSchedule">
+                                    <Form.Label className="type-body-sm fw-bold">
+                                        ¿Cuándo deseas programar la visita del comerciante?
+                                    </Form.Label>
+                                    <div className="d-flex gap-2">
+                                        <Form.Control
+                                            type="date"
+                                            name="draftBestScheduleDate"
+                                            value={draftInfo.draftBestScheduleDate}
+                                            onChange={handleChange}
+                                        />
+                                        <Form.Control
+                                            type="time"
+                                            name="draftBestScheduleTime"
+                                            value={draftInfo.draftBestScheduleTime}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </Form.Group>
+
+                                {/* Direction and Map */}
+                                <Form.Group className="mb-3" controlId="formNewProjectPostalCode">
+                                    <Form.Label className="type-body-sm fw-bold w-100">
+                                        ¿Dónde se requiere el servicio?
+                                        {userAddress && (
+                                            <div className="mt-2 mb-2">
+                                                <Form.Check 
+                                                    type="checkbox"
+                                                    id="use-registered-address"
+                                                    label={`Usar mi dirección guardada: ${userAddress}`}
+                                                    checked={draftInfo.draftDirection === userAddress}
+                                                    onChange={(e) => {
+                                                        setDraftInfo(prev => ({
+                                                            ...prev,
+                                                            draftDirection: e.target.checked ? userAddress : '',
+                                                        }))
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+                                        <Row className="w-100 m-0 flex justify-content-start align-items-center" style={{ flexWrap: 'wrap', gap: '8px' }}>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Registra la dirección exacta"
+                                                name="draftDirection"
+                                                value={draftInfo.draftDirection}
+                                                onChange={handleChange}
+                                                style={{ flex: 1, minWidth: '200px' }}
+                                            />
+                                            <Button className="type-body-sm fw-bold text-verde w-auto d-flex align-items-center gap-1" onClick={handleOpen} variant="link" style={{ textDecoration: 'none' }}>
+                                                <AddLocationIcon /> Seleccionar en el mapa
+                                            </Button>
+                                        </Row>
+                                    </Form.Label>
+                                </Form.Group>
+
+                                {/* Attachments */}
+                                <Form.Group className="mb-3" controlId="formNewProjectAtachments">
+                                    <Form.Label className="type-body-sm fw-bold">
+                                        Cargar fotos, imágenes y documentos relacionados (opcional)
+                                    </Form.Label>
+                                    <Row className="m-0 align-items-center gap-2">
+                                        <Box className="cargarArchivos w-auto">
+                                            <AdjuntarArchivos
+                                                name={'draftAtachments'}
+                                                multiple={true}
+                                                idPerson={userId}
+                                                rol={1}
+                                                route={`profiles/${userId}/draft`}
+                                                functionState={(info: any) => setDraftInfo(info)}
+                                                state={draftInfo}
+                                            />
+                                        </Box>
+                                        <Form.Control
+                                            type="text"
+                                            name="draftAtachments"
+                                            value={draftInfo.draftAtachments}
+                                            style={{ flex: 1, minWidth: '200px' }}
+                                            readOnly
+                                            placeholder="Ningún archivo cargado"
+                                        />
+                                    </Row>
+                                </Form.Group>
+
+                                <Modal
+                                    open={openModal}
+                                    onClose={handleCloseModal}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                >
+                                    <Box sx={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        width: '90%',
+                                        maxWidth: 600,
+                                        bgcolor: 'background.paper',
+                                        boxShadow: 24,
+                                        p: 4,
+                                        borderRadius: 2
+                                    }}>
+                                        <Ubicacion
+                                            setLocInfo={(info: any) => setDraftInfo(info)}
+                                            locInfo={draftInfo}
+                                            setOpen={setOpen}
+                                        />
+                                    </Box>
+                                </Modal>
+
+                                {/* Actions */}
+                                <Row className="pt-4 pb-4 w-100 justify-content-center m-0 gap-3">
+                                    <Button
+                                        onClick={handleSave}
                                         className="btn-primary-gradient p-2 ps-4 pe-4 w-auto"
                                         variant="primary"
                                     >
-                                        Guardar y continuar
+                                        Guardar y finalizar
                                     </Button>
-                                    <span className="p-4 w-auto"> </span>
                                     <Button
                                         onClick={handleComeBack}
                                         className="btn-round btn-middle w-auto"
@@ -418,282 +544,12 @@ export default function Page() {
                                         <KeyboardBackspaceIcon /> Volver atrás
                                     </Button>
                                 </Row>
-                            </Col>
-                        </>
-                    )}
+                            </Form>
+                        </Col>
+                    </Row>
                 </Col>
             )}
-            {activeStep === 1 && (
-                <Col className="nuevo-proyecto-buscador-2 align-items-baseline p-2 ps-4">
-                    <TablaSubCategoriaCantidades
-                        categoriaInfo={categoriaInfo}
-                        setDraftInfo={setDraftInfo}
-                        draftInfo={draftInfo}
-                    />
-                    <Typography className="type-section-title w-100 center mt-4 mb-4">
-                        Elige tus ajustes
-                    </Typography>
-                    <Col className="p-4 align-items-start card-frame" xl={6} lg={8} md={10} sm={12}>
-                        <Form className="m-4">
-                            <p className="type-body text-dark">
-                                Crea una oferta. <br />
-                                Dejanos conocer un poco más hacerca del proyecto que vas a postular. * Campos requeridos
-                            </p>
-                            <Form.Group className="mb-3" controlId="formNewProjectName">
-                                <Form.Label className="type-body-sm fw-bold">Dale un titulo a tu requerimiento *</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    style={{ height: '100px' }}
-                                    placeholder="¿Cual es el titulo de tu requerimiento?"
-                                    name="draftName"
-                                    value={draftInfo.draftName}
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formNewProjectDescription">
-                                <Form.Label className="type-body-sm fw-bold">Describe el tipo de servicio que necesitas *</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    style={{ height: '100px' }}
-                                    placeholder="¿Que servicio requieres?"
-                                    name="draftDescription"
-                                    value={draftInfo.draftDescription}
-                                    onChange={handleChange}
-                                />
-                                <Form.Text className="text-muted">
-                                    Provee información adicional aquí, como especificaciones de tecnica y materiales requeridos.
-                                </Form.Text>
-                            </Form.Group>
-                            <Typography color="text.secondary" className="type-body-sm fw-bold pb-2" onClick={handleShowMore} style={{ cursor: 'pointer' }}>
-                                Ofrece mayores detalles
-                                {showMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                            </Typography>
-                            {showMore && (
-                                <Box>
-                                    <Form.Group className="mb-3" controlId="formNewProjectSize">
-                                        <Form.Label className="type-body-sm fw-bold">Escoge el tamaño</Form.Label>
-                                        <Form.Select name="draftSize" value={draftInfo.draftSize} onChange={handleChange}>
-                                            <option>Selecciona el tamaño del proyecto</option>
-                                            <option value="sencillo">Sencillo</option>
-                                            <option value="mediano">Mediano</option>
-                                            <option value="doble">Doble</option>
-                                            <option value="grande">Grande</option>
-                                            <option value="Otra">Otro</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                    <Form.Group className="mb-3" controlId="formNewProjectProperty">
-                                        <Form.Label className="type-body-sm fw-bold">¿Qué tipo de propiedad es?</Form.Label>
-                                        <Form.Select name="draftProperty" value={draftInfo.draftProperty} onChange={handleChange}>
-                                            <option>Selecciona el tipo de propiedad</option>
-                                            <option value="Colonial">Propiedad Colonial (1800 - 1920)</option>
-                                            <option value="SubUrbana">Propiedad suburbana (1920-1960)</option>
-                                            <option value="Moderna">Propiedad moderna (1960-presente)</option>
-                                            <option value="Otra">Otra</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                    <Form.Group className="mb-3" controlId="formNewProjectRooms">
-                                        <Form.Label className="type-body-sm fw-bold">¿Cuantas habitaciones y/o espacios seran intervenidos?</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Por favor especifica"
-                                            name="draftRooms"
-                                            value={draftInfo.draftRooms}
-                                            onChange={handleChange}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="mb-3" controlId="formNewProjectPlans">
-                                        <Form.Label className="type-body-sm fw-bold">¿Han sido diseñados planos arquitectonicos?</Form.Label>
-                                        <Form.Select name="draftPlans" value={draftInfo.draftPlans} onChange={handleChange}>
-                                            <option>Selecciona el estado actual</option>
-                                            <option value="Aproved">Aprobados</option>
-                                            <option value="Aplied">Aplicado</option>
-                                            <option value="NotAplied">Sin aplicar aun</option>
-                                            <option value="NotSure">No estoy seguro</option>
-                                            <option value="NotNeed">No son necesarios</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                    <Form.Group className="mb-3" controlId="formNewProjectPermissions">
-                                        <Form.Label className="type-body-sm fw-bold">¿Cúal es el estado de los permisos?</Form.Label>
-                                        <Form.Select name="draftPermissions" value={draftInfo.draftPermissions} onChange={handleChange}>
-                                            <option>Selecciona el estado actual</option>
-                                            <option value="Aproved">Aprobados</option>
-                                            <option value="Aplied">Aplicado</option>
-                                            <option value="NotAplied">Sin aplicar aun</option>
-                                            <option value="NotSure">No estoy seguro</option>
-                                            <option value="NotNeed">No son necesarios</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                </Box>
-                            )}
-                            <Col className="col-10">
-                                <Row className="pt-4 pb-4 w-100 justify-content-center">
-                                    <Button
-                                        onClick={goForward}
-                                        style={{ paddingRight: '10px' }}
-                                        className="p-2 ps-4 pe-4 btn-round btn-high body-1 w-auto"
-                                        variant="primary"
-                                    >
-                                        Guardar y continuar
-                                    </Button>
-                                    <span className="p-4 w-auto"> </span>
-                                    <Button
-                                        onClick={handleComeBack}
-                                        className="btn-round btn-middle w-auto"
-                                        variant="secondary"
-                                    >
-                                        <KeyboardBackspaceIcon /> Volver atras
-                                    </Button>
-                                </Row>
-                            </Col>
-                        </Form>
-                    </Col>
-                </Col>
-            )}
-            {activeStep === 2 && (
-                <Col className="nuevo-proyecto-buscador-3 align-items-baseline p-2 ps-4">
-                    <Typography className="type-section-title w-100 center">
-                        Programa la visita
-                    </Typography>
-                    <Col className="p-4 align-items-start card-frame" xl={6} lg={8} md={10} sm={12}>
-                        <Form>
-                            <Form.Group className="m-4" controlId="formNewProjectBestSchedule">
-                                <Form.Label className="type-body-sm fw-bold">
-                                    ¿Con cuál disponibilidad de horario y tiempo cuenta usted? *
-                                </Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    name="draftBestScheduleDate"
-                                    value={draftInfo.draftBestScheduleDate}
-                                    onChange={handleChange}
-                                />
-                                <Form.Control
-                                    type="time"
-                                    name="draftBestScheduleTime"
-                                    value={draftInfo.draftBestScheduleTime}
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group className="m-4" controlId="formNewProjectPostalCode">
-                                <Form.Label className="type-body-sm fw-bold w-100">
-                                    Registra la dirección donde se requiere el servicio.
-                                    {userAddress && (
-                                        <div className="mt-2 mb-2">
-                                            <Form.Check 
-                                                type="checkbox"
-                                                id="use-registered-address"
-                                                label={`Usar mi dirección: ${userAddress}`}
-                                                checked={draftInfo.draftDirection === userAddress}
-                                                onChange={(e) => {
-                                                    setDraftInfo(prev => ({
-                                                        ...prev,
-                                                        draftDirection: e.target.checked ? userAddress : '',
-                                                    }))
-                                                }}
-                                            />
-                                        </div>
-                                    )}
-                                    <Row className="w-100 flex justify-content-start" style={{ flexWrap: 'wrap' }}>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Registra la dirección"
-                                            name="draftDirection"
-                                            value={draftInfo.draftDirection}
-                                            onChange={handleChange}
-                                        />
-                                        <Button className="type-body-sm fw-bold ms-2 pb-2 text-verde w-auto" onClick={handleOpen}>
-                                            <AddLocationIcon /> {'Seleccionar en el mapa'}
-                                        </Button>
-                                    </Row>
-                                </Form.Label>
-                            </Form.Group>
-                            <Form.Group className="m-4" controlId="formNewProjectAtachments">
-                                <Form.Label className="type-body-sm fw-bold">
-                                    Cargar fotos, imagenes y documentos relacionados.
-                                </Form.Label>
-                                <Row>
-                                    <Box className="cargarArchivos">
-                                        <AdjuntarArchivos
-                                            name={'draftAtachments'}
-                                            multiple={true}
-                                            idPerson={userId}
-                                            rol={1}
-                                            route={`profiles/${userId}/draft`}
-                                            functionState={(info: any) => setDraftInfo(info)}
-                                            state={draftInfo}
-                                        />
-                                    </Box>
-                                    <Form.Control
-                                        type="text"
-                                        name="draftAtachments"
-                                        value={draftInfo.draftAtachments}
-                                        className="w-50"
-                                        readOnly
-                                    />
-                                </Row>
-                            </Form.Group>
-                            <Modal
-                                open={openModal}
-                                onClose={handleCloseModal}
-                                aria-labelledby="modal-modal-title"
-                                aria-describedby="modal-modal-description"
-                            >
-                                <Box>
-                                    <Ubicacion
-                                        setLocInfo={(info: any) => setDraftInfo(info)}
-                                        locInfo={draftInfo}
-                                        setOpen={setOpen}
-                                    />
-                                </Box>
-                            </Modal>
-                            <Col className="col-10">
-                                <Row className="pt-4 pb-4 w-100 justify-content-center">
-                                    <Button
-                                        onClick={!hideRegister ? goForward : handleSave}
-                                        style={{ paddingRight: '10px' }}
-                                        className="btn-primary-gradient p-2 ps-4 pe-4 w-auto"
-                                        variant="primary"
-                                    >
-                                        Guardar y finalizar
-                                    </Button>
-                                    <span className="p-4 w-auto"> </span>
-                                    <Button
-                                        onClick={handleComeBack}
-                                        className="btn-round btn-middle w-auto"
-                                        variant="secondary"
-                                    >
-                                        <KeyboardBackspaceIcon /> Volver atras
-                                    </Button>
-                                </Row>
-                            </Col>
-                        </Form>
-                    </Col>
-                </Col>
-            )}
-            {activeStep === 3 && !hideRegister ? (
-                <Row className="nuevo-proyecto-mensaje w-100">
-                    <Col className="p-4 col-10">
-                        <h3 className="type-hero-title text-blanco">
-                            Por ultimo ingresa tus datos de contacto
-                        </h3>
-                        <p className="type-body text-blanco">
-                            Hasta cuatro Comerciantes calificados te contactaran para aplicar con una cotización.
-                            Asegúrate que tus datos son exactos.
-                        </p>
-                    </Col>
-                    <PageRegistro
-                        setDraftInfo={(info: any) => setDraftInfo(info)}
-                        draftInfo={draftInfo}
-                        handleSave={handleSave}
-                        showLogo={false}
-                    />
-                    <PageIngreso
-                        setDraftInfo={(info: any) => setDraftInfo(info)}
-                        draftInfo={draftInfo}
-                        handleSave={handleSave}
-                        showLogo={false}
-                    />
-                </Row>
-            ) : null}
         </Container>
     )
 }
+

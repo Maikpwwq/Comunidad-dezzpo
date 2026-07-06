@@ -1,4 +1,3 @@
-import React from 'react'
 import { usePageContext } from '@hooks/usePageContext'
 import { useUserStore } from '@stores/userStore'
 import { getPrimaryEmail, getPrimaryPhone } from '@utilities/contactUtils'
@@ -15,7 +14,7 @@ import { ChipsCategories, MapaPerfil, CincoEstrellas } from '@components/common'
 
 // UI Libs
 import { Row, Col, Container } from 'react-bootstrap'
-import { Box, Button, Typography, Stack } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import MailIcon from '@mui/icons-material/Mail'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
@@ -191,9 +190,9 @@ export default function Page() {
                             Canales de comunicación
                         </Typography>
                         {(() => {
-                            const visibleLinks = (socialLinks || [])
-                                .filter((sl) => sl.isVisible)
-                                .sort((a, b) => a.priority - b.priority)
+                            const visibleLinks = (socialLinks as any[] || [])
+                                .filter((sl: any) => sl.isVisible)
+                                .sort((a: any, b: any) => (a.priority || 0) - (b.priority || 0))
 
                             if (visibleLinks.length === 0) {
                                 return (
@@ -205,16 +204,16 @@ export default function Page() {
 
                             return (
                                 <div className={styles.SocialLinksGrid || ''}>
-                                    {visibleLinks.map((sl) => (
+                                    {visibleLinks.map((sl: any) => (
                                         <a
                                             key={sl.id}
-                                            href={sl.url.match(/^https?:\/\//) ? sl.url : `https://${sl.url}`}
+                                            href={sl.url?.match(/^https?:\/\//) ? sl.url : `https://${sl.url}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className={styles.SocialLinkChip || ''}
                                         >
                                             <span className={styles.SocialLinkChipName || ''}>
-                                                {PLATFORM_CONFIG[sl.platform]?.name || sl.platform}
+                                                {(PLATFORM_CONFIG as any)[sl.platform]?.name || sl.platform}
                                             </span>
                                             {sl.label && (
                                                 <span className={styles.SocialLinkChipLabel || ''}>

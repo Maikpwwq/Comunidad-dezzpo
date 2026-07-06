@@ -4,74 +4,25 @@
  * Main landing page for Comunidad Dezzpo marketplace.
  * Converted to TypeScript with V1 design patterns.
  */
-import { useState } from 'react'
 import { navigate } from 'vike/client/router'
-// Styles
 // Components
-import { ProjectSearchForm } from '@features/projects'
-import { NuestraComunidad, Subscribe } from '@features/marketing'
-// Bootstrap
+import { NuestraComunidad, QuickMatch } from '@features/marketing'
 // Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import { useTheme } from '@mui/material/styles'
 import {
     Box,
-    Button,
-    MobileStepper,
     Typography
 } from '@mui/material'
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
-// Swipeable views
-import SwipeableViewsModule from 'react-swipeable-views'
-import * as SwipeableViewsUtils from 'react-swipeable-views-utils'
-let _CachedSwipeable: any = null
-function getCustomSwipeableViews() {
-    if (_CachedSwipeable) return _CachedSwipeable
-    const SV = (SwipeableViewsModule as any).default?.default || (SwipeableViewsModule as any).default || SwipeableViewsModule
-    const utils = (SwipeableViewsUtils as any).default || SwipeableViewsUtils
-    const bk = utils.bindKeyboard?.default || utils.bindKeyboard
-    _CachedSwipeable = bk(SV)
-    return _CachedSwipeable
-}
-const styles = {
-    stepper: {
-        position: 'relative' as const,
-        bottom: '-25px',
-        zIndex: 1000,
-        background: 'transparent',
-        height: '0px',
-        padding: 0,
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'row' as const,
-    },
-}
+
 export default function Page() {
-    const theme = useTheme()
-    const CustomSwipeableViews = getCustomSwipeableViews()
-    const maxSteps = 2
-    const [activeStep, setActiveStep] = useState(0)
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    }
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1)
-    }
-    const handleStepChange = (step: number) => {
-        setActiveStep(step)
-    }
     const handleClick = () => {
         navigate('/app/portal-servicios')
     }
     return (
         <div className="home-container">
             <Container fluid className="p-0 pt-4">
-                <Row className="m-0 w-100 banner-comunidad d-flex justify-content-center">
-                    <Col className="image-container" lg={2} md={3} sm={12} xs={11}>
-                        {/* Image placeholder / spacing column if image is background */}
-                    </Col>
+                <Row className="m-0 w-100 banner-comunidad d-flex justify-content-center align-items-center">
                     <Col
                         id="contenedorBanner"
                         className="m-0 p-0 pt-4 d-flex flex-column justify-content-center align-items-center"
@@ -98,65 +49,8 @@ export default function Page() {
                             </Typography>
                         </Box>
                     </Col>
-                    <Col className="col m-4 p-0 d-flex justify-content-center flex-column" xl={4} lg={4} md={4} sm={12} xs={12}>
-                        <Box sx={{ width: '100%', position: 'relative' }}>
-                            <CustomSwipeableViews
-                                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                                index={activeStep}
-                                onChangeIndex={handleStepChange}
-                                enableMouseEvents
-                                style={{ width: '100%' }}
-                            >
-                                {/* Step 1: Search Form */}
-                                <div style={{ width: '100%', overflow: 'hidden' }}>
-                                    <ProjectSearchForm simple={false} />
-                                </div>
-
-                                {/* Step 2: Subscribe Section */}
-                                <div style={{ width: '100%', overflow: 'hidden' }}>
-                                    <Subscribe />
-                                </div>
-                            </CustomSwipeableViews>
-
-                            <MobileStepper
-                                sx={{
-                                    ...styles.stepper,
-                                    bottom: '0',
-                                    justifyContent: 'center',
-                                    paddingTop: 2
-                                }}
-                                steps={maxSteps}
-                                activeStep={activeStep}
-                                nextButton={
-                                    <Button
-                                        size="large"
-                                        onClick={handleNext}
-                                        className="arrow-next"
-                                        disabled={activeStep === maxSteps - 1}
-                                    >
-                                        {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowLeft fontSize="large" />
-                                        ) : (
-                                            <KeyboardArrowRight fontSize="large" />
-                                        )}
-                                    </Button>
-                                }
-                                backButton={
-                                    <Button
-                                        size="large"
-                                        onClick={handleBack}
-                                        className="arrow-back"
-                                        disabled={activeStep === 0}
-                                    >
-                                        {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowRight fontSize="large" />
-                                        ) : (
-                                            <KeyboardArrowLeft fontSize="large" />
-                                        )}
-                                    </Button>
-                                }
-                            />
-                        </Box>
+                    <Col className="col m-4 p-0 d-flex justify-content-center flex-column" xl={5} lg={6} md={7} sm={12} xs={12}>
+                        <QuickMatch />
                     </Col>
                 </Row>
             </Container>

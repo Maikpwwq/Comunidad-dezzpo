@@ -1,8 +1,6 @@
-import React from 'react'
 import { usePageContext } from '@hooks/usePageContext'
-import { Container, Row, Col } from 'react-bootstrap'
-import { Typography, Button, Box } from '@mui/material'
-import clsx from 'clsx'
+import { Container } from 'react-bootstrap'
+import { Typography, Button } from '@mui/material'
 import styles from './Discovery.module.scss'
 import { CincoEstrellas } from '@components/common'
 // @ts-ignore
@@ -126,7 +124,7 @@ export default function Page() {
             {/* Content List */}
             <Container className="py-5">
                 {/* Direct Matches */}
-                <Typography variant="h2" className={styles.SectionTitle}>
+                <Typography variant="h2" className={styles.SectionTitle || ''}>
                     {rolName} disponibles en {zoneName}
                 </Typography>
 
@@ -144,7 +142,7 @@ export default function Page() {
                 {/* Other Matches */}
                 {otherMatches.length > 0 && (
                     <div className="mt-5">
-                        <Typography variant="h2" className={styles.SectionTitle}>
+                        <Typography variant="h2" className={styles.SectionTitle || ''}>
                             Otros profesionales en {serviceName.toLowerCase()} en Bogotá
                         </Typography>
                         <div className={styles.Grid}>
@@ -156,7 +154,7 @@ export default function Page() {
                 {/* FAQ Accordion Section */}
                 {faqs.length > 0 && (
                     <div className={styles.FaqSection}>
-                        <Typography variant="h2" className={styles.SectionTitle} style={{ marginTop: 0 }}>
+                        <Typography variant="h2" className={styles.SectionTitle || ''} style={{ marginTop: 0 }}>
                             Preguntas frecuentes sobre {serviceName.toLowerCase()} en {zoneName}
                         </Typography>
                         <div>
