@@ -238,7 +238,18 @@ pending_payment → active → completed → disputed
 | `VITE_APP_EPAYCO_PRIVATE_KEY` | Server ONLY | Signature generation |
 | `VITE_APP_PAYCO_TEST` | Server | Test mode flag (`true`/`false`) |
 
+### Geographic Coverage & Centralization (ListadoZonas.ts)
+- **Centralized Source**: All zones and their slug-to-label mappings MUST be imported from `@assets/data/ListadoZonas` (both the `zones` array and the `zoneNames` record).
+- **No duplicates**: DO NOT hardcode lists of Bogotá localities or surrounding municipalities in local components, routes, or scripts.
+- **Coverage**: Includes all 20 localities of Bogotá plus adjacent metropolitan municipalities (Soacha, Chía, Cajicá, Zipaquirá, Cota, Funza, Mosquera, Madrid, Facatativá, La Calera, Sopó).
+- **Sitemap & Search Integration**: Both `generate-sitemap.ts` and `QuickMatch.tsx` consume the centralized constants directly, keeping marketing pages, search forms, and search engine optimization index lists completely in sync.
+
 ## 9. Learned Lessons
+
+### Centralized Geographic Configuration (2026-07-06)
+- **Centralization of Zones**: Migrated all zone listings (Bogotá localities + metropolitan municipalities) to `@assets/data/ListadoZonas.ts` to prevent duplication bugs and keep prerendering, sitemaps (`generate-sitemap.ts`), and marketing search forms (`QuickMatch.tsx`) perfectly aligned.
+- **Sitemap Script Path Aliases**: To run the sitemap generator script using `tsx` with path aliases, the `scripts/**/*.ts` pattern must be included in `tsconfig.json`'s `include` array. This ensures the TypeScript compiler compiles script files in the root workspace and correctly resolves aliases like `@assets/data/ListadoZonas` without IDE or compiler errors.
+
 
 ### Vike Configuration (2026-01-27)
 - **Deprecation of `+config.h.ts`**: Vike now prefers `+config.ts`.

@@ -12,7 +12,7 @@
  * - Functional handleFavorite with Firestore toggle
  */
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import { navigate } from 'vike/client/router'
 import clsx from 'clsx'
 
@@ -51,7 +51,6 @@ export interface DraftCardProps {
     draftCategory: string
     draftCreated?: string
     draftApply?: string[]
-    isLiked?: boolean
 }
 
 export function DraftCard({
@@ -63,14 +62,20 @@ export function DraftCard({
     draftCategory,
     draftCreated,
     draftApply = [],
-    isLiked: initialIsLiked = false,
 }: DraftCardProps): React.ReactElement {
-    // Zustand selectors (replacing UserAuthContext)
+    // Zustand selectors (atomic)
     const currentUserId = useUserStore((state) => state.userId)
     const userRole = useUserStore((state) => state.rol)
+    const savedDrafts = useUserStore((state) => state.savedDrafts)
+    const toggleSavedDraft = useUserStore((state) => state.toggleSavedDraft)
+
+    // Derived from store — survives navigation & reload
+    const isLiked = savedDrafts.includes(draftId)
+
+    // Race condition guard
+    const isSaving = useRef(false)
 
     // Local state
-    const [isLiked, setIsLiked] = useState(initialIsLiked)
     const [snackOpen, setSnackOpen] = useState(false)
     const [snackMessage, setSnackMessage] = useState('')
     const [ownerName, setOwnerName] = useState<string>(draftPropietarioResidente)
@@ -100,11 +105,6 @@ export function DraftCard({
     const isCommerciante = userRole === 2
     const canApply = draftApply.length < 4
 
-    // Determine collection name based on user role
-    const getUserCollection = (role: number | null): string => {
-        return role === 1 ? 'usersPropietariosResidentes' : 'usersComerciantesCalificados'
-    }
-
     // Handlers
     const handleVerRequerimiento = useCallback(() => {
         navigate(draftLink)
@@ -119,29 +119,38 @@ export function DraftCard({
     }, [draftId])
 
     const handleFavorite = useCallback(async () => {
+        if (isSaving.current) return
         if (!currentUserId) {
-            navigate('/sign-in')
+            navigate('/ingreso')
             return
         }
 
         if (!firestore || !userRole) return
 
-        const collectionName = getUserCollection(userRole)
-        const userRef = doc(firestore, collectionName, currentUserId)
+        isSaving.current = true
+        const wasLiked = useUserStore.getState().savedDrafts.includes(draftId)
+
+        // Optimistic: update store immediately for responsive UI
+        toggleSavedDraft(draftId)
 
         try {
+            const collectionName = userRole === 1 ? 'usersPropietariosResidentes' : 'usersComerciantesCalificados'
+            const userRef = doc(firestore, collectionName, currentUserId)
             await updateDoc(userRef, {
-                savedDrafts: isLiked ? arrayRemove(draftId) : arrayUnion(draftId)
+                savedDrafts: wasLiked ? arrayRemove(draftId) : arrayUnion(draftId)
             })
-            setIsLiked(!isLiked)
-            setSnackMessage(isLiked ? 'Eliminado de favoritos' : 'Guardado en favoritos')
+            setSnackMessage(wasLiked ? 'Eliminado de favoritos' : 'Guardado en favoritos')
             setSnackOpen(true)
         } catch (error) {
+            // Revert optimistic update on failure
+            toggleSavedDraft(draftId)
             console.error('Error updating favorites:', error)
             setSnackMessage('Error al actualizar favoritos')
             setSnackOpen(true)
+        } finally {
+            isSaving.current = false
         }
-    }, [draftId, currentUserId, isLiked, userRole])
+    }, [draftId, currentUserId, userRole, toggleSavedDraft])
 
     const handleShare = useCallback(async () => {
         try {

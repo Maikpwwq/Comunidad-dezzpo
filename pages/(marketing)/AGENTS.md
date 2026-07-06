@@ -1,6 +1,6 @@
 # Marketing Pages - AI Agent Context
 
-> **Scope**: This context applies to all pages under `pages/(marketing)/`
+> **Scope**: This context applies to all pages under `pages/(marketing)/`.
 > These are PUBLIC pages focused on SEO and conversion.
 
 ---
@@ -27,21 +27,82 @@ export default {
 
 | Route | Purpose | SEO Priority | Notes |
 |-------|---------|--------------|-------|
-| `/` | Home - Landing with search/CTA | **Critical** | |
+| `/` | Home - Landing with QuickMatch search/CTA | **Critical** | |
 | `/nosotros` | About us (history, mission, vision, team) | High | |
 | `/contactenos` | Contact info (phone, email, address, map) | Medium | |
 | `/asi-trabajamos` | How it works (propietarios + comerciantes) | High | |
 | `/comunidad-comerciantes` | For Professionals | **Critical** | |
 | `/comunidad-propietarios` | For Property Owners | **Critical** | |
 | `/presupuestos` | Request services (informative + form) | High | Links to `/app/nuevo-proyecto` |
-| `/ayuda-pqrs` | Help center & FAQ (accordion) | Medium | Triggers AI chatbot |
+| `/ayuda-pqrs` | Help center & FAQ (accordion + AI chatbot) | Medium | Triggers AI chatbot |
 | `/legal` | Legal documents (T&C, Privacy, Cookies) | Low | Google Drive links |
+| `/blog` | Blog content | Medium | |
+| `/profesionales-servicios` | Professional services directory landing | High | |
+| `/calificaciones` | Ratings page | Medium | |
+| `/apendice-costos` | Cost appendix reference | Medium | |
+| `/nuevo-proyecto` | New project wizard | High | 4-step form flow |
+| `/comerciante/@slug` | Public merchant profiles | High | Dynamic slugs |
+| `/@service/@zone` | Service × Zone discovery pages | **Critical** | Prerendered for all zones |
+| `/patrocinadores` | Sponsors page | Low | |
+| `/prensa` | Press page | Low | |
+| `/dev/typography` | Design system reference (dev only) | None | |
+
+---
+
+## Geographic Coverage & Dynamic Routes
+
+### `@service/@zone` — Discovery Pages
+
+The `/@service/@zone` routes generate service discovery pages for every combination of service category × geographic zone (e.g., `/plomeria/suba`, `/electricidad/soacha`).
+
+#### Centralized Zone Configuration
+
+**CRITICAL**: All zone definitions are centralized in `@assets/data/ListadoZonas.ts`:
+
+| Export | Type | Purpose |
+|--------|------|---------|
+| `zones` | `string[]` | Array of zone slugs for route generation |
+| `zoneNames` | `Record<string, string>` | Slug → human-readable label mapping |
+
+**Consumers in this route group:**
+- `+onBeforePrerenderStart.ts` — imports `zones` for static route generation
+- `+data.ts` — imports `zoneNames` for label resolution during data fetching
+
+**Rule**: DO NOT hardcode zone lists in any marketing component or route file. Always import from `@assets/data/ListadoZonas`.
+
+#### Coverage
+
+Includes all 20 localities of Bogotá plus adjacent metropolitan municipalities (Soacha, Chía, Cajicá, Zipaquirá, Cota, Funza, Mosquera, Madrid, Facatativá, La Calera, Sopó).
+
+---
+
+## QuickMatch Component
+
+The homepage hero search (`src/features/marketing/components/QuickMatch.tsx`) provides instant fuzzy matching:
+
+- **Categories**: Imported from `@assets/data/ListadoCategorias`
+- **Zones**: Dynamically built from `@assets/data/ListadoZonas` (`zoneNames`)
+- **Flow**: User types a need → fuzzy-matches against categories → selects zone → navigates to `/{service-slug}/{zone}`
+
+**Rule**: When updating zones, only modify `ListadoZonas.ts`. QuickMatch and all route files will automatically reflect the changes.
+
+---
+
+## Sitemap Generation
+
+`scripts/generate-sitemap.ts` generates `public/sitemap.xml` at build time:
+
+- Imports `zones` from `@assets/data/ListadoZonas`
+- Imports `ListadoCategorias` from `@assets/data/ListadoCategorias`
+- Generates `Category × Zone` URL matrix (~3100+ URLs)
+- Fetches dynamic `comerciante` slugs from Firestore
+- Runs as part of `pnpm build` pipeline
 
 ---
 
 ## Ayuda PQRS Architecture (Redesigned)
 
-The `/ayuda-pqrs` page was redesigned as a modern FAQ center:
+The `/ayuda-pqrs` page is a modern FAQ center:
 
 ### Structure
 - **Gradient hero** with "Centro de Ayuda" title
@@ -50,12 +111,6 @@ The `/ayuda-pqrs` page was redesigned as a modern FAQ center:
   - Comerciantes (6 FAQs)
   - General (9 FAQs)
 - **AI Chatbot CTA card** — replaces old WhatsApp "Chat en vivo" button
-
-### Key Files
-| File | Purpose |
-|------|---------|
-| `+Page.tsx` | Main page component with MUI Accordion, tabs, AI CTA |
-| `AyudaPqrs.module.scss` | SCSS module with gradient hero, accordion styling, AI card |
 
 ### AI Chatbot Integration
 - Imports `useChatStore` from `@stores/chatStore`
@@ -112,7 +167,8 @@ When modifying marketing pages:
 4. **Use Vike v0.4.x patterns**: `export default` for page component
 5. **SCSS Modules for new pages**: Use `PageName.module.scss` pattern (not global CSS)
 6. **Sync FAQ changes**: Update both component data AND `knowledge/dezzpo-core.md`
-7. **STRICT PACKAGE MANAGER POLICY**:
+7. **Zone changes**: Only modify `@assets/data/ListadoZonas.ts` — never hardcode zones locally
+8. **STRICT PACKAGE MANAGER POLICY**:
    - **ALWAYS use `pnpm`**.
    - **NEVER use `npm` or `npx`**.
    - Use `pnpm dlx` instead of `npx`.

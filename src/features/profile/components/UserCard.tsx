@@ -11,7 +11,7 @@
  * - Share fallback with clipboard toast
  */
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { navigate } from 'vike/client/router'
 
 // Note: Ensure vite.config.ts supports logical scss modules
@@ -47,7 +47,6 @@ export interface UserCardProps {
     userExperience?: string
     userDescription?: string
     userCategories?: string[]
-    isLiked?: boolean
 }
 
 interface CategoryChip {
@@ -65,16 +64,22 @@ export function UserCard({
     userExperience,
     userDescription,
     userCategories = [],
-    isLiked: initialIsLiked = false,
 }: UserCardProps): React.ReactElement {
-    // Zustand selectors (replacing UserAuthContext)
+    // Zustand selectors (atomic)
     const currentUserId = useUserStore((state) => state.userId)
     const userRole = useUserStore((state) => state.rol)
+    const likedProfiles = useUserStore((state) => state.likedProfiles)
+    const toggleLikedProfile = useUserStore((state) => state.toggleLikedProfile)
     const isAuthenticated = !!currentUserId
+
+    // Derived from store — survives navigation & reload
+    const isLiked = likedProfiles.includes(userId)
+
+    // Race condition guard
+    const isSaving = useRef(false)
 
     // Local state
     const [chips, setChips] = useState<CategoryChip[]>([])
-    const [isLiked, setIsLiked] = useState(initialIsLiked)
     const [snackOpen, setSnackOpen] = useState(false)
     const [snackMessage, setSnackMessage] = useState('')
 
@@ -84,11 +89,6 @@ export function UserCard({
     const bgAvatar = userPhotoUrl
         ? { bgcolor: 'var(--background-light-gray-color)' }
         : { bgcolor: 'var(--background-hover-green-color)' }
-
-    // Determine collection name based on user role
-    const getUserCollection = (role: number | null): string => {
-        return role === 1 ? 'usersPropietariosResidentes' : 'usersComerciantesCalificados'
-    }
 
     // Handlers
     const handleVerSitio = useCallback(() => {
@@ -116,32 +116,40 @@ export function UserCard({
     }, [currentUserId, userId, userRazonSocial])
 
     const handleFavorite = useCallback(async () => {
+        if (isSaving.current) return
         if (!currentUserId) {
-            navigate('/sign-in')
+            navigate('/ingreso')
             return
         }
 
         if (!firestore || !userRole) return
 
-        // Update the CURRENT user's likedsProfiles (not the target user's doc)
-        const collectionName = getUserCollection(userRole)
-        const currentUserRef = doc(firestore, collectionName, currentUserId)
+        isSaving.current = true
+        const wasLiked = useUserStore.getState().likedProfiles.includes(userId)
+
+        // Optimistic: update store immediately for responsive UI
+        toggleLikedProfile(userId)
 
         try {
+            const collectionName = userRole === 1 ? 'usersPropietariosResidentes' : 'usersComerciantesCalificados'
+            const currentUserRef = doc(firestore, collectionName, currentUserId)
             await updateDoc(currentUserRef, {
-                'userLikes.likedsProfiles': isLiked
+                'userLikes.likedsProfiles': wasLiked
                     ? arrayRemove(userId)
                     : arrayUnion(userId)
             })
-            setIsLiked(!isLiked)
-            setSnackMessage(isLiked ? 'Eliminado de favoritos' : 'Guardado en favoritos')
+            setSnackMessage(wasLiked ? 'Eliminado de favoritos' : 'Guardado en favoritos')
             setSnackOpen(true)
         } catch (error) {
-            console.error('Error adding favorite:', error)
+            // Revert optimistic update on failure
+            toggleLikedProfile(userId)
+            console.error('Error updating favorites:', error)
             setSnackMessage('Error al actualizar favoritos')
             setSnackOpen(true)
+        } finally {
+            isSaving.current = false
         }
-    }, [userId, currentUserId, isLiked, userRole])
+    }, [userId, currentUserId, userRole, toggleLikedProfile])
 
     const handleShare = useCallback(async () => {
         try {

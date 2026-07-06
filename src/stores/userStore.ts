@@ -31,6 +31,8 @@ export interface UserState {
   emails: ContactEmail[]
   phones: ContactPhone[]
   socialLinks: SocialLink[]
+  savedDrafts: string[]
+  likedProfiles: string[]
 }
 
 export interface UserActions {
@@ -50,6 +52,11 @@ export interface UserActions {
   addSocialLink: (link: SocialLink) => void
   updateSocialLink: (id: string, updates: Partial<SocialLink>) => void
   removeSocialLink: (id: string) => void
+  // Favorites actions
+  setSavedDrafts: (drafts: string[]) => void
+  setLikedProfiles: (profiles: string[]) => void
+  toggleSavedDraft: (draftId: string) => void
+  toggleLikedProfile: (profileId: string) => void
 }
 
 const initialState: UserState = {
@@ -64,6 +71,8 @@ const initialState: UserState = {
   emails: [],
   phones: [],
   socialLinks: [],
+  savedDrafts: [],
+  likedProfiles: [],
 }
 
 /**
@@ -162,6 +171,29 @@ export const useUserStore = create<UserState & UserActions>()(
           ...state,
           socialLinks: state.socialLinks.filter((sl) => sl.id !== id),
         })),
+
+      // Favorites
+      setSavedDrafts: (drafts) =>
+        set((state) => ({ ...state, savedDrafts: drafts })),
+
+      setLikedProfiles: (profiles) =>
+        set((state) => ({ ...state, likedProfiles: profiles })),
+
+      toggleSavedDraft: (draftId) =>
+        set((state) => ({
+          ...state,
+          savedDrafts: state.savedDrafts.includes(draftId)
+            ? state.savedDrafts.filter((id) => id !== draftId)
+            : [...state.savedDrafts, draftId],
+        })),
+
+      toggleLikedProfile: (profileId) =>
+        set((state) => ({
+          ...state,
+          likedProfiles: state.likedProfiles.includes(profileId)
+            ? state.likedProfiles.filter((id) => id !== profileId)
+            : [...state.likedProfiles, profileId],
+        })),
     }),
     {
       name: 'user-storage',
@@ -177,6 +209,8 @@ export const useUserStore = create<UserState & UserActions>()(
         emails: state.emails,
         phones: state.phones,
         socialLinks: state.socialLinks,
+        savedDrafts: state.savedDrafts,
+        likedProfiles: state.likedProfiles,
       }),
     }
   )

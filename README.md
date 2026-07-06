@@ -6,64 +6,86 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 
 ## Tech Stack
 
-- **Framework**: [Vike v0.4.x](https://vike.dev/) (SSR/SSG)
-- **UI**: React 19 + [MUI v6](https://mui.com/) (`@mui/material`, `@mui/icons-material`) + [@mui/x-data-grid](https://mui.com/x/react-data-grid/) v7 + **Emotion** (`@emotion/react`, `@emotion/styled`, `@emotion/server`, `@emotion/cache`) for SSR-friendly styling
-- **State**: Zustand (replacing Context/RxJS)
-- **Auth**: Firebase Auth (Google + Email)
-- **Server**: Hono with `@vikejs/hono` (`pages/+server.ts`; see [Vike +server](https://vike.dev/server))
-- **AI/RAG**: Gemini 2.5 Flash + Supabase pgvector + AI SDK
+| Layer | Technology | Details |
+|-------|-----------|---------|
+| **Framework** | [Vike v0.4.x](https://vike.dev/) | SSR/SSG with filesystem routing |
+| **UI** | React 19 + MUI v6 | `@mui/material`, `@mui/icons-material`, `@mui/x-data-grid` v7 |
+| **Styling** | Emotion 11 + SCSS Modules | `@emotion/react`, `@emotion/styled`, `@emotion/server` for SSR |
+| **State** | Zustand 5 | Atomic selectors, `userStore`, `chatStore` |
+| **Auth** | Firebase Auth | Google SSO + Email/Password |
+| **Database** | Firebase Firestore | User collections, contracts, drafts, quotations |
+| **Storage** | Firebase Storage | Profile images, documents, portfolios |
+| **Server** | Hono + `@vikejs/hono` | `pages/+server.ts` ([Vike +server](https://vike.dev/server)) |
+| **AI/RAG** | Gemini 2.5 Flash | `@ai-sdk/google` via AI SDK + Supabase pgvector |
+| **Messaging** | Sendbird Chat v4 + UIKit v3 | Real-time messaging, channel orchestration |
+| **Payments** | ePayco | Colombian payment gateway, server-side signatures |
+| **Build** | Vite 8 + SWC | `@vitejs/plugin-react-swc` |
+| **TypeScript** | v6.x | Zero `any` policy, `ServiceResponse<T>` pattern |
+| **Deployment** | Vercel | Serverless Functions, custom Node→Web adapter |
+| **Package Manager** | pnpm 10 | **Mandatory** — never use npm or npx |
 
-### 🛠️ EXTERNAL PROVIDERS
+### 🛠️ External Providers
 
+| Provider | Purpose | Initialization Dependency |
+|----------|---------|---------------------------|
+| **Firebase Auth** | Identity & Session | Global `AuthProvider` |
+| **Google Auth** | SSO Provider | Firebase Client SDK |
+| **Sendbird** | Real-time Messaging | Authenticated UID (Auth-only). Orchestration via `@services/sendbird/sendbird.service.ts` |
+| **ePayco** | Payment Processing | Server-side signature generation via `/api/v1/payment/signature` |
+| **Supabase** | Vector DB (pgvector) | RAG chatbot embeddings + document matching |
 
-| Provider          | Purpose             | Initialization Dependency                                                                                                                                               |
-| ----------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Firebase Auth** | Identity & Session  | Global `AuthProvider`                                                                                                                                                   |
-| **Google Auth**   | SSO Provider        | Firebase Client SDK                                                                                                                                                     |
-| **Sendbird**      | Real-time Messaging | Authenticated UID (Auth-only). Programmatic orchestration via `@services/sendbird/sendbird.service.ts`. Synchronizes Firebase profiles (Avatar/Nickname) automatically. |
+### 🚦 Routing & Access Control
 
+The project uses a **Tiered Access Model**:
 
-### 🚦 ROUTING & ACCESS CONTROL
-
-The project utilizes a **Tiered Access Model**:
-
-1. **Public (Marketing):** Unrestricted access.
-2. **Hybrid (App Guest):** Accessible by anyone w/ App Shell. UI adapts to auth state.
-  - `/app/portal-servicios`
-    - `/app/directorio-requerimientos`
-    - `/app/ver-requerimiento/[id]`
-    - `/app/suscripciones` 
-    - `/app/perfil/[id]` (Public View)
-3. **Strict (App Auth):** Requires valid session (e.g., `/app/messages`, `/app/settings`).
+1. **Public (Marketing):** Unrestricted access — SSR/SSG prerendered.
+2. **Hybrid (App Guest):** Accessible by anyone with App Shell. UI adapts to auth state.
+   - `/app/portal-servicios`
+   - `/app/directorio-requerimientos`
+   - `/app/ver-requerimiento/[id]`
+   - `/app/suscripciones`
+   - `/app/perfil/[id]` (Public View)
+3. **Strict (App Auth):** Requires valid session (e.g., `/app/mensajes`, `/app/ajustes`).
 4. **Admin (Custom Claims):** Requires `claims.admin === true` via Firebase custom claims.
-  - `/admin/dashboard` — KPI Command Center
-    - `/admin/usuarios` — User Management (DataGrid)
-    - `/admin/verificacion` — Identity Verification Queue
-
-- **Frontend**: React + TypeScript
-- **Server**: Hono with Vike `pages/+server.ts` and `@vikejs/hono`
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **Backend/Services**: Firebase (Auth, Firestore, Storage)
-- **AI/RAG Chatbot**: Gemini 2.5 Flash (via @ai-sdk/google) + Supabase pgvector
-- **Deployment**: Vercel (Serverless Functions)
+   - `/admin/dashboard` — KPI Command Center + Monetization Analytics
+   - `/admin/usuarios` — User Management (DataGrid)
+   - `/admin/verificacion` — Identity Verification Queue
+   - `/admin/contratos` — Contract Management
+   - `/admin/requerimientos` — Requirements Overview
 
 ## Project Structure
 
 ```
 comunidad-dezzpo/
-├── +server.ts                               # Hono + @vikejs/hono (repo root; see Vike +server)
-├── server/
-│   └── api/                                 # RAG chat + ePayco signature (imported by +server.ts)
-├── pages/                                    # Vike root pages directory
+├── pages/
 │   ├── +config.ts                            # Global Vike v1 config
 │   ├── +Layout.tsx                           # Root layout wrapper
-│   ├── +onRenderClient.tsx                   # Client renderer (Emotion CacheProvider)
-│   ├── +onRenderHtml.tsx                     # HTML renderer (Emotion critical CSS → <head>)
-│   ├── +Head.tsx                             # Shared <head> meta
+│   ├── +onRenderHtml.tsx                     # SSR + Emotion critical CSS → <head>
+│   ├── +onRenderClient.tsx                   # CSR/hydration + Emotion CacheProvider
+│   ├── +server.ts                            # Hono + @vikejs/hono (API then vike(app))
+│   ├── PageShell.tsx                         # ThemeProvider, CssBaseline, auth, page context
 │   │
-│   ├── (marketing)/                          # Route Group: Marketing Pages (SSR/SSG)
+│   ├── (marketing)/                          # Route Group: Marketing (SSR/SSG)
 │   │   ├── +Layout.tsx                       # Marketing layout (header/footer)
-│   │   └── ...                               # Public pages
+│   │   ├── +Page.tsx                         # Homepage with QuickMatch search
+│   │   ├── @service/@zone/                   # Dynamic /{service-slug}/{zone} routes
+│   │   ├── nosotros/                         # About us
+│   │   ├── contactenos/                      # Contact
+│   │   ├── asi-trabajamos/                   # How it works
+│   │   ├── comunidad-comerciantes/           # For Professionals
+│   │   ├── comunidad-propietarios/           # For Property Owners
+│   │   ├── presupuestos/                     # Request services
+│   │   ├── ayuda-pqrs/                       # Help center & FAQ (AI chatbot)
+│   │   ├── legal/                            # Legal documents
+│   │   ├── blog/                             # Blog
+│   │   ├── comerciante/@slug/                # Public merchant profiles
+│   │   ├── profesionales-servicios/          # Directory landing
+│   │   ├── nuevo-proyecto/                   # New project wizard
+│   │   ├── calificaciones/                   # Ratings page
+│   │   ├── apendice-costos/                  # Cost appendix
+│   │   ├── patrocinadores/                   # Sponsors
+│   │   ├── prensa/                           # Press
+│   │   └── dev/typography/                   # Design system reference
 │   │
 │   ├── (auth)/                               # Route Group: Authentication
 │   │   ├── +Layout.tsx                       # Auth layout (centered card)
@@ -71,103 +93,126 @@ comunidad-dezzpo/
 │   │   ├── registro/+Page.tsx                # Registration
 │   │   └── restaurar-contrasena/+Page.tsx    # Password reset flow
 │   │
-│   ├── admin/                                # Protected Admin Dashboard
-│   │   ├── +Layout.tsx                       # Admin guard + sidebar layout
-│   │   ├── dashboard/+Page.tsx               # KPI Command Center
-│   │   ├── usuarios/+Page.tsx                # User Management (DataGrid)
-│   │   ├── verificacion/+Page.tsx            # Identity Verification Queue
-│   │   └── apendice-costos/+Page.tsx         # Cost Appendix Management
-```
-
-### 📂 PROJECT STRUCTURE
-
-- `@src/styles/`: [**STRICT**] Centralized SCSS (kebab-case). Global typography and variables.
-- `@src/emotion/`: Emotion cache factory (`createEmotionCache.ts`) shared by Vike `+onRenderHtml` / `+onRenderClient` for MUI SSR and hydration.
-- `@src/features/`: Complex, business-logic-heavy modules (e.g., quotes, dashboard).
-- `@src/components/`: Pure, reusable UI components (Buttons, Inputs, Layouts).
-- `@src/services/`: API and Firebase service layers.
-- `@src/stores/`: Global state management (Zustand).
-- `pages/`: Vike filesystem routing.
-
-### 🧭 DIRECTORY MAP
-
-```text
-/
-├── pages/                            # Vike Routing (Filesystem-based)
-│   ├── (app)/                        # Route Group: Authenticated App
-│   │   ├── +Layout.tsx               # App Shell (Sidebar + Navbar)
-│   │   ├── +guard.ts                 # Auth Guard Configuration
-│   │   ├── portal-servicios/         # [HYBRID] Service marketplace
-│   │   ├── perfil/                   # [HYBRID] User profiles
-│   │   │   ├── +Page.tsx             # Profile component
-│   │   │   └── +route.ts             # Dynamic route param logic
-│   │   │   ├── +Page.tsx                     # User's own profile
-│   │   │   ├── @id/+Page.tsx                 # Vanity URL profile
-│   │   │   └── +route.ts                     # Route resolver
-│   │   │
-│   │   ├── ajustes/
-│   │   │   ├── +Page.tsx                     # Settings grid
-│   │   │   └── @id/+Page.tsx                 # [OPTIONAL] Admin edit
-│   │   │
-│   │   ├── cotizar/                          # Quote/Budget flow
-│   │   │   ├── +Page.tsx
-│   │   │   ├── editar/@id/+Page.tsx
-│   │   │   └── ver/@id/+Page.tsx
-│   │   │
-│   │   ├── requerimiento/                    # Requirements components/utils
-│   │   ├── editar-requerimiento/@draftId/    # Edit Requirement
-│   │   ├── ver-requerimiento/@draftId/       # View Requirement
-│   │   │
-│   │   ├── mensajes/+Page.tsx                # Sendbird Chat integration
-│   │   ├── notificaciones/+Page.tsx
-│   │   ├── portal-servicios/+Page.tsx
-│   │   ├── directorio-requerimientos/+Page.tsx
-│   │   ├── historial-servicios/+Page.tsx     # [NEW] Service history & status
-│   │   ├── biblioteca/+Page.tsx
-│   │   ├── calificaciones/+Page.tsx          # [NEW] Contract-gated ratings
-│   │   ├── certificaciones/+Page.tsx
-│   │   ├── contratacion/+Page.tsx
-│   │   ├── contratar/+Page.tsx               # [NEW] Contract creation
-│   │   ├── proyecto/+Page.tsx
-│   │   ├── suscripciones/+Page.tsx
-│   │   ├── formas-pago/+Page.tsx             # [NEW] Payment methods (ePayco)
-│   │   ├── invitar-amigos/+Page.tsx
-│   │   ├── cambiar-clave/+Page.tsx
-│   │   ├── configuracion-privacidad/+Page.tsx # [NEW] Privacy toggles
-│   │   └── asesorias/+Page.tsx               # [NEW] Advisory Q&A
-│   │   │
-│   │   └── _error/+Page.tsx                  # Error page
+│   ├── (app)/                                # Route Group: App Shell
+│   │   ├── +Layout.tsx                       # App Shell (Sidebar + Navbar + ChatWidget)
+│   │   ├── +guard.ts                         # Auth guard (with hybrid whitelist)
+│   │   ├── portal-servicios/                 # [HYBRID] Service marketplace
+│   │   ├── directorio-requerimientos/        # [HYBRID] Requirements directory
+│   │   ├── ver-requerimiento/@draftId/       # [HYBRID] View requirement
+│   │   ├── suscripciones/                    # [HYBRID] Subscriptions
+│   │   ├── perfil/@id/                       # [HYBRID] User profiles
+│   │   ├── mensajes/                         # Sendbird Chat
+│   │   ├── cotizar/                          # Quote flow
+│   │   ├── editar-requerimiento/@draftId/    # Edit requirement
+│   │   ├── ajustes/                          # Settings
+│   │   ├── contratacion/                     # Contract + payment
+│   │   ├── contratar/                        # Contract creation
+│   │   ├── formas-pago/                      # Payment methods (role-adaptive)
+│   │   ├── calificaciones/                   # Contract-gated ratings
+│   │   ├── historial-servicios/              # Service history & status
+│   │   ├── certificaciones/                  # Certifications
+│   │   ├── biblioteca/                       # Library
+│   │   ├── notificaciones/                   # Notifications
+│   │   ├── proyecto/                         # Projects
+│   │   ├── requerimiento/                    # Requirements
+│   │   ├── asesorias/                        # Advisory Q&A
+│   │   ├── invitar-amigos/                   # Referral
+│   │   ├── cambiar-clave/                    # Password change
+│   │   └── configuracion-privacidad/         # Privacy settings
 │   │
-│   ├── src/
-│   │   ├── components/                       # Atomic Design
-│   │   │   ├── atoms/                        # Basic UI elements
-│   │   │   ├── molecules/                    # Combined atoms
-│   │   │   ├── organisms/                    # Complex components
-│   │   │   └── templates/                    # Page templates
-│   │   │
-│   │   ├── features/                         # Feature modules
-│   │   │   ├── auth/
-│   │   │   ├── profile/
-│   │   │   ├── budget/
-│   │   │   ├── chat/
-│   │   │   └── requirements/
-│   │   │
-│   │   ├── services/                         # Service Layer
-│   │   │   ├── firebase/
-│   │   │   ├── firestore/
-│   │   │   └── sendbird/
-│   │   │
-│   │   ├── hooks/                            # Custom hooks
-│   │   ├── stores/                           # [REFACTOR] RxJS state
-│   │   ├── types/                            # [NEW] Shared TypeScript types
-│   │   ├── assets/                           # [KEEP] Static assets
-│   │   ├── fonts/                            # [KEEP] Local fonts
-│   │   └── styles/                           # [NEW] Global styles
+│   ├── admin/                                # Admin Control Tower
+│   │   ├── +Layout.tsx                       # Admin guard + sidebar
+│   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts + Monetization
+│   │   ├── usuarios/+Page.tsx                # MUI DataGrid + drawer
+│   │   ├── verificacion/+Page.tsx            # Identity verification queue
+│   │   ├── contratos/                        # Contract management
+│   │   └── requerimientos/                   # Requirements overview
 │   │
-│   ├── server/                               # [KEEP] Express server
-│   ├── vite.config.ts
-│   ├── tsconfig.json
-│   └── package.json
+│   └── _error/                               # Error page
+│
+├── server/
+│   └── api/
+│       ├── chat.ts                           # RAG chatbot (Gemini + Supabase)
+│       ├── payment/
+│       │   ├── signature.ts                  # ePayco signature generation
+│       │   └── confirmation.ts               # ePayco payment confirmation
+│       └── notifications/
+│           └── email.ts                      # Email notifications
+│
+├── src/
+│   ├── assets/
+│   │   └── data/
+│   │       ├── ListadoCategorias.tsx          # Service categories constant
+│   │       ├── ListadoZonas.ts               # Centralized geographic zones
+│   │       └── CategoryIcons.tsx             # Category icon mappings
+│   │
+│   ├── components/                           # Shared UI Components
+│   │   ├── common/                           # Common elements
+│   │   ├── layout/                           # Layout components
+│   │   ├── molecules/                        # Composed components
+│   │   └── dev/                              # Dev-only components
+│   │
+│   ├── features/                             # Feature Modules
+│   │   ├── admin/                            # Admin dashboard components
+│   │   ├── auth/                             # Auth flows
+│   │   ├── chat/                             # AI ChatWidget
+│   │   ├── marketing/                        # Marketing components (QuickMatch, etc.)
+│   │   ├── messaging/                        # Sendbird messaging
+│   │   ├── profile/                          # User profiles
+│   │   ├── projects/                         # Project management
+│   │   └── quotes/                           # Quotation system
+│   │
+│   ├── services/                             # Data Layer
+│   │   ├── admin/                            # Admin-only service (stats, users, verification)
+│   │   ├── contracts/                        # Contract CRUD
+│   │   ├── drafts/                           # Draft requirements
+│   │   ├── firebase/                         # Firebase client SDK init
+│   │   ├── quotations/                       # Quotation management
+│   │   ├── search/                           # Search service
+│   │   ├── sendbird/                         # Channel orchestration
+│   │   ├── users/                            # User profiles
+│   │   └── utils/                            # Service utilities
+│   │
+│   ├── hooks/                                # Shared Hooks
+│   │   ├── useAuth.ts                        # Auth state hook
+│   │   ├── useAdminGuard.ts                  # Firebase custom claims check
+│   │   ├── useFirestoreQuery.ts              # Generic Firestore query hook
+│   │   ├── useGoogleMaps.ts                  # Google Maps integration
+│   │   ├── useLocalStorage.ts                # localStorage hook
+│   │   ├── useShareAction.ts                 # Share/copy action
+│   │   └── usePageContext.tsx                # Vike page context
+│   │
+│   ├── stores/                               # Zustand Stores
+│   │   ├── userStore.ts                      # User auth/profile state
+│   │   └── chatStore.ts                      # ChatWidget open/close state
+│   │
+│   ├── emotion/                              # Emotion cache factory
+│   ├── config/                               # App configuration
+│   ├── providers/                            # React providers
+│   ├── styles/                               # Global SCSS styles
+│   ├── types/                                # Shared TypeScript types
+│   ├── utilities/                            # Utility functions
+│   └── fonts/                                # Local fonts
+│
+├── scripts/
+│   ├── generate-sitemap.ts                   # Sitemap generator (uses @assets/data/ListadoZonas)
+│   ├── patch-vercel-entry.mjs                # Post-build: patches dist/server/entry.mjs
+│   ├── seed.ts                               # Firecrawl scraper → Supabase embeddings
+│   ├── seed-knowledge.ts                     # Knowledge .md → Supabase embeddings
+│   ├── setAdminClaim.ts                      # One-time admin setup
+│   ├── migrate-comerciante-slugs.ts          # Slug migration utility
+│   └── supabase-schema.sql                   # Vector DB schema
+│
+├── knowledge/                                # RAG chatbot knowledge base
+│   └── dezzpo-core.md                        # Editable business info (## = chunk)
+│
+├── docs/
+│   ├── mui-emotion-ssr-vike.md               # MUI + Emotion SSR deep-dive
+│   └── server-stack-vike.md                  # Server architecture reference
+│
+├── vite.config.ts
+├── tsconfig.json
+└── package.json
 ```
 
 ## Workflow
@@ -182,39 +227,35 @@ pnpm dev        # Start dev server on :3000
 ### Build & Deploy
 
 ```bash
-pnpm build      # Build for production
+pnpm build      # Build for production (vike build + patch-vercel-entry + generate-sitemap)
 pnpm preview    # Preview build locally
 git push        # Auto-deploys to Vercel
 ```
 
-If the Vite build runs out of memory on large bundles, use a higher heap (example):
+If the Vite build runs out of memory on large bundles:
 
 ```bash
 NODE_OPTIONS=--max-old-space-size=8192 pnpm build
+```
+
+### Type Checking
+
+```bash
+pnpm typecheck  # tsc --noEmit (covers pages/, src/, server/, scripts/)
 ```
 
 ### MUI, Emotion, and SSR (Vike)
 
 - **Single theme surface**: `pages/PageShell.tsx` wraps the tree with `ThemeProvider`, `CssBaseline`, `PageContextProvider`, and `UserAuthProvider`. App and admin layouts should not add a second `ThemeProvider` or duplicate auth providers.
 - **Emotion cache**: `src/emotion/createEmotionCache.ts` defines a stable cache key (`mui`) and `prepend: true`. The server creates a per-request cache; the client uses `getClientEmotionCache()` so hydration matches the server markup.
-- **Critical CSS**: `pages/+onRenderHtml.tsx` wraps the SSR tree in Emotion’s `CacheProvider`, uses `createEmotionServer` + `extractCriticalToChunks` / `constructStyleTagsFromChunks`, and injects the resulting `<style>` tags in `<head>` **after** the Bootstrap CDN link so MUI `sx` / component styles win where both apply.
+- **Critical CSS**: `pages/+onRenderHtml.tsx` wraps the SSR tree in Emotion's `CacheProvider`, uses `createEmotionServer` + `extractCriticalToChunks` / `constructStyleTagsFromChunks`, and injects the resulting `<style>` tags in `<head>` **after** the Bootstrap CDN link so MUI `sx` / component styles win where both apply.
 - **Client**: `pages/+onRenderClient.tsx` wraps the same structure with `CacheProvider` using the client singleton cache.
 - **Vite SSR**: `vite.config.ts` → `ssr.noExternal` (when `NODE_ENV === 'production'`) bundles packages that Node cannot load cleanly as externals (including **MUI**, **Emotion**, Sendbird UIKit, `firebase`, `date-fns`, `zustand`, etc.). Without MUI/Emotion in this list, Vercel SSR can fail with ESM directory-import errors under `@mui/utils`. Other deps stay listed for CJS interop or Vite transforms.
 - **Dependency alignment**: `package.json` → `pnpm.overrides` pins `@mui/system` to **6.5.0** so it stays aligned with MUI v6 while using `@mui/x-data-grid` v7 (avoids duplicate incompatible `@mui/system` versions in the lockfile).
 
-Full checklist and diagrams: `[docs/mui-emotion-ssr-vike.md](./docs/mui-emotion-ssr-vike.md)`.
+Full checklist and diagrams: [`docs/mui-emotion-ssr-vike.md`](./docs/mui-emotion-ssr-vike.md).
 
 **MUI v9**: A major bump requires a dedicated migration (Grid v2, system props on `sx`, icons/slots, Data Grid v9). This repo intentionally stays on MUI v6 + Data Grid v7 until that work is scheduled.
-
-### RAG Chatbot — Knowledge Seeding
-
-```bash
-# Seed from web scraping (Firecrawl → Supabase)
-pnpm dlx tsx scripts/seed.ts
-
-# Seed from knowledge files (knowledge/*.md → Supabase)
-pnpm dlx tsx scripts/seed-knowledge.ts
-```
 
 ## RAG Chatbot Architecture
 
@@ -222,15 +263,13 @@ The app includes an AI-powered chatbot ("Asistente Dezzpo") for context-aware Q&
 
 ### Stack
 
-
-| Layer          | Technology                    | Details                                |
-| -------------- | ----------------------------- | -------------------------------------- |
-| **LLM**        | Gemini 2.5 Flash              | `@ai-sdk/google` via AI SDK            |
-| **Embeddings** | gemini-embedding-001          | 3072d → truncated to 768d (Matryoshka) |
-| **Vector DB**  | Supabase pgvector             | `dezzpo_documents` table, HNSW index   |
-| **Server**     | Hono API route                | `POST /api/v1/chat` (generateText)     |
-| **Frontend**   | Native fetch + ReadableStream | `ChatWidget.tsx` → Zustand             |
-
+| Layer | Technology | Details |
+|-------|-----------|---------|
+| **LLM** | Gemini 2.5 Flash | `@ai-sdk/google` via AI SDK |
+| **Embeddings** | gemini-embedding-001 | 3072d → truncated to 768d (Matryoshka) |
+| **Vector DB** | Supabase pgvector | `dezzpo_documents` table, HNSW index |
+| **Server** | Hono API route | `POST /api/v1/chat` (generateText) |
+| **Frontend** | Native fetch + ReadableStream | `ChatWidget.tsx` → Zustand |
 
 ### How It Works
 
@@ -240,26 +279,22 @@ The app includes an AI-powered chatbot ("Asistente Dezzpo") for context-aware Q&
 4. System prompt + context injected → Gemini 2.5 Flash generates response
 5. Response returned as plain text to widget
 
+### Knowledge Seeding
+
+```bash
+# Seed from knowledge files (knowledge/*.md → Supabase)
+pnpm dlx tsx scripts/seed-knowledge.ts
+
+# Seed from web scraping (Firecrawl → Supabase)
+pnpm dlx tsx scripts/seed.ts
+```
+
 ### Knowledge System
 
-- `**knowledge/dezzpo-core.md`**: Editable business knowledge. Each `##` section = 1 chunk.
-- `**scripts/seed-knowledge.ts**`: Reads `knowledge/*.md`, embeds, inserts to Supabase.
-- `**scripts/seed.ts**`: Firecrawl scrapes site, chunks, embeds, inserts to Supabase.
+- **`knowledge/dezzpo-core.md`**: Editable business knowledge. Each `##` section = 1 chunk.
+- **`scripts/seed-knowledge.ts`**: Reads `knowledge/*.md`, embeds, inserts to Supabase.
+- **`scripts/seed.ts`**: Firecrawl scrapes site, chunks, embeds, inserts to Supabase.
 - Knowledge entries are tagged `source: 'knowledge/*'` and can be re-seeded independently.
-
-### Environment Variables (Required)
-
-
-| Variable                                | Purpose                                     |
-| --------------------------------------- | ------------------------------------------- |
-| `VITE_APP_SUPABASE_PROJECT_URL`         | Supabase project URL                        |
-| `VITE_APP_SUPABASE_SECRET_KEY`          | Supabase service role key                   |
-| `VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY` | Gemini API key                              |
-| `VITE_APP_FIRECRAWL_API_KEY`            | Firecrawl API key (for seed.ts)             |
-| `VITE_APP_EPAYCO_PUBLIC_KEY`            | ePayco public key (checkout)                |
-| `VITE_APP_EPAYCO_PRIVATE_KEY`           | ePayco private key (server-side signatures) |
-| `VITE_APP_PAYCO_TEST`                   | ePayco test mode (`true`/`false`)           |
-
 
 ## Smart Contract & Payment Flow
 
@@ -276,7 +311,8 @@ pending_payment → active (after payment) → completed → disputed
 1. **Negotiation** (`/app/ver-requerimiento/@draftId`): Propietario reviews quotations and edits the agreed amount.
 2. **Contract Creation** (`/app/contratar`): Creates a Firestore `contracts` document with `status: 'pending_payment'`.
 3. **Payment** (`/app/contratacion?contractId=XYZ`): Fetches contract summary, calls server-side `/api/v1/payment/signature` for ePayco cryptographic signature, opens ePayco Standard Checkout.
-4. **Wallet** (`/app/formas-pago`): Role-adaptive view — Propietarios see pending payments, Comerciantes see earnings summary.
+4. **Confirmation** (`/api/v1/payment/confirmation`): Server-side webhook receives ePayco payment result.
+5. **Wallet** (`/app/formas-pago`): Role-adaptive view — Propietarios see pending payments, Comerciantes see earnings summary.
 
 ### Contract Schema
 
@@ -297,45 +333,60 @@ interface ContractFirestoreDocument {
 
 ### Payment API
 
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/v1/payment/signature` | POST | Server-side ePayco signature generation (MD5 hash with private key) |
+| `/api/v1/payment/confirmation` | POST | ePayco payment confirmation webhook |
+| `/api/v1/notifications/email` | POST | Email notification service |
 
-| Route                       | Method | Purpose                                                             |
-| --------------------------- | ------ | ------------------------------------------------------------------- |
-| `/api/v1/payment/signature` | POST   | Server-side ePayco signature generation (MD5 hash with private key) |
+## Geographic Coverage
 
+All geographic zones are centralized in [`src/assets/data/ListadoZonas.ts`](./src/assets/data/ListadoZonas.ts).
 
-### ePayco Integration
+**Coverage**: All 20 localities of Bogotá + adjacent metropolitan municipalities:
+- **Bogotá regions**: Bogotá (catch-all), Norte, Sur, Centro, Occidente
+- **Localities**: Suba, Usaquén, Chapinero, Teusaquillo, Kennedy, Engativá, Fontibón, Barrios Unidos, Bosa, Puente Aranda, Los Mártires, Santa Fe, San Cristóbal, Usme, Tunjuelito, Antonio Nariño, La Candelaria, Rafael Uribe Uribe, Ciudad Bolívar, Sumapaz
+- **Metropolitan**: Soacha, Chía, Cajicá, Zipaquirá, Cota, Funza, Mosquera, Madrid, Facatativá, La Calera, Sopó
 
-- **SDK**: Loaded from CDN (`checkout.epayco.co/checkout.js`)
-- **Signature**: `md5(custId^privateKey^invoice^amount^currency)` — generated server-side only
-- **Test Mode**: Controlled by `VITE_APP_PAYCO_TEST` env var
+**Consumers**: `generate-sitemap.ts`, `QuickMatch.tsx`, `+onBeforePrerenderStart.ts`, `+data.ts`, `adminService.ts`
+
+## Environment Variables
+
+| Variable | Scope | Purpose |
+|----------|-------|---------|
+| `VITE_APP_FIREBASE_*` | Client + Server | Firebase configuration |
+| `VITE_APP_SUPABASE_PROJECT_URL` | Server | Supabase project URL |
+| `VITE_APP_SUPABASE_SECRET_KEY` | Server | Supabase service role key |
+| `VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY` | Server | Gemini API key |
+| `VITE_APP_FIRECRAWL_API_KEY` | Server | Firecrawl API key (for seed.ts) |
+| `VITE_APP_EPAYCO_PUBLIC_KEY` | Client + Server | ePayco checkout initialization |
+| `VITE_APP_EPAYCO_PRIVATE_KEY` | Server ONLY | ePayco signature generation |
+| `VITE_APP_PAYCO_TEST` | Server | ePayco test mode (`true`/`false`) |
+| `VITE_APP_SENDBIRD_APP_ID` | Client | Sendbird application ID |
 
 ## Migration Status
 
-
-| Module                  | Status        | Notes                                                                                 |
-| ----------------------- | ------------- | ------------------------------------------------------------------------------------- |
-| **Auth**                | ✅ Migrated    | Uses `@features/auth`, `useAuth` hook, strictly typed                                 |
-| **Profile**             | ✅ Migrated    | Uses `@features/profile`, `userService`, Zustand store                                |
-| **Quotes**              | ✅ Migrated    | Uses `@features/quotes`, `quotationService`, `draftService`                           |
-| **CSS Standardization** | ✅ Migrated    | Enforced `kebab-case`, asset class mapping in place                                   |
-| **Admin Control Tower** | ✅ Implemented | `useAdminGuard`, KPI dashboard (Recharts), User DataGrid, Identity verification queue |
-| **React 19 & TS 6.0**   | ✅ Migrated    | Fully upgraded to React 19, cleaned up all useMemo/forwardRef hooks, and resolved all TS 6.0 deprecations |
-
+| Module | Status | Notes |
+|--------|--------|-------|
+| **Auth** | ✅ Migrated | Uses `@features/auth`, `useAuth` hook, strictly typed |
+| **Profile** | ✅ Migrated | Uses `@features/profile`, `userService`, Zustand store |
+| **Quotes** | ✅ Migrated | Uses `@features/quotes`, `quotationService`, `draftService` |
+| **CSS Standardization** | ✅ Migrated | Enforced `kebab-case`, SCSS Modules |
+| **Admin Control Tower** | ✅ Implemented | `useAdminGuard`, KPI dashboard (Recharts), User DataGrid, Verification queue |
+| **Monetization Analytics** | ✅ Implemented | Funnel metrics, geographic density, revenue stats, trust badges |
+| **Geographic Centralization** | ✅ Implemented | `ListadoZonas.ts` single source of truth for all zones |
+| **React 19 & TS 6.0** | ✅ Migrated | No `forwardRef`, no unnecessary `useMemo`, relative path targets |
+| **Contracts & Payments** | ✅ Implemented | ePayco integration, server-side signatures, contract lifecycle |
+| **RAG Chatbot** | ✅ Implemented | Gemini 2.5 Flash + Supabase pgvector, knowledge seeding |
 
 ## Service Standards
 
-All new services must strictly adhere to the `ServiceResponse<T>` pattern to ensure robust error handling and type safety.
+All new services must strictly adhere to the `ServiceResponse<T>` pattern:
 
 ```typescript
-// Standard Response Pattern
 export type ServiceResponse<T> = 
   | { success: true; data: T; error: null }
   | { success: false; data: null; error: ServiceErrorInfo };
-
-// Example Usage
-async function getProfile(id: string): Promise<ServiceResponse<UserProfile>> {
-  // ... implementation
-}
 ```
 
 ## CSS & Typography Guide
@@ -344,80 +395,30 @@ async function getProfile(id: string): Promise<ServiceResponse<UserProfile>> {
 
 Use `kebab-case` for all SCSS classes. `camelCase` is forbidden.
 
-```tsx
-// ✅ Correct
-<div className={styles['main-container']} />
-
-// ❌ Forbidden
-<div className="mainContainer" />
-```
-
 ### Typography System
 
 Located in `src/styles/components/_typography.scss`.
 
-
-| Class                 | Size        | Use Case            |
-| --------------------- | ----------- | ------------------- |
-| `.type-hero-title`    | 60px → 32px | Hero/landing titles |
-| `.type-section-title` | 36px → 24px | Section headers     |
-| `.type-card-title`    | 24px → 18px | Card titles         |
-| `.type-body-lg`       | 18px → 16px | Lead paragraphs     |
-| `.type-body`          | 16px → 14px | Standard content    |
-| `.type-caption`       | 14px → 12px | Captions/metadata   |
-
-
-**Fluid Typography Mixin:**
-
-```scss
-@include fluid-type(16px, 24px); // Scales 16px→24px between mobile/desktop
-```
-
-### Text Variants
-
-
-| Class                 | Style                |
-| --------------------- | -------------------- |
-| `.text-bold`          | `font-weight: 700`   |
-| `.text-italic`        | `font-style: italic` |
-| `.text-underline`     | Underlined text      |
-| `.text-strikethrough` | Line-through         |
-
-
-### Contrast Classes
-
-
-| Class             | Use Case                               |
-| ----------------- | -------------------------------------- |
-| `.text-on-light`  | Dark text on white/cream backgrounds   |
-| `.text-on-dark`   | White text on dark backgrounds         |
-| `.opacidad-negro` | Dark overlay box for image backgrounds |
-
-
-### Button System
-
-Located in `src/styles/components/_buttons.scss`.
-
-
-| Class                    | Style                 | Use Case                       |
-| ------------------------ | --------------------- | ------------------------------ |
-| `.btn-primary-gradient`  | Teal-to-blue gradient | Main CTAs (Siguiente, Guardar) |
-| `.btn-secondary-outline` | Transparent + border  | Secondary (Volver, Cancelar)   |
-| `.btn-icon-action`       | Solid teal + icon     | PUBLICAR, CHAT EN VIVO         |
-| `.btn-floating-action`   | Purple + shadow       | Asísteme sticky bar            |
-
+| Class | Size | Use Case |
+|-------|------|----------|
+| `.type-hero-title` | 60px → 32px | Hero/landing titles |
+| `.type-section-title` | 36px → 24px | Section headers |
+| `.type-card-title` | 24px → 18px | Card titles |
+| `.type-body-lg` | 18px → 16px | Lead paragraphs |
+| `.type-body` | 16px → 14px | Standard content |
+| `.type-caption` | 14px → 12px | Captions/metadata |
 
 ### Dev Reference
 
 View live typography samples at `/dev/typography`.
 
-## Vite, Vike server, and Vercel
+## Vite, Vike Server, and Vercel
 
 - **Vite 8** is the build tool (`vite`, `@vitejs/plugin-react-swc`). Follow [Vite migration](https://vite.dev/guide/migration) when upgrading.
-- **Vike** uses **`pages/+server.ts`**: Hono app, custom API routes registered **before** `vike(app)`, then `export default { fetch: app.fetch, prod?: { port, onReady } } satisfies Server` per [Vike +server](https://vike.dev/server) and [Migration from vike-photon](https://vike.dev/migration/server). Use **`@vikejs/hono`** only (not `vike-photon` / `@photonjs/*`).
-- **Vercel**: **`vite-plugin-vercel`** — `import { vercel } from 'vite-plugin-vercel/vite'` and register `vercel()` after `vike({})` (and after `@vitejs/plugin-react-swc`) in `vite.config.ts` per [Deploy > Vercel](https://vike.dev/vercel).
-- **Scripts**: `pnpm dev` runs **`vite`** (Vike dev server + HMR for `pages/+server.ts`). Production bundle: `pnpm build`; run the built SSR app locally: `pnpm prod` (`vike build && vike preview`).
-- **Typecheck**: `pages/+server.ts` is covered by `tsconfig.json` → `include` (`pages/**/*.ts`).
+- **Vike** uses **`pages/+server.ts`**: Hono app, custom API routes registered **before** `vike(app)`, then `export default { fetch: app.fetch, prod?: { port, onReady } } satisfies Server` per [Vike +server](https://vike.dev/server).
+- **Vercel**: Custom Node→Web adapter via `scripts/patch-vercel-entry.mjs`. Do **not** use `hono/vercel` `handle()`.
+- **Build pipeline**: `pnpm build` runs `vike build && node scripts/patch-vercel-entry.mjs && pnpm exec tsx scripts/generate-sitemap.ts`.
+- **Static assets**: `vercel.json` sets `"outputDirectory": "dist/client"` so CSS/JS/images are served from Vercel's CDN.
 
 Full reference: [`docs/server-stack-vike.md`](./docs/server-stack-vike.md).
 
@@ -426,10 +427,11 @@ Full reference: [`docs/server-stack-vike.md`](./docs/server-stack-vike.md).
 - **API routes MUST be defined BEFORE `vike(app)`** in `pages/+server.ts`. The Vike middleware is a catch-all; anything registered after it never runs.
 - **Static imports only** for API handlers — dynamic imports fail on Vercel's bundled output.
 - **`dotenv/config`** is imported at the top of `pages/+server.ts` for local env loading.
-- **`VITE_APP_*` env vars** are bridged to standard names in `server/api/chat.ts`.
 - **Registered API routes:**
   - `POST /api/v1/chat` — RAG chatbot (Gemini + Supabase pgvector)
   - `POST /api/v1/payment/signature` — ePayco payment signature generation
+  - `POST /api/v1/payment/confirmation` — ePayco payment confirmation
+  - `POST /api/v1/notifications/email` — Email notifications
 
 ## Legal
 
