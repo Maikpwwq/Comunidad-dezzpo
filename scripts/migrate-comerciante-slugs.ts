@@ -1,4 +1,5 @@
-import admin from 'firebase-admin'
+import { initializeApp, cert } from 'firebase-admin/app'
+import { getFirestore } from 'firebase-admin/firestore'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
@@ -17,17 +18,18 @@ function slugify(text: string): string {
 
 // Initialize Admin SDK
 const serviceAccountPath = resolve(process.cwd(), 'serviceAccountKey.json')
+let app
 try {
     const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf-8'))
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
+    app = initializeApp({
+        credential: cert(serviceAccount),
     })
 } catch (error) {
     console.error('Failed to load serviceAccountKey.json', error)
     process.exit(1)
 }
 
-const db = admin.firestore()
+const db = getFirestore(app)
 
 async function main() {
     console.log('Starting comerciante slug migration...')

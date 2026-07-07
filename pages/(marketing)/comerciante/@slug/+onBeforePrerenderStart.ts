@@ -5,7 +5,7 @@ export async function onBeforePrerenderStart() {
         const querySnapshot = await adminFirestore.collection('usersComerciantesCalificados').get()
         const urls: string[] = []
 
-        querySnapshot.forEach(doc => {
+        querySnapshot.forEach((doc: any) => {
             const data = doc.data()
             if (data.userSlug) {
                 urls.push(`/comerciante/${data.userSlug}`)

@@ -12,7 +12,8 @@
  *   2. pnpm install firebase-admin (dev dependency)
  */
 
-import * as admin from 'firebase-admin'
+import { initializeApp, cert } from 'firebase-admin/app'
+import { getAuth } from 'firebase-admin/auth'
 import { readFileSync } from 'fs'
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
@@ -30,10 +31,11 @@ if (!uid) {
 
 // Initialize Admin SDK
 const serviceAccountPath = resolve(__dirname, '..', 'serviceAccountKey.json')
+let app
 try {
     const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf-8'))
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
+    app = initializeApp({
+        credential: cert(serviceAccount),
     })
 } catch (error) {
     console.error('Failed to load serviceAccountKey.json')
@@ -41,14 +43,16 @@ try {
     process.exit(1)
 }
 
+const auth = getAuth(app)
+
 async function setAdminClaim() {
     try {
         // Set admin claim
-        await admin.auth().setCustomUserClaims(uid!, { admin: true })
+        await auth.setCustomUserClaims(uid!, { admin: true })
         console.log(`✅ Admin claim set for user: ${uid}`)
 
         // Verify
-        const user = await admin.auth().getUser(uid!)
+        const user = await auth.getUser(uid!)
         console.log('Custom claims:', user.customClaims)
         console.log('')
         console.log('⚠️  The user must sign out and sign back in for the claim to take effect.')

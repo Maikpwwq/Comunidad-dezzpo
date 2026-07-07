@@ -76,7 +76,7 @@ async function data(pageContext: PageContextServer) {
             .get()
 
         const allComerciantes: any[] = []
-        querySnapshot.forEach(doc => {
+        querySnapshot.forEach((doc: any) => {
             allComerciantes.push({ ...doc.data(), userId: doc.id })
         })
 

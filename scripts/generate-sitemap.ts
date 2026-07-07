@@ -1,4 +1,5 @@
-import admin from 'firebase-admin'
+import { initializeApp, cert } from 'firebase-admin/app'
+import { getFirestore, type Firestore } from 'firebase-admin/firestore'
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs'
 import { resolve, dirname } from 'path'
 
@@ -49,13 +50,13 @@ async function generateSitemap() {
 
     // Initialize Admin SDK
     const serviceAccountPath = resolve(process.cwd(), 'serviceAccountKey.json')
-    let db: admin.firestore.Firestore | null = null
+    let db: Firestore | null = null
     try {
         const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf-8'))
-        admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount),
+        const app = initializeApp({
+            credential: cert(serviceAccount),
         })
-        db = admin.firestore()
+        db = getFirestore(app)
     } catch {
         console.warn('Firebase Admin credentials not found. Generating sitemap without database dynamic comerciantes.')
     }
@@ -76,7 +77,7 @@ async function generateSitemap() {
     if (db) {
         try {
             const snap = await db.collection('usersComerciantesCalificados').get()
-            snap.forEach(doc => {
+            snap.forEach((doc: any) => {
                 const data = doc.data()
                 const slug = data.userSlug || slugify(data.userName || '')
                 if (slug) {
