@@ -37,7 +37,27 @@ function findCategoryBySlug(slug: string) {
     })
 }
 
-// zoneNames imported from @assets/data/ListadoZonas
+let cachedComerciantes: any[] | null = null
+
+async function getComerciantesCached() {
+    if (cachedComerciantes !== null) {
+        return cachedComerciantes
+    }
+    try {
+        const querySnapshot = await adminFirestore
+            .collection('usersComerciantesCalificados')
+            .get()
+        const list: any[] = []
+        querySnapshot.forEach((doc: any) => {
+            list.push({ ...doc.data(), userId: doc.id })
+        })
+        cachedComerciantes = list
+    } catch (error: any) {
+        console.error(`[Firebase Admin Cache] Error pre-fetching comerciantes:`, error?.message || error)
+        cachedComerciantes = []
+    }
+    return cachedComerciantes
+}
 
 async function data(pageContext: PageContextServer) {
     const { service, zone } = pageContext.routeParams
@@ -70,15 +90,10 @@ async function data(pageContext: PageContextServer) {
     const rolName = category.rol || serviceName
 
     try {
-        const querySnapshot = await adminFirestore
-            .collection('usersComerciantesCalificados')
-            .where('userCategories', 'array-contains', serviceName)
-            .get()
-
-        const allComerciantes: any[] = []
-        querySnapshot.forEach((doc: any) => {
-            allComerciantes.push({ ...doc.data(), userId: doc.id })
-        })
+        const allComerciantesFromCache = await getComerciantesCached()
+        const allComerciantes = allComerciantesFromCache.filter((c: any) => 
+            Array.isArray(c.userCategories) && c.userCategories.includes(serviceName)
+        )
 
         // Separate matches by zone
         const directMatches: any[] = []
