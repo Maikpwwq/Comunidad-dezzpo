@@ -10,11 +10,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const isProd = process.env.NODE_ENV === 'production'
 
-// SSR externals configuration for production
+// SSR noExternal: only in production builds (Rollup transpiles CJS → ESM).
+// In dev mode, Node handles resolution natively; MUI directory-import errors
+// only manifest in bundled SSR (Vercel), where Rollup resolves them correctly.
 const noExternal: string[] = []
 if (isProd) {
   noExternal.push(
-    // MUI + Emotion: must be bundled for SSR on Vercel/Node ESM (avoids directory-import errors under @mui/utils, etc.)
+    // MUI + Emotion
     '@mui/material',
     '@mui/icons-material',
     '@mui/system',
@@ -24,8 +26,6 @@ if (isProd) {
     '@emotion/react',
     '@emotion/styled',
     // Third-party UI libraries
-    // 'react-bootstrap', // Commented out to fix SSR named import element type error (let Node handle CJS interop)
-    // 'recharts',
     'prop-types',
     'clsx',
     'date-fns',
@@ -39,7 +39,7 @@ if (isProd) {
     'uuid',
     '@googlemaps/js-api-loader',
     // State management
-    'zustand'
+    'zustand',
   )
 }
 

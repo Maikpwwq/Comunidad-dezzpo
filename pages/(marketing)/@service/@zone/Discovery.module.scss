@@ -6,7 +6,7 @@
 }
 
 .HeroSection {
-    background: linear-gradient(135deg, #1b4d3e 0%, #2e7d32 100%);
+    background: linear-gradient(135deg, #00b0ab 0%, #2e7d32 100%);
     color: white;
     padding: 4rem 1.5rem;
     text-align: center;
@@ -128,10 +128,10 @@
     font-weight: 600;
     text-transform: none;
     padding: 0.5rem 1.25rem;
-    background: linear-gradient(135deg, #2e7d32 0%, #1b4d3e 100%);
+    background: linear-gradient(135deg, #2e7d32 0%, #00b0ab 100%);
     color: white !important;
     &:hover {
-        background: linear-gradient(135deg, #1b4d3e 0%, #2e7d32 100%);
+        background: linear-gradient(135deg, #00b0ab 0%, #2e7d32 100%);
     }
 }
 

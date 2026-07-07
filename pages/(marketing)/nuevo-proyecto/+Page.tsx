@@ -215,9 +215,8 @@ export default function Page() {
         <Container fluid className="p-0 new-project-page" style={{ position: 'relative' }}>
             <PasoAPaso activeStep={activeStep} steps={steps} />
             {activeStep === 0 && (
-                <Col className="p-4">
-                    <Row className="justify-content-center">
-                        <Col xl={6} lg={8} md={10} sm={12} className="card-frame p-4">
+                <Row className="justify-content-center w-100 m-0 p-4">
+                    <Col xl={6} lg={8} md={10} sm={12} className="card-frame p-4">
                             <Typography className="type-section-title w-100 center mb-4">
                                 ¿Qué necesitas?
                             </Typography>
@@ -307,8 +306,7 @@ export default function Page() {
                                 </Row>
                             </Form>
                         </Col>
-                    </Row>
-                </Col>
+                </Row>
             )}
             {/* Step 1 (unauthenticated): Registration / Login */}
             {!hideRegister && activeStep === 1 && (
@@ -347,9 +345,8 @@ export default function Page() {
 
             {/* Step 1 (authenticated) or Step 2 (unauthenticated): Detalles opcionales (Enrichment) */}
             {((hideRegister && activeStep === 1) || (!hideRegister && activeStep === 2)) && (
-                <Col className="p-4">
-                    <Row className="justify-content-center">
-                        <Col xl={8} lg={10} md={12} className="card-frame p-4">
+                <Row className="justify-content-center w-100 m-0 p-4">
+                    <Col xl={8} lg={10} md={12} className="card-frame p-4">
                             <Typography className="type-section-title w-100 center mb-4">
                                 Detalles opcionales de tu proyecto
                             </Typography>
@@ -560,8 +557,7 @@ export default function Page() {
                                 </Row>
                             </Form>
                         </Col>
-                    </Row>
-                </Col>
+                </Row>
             )}
         </Container>
     )

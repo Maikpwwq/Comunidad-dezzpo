@@ -55,7 +55,7 @@ export default function Page() {
                                     transition: 'all 0.2s ease',
                                     '&:hover': {
                                         backgroundColor: 'var(--background-main-green-color)',
-                                        color: 'white',
+                                        color: 'white !important',
                                     }
                                 }}
                             >
