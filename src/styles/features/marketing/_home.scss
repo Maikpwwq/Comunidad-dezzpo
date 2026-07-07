@@ -10,7 +10,7 @@
         display: flex;
         align-items: center;
         align-content: center;
-        font-family: var(--font-worksans-regular); // Replaced 'lato Regular'
+        font-family: var(--font-worksans-regular);
         font-size: 21px;
 
         @media screen and (max-width: 1200px) {
@@ -21,15 +21,22 @@
     .slogan {
         display: flex;
         flex-direction: column;
-        padding: 24px 33px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px 20px;
         color: var(--content-text-color);
         max-width: 430px;
-        // Position overlay on banner image
         position: relative;
         z-index: 10;
         margin-left: auto;
         margin-right: auto;
         
+        .type-hero-title {
+            color: var(--primary-titles-text-color);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+        }
+
         // CTA Button styling
         .btn-cta {
             display: inline-block;

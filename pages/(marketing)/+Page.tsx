@@ -25,25 +25,39 @@ export default function Page() {
                 <Row className="m-0 w-100 banner-comunidad d-flex justify-content-center align-items-center">
                     <Col
                         id="contenedorBanner"
-                        className="m-0 p-0 pt-4 d-flex flex-column justify-content-center align-items-center"
+                        className="m-0 p-0 d-flex flex-column justify-content-center align-items-center"
                         xl={5}
                         lg={5}
                         md={5}
                         sm={10}
                         xs={11}
                     >
-                        <Box className="slogan p-0 ps-4">
+                        <Box className="slogan p-0">
                             <h1 className="type-hero-title">
                                 <strong>Bienvenido</strong>
                             </h1>
-                            <Typography variant="body2" className="mb-4 mt-2">
+                            <Typography variant="body2" className="mb-3 mt-2" sx={{ color: 'var(--content-text-color)', fontSize: '1rem', lineHeight: 1.6 }}>
                                 ¡Encuentra al instante el personal profesional ideal para cada proyecto en el hogar!
                             </Typography>
                             <Typography
                                 variant="subtitle1"
-                                className="text-verde btn btn-round btn-high"
-                                sx={{ backgroundColor: 'transparent !important', border: '2px solid var(--background-main-green-color)' }}
+                                component="button"
+                                className="text-verde btn-cta"
                                 onClick={handleClick}
+                                sx={{
+                                    cursor: 'pointer',
+                                    border: '2px solid var(--background-main-green-color)',
+                                    borderRadius: '30px',
+                                    padding: '10px 28px',
+                                    fontWeight: 600,
+                                    backgroundColor: 'white',
+                                    color: 'var(--primary-green-text-color)',
+                                    transition: 'all 0.2s ease',
+                                    '&:hover': {
+                                        backgroundColor: 'var(--background-main-green-color)',
+                                        color: 'white',
+                                    }
+                                }}
                             >
                                 Portal de servicios
                             </Typography>

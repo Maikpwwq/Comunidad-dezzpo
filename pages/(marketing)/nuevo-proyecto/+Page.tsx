@@ -16,7 +16,8 @@ import {
 import { firestore, isFirebaseAvailable } from '@services/firebase'
 // Components
 import {
-    ProjectSearchForm
+    CategorySelector,
+    PROJECT_TYPES
 } from '@features/projects'
 // Features
 import { PasoAPaso, Ubicacion } from '@features/marketing'
@@ -28,7 +29,7 @@ import PageIngreso from '../../(auth)/ingreso/+Page'
 import { Row, Col, Container, Button, Form } from 'react-bootstrap'
 // MUI
 // MUI
-import { Box, Modal, Typography, Chip } from '@mui/material'
+import { Box, Modal, Typography } from '@mui/material'
 import AddLocationIcon from '@mui/icons-material/AddLocation'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -260,25 +261,32 @@ export default function Page() {
                                     </Form.Select>
                                 </Form.Group>
 
-                                {/* Category selector — reuse existing inline version */}
+                                <Form.Group className="mb-3" controlId="formQuickProjectType">
+                                    <Form.Label className="type-body-sm fw-bold">
+                                        ¿Qué tipo de proyecto es? *
+                                    </Form.Label>
+                                    <Form.Select
+                                        name="draftProject"
+                                        value={draftInfo.draftProject || ''}
+                                        onChange={handleChange}
+                                    >
+                                        {PROJECT_TYPES.map(({ value, label }) => (
+                                            <option key={value || 'empty'} value={value}>
+                                                {label}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+
                                 <Form.Group className="mb-3" controlId="formQuickCategory">
                                     <Form.Label className="type-body-sm fw-bold">
-                                        ¿Qué tipo de servicio? *
+                                        ¿Qué tipo de profesional necesitas? *
                                     </Form.Label>
-                                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                                        {draftInfo.draftProject && (
-                                            <Chip
-                                                label={draftInfo.draftProject}
-                                                color="primary"
-                                                size="small"
-                                                sx={{ fontWeight: 600, alignSelf: 'flex-start' }}
-                                            />
-                                        )}
-                                        <ProjectSearchForm
-                                            setDraftInfo={handleUpdateDraftInfo}
-                                            draftInfo={draftInfo}
-                                        />
-                                    </Box>
+                                    <CategorySelector
+                                        setDraftInfo={handleUpdateDraftInfo}
+                                        draftInfo={draftInfo}
+                                        className="mt-1"
+                                    />
                                 </Form.Group>
 
                                 <Row className="pt-4 pb-4 w-100 justify-content-center">
@@ -286,7 +294,13 @@ export default function Page() {
                                         onClick={goForward}
                                         className="btn-primary-gradient p-2 ps-4 pe-4 w-auto"
                                         variant="primary"
-                                        disabled={!draftInfo.draftDescription.trim()}
+                                        disabled={
+                                            !draftInfo.draftDescription.trim() ||
+                                            !draftInfo.draftCity ||
+                                            !draftInfo.draftProject ||
+                                            !draftInfo.draftCategory ||
+                                            draftInfo.draftCategory === 0
+                                        }
                                     >
                                         Continuar
                                     </Button>
