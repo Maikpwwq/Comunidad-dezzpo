@@ -99,13 +99,13 @@ importers:
         specifier: ^15.8.1
         version: 15.8.1
       react:
-        specifier: ^19.2.7
+        specifier: ^19.0.0
         version: 19.2.7
       react-bootstrap:
         specifier: ^2.10.10
         version: 2.10.10(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react-dom:
-        specifier: ^19.2.7
+        specifier: ^19.0.0
         version: 19.2.7(react@19.2.7)
       react-google-autocomplete:
         specifier: ^2.7.5
@@ -172,10 +172,10 @@ importers:
         specifier: ^26.1.1
         version: 26.1.1
       '@types/react':
-        specifier: ^19.2.17
+        specifier: ^19.0.0
         version: 19.2.17
       '@types/react-dom':
-        specifier: ^19.2.3
+        specifier: ^19.0.0
         version: 19.2.3(@types/react@19.2.17)
       '@types/react-swipeable-views':
         specifier: ^0.13.6
