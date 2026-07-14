@@ -10,7 +10,8 @@
   ],
   "functions": {
     "api/index.ts": {
-      "includeFiles": "dist/**"
+      "includeFiles": "dist/**",
+      "excludeFiles": "node_modules/{@mui,@sendbird,recharts}/**/*"
     }
   }
 }
