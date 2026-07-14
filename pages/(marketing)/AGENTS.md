@@ -173,3 +173,25 @@ When modifying marketing pages:
    - **NEVER use `npm` or `npx`**.
    - Use `pnpm dlx` instead of `npx`.
    - Use `pnpm run <script>` for package scripts.
+
+---
+
+## Testing Coverage
+
+See [docs/testing-architecture.md](../../docs/testing-architecture.md) for full details.
+
+### Nuevo Proyecto (`/nuevo-proyecto`)
+- `tests/unit/features/projects/NuevoProyecto.test.tsx` — isolated multi-step form rendering, validation blockers, mocked `setDoc()` payload.
+- `tests/integration/projects/NuevoProyectoIntegration.test.tsx` — full form lifecycle: URL param pre-fill, localStorage draft persistence, Firestore submission.
+- `tests/e2e/projects/newProjectFlow.spec.ts` — Playwright: authenticated user completes wizard → history redirect.
+
+### SearchBar & QuickMatch
+- `tests/unit/features/search/SearchBar.test.tsx` — MUI Autocomplete rendering, filtered options, `navigate()` on selection.
+- `tests/integration/search/SearchBarIntegration.test.tsx` — QuickMatch fallback navigation to `/nuevo-proyecto`.
+- `tests/e2e/search/searchFlow.spec.ts` — Playwright: hero search → dropdown → microsite navigation.
+
+### Import Convention for Page Components
+When importing `+Page.tsx` files from `pages/` into tests, use the `#R/*` alias:
+```typescript
+import NuevoProyectoPage from '#R/(marketing)/nuevo-proyecto/+Page';
+```

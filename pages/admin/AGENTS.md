@@ -109,3 +109,24 @@ pending_payment → active (after ePayco payment) → completed → disputed
 | `VITE_APP_EPAYCO_PUBLIC_KEY` | ePayco public key |
 | `VITE_APP_EPAYCO_PRIVATE_KEY` | ePayco private key (server-only) |
 | `VITE_APP_PAYCO_TEST` | Test mode flag |
+
+---
+
+## 9. Testing Coverage
+
+See [docs/testing-architecture.md](../../docs/testing-architecture.md) for full details.
+
+### Current Coverage
+Admin pages are not yet covered by dedicated unit or integration tests. The following existing tests provide partial coverage:
+
+- `tests/e2e/happy-paths/happyPaths.spec.ts` — general authenticated route smoke tests (does not currently include `/admin/*` routes since they require custom claims).
+- `tests/unit/stores/userStore.test.ts` — covers the shared `userStore` that admin pages consume.
+
+### Future Test Candidates
+| Test | Type | Priority |
+|------|------|----------|
+| `useAdminGuard` hook | Unit | High — verify custom claims check and redirect |
+| `adminService.getAdminStats()` | Unit | Medium — mock Firestore aggregation |
+| Admin Dashboard rendering | Integration | Medium — verify KPI cards with mocked stats |
+| Verification Queue approve/reject | Integration | High — verify status transitions |
+| `/admin/dashboard` E2E | E2E | Low — requires seeded admin user with claims |

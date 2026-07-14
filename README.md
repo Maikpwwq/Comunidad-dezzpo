@@ -2,7 +2,7 @@
 
 Professional network for real estate maintenance, remodeling, and finishes. We connect qualified professionals with users through a trusted marketplace.
 
-**Coding agents:** start from the repo root [`AGENTS.md`](./AGENTS.md); nested [`pages/(marketing)/AGENTS.md`](./pages/(marketing)/AGENTS.md), [`pages/(app)/AGENTS.md`](./pages/(app)/AGENTS.md), and [`pages/admin/AGENTS.md`](./pages/admin/AGENTS.md) add route-group rules. MUI + Emotion + Vike SSR: [`docs/mui-emotion-ssr-vike.md`](./docs/mui-emotion-ssr-vike.md). Server (+server, Vercel, Vite): [`docs/server-stack-vike.md`](./docs/server-stack-vike.md).
+**Coding agents:** start from the repo root [`AGENTS.md`](./AGENTS.md); nested [`pages/(marketing)/AGENTS.md`](./pages/(marketing)/AGENTS.md), [`pages/(app)/AGENTS.md`](./pages/(app)/AGENTS.md), and [`pages/admin/AGENTS.md`](./pages/admin/AGENTS.md) add route-group rules. MUI + Emotion + Vike SSR: [`docs/mui-emotion-ssr-vike.md`](./docs/mui-emotion-ssr-vike.md). Server (+server, Vercel, Vite): [`docs/server-stack-vike.md`](./docs/server-stack-vike.md). Testing Architecture: [`docs/testing-architecture.md`](./docs/testing-architecture.md).
 
 ## Tech Stack
 
@@ -21,6 +21,7 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 | **Payments** | ePayco | Colombian payment gateway, server-side signatures |
 | **Build** | Vite 8 + SWC | `@vitejs/plugin-react-swc` |
 | **TypeScript** | v6.x | Zero `any` policy, `ServiceResponse<T>` pattern |
+| **Testing** | Vitest + Playwright | 3-Layer Testing Pyramid (`tests/` directory) |
 | **Deployment** | Vercel | Serverless Functions, custom Node→Web adapter |
 | **Package Manager** | pnpm 10 | **Mandatory** — never use npm or npx |
 
@@ -208,9 +209,28 @@ comunidad-dezzpo/
 │
 ├── docs/
 │   ├── mui-emotion-ssr-vike.md               # MUI + Emotion SSR deep-dive
-│   └── server-stack-vike.md                  # Server architecture reference
+│   ├── server-stack-vike.md                  # Server architecture reference
+│   └── testing-architecture.md              # Testing pyramid & conventions
+│
+├── tests/                                    # Automated test pyramid
+│   ├── setup.ts                              # Vitest global setup (RTL + Zustand mock factory)
+│   ├── unit/                                 # Layer 1: Isolated unit tests
+│   │   ├── stores/                           # Zustand store tests
+│   │   └── features/                         # Component tests (SearchBar, NuevoProyecto)
+│   ├── integration/                          # Layer 2: Cross-boundary integration tests
+│   │   ├── auth/                             # Guard whitelist & redirect tests
+│   │   ├── projects/                         # Form lifecycle tests
+│   │   └── search/                           # QuickMatch fallback tests
+│   └── e2e/                                  # Layer 3: Playwright browser tests
+│       ├── pom/                              # Page Object Models (AuthPage)
+│       ├── auth/                             # Login, registration, password reset
+│       ├── projects/                         # New project creation flow
+│       ├── search/                           # Homepage search flow
+│       └── happy-paths/                      # Critical route smoke tests
 │
 ├── vite.config.ts
+├── vitest.config.ts                          # Vitest config (jsdom, coverage thresholds)
+├── playwright.config.ts                      # Playwright config (browsers, dev server)
 ├── tsconfig.json
 └── package.json
 ```
@@ -236,6 +256,23 @@ If the Vite build runs out of memory on large bundles:
 
 ```bash
 NODE_OPTIONS=--max-old-space-size=8192 pnpm build
+```
+
+### Testing
+
+See [docs/testing-architecture.md](./docs/testing-architecture.md) for the full testing guide.
+
+```bash
+# Unit + Integration (Vitest)
+pnpm exec vitest run              # Run all tests
+pnpm exec vitest run --coverage   # Run with coverage report
+pnpm exec vitest                  # Watch mode
+
+# E2E (Playwright — auto-starts dev server)
+pnpm exec playwright install      # First-time: install browsers
+pnpm exec playwright test         # Run all E2E tests
+pnpm exec playwright test --ui    # Interactive UI mode
+pnpm exec playwright show-report  # View HTML report
 ```
 
 ### Type Checking

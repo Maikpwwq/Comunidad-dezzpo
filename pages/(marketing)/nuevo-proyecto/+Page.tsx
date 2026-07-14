@@ -163,6 +163,9 @@ export default function Page() {
         const snap = draftToFirestore(finalDraftInfo, draftInfo.draftId)
         snap.then(() => {
             navigate('/app/directorio-requerimientos')
+        }).catch((error) => {
+            console.error('Failed to save project draft to Firestore:', error)
+            // TODO: Surface this error in the UI (e.g. via toast)
         })
     }
     const goForward = () => {

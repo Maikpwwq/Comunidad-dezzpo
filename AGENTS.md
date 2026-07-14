@@ -315,14 +315,19 @@ pending_payment → active → completed → disputed
 - **Ref Prop**: Do **not** use legacy `forwardRef` or `displayName` wrappers in components. Declare `ref` directly as a standard React component prop as supported natively in React 19.
 - **useMemo Elimination**: Do **not** use `useMemo` for simple property derivations or cheap calculations (e.g., extracting values from objects, or filtering lists of a few dozen entries). React 19's virtual DOM diffing is highly performant, and string primitive dependencies in hooks are compared by value anyway. Removing unnecessary `useMemo` hooks reduces dependency tracking and hook memory overhead.
 
-## 10. Package Manager Policy (STRICT)
+## 10. Testing Architecture (Vitest & Playwright)
+- **Pyramid Structure**: The project implements a strict 3-layer testing pyramid (`tests/unit`, `tests/integration`, `tests/e2e`). Do not collapse layers or bypass mock boundaries in unit/integration layers.
+- **Reference Document**: See `docs/testing-architecture.md` for full implementation details, including Zustand singleton mocking (`tests/setup.ts`), Playwright POM patterns, and Vike SSR routing tests.
+- **Test Commands**: Use `pnpm exec vitest run` for layers 1 & 2. Use `pnpm exec playwright test` for layer 3.
+
+## 11. Package Manager Policy (STRICT)
 - **ALWAYS use `pnpm`**.
 - **NEVER use `npm` or `npx`**.
 - Use `pnpm dlx` instead of `npx`.
 - Use `pnpm run <script>` for package scripts.
 
 
-## 11. CSS & Typography Guide (STRICT)
+## 12. CSS & Typography Guide (STRICT)
 
 ### Naming Convention
 - **Kebab-case only**: All SCSS classes must use `kebab-case`.

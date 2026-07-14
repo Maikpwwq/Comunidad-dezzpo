@@ -145,3 +145,19 @@ When modifying app pages:
 3. **Use `@stores/userStore`** for user data
 4. **Follow Vike v0.4.x patterns**: `export default` at file level
 5. **TypeScript only** for new/migrated code
+
+---
+
+## Testing Coverage
+
+See [docs/testing-architecture.md](../../docs/testing-architecture.md) for full details.
+
+### Guard & Auth Tests
+- `tests/integration/auth/authGuard.test.ts` — imports the real `guard` function from `#R/(app)/+guard` and verifies whitelist vs redirect behavior for every route in the tiered access model.
+- `tests/e2e/auth/authFlows.spec.ts` — Playwright tests for login, registration, password reset, and unauthenticated route bounce to `/ingreso`.
+- `tests/e2e/happy-paths/happyPaths.spec.ts` — smoke tests iterating over critical `/app/*` routes to verify they render without crashing.
+
+### Store Tests
+- `tests/unit/stores/userStore.test.ts` — profile hydration, `updateUser()`, `isAuth` flag, contact CRUD.
+- `tests/unit/stores/chatStore.test.ts` — `toggleChat()`, `setOpen()`, `setCurrentPathname()`.
+

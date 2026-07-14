@@ -95,6 +95,8 @@
     "pages/**/*.tsx",
     "server/**/*.ts",
     "scripts/**/*.ts",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
     "vite.config.ts"
   ],
   "exclude": [
