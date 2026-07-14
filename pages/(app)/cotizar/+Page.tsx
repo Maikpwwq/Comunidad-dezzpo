@@ -17,7 +17,9 @@ import {
     TableRow,
     TableCell,
     Typography,
-    Box
+    Box,
+    Switch,
+    FormControlLabel
 } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
@@ -41,6 +43,8 @@ interface CotizacionState {
     condicionesNegocio: string
     garantia: string
     valorSubtotal: number
+    requireDeposit: boolean
+    depositAmount: number
 }
 export default function Page() {
     const userAuth = useContext(UserAuthContext)
@@ -64,11 +68,22 @@ export default function Page() {
         condicionesNegocio: '',
         garantia: '',
         valorSubtotal: 0,
+        requireDeposit: false,
+        depositAmount: 0,
     })
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        const { name, value, type } = e.target
+        let finalValue: any = value
+
+        if (type === 'checkbox') {
+            finalValue = (e.target as HTMLInputElement).checked
+        } else if (name === 'depositAmount') {
+            finalValue = Number(value)
+        }
+
         setCotizacion({
             ...cotizacion,
-            [e.target.name]: e.target.value,
+            [name]: finalValue,
         })
     }
     const handleRemoveTableRow = (e: React.MouseEvent, index: number) => {
@@ -361,6 +376,37 @@ export default function Page() {
                     minRows={2}
                     className="ps-3 information-pill w-100"
                 />
+
+                <Row className="pt-4 pb-2 w-100">
+                    <Col>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={cotizacion.requireDeposit}
+                                    onChange={handleChange}
+                                    name="requireDeposit"
+                                    color="primary"
+                                />
+                            }
+                            label={<Typography className="type-card-title">Requerir anticipo o depósito para iniciar</Typography>}
+                        />
+                        {cotizacion.requireDeposit && (
+                            <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
+                                <Typography>Monto de anticipo ($COP):</Typography>
+                                <input
+                                    type="number"
+                                    value={cotizacion.depositAmount}
+                                    onChange={handleChange}
+                                    name="depositAmount"
+                                    placeholder="Ej. 50000"
+                                    className="p-2 information-pill"
+                                    style={{ maxWidth: '200px' }}
+                                />
+                            </Box>
+                        )}
+                    </Col>
+                </Row>
+
                 <Row className="pb-4 pt-4 w-100">
                     <Col className="">
                         <Button

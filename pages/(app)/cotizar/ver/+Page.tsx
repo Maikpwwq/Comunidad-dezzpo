@@ -15,6 +15,7 @@ import {
     Typography,
     Button,
     CircularProgress,
+    Box,
 } from '@mui/material'
 import DownloadIcon from '@mui/icons-material/Download'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp'
@@ -33,6 +34,8 @@ interface QuotationInfoState extends Partial<QuotationFirestoreDocument> {
     quotationDraftId?: string
     quotationPrice?: number
     quotationStatus?: 'pending' | 'accepted' | 'rejected'
+    requireDeposit?: boolean
+    depositAmount?: number
 }
 
 export default function Page() {
@@ -88,6 +91,8 @@ export default function Page() {
                     condicionesNegocio: rest.condicionesNegocio || '',
                     garantia: rest.garantia || '',
                     valorSubtotal: rest.valorSubtotal || 0,
+                    requireDeposit: rest.requireDeposit || false,
+                    depositAmount: rest.depositAmount || 0,
                     ...rest
                 });
 
@@ -383,6 +388,29 @@ export default function Page() {
                 >
                     {quotationInfo.garantia}
                 </Typography>
+                
+                {/* Payment Conditions Section */}
+                {quotationInfo.requireDeposit && (
+                    <>
+                        <Typography
+                            variant="h6"
+                            className="p-description w-auto mt-4 text-warning"
+                        >
+                            Condiciones de Pago:
+                        </Typography>
+                        <Box className="detail-pill p-3 mt-2 border border-warning rounded">
+                            <Typography variant="body1">
+                                <strong>El comerciante requiere un anticipo/depósito para iniciar el trabajo.</strong>
+                            </Typography>
+                            <Typography variant="h6" className="mt-2 text-success">
+                                Monto del anticipo: {Number(quotationInfo.depositAmount).toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary" className="mt-1">
+                                Este valor deberá ser pagado a través de nuestra plataforma al confirmar el contrato. El saldo restante se acordará directamente o al finalizar.
+                            </Typography>
+                        </Box>
+                    </>
+                )}
             </Col>
 
             {/* Hidden PDF template — positioned offscreen for html2pdf capture */}

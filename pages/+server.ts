@@ -16,6 +16,7 @@ import { paymentConfirmationHandler } from '../server/api/payment/confirmation.t
 import { emailNotificationHandler } from '../server/api/notifications/email.ts'
 import { fanoutNotificationHandler } from '../server/api/notifications/fanout.ts'
 import { trustScoreHandler } from '../server/api/trust-score.ts'
+import { reviewRequestsHandler } from '../server/api/review-requests.ts'
 
 const app = new Hono()
 
@@ -113,6 +114,16 @@ app.post('/api/v1/cron/trust-score', async (c) => {
     const message = err instanceof Error ? err.message : String(err)
     console.error('[/api/v1/cron/trust-score] Route error:', message)
     return c.json({ error: message || 'Trust score cron failed' }, 500)
+  }
+})
+
+app.post('/api/v1/cron/review-requests', async (c) => {
+  try {
+    return await reviewRequestsHandler(c)
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[/api/v1/cron/review-requests] Route error:', message)
+    return c.json({ error: message || 'Review requests cron failed' }, 500)
   }
 })
 

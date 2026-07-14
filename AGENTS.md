@@ -210,6 +210,7 @@ pending_payment → active → completed → disputed
 - Contracts are **always** created with `status: 'pending_payment'`.
 - Transition to `active` happens **only** after successful ePayco payment confirmation.
 - **Never** set `status: 'active'` directly on contract creation.
+- **Deposit Architecture**: Quotations and Contracts support `requireDeposit` and `depositAmount`. When `requireDeposit` is true, the initial contract `paymentStage` is `'deposit'`. The ePayco payload MUST charge the `depositAmount` instead of the full `agreedAmount`. The invoice ID must append `-{paymentStage}` (e.g., `DEZZPO-123-deposit`) to prevent transaction tracking collisions.
 
 ### Payment Security (CRITICAL)
 - **Private keys MUST stay server-side**: `VITE_APP_EPAYCO_PRIVATE_KEY` is consumed only in `server/api/payment/signature.ts`.

@@ -190,6 +190,8 @@ export interface QuotationFirestoreDocument extends DocumentData {
     quotationCreatedAt?: string
     quotationStatus?: 'pending' | 'accepted' | 'rejected'
     viewedAt?: string
+    requireDeposit?: boolean
+    depositAmount?: number
 }
 
 export interface ReadQuotationParams {
@@ -264,6 +266,7 @@ export interface ContractFirestoreDocument extends DocumentData {
     comerciantePayoutAmount?: number
     paymentMethod?: 'epayco' | 'external'
     paymentStage?: 'full_payment' | 'deposit' | 'balance'
+    depositAmount?: number
 }
 
 export interface CreateContractParams {

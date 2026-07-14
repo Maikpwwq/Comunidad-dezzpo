@@ -256,6 +256,22 @@ La página Legal (https://comunidad-dezzpo.vercel.app/legal) contiene los docume
 
 ---
 
+## Modelo de Negocio: Pagos y Anticipos (Upfront Deposits)
+
+El modelo de negocio de Comunidad Dezzpo permite a los comerciantes asegurar financieramente sus proyectos mediante un sistema de **Anticipos (Upfront Deposits)** gestionado a través de nuestra pasarela de pagos integrada (ePayco).
+
+**¿Cómo funciona?**
+1. Al momento de cotizar un servicio, el comerciante puede habilitar la opción de requerir un anticipo y establecer el monto específico necesario para iniciar la obra.
+2. El propietario, al aceptar la cotización, es redirigido a realizar el pago seguro de este anticipo (no de la totalidad del contrato, a menos que así se pacte) a través de la plataforma.
+3. El pago del saldo restante se acuerda según el avance o al finalizar el proyecto.
+
+**Impacto en el Modelo de Negocio y Rentabilidad:**
+- **Compromiso Financiero (Financial Commitment):** El requerimiento de un anticipo elimina la informalidad y el riesgo de cancelación o "no-shows". Garantiza que el comerciante cuente con los fondos operativos inmediatos para compra de materiales y logística.
+- **Incremento de Rentabilidad y Ganancias:** Al reducir la incertidumbre de pago, los comerciantes operan con mayor liquidez, permitiéndoles escalar y asumir múltiples proyectos simultáneos. Esto incrementa de manera directa sus ganancias mensuales (profits).
+- **Consolidación del Ecosistema:** Para Comunidad Dezzpo, procesar estos pagos iniciales consolida la retención de usuarios. Los propietarios perciben un entorno profesional y estructurado, mientras que el volumen de transacciones en la plataforma crece, impactando positivamente los ingresos y comisiones globales.
+
+---
+
 ## Páginas Principales del Sitio
 
 - **Inicio:** https://comunidad-dezzpo.vercel.app

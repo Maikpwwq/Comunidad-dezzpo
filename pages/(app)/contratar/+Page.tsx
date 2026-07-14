@@ -25,6 +25,8 @@ export default function Page() {
     const [quotationId, setQuotationId] = useState<string | null>(null)
     const [providerId, setProviderId] = useState<string | null>(null)
     const [agreedAmount, setAgreedAmount] = useState<number>(0)
+    const [requireDeposit, setRequireDeposit] = useState<boolean>(false)
+    const [depositAmount, setDepositAmount] = useState<number>(0)
 
     // Data
     const [draft, setDraft] = useState<DraftFirestoreDocument | null>(null)
@@ -43,6 +45,9 @@ export default function Page() {
         setProviderId(params.get('providerId'))
         const amount = parseFloat(params.get('amount') || '0')
         setAgreedAmount(isNaN(amount) ? 0 : amount)
+        setRequireDeposit(params.get('requireDeposit') === 'true')
+        const depAmount = parseFloat(params.get('depositAmount') || '0')
+        setDepositAmount(isNaN(depAmount) ? 0 : depAmount)
     }, [])
 
     // Fetch draft data
@@ -97,7 +102,8 @@ export default function Page() {
                     platformFeeAmount,
                     comerciantePayoutAmount,
                     paymentMethod: 'epayco',
-                    paymentStage: 'full_payment',
+                    paymentStage: requireDeposit ? 'deposit' : 'full_payment',
+                    depositAmount: requireDeposit ? depositAmount : 0,
                 },
             })
 
@@ -202,6 +208,17 @@ export default function Page() {
                             <Typography variant="h5" color="primary" gutterBottom>
                                 ${agreedAmount.toLocaleString('es-CO')} COP
                             </Typography>
+
+                            {requireDeposit && (
+                                <>
+                                    <Typography variant="body2" color="warning.main" sx={{ mt: 2, fontWeight: 'bold' }}>
+                                        Anticipo Requerido
+                                    </Typography>
+                                    <Typography variant="h6" color="warning.main" gutterBottom>
+                                        ${depositAmount.toLocaleString('es-CO')} COP
+                                    </Typography>
+                                </>
+                            )}
                         </Col>
                     </Row>
 

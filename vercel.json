@@ -17,6 +17,10 @@
     {
       "path": "/api/v1/cron/trust-score",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/v1/cron/review-requests",
+      "schedule": "0 10 * * *"
     }
   ]
 }

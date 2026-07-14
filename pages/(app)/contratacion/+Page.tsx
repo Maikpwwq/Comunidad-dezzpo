@@ -107,6 +107,8 @@ export default function Page() {
     const handlePay = useCallback(async () => {
         if (!contract || !contractId) return
 
+        const chargeAmount = contract.paymentStage === 'deposit' && contract.depositAmount ? contract.depositAmount : contract.agreedAmount
+
         setIsPaying(true)
         try {
             // 1. Get server-signed payload
@@ -115,10 +117,11 @@ export default function Page() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     contractId,
-                    amount: contract.agreedAmount,
+                    amount: chargeAmount,
                     description: contract.objectDescription || 'Servicio Comunidad Dezzpo',
                     buyerEmail: userEmail || '',
                     buyerName: userName || '',
+                    paymentStage: contract.paymentStage || 'full_payment',
                 }),
             })
 
@@ -142,7 +145,7 @@ export default function Page() {
 
             // Track payment initiation event
             import('@utils/analytics').then(({ trackCreateContract }) => {
-                trackCreateContract(contractId, contract.agreedAmount, contract.providerId)
+                trackCreateContract(contractId, chargeAmount, contract.providerId)
             })
 
             handler.open({
@@ -247,6 +250,11 @@ export default function Page() {
                             <Typography variant="h3" fontWeight="bold" sx={{ color: 'var(--primary-green-text-color)' }}>
                                 ${contract.agreedAmount.toLocaleString('es-CO')} COP
                             </Typography>
+                            {contract.paymentStage === 'deposit' && contract.depositAmount && (
+                                <Typography variant="subtitle1" color="warning.main" sx={{ mt: 1, fontWeight: 'bold' }}>
+                                    (Pago actual: Anticipo de ${contract.depositAmount.toLocaleString('es-CO')} COP)
+                                </Typography>
+                            )}
                         </Box>
                     </Stack>
                 </Paper>
@@ -284,7 +292,7 @@ export default function Page() {
                                 '&:hover': { bgcolor: 'var(--secondary-green-text-color)' },
                             }}
                         >
-                            {isPaying ? 'Procesando...' : `PAGAR $${contract.agreedAmount.toLocaleString('es-CO')} COP`}
+                            {isPaying ? 'Procesando...' : `PAGAR $${(contract.paymentStage === 'deposit' && contract.depositAmount ? contract.depositAmount : contract.agreedAmount).toLocaleString('es-CO')} COP`}
                         </Button>
                     </Paper>
                 )}

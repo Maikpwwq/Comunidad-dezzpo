@@ -156,9 +156,13 @@ export default function Page() {
         e.preventDefault()
         navigate(`/app/editar-cotizacion/${quotationId}`)
     }
-    const handleHire = (e: React.MouseEvent, quotationId: string, proponentId: string, finalAmount: number) => {
+    const handleHire = (e: React.MouseEvent, quotationId: string, proponentId: string, finalAmount: number, requireDeposit?: boolean, depositAmount?: number) => {
         e.preventDefault()
-        navigate(`/app/contratar?draftId=${draftId}&quotationId=${quotationId}&proponentId=${proponentId}&amount=${finalAmount}`)
+        let url = `/app/contratar?draftId=${draftId}&quotationId=${quotationId}&proponentId=${proponentId}&amount=${finalAmount}`
+        if (requireDeposit) {
+            url += `&requireDeposit=true&depositAmount=${depositAmount || 0}`
+        }
+        navigate(url)
     }
     const handleCotizar = () => {
         const draftParamId = requerimientoInfo.draftId || draftId
@@ -433,6 +437,8 @@ export default function Page() {
                                     const scope = legacyItem.scope
                                     const description = legacyItem.description || item.quotationDescription
                                     const valorCotizado = legacyItem.valorSubtotal || item.quotationPrice || 0
+                                    const requireDeposit = legacyItem.requireDeposit || item.requireDeposit || false
+                                    const depositAmount = legacyItem.depositAmount || item.depositAmount || 0
 
                                     return (
                                         <TableRow key={quotationId} hover>
@@ -481,7 +487,7 @@ export default function Page() {
                                                             size="small"
                                                             variant="contained"
                                                             color="primary"
-                                                            onClick={(e) => handleHire(e, quotationId, proponentId, agreedAmount)}
+                                                            onClick={(e) => handleHire(e, quotationId, proponentId, agreedAmount, requireDeposit, depositAmount)}
                                                         >
                                                             CONTRATAR
                                                         </Button>
