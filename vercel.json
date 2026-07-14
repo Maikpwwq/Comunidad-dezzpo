@@ -9,7 +9,7 @@
     }
   ],
   "functions": {
-    "api/index.ts": {
+    "api/index.mjs": {
       "includeFiles": "dist/server/**"
     }
   },

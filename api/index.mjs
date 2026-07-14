@@ -1,4 +1,5 @@
 // Vercel Serverless Function Entry Point
 // Re-exports the fully bundled and patched production handler
-// @ts-expect-error - entry.mjs is generated during production build
+// Uses .mjs to bypass @vercel/node TypeScript compilation
+// (avoids TS 7.x incompatibility with @vercel/node's compiler host)
 export { default } from '../dist/server/entry.mjs'
