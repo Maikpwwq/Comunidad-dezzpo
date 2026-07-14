@@ -30,6 +30,7 @@ import { Ubicacion } from '@features/marketing'
 import PropertiesManager from '@features/profile/components/PropertiesManager'
 import { SnackBarAlert, ChipsCategories } from '@components/common'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { zones, zoneNames } from '@assets/data/ListadoZonas'
 
 // MUI
 import {
@@ -41,11 +42,15 @@ import {
     MenuItem,
     InputLabel,
     FormControl,
+    FormControlLabel,
+    Switch,
     Chip,
     LinearProgress,
     IconButton,
     Tooltip,
 } from '@mui/material'
+import PublicIcon from '@mui/icons-material/Public'
+import FlashOnIcon from '@mui/icons-material/FlashOn'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom'
 import ErrorIcon from '@mui/icons-material/Error'
@@ -120,6 +125,11 @@ export default function Page() {
     const [socialUrlErrors, setSocialUrlErrors] = useState<Record<string, boolean>>({})
     const [properties, setProperties] = useState<Property[]>([])
 
+    // Coverage zones state (comerciante only)
+    const [coverageZones, setCoverageZones] = useState<string[]>([])
+    const [coverageCityWide, setCoverageCityWide] = useState(false)
+    const [isAvailableNow, setIsAvailableNow] = useState(false)
+
     const [userEditInfo, setUserEditInfo] = useState<UserEditInfo>({
         userName: '',
         userMail: '',
@@ -187,6 +197,11 @@ export default function Page() {
                     setPhones(userData.phones || [])
                     setSocialLinks(userData.socialLinks || [])
                     setProperties(userData.properties || [])
+
+                    // Load coverage zones
+                    setCoverageZones(userData.userZonasCobertura || [])
+                    setCoverageCityWide(userData.coberturaTodaLaCiudad || false)
+                    setIsAvailableNow(userData.isAvailableNow || false)
 
                     setIsLoaded(true)
 
@@ -374,6 +389,38 @@ export default function Page() {
             setAlert({ open: true, message: 'Error al actualizar. Intenta de nuevo.', severity: 'error' })
         }
     }, [userAuthID, userRol.rol, socialLinks, socialUrlErrors])
+
+    // ── Coverage zone handlers (comerciante) ─────────────────────────────
+    const handleToggleZone = (zone: string) => {
+        setCoverageZones((prev) =>
+            prev.includes(zone)
+                ? prev.filter((z) => z !== zone)
+                : [...prev, zone]
+        )
+    }
+
+    const handleSaveCoverage = useCallback(async () => {
+        if (!userRol.rol) {
+            setAlert({ open: true, message: 'Error: Rol no identificado.', severity: 'error' })
+            return
+        }
+
+        try {
+            await updateUser({
+                userId: userAuthID,
+                role: userRol.rol,
+                data: {
+                    userZonasCobertura: coverageZones,
+                    coberturaTodaLaCiudad: coverageCityWide,
+                    isAvailableNow,
+                } as any,
+            })
+            setAlert({ open: true, message: '¡Zonas de cobertura actualizadas!', severity: 'success' })
+        } catch (error) {
+            console.error('Error updating coverage zones:', error)
+            setAlert({ open: true, message: 'Error al actualizar cobertura.', severity: 'error' })
+        }
+    }, [userAuthID, userRol.rol, coverageZones, coverageCityWide, isAvailableNow])
 
     const isComerciante = userRol.rol === 2
 
@@ -716,7 +763,80 @@ export default function Page() {
                     </Modal>
                 </div>
 
-                {/* ===================== Card 4: Identidad ===================== */}
+                {/* ===================== Card 4: Zonas de Cobertura (Comerciante only) ===================== */}
+                {isComerciante && (
+                    <div className={`${styles['settings-card']} ${styles['settings-card--full']} ${styles['coverage-card']}`}>
+                        <div className={styles['card-header']}>
+                            <h2 className={styles['card-title']}>Zonas de Cobertura</h2>
+                            <Button
+                                className="btn btn-primary"
+                                size="small"
+                                onClick={handleSaveCoverage}
+                            >
+                                Guardar
+                            </Button>
+                        </div>
+                        <p className="type-body" style={{ marginBottom: '0.5rem' }}>
+                            Selecciona las zonas donde prestas servicio. Aparecer\u00e1s en los resultados de b\u00fasqueda de cada zona seleccionada.
+                        </p>
+
+                        <div className={styles['coverage-toggle-row']} style={{ marginBottom: '1rem' }}>
+                            <FlashOnIcon sx={{ color: 'var(--background-main-green-color, #4caf50)' }} />
+                            <span className={styles['coverage-toggle-label']}>
+                                ¡Disponible ahora mismo! (Urgencias)
+                            </span>
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={isAvailableNow}
+                                        onChange={(e) => setIsAvailableNow(e.target.checked)}
+                                        color="success"
+                                    />
+                                }
+                                label=""
+                            />
+                        </div>
+
+                        <div className={styles['coverage-toggle-row']}>
+                            <PublicIcon sx={{ color: 'var(--background-main-green-color, #4caf50)' }} />
+                            <span className={styles['coverage-toggle-label']}>
+                                Toda la ciudad y área metropolitana
+                            </span>
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={coverageCityWide}
+                                        onChange={(e) => setCoverageCityWide(e.target.checked)}
+                                        color="success"
+                                    />
+                                }
+                                label=""
+                            />
+                        </div>
+
+                        {!coverageCityWide && (
+                            <>
+                                <div className={styles['coverage-chip-grid']}>
+                                    {zones.map((zone) => (
+                                        <Chip
+                                            key={zone}
+                                            label={zoneNames[zone]}
+                                            onClick={() => handleToggleZone(zone)}
+                                            color={coverageZones.includes(zone) ? 'success' : 'default'}
+                                            variant={coverageZones.includes(zone) ? 'filled' : 'outlined'}
+                                            size="small"
+                                        />
+                                    ))}
+                                </div>
+                                <span className={styles['coverage-count']}>
+                                    {coverageZones.length} zona{coverageZones.length !== 1 ? 's' : ''} seleccionada{coverageZones.length !== 1 ? 's' : ''}
+                                </span>
+                            </>
+                        )}
+                    </div>
+                )}
+
+                {/* ===================== Card 5: Identidad ===================== */}
                 <div className={styles['settings-card']}>
                     <div className={styles['card-header']}>
                         <h2 className={styles['card-title']}>Confirma tu Identidad</h2>

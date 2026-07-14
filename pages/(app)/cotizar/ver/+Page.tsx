@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { usePageContext } from '@hooks/usePageContext'
-import { getQuotation } from '@services/quotations'
+import { getQuotation, updateQuotation } from '@services/quotations'
+import { getUser } from '@services/users'
 import type { QuotationFirestoreDocument } from '@services/types'
+import { useUserStore } from '@stores/userStore'
+import { buildHandoffUrl } from '@utilities/whatsappHandoff'
 import { Container, Row, Col } from 'react-bootstrap'
 import {
     Table,
@@ -14,6 +17,7 @@ import {
     CircularProgress,
 } from '@mui/material'
 import DownloadIcon from '@mui/icons-material/Download'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 import QuotationPdfTemplate from '@features/quotes/components/QuotationPdfTemplate'
 import type { QuotationPdfData } from '@features/quotes/components/QuotationPdfTemplate'
 
@@ -46,6 +50,9 @@ export default function Page() {
         garantia: '',
         valorSubtotal: 0,
     })
+
+    const { userId, displayName } = useUserStore()
+    const [comerciantePhone, setComerciantePhone] = useState<string>('')
 
     // PDF generation state
     const [isGenerating, setIsGenerating] = useState(false)
@@ -83,6 +90,23 @@ export default function Page() {
                     valorSubtotal: rest.valorSubtotal || 0,
                     ...rest
                 });
+
+                // Fetch comerciante for WhatsApp handoff
+                if (quotationComercianteId) {
+                    getUser({ userId: quotationComercianteId, role: 2 }).then(res => {
+                        if (res?.success && res?.data) {
+                            setComerciantePhone((res.data as any).userCelular || '')
+                        }
+                    })
+                }
+
+                // Trigger silent read receipt if client views it
+                if (userId && userId !== quotationComercianteId && !(response.data as any).viewedAt) {
+                    updateQuotation({
+                        quotationId,
+                        data: { viewedAt: new Date().toISOString() }
+                    }).catch(err => console.error('Error updating viewedAt:', err))
+                }
             } else {
                 console.log('Quotation not found or error:', response.error);
             }
@@ -143,8 +167,38 @@ export default function Page() {
                     <Typography variant="h5" className="w-auto pb-4">
                         Consulta los detalles de la cotización
                     </Typography>
-                    <Button
-                        variant="contained"
+                    <div className="d-flex gap-3">
+                        {userId && userId !== quotationInfo.quotationComercianteId && comerciantePhone && (
+                            <Button
+                                variant="contained"
+                                startIcon={<WhatsAppIcon />}
+                                onClick={() => {
+                                    const { url } = buildHandoffUrl({
+                                        phone: comerciantePhone,
+                                        senderName: displayName || 'Cliente',
+                                        type: 'quote_response',
+                                        description: quotationInfo.description,
+                                        price: quotationInfo.valorSubtotal,
+                                        referenceId: quotationInfo.quotationId,
+                                    })
+                                    window.open(url, '_blank')
+                                }}
+                                sx={{
+                                    borderRadius: '50px',
+                                    backgroundColor: '#25D366',
+                                    textTransform: 'none',
+                                    fontWeight: 600,
+                                    px: 3,
+                                    '&:hover': {
+                                        backgroundColor: '#128C7E',
+                                    },
+                                }}
+                            >
+                                Contactar
+                            </Button>
+                        )}
+                        <Button
+                            variant="contained"
                         startIcon={
                             isGenerating
                                 ? <CircularProgress size={18} sx={{ color: '#fff' }} />
@@ -170,6 +224,7 @@ export default function Page() {
                     >
                         {isGenerating ? 'Generando...' : 'Descargar Cotización'}
                     </Button>
+                    </div>
                 </Row>
                 <Typography variant="h6" className="p-description w-auto">
                     Descripción del servicio:

@@ -118,7 +118,7 @@ describe('New Project Full Form (Integration)', () => {
     
     expect(setDoc).toHaveBeenCalledTimes(1);
     
-    const payload = vi.mocked(setDoc).mock.calls[0][1];
+    const payload = vi.mocked(setDoc).mock.calls[0]![1];
     expect(payload).toMatchObject({
       draftDescription: 'test_query',
       draftCity: 'Suba',

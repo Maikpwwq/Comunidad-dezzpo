@@ -109,6 +109,10 @@ export interface UserFirestoreDocument extends DocumentData {
     }
     savedDrafts?: string[]
     privacySettings?: PrivacySettings
+    /** Zonas donde el comerciante presta servicio (array of zone slugs). */
+    userZonasCobertura?: string[]
+    /** Indica si el comerciante cubre toda el area metropolitana/ciudad. */
+    coberturaTodaLaCiudad?: boolean
     /** Structured email contacts array. */
     emails?: ContactEmail[]
     /** Structured phone contacts array. */
@@ -119,6 +123,14 @@ export interface UserFirestoreDocument extends DocumentData {
     properties?: Property[]
     /** Premium listing tier for merchants. */
     profileTier?: 'free' | 'destacado'
+    /** Phase 2: Active Lead Generation - Toggle for 'Available Now' status */
+    isAvailableNow?: boolean
+    /** Phase 2: Last active timestamp for tracking emergency capture */
+    lastActive?: string
+    /** FCM Tokens for push notifications */
+    fcmTokens?: string[]
+    /** Phase 3: Algorithmic trust score (0-100) computed from behavioral metrics */
+    trustScore?: number
 }
 
 export type UserRole = 1 | 2 // 1 = Propietario, 2 = Comerciante
@@ -177,6 +189,7 @@ export interface QuotationFirestoreDocument extends DocumentData {
     quotationDescription?: string
     quotationCreatedAt?: string
     quotationStatus?: 'pending' | 'accepted' | 'rejected'
+    viewedAt?: string
 }
 
 export interface ReadQuotationParams {

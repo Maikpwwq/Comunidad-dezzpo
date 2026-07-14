@@ -1,12 +1,14 @@
 import { initializeApp, getApps, cert, type App } from 'firebase-admin/app'
 import { getFirestore } from 'firebase-admin/firestore'
 import { getAuth } from 'firebase-admin/auth'
+import { getMessaging } from 'firebase-admin/messaging'
 import { readFileSync, existsSync } from 'fs'
 import { resolve } from 'path'
 
 let adminApp: App | null = null
 let adminFirestore: any
 let adminAuth: any
+let adminMessaging: any
 
 const privateKey = process.env.FIREBASE_PRIVATE_KEY || process.env.VITE_APP_FIREBASE_PRIVATE_KEY
 const clientEmail = process.env.FIREBASE_CLIENT_EMAIL || process.env.VITE_APP_FIREBASE_CLIENT_EMAIL
@@ -30,6 +32,7 @@ if (apps.length > 0) {
     adminApp = apps[0]!
     adminFirestore = getFirestore(adminApp)
     adminAuth = getAuth(adminApp)
+    adminMessaging = getMessaging(adminApp)
 } else if (hasEnvCredentials || hasLocalServiceAccount) {
     try {
         if (hasEnvCredentials) {
@@ -48,6 +51,7 @@ if (apps.length > 0) {
         }
         adminFirestore = getFirestore(adminApp)
         adminAuth = getAuth(adminApp)
+        adminMessaging = getMessaging(adminApp)
     } catch (err: any) {
         console.error('[Firebase Admin] Initialization failed:', err?.message || err)
     }
@@ -107,6 +111,13 @@ if (!adminApp) {
             }
         }
     } as any
+
+    adminMessaging = {
+        async sendMulticast() {
+            console.warn('[Firebase Admin Mock] sendMulticast called')
+            return { successCount: 0, failureCount: 0, responses: [] }
+        }
+    } as any
 }
 
-export { adminApp, adminFirestore, adminAuth }
+export { adminApp, adminFirestore, adminAuth, adminMessaging }

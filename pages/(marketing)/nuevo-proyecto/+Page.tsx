@@ -162,6 +162,18 @@ export default function Page() {
         }
         const snap = draftToFirestore(finalDraftInfo, draftInfo.draftId)
         snap.then(() => {
+            // Call fanout API for Phase 2 Lead Generation
+            fetch('/api/v1/notifications/fanout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    draftId: draftInfo.draftId,
+                    serviceCategory: finalDraftInfo.draftCategory,
+                    locationZone: finalDraftInfo.draftCity,
+                    description: finalDraftInfo.draftDescription
+                })
+            }).catch(err => console.error('Failed to trigger fanout notifications:', err))
+
             navigate('/app/directorio-requerimientos')
         }).catch((error) => {
             console.error('Failed to save project draft to Firestore:', error)

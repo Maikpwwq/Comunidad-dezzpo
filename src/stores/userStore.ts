@@ -33,6 +33,10 @@ export interface UserState {
   socialLinks: SocialLink[]
   savedDrafts: string[]
   likedProfiles: string[]
+  // Coverage zones (comerciante only)
+  userZonasCobertura: string[]
+  coberturaTodaLaCiudad: boolean
+  isAvailableNow: boolean
 }
 
 export interface UserActions {
@@ -57,6 +61,10 @@ export interface UserActions {
   setLikedProfiles: (profiles: string[]) => void
   toggleSavedDraft: (draftId: string) => void
   toggleLikedProfile: (profileId: string) => void
+  // Coverage zone actions (comerciante)
+  setZonasCobertura: (zonas: string[]) => void
+  setCoberturaTodaLaCiudad: (flag: boolean) => void
+  setIsAvailableNow: (flag: boolean) => void
 }
 
 const initialState: UserState = {
@@ -73,6 +81,9 @@ const initialState: UserState = {
   socialLinks: [],
   savedDrafts: [],
   likedProfiles: [],
+  userZonasCobertura: [],
+  coberturaTodaLaCiudad: false,
+  isAvailableNow: false,
 }
 
 /**
@@ -194,6 +205,17 @@ export const useUserStore = create<UserState & UserActions>()(
             ? state.likedProfiles.filter((id) => id !== profileId)
             : [...state.likedProfiles, profileId],
         })),
+
+      // Coverage zone actions
+      setZonasCobertura: (zonas) =>
+        set((state) => ({ ...state, userZonasCobertura: zonas })),
+
+      setCoberturaTodaLaCiudad: (flag) =>
+        set((state) => ({ ...state, coberturaTodaLaCiudad: flag })),
+
+      // Availability action
+      setIsAvailableNow: (flag) =>
+        set((state) => ({ ...state, isAvailableNow: flag })),
     }),
     {
       name: 'user-storage',
@@ -211,6 +233,9 @@ export const useUserStore = create<UserState & UserActions>()(
         socialLinks: state.socialLinks,
         savedDrafts: state.savedDrafts,
         likedProfiles: state.likedProfiles,
+        userZonasCobertura: state.userZonasCobertura,
+        coberturaTodaLaCiudad: state.coberturaTodaLaCiudad,
+        isAvailableNow: state.isAvailableNow,
       }),
     }
   )

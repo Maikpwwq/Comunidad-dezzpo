@@ -49,7 +49,7 @@ describe('userStore', () => {
     useUserStore.getState().addContact('phones', phone as any);
     
     expect(useUserStore.getState().phones.length).toBe(1);
-    expect(useUserStore.getState().phones[0].number).toBe('555-1234');
+    expect(useUserStore.getState().phones[0]?.number).toBe('555-1234');
 
     useUserStore.getState().removeContact('phones', 0);
     // Since it's primary, the store logic prevents removal if isPrimary is true!

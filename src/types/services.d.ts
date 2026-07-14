@@ -154,6 +154,12 @@ export interface UserFirestoreDocument {
     emails?: ContactEmail[]
     phones?: ContactPhone[]
     socialLinks?: SocialLink[]
+    userZonasCobertura?: string[]
+    coberturaTodaLaCiudad?: boolean
+    isAvailableNow?: boolean
+    lastActive?: string
+    fcmTokens?: string[]
+    trustScore?: number
 }
 
 export interface DraftFirestoreDocument {
@@ -177,6 +183,7 @@ export interface QuotationFirestoreDocument {
     quotationDescription?: string
     quotationCreatedAt?: string
     quotationStatus?: 'pending' | 'accepted' | 'rejected'
+    viewedAt?: string
 }
 
 // =============================================================================

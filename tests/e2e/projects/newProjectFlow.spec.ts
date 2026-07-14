@@ -15,7 +15,7 @@ test.describe('New Project Creation Flow', () => {
     await page.goto('/nuevo-proyecto');
 
     // Step 0: ¿Qué necesitas?
-    await page.getByPlaceholderText(/Ej: Se me rompió un tubo/i).fill('Reparación de techo E2E Test');
+    await page.getByPlaceholder(/Ej: Se me rompió un tubo/i).fill('Reparación de techo E2E Test');
     await page.getByRole('combobox', { name: /zona de Bogotá/i }).selectOption('Suba');
     await page.getByRole('combobox', { name: /tipo de proyecto/i }).selectOption('remodelacion');
     // For CategorySelector, assuming it's a select or custom dropdown
@@ -27,7 +27,7 @@ test.describe('New Project Creation Flow', () => {
       await categorySelect.selectOption({ index: 1 });
     } else {
       // If Autocomplete
-      await page.getByPlaceholderText(/Buscar categoría/i).fill('Plom');
+      await page.getByPlaceholder(/Buscar categoría/i).fill('Plom');
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('Enter');
     }
@@ -36,7 +36,7 @@ test.describe('New Project Creation Flow', () => {
 
     // Step 2: Detalles opcionales
     await expect(page.getByText('Detalles opcionales de tu proyecto')).toBeVisible();
-    await page.getByPlaceholderText(/Ej: Pintar fachada/i).fill('Reparación Completa E2E');
+    await page.getByPlaceholder(/Ej: Pintar fachada/i).fill('Reparación Completa E2E');
     
     // Submit
     await page.getByRole('button', { name: /Guardar y finalizar/i }).click();

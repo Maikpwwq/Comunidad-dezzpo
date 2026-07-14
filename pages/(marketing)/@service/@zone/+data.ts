@@ -105,9 +105,13 @@ async function data(pageContext: PageContextServer) {
             const address = (comerciante.userDirection || '').toLowerCase()
             const ubication = (comerciante.userUbication || '').toLowerCase()
             const description = (comerciante.userDescription || '').toLowerCase()
+            const zonasCobertura = Array.isArray(comerciante.userZonasCobertura) ? comerciante.userZonasCobertura : []
+            const isCityWide = !!comerciante.coberturaTodaLaCiudad
 
             const isDirectZone = 
                 zone === 'bogota' || 
+                isCityWide ||
+                zonasCobertura.includes(zone) ||
                 address.includes(zoneKeyword) || 
                 ubication.includes(zoneKeyword) || 
                 description.includes(zoneKeyword)
@@ -119,11 +123,20 @@ async function data(pageContext: PageContextServer) {
             }
         }
 
-        // Sort destacado profiles first in both arrays
+        // Sort: destacado > available now > trustScore (descending)
         const tierSort = (a: any, b: any) => {
             const aDestacado = a.profileTier === 'destacado' ? 0 : 1
             const bDestacado = b.profileTier === 'destacado' ? 0 : 1
-            return aDestacado - bDestacado
+            if (aDestacado !== bDestacado) return aDestacado - bDestacado
+            
+            const aAvailable = a.isAvailableNow ? 0 : 1
+            const bAvailable = b.isAvailableNow ? 0 : 1
+            if (aAvailable !== bAvailable) return aAvailable - bAvailable
+
+            // Phase 3: Trust score tiebreaker (higher score = earlier position)
+            const aTrust = typeof a.trustScore === 'number' ? a.trustScore : 0
+            const bTrust = typeof b.trustScore === 'number' ? b.trustScore : 0
+            return bTrust - aTrust
         }
         directMatches.sort(tierSort)
         otherMatches.sort(tierSort)

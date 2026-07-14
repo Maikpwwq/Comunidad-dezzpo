@@ -14,6 +14,8 @@ import { chatHandler } from '../server/api/chat.ts'
 import { paymentSignatureHandler } from '../server/api/payment/signature.ts'
 import { paymentConfirmationHandler } from '../server/api/payment/confirmation.ts'
 import { emailNotificationHandler } from '../server/api/notifications/email.ts'
+import { fanoutNotificationHandler } from '../server/api/notifications/fanout.ts'
+import { trustScoreHandler } from '../server/api/trust-score.ts'
 
 const app = new Hono()
 
@@ -91,6 +93,26 @@ app.post('/api/v1/notifications/email', async (c) => {
     const message = err instanceof Error ? err.message : String(err)
     console.error('[/api/v1/notifications/email] Route error:', message)
     return c.json({ error: message || 'Email notification failed' }, 500)
+  }
+})
+
+app.post('/api/v1/notifications/fanout', async (c) => {
+  try {
+    return await fanoutNotificationHandler(c)
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[/api/v1/notifications/fanout] Route error:', message)
+    return c.json({ error: message || 'Fanout notification failed' }, 500)
+  }
+})
+
+app.post('/api/v1/cron/trust-score', async (c) => {
+  try {
+    return await trustScoreHandler(c)
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[/api/v1/cron/trust-score] Route error:', message)
+    return c.json({ error: message || 'Trust score cron failed' }, 500)
   }
 })
 

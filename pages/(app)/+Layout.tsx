@@ -15,6 +15,7 @@ import { useUserStore } from '@stores/userStore'
 // Providers
 import { SendbirdProviderWrapper } from '@providers'
 import ChatWidget from '@features/chat/ChatWidget'
+import { useFCMToken } from '@hooks/useFCMToken'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -40,6 +41,9 @@ export function Layout({ children }: LayoutProps): React.ReactElement {
   const isAuth = useUserStore((state) => state.isAuth)
   const mobileOpen = useUserStore((state) => state.mobileOpen)
   const updateMobileMenu = useUserStore((state) => state.updateMobileMenu)
+
+  // Register FCM push notifications for Comerciantes
+  useFCMToken()
 
   const [sidebarOpen, setSidebarOpen] = useState(true)
 

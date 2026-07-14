@@ -12,5 +12,11 @@
     "api/index.ts": {
       "includeFiles": "dist/server/**"
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/v1/cron/trust-score",
+      "schedule": "0 3 * * *"
+    }
+  ]
 }

@@ -6,7 +6,7 @@ test.describe('Search Bar Flow - Homepage', () => {
     await page.goto('/');
 
     // QuickMatch input
-    const searchInput = page.getByPlaceholderText(/Ej: plomero, electricista/i);
+    const searchInput = page.getByPlaceholder(/Ej: plomero, electricista/i);
     await expect(searchInput).toBeVisible();
 
     // Type a service query
@@ -32,7 +32,7 @@ test.describe('Search Bar Flow - Homepage', () => {
   test('Fallback search navigates to /nuevo-proyecto when no exact match is clicked', async ({ page }) => {
     await page.goto('/');
 
-    const searchInput = page.getByPlaceholderText(/Ej: plomero, electricista/i);
+    const searchInput = page.getByPlaceholder(/Ej: plomero, electricista/i);
     await searchInput.fill('ServicioDesconocidoE2E');
 
     // Press enter to trigger fallback behavior

@@ -74,22 +74,66 @@ export default function Page() {
     const emailDisplay = getPrimaryEmail(emails) || userMail || '—'
     const phoneDisplay = getPrimaryPhone(phones) || userPhone || '—'
 
-    // JSON-LD Structured Data
+    // JSON-LD Structured Data (Phase 3: Enhanced with ImageGallery + Trust)
+    const zonasCobertura = comerciante.userZonasCobertura || []
+    const trustScore = typeof comerciante.trustScore === 'number' ? comerciante.trustScore : null
+
+    const localBusiness: Record<string, unknown> = {
+        '@type': 'LocalBusiness',
+        'name': userRazonSocial || userName,
+        'description': userDescription,
+        'image': userPhotoUrl,
+        'address': {
+            '@type': 'PostalAddress',
+            'addressLocality': userDirection || 'Bogotá',
+            'addressCountry': 'CO'
+        },
+        'telephone': phoneDisplay,
+    }
+
+    // Inject aggregateRating from trustScore when available
+    if (trustScore !== null && trustScore > 0) {
+        const ratingValue = Math.round((trustScore / 20) * 10) / 10 // Map 0-100 → 0-5
+        localBusiness['aggregateRating'] = {
+            '@type': 'AggregateRating',
+            'ratingValue': Math.max(1, Math.min(5, ratingValue)),
+            'bestRating': 5,
+            'worstRating': 1,
+            'ratingCount': 1
+        }
+    }
+
+    // Inject areaServed from coverage zones
+    if (zonasCobertura.length > 0) {
+        localBusiness['areaServed'] = zonasCobertura.map((z: string) => ({
+            '@type': 'City',
+            'name': z.replace('bogota-', '').replace(/-/g, ' ')
+        }))
+    }
+
+    const schemaGraph: Record<string, unknown>[] = [
+        {
+            '@type': 'ProfilePage',
+            'mainEntity': localBusiness
+        }
+    ]
+
+    // ImageGallery JSON-LD for portfolio
+    if (userGalleryUrl.length > 0) {
+        schemaGraph.push({
+            '@type': 'ImageGallery',
+            'name': `Portafolio de ${userRazonSocial || userName}`,
+            'image': userGalleryUrl.map((url: string, i: number) => ({
+                '@type': 'ImageObject',
+                'url': url,
+                'name': `Trabajo ${i + 1} de ${userName}`
+            }))
+        })
+    }
+
     const schemaJson = {
         '@context': 'https://schema.org',
-        '@type': 'ProfilePage',
-        'mainEntity': {
-            '@type': 'LocalBusiness',
-            'name': userRazonSocial || userName,
-            'description': userDescription,
-            'image': userPhotoUrl,
-            'address': {
-                '@type': 'PostalAddress',
-                'addressLocality': userDirection || 'Bogotá',
-                'addressCountry': 'CO'
-            },
-            'telephone': phoneDisplay
-        }
+        '@graph': schemaGraph
     }
 
     return (

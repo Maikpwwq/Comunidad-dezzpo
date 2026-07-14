@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import NuevoProyectoPage from '#R/(marketing)/nuevo-proyecto/+Page';
 import { navigate } from 'vike/client/router';
@@ -120,8 +120,8 @@ describe('New Project Flow - /nuevo-proyecto', () => {
     
     // Verify Firestore call
     expect(setDoc).toHaveBeenCalledTimes(1);
-    const mockRef = vi.mocked(setDoc).mock.calls[0][0];
-    const payload = vi.mocked(setDoc).mock.calls[0][1];
+    const mockRef = vi.mocked(setDoc).mock.calls[0]![0];
+    const payload = vi.mocked(setDoc).mock.calls[0]![1];
     
     expect(mockRef).toBe('mock-doc-ref');
     expect(payload).toMatchObject({

@@ -21,7 +21,10 @@ import {
     Tab,
     Box,
     Button,
+    Tooltip,
 } from '@mui/material'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import { navigate } from 'vike/client/router'
 
 // Stores
@@ -236,13 +239,14 @@ export default function Page() {
                                             <TableCell>Requerimiento</TableCell>
                                             <TableCell>Monto</TableCell>
                                             <TableCell>Estado</TableCell>
+                                            <TableCell>Leído</TableCell>
                                             <TableCell>Descripción</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {quotations.length === 0 ? (
                                             <TableRow>
-                                                <TableCell colSpan={4} align="center">
+                                                <TableCell colSpan={5} align="center">
                                                     <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
                                                         No has enviado cotizaciones.
                                                     </Typography>
@@ -257,6 +261,17 @@ export default function Page() {
                                                     </TableCell>
                                                     <TableCell>
                                                         <StatusChip status={q.quotationStatus || 'pending'} />
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {q.viewedAt ? (
+                                                            <Tooltip title={`Visto el ${new Date(q.viewedAt).toLocaleDateString()}`}>
+                                                                <CheckCircleOutlineIcon color="success" fontSize="small" />
+                                                            </Tooltip>
+                                                        ) : (
+                                                            <Tooltip title="No visto">
+                                                                <RemoveCircleOutlineIcon color="disabled" fontSize="small" />
+                                                            </Tooltip>
+                                                        )}
                                                     </TableCell>
                                                     <TableCell sx={{ maxWidth: 300 }}>
                                                         <Typography variant="body2" noWrap>
