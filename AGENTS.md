@@ -293,12 +293,12 @@ pending_payment → active → completed → disputed
 - **Custom Vercel Adapter**: `scripts/patch-vercel-entry.mjs` patches the Vike-compiled `dist/server/entry.mjs` after build. It generates a zero-dependency Node→Web Standard adapter that translates Vercel's `(req, res)` into a Web `Request`, calls `server.fetch()`, and streams the `Response` back. **Do NOT use `hono/vercel` `handle()`** — it assumes Edge runtime and crashes on Node.js with `headers.get is not a function`.
 - **Build pipeline**: `pnpm build` runs `vike build && node scripts/patch-vercel-entry.mjs`.
 - **Static assets**: `vercel.json` sets `"outputDirectory": "dist/client"` so CSS/JS/images are served from Vercel's CDN. The catch-all rewrite `/(.*) → /api` only handles dynamic SSR routes.
-- **Serverless entry**: `api/index.ts` re-exports `dist/server/entry.mjs` (the patched file).
+- **Serverless entry**: `api/index.mjs` re-exports `dist/server/entry.mjs` (the patched file). **Must be `.mjs`** — see TS7 lesson below.
 - **Constraints**:
   - **Server entry**: `pages/+server.ts` — export `{ fetch: app.fetch, prod?: { port, onReady } }` per [Vike +server](https://vike.dev/server).
   - **API routes MUST be registered BEFORE `vike(app)`** so the Vike catch-all does not swallow them.
   - **URL normalization middleware** in `+server.ts` converts relative URLs to absolute as a safety net.
-  - **Forbidden approaches**: Do NOT import raw TS source in `api/index.ts`, do NOT use `hono/vercel` `handle()`, do NOT use `vite-plugin-vercel` `vercel()` plugin for output generation.
+  - **Forbidden approaches**: Do NOT use `api/index.ts` (see TS7 lesson), do NOT use `hono/vercel` `handle()`, do NOT use `vite-plugin-vercel` `vercel()` plugin for output generation.
 - **Full reference**: [docs/server-stack-vike.md](docs/server-stack-vike.md).
 
 ### MUI v6 + Emotion SSR (2026-05)
@@ -310,11 +310,16 @@ pending_payment → active → completed → disputed
 - **MUI v9**: Out of scope for drive-by bumps; requires a planned migration (Grid v2, `sx`-only system props, icons/slots, Data Grid v9).
 - **Artifact**: Deep-dive and step-6 checklist — [docs/mui-emotion-ssr-vike.md](docs/mui-emotion-ssr-vike.md).
 
-### React 19 & TypeScript 6.0 Compiler Modernization (2026-05)
-- **Stack**: React 19, TypeScript 6.x.
-- **TSConfig Path Mappings**: Modern TypeScript 6.0 deprecates `"baseUrl"`. To eliminate compiler warnings and IDE errors, **never** specify `"baseUrl": "."` or `"ignoreDeprecations": "5.0"`. Instead, use **relative targets** (prefixing with `./`) for all path mapping arrays (e.g. `"@/*": ["./src/*"]`).
+### React 19 & TypeScript 7.x Compiler Modernization (2026-07)
+- **Stack**: React 19, TypeScript 7.x.
+- **TSConfig Path Mappings**: Modern TypeScript deprecates `"baseUrl"`. To eliminate compiler warnings and IDE errors, **never** specify `"baseUrl": "."` or `"ignoreDeprecations": "5.0"`. Instead, use **relative targets** (prefixing with `./`) for all path mapping arrays (e.g. `"@/*": ["./src/*"]`).
 - **Ref Prop**: Do **not** use legacy `forwardRef` or `displayName` wrappers in components. Declare `ref` directly as a standard React component prop as supported natively in React 19.
 - **useMemo Elimination**: Do **not** use `useMemo` for simple property derivations or cheap calculations (e.g., extracting values from objects, or filtering lists of a few dozen entries). React 19's virtual DOM diffing is highly performant, and string primitive dependencies in hooks are compared by value anyway. Removing unnecessary `useMemo` hooks reduces dependency tracking and hook memory overhead.
+
+### @vercel/node + TypeScript 7 Incompatibility (2026-07-14)
+- **Problem**: `@vercel/node` uses an internal TypeScript compiler host to transpile `.ts` serverless entry points. When it detects a local TS 7.x installation, it tries to use it, but TS 7 changed internal `readFile` APIs that `@vercel/node` depends on. This causes `Error: Cannot read properties of undefined (reading 'readFile')` during the serverless function build step — **after** the Vite/Vike build succeeds.
+- **Fix**: Rename `api/index.ts` → `api/index.mjs`. The `.mjs` extension tells `@vercel/node` to treat it as plain ESM — no TypeScript compilation needed. The file is just a 1-line re-export of the already-built `dist/server/entry.mjs`.
+- **NEVER revert to `api/index.ts`** while on TypeScript 7.x, unless `@vercel/node` releases a fix.
 
 ## 10. Testing Architecture (Vitest & Playwright)
 - **Pyramid Structure**: The project implements a strict 3-layer testing pyramid (`tests/unit`, `tests/integration`, `tests/e2e`). Do not collapse layers or bypass mock boundaries in unit/integration layers.
