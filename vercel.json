@@ -10,8 +10,7 @@
   ],
   "functions": {
     "api/index.ts": {
-      "includeFiles": "dist/**",
-      "excludeFiles": "node_modules/.pnpm/{@mui+*,@sendbird+*,recharts@*,typescript@*,postcss@*,lightningcss@*,rolldown@*,sass@*,prettier@*}/**"
+      "includeFiles": "dist/server/**"
     }
   }
 }
