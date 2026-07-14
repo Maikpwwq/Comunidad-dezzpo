@@ -36,6 +36,8 @@ if (isProd) {
     'react-icomoon',
     // Firebase & utilities
     'firebase',
+    'jwks-rsa',
+    'jose',
     'uuid',
     '@googlemaps/js-api-loader',
     // State management
