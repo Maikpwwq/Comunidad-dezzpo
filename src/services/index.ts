@@ -47,3 +47,5 @@ export * from './membershipAndCertService'
 export * from './referralService'
 // Inmuebles services
 export * from './inmuebles'
+// Notification services
+export * from './notificationService'

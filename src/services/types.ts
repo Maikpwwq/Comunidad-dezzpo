@@ -389,4 +389,35 @@ export interface ReferralRedemption extends DocumentData {
     usedAt?: string
 }
 
+// =============================================================================
+// Notification Types
+// =============================================================================
+
+export type NotificationType =
+    | 'system_announcement'
+    | 'pending_action'
+    | 'profile_favorite'
+    | 'profile_comment'
+    | 'quote_received'
+    | 'contract_update'
+    | 'referral_earned'
+
+export interface NotificationDocument extends DocumentData {
+    notificationId?: string
+    recipientId: string // UID or 'ALL' for broadcasts
+    recipientRole?: 1 | 2 // 1: Propietario, 2: Comerciante, undefined: Both
+    type: NotificationType
+    title: string
+    body: string
+    actionUrl?: string
+    isRead: boolean
+    createdAt: string
+    metadata?: {
+        actorId?: string
+        actorName?: string
+        actorPhotoUrl?: string
+        relatedEntityId?: string
+    }
+}
+
 
