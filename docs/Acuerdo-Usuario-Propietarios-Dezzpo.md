@@ -2,13 +2,13 @@
 
 **Comunidad Dezzpo**
 
-*Última actualización: [fecha de publicación] — Reemplaza la versión del 4 de mayo de 2019*
+_Actualizado V1.1: 21 de Julio del 2026_
 
 ---
 
 ## 1. Aceptación del Acuerdo
 
-Gracias por utilizar Dezzpo. Este Acuerdo regula el uso de la plataforma digital Dezzpo (el "Servicio"), disponible a través de nuestro sitio web, la aplicación móvil Dezzpo y nuestros canales oficiales (en conjunto, las "Aplicaciones"), operada por **[Razón Social / NIT — ver nota final sobre figura legal]** (en adelante, "Dezzpo", "nosotros" o "la Plataforma").
+Gracias por utilizar Dezzpo. Este Acuerdo regula el uso de la plataforma digital Dezzpo (el "Servicio"), disponible a través de nuestro sitio web, la aplicación móvil Dezzpo y nuestros canales oficiales (en conjunto, las "Aplicaciones"), operada por **Michael Arias Fajardo / NIT 1024537835-7** (en adelante, "Dezzpo", "nosotros" o "la Plataforma").
 
 Al registrarse, publicar un Requerimiento, o continuar usando cualquier parte del Servicio, usted (el "Propietario") declara haber leído y acepta este Acuerdo, así como nuestra Política de Privacidad y Aviso de Tratamiento de Datos Personales.
 
@@ -16,14 +16,14 @@ El Servicio está dirigido a usuarios ubicados en Colombia y se rige por la legi
 
 ## 2. Definiciones
 
-| Término | Significado |
-|---|---|
+| Término                    | Significado                                                                                                                                     |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Comerciante Calificado** | Persona natural o jurídica, examinada por Dezzpo, que ofrece servicios de construcción, remodelación o mantenimiento a través de la Plataforma. |
-| **Propietario** | Usuario que publica Requerimientos, solicita Cotizaciones y contrata Comerciantes Calificados. |
-| **Requerimiento** | Publicación de un Propietario describiendo un proyecto o necesidad de servicio. |
-| **Cotización** | Oferta económica de un Comerciante Calificado en respuesta a un Requerimiento. |
-| **Inmueble** | Dirección de propiedad registrada por el Propietario en el módulo "Mis Inmuebles". |
-| **Destacado** | Distintivo de perfil que un Comerciante Calificado obtiene al aprobar el proceso de certificación de Dezzpo. |
+| **Propietario**            | Usuario que publica Requerimientos, solicita Cotizaciones y contrata Comerciantes Calificados.                                                  |
+| **Requerimiento**          | Publicación de un Propietario describiendo un proyecto o necesidad de servicio.                                                                 |
+| **Cotización**             | Oferta económica de un Comerciante Calificado en respuesta a un Requerimiento.                                                                  |
+| **Inmueble**               | Dirección de propiedad registrada por el Propietario en el módulo "Mis Inmuebles".                                                              |
+| **Destacado**              | Distintivo de perfil que un Comerciante Calificado obtiene al aprobar el proceso de certificación de Dezzpo.                                    |
 
 ## 3. Naturaleza del Servicio
 
@@ -98,7 +98,7 @@ Este derecho de retracto aplica a los pagos que usted realiza directamente a Dez
 
 ## 11. Resolución de Disputas con Comerciantes
 
-Si tiene una disputa con un Comerciante Calificado, debe dirigirla directamente a él. Le pedimos que también nos informe los detalles tan pronto como sea razonable, a través de [canal de soporte].
+Si tiene una disputa con un Comerciante Calificado, debe dirigirla directamente a él. Le pedimos que también nos informe los detalles tan pronto como sea razonable, a través de correo electronico [EMAIL_ADDRESS]
 
 Podemos investigar cualquier reclamación y, según el resultado, permitir que ambas partes continúen usando el Servicio, suspender temporalmente el acceso de cualquiera de ellas, o restringirlo de forma indefinida. Salvo lo aquí indicado, Dezzpo no interviene en la relación contractual entre usted y el Comerciante Calificado y no será responsable por las obligaciones derivadas de dicha relación.
 
@@ -142,17 +142,6 @@ Este Acuerdo se rige por las leyes de la República de Colombia. Cualquier contr
 
 ## 20. Contacto
 
-Para preguntas sobre este Acuerdo, escríbanos a [correo de contacto] o a través del formulario de contacto en la Plataforma.
+Para preguntas sobre este Acuerdo, escríbanos a [EMAIL_ADDRESS] o a través del formulario de contacto en la Plataforma.
 
 ---
-
-## Notas para el equipo — pendientes antes de publicar
-
-*Esta sección es solo para uso interno; no debe incluirse en la versión publicada.*
-
-1. **Figura legal:** este documento asume una entidad contratante ("Dezzpo"). Mientras no exista una sociedad constituida, quien realmente asume la responsabilidad contractual frente a los usuarios es la persona natural que opera la cuenta de ePayco. Esto es prioritario resolver antes de escalar el volumen de transacciones — no es solo un detalle de redacción.
-2. Completar [Razón Social / NIT], correos de contacto, y el correo específico para solicitudes de datos personales (Sección 10.4).
-3. Confirmar el rango exacto de comisión vigente (7.2) y si debe fijarse un número único en vez de un rango.
-4. Verificar con la Política de Privacidad existente que las Secciones 10.3 y 10.4 no dupliquen ni contradigan su contenido — si ya existe, esta sección debería referenciarla en vez de repetirla.
-5. Esta versión elimina el "Programa de Crédito Líder" y la "publicación destacada de proyectos por 3 días" del documento anterior, porque no encontré evidencia de que existan en el producto actual. Si sí existen, deben reincorporarse con su mecánica real.
-6. Revisión final recomendada por un abogado colombiano con experiencia en comercio electrónico, protección de datos y, dado que hay comisión sobre pagos de terceros, medios de pago/regulación financiera.
