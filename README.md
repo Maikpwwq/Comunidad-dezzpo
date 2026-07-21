@@ -128,11 +128,12 @@ comunidad-dezzpo/
 │   ├── admin/                                # Admin Control Tower
 │   │   ├── +Layout.tsx                       # Admin guard + sidebar
 │   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts + Monetization
-│   │   ├── usuarios/+Page.tsx                # MUI DataGrid + drawer
+│   │   ├── usuarios/+Page.tsx                # MUI DataGrid + live classification editor
 │   │   ├── verificacion/+Page.tsx            # Identity verification queue
 │   │   ├── certificaciones/+Page.tsx         # Certification requests queue
 │   │   ├── referidos/+Page.tsx               # Referral program audit & metrics
 │   │   ├── notificaciones/+Page.tsx           # Mass broadcast workbench
+│   │   ├── blog/+Page.tsx                    # Blog & Content management workbench
 │   │   ├── contratos/                        # Contract management
 │   │   └── requerimientos/                   # Requirements overview
 │   │

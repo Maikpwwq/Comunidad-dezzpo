@@ -14,6 +14,7 @@ export {
     getFunnelMetrics,
     getGeographicDensity,
     getPlatformRevenueStats,
+    updateUserClassification,
 } from './adminService'
 
 export type {
