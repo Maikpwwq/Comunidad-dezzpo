@@ -68,7 +68,7 @@
     "date-fns": "^4.4.0",
     "dotenv": "^17.4.2",
     "firebase": "^12.16.0",
-    "firebase-admin": "^14.2.0",
+    "firebase-admin": "^13.0.0",
     "hono": "^4.12.31",
     "html2pdf.js": "^0.14.0",
     "prop-types": "^15.8.1",
