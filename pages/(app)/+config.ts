@@ -9,5 +9,8 @@ import type { Config } from 'vike/types'
 export default {
   // No pre-rendering - content is user-specific
   prerender: false,
+  // CSR / SPA behavior — disable SSR to prevent crashes from client-only
+  // APIs (Zustand localStorage, Sendbird SDK, FCM push) during Vercel SSR.
+  ssr: false,
   filesystemRoutingRoot: '/app',
 } satisfies Config
