@@ -55,9 +55,9 @@ export async function createNotification(
 export async function broadcastNotification(data: {
     title: string
     body: string
-    actionUrl?: string
-    recipientRole?: 1 | 2
-    type?: NotificationType
+    actionUrl?: string | undefined
+    recipientRole?: 1 | 2 | undefined
+    type?: NotificationType | undefined
 }): Promise<string | null> {
     return createNotification({
         recipientId: 'ALL',
