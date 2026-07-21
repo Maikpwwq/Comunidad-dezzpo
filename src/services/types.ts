@@ -310,6 +310,29 @@ export interface AsesoriaData {
 }
 
 // =============================================================================
+// Blog Types
+// =============================================================================
+
+export interface BlogPost {
+    id?: string
+    slug: string
+    title: string
+    excerpt: string
+    content: string
+    coverImage: string
+    category: 'Propietarios' | 'Comerciantes' | 'Casos de Éxito' | 'Noticias'
+    targetAudience: 'propietario' | 'comerciante' | 'general'
+    authorName: string
+    authorRole: string
+    authorAvatar?: string
+    readTimeMinutes: number
+    publishedAt: string
+    status: 'published' | 'draft'
+    featured?: boolean
+    viewsCount?: number
+}
+
+// =============================================================================
 // Contract Types
 // =============================================================================
 

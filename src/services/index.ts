@@ -49,3 +49,5 @@ export * from './referralService'
 export * from './inmuebles'
 // Notification services
 export * from './notificationService'
+// Blog services
+export * from './blogService'

@@ -455,10 +455,10 @@ export default function Page() {
                                         const respuestas = thread.asesoriaRespuestas || []
                                         const dateStr = thread.asesoriaCreatedAt
                                             ? new Date(thread.asesoriaCreatedAt).toLocaleDateString('es-CO', {
-                                                  day: '2-digit',
-                                                  month: 'short',
-                                                  year: 'numeric',
-                                              })
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: 'numeric',
+                                            })
                                             : ''
 
                                         return (
@@ -519,7 +519,7 @@ export default function Page() {
                                                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
                                                         <Tooltip title="Esta consulta fue útil">
                                                             <Button
-                                                                size="small"
+                                                                size="sm"
                                                                 startIcon={<ThumbUpIcon fontSize="small" />}
                                                                 onClick={() => handleLikeThread(threadId)}
                                                                 sx={{ color: '#38bdf8', textTransform: 'none' }}
@@ -573,11 +573,11 @@ export default function Page() {
                                                                             <Typography variant="caption" sx={{ color: '#64748b' }}>
                                                                                 {resp.date
                                                                                     ? new Date(resp.date).toLocaleDateString('es-CO', {
-                                                                                          day: '2-digit',
-                                                                                          month: 'short',
-                                                                                          hour: '2-digit',
-                                                                                          minute: '2-digit',
-                                                                                      })
+                                                                                        day: '2-digit',
+                                                                                        month: 'short',
+                                                                                        hour: '2-digit',
+                                                                                        minute: '2-digit',
+                                                                                    })
                                                                                     : ''}
                                                                             </Typography>
                                                                         </Box>
@@ -606,7 +606,7 @@ export default function Page() {
                                                             />
                                                             <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
                                                                 <Button
-                                                                    size="small"
+                                                                    size="sm"
                                                                     variant="text"
                                                                     onClick={() => {
                                                                         setActiveResponseId(null)
@@ -617,7 +617,7 @@ export default function Page() {
                                                                     Cancelar
                                                                 </Button>
                                                                 <Button
-                                                                    size="small"
+                                                                    size="sm"
                                                                     variant="contained"
                                                                     startIcon={<SendIcon />}
                                                                     disabled={!responseText.trim()}
@@ -631,7 +631,7 @@ export default function Page() {
                                                     ) : (
                                                         <Button
                                                             variant="outlined"
-                                                            size="small"
+                                                            size="sm"
                                                             startIcon={<SendIcon />}
                                                             onClick={() => setActiveResponseId(threadId)}
                                                             sx={{ color: '#38bdf8', borderColor: '#38bdf8', textTransform: 'none', fontWeight: 700 }}
