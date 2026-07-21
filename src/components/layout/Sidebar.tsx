@@ -48,6 +48,8 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import HomeWorkIcon from '@mui/icons-material/HomeWork'
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import ArticleIcon from '@mui/icons-material/Article'
 
 // Branding
 import LogoMenuComunidadDezzpo from '/assets/img/logo/IsoLogo-Dezzpo-Verde.png'
@@ -75,6 +77,8 @@ const ICON_MAP: Record<string, React.ReactNode> = {
     ReceiptLongIcon: <ReceiptLongIcon />,
     AdminPanelSettingsIcon: <AdminPanelSettingsIcon />,
     HomeWorkIcon: <HomeWorkIcon />,
+    AssignmentIcon: <AssignmentIcon />,
+    ArticleIcon: <ArticleIcon />,
 }
 
 /** Style tokens */

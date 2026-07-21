@@ -244,10 +244,10 @@ export default function Page() {
                         {filteredPosts.map((post) => {
                             const dateFormatted = post.publishedAt
                                 ? new Date(post.publishedAt).toLocaleDateString('es-CO', {
-                                      day: '2-digit',
-                                      month: 'short',
-                                      year: 'numeric',
-                                  })
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric',
+                                })
                                 : ''
 
                             return (

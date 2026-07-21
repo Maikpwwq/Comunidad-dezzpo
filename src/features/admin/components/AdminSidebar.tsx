@@ -19,6 +19,8 @@ import HowToRegIcon from '@mui/icons-material/HowToReg'
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import CardMembershipIcon from '@mui/icons-material/CardMembership'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import ArticleIcon from '@mui/icons-material/Article'
 
 import { ADMIN_SIDEBAR } from '@components/layout/navigation.config'
 import { navigate } from 'vike/client/router'
@@ -47,6 +49,8 @@ const ICON_MAP: Record<string, React.ReactElement> = {
     ReceiptLongIcon: <ReceiptLongIcon />,
     AssignmentIcon: <AssignmentIcon />,
     CardMembershipIcon: <CardMembershipIcon />,
+    NotificationsIcon: <NotificationsIcon />,
+    ArticleIcon: <ArticleIcon />,
 }
 
 

@@ -105,7 +105,7 @@ export const ADMIN_SIDEBAR: NavSectionConfig = {
         { id: 'admin-requerimientos', label: 'Requerimientos', route: '/admin/requerimientos', icon: 'AssignmentIcon' },
         { id: 'admin-referidos', label: 'Referidos', route: '/admin/referidos', icon: 'CardMembershipIcon' },
         { id: 'admin-notificaciones', label: 'Notificaciones', route: '/admin/notificaciones', icon: 'NotificationsIcon' },
-        { id: 'admin-blog', label: 'Blog & Inbound', route: '/admin/blog', icon: 'ArticleIcon' },
+        { id: 'admin-blog', label: 'Blog', route: '/admin/blog', icon: 'ArticleIcon' },
     ],
 }
 
