@@ -17,8 +17,24 @@ if (!match) {
 const chunkPath = match[1]
 console.log(`[patch-vercel-entry] Found server chunk: ${chunkPath}`)
 
+// Dynamically detect the export name from the chunk
+// Rolldown minifies it: export { _server_default as t }
+// The name ('t') can vary across build environments (local vs Vercel)
+const chunkFullPath = resolve('dist/server', chunkPath)
+const chunkContent = readFileSync(chunkFullPath, 'utf-8')
+const exportMatch = chunkContent.match(/export\s*\{\s*_server_default\s+as\s+(\w+)\s*\}/)
+
+if (!exportMatch) {
+  console.error('[patch-vercel-entry] ❌ Could not find _server_default export in chunk!')
+  console.error('[patch-vercel-entry] Chunk tail:', chunkContent.slice(-200))
+  process.exit(1)
+}
+
+const exportName = exportMatch[1]
+console.log(`[patch-vercel-entry] Detected server export name: ${exportName}`)
+
 // Write the patched entry.mjs that exports a custom, zero-dependency translation adapter
-const patchedContent = `import { t as server } from "${chunkPath}";
+const patchedContent = `import { ${exportName} as server } from "${chunkPath}";
 
 // Custom translation adapter from Node.js (req, res) to Web Standard Request/Response
 export default async function handler(req, res) {
@@ -81,4 +97,4 @@ export default async function handler(req, res) {
 `
 
 writeFileSync(entryPath, patchedContent, 'utf-8')
-console.log('[patch-vercel-entry] ✅ Patched entry.mjs with high-performance custom Node-to-Web adapter!')
+console.log(`[patch-vercel-entry] ✅ Patched entry.mjs (export: ${exportName})`)
