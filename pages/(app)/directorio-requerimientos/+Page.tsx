@@ -12,6 +12,8 @@ import { useUserStore } from '@stores/userStore'
 import { useAuth } from '@hooks/useAuth'
 import { getAllDrafts } from '@services/drafts/draftService'
 import { getUser } from '@services/users'
+import { usePageContext } from '@hooks/usePageContext'
+import { SearchBar } from '@components/layout'
 // Components
 import { DraftCard } from '@features/quotes'
 // Styles
@@ -23,6 +25,7 @@ import StarIcon from '@mui/icons-material/Star'
 
 import { PROPIETARIO_RANKINGS } from '@config/userClassification.config'
 import FilterListIcon from '@mui/icons-material/FilterList'
+import SearchIcon from '@mui/icons-material/Search'
 
 interface Draft {
     id?: string
@@ -40,6 +43,10 @@ interface Draft {
 }
 
 export default function Page() {
+    const pageContext = usePageContext()
+    const searchInput = pageContext.routeParams?.searchInput || pageContext.routeParams?.category
+    const spacedText = searchInput ? decodeURIComponent(String(searchInput)).replace(/\+/g, ' ') : ''
+
     const [draftsData, setDraftsData] = useState<Draft[]>([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [userCategories, setUserCategories] = useState<string[]>([])
@@ -98,15 +105,26 @@ export default function Page() {
         fetchUserCategories()
     }, [userId, isComerciante])
 
+    // Filter drafts by category search term (from SearchBar)
+    const filteredByCategory = draftsData.filter((draft) => {
+        if (!spacedText) return true
+        const term = spacedText.toLowerCase()
+        const cat = (draft.draftCategory || '').toLowerCase()
+        const name = (draft.draftName || '').toLowerCase()
+        const desc = (draft.draftDescription || '').toLowerCase()
+        return cat.includes(term) || name.includes(term) || desc.includes(term)
+    })
+
     // Filter drafts by Propietario Classification tier
-    const filteredByClassification = draftsData.filter((draft) => {
+    const filteredByClassification = filteredByCategory.filter((draft) => {
         if (selectedClassification === 'all') return true
         const clas = (
             draft.userClasification ||
             draft.draftPropietarioClassification ||
             ''
         ).toLowerCase()
-        const targetTier = PROPIETARIO_RANKINGS.clasificacion.tiers.find(
+        const tiers = PROPIETARIO_RANKINGS.clasificacion?.tiers || []
+        const targetTier = tiers.find(
             (t) => t.id === selectedClassification
         )
         if (!targetTier) return true
@@ -150,6 +168,26 @@ export default function Page() {
                         Aplica a un requerimiento
                     </Button>
                 </header>
+
+                <Box sx={{ my: 2 }}>
+                    <SearchBar
+                        targetRoutePrefix="/app/directorio-requerimientos"
+                        placeholder="Buscar requerimientos por categoría..."
+                    />
+                </Box>
+
+                {spacedText && (
+                    <Box sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="body2" fontWeight={600} color="text.secondary">
+                            Búsqueda por categoría:
+                        </Typography>
+                        <Chip
+                            label={spacedText}
+                            color="primary"
+                            onDelete={() => navigate('/app/directorio-requerimientos')}
+                        />
+                    </Box>
+                )}
 
                 <h3 className="type-section-title">
                     Buscar Requerimientos: Obtener o Aplicar con Cotizaciones

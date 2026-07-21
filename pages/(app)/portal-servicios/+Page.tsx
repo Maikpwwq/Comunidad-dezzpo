@@ -109,7 +109,8 @@ export default function Page() {
     // Filter merchant users by classification tier
     const filterUserList = (list: UserFirestoreDocument[]) => {
         if (selectedMerchantClassification === 'all') return list
-        const targetTier = COMERCIANTE_RANKINGS.clasificacion.tiers.find(
+        const tiers = COMERCIANTE_RANKINGS.clasificacion?.tiers || []
+        const targetTier = tiers.find(
             (t) => t.id === selectedMerchantClassification
         )
         if (!targetTier) return list
@@ -165,7 +166,7 @@ export default function Page() {
                                 variant={selectedMerchantClassification === 'all' ? 'filled' : 'outlined'}
                                 sx={{ fontWeight: 600 }}
                             />
-                            {COMERCIANTE_RANKINGS.clasificacion.tiers.map((tier) => (
+                            {(COMERCIANTE_RANKINGS.clasificacion?.tiers || []).map((tier) => (
                                 <Chip
                                     key={tier.id}
                                     label={tier.name}

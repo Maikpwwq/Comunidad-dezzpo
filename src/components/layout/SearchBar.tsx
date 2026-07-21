@@ -32,20 +32,32 @@ interface CategoryOption {
 
 export interface SearchBarProps {
     className?: string
+    targetRoutePrefix?: string
+    onCategorySelect?: (categoryLabel: string) => void
+    placeholder?: string
 }
 
-export function SearchBar({ className }: SearchBarProps): React.ReactElement {
+export function SearchBar({
+    className,
+    targetRoutePrefix = '/app/portal-servicios',
+    onCategorySelect,
+    placeholder = 'Buscar categoría...',
+}: SearchBarProps): React.ReactElement {
     const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null)
 
     const handleCategorySelect = useCallback(
         (_event: React.SyntheticEvent, value: CategoryOption | null) => {
             setSelectedCategory(value)
             if (value) {
-                const encoded = value.label.replace(/ /g, '+')
-                navigate(`/app/portal-servicios/${encoded}`)
+                if (onCategorySelect) {
+                    onCategorySelect(value.label)
+                } else {
+                    const encoded = value.label.replace(/ /g, '+')
+                    navigate(`${targetRoutePrefix}/${encoded}`)
+                }
             }
         },
-        []
+        [onCategorySelect, targetRoutePrefix]
     )
 
     return (
@@ -154,7 +166,7 @@ export function SearchBar({ className }: SearchBarProps): React.ReactElement {
                     <TextField
                         {...params}
                         InputLabelProps={params.InputLabelProps as any}
-                        placeholder="Buscar categoría..."
+                        placeholder={placeholder}
                         size="small"
                         InputProps={{
                             ...params.InputProps,
