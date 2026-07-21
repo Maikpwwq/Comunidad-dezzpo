@@ -296,6 +296,83 @@ El modelo de negocio de Comunidad Dezzpo permite a los comerciantes asegurar fin
 - **Legal:** https://comunidad-dezzpo.vercel.app/legal
 - **Ayuda / PQRS:** https://comunidad-dezzpo.vercel.app/ayuda-pqrs
 - **Blog:** https://comunidad-dezzpo.vercel.app/blog
+- **Clasificación de Usuarios:** https://comunidad-dezzpo.vercel.app/clasificacion-usuarios
+- **Asesorías Comunitarias:** https://comunidad-dezzpo.vercel.app/asesorias
+
+---
+
+## Blog de Comunidad Dezzpo
+
+El Blog de Comunidad Dezzpo (https://comunidad-dezzpo.vercel.app/blog) es un centro de contenido educativo y de inbound marketing que publica artículos segmentados por audiencia:
+
+- **Para Propietarios:** Guías sobre cómo publicar proyectos, comparar cotizaciones, elegir al profesional adecuado, y aprovechar al máximo la plataforma.
+- **Para Comerciantes Calificados:** Artículos sobre cómo optimizar tu perfil profesional, aumentar tu visibilidad, obtener la certificación Dezzpo, y gestionar cotizaciones eficientemente.
+- **General:** Novedades de la plataforma, tendencias del sector de mantenimiento residencial, y consejos de seguridad laboral.
+
+Los artículos se pueden filtrar por audiencia (Propietarios, Comerciantes, General) usando las pestañas en la parte superior del blog. Cada artículo incluye la fecha de publicación, autor, y llamados a la acción específicos según la audiencia del lector.
+
+---
+
+## Clasificación y Niveles de Usuarios
+
+Comunidad Dezzpo asigna clasificaciones y niveles a cada usuario según su tamaño de operación, experiencia en la plataforma y tipo de membresía. Los detalles de las clasificaciones se pueden consultar públicamente en https://comunidad-dezzpo.vercel.app/clasificacion-usuarios.
+
+### Para Comerciantes Calificados
+
+**Clasificación (Tipo de Operación):**
+- Persona Natural — Profesional independiente
+- Emergente — Equipo pequeño en crecimiento
+- PyME de Servicios — Pequeña/mediana empresa
+- Gacela — Empresa de rápido crecimiento
+- Tractora — Empresa consolidada
+- Escalable — Gran operación escalable
+
+**Categoría (Membresía):**
+- Hierro I, Hierro II, Hierro III — Niveles iniciales
+- Bronce, Plata, Oro, Platino — Niveles intermedios
+- Diamante, Black Diamond — Niveles premium
+
+**Gradación (Experiencia en la Plataforma):**
+- Aprendiz, Oficial, Maestro Constructor, Gran Maestro
+
+### Para Propietarios
+
+**Clasificación (Tipo de Inmueble):**
+- Hogar — Vivienda individual
+- Negocio — Local comercial
+- Propiedad Horizontal — Edificio o conjunto residencial
+- Inmobiliaria — Empresa inmobiliaria
+- Aliado — Socio estratégico
+
+**Categoría (Membresía):**
+- Básico, Plus, Premium, VIP, Black
+
+**Gradación (Experiencia en la Plataforma):**
+- Miembro Activo, Vecino Confiable, Referente Comunitario, Embajador Dezzpo
+
+Los filtros de clasificación están disponibles en el Portal de Servicios y en el Directorio de Requerimientos para facilitar el match entre usuarios.
+
+---
+
+## Asesorías Comunitarias
+
+La sección de Asesorías (https://comunidad-dezzpo.vercel.app/asesorias) es un foro comunitario donde los usuarios pueden publicar preguntas y recibir respuestas de la comunidad. Funciona como un sistema de preguntas y respuestas donde:
+
+- Cualquier usuario registrado puede crear un hilo de consulta
+- Otros usuarios pueden responder con comentarios
+- Las respuestas pueden recibir "likes" para destacar las más útiles
+- El historial de preguntas está disponible públicamente para consulta
+
+---
+
+## Programa de Referidos "Voz a Voz"
+
+Comunidad Dezzpo cuenta con un programa de referidos que recompensa a los usuarios que inviten a nuevos miembros:
+
+- **+50 puntos** cuando un nuevo usuario se registra usando tu código de referido
+- **+200 puntos** cuando el usuario referido completa su primer contrato
+
+Los puntos acumulados se pueden canjear por recompensas del catálogo desde el Dashboard de Referidos en `/app/invitar-amigos`. El código de referido se puede compartir por WhatsApp, Facebook o Email.
 
 ---
 
@@ -305,3 +382,4 @@ El modelo de negocio de Comunidad Dezzpo permite a los comerciantes asegurar fin
 - **Instagram:** @comunidaddezzpo
 - **Facebook:** Comunidad Dezzpo
 - **WhatsApp:** +57 320 484 2897
+

@@ -133,20 +133,29 @@ comunidad-dezzpo/
 │   ├── admin/                                # Admin Control Tower
 │   │   ├── +Layout.tsx                       # Admin guard + sidebar
 │   │   ├── AGENTS.md                         # Admin-specific constraints
-│   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts
-│   │   ├── usuarios/+Page.tsx                # MUI DataGrid + drawer
+│   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts + Monetization
+│   │   ├── usuarios/+Page.tsx                # MUI DataGrid + live classification editor
 │   │   ├── verificacion/+Page.tsx            # Identity verification queue
-│   │   └── referidos/+Page.tsx               # Referral audit & metrics
+│   │   ├── certificaciones/+Page.tsx         # Certification requests queue
+│   │   ├── referidos/+Page.tsx               # Referral audit & metrics
+│   │   ├── notificaciones/+Page.tsx          # Mass broadcast workbench
+│   │   └── blog/+Page.tsx                    # Blog & content management workbench
 │   │
 ├── src/
 │   ├── emotion/
 │   │   └── createEmotionCache.ts             # Emotion cache key + client singleton
 │   ├── components/                           # Atomic Design components
 │   ├── features/                             # Feature modules
+│   ├── config/                               # Centralized configuration
+│   │   ├── userClassification.config.ts      # User ranking tiers, badges, criteria
+│   │   ├── pricing.config.ts                 # Platform pricing constants
+│   │   └── referrals.config.ts               # Referral reward catalog & point rules
 │   ├── services/                             # Data layer
 │   │   ├── admin/                            # Admin-only service
-│   │   │   ├── adminService.ts               # Stats, users, verification queries
-│   │   │   └── index.ts
+│   │   │   ├── adminService.ts               # Stats, users, classification, verification
+│   │   │   └── index.ts                      # Barrel — all exports MUST be listed here
+│   │   ├── blog/                             # Blog CRUD, seeding, slug generation
+│   │   │   └── blogService.ts
 │   │   ├── firebase/
 │   │   └── users/
 │   ├── hooks/                                # Shared hooks
@@ -277,6 +286,29 @@ pending_payment → active → completed → disputed
 
 ## 9. Learned Lessons
 
+
+### Blog & Inbound Marketing System (2026-07-21)
+- **Service Layer**: `@services/blog/blogService.ts` handles full CRUD (create, read, update, delete), slug generation, audience tagging (`propietarios`/`comerciantes`/`general`), and view-count metrics.
+- **Admin Workbench**: `/admin/blog` provides a content management interface with rich-text editing, image upload, audience targeting, publish/draft toggle, and article metrics table.
+- **Public Blog Hub**: `/blog` renders audience-segmented tabs, hero articles, and card grid. `/blog/@slug` renders individual articles with breadcrumbs and targeted CTAs.
+- **Firestore Collection**: `blogPosts` — fields include `title`, `slug`, `content`, `audience`, `status`, `coverImage`, `author`, `viewCount`, `createdAt`, `updatedAt`.
+
+### User Classification, Ranking & Badges System (2026-07-21)
+- **Centralized Config**: `src/config/userClassification.config.ts` defines `COMERCIANTE_RANKINGS` and `PROPIETARIO_RANKINGS` with three axes each: `categoria` (membership tier), `clasificacion` (operational scale), and `gradacion` (experience grade).
+- **Firestore Fields**: `userCategorie`, `userClasification`, `userGrade` stored as strings in both `usersComerciantesCalificados` and `usersPropietariosResidentes`.
+- **Admin Editor**: `/admin/usuarios` modal includes live dropdown editors for all three classification fields per user.
+- **Public Matrix**: `/clasificacion-usuarios` marketing page with tabbed `<UserRankingTable />` component showing tier criteria.
+- **Badge Chips**: `UserCard.tsx` and `DraftCard.tsx` render colored classification chips via `getBadgeDetails()` helper.
+- **Filter Bars**: `/app/portal-servicios` filters merchants by `COMERCIANTE_RANKINGS.clasificacion` tiers. `/app/directorio-requerimientos` filters requirements by `PROPIETARIO_RANKINGS.clasificacion` tiers.
+
+### Category SearchBar & Parameterized Routes (2026-07-21)
+- **Reusable SearchBar**: `src/components/layout/SearchBar.tsx` accepts `targetRoutePrefix` (defaults to `/app/portal-servicios`), `placeholder`, and `onCategorySelect` props. Navigates to `/{targetRoutePrefix}/{encodedCategory}` on selection.
+- **Vike @searchInput Routes**: Both `/app/portal-servicios/@searchInput` and `/app/directorio-requerimientos/@searchInput` have `+config.ts` + `+Page.tsx` (re-exporting parent `+Page`) to enable SSR hydration, browser reload, and deep linking.
+- **Category Filtering**: Page components read `pageContext.routeParams?.searchInput`, decode it, and filter lists by matching against `draftCategory`, `draftName`, `draftDescription`, or user service categories. An active search chip with clear button is displayed.
+
+### Barrel Export Hygiene (2026-07-21)
+- **Problem**: Adding a new exported function to a service module (e.g., `adminService.ts`) without also adding it to the barrel `index.ts` causes `[MISSING_EXPORT]` build failures on Vercel, even when the dev server works fine (Vite resolves deep imports differently).
+- **Rule**: When adding any new `export` to a service module, **always** update the corresponding `index.ts` barrel file in the same commit. Run `pnpm build` locally to verify before pushing.
 
 ### Multi-Property Management ("Mis Inmuebles" - 2026-07-21)
 - **Role Scoping**: `/app/mis-inmuebles` is exclusive to **Propietario** accounts (`rol === 1`). It is gated both at the route component level and within `PROPIETARIO_SIDEBAR`.
