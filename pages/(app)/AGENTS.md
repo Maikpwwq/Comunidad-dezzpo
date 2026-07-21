@@ -187,3 +187,25 @@ The referral dashboard is a gamified center for "Voz a Voz" growth:
 - **Never hardcode point values** — always use `REFERRAL_POINT_RULES` from `@config/referrals.config`.
 - **Reward catalog** is a `readonly` array; UI components import it from config, not from the service.
 - Self-referral is blocked at the service layer.
+
+---
+
+## Multi-Property Management ("Mis Inmuebles" - `/app/mis-inmuebles`)
+
+The property management center allows **Propietario** accounts (`rol === 1`) to register and manage multiple serviced property addresses (houses, apartments, commercial buildings).
+
+### Features
+- **Property List**: View all registered properties with alias, street address, city, postal code, and optional city-zone locality chip.
+- **Preferred Property ("Preferida")**: Exactly one property can be marked as default. Setting a property as preferred atomically unsets all others using a Firestore `writeBatch`.
+- **Deletion Guard**: Prevents deleting the currently preferred property if other properties exist in the list. If it is the last property, deletion is allowed.
+- **Address Separation**: The owner's personal/contact address in `Ajustes > Ubicación` remains separate for correspondence.
+
+### Architecture
+- **Firestore Subcollection**: `usersPropietariosResidentes/{uid}/inmuebles/{inmuebleId}`.
+- **Service**: `@services/inmuebles` (`getInmuebles`, `createInmueble`, `updateInmueble`, `deleteInmueble`, `setPreferidaInmueble`).
+- **Feature UI**: `@features/inmuebles` (`InmueblesList`, `InmuebleCard`, `InmuebleFormModal`, `PropertySelector`).
+- **Navigation**: Rendered in `PROPIETARIO_SIDEBAR` (first-level `Inicio` section).
+
+### Integration Points
+- **`/nuevo-proyecto`**: Uses `<PropertySelector />` to select target property for requirement posting.
+- **`/app/suscripciones`**: VIP inspection modal uses `<PropertySelector />` to auto-fill inspection address details.

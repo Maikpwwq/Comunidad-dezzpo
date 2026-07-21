@@ -39,7 +39,8 @@ import DescriptionIcon from '@mui/icons-material/Description'
 
 import { useUserStore } from '@stores/userStore'
 import { PRICING } from '@config/pricing.config'
-import { createInspectionRequest } from '@services'
+import { createInspectionRequest } from '@services/membershipAndCertService'
+import { PropertySelector } from '@features/inmuebles'
 import { navigate } from 'vike/client/router'
 
 
@@ -399,13 +400,29 @@ export default function Page() {
                         
                         <Row className="g-3">
                             <Col xs={12}>
+                                {isAuth && userId ? (
+                                    <PropertySelector
+                                        propietarioId={userId}
+                                        label="Selecciona el inmueble a inspeccionar *"
+                                        onSelectInmueble={(inmueble) => {
+                                            if (inmueble) {
+                                                setAddress(inmueble.direccion)
+                                                setCity(inmueble.ciudad)
+                                                setPostalCode(inmueble.codigoPostal || '')
+                                            }
+                                        }}
+                                    />
+                                ) : null}
+                            </Col>
+                            <Col xs={12}>
                                 <TextField
                                     fullWidth
-                                    label="Dirección del Inmueble"
+                                    label="Dirección del Inmueble *"
                                     placeholder="Ej. Calle 123 # 45-67 Apto 101"
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
                                     required
+                                    size="small"
                                     InputProps={{
                                         startAdornment: <HomeIcon sx={{ color: 'action.active', mr: 1 }} />
                                     }}
@@ -414,10 +431,11 @@ export default function Page() {
                             <Col xs={6}>
                                 <TextField
                                     fullWidth
-                                    label="Ciudad"
+                                    label="Ciudad *"
                                     value={city}
                                     onChange={(e) => setCity(e.target.value)}
                                     required
+                                    size="small"
                                 />
                             </Col>
                             <Col xs={6}>
@@ -427,6 +445,7 @@ export default function Page() {
                                     placeholder="Ej. 110111"
                                     value={postalCode}
                                     onChange={(e) => setPostalCode(e.target.value)}
+                                    size="small"
                                 />
                             </Col>
                             <Col xs={12}>

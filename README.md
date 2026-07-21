@@ -119,6 +119,7 @@ comunidad-dezzpo/
 │   │   ├── requerimiento/                    # Requirements
 │   │   ├── asesorias/                        # Advisory Q&A
 │   │   ├── invitar-amigos/                   # Referral Program Dashboard (gamified)
+│   │   ├── mis-inmuebles/                    # Multi-property management (Propietarios)
 │   │   ├── cambiar-clave/                    # Password change
 │   │   └── configuracion-privacidad/         # Privacy settings
 │   │

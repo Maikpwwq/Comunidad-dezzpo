@@ -21,6 +21,7 @@ import {
 } from '@features/projects'
 // Features
 import { PasoAPaso, Ubicacion } from '@features/marketing'
+import { PropertySelector } from '@features/inmuebles'
 import PageRegistro from '../../(auth)/registro/+Page'
 import PageIngreso from '../../(auth)/ingreso/+Page'
 // Styles
@@ -465,35 +466,36 @@ export default function Page() {
 
                                 {/* Direction and Map */}
                                 <Form.Group className="mb-3" controlId="formNewProjectPostalCode">
-                                    <Form.Label className="type-body-sm fw-bold w-100">
-                                        ¿Dónde se requiere el servicio?
-                                        {userAddress && (
-                                            <div className="mt-2 mb-2">
-                                                <Form.Check 
-                                                    type="checkbox"
-                                                    id="use-registered-address"
-                                                    label={`Usar mi dirección guardada: ${userAddress}`}
-                                                    checked={draftInfo.draftDirection === userAddress}
-                                                    onChange={(e) => {
-                                                        setDraftInfo(prev => ({
-                                                            ...prev,
-                                                            draftDirection: e.target.checked ? userAddress : '',
-                                                        }))
-                                                    }}
-                                                />
-                                            </div>
-                                        )}
-                                        <Row className="w-100 m-0 flex justify-content-start align-items-center" style={{ flexWrap: 'wrap', gap: '8px' }}>
+                                    {currentUser?.isAuth && userId ? (
+                                        <PropertySelector
+                                            propietarioId={userId}
+                                            label="¿En cuál de tus inmuebles se requiere el servicio? *"
+                                            onSelectInmueble={(inmueble) => {
+                                                if (inmueble) {
+                                                    const fullAddress = `${inmueble.direccion}, ${inmueble.ciudad}`
+                                                    setDraftInfo(prev => ({
+                                                        ...prev,
+                                                        draftDirection: fullAddress,
+                                                        draftCity: inmueble.zona || inmueble.ciudad,
+                                                    }))
+                                                }
+                                            }}
+                                        />
+                                    ) : null}
+
+                                    <Form.Label className="type-body-sm fw-bold w-100 mt-2">
+                                        Confirmar dirección exacta del servicio *
+                                        <Row className="w-100 m-0 flex justify-content-start align-items-center" style={{ flexWrap: 'wrap', gap: '8px', marginTop: '6px' }}>
                                             <Form.Control
                                                 type="text"
-                                                placeholder="Registra la dirección exacta"
+                                                placeholder="Ej. Cl. 19a #12-2 Apto 301, Bogotá"
                                                 name="draftDirection"
                                                 value={draftInfo.draftDirection}
                                                 onChange={handleChange}
                                                 style={{ flex: 1, minWidth: '200px' }}
                                             />
                                             <Button className="type-body-sm fw-bold text-verde w-auto d-flex align-items-center gap-1" onClick={handleOpen} variant="link" style={{ textDecoration: 'none' }}>
-                                                <AddLocationIcon /> Seleccionar en el mapa
+                                                <AddLocationIcon /> Ajustar en el mapa
                                             </Button>
                                         </Row>
                                     </Form.Label>

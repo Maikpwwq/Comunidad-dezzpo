@@ -278,6 +278,14 @@ pending_payment → active → completed → disputed
 ## 9. Learned Lessons
 
 
+### Multi-Property Management ("Mis Inmuebles" - 2026-07-21)
+- **Role Scoping**: `/app/mis-inmuebles` is exclusive to **Propietario** accounts (`rol === 1`). It is gated both at the route component level and within `PROPIETARIO_SIDEBAR`.
+- **Address Separation**: The user's personal address in `Ajustes > Ubicación` (`userDirection`) is preserved as a personal contact/correspondence address. Serviced properties/buildings are stored in the subcollection `usersPropietariosResidentes/{uid}/inmuebles/{inmuebleId}`.
+- **Atomic Preferred Property**: Setting a property as preferred (`isPreferida = true`) uses a Firestore `writeBatch` in `@services/inmuebles` to flip all other properties to `isPreferida = false`.
+- **Deletion Guard**: A preferred property cannot be deleted if other properties exist in the user's list.
+- **Form Integration**: Requirements posting (`/nuevo-proyecto`) and VIP inspection requests (`/app/suscripciones`) use the reusable `<PropertySelector />` from `@features/inmuebles`.
+
+
 ### Centralized Geographic Configuration (2026-07-06)
 - **Centralization of Zones**: Migrated all zone listings (Bogotá localities + metropolitan municipalities) to `@assets/data/ListadoZonas.ts` to prevent duplication bugs and keep prerendering, sitemaps (`generate-sitemap.ts`), and marketing search forms (`QuickMatch.tsx`) perfectly aligned.
 - **Sitemap Script Path Aliases**: To run the sitemap generator script using `tsx` with path aliases, the `scripts/**/*.ts` pattern must be included in `tsconfig.json`'s `include` array. This ensures the TypeScript compiler compiles script files in the root workspace and correctly resolves aliases like `@assets/data/ListadoZonas` without IDE or compiler errors.

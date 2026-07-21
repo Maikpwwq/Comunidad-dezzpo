@@ -62,6 +62,7 @@ export const PROPIETARIO_SIDEBAR: NavSectionConfig[] = [
             { id: 'notificaciones', label: 'Notificaciones', route: '/app/notificaciones', icon: 'NotificationsIcon' },
             { id: 'suscripciones', label: 'Suscripciones', route: '/app/suscripciones', icon: 'LoyaltyIcon' },
             { id: 'contratos', label: 'Mis Contratos', route: '/app/historial-servicios', icon: 'ReceiptLongIcon' },
+            { id: 'inmuebles', label: 'Mis Inmuebles', route: '/app/mis-inmuebles', icon: 'HomeWorkIcon' },
             { id: 'biblioteca', label: 'Biblioteca', route: '/app/biblioteca', icon: 'CollectionsBookmarkIcon' },
             { id: 'invitar', label: 'Invitar a un Amigo', route: '/app/invitar-amigos', icon: 'CardMembershipIcon' },
             { id: 'ajustes', label: 'Ajustes', route: '/app/ajustes/:userId', icon: 'ManageAccountsIcon' },
