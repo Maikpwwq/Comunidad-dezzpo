@@ -5,6 +5,7 @@ import { CssBaseline } from '@mui/material'
 import { PageContextProvider } from '@hooks/usePageContext'
 import { UserAuthProvider } from '@providers/UserAuthProvider'
 import { theme } from '@config/theme'
+import { useReferralTracker } from '@hooks/useReferralTracker'
 import '@styles/global.scss'
 import '@styles/index.scss'
 
@@ -21,7 +22,10 @@ export default function PageShell({
   children: ReactNode
   pageContext: PageContext
 }) {
+  useReferralTracker()
+
   return (
+
     <PageContextProvider pageContext={pageContext}>
       <UserAuthProvider>
         <ThemeProvider theme={theme}>

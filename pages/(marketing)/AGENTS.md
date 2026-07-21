@@ -132,6 +132,17 @@ The public profiles (e.g. `/app/perfil/[id]`) are **Hybrid Routes**. They render
 
 ---
 
+## Referral URL Attribution (Global Tracker)
+
+Marketing pages are common entry points for referral links (e.g., `dezzpo.com/?ref=DEZZPO-A8K912`). The `useReferralTracker` hook, mounted globally in `pages/PageShell.tsx`, automatically captures the `?ref=CODE` parameter from any URL and stores it in `sessionStorage` (key: `dezzpo_ref_code`).
+
+- **No action required** in marketing components — tracking is handled globally.
+- The stored code is consumed during user registration in `userService.setUser()`.
+- Referral config (rewards, point rules) lives in `@config/referrals.config`.
+
+
+---
+
 ## Presupuestos → Nuevo Proyecto Flow
 
 The `/presupuestos` page is **informative** with a "Solicitar Servicios" form:

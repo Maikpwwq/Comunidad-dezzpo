@@ -102,8 +102,10 @@ export const ADMIN_SIDEBAR: NavSectionConfig = {
         { id: 'admin-certificaciones', label: 'Certificaciones', route: '/admin/certificaciones', icon: 'HowToRegIcon' },
         { id: 'admin-contratos', label: 'Contratos', route: '/admin/contratos', icon: 'ReceiptLongIcon' },
         { id: 'admin-requerimientos', label: 'Requerimientos', route: '/admin/requerimientos', icon: 'AssignmentIcon' },
+        { id: 'admin-referidos', label: 'Referidos', route: '/admin/referidos', icon: 'CardMembershipIcon' },
     ],
 }
+
 
 
 /** Single Admin portal link for the App Sidebar */

@@ -27,6 +27,7 @@
 | `/admin/dashboard` | KPI Dashboard | User counts, growth trends, revenue potential, contract health |
 | `/admin/usuarios` | User Management | DataGrid with search, role/status chips, side drawer detail |
 | `/admin/verificacion` | Identity Verification | Queue workbench, split-screen (user data ↔ document), approve/reject |
+| `/admin/referidos` | Referral Audit | Global referral metrics (KPIs, conversion rate), filterable audit table |
 
 ## 3. Data Service (`adminService.ts`)
 
@@ -37,6 +38,11 @@
 | `getAllUsers()` | `AdminUserRow[]` | All users from both collections |
 | `getPendingVerifications()` | `VerificationItem[]` | Users with `identityVerification.status == 'pending'` |
 | `updateVerificationStatus()` | `void` | Approve/reject with optional reason |
+
+### Referral Service (`referralService.ts` — admin queries)
+| Function | Returns | Purpose |
+|----------|---------|---------|
+| `getAllReferralsForAdmin()` | `ReferralRecord[]` | All referral records ordered by `createdAt` desc |
 
 ## 4. Dependencies (Admin-Only)
 
@@ -129,4 +135,5 @@ Admin pages are not yet covered by dedicated unit or integration tests. The foll
 | `adminService.getAdminStats()` | Unit | Medium — mock Firestore aggregation |
 | Admin Dashboard rendering | Integration | Medium — verify KPI cards with mocked stats |
 | Verification Queue approve/reject | Integration | High — verify status transitions |
+| Referral Audit `/admin/referidos` rendering | Integration | Medium — verify KPI cards and table with mocked `getAllReferralsForAdmin` |
 | `/admin/dashboard` E2E | E2E | Low — requires seeded admin user with claims |

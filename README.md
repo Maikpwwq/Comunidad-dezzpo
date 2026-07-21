@@ -53,6 +53,7 @@ The project uses a **Tiered Access Model**:
    - `/admin/verificacion` — Identity Verification Queue
    - `/admin/contratos` — Contract Management
    - `/admin/requerimientos` — Requirements Overview
+   - `/admin/referidos` — Referral Program Auditing & Metrics
 
 ## Project Structure
 
@@ -117,7 +118,7 @@ comunidad-dezzpo/
 │   │   ├── proyecto/                         # Projects
 │   │   ├── requerimiento/                    # Requirements
 │   │   ├── asesorias/                        # Advisory Q&A
-│   │   ├── invitar-amigos/                   # Referral
+│   │   ├── invitar-amigos/                   # Referral Program Dashboard (gamified)
 │   │   ├── cambiar-clave/                    # Password change
 │   │   └── configuracion-privacidad/         # Privacy settings
 │   │
@@ -126,6 +127,7 @@ comunidad-dezzpo/
 │   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts + Monetization
 │   │   ├── usuarios/+Page.tsx                # MUI DataGrid + drawer
 │   │   ├── verificacion/+Page.tsx            # Identity verification queue
+│   │   ├── referidos/+Page.tsx               # Referral program audit & metrics
 │   │   ├── contratos/                        # Contract management
 │   │   └── requerimientos/                   # Requirements overview
 │   │
@@ -172,6 +174,7 @@ comunidad-dezzpo/
 │   │   ├── search/                           # Search service
 │   │   ├── sendbird/                         # Channel orchestration
 │   │   ├── users/                            # User profiles
+│   │   ├── referralService.ts                # Referral code gen, attribution, points, rewards
 │   │   └── utils/                            # Service utilities
 │   │
 │   ├── hooks/                                # Shared Hooks
@@ -181,6 +184,7 @@ comunidad-dezzpo/
 │   │   ├── useGoogleMaps.ts                  # Google Maps integration
 │   │   ├── useLocalStorage.ts                # localStorage hook
 │   │   ├── useShareAction.ts                 # Share/copy action
+│   │   ├── useReferralTracker.ts             # Captures ?ref= URL params globally
 │   │   └── usePageContext.tsx                # Vike page context
 │   │
 │   ├── stores/                               # Zustand Stores
@@ -188,7 +192,7 @@ comunidad-dezzpo/
 │   │   └── chatStore.ts                      # ChatWidget open/close state
 │   │
 │   ├── emotion/                              # Emotion cache factory
-│   ├── config/                               # App configuration
+│   ├── config/                               # App configuration (pricing, referrals, theme)
 │   ├── providers/                            # React providers
 │   ├── styles/                               # Global SCSS styles
 │   ├── types/                                # Shared TypeScript types
@@ -216,6 +220,7 @@ comunidad-dezzpo/
 │   ├── setup.ts                              # Vitest global setup (RTL + Zustand mock factory)
 │   ├── unit/                                 # Layer 1: Isolated unit tests
 │   │   ├── stores/                           # Zustand store tests
+│   │   ├── services/                         # Service layer tests (payment, referral)
 │   │   └── features/                         # Component tests (SearchBar, NuevoProyecto)
 │   ├── integration/                          # Layer 2: Cross-boundary integration tests
 │   │   ├── auth/                             # Guard whitelist & redirect tests
@@ -415,6 +420,7 @@ All geographic zones are centralized in [`src/assets/data/ListadoZonas.ts`](./sr
 | **React 19 & TS 6.0** | ✅ Migrated | No `forwardRef`, no unnecessary `useMemo`, relative path targets |
 | **Contracts & Payments** | ✅ Implemented | ePayco integration, server-side signatures, contract lifecycle |
 | **RAG Chatbot** | ✅ Implemented | Gemini 2.5 Flash + Supabase pgvector, knowledge seeding |
+| **Referral Program** | ✅ Implemented | Code generation, sign-up attribution, points/rewards, admin audit |
 
 ## Service Standards
 

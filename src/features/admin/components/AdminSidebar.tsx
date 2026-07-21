@@ -18,6 +18,7 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
 import HowToRegIcon from '@mui/icons-material/HowToReg'
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
 import AssignmentIcon from '@mui/icons-material/Assignment'
+import CardMembershipIcon from '@mui/icons-material/CardMembership'
 
 import { ADMIN_SIDEBAR } from '@components/layout/navigation.config'
 import { navigate } from 'vike/client/router'
@@ -45,7 +46,9 @@ const ICON_MAP: Record<string, React.ReactElement> = {
     HowToRegIcon: <HowToRegIcon />,
     ReceiptLongIcon: <ReceiptLongIcon />,
     AssignmentIcon: <AssignmentIcon />,
+    CardMembershipIcon: <CardMembershipIcon />,
 }
+
 
 interface AdminSidebarProps {
     onCloseMobile?: () => void;

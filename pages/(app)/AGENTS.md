@@ -161,3 +161,29 @@ See [docs/testing-architecture.md](../../docs/testing-architecture.md) for full 
 - `tests/unit/stores/userStore.test.ts` — profile hydration, `updateUser()`, `isAuth` flag, contact CRUD.
 - `tests/unit/stores/chatStore.test.ts` — `toggleChat()`, `setOpen()`, `setCurrentPathname()`.
 
+### Service Tests
+- `tests/unit/services/referralService.test.ts` — code generation, sign-up attribution (+50 pts), self-referral prevention, reward redemption with insufficient points guard.
+
+---
+
+## Referral Program (`/app/invitar-amigos`)
+
+The referral dashboard is a gamified center for "Voz a Voz" growth:
+
+### Features
+- **Referral Code & Link**: Auto-generated unique code (`DEZZPO-XXXX`), one-click copy to clipboard.
+- **Social Sharing**: Direct buttons for WhatsApp, Facebook, and Email sharing.
+- **KPI Cards**: Total Invited, Active Referrals, Points Balance, Total Points Earned.
+- **Reward Catalog**: Redeem points for membership discounts, certification discounts, featured profile, or free inspections. Config is centralized in `@config/referrals.config`.
+- **Referral History Table**: Audit trail with status chips (Registered / Contract Completed) and points awarded.
+
+### Architecture
+- **Config**: `src/config/referrals.config.ts` — `REWARD_CATALOG` and `REFERRAL_POINT_RULES`.
+- **Service**: `src/services/referralService.ts` — `getOrCreateReferralCode()`, `getReferralSummary()`, `redeemReward()`.
+- **Tracker**: `src/hooks/useReferralTracker.ts` — captures `?ref=CODE` from URL into `sessionStorage`, mounted globally in `PageShell.tsx`.
+- **Attribution**: `userService.setUser()` reads the stored ref code on new registration and calls `trackReferralRegistration()`.
+
+### Constraints
+- **Never hardcode point values** — always use `REFERRAL_POINT_RULES` from `@config/referrals.config`.
+- **Reward catalog** is a `readonly` array; UI components import it from config, not from the service.
+- Self-referral is blocked at the service layer.

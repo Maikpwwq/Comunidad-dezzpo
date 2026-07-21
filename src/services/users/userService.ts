@@ -89,6 +89,9 @@ export async function updateUser({ userId, role, data }: UpdateUserParams): Prom
     }
 }
 
+import { getStoredReferralCode, clearStoredReferralCode } from '@hooks/useReferralTracker'
+import { trackReferralRegistration } from '../referralService'
+
 /**
  * Create or overwrite a user document
  */
@@ -102,11 +105,25 @@ export async function setUser({ userId, role, data }: UpdateUserParams): Promise
     try {
         const docRef = doc(userCol, userId)
         await setDoc(docRef, data, { merge: true })
+
+        // Check for pending referral attribution
+        const storedRefCode = getStoredReferralCode()
+        if (storedRefCode) {
+            trackReferralRegistration(
+                userId,
+                data.userName || data.userRazonSocial || 'Nuevo Usuario',
+                role,
+                storedRefCode
+            ).then((success) => {
+                if (success) clearStoredReferralCode()
+            }).catch(console.error)
+        }
     } catch (error) {
         console.error('Error setting user:', error)
         throw error
     }
 }
+
 
 /**
  * Get users by categories (for search)

@@ -135,7 +135,17 @@ export interface UserFirestoreDocument extends DocumentData {
     membershipStatus?: 'active' | 'inactive' | 'expired'
     membershipExpiresAt?: string
     earnedBadges?: Array<{ category: string; issuedAt: string; expiresAt?: string }>
+    /** Referral Program fields */
+    referralCode?: string
+    referredBy?: string | null
+    referralStats?: {
+        totalInvited: number
+        activeReferrals: number
+        pointsBalance: number
+        totalPointsEarned: number
+    }
 }
+
 
 // =============================================================================
 // Subscription & Certification Request Types
@@ -348,4 +358,35 @@ export interface PaymentMethodFirestoreDocument extends DocumentData {
 }
 
 export type SavePaymentMethodParams = Omit<PaymentMethodFirestoreDocument, 'id' | 'createdAt'>
+
+// =============================================================================
+// Referral Program Types
+// =============================================================================
+
+export interface ReferralRecord extends DocumentData {
+    referralId?: string
+    referrerId: string
+    referrerName: string
+    referredUserId: string
+    referredUserName: string
+    referredUserRole: number
+    refCodeUsed: string
+    status: 'pending' | 'completed' | 'rewarded'
+    pointsEarned: number
+    createdAt: string
+    completedAt?: string
+}
+
+export interface ReferralRedemption extends DocumentData {
+    redemptionId?: string
+    userId: string
+    rewardId: 'discount_membership' | 'discount_certification' | 'featured_month'
+    rewardName: string
+    pointsSpent: number
+    couponCode: string
+    status: 'active' | 'used' | 'expired'
+    createdAt: string
+    usedAt?: string
+}
+
 

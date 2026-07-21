@@ -27,6 +27,8 @@ tests/
 │   ├── stores/
 │   │   ├── chatStore.test.ts                         # ChatWidget open/close state
 │   │   └── userStore.test.ts                         # Auth state, profile, contacts
+│   ├── services/
+│   │   └── referralService.test.ts                   # Code generation, sign-up attribution, points, reward redemption
 │   └── features/
 │       ├── search/
 │       │   └── SearchBar.test.tsx                    # Autocomplete rendering, filtering, navigation
@@ -97,6 +99,7 @@ vi.mock('zustand', async (importOriginal) => {
 |-----------|---------------|
 | `chatStore.test.ts` | Initial state (`isOpen: false`), `toggleChat()`, `setOpen()`, `setCurrentPathname()` |
 | `userStore.test.ts` | Profile hydration, `updateUser()`, `isAuth` flag, contact array CRUD |
+| `referralService.test.ts` | Code generation (`DEZZPO-XXXX`), sign-up attribution (+50 pts), self-referral prevention, reward redemption logic |
 | `SearchBar.test.tsx` | Empty-state rendering, filtered option display, `navigate()` on selection, input clear, keyboard nav |
 | `NuevoProyecto.test.tsx` | Step rendering, required-field validation blockers, mocked `setDoc()` payload construction |
 

@@ -135,7 +135,8 @@ comunidad-dezzpo/
 │   │   ├── AGENTS.md                         # Admin-specific constraints
 │   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts
 │   │   ├── usuarios/+Page.tsx                # MUI DataGrid + drawer
-│   │   └── verificacion/+Page.tsx            # Identity verification queue
+│   │   ├── verificacion/+Page.tsx            # Identity verification queue
+│   │   └── referidos/+Page.tsx               # Referral audit & metrics
 │   │
 ├── src/
 │   ├── emotion/
@@ -150,7 +151,8 @@ comunidad-dezzpo/
 │   │   └── users/
 │   ├── hooks/                                # Shared hooks
 │   │   ├── useAuth.ts
-│   │   └── useAdminGuard.ts                  # Firebase custom claims check
+│   │   ├── useAdminGuard.ts                  # Firebase custom claims check
+│   │   └── useReferralTracker.ts             # Captures ?ref= URL params globally
 │   ├── stores/                               # Zustand stores
 │   └── styles/                               # Global styles
 │
@@ -245,7 +247,36 @@ pending_payment → active → completed → disputed
 - **Coverage**: Includes all 20 localities of Bogotá plus adjacent metropolitan municipalities (Soacha, Chía, Cajicá, Zipaquirá, Cota, Funza, Mosquera, Madrid, Facatativá, La Calera, Sopó).
 - **Sitemap & Search Integration**: Both `generate-sitemap.ts` and `QuickMatch.tsx` consume the centralized constants directly, keeping marketing pages, search forms, and search engine optimization index lists completely in sync.
 
+### Referral Program ("Voz a Voz") Constraints
+
+#### Architecture
+- **Centralized Config**: All reward catalog items and point constants live in `src/config/referrals.config.ts` (`REWARD_CATALOG`, `REFERRAL_POINT_RULES`). **Never** hardcode point values or reward definitions in components or services.
+- **Service**: `src/services/referralService.ts` handles all Firestore operations — code generation, sign-up attribution, points awarding, reward redemption, and admin queries. Consumers import functions from `@services/referralService` and config from `@config/referrals.config`.
+- **Tracker Hook**: `src/hooks/useReferralTracker.ts` detects `?ref=CODE` URL parameters and persists them to `sessionStorage` (key: `dezzpo_ref_code`). Mounted globally in `pages/PageShell.tsx`.
+- **Attribution**: `src/services/users/userService.ts` → `setUser()` reads the `sessionStorage` ref code on new user creation and calls `trackReferralRegistration()` to link the referral.
+
+#### Firestore Collections
+| Collection | Purpose |
+|-----------|---------|
+| `referrals` | Audit trail of referral relationships (referrer ↔ referred, points, status) |
+| `referralRedemptions` | Coupon codes generated from point redemptions |
+| `usersPropietariosResidentes` / `usersComerciantesCalificados` | Extended with `referralCode`, `referralStats`, `referredBy` fields |
+
+#### Point Rules (from `REFERRAL_POINT_RULES`)
+| Event | Points |
+|-------|--------|
+| New user registers via referral code | +50 pts to referrer |
+| Referred user completes first contract | +200 pts to referrer |
+
+#### Self-Referral Prevention
+- `trackReferralRegistration()` checks `referrerId === newUserId` and returns `false` if they match.
+
+#### UI Routes
+- **User Dashboard**: `/app/invitar-amigos` — gamified dashboard with code sharing (WhatsApp/Facebook/Email), KPIs, reward catalog, referral history table.
+- **Admin Audit**: `/admin/referidos` — global metrics (total invitations, conversion rate, points distributed) and filterable audit table.
+
 ## 9. Learned Lessons
+
 
 ### Centralized Geographic Configuration (2026-07-06)
 - **Centralization of Zones**: Migrated all zone listings (Bogotá localities + metropolitan municipalities) to `@assets/data/ListadoZonas.ts` to prevent duplication bugs and keep prerendering, sitemaps (`generate-sitemap.ts`), and marketing search forms (`QuickMatch.tsx`) perfectly aligned.
