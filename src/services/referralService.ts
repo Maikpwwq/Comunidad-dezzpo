@@ -15,6 +15,7 @@ import {
     addDoc,
     getDoc,
     getDocs,
+    setDoc,
     updateDoc,
     query,
     where,
@@ -34,20 +35,37 @@ const COMERCIANTES_COLLECTION = 'usersComerciantesCalificados'
  * Finds user document across both Propietario and Comerciante collections
  */
 async function findUserDoc(userId: string): Promise<{ ref: any; data: UserFirestoreDocument; collectionName: string } | null> {
-    if (!firestore) return null
+    if (!firestore || !userId) return null
 
-    // Try comerciantes first
-    const comRef = doc(firestore, COMERCIANTES_COLLECTION, userId)
-    const comSnap = await getDoc(comRef)
-    if (comSnap.exists()) {
-        return { ref: comRef, data: comSnap.data() as UserFirestoreDocument, collectionName: COMERCIANTES_COLLECTION }
-    }
+    try {
+        // Try comerciantes first
+        const comRef = doc(firestore, COMERCIANTES_COLLECTION, userId)
+        const comSnap = await getDoc(comRef)
+        if (comSnap.exists()) {
+            return { ref: comRef, data: comSnap.data() as UserFirestoreDocument, collectionName: COMERCIANTES_COLLECTION }
+        }
 
-    // Try propietarios
-    const propRef = doc(firestore, PROPIETARIOS_COLLECTION, userId)
-    const propSnap = await getDoc(propRef)
-    if (propSnap.exists()) {
-        return { ref: propRef, data: propSnap.data() as UserFirestoreDocument, collectionName: PROPIETARIOS_COLLECTION }
+        // Try propietarios
+        const propRef = doc(firestore, PROPIETARIOS_COLLECTION, userId)
+        const propSnap = await getDoc(propRef)
+        if (propSnap.exists()) {
+            return { ref: propRef, data: propSnap.data() as UserFirestoreDocument, collectionName: PROPIETARIOS_COLLECTION }
+        }
+
+        // Query fallbacks if direct document ID lookup didn't match
+        const qCom = query(collection(firestore, COMERCIANTES_COLLECTION), where('userId', '==', userId))
+        const sCom = await getDocs(qCom)
+        if (!sCom.empty && sCom.docs[0]) {
+            return { ref: sCom.docs[0].ref, data: sCom.docs[0].data() as UserFirestoreDocument, collectionName: COMERCIANTES_COLLECTION }
+        }
+
+        const qProp = query(collection(firestore, PROPIETARIOS_COLLECTION), where('userId', '==', userId))
+        const sProp = await getDocs(qProp)
+        if (!sProp.empty && sProp.docs[0]) {
+            return { ref: sProp.docs[0].ref, data: sProp.docs[0].data() as UserFirestoreDocument, collectionName: PROPIETARIOS_COLLECTION }
+        }
+    } catch (err) {
+        console.warn('Error in findUserDoc:', err)
     }
 
     return null
@@ -60,32 +78,51 @@ export async function getOrCreateReferralCode(userId: string): Promise<string> {
     if (!firestore || !userId) return ''
 
     try {
-        const userMatch = await findUserDoc(userId)
-        if (!userMatch) return ''
+        const cleanId = userId.replace(/[^a-zA-Z0-9]/g, '').slice(0, 4).toUpperCase() || 'USER'
+        const randomPart = Math.floor(1000 + Math.random() * 9000)
+        const generatedCode = `DEZZPO-${cleanId}${randomPart}`
 
-        if (userMatch.data.referralCode) {
-            return userMatch.data.referralCode
+        const userMatch = await findUserDoc(userId)
+
+        if (userMatch) {
+            if (userMatch.data.referralCode) {
+                return userMatch.data.referralCode
+            }
+
+            await updateDoc(userMatch.ref, {
+                referralCode: generatedCode,
+                referralStats: userMatch.data.referralStats || {
+                    totalInvited: 0,
+                    activeReferrals: 0,
+                    pointsBalance: 0,
+                    totalPointsEarned: 0,
+                },
+            })
+            return generatedCode
         }
 
-        // Generate clean unique code e.g. DEZZPO-A8K9
-        const shortId = userId.replace(/[^a-zA-Z0-9]/g, '').slice(0, 4).toUpperCase()
-        const randomPart = Math.floor(100 + Math.random() * 900)
-        const generatedCode = `DEZZPO-${shortId}${randomPart}`
+        // If user doc doesn't exist yet, create default entry in Propietarios collection
+        const defaultRef = doc(firestore, PROPIETARIOS_COLLECTION, userId)
+        const initialStats = {
+            totalInvited: 0,
+            activeReferrals: 0,
+            pointsBalance: 0,
+            totalPointsEarned: 0,
+        }
 
-        await updateDoc(userMatch.ref, {
+        await setDoc(defaultRef, {
+            userId,
             referralCode: generatedCode,
-            referralStats: userMatch.data.referralStats || {
-                totalInvited: 0,
-                activeReferrals: 0,
-                pointsBalance: 0,
-                totalPointsEarned: 0,
-            },
-        })
+            referralStats: initialStats,
+            createdAt: new Date().toISOString(),
+        }, { merge: true })
 
         return generatedCode
     } catch (error) {
         console.error('Error getting/creating referral code:', error)
-        return ''
+        // Fallback clean code so UI never gets stuck on loading state
+        const fallbackId = userId ? userId.replace(/[^a-zA-Z0-9]/g, '').slice(0, 6).toUpperCase() : 'DEZZPO'
+        return `DEZZPO-${fallbackId}`
     }
 }
 
@@ -242,22 +279,44 @@ export async function getReferralSummary(userId: string): Promise<{
         return { referralCode: '', stats: defaultStats, referralsList: [] }
     }
 
+    let code = ''
+    let stats = defaultStats
+    let referralsList: ReferralRecord[] = []
+
     try {
-        const code = await getOrCreateReferralCode(userId)
-        const userMatch = await findUserDoc(userId)
-        const stats = userMatch?.data.referralStats || defaultStats
-
-        // Get referrals list
-        const colRef = collection(firestore, REFERRALS_COLLECTION)
-        const q = query(colRef, where('referrerId', '==', userId), orderBy('createdAt', 'desc'))
-        const snapshot = await getDocs(q)
-        const referralsList = snapshot.docs.map((d) => d.data() as ReferralRecord)
-
-        return { referralCode: code, stats, referralsList }
-    } catch (error) {
-        console.error('Error getting referral summary:', error)
-        return { referralCode: '', stats: defaultStats, referralsList: [] }
+        code = await getOrCreateReferralCode(userId)
+    } catch (err) {
+        console.error('Error getting referral code:', err)
     }
+
+    try {
+        const userMatch = await findUserDoc(userId)
+        if (userMatch?.data.referralStats) {
+            stats = userMatch.data.referralStats
+        }
+    } catch (err) {
+        console.error('Error fetching user stats for referrals:', err)
+    }
+
+    try {
+        // Query referrals safely without composite index (sort in memory)
+        const colRef = collection(firestore, REFERRALS_COLLECTION)
+        const q = query(colRef, where('referrerId', '==', userId))
+        const snapshot = await getDocs(q)
+        referralsList = snapshot.docs
+            .map((d) => d.data() as ReferralRecord)
+            .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''))
+    } catch (err) {
+        console.warn('Could not fetch referrals list (non-critical):', err)
+    }
+
+    // Ensure we always return a valid referral code if userId is present
+    if (!code) {
+        const fallbackId = userId.replace(/[^a-zA-Z0-9]/g, '').slice(0, 6).toUpperCase()
+        code = `DEZZPO-${fallbackId}`
+    }
+
+    return { referralCode: code, stats, referralsList }
 }
 
 /**
