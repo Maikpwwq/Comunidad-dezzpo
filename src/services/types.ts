@@ -273,18 +273,32 @@ export interface SearchResult {
 // =============================================================================
 
 export interface AsesoriaResponse {
+    responseId?: string
     providerId: string
+    authorName?: string
+    authorRole?: 1 | 2
+    authorPhotoUrl?: string
     answerText: string
     date: string
+    isVerifiedProvider?: boolean
+    upvotes?: number
 }
 
 export interface AsesoriaFirestoreDocument extends DocumentData {
     asesoriaId?: string
+    id?: string
     asesoriaTitulo?: string
     asesoriaDescription?: string
     asesoriaSelect?: string
     asesoriaCategoria?: string
+    asesoriaAuthorId?: string
+    asesoriaAuthorName?: string
+    asesoriaAuthorRole?: 1 | 2
+    asesoriaAuthorPhotoUrl?: string
+    asesoriaCreatedAt?: string
     asesoriaRespuestas?: AsesoriaResponse[]
+    likesCount?: number
+    viewsCount?: number
 }
 
 export interface AsesoriaData {

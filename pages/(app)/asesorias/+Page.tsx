@@ -1,9 +1,7 @@
 /**
- * Asesorías (Advisories) Page
+ * Asesorías (Advisories) App Page (/app/asesorias)
  *
- * Propietarios can post technical questions.
- * Comerciantes can respond with expert advice.
- * Stored in the 'asesorias' Firestore collection.
+ * Authenticated workspace for Propietarios and Comerciantes to manage technical Q&A threads.
  */
 import { useState, useEffect, useCallback } from 'react'
 import { Container, Spinner, Alert } from 'react-bootstrap'
@@ -19,24 +17,32 @@ import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
+    Avatar,
+    Box,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer'
+import VerifiedIcon from '@mui/icons-material/Verified'
+import SendIcon from '@mui/icons-material/Send'
+import PersonIcon from '@mui/icons-material/Person'
+import EngineeringIcon from '@mui/icons-material/Engineering'
 
 // Stores
 import { useUserStore } from '@stores/userStore'
 
 // Services
-import { firestore, isFirebaseAvailable } from '@services/firebase'
-import { collection, getDocs, addDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore'
-import type { AsesoriaFirestoreDocument, AsesoriaResponse } from '@services/types'
-
-const ASESORIAS_COLLECTION = 'asesorias'
+import {
+    getAllAsesorias,
+    createAsesoria,
+    addAsesoriaResponse,
+} from '@services/asesoriaService'
+import type { AsesoriaFirestoreDocument } from '@services/types'
 
 export default function Page() {
     const currentUserId = useUserStore((state) => state.userId)
     const userRole = useUserStore((state) => state.rol) // 1 = Propietario, 2 = Comerciante
-    const userName = (useUserStore as any)((state: any) => state.userName) || ''
+    const displayName = useUserStore((state) => state.displayName) || ''
+    const photoUrl = useUserStore((state) => state.photoUrl) || ''
 
     const [asesorias, setAsesorias] = useState<AsesoriaFirestoreDocument[]>([])
     const [isLoading, setIsLoading] = useState(true)
@@ -54,65 +60,46 @@ export default function Page() {
     const [responseText, setResponseText] = useState('')
 
     // Fetch all asesorias
-    useEffect(() => {
-        const fetchAsesorias = async () => {
-            if (!isFirebaseAvailable() || !firestore) {
-                setIsLoading(false)
-                return
-            }
-
-            try {
-                const asesoriasRef = collection(firestore, ASESORIAS_COLLECTION)
-                const snapshot = await getDocs(asesoriasRef)
-                const data = snapshot.docs.map((doc) => ({
-                    ...doc.data(),
-                    asesoriaId: doc.id,
-                })) as AsesoriaFirestoreDocument[]
-
-                setAsesorias(data)
-            } catch (error) {
-                console.error('Error fetching asesorias:', error)
-            } finally {
-                setIsLoading(false)
-            }
+    const fetchAsesorias = useCallback(async () => {
+        setIsLoading(true)
+        try {
+            const list = await getAllAsesorias()
+            setAsesorias(list)
+        } catch (error) {
+            console.error('Error fetching asesorias:', error)
+        } finally {
+            setIsLoading(false)
         }
-
-        fetchAsesorias()
     }, [])
+
+    useEffect(() => {
+        fetchAsesorias()
+    }, [fetchAsesorias])
 
     // Create a new asesoria (Propietario only)
     const handleCreateAsesoria = useCallback(async () => {
-        if (!currentUserId || !firestore || !newTitle.trim()) return
+        if (!currentUserId || !newTitle.trim()) return
 
         setIsSubmitting(true)
         try {
-            const asesoriasRef = collection(firestore, ASESORIAS_COLLECTION)
-            const newDoc = await addDoc(asesoriasRef, {
+            const docId = await createAsesoria({
                 asesoriaTitulo: newTitle.trim(),
                 asesoriaDescription: newDescription.trim(),
-                asesoriaCategoria: newCategory.trim(),
-                asesoriaSelect: 'open',
+                asesoriaCategoria: newCategory.trim() || 'General',
                 asesoriaAuthorId: currentUserId,
-                asesoriaAuthorName: userName || 'Anónimo',
-                asesoriaCreatedAt: new Date().toISOString(),
-                asesoriaRespuestas: [],
+                asesoriaAuthorName: displayName || 'Usuario Dezzpo',
+                asesoriaAuthorRole: (userRole as 1 | 2) || 1,
+                asesoriaAuthorPhotoUrl: photoUrl,
             })
 
-            // Add to local state
-            setAsesorias(prev => [{
-                asesoriaId: newDoc.id,
-                asesoriaTitulo: newTitle.trim(),
-                asesoriaDescription: newDescription.trim(),
-                asesoriaCategoria: newCategory.trim(),
-                asesoriaSelect: 'open',
-                asesoriaRespuestas: [],
-            }, ...prev])
-
-            setNewTitle('')
-            setNewDescription('')
-            setNewCategory('')
-            setSnackMessage('¡Consulta publicada exitosamente!')
-            setSnackOpen(true)
+            if (docId) {
+                setNewTitle('')
+                setNewDescription('')
+                setNewCategory('')
+                setSnackMessage('¡Consulta publicada exitosamente!')
+                setSnackOpen(true)
+                fetchAsesorias()
+            }
         } catch (error) {
             console.error('Error creating asesoria:', error)
             setSnackMessage('Error al publicar la consulta')
@@ -120,36 +107,31 @@ export default function Page() {
         } finally {
             setIsSubmitting(false)
         }
-    }, [currentUserId, userName, newTitle, newDescription, newCategory])
+    }, [currentUserId, displayName, userRole, photoUrl, newTitle, newDescription, newCategory, fetchAsesorias])
 
-    // Add a response (Comerciante only)
+    // Add a response
     const handleAddResponse = useCallback(async (asesoriaId: string) => {
-        if (!currentUserId || !firestore || !responseText.trim()) return
+        if (!currentUserId || !responseText.trim()) return
 
         setIsSubmitting(true)
         try {
-            const asesoriaRef = doc(firestore, ASESORIAS_COLLECTION, asesoriaId)
-            const newResponse: AsesoriaResponse = {
+            const ok = await addAsesoriaResponse(asesoriaId, {
                 providerId: currentUserId,
+                authorName: displayName || (userRole === 2 ? 'Comerciante Calificado' : 'Usuario Dezzpo'),
+                authorRole: (userRole as 1 | 2) || 1,
+                authorPhotoUrl: photoUrl,
                 answerText: responseText.trim(),
                 date: new Date().toISOString(),
-            }
-
-            await updateDoc(asesoriaRef, {
-                asesoriaRespuestas: arrayUnion(newResponse),
+                isVerifiedProvider: userRole === 2,
             })
 
-            // Update local state
-            setAsesorias(prev => prev.map(a =>
-                a.asesoriaId === asesoriaId
-                    ? { ...a, asesoriaRespuestas: [...(a.asesoriaRespuestas || []), newResponse] }
-                    : a
-            ))
-
-            setResponseText('')
-            setActiveResponseId(null)
-            setSnackMessage('¡Respuesta enviada!')
-            setSnackOpen(true)
+            if (ok) {
+                setResponseText('')
+                setActiveResponseId(null)
+                setSnackMessage('¡Respuesta enviada!')
+                setSnackOpen(true)
+                fetchAsesorias()
+            }
         } catch (error) {
             console.error('Error adding response:', error)
             setSnackMessage('Error al enviar la respuesta')
@@ -157,7 +139,7 @@ export default function Page() {
         } finally {
             setIsSubmitting(false)
         }
-    }, [currentUserId, responseText])
+    }, [currentUserId, displayName, userRole, photoUrl, responseText, fetchAsesorias])
 
     if (!currentUserId) {
         return (
@@ -182,17 +164,17 @@ export default function Page() {
                 <h1 className="type-hero-title">Asesorías Técnicas</h1>
                 <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
                     {userRole === 1
-                        ? 'Publica tus consultas técnicas y recibe respuestas de profesionales.'
-                        : 'Responde a las consultas técnicas de los propietarios y residentes.'}
+                        ? 'Publica tus consultas técnicas y recibe respuestas de profesionales calificados.'
+                        : 'Responde a las consultas técnicas de la comunidad de propietarios y residentes.'}
                 </Typography>
 
                 {/* New question form (Propietario only) */}
                 {userRole === 1 && (
-                    <Paper elevation={1} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
-                        <Typography variant="h6" gutterBottom>
-                            Nueva Consulta
+                    <Paper elevation={1} sx={{ p: 3, mb: 4, borderRadius: 3 }}>
+                        <Typography variant="h6" fontWeight={700} gutterBottom>
+                            Nueva Consulta Técnica
                         </Typography>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                             <TextField
                                 label="Título de la consulta"
                                 value={newTitle}
@@ -201,7 +183,7 @@ export default function Page() {
                                 fullWidth
                             />
                             <TextField
-                                label="Categoría (ej. Electricidad, Plomería)"
+                                label="Categoría (ej. Electricidad, Plomería, Pintura)"
                                 value={newCategory}
                                 onChange={(e) => setNewCategory(e.target.value)}
                                 size="small"
@@ -236,108 +218,153 @@ export default function Page() {
 
                 {/* List of asesorias */}
                 {asesorias.length === 0 ? (
-                    <Paper elevation={0} sx={{ p: 4, textAlign: 'center', borderRadius: 2, border: '1px dashed #ccc' }}>
+                    <Paper elevation={0} sx={{ p: 4, textAlign: 'center', borderRadius: 3, border: '1px dashed #ccc' }}>
                         <QuestionAnswerIcon sx={{ fontSize: 48, color: '#ccc', mb: 1 }} />
                         <Typography variant="body1" color="text.secondary">
                             No hay consultas publicadas aún.
                         </Typography>
                     </Paper>
                 ) : (
-                    asesorias.map((asesoria) => (
-                        <Accordion key={asesoria.asesoriaId} sx={{ mb: 1, borderRadius: '8px !important' }}>
-                            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', width: '100%' }}>
-                                    <div style={{ flex: 1 }}>
-                                        <Typography variant="subtitle1" fontWeight={600}>
-                                            {asesoria.asesoriaTitulo}
-                                        </Typography>
-                                        {asesoria.asesoriaCategoria && (
-                                            <Chip
-                                                label={asesoria.asesoriaCategoria}
-                                                size="small"
-                                                variant="outlined"
-                                                sx={{ mt: 0.5 }}
-                                            />
-                                        )}
-                                    </div>
-                                    <Chip
-                                        label={`${(asesoria.asesoriaRespuestas || []).length} respuestas`}
-                                        size="small"
-                                        color={(asesoria.asesoriaRespuestas || []).length > 0 ? 'success' : 'default'}
-                                    />
-                                </div>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography variant="body2" sx={{ mb: 2 }}>
-                                    {asesoria.asesoriaDescription}
-                                </Typography>
+                    asesorias.map((asesoria) => {
+                        const targetId = asesoria.asesoriaId || asesoria.id || ''
+                        const respuestas = asesoria.asesoriaRespuestas || []
 
-                                <Divider sx={{ mb: 2 }} />
-
-                                {/* Responses */}
-                                {(asesoria.asesoriaRespuestas || []).map((resp, idx) => (
-                                    <Paper
-                                        key={idx}
-                                        variant="outlined"
-                                        sx={{ p: 2, mb: 1, borderRadius: 1, bgcolor: '#fafafa' }}
-                                    >
-                                        <Typography variant="body2">{resp.answerText}</Typography>
-                                        <Typography variant="caption" color="text.secondary">
-                                            Profesional • {resp.date}
-                                        </Typography>
-                                    </Paper>
-                                ))}
-
-                                {/* Response form (Comerciante only) */}
-                                {userRole === 2 && (
-                                    <>
-                                        {activeResponseId === asesoria.asesoriaId ? (
-                                            <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                                <TextareaAutosize
-                                                    value={responseText}
-                                                    onChange={(e) => setResponseText(e.target.value)}
-                                                    placeholder="Escribe tu respuesta profesional..."
-                                                    minRows={2}
-                                                    style={{
-                                                        width: '100%',
-                                                        padding: '0.5rem',
-                                                        borderRadius: '6px',
-                                                        border: '1px solid #e0e0e0',
-                                                        fontFamily: 'inherit',
-                                                        fontSize: '0.875rem',
-                                                    }}
+                        return (
+                            <Accordion key={targetId} sx={{ mb: 2, borderRadius: '12px !important' }}>
+                                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', width: '100%' }}>
+                                        <Avatar src={asesoria.asesoriaAuthorPhotoUrl} sx={{ width: 36, height: 36 }}>
+                                            {asesoria.asesoriaAuthorName?.charAt(0) || <PersonIcon />}
+                                        </Avatar>
+                                        <div style={{ flex: 1 }}>
+                                            <Typography variant="subtitle1" fontWeight={700}>
+                                                {asesoria.asesoriaTitulo}
+                                            </Typography>
+                                            {asesoria.asesoriaCategoria && (
+                                                <Chip
+                                                    label={asesoria.asesoriaCategoria}
+                                                    size="small"
+                                                    variant="outlined"
+                                                    sx={{ mt: 0.5 }}
                                                 />
-                                                <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
-                                                    <Button
-                                                        size="small"
-                                                        onClick={() => { setActiveResponseId(null); setResponseText('') }}
-                                                    >
-                                                        Cancelar
-                                                    </Button>
-                                                    <Button
-                                                        size="small"
-                                                        className="btn-round btn-high"
-                                                        onClick={() => handleAddResponse(asesoria.asesoriaId!)}
-                                                        disabled={isSubmitting || !responseText.trim()}
-                                                    >
-                                                        Enviar
-                                                    </Button>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <Button
-                                                size="small"
-                                                sx={{ mt: 1 }}
-                                                onClick={() => setActiveResponseId(asesoria.asesoriaId!)}
+                                            )}
+                                        </div>
+                                        <Chip
+                                            label={`${respuestas.length} respuestas`}
+                                            size="small"
+                                            color={respuestas.length > 0 ? 'success' : 'default'}
+                                        />
+                                    </div>
+                                </AccordionSummary>
+                                <AccordionDetails sx={{ p: 3 }}>
+                                    <Typography variant="body1" sx={{ mb: 2, color: 'text.primary' }}>
+                                        {asesoria.asesoriaDescription}
+                                    </Typography>
+
+                                    <Divider sx={{ mb: 2 }} />
+
+                                    {/* Responses */}
+                                    <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1.5 }}>
+                                        Respuestas de la comunidad ({respuestas.length})
+                                    </Typography>
+
+                                    {respuestas.length === 0 ? (
+                                        <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', mb: 2 }}>
+                                            Aún no hay respuestas registradas para esta consulta.
+                                        </Typography>
+                                    ) : (
+                                        respuestas.map((resp, idx) => (
+                                            <Paper
+                                                key={resp.responseId || idx}
+                                                variant="outlined"
+                                                sx={{ p: 2, mb: 1.5, borderRadius: 2, bgcolor: '#fafafa' }}
                                             >
-                                                Responder
-                                            </Button>
-                                        )}
-                                    </>
-                                )}
-                            </AccordionDetails>
-                        </Accordion>
-                    ))
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                                                    <Avatar src={resp.authorPhotoUrl} sx={{ width: 28, height: 28 }}>
+                                                        {resp.authorRole === 2 ? <EngineeringIcon fontSize="small" /> : <PersonIcon fontSize="small" />}
+                                                    </Avatar>
+                                                    <Typography variant="subtitle2" fontWeight={700}>
+                                                        {resp.authorName || 'Usuario Dezzpo'}
+                                                    </Typography>
+                                                    {resp.isVerifiedProvider && (
+                                                        <Chip
+                                                            icon={<VerifiedIcon color="primary" fontSize="small" />}
+                                                            label="Profesional Certificado"
+                                                            size="small"
+                                                            variant="outlined"
+                                                            sx={{ height: 20, fontSize: '0.7rem' }}
+                                                        />
+                                                    )}
+                                                    <Typography variant="caption" color="text.secondary" sx={{ ml: 'auto' }}>
+                                                        {resp.date
+                                                            ? new Date(resp.date).toLocaleDateString('es-CO', {
+                                                                  day: '2-digit',
+                                                                  month: 'short',
+                                                                  hour: '2-digit',
+                                                                  minute: '2-digit',
+                                                              })
+                                                            : ''}
+                                                    </Typography>
+                                                </Box>
+                                                <Typography variant="body2" sx={{ pl: 4.5 }}>
+                                                    {resp.answerText}
+                                                </Typography>
+                                            </Paper>
+                                        ))
+                                    )}
+
+                                    {/* Response Form */}
+                                    {activeResponseId === targetId ? (
+                                        <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                            <TextareaAutosize
+                                                value={responseText}
+                                                onChange={(e) => setResponseText(e.target.value)}
+                                                placeholder="Escribe tu respuesta profesional o recomendación..."
+                                                minRows={2}
+                                                style={{
+                                                    width: '100%',
+                                                    padding: '0.5rem',
+                                                    borderRadius: '6px',
+                                                    border: '1px solid #ccc',
+                                                    fontFamily: 'inherit',
+                                                    fontSize: '0.875rem',
+                                                }}
+                                            />
+                                            <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                                                <Button
+                                                    size="small"
+                                                    onClick={() => {
+                                                        setActiveResponseId(null)
+                                                        setResponseText('')
+                                                    }}
+                                                >
+                                                    Cancelar
+                                                </Button>
+                                                <Button
+                                                    size="small"
+                                                    className="btn-round btn-high"
+                                                    onClick={() => handleAddResponse(targetId)}
+                                                    disabled={isSubmitting || !responseText.trim()}
+                                                >
+                                                    Enviar Respuesta
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <Button
+                                            size="small"
+                                            variant="outlined"
+                                            startIcon={<SendIcon fontSize="small" />}
+                                            sx={{ mt: 1, textTransform: 'none', fontWeight: 600 }}
+                                            onClick={() => setActiveResponseId(targetId)}
+                                        >
+                                            Responder a este hilo
+                                        </Button>
+                                    )}
+                                </AccordionDetails>
+                            </Accordion>
+                        )
+                    })
                 )}
 
                 <Snackbar
