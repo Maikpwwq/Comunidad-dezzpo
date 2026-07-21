@@ -36,9 +36,15 @@ import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import Login from '@mui/icons-material/Login'
 import Storefront from '@mui/icons-material/Storefront'
 import PriceChange from '@mui/icons-material/PriceChange'
+import Person from '@mui/icons-material/Person'
+
+// Stores
+import { useUserStore } from '@stores/userStore'
 
 export function MenuComunidad(): React.ReactElement {
     const [isOpen, setIsOpen] = useState(false)
+    const isAuth = useUserStore((state) => state.isAuth)
+    const displayName = useUserStore((state) => state.displayName)
 
     const handleClose = useCallback(() => {
         setIsOpen(false)
@@ -106,10 +112,17 @@ export function MenuComunidad(): React.ReactElement {
                                 <Storefront className="me-2" fontSize="small" />
                                 <strong>Directorio Comerciantes</strong>
                             </Link>
-                            <Link href="/ingreso" className="d-flex align-items-center text-white hover-underline">
-                                <Login className="me-2" fontSize="small" />
-                                <strong>Ingresar</strong>
-                            </Link>
+                            {isAuth ? (
+                                <Link href="/app/portal-servicios" className="d-flex align-items-center text-white hover-underline">
+                                    <Person className="me-2" fontSize="small" />
+                                    <strong>{displayName || 'Mi Cuenta'}</strong>
+                                </Link>
+                            ) : (
+                                <Link href="/ingreso" className="d-flex align-items-center text-white hover-underline">
+                                    <Login className="me-2" fontSize="small" />
+                                    <strong>Ingresar</strong>
+                                </Link>
+                            )}
                         </div>
                     </Row>
                 </Container>
@@ -171,14 +184,19 @@ export function MenuComunidad(): React.ReactElement {
             </div>
 
             {/* Mobile Navigation Drawer */}
-            {/* Mobile Navigation Drawer */}
             {isOpen && (
                 <nav className={clsx(styles.MobileNavDrawer, "col-12 pt-2 pb-2")}>
                     <div className="d-flex flex-column p-4">
                         <div className="mb-4 d-flex justify-content-center">
-                            <Link href="/ingreso" className="btn btn-light w-100 rounded-pill fw-bold body-1">
-                                <Login className="me-2" /> Ingresar
-                            </Link>
+                            {isAuth ? (
+                                <Link href="/app/portal-servicios" className="btn btn-light w-100 rounded-pill fw-bold body-1">
+                                    <Person className="me-2" /> {displayName || 'Mi Cuenta'}
+                                </Link>
+                            ) : (
+                                <Link href="/ingreso" className="btn btn-light w-100 rounded-pill fw-bold body-1">
+                                    <Login className="me-2" /> Ingresar
+                                </Link>
+                            )}
                         </div>
                         <ul className="list-unstyled">
                             {renderMenuItems(true)}

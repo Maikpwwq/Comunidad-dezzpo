@@ -17,6 +17,7 @@ declare global {
 
     interface Config {
       Layout?: React.ComponentType<{ children: React.ReactNode }>
+      ssr?: boolean
     }
     
     interface PageContext {
