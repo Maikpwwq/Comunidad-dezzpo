@@ -27,6 +27,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
 import PersonIcon from '@mui/icons-material/Person'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import SaveIcon from '@mui/icons-material/Save'
 import { DataGrid, type GridColDef } from '@mui/x-data-grid'
 import {
     getAllUsers,
@@ -34,6 +35,7 @@ import {
     banUser,
     unbanUser,
     backfillOpenChannels,
+    updateUserClassification,
     type AdminUserRow,
 } from '@services/admin'
 
@@ -127,6 +129,10 @@ export default function Page() {
     const [confirmDialog, setConfirmDialog] = useState<{ type: 'password' | 'ban' | 'unban' | 'backfill'; user?: AdminUserRow } | null>(null)
     const [snackbar, setSnackbar] = useState<{ message: string; severity: 'success' | 'error' } | null>(null)
 
+    const [editUserCategorie, setEditUserCategorie] = useState('')
+    const [editUserClasification, setEditUserClasification] = useState('')
+    const [editUserGrade, setEditUserGrade] = useState('')
+
     useEffect(() => {
         async function load() {
             const data = await getAllUsers()
@@ -147,9 +153,42 @@ export default function Page() {
 
     const handleRowClick = useCallback((params: { row: AdminUserRow }) => {
         setSelectedUser(params.row)
+        setEditUserCategorie(params.row.userCategorie || '')
+        setEditUserClasification(params.row.userClasification || '')
+        setEditUserGrade(params.row.userGrade || '')
     }, [])
 
     const handleClose = useCallback(() => setSelectedUser(null), [])
+
+    const handleSaveClassification = useCallback(async () => {
+        if (!selectedUser) return
+        try {
+            const ok = await updateUserClassification(selectedUser.uid, selectedUser.role, {
+                userCategorie: editUserCategorie,
+                userClasification: editUserClasification,
+                userGrade: editUserGrade,
+            })
+
+            if (ok) {
+                setSnackbar({ message: '¡Clasificación actualizada en Firestore!', severity: 'success' })
+                setUsers((prev) =>
+                    prev.map((u) =>
+                        u.uid === selectedUser.uid
+                            ? {
+                                  ...u,
+                                  userCategorie: editUserCategorie,
+                                  userClasification: editUserClasification,
+                                  userGrade: editUserGrade,
+                              }
+                            : u
+                    )
+                )
+            }
+        } catch (err) {
+            console.error('Error saving classification:', err)
+            setSnackbar({ message: 'Error al actualizar clasificación', severity: 'error' })
+        }
+    }, [selectedUser, editUserCategorie, editUserClasification, editUserGrade])
 
     const handleCopyUid = useCallback(() => {
         if (selectedUser) {
@@ -356,9 +395,45 @@ export default function Page() {
 
                             <Divider sx={{ my: 2.5 }} />
 
-                            <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-                                Las acciones de seguridad requieren Cloud Functions configuradas.
+                            {/* Classification, Gradation & Category Editor */}
+                            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1.5, color: 'text.primary' }}>
+                                Clasificación y Rangos del Usuario
                             </Typography>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                <TextField
+                                    label="Categoría Membresía (userCategorie)"
+                                    size="small"
+                                    fullWidth
+                                    value={editUserCategorie}
+                                    onChange={(e) => setEditUserCategorie(e.target.value)}
+                                    placeholder="Ej: Hierro I, Plata, Oro, Premium..."
+                                />
+                                <TextField
+                                    label="Clasificación Operación (userClasification)"
+                                    size="small"
+                                    fullWidth
+                                    value={editUserClasification}
+                                    onChange={(e) => setEditUserClasification(e.target.value)}
+                                    placeholder="Ej: Persona Natural, PyME, Hogar, Propiedad Horizontal..."
+                                />
+                                <TextField
+                                    label="Grado de Experiencia (userGrade)"
+                                    size="small"
+                                    fullWidth
+                                    value={editUserGrade}
+                                    onChange={(e) => setEditUserGrade(e.target.value)}
+                                    placeholder="Ej: Maestro Constructor, Gran Maestro, Miembro Activo..."
+                                />
+                                <Button
+                                    variant="outlined"
+                                    size="small"
+                                    startIcon={<SaveIcon />}
+                                    onClick={handleSaveClassification}
+                                    sx={{ alignSelf: 'flex-start', fontWeight: 700 }}
+                                >
+                                    Guardar Clasificación
+                                </Button>
+                            </Box>
                         </DialogContent>
 
                         {/* Action buttons */}

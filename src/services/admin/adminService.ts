@@ -140,6 +140,9 @@ export interface AdminUserRow {
     lastLogin: string
     joined: string
     channelUrl?: string
+    userCategorie?: string
+    userClasification?: string
+    userGrade?: string
 }
 
 export async function getAllUsers(): Promise<AdminUserRow[]> {
@@ -159,6 +162,9 @@ export async function getAllUsers(): Promise<AdminUserRow[]> {
             lastLogin: d.lastLogin || '—',
             joined: d.userJoined || '—',
             channelUrl: d.userChannelUrl || '',
+            userCategorie: d.userCategorie || '',
+            userClasification: d.userClasification || '',
+            userGrade: d.userGrade || '',
         })
     })
 
@@ -174,10 +180,42 @@ export async function getAllUsers(): Promise<AdminUserRow[]> {
             lastLogin: d.lastLogin || '—',
             joined: d.userJoined || '—',
             channelUrl: d.userChannelUrl || '',
+            userCategorie: d.userCategorie || '',
+            userClasification: d.userClasification || '',
+            userGrade: d.userGrade || '',
         })
     })
 
     return users
+}
+
+/**
+ * Update user classification fields in Firestore (userCategorie, userClasification, userGrade)
+ */
+export async function updateUserClassification(
+    uid: string,
+    role: 'Propietario' | 'Comerciante',
+    data: {
+        userCategorie?: string
+        userClasification?: string
+        userGrade?: string
+    }
+): Promise<boolean> {
+    if (!isFirebaseAvailable() || !firestore || !uid) return false
+
+    try {
+        const collectionName = role === 'Propietario' ? PROPIETARIOS : COMERCIANTES
+        const userRef = doc(firestore, collectionName, uid)
+        await updateDoc(userRef, {
+            userCategorie: data.userCategorie ?? '',
+            userClasification: data.userClasification ?? '',
+            userGrade: data.userGrade ?? '',
+        })
+        return true
+    } catch (err) {
+        console.error('Error updating user classification:', err)
+        return false
+    }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
