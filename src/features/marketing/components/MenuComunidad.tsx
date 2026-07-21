@@ -45,6 +45,7 @@ export function MenuComunidad(): React.ReactElement {
     const [isOpen, setIsOpen] = useState(false)
     const isAuth = useUserStore((state) => state.isAuth)
     const displayName = useUserStore((state) => state.displayName)
+    const userId = useUserStore((state) => state.userId)
 
     const handleClose = useCallback(() => {
         setIsOpen(false)
@@ -101,6 +102,8 @@ export function MenuComunidad(): React.ReactElement {
         </>
     )
 
+    const profileHref = userId ? `/app/perfil/${userId}` : '/app/perfil'
+
     return (
         <Container fluid className="p-0" id="menu-comunidad">
             {/* Top Bar (Dark) */}
@@ -113,7 +116,7 @@ export function MenuComunidad(): React.ReactElement {
                                 <strong>Directorio Comerciantes</strong>
                             </Link>
                             {isAuth ? (
-                                <Link href="/app/portal-servicios" className="d-flex align-items-center text-white hover-underline">
+                                <Link href={profileHref} className="d-flex align-items-center text-white hover-underline">
                                     <Person className="me-2" fontSize="small" />
                                     <strong>{displayName || 'Mi Cuenta'}</strong>
                                 </Link>
@@ -189,7 +192,7 @@ export function MenuComunidad(): React.ReactElement {
                     <div className="d-flex flex-column p-4">
                         <div className="mb-4 d-flex justify-content-center">
                             {isAuth ? (
-                                <Link href="/app/portal-servicios" className="btn btn-light w-100 rounded-pill fw-bold body-1">
+                                <Link href={profileHref} className="btn btn-light w-100 rounded-pill fw-bold body-1">
                                     <Person className="me-2" /> {displayName || 'Mi Cuenta'}
                                 </Link>
                             ) : (
