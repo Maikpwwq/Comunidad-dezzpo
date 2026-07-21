@@ -777,7 +777,7 @@ export default function Page() {
                             </Button>
                         </div>
                         <p className="type-body" style={{ marginBottom: '0.5rem' }}>
-                            Selecciona las zonas donde prestas servicio. Aparecer\u00e1s en los resultados de b\u00fasqueda de cada zona seleccionada.
+                            Selecciona las zonas donde prestas servicio. Aparecerás en los resultados de búsqueda de cada zona seleccionada.
                         </p>
 
                         <div className={styles['coverage-toggle-row']} style={{ marginBottom: '1rem' }}>

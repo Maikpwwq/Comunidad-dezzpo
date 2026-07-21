@@ -24,7 +24,7 @@ export default function Page() {
             <Container fluid className="p-0 pt-4">
                 <Row className="m-0 w-100 banner-comunidad d-flex justify-content-center align-items-center">
                     {/* Spacer: pushes contenedorBanner away from the background character image on xl/lg */}
-                    <Col className="col m-0 p-0 d-none d-lg-flex" xl={5} lg={3}>
+                    <Col className="col m-0 p-0 d-none d-lg-flex" xl={4} lg={2}>
                     </Col>
                     <Col
                         id="contenedorBanner"
