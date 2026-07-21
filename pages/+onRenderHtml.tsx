@@ -62,7 +62,8 @@ async function onRenderHtml(pageContext: PageContextServer) {
     }
   }
 
-  const { documentProps } = pageContext.exports as {
+  const exports = pageContext.exports || {}
+  const { documentProps } = exports as {
     documentProps?: { title?: string; description?: string }
   }
   const title =
