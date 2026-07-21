@@ -151,7 +151,7 @@ export async function getAllCertificationRequests(): Promise<CertificationReques
         return snapshot.docs.map((doc) => doc.data() as CertificationRequest)
     } catch (error) {
         console.error('Error fetching all certification requests:', error)
-        throw error
+        return []
     }
 }
 

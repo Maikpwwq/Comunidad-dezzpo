@@ -36,6 +36,14 @@ service cloud.firestore {
       allow create: if isOwner(userId);
       allow update: if isOwner(userId) || isAdmin();
       allow delete: if false;
+
+      match /inmuebles/{inmuebleId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+
+      match /paymentMethods/{methodId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
     }
 
     match /usersComerciantesCalificados/{userId} {
@@ -43,6 +51,51 @@ service cloud.firestore {
       allow create: if isOwner(userId);
       allow update: if isOwner(userId) || isAdmin();
       allow delete: if false;
+
+      match /paymentMethods/{methodId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+    }
+
+    // =========================================================================
+    // Certification Requests (skills verification for comerciantes)
+    // =========================================================================
+    match /certificationRequests/{requestId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated();
+      allow delete: if false;
+    }
+
+    // =========================================================================
+    // Inspection Requests (technical property inspections)
+    // =========================================================================
+    match /inspectionRequests/{requestId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated();
+      allow delete: if false;
+    }
+
+    // =========================================================================
+    // Referral Program (Voz a Voz) & Redemptions
+    // =========================================================================
+    match /referrals/{referralId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated();
+      allow delete: if false;
+    }
+
+    match /referralRedemptions/{redemptionId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated();
+      allow delete: if false;
+    }
+
+    // =========================================================================
+    // Funnel Events (analytics)
+    // =========================================================================
+    match /funnel_events/{eventId} {
+      allow create: if true;
+      allow read: if isAuthenticated();
     }
 
     // =========================================================================

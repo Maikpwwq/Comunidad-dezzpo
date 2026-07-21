@@ -61,10 +61,16 @@ export default function Page() {
 
     async function load() {
         setLoading(true)
-        const items = await getAllCertificationRequests()
-        setQueue(items)
-        if (items.length > 0) setSelected(items[0]!)
-        setLoading(false)
+        try {
+            const items = await getAllCertificationRequests()
+            setQueue(items)
+            if (items.length > 0) setSelected(items[0]!)
+        } catch (error) {
+            console.error('Error loading certification requests:', error)
+            setQueue([])
+        } finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
