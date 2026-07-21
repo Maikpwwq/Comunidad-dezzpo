@@ -92,20 +92,49 @@ export async function paymentConfirmationHandler(c: Context): Promise<Response> 
 
         const responseCode = Number(payload.x_cod_response)
         
-        // Update contract status to active on response code 1 (Accepted)
+        // Update status on response code 1 (Accepted)
         if (responseCode === 1) {
             const db = getFirestoreDb()
-            const contractRef = doc(db, 'contracts', contractId)
             
-            await updateDoc(contractRef, {
-                status: 'active',
-                paymentStage,
-                updatedAt: new Date().toISOString()
-            })
-            console.log(`[Payment Webhook] Contract ${contractId} successfully updated to status 'active' for stage: ${paymentStage}`)
+            if (parts[1] === 'SUB') {
+                const comercianteId = parts[2]
+                if (comercianteId) {
+                    const merchantRef = doc(db, 'usersComerciantesCalificados', comercianteId)
+                    const expirationDate = new Date()
+                    expirationDate.setFullYear(expirationDate.getFullYear() + 1)
+                    await updateDoc(merchantRef, {
+                        membershipStatus: 'active',
+                        membershipExpiresAt: expirationDate.toISOString(),
+                        profileTier: 'destacado',
+                        updatedAt: new Date().toISOString()
+                    })
+                    console.log(`[Payment Webhook] Subscribed merchant ${comercianteId} to active membership.`)
+                }
+            } else if (parts[1] === 'CERT') {
+                const requestId = parts[2]
+                if (requestId) {
+                    const certRef = doc(db, 'certificationRequests', requestId)
+                    await updateDoc(certRef, {
+                        status: 'pending',
+                        paymentStatus: 'paid',
+                        paymentReference: x_ref_payco || x_transaction_id,
+                        updatedAt: new Date().toISOString()
+                    })
+                    console.log(`[Payment Webhook] Certification request ${requestId} marked as paid.`)
+                }
+            } else {
+                const contractRef = doc(db, 'contracts', contractId)
+                await updateDoc(contractRef, {
+                    status: 'active',
+                    paymentStage,
+                    updatedAt: new Date().toISOString()
+                })
+                console.log(`[Payment Webhook] Contract ${contractId} successfully updated to status 'active' for stage: ${paymentStage}`)
+            }
         } else {
-            console.log(`[Payment Webhook] Payment transaction state not accepted (code ${responseCode}). Contract ${contractId} remains unchanged.`)
+            console.log(`[Payment Webhook] Payment transaction state not accepted (code ${responseCode}). Invoice ${invoice} remains unchanged.`)
         }
+
 
         return c.json({ success: true, message: 'Webhook processed successfully' })
     } catch (error: any) {

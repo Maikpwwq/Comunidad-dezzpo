@@ -131,7 +131,47 @@ export interface UserFirestoreDocument extends DocumentData {
     fcmTokens?: string[]
     /** Phase 3: Algorithmic trust score (0-100) computed from behavioral metrics */
     trustScore?: number
+    /** Subscription and Certification fields */
+    membershipStatus?: 'active' | 'inactive' | 'expired'
+    membershipExpiresAt?: string
+    earnedBadges?: Array<{ category: string; issuedAt: string; expiresAt?: string }>
 }
+
+// =============================================================================
+// Subscription & Certification Request Types
+// =============================================================================
+
+export interface InspectionRequest {
+    requestId: string
+    propietarioId: string
+    propertyDetails: {
+        name: string
+        address: string
+        city: string
+        postalCode: string
+    }
+    serviceScope: string
+    contactPhone: string
+    contactEmail: string
+    status: 'pending_schedule' | 'scheduled' | 'inspected' | 'cancelled'
+    scheduledDate?: string
+    scheduledTime?: string
+    createdAt: string
+    notes?: string
+}
+
+export interface CertificationRequest {
+    requestId: string
+    comercianteId: string
+    category: string
+    dateTime: string
+    status: 'pending_payment' | 'pending' | 'scheduled' | 'evaluated' | 'approved' | 'rejected'
+    paymentStatus: 'pending' | 'paid'
+    paymentReference?: string
+    notes?: string
+    createdAt: string
+}
+
 
 export type UserRole = 1 | 2 // 1 = Propietario, 2 = Comerciante
 

@@ -15,6 +15,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import GroupIcon from '@mui/icons-material/Group'
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
+import HowToRegIcon from '@mui/icons-material/HowToReg'
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 
@@ -41,6 +42,7 @@ const ICON_MAP: Record<string, React.ReactElement> = {
     DashboardIcon: <DashboardIcon />,
     GroupIcon: <GroupIcon />,
     VerifiedUserIcon: <VerifiedUserIcon />,
+    HowToRegIcon: <HowToRegIcon />,
     ReceiptLongIcon: <ReceiptLongIcon />,
     AssignmentIcon: <AssignmentIcon />,
 }

@@ -20,6 +20,9 @@ import MailIcon from '@mui/icons-material/Mail'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
+import VerifiedIcon from '@mui/icons-material/Verified'
+import { Chip } from '@mui/material'
+
 
 export default function Page() {
     const pageContext = usePageContext()
@@ -184,7 +187,31 @@ export default function Page() {
                     <span className={clsx(styles.Experience, "fs-6")}>
                         Activo desde: {userJoined}
                     </span>
+                    {comerciante.earnedBadges && comerciante.earnedBadges.length > 0 && (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1.5 }}>
+                            {comerciante.earnedBadges.map((badge: any, index: number) => (
+                                <Chip
+                                    key={index}
+                                    icon={<VerifiedIcon sx={{ color: '#0d9488 !important', fontSize: '0.9rem' }} />}
+                                    label={`Certificado: ${badge.category}`}
+                                    sx={{
+                                        bgcolor: '#f0fdfa',
+                                        color: '#0f766e',
+                                        fontWeight: 600,
+                                        border: '1px solid #ccfbf1',
+                                        fontSize: '0.75rem',
+                                        height: 26,
+                                        '& .MuiChip-icon': {
+                                            color: '#0d9488',
+                                        }
+                                    }}
+                                    size="small"
+                                />
+                            ))}
+                        </Box>
+                    )}
                 </Box>
+
 
                 {/* Visible Contact Info (Visible to guest/anonymous users) */}
                 <Row className="p-0 m-0 w-100 d-flex align-items-start">

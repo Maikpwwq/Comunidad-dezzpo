@@ -102,17 +102,19 @@ Los comerciantes registrados ofrecen servicios en las siguientes categorías:
 
 ## Certificación Dezzpo
 
-La certificación Dezzpo es una insignia de validación de habilidades para comerciantes. El proceso incluye:
+La certificación Dezzpo es una insignia de validación de habilidades técnicas y profesionales para comerciantes calificados. El proceso incluye:
 
-1. El comerciante solicita la certificación desde su perfil
-2. Se programa una visita de inspección
-3. Se validan: certificados, diplomas, equipos y técnica requerida
-4. Al aprobar, el comerciante recibe la insignia verificada en su perfil
+1. **Solicitud y Pago de Visita Técnica:** El comerciante selecciona la especialidad a certificar y agenda la fecha/hora desde `/app/certificaciones`. Realiza el pago previo de la tasa de gestión e inspección técnica ($290.000 COP) a través de ePayco.
+2. **Evaluación en Terreno:** Un evaluador calificado realiza la visita técnica presencial para verificar: certificados, herramientas, equipos e idoneidad en la ejecución del oficio.
+3. **Aprobación en Centro de Control Admin:** El evaluador revisa y aprueba la solicitud desde el panel de administración (`/admin/certificaciones`).
+4. **Insignia y Estatus Destacado:** Al ser aprobada, el comerciante recibe automáticamente la insignia de verificación en su perfil público y su estatus cambia a `profileTier: 'destacado'`.
 
 **Beneficios:**
-- Mayor confianza ante propietarios
-- Acceso a proyectos de mayor complejidad
-- Perfil destacado en el directorio
+- Insignia de habilidades verificadas visible en el perfil público
+- Mayor tasa de conversión y preferencia de propietarios
+- Clasificación como comerciante destacado en el directorio
+- Acceso prioritario en búsquedas y cotizaciones
+
 
 ---
 
@@ -256,7 +258,18 @@ La página Legal (https://comunidad-dezzpo.vercel.app/legal) contiene los docume
 
 ---
 
+## Tarifas y Estructura de Precios
+
+La plataforma cuenta con tarifas transparentes configuradas centralizadamente (`src/config/pricing.config.ts`):
+
+- **Membresía Anual Comerciante Calificado:** `$150.000 COP / año`. Otorga ficha de perfil optimizada, notificaciones en tiempo real, crédito de publicidad y estatus destacado.
+- **Certificación de Validación de Habilidades:** `$290.000 COP` por especialidad. Incluye visita técnica presencial y otorgamiento de insignia verificada.
+- **Propietarios VIP +Plus:** Acceso a servicio de inspección técnica del inmueble mediante formulario in-app (`/app/suscripciones`).
+
+---
+
 ## Modelo de Negocio: Pagos y Anticipos (Upfront Deposits)
+
 
 El modelo de negocio de Comunidad Dezzpo permite a los comerciantes asegurar financieramente sus proyectos mediante un sistema de **Anticipos (Upfront Deposits)** gestionado a través de nuestra pasarela de pagos integrada (ePayco).
 

@@ -8,3 +8,5 @@
  */
 
 export { theme } from './theme'
+export { PRICING } from './pricing.config'
+
