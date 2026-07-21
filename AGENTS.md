@@ -321,6 +321,11 @@ pending_payment → active → completed → disputed
 - **Fix**: Rename `api/index.ts` → `api/index.mjs`. The `.mjs` extension tells `@vercel/node` to treat it as plain ESM — no TypeScript compilation needed. The file is just a 1-line re-export of the already-built `dist/server/entry.mjs`.
 - **NEVER revert to `api/index.ts`** while on TypeScript 7.x, unless `@vercel/node` releases a fix.
 
+### Vercel Serverless SSR Diagnostics & firebase-admin ESM Interop (2026-07-21)
+- **Dynamic Adapter Entry Matching**: `scripts/patch-vercel-entry.mjs` dynamically detects the server export chunk from Vike's minified Rollup build output rather than assuming static export names.
+- **Diagnostic Serverless Wrapper**: `api/index.mjs` intercepts top-level import failures and execution exceptions, returning structured JSON errors with stack traces to eliminate opaque 500 error pages.
+- **`firebase-admin` Dependency Pinning**: `firebase-admin@14.x` introduced `jwks-rsa@4.x` which depends on `jose@6.x` (pure ESM). On Node 20.x serverless runtimes, this causes `ERR_REQUIRE_ESM: require() of ES Module ... not supported`. To ensure seamless CJS/ESM interop on Vercel, `firebase-admin` MUST remain pinned to `^13.0.0` (which uses `jwks-rsa@3.x` / `jose@4.x` supporting CommonJS `require()`).
+
 ## 10. Testing Architecture (Vitest & Playwright)
 - **Pyramid Structure**: The project implements a strict 3-layer testing pyramid (`tests/unit`, `tests/integration`, `tests/e2e`). Do not collapse layers or bypass mock boundaries in unit/integration layers.
 - **Reference Document**: See `docs/testing-architecture.md` for full implementation details, including Zustand singleton mocking (`tests/setup.ts`), Playwright POM patterns, and Vike SSR routing tests.
