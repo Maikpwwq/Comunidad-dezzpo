@@ -1,14 +1,9 @@
 allowBuilds:
-  '0': '@firebase/util'
-  '1': '@parcel/watcher'
-  '2': core-js
-  '3': esbuild
-  '4': protobufjs
-  '@firebase/util': set this to true or false
-  '@parcel/watcher': set this to true or false
-  core-js: set this to true or false
-  esbuild: set this to true or false
-  protobufjs: set this to true or false
+  '@firebase/util': true
+  '@parcel/watcher': true
+  core-js: true
+  esbuild: true
+  protobufjs: true
 minimumReleaseAgeExclude:
   - '@ai-sdk/gateway@4.0.24'
   - '@ai-sdk/google@4.0.19'
