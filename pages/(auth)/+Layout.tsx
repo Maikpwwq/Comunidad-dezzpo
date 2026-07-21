@@ -9,8 +9,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
     const isAuth = useIsAuthenticated()
 
     useEffect(() => {
-        if (isAuth) {
-            navigate('/app/portal-servicios')
+        if (isAuth && typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search)
+            const returnTo = params.get('returnTo')
+            const target = returnTo ? decodeURIComponent(returnTo) : '/app/portal-servicios'
+            navigate(target)
         }
     }, [isAuth])
 
