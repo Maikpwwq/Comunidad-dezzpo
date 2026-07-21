@@ -1,0 +1,1 @@
+Ofrecemos un servicio de intermediación digital: conectamos a propietarios que necesitan contratar servicios de construcción o remodelación con comerciantes (profesionales independientes calificados) que los ejecutan. Los usuarios cotizan, contratan y pagan el servicio dentro de la plataforma, y cobramos una comisión por cada intermediación realizada.

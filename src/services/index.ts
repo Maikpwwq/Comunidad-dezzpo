@@ -39,4 +39,8 @@ export * from './categoriasService'
 // Sendbird services
 export * from './sendbird'
 
+// Payment services
+export * from './paymentService'
+
+
 

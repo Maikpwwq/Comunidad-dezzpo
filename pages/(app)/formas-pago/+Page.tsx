@@ -1,13 +1,16 @@
 /**
  * Formas de Pago (Payment Methods) Page
  *
- * ePayco integration scaffold for Colombian marketplace payments.
+ * ePayco integration for Colombian marketplace payments.
  * Role-adaptive: Propietarios see payment methods + pending contracts.
  * Comerciantes see earnings summary and payout configuration.
  *
- * Integration: ePayco Standard Checkout + Split Payments
+ * Features:
+ * - Saved payment methods management (Cards tokenized via ePayco SDK, PSE preferences)
+ * - Modal triggers for adding cards, PSE bank preferences, and Cash payment info
+ * - Default payment method management and deletion
  */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Container, Spinner, Alert } from 'react-bootstrap'
 import {
     Typography,
@@ -23,12 +26,18 @@ import {
     Snackbar,
     Box,
     Stack,
+    IconButton,
+    Tooltip,
 } from '@mui/material'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import PaymentsIcon from '@mui/icons-material/Payments'
 import AddIcon from '@mui/icons-material/Add'
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
+import StarIcon from '@mui/icons-material/Star'
+import StarBorderIcon from '@mui/icons-material/StarBorder'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { navigate } from 'vike/client/router'
 
 // Store & Auth
@@ -37,7 +46,20 @@ import { useAuth } from '@hooks/useAuth'
 
 // Services
 import { getContractsByClient, getContractsByProvider } from '@services/contracts'
-import type { ContractFirestoreDocument } from '@services/types'
+import {
+    getPaymentMethods,
+    deletePaymentMethod,
+    setDefaultPaymentMethod,
+} from '@services/paymentService'
+import type { ContractFirestoreDocument, PaymentMethodFirestoreDocument } from '@services/types'
+
+// Modals
+import {
+    AddCardModal,
+    AddPsePreferenceModal,
+    CashPaymentInfoModal,
+    ConfirmDeleteModal,
+} from '@components/payment'
 
 // Environment
 const EPAYCO_PUBLIC_KEY = import.meta.env.VITE_APP_EPAYCO_PUBLIC_KEY || ''
@@ -51,9 +73,24 @@ const methodIcons: Record<string, React.ReactNode> = {
 
 // Supported payment methods in Colombia
 const availableMethodTypes = [
-    { type: 'card', label: 'Tarjeta Débito o Crédito', sublabel: 'Visa, Mastercard, American Express' },
-    { type: 'pse', label: 'PSE (Transferencia bancaria)', sublabel: 'Todos los bancos en Colombia' },
-    { type: 'cash', label: 'Efectivo', sublabel: 'Efecty, Baloto, puntos de corresponsal' },
+    {
+        type: 'card',
+        label: 'Tarjeta Débito o Crédito',
+        sublabel: 'Visa, Mastercard, American Express (Tokenizado seguro)',
+        actionLabel: 'Agregar',
+    },
+    {
+        type: 'pse',
+        label: 'PSE (Transferencia bancaria)',
+        sublabel: 'Guarda tu banco habitual y datos de facturación',
+        actionLabel: 'Agregar',
+    },
+    {
+        type: 'cash',
+        label: 'Efectivo (Efecty, Baloto, Corresponsal)',
+        sublabel: 'Generación de PIN en tiempo real durante el checkout de contrato',
+        actionLabel: '¿Cómo funciona?',
+    },
 ]
 
 // Status labels
@@ -64,61 +101,122 @@ const statusLabels: Record<string, { label: string; color: 'warning' | 'success'
     disputed: { label: 'Disputa', color: 'error' },
 }
 
-interface SavedPaymentMethod {
-    id: string
-    type: string
-    last4?: string
-    brand?: string
-    addedAt: string
-}
-
 export default function Page() {
     const currentUserId = useUserStore((state) => state.userId)
     const { currentUser } = useAuth()
     const userRole = currentUser?.role // 1=propietario, 2=comerciante
 
-    const [savedMethods, _setSavedMethods] = useState<SavedPaymentMethod[]>([])
+    const [savedMethods, setSavedMethods] = useState<PaymentMethodFirestoreDocument[]>([])
     const [contracts, setContracts] = useState<ContractFirestoreDocument[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [snackOpen, setSnackOpen] = useState(false)
     const [snackMessage, setSnackMessage] = useState('')
 
+    // Modal Visibility States
+    const [cardModalOpen, setCardModalOpen] = useState(false)
+    const [pseModalOpen, setPseModalOpen] = useState(false)
+    const [cashModalOpen, setCashModalOpen] = useState(false)
+    
+    // Deletion Modal State
+    const [deleteTarget, setDeleteTarget] = useState<PaymentMethodFirestoreDocument | null>(null)
+    const [isDeleting, setIsDeleting] = useState(false)
+
     const isEpaycoConfigured = !!EPAYCO_PUBLIC_KEY
     const isPropietario = userRole === 1
     const isComerciante = userRole === 2
 
-    // Fetch contracts based on role
-    useEffect(() => {
-        const fetchData = async () => {
-            if (!currentUserId) {
-                setIsLoading(false)
-                return
-            }
-            try {
-                let data: ContractFirestoreDocument[] = []
-                if (isPropietario) {
-                    data = await getContractsByClient(currentUserId)
-                } else if (isComerciante) {
-                    data = await getContractsByProvider(currentUserId)
-                }
-                setContracts(data)
-            } catch (err) {
-                console.error('Error fetching contracts:', err)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        fetchData()
-    }, [currentUserId, isPropietario, isComerciante])
-
-    const handleAddMethod = (type: string) => {
-        if (!isEpaycoConfigured) {
-            setSnackMessage('ePayco no está configurado. Agrega VITE_EPAYCO_PUBLIC_KEY al .env')
-            setSnackOpen(true)
+    // Fetch contracts & payment methods
+    const fetchData = useCallback(async () => {
+        if (!currentUserId) {
+            setIsLoading(false)
             return
         }
-        setSnackMessage(`Integración de ${type} próximamente con ePayco`)
+        try {
+            let contractsData: ContractFirestoreDocument[] = []
+            if (isPropietario) {
+                contractsData = await getContractsByClient(currentUserId)
+            } else if (isComerciante) {
+                contractsData = await getContractsByProvider(currentUserId)
+            }
+            setContracts(contractsData)
+
+            const methodsData = await getPaymentMethods(currentUserId)
+            setSavedMethods(methodsData)
+        } catch (err) {
+            console.error('Error fetching financial data:', err)
+        } finally {
+            setIsLoading(false)
+        }
+    }, [currentUserId, isPropietario, isComerciante])
+
+    useEffect(() => {
+        fetchData()
+    }, [fetchData])
+
+    // Open appropriate modal per method type
+    const handleAddMethod = (type: string) => {
+        if (type === 'card') {
+            if (!isEpaycoConfigured) {
+                setSnackMessage('ePayco no está configurado. Agrega VITE_APP_EPAYCO_PUBLIC_KEY al .env')
+                setSnackOpen(true)
+                return
+            }
+            setCardModalOpen(true)
+        } else if (type === 'pse') {
+            setPseModalOpen(true)
+        } else if (type === 'cash') {
+            setCashModalOpen(true)
+        }
+    }
+
+    // Modal Success Handlers
+    const handleCardAdded = (newMethod: PaymentMethodFirestoreDocument) => {
+        setSavedMethods(prev => [newMethod, ...prev.map(m => newMethod.isDefault ? { ...m, isDefault: false } : m)])
+        setSnackMessage('Tarjeta guardada exitosamente.')
         setSnackOpen(true)
+    }
+
+    const handlePseAdded = (newMethod: PaymentMethodFirestoreDocument) => {
+        setSavedMethods(prev => [newMethod, ...prev.map(m => newMethod.isDefault ? { ...m, isDefault: false } : m)])
+        setSnackMessage('Preferencia de banco PSE guardada.')
+        setSnackOpen(true)
+    }
+
+    // Default payment method toggle
+    const handleSetDefault = async (methodId: string) => {
+        if (!currentUserId) return
+        try {
+            const success = await setDefaultPaymentMethod(currentUserId, methodId)
+            if (success) {
+                setSavedMethods(prev => prev.map(m => ({
+                    ...m,
+                    isDefault: m.id === methodId
+                })))
+                setSnackMessage('Método principal actualizado.')
+                setSnackOpen(true)
+            }
+        } catch (err) {
+            console.error('Error setting default payment method:', err)
+        }
+    }
+
+    // Delete payment method execution
+    const handleConfirmDelete = async () => {
+        if (!currentUserId || !deleteTarget) return
+        setIsDeleting(true)
+        try {
+            const success = await deletePaymentMethod(currentUserId, deleteTarget.id)
+            if (success) {
+                setSavedMethods(prev => prev.filter(m => m.id !== deleteTarget.id))
+                setSnackMessage('Método de pago eliminado.')
+                setSnackOpen(true)
+            }
+        } catch (err) {
+            console.error('Error deleting payment method:', err)
+        } finally {
+            setIsDeleting(false)
+            setDeleteTarget(null)
+        }
     }
 
     const handlePayContract = (contractId: string) => {
@@ -159,7 +257,7 @@ export default function Page() {
                 {!isEpaycoConfigured && (
                     <Alert variant="info" className="mt-3">
                         <strong>Modo desarrollo:</strong> Configura las variables de entorno de ePayco
-                        (<code>VITE_EPAYCO_PUBLIC_KEY</code>, <code>VITE_EPAYCO_PRIVATE_KEY</code>)
+                        (<code>VITE_APP_EPAYCO_PUBLIC_KEY</code>, <code>VITE_APP_EPAYCO_PRIVATE_KEY</code>)
                         para habilitar la integración de pagos.
                     </Alert>
                 )}
@@ -231,42 +329,103 @@ export default function Page() {
                     </Paper>
                 )}
 
-                {/* Saved Payment Methods */}
+                {/* Saved Payment Methods Section */}
                 <Paper elevation={1} sx={{ p: 3, mt: 3, borderRadius: 2 }}>
                     <Typography variant="h6" gutterBottom>
                         Métodos Guardados
                     </Typography>
                     {savedMethods.length === 0 ? (
                         <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
-                            No tienes métodos de pago guardados.
+                            No tienes métodos de pago guardados o preferencias registradas. Agrega uno a continuación.
                         </Typography>
                     ) : (
                         <Table size="small">
-                            <TableHead>
+                            <TableHead sx={{ bgcolor: 'var(--background-light-gray-color)' }}>
                                 <TableRow>
-                                    <TableCell>Tipo</TableCell>
-                                    <TableCell>Detalles</TableCell>
-                                    <TableCell>Agregado</TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Tipo</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Detalles / Titular</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Registrado</TableCell>
+                                    <TableCell align="center" sx={{ fontWeight: 'bold' }}>Acciones</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {savedMethods.map((method) => (
-                                    <TableRow key={method.id}>
+                                    <TableRow key={method.id} hover>
                                         <TableCell>
-                                            <Chip
-                                                icon={methodIcons[method.type] as any}
-                                                label={method.brand || method.type}
-                                                size="small"
-                                                variant="outlined"
-                                            />
+                                            <Stack direction="row" spacing={1} alignItems="center">
+                                                <Chip
+                                                    icon={methodIcons[method.type] as any}
+                                                    label={method.type === 'card' ? (method.brand || 'Tarjeta') : 'PSE'}
+                                                    size="small"
+                                                    variant="outlined"
+                                                    color={method.type === 'card' ? 'primary' : 'secondary'}
+                                                />
+                                                {method.isDefault && (
+                                                    <Chip
+                                                        label="Principal"
+                                                        size="small"
+                                                        color="success"
+                                                        sx={{ fontWeight: 'bold', height: 20, fontSize: '0.7rem' }}
+                                                    />
+                                                )}
+                                            </Stack>
                                         </TableCell>
                                         <TableCell>
-                                            {method.last4 ? `•••• ${method.last4}` : '—'}
+                                            {method.type === 'card' ? (
+                                                <Box>
+                                                    <Typography variant="body2" fontWeight={600}>
+                                                        •••• {method.last4 || '****'}
+                                                    </Typography>
+                                                    <Typography variant="caption" color="text.secondary">
+                                                        Vence: {method.expMonth}/{method.expYear} — {method.cardholderName || 'Titular'}
+                                                    </Typography>
+                                                </Box>
+                                            ) : (
+                                                <Box>
+                                                    <Typography variant="body2" fontWeight={600}>
+                                                        {method.bankName || 'Banco PSE'}
+                                                    </Typography>
+                                                    <Typography variant="caption" color="text.secondary">
+                                                        {method.personType === 'J' ? 'Persona Jurídica' : 'Persona Natural'} ({method.docType} {method.docNumberMasked})
+                                                    </Typography>
+                                                </Box>
+                                            )}
                                         </TableCell>
-                                        <TableCell>{method.addedAt}</TableCell>
                                         <TableCell>
-                                            <Button size="small" color="error">Eliminar</Button>
+                                            <Typography variant="caption" color="text.secondary">
+                                                {new Date(method.createdAt).toLocaleDateString('es-CO')}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Stack direction="row" spacing={1} justifyContent="center">
+                                                {!method.isDefault && (
+                                                    <Tooltip title="Establecer como principal">
+                                                        <IconButton
+                                                            size="small"
+                                                            color="warning"
+                                                            onClick={() => handleSetDefault(method.id)}
+                                                        >
+                                                            <StarBorderIcon fontSize="small" />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                )}
+                                                {method.isDefault && (
+                                                    <Tooltip title="Método principal">
+                                                        <IconButton size="small" color="warning" disabled>
+                                                            <StarIcon fontSize="small" />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                )}
+                                                <Tooltip title="Eliminar método">
+                                                    <IconButton
+                                                        size="small"
+                                                        color="error"
+                                                        onClick={() => setDeleteTarget(method)}
+                                                    >
+                                                        <DeleteOutlineIcon fontSize="small" />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </Stack>
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -275,7 +434,7 @@ export default function Page() {
                     )}
                 </Paper>
 
-                {/* Add Payment Method */}
+                {/* Add Payment Method Section */}
                 <Paper elevation={1} sx={{ p: 3, mt: 2, borderRadius: 2 }}>
                     <Typography variant="h6" gutterBottom>
                         Agregar Método de Pago
@@ -289,7 +448,7 @@ export default function Page() {
                                     display: 'flex',
                                     justifyContent: 'space-between',
                                     alignItems: 'center',
-                                    padding: '0.75rem',
+                                    padding: '0.75rem 1rem',
                                     borderRadius: '8px',
                                     border: '1px solid #e0e0e0',
                                 }}
@@ -307,11 +466,16 @@ export default function Page() {
                                 </div>
                                 <Button
                                     size="small"
-                                    startIcon={<AddIcon />}
+                                    variant={method.type === 'cash' ? 'outlined' : 'contained'}
+                                    startIcon={method.type === 'cash' ? <HelpOutlineIcon /> : <AddIcon />}
                                     onClick={() => handleAddMethod(method.type)}
-                                    disabled={!isEpaycoConfigured}
+                                    sx={method.type !== 'cash' ? {
+                                        bgcolor: 'var(--primary-green-text-color)',
+                                        color: 'white',
+                                        '&:hover': { bgcolor: 'var(--secondary-green-text-color)' },
+                                    } : {}}
                                 >
-                                    Agregar
+                                    {method.actionLabel}
                                 </Button>
                             </div>
                         ))}
@@ -359,6 +523,38 @@ export default function Page() {
                         </TableBody>
                     </Table>
                 </Paper>
+
+                {/* Modals */}
+                <AddCardModal
+                    open={cardModalOpen}
+                    userId={currentUserId}
+                    onClose={() => setCardModalOpen(false)}
+                    onSuccess={handleCardAdded}
+                />
+
+                <AddPsePreferenceModal
+                    open={pseModalOpen}
+                    userId={currentUserId}
+                    onClose={() => setPseModalOpen(false)}
+                    onSuccess={handlePseAdded}
+                />
+
+                <CashPaymentInfoModal
+                    open={cashModalOpen}
+                    onClose={() => setCashModalOpen(false)}
+                />
+
+                <ConfirmDeleteModal
+                    open={!!deleteTarget}
+                    methodDetails={
+                        deleteTarget?.type === 'card'
+                            ? `Tarjeta ${deleteTarget.brand} •••• ${deleteTarget.last4}`
+                            : `Preferencia PSE ${deleteTarget?.bankName}`
+                    }
+                    isDeleting={isDeleting}
+                    onClose={() => setDeleteTarget(null)}
+                    onConfirm={handleConfirmDelete}
+                />
 
                 <Snackbar
                     open={snackOpen}

@@ -277,3 +277,35 @@ export interface UpdateContractParams {
     contractId: string
     data: Partial<ContractFirestoreDocument>
 }
+
+// =============================================================================
+// Payment Method Types
+// =============================================================================
+
+export interface PaymentMethodFirestoreDocument extends DocumentData {
+    id: string
+    userId: string
+    type: 'card' | 'pse'
+    isDefault: boolean
+    createdAt: string
+    
+    // Card specific fields (Client-side tokenized via ePayco)
+    token?: string
+    brand?: 'Visa' | 'Mastercard' | 'American Express' | 'Diners' | 'Otro'
+    last4?: string
+    expMonth?: string
+    expYear?: string
+    cardholderName?: string
+    
+    // PSE specific fields (Preferred Bank & Billing info)
+    bankCode?: string
+    bankName?: string
+    personType?: 'N' | 'J'
+    
+    // Tax/Identity details
+    docType?: string
+    docNumberMasked?: string
+}
+
+export type SavePaymentMethodParams = Omit<PaymentMethodFirestoreDocument, 'id' | 'createdAt'>
+
