@@ -286,6 +286,13 @@ pending_payment → active → completed → disputed
 - **Form Integration**: Requirements posting (`/nuevo-proyecto`) and VIP inspection requests (`/app/suscripciones`) use the reusable `<PropertySelector />` from `@features/inmuebles`.
 
 
+### Hybrid Notification System Architecture (2026-07-21)
+- **Hybrid Responsibilities**: Structured system notifications, mass broadcast announcements (`recipientId = 'ALL'`), and unread badge counters are governed by Firestore (`/notifications` collection + `@services/notificationService`). Sendbird remains dedicated exclusively to 1-to-1 chats, negotiation channels, and live profile comments.
+- **Real-Time Sync**: Component headers (`NotificationBar.tsx`) and the Notification Center (`/app/notificaciones`) subscribe to real-time updates via `subscribeUserNotifications()` using `onSnapshot`.
+- **Admin Broadcast Workbench**: Administrators broadcast platform announcements from `/admin/notificaciones`, targeting all users or filtering by role (`1` for Propietarios, `2` for Comerciantes).
+
+
+
 ### Centralized Geographic Configuration (2026-07-06)
 - **Centralization of Zones**: Migrated all zone listings (Bogotá localities + metropolitan municipalities) to `@assets/data/ListadoZonas.ts` to prevent duplication bugs and keep prerendering, sitemaps (`generate-sitemap.ts`), and marketing search forms (`QuickMatch.tsx`) perfectly aligned.
 - **Sitemap Script Path Aliases**: To run the sitemap generator script using `tsx` with path aliases, the `scripts/**/*.ts` pattern must be included in `tsconfig.json`'s `include` array. This ensures the TypeScript compiler compiles script files in the root workspace and correctly resolves aliases like `@assets/data/ListadoZonas` without IDE or compiler errors.

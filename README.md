@@ -51,9 +51,11 @@ The project uses a **Tiered Access Model**:
    - `/admin/dashboard` — KPI Command Center + Monetization Analytics
    - `/admin/usuarios` — User Management (DataGrid)
    - `/admin/verificacion` — Identity Verification Queue
+   - `/admin/certificaciones` — Certification Requests Evaluation Queue
    - `/admin/contratos` — Contract Management
    - `/admin/requerimientos` — Requirements Overview
    - `/admin/referidos` — Referral Program Auditing & Metrics
+   - `/admin/notificaciones` — Platform-Wide Broadcast Workbench
 
 ## Project Structure
 
@@ -128,7 +130,9 @@ comunidad-dezzpo/
 │   │   ├── dashboard/+Page.tsx               # KPI cards + Recharts + Monetization
 │   │   ├── usuarios/+Page.tsx                # MUI DataGrid + drawer
 │   │   ├── verificacion/+Page.tsx            # Identity verification queue
+│   │   ├── certificaciones/+Page.tsx         # Certification requests queue
 │   │   ├── referidos/+Page.tsx               # Referral program audit & metrics
+│   │   ├── notificaciones/+Page.tsx           # Mass broadcast workbench
 │   │   ├── contratos/                        # Contract management
 │   │   └── requerimientos/                   # Requirements overview
 │   │

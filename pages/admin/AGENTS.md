@@ -27,7 +27,9 @@
 | `/admin/dashboard` | KPI Dashboard | User counts, growth trends, revenue potential, contract health |
 | `/admin/usuarios` | User Management | DataGrid with search, role/status chips, side drawer detail |
 | `/admin/verificacion` | Identity Verification | Queue workbench, split-screen (user data ↔ document), approve/reject |
+| `/admin/certificaciones` | Certifications Review | Evaluation queue workbench for comerciante skill verification |
 | `/admin/referidos` | Referral Audit | Global referral metrics (KPIs, conversion rate), filterable audit table |
+| `/admin/notificaciones` | Broadcast Workbench | Platform-wide mass notification broadcast to all or by role |
 
 ## 3. Data Service (`adminService.ts`)
 
