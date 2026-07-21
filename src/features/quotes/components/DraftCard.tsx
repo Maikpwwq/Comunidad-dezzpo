@@ -36,10 +36,13 @@ import {
     Avatar,
     IconButton,
     Typography,
-    Snackbar
+    Snackbar,
+    Chip,
+    Box,
 } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
+import { getBadgeDetails } from '@config/userClassification.config'
 
 // Types
 export interface DraftCardProps {
@@ -51,6 +54,7 @@ export interface DraftCardProps {
     draftCategory: string
     draftCreated?: string
     draftApply?: string[]
+    draftPropietarioClassification?: string
 }
 
 export function DraftCard({
@@ -62,6 +66,7 @@ export function DraftCard({
     draftCategory,
     draftCreated,
     draftApply = [],
+    draftPropietarioClassification,
 }: DraftCardProps): React.ReactElement {
     // Zustand selectors (atomic)
     const currentUserId = useUserStore((state) => state.userId)
@@ -79,6 +84,7 @@ export function DraftCard({
     const [snackOpen, setSnackOpen] = useState(false)
     const [snackMessage, setSnackMessage] = useState('')
     const [ownerName, setOwnerName] = useState<string>(draftPropietarioResidente)
+    const [ownerClassification, setOwnerClassification] = useState<string | undefined>(draftPropietarioClassification)
 
     React.useEffect(() => {
         let isMounted = true
@@ -87,8 +93,9 @@ export function DraftCard({
             try {
                 // Propietarios are role 1
                 const userData = await getUser({ userId: draftPropietarioResidente, role: 1 })
-                if (isMounted && userData?.userName) {
-                    setOwnerName(userData.userName)
+                if (isMounted) {
+                    if (userData?.userName) setOwnerName(userData.userName)
+                    if (userData?.userClasification) setOwnerClassification(userData.userClasification)
                 }
             } catch (error) {
                 console.error('Error fetching owner name', error)
@@ -188,7 +195,24 @@ export function DraftCard({
                         Publicado hace {draftCreated}
                     </Typography>
                 }
-                title={<span className={styles['text-owner']}>{ownerName}</span>}
+                title={
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                        <span className={styles['text-owner']}>{ownerName}</span>
+                        {ownerClassification && (
+                            <Chip
+                                label={getBadgeDetails(ownerClassification).name}
+                                size="small"
+                                sx={{
+                                    bgcolor: getBadgeDetails(ownerClassification).bgLight,
+                                    color: getBadgeDetails(ownerClassification).color,
+                                    fontWeight: 700,
+                                    fontSize: '0.68rem',
+                                    height: 18,
+                                }}
+                            />
+                        )}
+                    </Box>
+                }
             />
 
             <CardContent className={clsx(styles.Content)}>

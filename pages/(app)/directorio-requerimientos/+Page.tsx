@@ -21,6 +21,9 @@ import { Container, Button } from 'react-bootstrap'
 import { Typography, Chip, Box, Divider } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 
+import { PROPIETARIO_RANKINGS } from '@config/userClassification.config'
+import FilterListIcon from '@mui/icons-material/FilterList'
+
 interface Draft {
     id?: string
     draftId?: string
@@ -31,6 +34,8 @@ interface Draft {
     draftPropietarioResidente?: string
     draftCreated?: string
     draftApply?: string[]
+    userClasification?: string
+    draftPropietarioClassification?: string
     [key: string]: unknown
 }
 
@@ -38,6 +43,8 @@ export default function Page() {
     const [draftsData, setDraftsData] = useState<Draft[]>([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [userCategories, setUserCategories] = useState<string[]>([])
+    const [selectedClassification, setSelectedClassification] = useState<string>('all')
+
     const userId = useUserStore((state) => state.userId)
     const { currentUser } = useAuth()
     const isComerciante = currentUser?.role === 2
@@ -91,21 +98,41 @@ export default function Page() {
         fetchUserCategories()
     }, [userId, isComerciante])
 
+    // Filter drafts by Propietario Classification tier
+    const filteredByClassification = draftsData.filter((draft) => {
+        if (selectedClassification === 'all') return true
+        const clas = (
+            draft.userClasification ||
+            draft.draftPropietarioClassification ||
+            ''
+        ).toLowerCase()
+        const targetTier = PROPIETARIO_RANKINGS.clasificacion.tiers.find(
+            (t) => t.id === selectedClassification
+        )
+        if (!targetTier) return true
+        return (
+            clas.includes(targetTier.name.toLowerCase()) ||
+            clas.includes(targetTier.id.toLowerCase())
+        )
+    })
+
     // Filter drafts matching the comerciante's categories
     const getMatchingDrafts = () => {
         if (!isComerciante || userCategories.length === 0) return []
-        return draftsData.filter((draft) => {
+        return filteredByClassification.filter((draft) => {
             const cat = (draft.draftCategory || '').toLowerCase()
-            return userCategories.some((uc) => cat.includes(uc.toLowerCase()) || uc.toLowerCase().includes(cat))
+            return userCategories.some(
+                (uc) => cat.includes(uc.toLowerCase()) || uc.toLowerCase().includes(cat)
+            )
         })
     }
     const matchingDrafts = getMatchingDrafts()
 
     // Remaining drafts (not in matching)
     const getOtherDrafts = () => {
-        if (matchingDrafts.length === 0) return draftsData
+        if (matchingDrafts.length === 0) return filteredByClassification
         const matchingIds = new Set(matchingDrafts.map((d) => d.draftId || d.id))
-        return draftsData.filter((d) => !matchingIds.has(d.draftId || d.id))
+        return filteredByClassification.filter((d) => !matchingIds.has(d.draftId || d.id))
     }
     const otherDrafts = getOtherDrafts()
 
@@ -127,6 +154,47 @@ export default function Page() {
                 <h3 className="type-section-title">
                     Buscar Requerimientos: Obtener o Aplicar con Cotizaciones
                 </h3>
+
+                {/* Classification Tier Filter Bar */}
+                <Box
+                    sx={{
+                        my: 2.5,
+                        p: 2,
+                        borderRadius: 3,
+                        bgcolor: 'var(--background-light-gray-color, #f8fafc)',
+                        border: '1px solid #e2e8f0',
+                    }}
+                >
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+                        <FilterListIcon sx={{ color: 'var(--brand-teal, #00897b)' }} />
+                        <Typography variant="subtitle2" fontWeight={700} color="text.primary">
+                            Filtrar por Clasificación del Propietario / Tipo de Inmueble:
+                        </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                        <Chip
+                            label="Todos los Inmuebles"
+                            onClick={() => setSelectedClassification('all')}
+                            color={selectedClassification === 'all' ? 'primary' : 'default'}
+                            variant={selectedClassification === 'all' ? 'filled' : 'outlined'}
+                            sx={{ fontWeight: 600 }}
+                        />
+                        {PROPIETARIO_RANKINGS.clasificacion.tiers.map((tier) => (
+                            <Chip
+                                key={tier.id}
+                                label={tier.name}
+                                onClick={() => setSelectedClassification(tier.id)}
+                                color={selectedClassification === tier.id ? 'primary' : 'default'}
+                                variant={selectedClassification === tier.id ? 'filled' : 'outlined'}
+                                sx={{
+                                    fontWeight: 600,
+                                    bgcolor: selectedClassification === tier.id ? tier.color : undefined,
+                                    color: selectedClassification === tier.id ? '#ffffff' : undefined,
+                                }}
+                            />
+                        ))}
+                    </Box>
+                </Box>
 
                 {/* Category-Filtered Section for Comerciantes */}
                 {isComerciante && matchingDrafts.length > 0 && (

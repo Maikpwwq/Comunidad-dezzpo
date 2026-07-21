@@ -138,6 +138,10 @@ export interface UserFirestoreDocument extends DocumentData {
     /** Referral Program fields */
     referralCode?: string
     referredBy?: string | null
+    /** Ranking, Classification and Honor Grade fields */
+    userCategorie?: string
+    userClasification?: string
+    userGrade?: string
     referralStats?: {
         totalInvited: number
         activeReferrals: number

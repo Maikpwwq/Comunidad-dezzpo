@@ -7,7 +7,9 @@ import { searchByCategories } from '@services/search' // Changed import
 import { UserCard } from '@features/profile'
 // UI Libs
 import { Row, Col, Container, Button } from 'react-bootstrap'
-import { Skeleton, Stack, Typography } from '@mui/material'
+import { Box, Chip, Skeleton, Stack, Typography } from '@mui/material'
+import FilterListIcon from '@mui/icons-material/FilterList'
+import { COMERCIANTE_RANKINGS } from '@config/userClassification.config'
 // Types
 import type { UserFirestoreDocument } from '@services/types'
 
@@ -44,6 +46,7 @@ export default function Page() {
     const [isLoaded, setIsLoaded] = useState(false)
     const [searchData, setSearchData] = useState<SearchDataState>({})
     const [usersData, setUsersData] = useState<UserFirestoreDocument[]>([])
+    const [selectedMerchantClassification, setSelectedMerchantClassification] = useState<string>('all')
 
     const fetchInitialUsers = async () => {
         try {
@@ -103,6 +106,25 @@ export default function Page() {
         navigate('/nuevo-proyecto')
     }
 
+    // Filter merchant users by classification tier
+    const filterUserList = (list: UserFirestoreDocument[]) => {
+        if (selectedMerchantClassification === 'all') return list
+        const targetTier = COMERCIANTE_RANKINGS.clasificacion.tiers.find(
+            (t) => t.id === selectedMerchantClassification
+        )
+        if (!targetTier) return list
+        return list.filter((u) => {
+            const clas = (u.userClasification || '').toLowerCase()
+            return (
+                clas.includes(targetTier.name.toLowerCase()) ||
+                clas.includes(targetTier.id.toLowerCase())
+            )
+        })
+    }
+
+    const filteredUsersData = filterUserList(usersData)
+    const filteredSearchData = searchData.docSnap ? filterUserList(searchData.docSnap) : []
+
     return (
         <Container fluid className="p-0 h-100" style={{ overflowX: 'hidden' }}>
             <Row className="m-0 d-flex">
@@ -117,6 +139,48 @@ export default function Page() {
                         </Button>
                     </h1>
                     <SearchBar />
+
+                    {/* Comerciante Classification Filter Bar */}
+                    <Box
+                        sx={{
+                            mt: 2.5,
+                            mx: 2,
+                            p: 2,
+                            borderRadius: 3,
+                            bgcolor: 'var(--background-light-gray-color, #f8fafc)',
+                            border: '1px solid #e2e8f0',
+                        }}
+                    >
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+                            <FilterListIcon sx={{ color: 'var(--brand-teal, #00897b)' }} />
+                            <Typography variant="subtitle2" fontWeight={700} color="text.primary">
+                                Filtrar por Tamaño de Operación / Estructura del Comerciante:
+                            </Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                            <Chip
+                                label="Todos los Perfiles"
+                                onClick={() => setSelectedMerchantClassification('all')}
+                                color={selectedMerchantClassification === 'all' ? 'primary' : 'default'}
+                                variant={selectedMerchantClassification === 'all' ? 'filled' : 'outlined'}
+                                sx={{ fontWeight: 600 }}
+                            />
+                            {COMERCIANTE_RANKINGS.clasificacion.tiers.map((tier) => (
+                                <Chip
+                                    key={tier.id}
+                                    label={tier.name}
+                                    onClick={() => setSelectedMerchantClassification(tier.id)}
+                                    color={selectedMerchantClassification === tier.id ? 'primary' : 'default'}
+                                    variant={selectedMerchantClassification === tier.id ? 'filled' : 'outlined'}
+                                    sx={{
+                                        fontWeight: 600,
+                                        bgcolor: selectedMerchantClassification === tier.id ? tier.color : undefined,
+                                        color: selectedMerchantClassification === tier.id ? '#ffffff' : undefined,
+                                    }}
+                                />
+                            ))}
+                        </Box>
+                    </Box>
                 </Col>
                 {searchInput ? (
                     <Row className="">
@@ -128,9 +192,8 @@ export default function Page() {
 
                         <Suspense fallback={<PortalSkeleton />}>
                             <section className={styles['directory-wrapper']}>
-                                {searchData?.docSnap &&
-                                    searchData?.docSnap.length > 0 ? (
-                                    searchData?.docSnap.map((user) => (
+                                {filteredSearchData && filteredSearchData.length > 0 ? (
+                                    filteredSearchData.map((user) => (
                                         <UserCard
                                             key={user.userId || user.uid}
                                             {...user}
@@ -143,7 +206,7 @@ export default function Page() {
                                             fontSize={'1.125rem'}
                                         >
                                             No se encontraron resultados de la
-                                            busqueda para la categoria!
+                                            búsqueda para la categoría o filtro seleccionado!
                                             <br />
                                             {spacedText}
                                         </Typography>
@@ -165,19 +228,25 @@ export default function Page() {
                     <p className="type-caption px-3">
                         Directorio de comerciantes calificados, contratistas
                         independientes y empresas del sector. <br />
-                        Encuentra todo lo mejor en asisitencia técnica!
+                        Encuentra todo lo mejor en asistencia técnica!
                     </p>
 
                     <Suspense fallback={<PortalSkeleton />}>
                         <section className={styles['directory-wrapper']}>
-                            {usersData &&
-                                usersData.length > 0 &&
-                                usersData.map((user) => (
+                            {filteredUsersData && filteredUsersData.length > 0 ? (
+                                filteredUsersData.map((user) => (
                                     <UserCard
                                         key={user.userId || user.uid}
                                         {...user}
                                     />
-                                ))}
+                                ))
+                            ) : (
+                                <div style={{ gridColumn: '1 / -1' }}>
+                                    <Typography className="type-body" fontSize={'1rem'} color="text.secondary">
+                                        No se encontraron profesionales para el nivel de clasificación seleccionado.
+                                    </Typography>
+                                </div>
+                            )}
                         </section>
                     </Suspense>
                 </Col>

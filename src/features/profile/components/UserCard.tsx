@@ -25,13 +25,17 @@ import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import { firestore } from '@services/firebase'
 import { getOrCreateDirectChannel } from '@services/sendbird'
 
+import { getBadgeDetails } from '@config/userClassification.config'
+
 // MUI Components
 import {
     Button,
     Avatar,
     IconButton,
     Typography,
-    Snackbar
+    Snackbar,
+    Chip,
+    Box,
 } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
@@ -47,6 +51,8 @@ export interface UserCardProps {
     userExperience?: string
     userDescription?: string
     userCategories?: string[]
+    userClasification?: string
+    userGrade?: string
 }
 
 interface CategoryChip {
@@ -64,6 +70,8 @@ export function UserCard({
     userExperience,
     userDescription,
     userCategories = [],
+    userClasification,
+    userGrade,
 }: UserCardProps): React.ReactElement {
     // Zustand selectors (atomic)
     const currentUserId = useUserStore((state) => state.userId)
@@ -195,6 +203,21 @@ export function UserCard({
                     <Typography variant="caption" display="block" color="text.secondary">
                         {userProfession} • Se unió el {userJoined}
                     </Typography>
+                    {userClasification && (
+                        <Box sx={{ mt: 0.5 }}>
+                            <Chip
+                                label={getBadgeDetails(userClasification).name}
+                                size="small"
+                                sx={{
+                                    bgcolor: getBadgeDetails(userClasification).bgLight,
+                                    color: getBadgeDetails(userClasification).color,
+                                    fontWeight: 700,
+                                    fontSize: '0.7rem',
+                                    height: 20,
+                                }}
+                            />
+                        </Box>
+                    )}
                 </div>
             </header>
 
