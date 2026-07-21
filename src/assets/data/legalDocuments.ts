@@ -10,7 +10,7 @@ export interface LegalDocument {
     subtitle: string
     version: string
     lastUpdated: string
-    pdfDownloadUrl?: string
+    pdfDownloadUrl?: string | undefined
     content: string
 }
 
