@@ -69,8 +69,29 @@ export default function Page() {
 
     const getDocIcon = (id: string) => {
         if (id.includes('terminos')) return <GavelIcon sx={{ fontSize: 32, color: 'primary.main' }} />
-        if (id.includes('privacidad')) return <ShieldIcon sx={{ fontSize: 32, color: '#0284c7' }} />
+        if (id.includes('tratamiento') || id.includes('privacidad')) return <ShieldIcon sx={{ fontSize: 32, color: '#0284c7' }} />
         return <CookieIcon sx={{ fontSize: 32, color: '#eab308' }} />
+    }
+
+    const renderFormattedLine = (line: string) => {
+        const parts = line.split(/(\*\*[^*]+\*\*|_[\w\s\d.:/-]+_)/g)
+        return parts.map((part, index) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+                return (
+                    <strong key={index} style={{ color: '#0f172a', fontWeight: 700 }}>
+                        {part.slice(2, -2)}
+                    </strong>
+                )
+            }
+            if (part.startsWith('_') && part.endsWith('_')) {
+                return (
+                    <em key={index} style={{ color: '#64748b' }}>
+                        {part.slice(1, -1)}
+                    </em>
+                )
+            }
+            return part
+        })
     }
 
     return (
@@ -111,7 +132,7 @@ export default function Page() {
                                     height: '100%',
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    justify: 'space-between',
+                                    justifyContent: 'space-between',
                                     border: '1px solid #e2e8f0',
                                     boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
                                     transition: 'all 0.2s ease-in-out',
@@ -247,7 +268,7 @@ export default function Page() {
                         }}
                     >
                         {LEGAL_DOCUMENTS.map((d) => (
-                            <Tab key={d.id} value={d.id} label={d.title.split(' ')[0] + ' ' + (d.subtitle ? `(${d.subtitle.split(' ')[2] || ''})` : '')} />
+                            <Tab key={d.id} value={d.id} label={d.title} />
                         ))}
                     </Tabs>
                 </Box>
@@ -271,19 +292,26 @@ export default function Page() {
                     >
                         {activeDoc.content.split('\n').map((line, lIdx) => {
                             if (line.startsWith('# ')) {
-                                return <Typography key={lIdx} variant="h4" fontWeight={800} sx={{ mb: 1, color: '#0f172a' }}>{line.replace('# ', '')}</Typography>
+                                return (
+                                    <Typography key={lIdx} variant="h4" fontWeight={800} sx={{ mb: 1, color: '#0f172a' }}>
+                                        {renderFormattedLine(line.replace('# ', ''))}
+                                    </Typography>
+                                )
                             }
                             if (line.startsWith('## ')) {
-                                return <Typography key={lIdx} variant="h6" fontWeight={700} sx={{ mt: 3, mb: 1.5, color: '#0f172a', borderBottom: '1px solid #e2e8f0', pb: 0.5 }}>{line.replace('## ', '')}</Typography>
-                            }
-                            if (line.startsWith('**') && line.endsWith('**')) {
-                                return <Typography key={lIdx} variant="subtitle2" fontWeight={800} sx={{ mt: 1.5, color: '#0f172a' }}>{line.replace(/\*\*/g, '')}</Typography>
+                                return (
+                                    <Typography key={lIdx} variant="h6" fontWeight={700} sx={{ mt: 3, mb: 1.5, color: '#0f172a', borderBottom: '1px solid #e2e8f0', pb: 0.5 }}>
+                                        {renderFormattedLine(line.replace('## ', ''))}
+                                    </Typography>
+                                )
                             }
                             if (line.startsWith('- ')) {
                                 return (
                                     <Box key={lIdx} sx={{ display: 'flex', gap: 1, mb: 0.75, pl: 1 }}>
                                         <Typography variant="body2" sx={{ color: 'primary.main', fontWeight: 700 }}>•</Typography>
-                                        <Typography variant="body2" color="text.primary">{line.replace('- ', '')}</Typography>
+                                        <Typography variant="body2" color="text.primary">
+                                            {renderFormattedLine(line.replace('- ', ''))}
+                                        </Typography>
                                     </Box>
                                 )
                             }
@@ -293,7 +321,7 @@ export default function Page() {
                             if (!line.trim()) return <Box key={lIdx} sx={{ height: 8 }} />
                             return (
                                 <Typography key={lIdx} variant="body2" sx={{ mb: 1.5, color: '#334155', lineHeight: 1.7 }}>
-                                    {line}
+                                    {renderFormattedLine(line)}
                                 </Typography>
                             )
                         })}

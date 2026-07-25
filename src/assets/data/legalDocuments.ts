@@ -329,59 +329,153 @@ Este Acuerdo se rige por las leyes de la República de Colombia. Cualquier contr
 `,
     },
     {
-        id: 'politica-privacidad',
-        title: 'Política de Privacidad',
-        subtitle: 'Aviso de Tratamiento de Datos Personales (Ley 1581 de 2012)',
-        version: 'V1.0',
+        id: 'politica-tratamiento-datos',
+        title: 'Política de Tratamiento de Datos',
+        subtitle: 'Habeas Data y Protección de Datos Personales (Ley 1581 de 2012)',
+        version: 'V1.1',
         lastUpdated: '21 de Julio de 2026',
         pdfDownloadUrl: 'https://drive.google.com/file/d/10I8CNmXfatwNigiICp7UP40WQyMENC_f/view?usp=sharing',
-        content: `# Política de Privacidad y Tratamiento de Datos Personales
+        content: `# Política de Tratamiento de Datos Personales
 
 **Comunidad Dezzpo**
-_Actualizado: 21 de Julio del 2026_
+_Actualizado V1.1: 21 de Julio del 2026_
 
 ---
 
-## 1. Identificación del Responsable del Tratamiento
+## 1. Objetivo
 
-La plataforma digital Dezzpo, operada por **Michael Arias Fajardo / NIT 1024537835-7** (en adelante "Dezzpo"), con domicilio en Bogotá D.C., Colombia, informa a todos sus usuarios (Propietarios, Residentes, Comerciantes Calificados y Empresas de Servicios) que los datos personales recolectados a través de nuestro sitio web, aplicaciones y canales oficiales serán tratados de conformidad con la **Ley 1581 de 2012** y el **Decreto 1074 de 2015**.
+Establecer los criterios que Dezzpo aplica en la recolección, almacenamiento, uso, circulación y supresión de los datos personales de los usuarios de la Plataforma (Propietarios y Comerciantes Calificados), garantizando su autenticidad, confidencialidad e integridad.
+
+## 2. Alcance
+
+Esta Política aplica a los datos personales de personas naturales registradas en las bases de datos de Dezzpo a través del sitio web y la aplicación móvil, y debe ser observada por el equipo, contratistas y terceros que traten dicha información en nombre de Dezzpo.
+
+## 3. Marco Normativo
+
+- Constitución Política de Colombia, artículo 15 (derecho al habeas data).
+- Ley Estatutaria 1581 de 2012, reglamentada hoy por el Decreto 1074 de 2015 (Título 2, Capítulo 25), que incorporó el antiguo Decreto 1377 de 2013.
+- Sentencia C-748 de 2011 de la Corte Constitucional (control de constitucionalidad de la Ley 1581).
+
+## 4. Responsable del Tratamiento
+
+**Michael Arias / NIT 102457835-7 / domicilio — Calle 159 No 8c-45**, operador de la Plataforma Dezzpo.
+
+Canal de contacto para ejercer sus derechos: **comunidad.dezzpo@gmail.com**.
+
+## 5. Datos que Recolectamos y Finalidades del Tratamiento
+
+Recolectamos los siguientes tipos de datos, según su rol en la Plataforma:
+
+- **Datos de identificación:** nombre, documento de identidad, RUT, datos de contacto.
+- **Datos de verificación:** soporte de domicilio, licencias o certificaciones profesionales (Comerciantes Calificados), seguro de responsabilidad civil.
+- **Datos de ubicación:** direcciones de inmuebles registradas (Propietarios), zona de cobertura de servicio (Comerciantes Calificados).
+- **Datos de transacciones:** historial de Requerimientos, Cotizaciones, contratos y pagos procesados a través de ePayco (no incluye datos completos de tarjeta, que son tokenizados directamente por el procesador de pagos).
+- **Datos de uso:** mensajes dentro de la Plataforma, calificaciones, contenido de perfil.
+
+Tratamos estos datos para:
+
+- a) Registrar, autenticar y verificar la identidad de los usuarios.
+- b) Publicar y gestionar Requerimientos, Cotizaciones y la contratación entre Propietarios y Comerciantes Calificados.
+- c) Procesar pagos y comisiones a través de nuestra pasarela de pagos integrada.
+- d) Mostrar perfiles públicos, calificaciones y distintivos de certificación ("Destacado").
+- e) Enviar notificaciones relevantes (nuevos Requerimientos, mensajes, estado de solicitudes).
+- f) Prevenir fraude y verificar el cumplimiento de nuestros Acuerdos de Usuario.
+- g) Generar estadísticas internas para mejorar el Servicio.
+- h) Realizar actividades de mercadeo sobre nuestros propios servicios (usted puede solicitar exclusión de estas comunicaciones en cualquier momento).
+- i) Atender solicitudes, quejas y reclamos, y dar trámite al ejercicio de sus derechos de habeas data.
+- j) Cumplir obligaciones legales y regulatorias aplicables.
+
+## 6. Datos Sensibles
+
+Solo recolectamos datos sensibles (por ejemplo, datos biométricos) cuando exista una finalidad específica, legítima y previamente informada, con su autorización expresa e independiente de cualquier otra autorización general. Usted nunca está obligado a responder preguntas sobre datos sensibles.
+
+## 7. Datos de Menores de Edad
+
+Dezzpo no está dirigido a menores de edad; el registro en la Plataforma requiere ser mayor de edad y tener capacidad legal para contratar, conforme a nuestros Acuerdos de Usuario.
+
+## 8. Derechos de los Titulares
+
+Usted tiene derecho a:
+
+- (i) Acceder de forma gratuita a sus datos.
+- (ii) Conocer, actualizar y rectificar su información.
+- (iii) Solicitar prueba de la autorización otorgada.
+- (iv) Presentar quejas ante la Superintendencia de Industria y Comercio.
+- (v) Revocar la autorización y/o solicitar la supresión de sus datos, salvo que exista un deber legal o contractual que impida eliminarlos.
+- (vi) Abstenerse de responder preguntas sobre datos sensibles.
+
+Puede ejercer estos derechos escribiendo a **comunidad.dezzpo@gmail.com** o desde Ajustes > Privacidad en la Plataforma.
+
+## 9. Principios Rectores
+
+- **Legalidad:** el tratamiento se sujeta a lo dispuesto en la ley.
+- **Finalidad:** el tratamiento obedece a una finalidad legítima, informada al Titular.
+- **Libertad:** solo se ejerce con su consentimiento previo, expreso e informado.
+- **Veracidad:** la información tratada debe ser veraz, completa y actualizada.
+- **Transparencia:** usted puede solicitar información sobre la existencia de datos que le conciernan en cualquier momento.
+- **Acceso y circulación restringida:** el tratamiento se limita a las personas autorizadas por usted o por la ley.
+- **Seguridad:** aplicamos medidas técnicas, humanas y administrativas razonables para proteger sus datos.
+- **Confidencialidad:** toda persona que intervenga en el tratamiento está obligada a guardar reserva, incluso después de finalizada su relación con Dezzpo.
+
+## 10. Transferencia y Transmisión Internacional
+
+Parte de nuestra infraestructura tecnológica (almacenamiento en la nube) puede procesar datos en servidores ubicados fuera de Colombia. Al aceptar el Aviso de Privacidad, usted autoriza esta transferencia y transmisión, necesaria para la prestación del Servicio.
+
+## 11. Vigencia de las Bases de Datos
+
+Conservamos sus datos mientras sean necesarios para las finalidades descritas, o mientras exista una relación contractual vigente. Puede solicitar su supresión en cualquier momento, salvo que exista un deber legal o contractual de conservarlos.
+
+## 12. Vigencia y Actualización
+
+Esta Política entra en vigencia a partir de su publicación y será revisada al menos una vez al año, o antes si cambian materialmente nuestras prácticas de tratamiento de datos.
+`,
+    },
+    {
+        id: 'aviso-privacidad',
+        title: 'Aviso de Privacidad',
+        subtitle: 'Autorización para el Tratamiento de Datos Personales',
+        version: 'V1.1',
+        lastUpdated: '21 de Julio de 2026',
+        pdfDownloadUrl: undefined,
+        content: `# Aviso de Privacidad y Autorización para el Tratamiento de Datos Personales
+
+**Michael Arias**, identificada con NIT **1024537835-7**, con domicilio en **Calle 159 No 8c-45**, responsable del tratamiento de sus datos personales, le informa lo siguiente:
 
 ---
 
-## 2. Finalidades del Tratamiento
+## 1. ¿Qué hacemos con sus datos?
 
-Los datos personales proporcionados serán utilizados para las siguientes finalidades:
+Recolectamos, almacenamos, usamos y, cuando corresponda, transmitimos sus datos personales para:
 
-1. **Gestión de Cuentas y Registro**: Crear, autenticar y administrar el perfil del usuario en la Plataforma.
-2. **Conexión de Servicios**: Facilitar la publicación de Requerimientos y el envío de Cotizaciones entre Propietarios y Comerciantes Calificados.
-3. **Procesamiento de Pagos y Facturación**: Gestionar las transacciones y comisiones mediante pasarelas de pago autorizadas (ePayco).
-4. **Verificación de Seguridad**: Validar documentos de identidad, certificaciones técnicas, licencias y antecedentes para prevenir fraude y mantener la confianza de la comunidad.
-5. **Comunicación y Soporte**: Enviar notificaciones de servicio, alertas sobre el estado de solicitudes, mensajes del sistema y responder requerimientos de soporte o PQRS.
-6. **Mejora Continua y Análisis**: Realizar análisis estadísticos agregados para optimizar la experiencia de usuario y el rendimiento del sitio.
+- Registrarlo y verificar su identidad en la Plataforma Dezzpo.
+- Gestionar la publicación y contratación de Requerimientos entre Propietarios y Comerciantes Calificados.
+- Procesar pagos y comisiones a través de nuestra pasarela de pagos integrada.
+- Mostrar su perfil, calificaciones y certificaciones dentro de la Plataforma.
+- Enviarle notificaciones relevantes sobre su cuenta y actividad.
+- Comunicaciones de mercadeo sobre nuestros propios servicios (opcional — puede solicitar exclusión en cualquier momento).
+- Cumplir obligaciones legales aplicables.
 
----
+Parte de nuestra infraestructura tecnológica puede procesar sus datos en servidores ubicados fuera de Colombia; al aceptar este Aviso, usted autoriza dicha transferencia.
 
-## 3. Derechas del Titular de los Datos (Habeas Data)
-
-Como titular de sus datos personales, usted tiene derecho a:
-
-- **Conocer, actualizar y rectificar** sus datos personales en cualquier momento a través de la sección "Ajustes de Perfil" o mediante nuestros canales de contacto.
-- **Solicitar prueba** de la autorización otorgada para el tratamiento de sus datos.
-- **Ser informado** sobre el uso que se le ha dado a sus datos personales.
-- **Revocar la autorización y/o solicitar la supresión** de sus datos cuando no exista un deber legal o contractual de permanecer en la base de datos.
-- **Presentar quejas** ante la Superintendencia de Industria y Comercio (SIC) por infracciones a la normativa de protección de datos.
+Puede consultar el detalle completo en nuestra **Política de Tratamiento de Datos Personales**, disponible en **www.comunidad-dezzpo.vercel.app/legal**.
 
 ---
 
-## 4. Transferencia y Transmisión Internacional de Datos
+## 2. Sus derechos
 
-Para operar los servicios de forma eficiente y segura, Dezzpo utiliza proveedores tecnológicos internacionales (servidores en la nube, infraestructura de autenticación de Firebase y pasarelas de pago). Al aceptar este aviso, el usuario autoriza la transmisión y transferencia internacional de sus datos necesarios para la prestación del Servicio.
+Usted puede: acceder gratuitamente a sus datos; conocerlos, actualizarlos y rectificarlos; solicitar prueba de su autorización; presentar quejas ante la Superintendencia de Industria y Comercio; revocar su autorización o solicitar la supresión de sus datos (salvo deber legal o contractual que lo impida); y abstenerse de responder preguntas sobre datos sensibles.
 
 ---
 
-## 5. Canales de Atención para Solicitudes
+## 3. ¿Cómo ejercer sus derechos?
 
-Para ejercer sus derechos de Habeas Data, enviar consultas o solicitar la supresión de datos, puede comunicarse a través del formulario de atención en la Plataforma o mediante nuestra sección de Ayuda.
+Escríbanos a **comunidad.dezzpo@gmail.com** o desde Ajustes > Privacidad en la Plataforma.
+
+---
+
+## 4. Autorización
+
+Al registrarme y usar la Plataforma, declaro que la información que suministro es veraz, completa y exacta, y autorizo de manera previa, expresa e informada el tratamiento de mis datos personales por parte de Dezzpo para las finalidades aquí descritas.
 `,
     },
     {
