@@ -42,7 +42,7 @@ import {
     updateUserClassification,
     type AdminUserRow,
 } from '@services/admin'
-import { COMERCIANTE_OPTIONS, PROPIETARIO_OPTIONS } from '@config/userClassification.config'
+import { COMERCIANTE_OPTIONS, PROPIETARIO_OPTIONS, getBadgeDetails } from '@config/userClassification.config'
 
 /* ── Brand palette ─────────────────────────────────────────────── */
 const BRAND = {
@@ -97,6 +97,54 @@ const columns: GridColDef<AdminUserRow>[] = [
                 sx={statusChipSx(params.value)}
             />
         ),
+    },
+    {
+        field: 'userCategorie',
+        headerName: 'Categoría',
+        width: 130,
+        renderCell: (params) => {
+            if (!params.value) return <span style={{ color: '#94a3b8', fontSize: '0.75rem' }}>—</span>
+            const badge = getBadgeDetails(params.value)
+            return (
+                <Chip
+                    label={badge.name}
+                    size="small"
+                    sx={{ bgcolor: badge.bgLight, color: badge.color, fontWeight: 600, fontSize: '0.7rem' }}
+                />
+            )
+        },
+    },
+    {
+        field: 'userClasification',
+        headerName: 'Clasificación',
+        width: 160,
+        renderCell: (params) => {
+            if (!params.value) return <span style={{ color: '#94a3b8', fontSize: '0.75rem' }}>—</span>
+            const badge = getBadgeDetails(params.value)
+            return (
+                <Chip
+                    label={badge.name}
+                    size="small"
+                    sx={{ bgcolor: badge.bgLight, color: badge.color, fontWeight: 600, fontSize: '0.7rem' }}
+                />
+            )
+        },
+    },
+    {
+        field: 'userGrade',
+        headerName: 'Grado',
+        width: 140,
+        renderCell: (params) => {
+            if (!params.value) return <span style={{ color: '#94a3b8', fontSize: '0.75rem' }}>—</span>
+            const badge = getBadgeDetails(params.value)
+            return (
+                <Chip
+                    label={badge.name}
+                    size="small"
+                    sx={{ bgcolor: badge.bgLight, color: badge.color, fontWeight: 600, fontSize: '0.7rem' }}
+                />
+            )
+        },
     },
     { field: 'joined', headerName: 'Registro', width: 130 },
     {
