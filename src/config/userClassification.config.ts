@@ -351,3 +351,68 @@ export function getBadgeDetails(
     // Default fallback returning the string value as-is
     return { name: val, color: '#3b82f6', bgLight: '#eff6ff' }
 }
+
+/* =============================================================================
+   4. PREDEFINED SELECTOR OPTIONS FOR ADMIN & FORMS
+   ============================================================================= */
+
+export const COMERCIANTE_OPTIONS = {
+    userCategorie: [
+        'Hierro I', 'Hierro II', 'Hierro III', 'Hierro IV', 'Hierro V',
+        'Bronce I', 'Bronce II', 'Bronce III', 'Bronce IV', 'Bronce V',
+        'Plata I', 'Plata II', 'Plata III', 'Plata IV', 'Plata V',
+        'Oro I', 'Oro II', 'Oro III', 'Oro IV', 'Oro V',
+        'Platino I', 'Platino II', 'Platino III', 'Platino IV', 'Platino V',
+        'Diamante I', 'Diamante II', 'Diamante III', 'Diamante IV', 'Diamante V',
+        'Black Diamond',
+    ],
+    userClasification: [
+        'Persona Natural',
+        'Empresa Emergente',
+        'PyME de Servicios',
+        'Empresa Gacela',
+        'Empresa Tractora',
+        'Corporativo Escalable',
+        'Emergente',
+        'PyME',
+        'Gacela',
+        'Tractora',
+        'Escalable',
+    ],
+    userGrade: [
+        'Activo',
+        'Director Restauración',
+        'Campeón',
+        'Maestro Constructor',
+        'Gran Maestro',
+        'Retador Sostenible',
+    ],
+}
+
+export const PROPIETARIO_OPTIONS = {
+    userCategorie: [
+        'Básico',
+        'Plus',
+        'Silver',
+        'Gold',
+        'Premium',
+        'Black Diamond',
+    ],
+    userClasification: [
+        'Hogar',
+        'Negocio',
+        'Propiedad Horizontal',
+        'Inmobiliaria',
+        'Aliado Estratégico',
+        'Aliado',
+    ],
+    userGrade: [
+        'Nuevo Miembro',
+        'Explorador',
+        'Miembro Activo',
+        'Cliente Frecuente',
+        'Cliente Preferencial',
+        'Embajador Dezzpo',
+    ],
+}
+

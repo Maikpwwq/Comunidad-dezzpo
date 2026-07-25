@@ -22,6 +22,10 @@ import {
     Snackbar,
     Alert,
     CircularProgress,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
@@ -38,6 +42,7 @@ import {
     updateUserClassification,
     type AdminUserRow,
 } from '@services/admin'
+import { COMERCIANTE_OPTIONS, PROPIETARIO_OPTIONS } from '@config/userClassification.config'
 
 /* ── Brand palette ─────────────────────────────────────────────── */
 const BRAND = {
@@ -397,43 +402,90 @@ export default function Page() {
 
                             {/* Classification, Gradation & Category Editor */}
                             <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1.5, color: 'text.primary' }}>
-                                Clasificación y Rangos del Usuario
+                                Clasificación y Rangos del Usuario ({selectedUser.role})
                             </Typography>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                                <TextField
-                                    label="Categoría Membresía (userCategorie)"
-                                    size="small"
-                                    fullWidth
-                                    value={editUserCategorie}
-                                    onChange={(e) => setEditUserCategorie(e.target.value)}
-                                    placeholder="Ej: Hierro I, Plata, Oro, Premium..."
-                                />
-                                <TextField
-                                    label="Clasificación Operación (userClasification)"
-                                    size="small"
-                                    fullWidth
-                                    value={editUserClasification}
-                                    onChange={(e) => setEditUserClasification(e.target.value)}
-                                    placeholder="Ej: Persona Natural, PyME, Hogar, Propiedad Horizontal..."
-                                />
-                                <TextField
-                                    label="Grado de Experiencia (userGrade)"
-                                    size="small"
-                                    fullWidth
-                                    value={editUserGrade}
-                                    onChange={(e) => setEditUserGrade(e.target.value)}
-                                    placeholder="Ej: Maestro Constructor, Gran Maestro, Miembro Activo..."
-                                />
-                                <Button
-                                    variant="outlined"
-                                    size="small"
-                                    startIcon={<SaveIcon />}
-                                    onClick={handleSaveClassification}
-                                    sx={{ alignSelf: 'flex-start', fontWeight: 700 }}
-                                >
-                                    Guardar Clasificación
-                                </Button>
-                            </Box>
+                            {(() => {
+                                const classificationOpts = selectedUser.role === 'Comerciante' ? COMERCIANTE_OPTIONS : PROPIETARIO_OPTIONS
+                                return (
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                        <FormControl size="small" fullWidth>
+                                            <InputLabel id="select-user-categorie-label">Categoría Membresía (userCategorie)</InputLabel>
+                                            <Select
+                                                labelId="select-user-categorie-label"
+                                                label="Categoría Membresía (userCategorie)"
+                                                value={editUserCategorie}
+                                                onChange={(e) => setEditUserCategorie(e.target.value)}
+                                            >
+                                                <MenuItem value=""><em>Sin Asignar</em></MenuItem>
+                                                {classificationOpts.userCategorie.map((opt) => (
+                                                    <MenuItem key={opt} value={opt}>{opt}</MenuItem>
+                                                ))}
+                                                {editUserCategorie && !classificationOpts.userCategorie.includes(editUserCategorie) && (
+                                                    <MenuItem value={editUserCategorie}>{editUserCategorie} (Valor Actual)</MenuItem>
+                                                )}
+                                            </Select>
+                                        </FormControl>
+
+                                        <FormControl size="small" fullWidth>
+                                            <InputLabel id="select-user-clasification-label">
+                                                {selectedUser.role === 'Comerciante'
+                                                    ? 'Clasificación Operación (userClasification)'
+                                                    : 'Clasificación Inmueble (userClasification)'}
+                                            </InputLabel>
+                                            <Select
+                                                labelId="select-user-clasification-label"
+                                                label={selectedUser.role === 'Comerciante'
+                                                    ? 'Clasificación Operación (userClasification)'
+                                                    : 'Clasificación Inmueble (userClasification)'}
+                                                value={editUserClasification}
+                                                onChange={(e) => setEditUserClasification(e.target.value)}
+                                            >
+                                                <MenuItem value=""><em>Sin Asignar</em></MenuItem>
+                                                {classificationOpts.userClasification.map((opt) => (
+                                                    <MenuItem key={opt} value={opt}>{opt}</MenuItem>
+                                                ))}
+                                                {editUserClasification && !classificationOpts.userClasification.includes(editUserClasification) && (
+                                                    <MenuItem value={editUserClasification}>{editUserClasification} (Valor Actual)</MenuItem>
+                                                )}
+                                            </Select>
+                                        </FormControl>
+
+                                        <FormControl size="small" fullWidth>
+                                            <InputLabel id="select-user-grade-label">
+                                                {selectedUser.role === 'Comerciante'
+                                                    ? 'Grado de Experiencia (userGrade)'
+                                                    : 'Grado de Fidelidad (userGrade)'}
+                                            </InputLabel>
+                                            <Select
+                                                labelId="select-user-grade-label"
+                                                label={selectedUser.role === 'Comerciante'
+                                                    ? 'Grado de Experiencia (userGrade)'
+                                                    : 'Grado de Fidelidad (userGrade)'}
+                                                value={editUserGrade}
+                                                onChange={(e) => setEditUserGrade(e.target.value)}
+                                            >
+                                                <MenuItem value=""><em>Sin Asignar</em></MenuItem>
+                                                {classificationOpts.userGrade.map((opt) => (
+                                                    <MenuItem key={opt} value={opt}>{opt}</MenuItem>
+                                                ))}
+                                                {editUserGrade && !classificationOpts.userGrade.includes(editUserGrade) && (
+                                                    <MenuItem value={editUserGrade}>{editUserGrade} (Valor Actual)</MenuItem>
+                                                )}
+                                            </Select>
+                                        </FormControl>
+
+                                        <Button
+                                            variant="outlined"
+                                            size="small"
+                                            startIcon={<SaveIcon />}
+                                            onClick={handleSaveClassification}
+                                            sx={{ alignSelf: 'flex-start', fontWeight: 700 }}
+                                        >
+                                            Guardar Clasificación
+                                        </Button>
+                                    </Box>
+                                )
+                            })()}
                         </DialogContent>
 
                         {/* Action buttons */}
