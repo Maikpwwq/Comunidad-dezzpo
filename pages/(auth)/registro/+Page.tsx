@@ -61,6 +61,8 @@ export default function Page({
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [role, setRole] = useState<UserRoleNumeric>(null)
+    const [acceptedPrivacy, setAcceptedPrivacy] = useState(false)
+
     // Role selection
     const handleSelectRole = (selectedRole: UserRoleNumeric) => {
         setRole(selectedRole)
@@ -69,6 +71,7 @@ export default function Page({
     // Email signup
     const handleEmailSignup = async (e: FormEvent) => {
         e.preventDefault()
+        if (!acceptedPrivacy) return
         if (password !== confirmPassword) {
             // Alert is handled by hook
             return
@@ -84,6 +87,9 @@ export default function Page({
     }
     // Google signup
     const handleGoogleSignup = async () => {
+        if (!acceptedPrivacy) {
+            return
+        }
         const result = await registerWithGoogle({ role }, draftInfo)
         if (result.success && draftInfo && setDraftInfo && handleSave) {
             setDraftInfo({ ...draftInfo, draftPropietarioResidente: result.user?.uid || '' })
@@ -158,30 +164,43 @@ export default function Page({
                                         />
                                     </Form.Group>
                                 </Col>
-                                <Col className="pt-4 pb-3">
-                                    <a
-                                        href="https://drive.google.com/file/d/1R3uRi3zZ0MmjN3VoUp3GvLGvZ3bCaT6e/view?usp=sharing"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <h3 className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")}>
-                                            Aviso tratamiento de datos personales <DownloadIcon fontSize="small" />.
-                                        </h3>
-                                    </a>
-                                    <br />
+                                <Col className="pt-2 pb-3 d-flex flex-column align-items-center">
+                                    <Form.Group className="mb-3 text-start w-100 px-2" style={{ maxWidth: 360 }}>
+                                        <Form.Check
+                                            type="checkbox"
+                                            id="accept-privacy-checkbox"
+                                            checked={acceptedPrivacy}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setAcceptedPrivacy(e.target.checked)}
+                                            label={
+                                                <span className="body-2" style={{ fontSize: '0.85rem', color: '#475569', lineHeight: 1.5 }}>
+                                                    He leído y acepto el{' '}
+                                                    <a
+                                                        href="/legal?doc=aviso-privacidad"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className={clsx(styles.Link, styles.Green)}
+                                                        style={{ textDecoration: 'underline', fontWeight: 700 }}
+                                                    >
+                                                        Aviso de Privacidad y Autorización para el Tratamiento de Datos Personales
+                                                    </a>
+                                                    . <span style={{ color: '#ef4444' }}>*</span>
+                                                </span>
+                                            }
+                                        />
+                                    </Form.Group>
+
                                     <Button
                                         onClick={() => setStep(1)}
-                                        className="mb-4 btn-round btn-middle w-auto"
+                                        className="mb-3 btn-round btn-middle w-auto"
                                         variant="secondary"
                                     >
                                         <KeyboardBackspaceIcon /> Volver atrás
                                     </Button>
-                                    <span className="mt-1" style={{ marginBottom: '1rem' }} />
                                     <Button
                                         className="btn-buscador btn-round btn-high body-1"
                                         variant="primary"
                                         type="submit"
-                                        disabled={isLoading}
+                                        disabled={isLoading || !acceptedPrivacy}
                                     >
                                         {isLoading ? 'Cargando...' : 'Crear Cuenta'}
                                     </Button>

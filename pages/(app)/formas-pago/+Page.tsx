@@ -562,6 +562,29 @@ export default function Page() {
                     onClose={() => setSnackOpen(false)}
                     message={snackMessage}
                 />
+
+                <Box sx={{ mt: 5, pt: 3, borderTop: '1px solid #e2e8f0', textAlign: 'center' }}>
+                    <Typography variant="caption" color="text.secondary">
+                        Tus transacciones y datos de facturación procesados por ePayco se rigen bajo nuestro{' '}
+                        <a
+                            href="/legal?doc=aviso-privacidad"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#0284c7', fontWeight: 600, textDecoration: 'underline' }}
+                        >
+                            Aviso de Privacidad
+                        </a>{' '}
+                        y la{' '}
+                        <a
+                            href="/legal?doc=politica-tratamiento-datos"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#0284c7', fontWeight: 600, textDecoration: 'underline' }}
+                        >
+                            Política de Tratamiento de Datos
+                        </a>.
+                    </Typography>
+                </Box>
             </div>
         </Container>
     )

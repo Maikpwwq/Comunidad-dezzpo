@@ -419,6 +419,29 @@ export default function Page() {
                     {snackMessage}
                 </Alert>
             </Snackbar>
+
+            <Box sx={{ mt: 5, pt: 3, borderTop: '1px solid #e2e8f0', textAlign: 'center' }}>
+                <Typography variant="caption" color="text.secondary">
+                    Los datos de verificación laboral y documentos técnicos proporcionados se tratan bajo nuestro{' '}
+                    <a
+                        href="/legal?doc=aviso-privacidad"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#0284c7', fontWeight: 600, textDecoration: 'underline' }}
+                    >
+                        Aviso de Privacidad
+                    </a>{' '}
+                    y la{' '}
+                    <a
+                        href="/legal?doc=politica-tratamiento-datos"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#0284c7', fontWeight: 600, textDecoration: 'underline' }}
+                    >
+                        Política de Tratamiento de Datos
+                    </a>.
+                </Typography>
+            </Box>
         </Container>
     )
 }

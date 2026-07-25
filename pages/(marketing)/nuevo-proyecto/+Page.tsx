@@ -576,6 +576,31 @@ export default function Page() {
                         </Col>
                 </Row>
             )}
+
+            <Row className="w-100 m-0 py-3 border-top text-center">
+                <Col className="col-12">
+                    <Typography variant="caption" color="text.secondary">
+                        Al publicar tu requerimiento, la información de tu proyecto se gestiona bajo nuestro{' '}
+                        <a
+                            href="/legal?doc=aviso-privacidad"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#0284c7', fontWeight: 600, textDecoration: 'underline' }}
+                        >
+                            Aviso de Privacidad
+                        </a>{' '}
+                        y la{' '}
+                        <a
+                            href="/legal?doc=politica-tratamiento-datos"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#0284c7', fontWeight: 600, textDecoration: 'underline' }}
+                        >
+                            Política de Tratamiento de Datos
+                        </a>.
+                    </Typography>
+                </Col>
+            </Row>
         </Container>
     )
 }

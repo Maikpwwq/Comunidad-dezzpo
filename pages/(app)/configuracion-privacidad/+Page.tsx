@@ -153,6 +153,41 @@ export default function Page() {
                     ))}
                 </Paper>
 
+                <Paper elevation={0} sx={{ p: 3, mt: 3, borderRadius: 3, bgcolor: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                    <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 1, color: '#0f172a' }}>
+                        Documentos Legales y Protección de Datos Personales
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2, lineHeight: 1.6 }}>
+                        Conforme a la Ley 1581 de 2012 de Habeas Data, puedes consultar nuestros términos oficiales y políticas de tratamiento de datos en cualquier momento:
+                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                        <a
+                            href="/legal?doc=aviso-privacidad"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#0284c7', fontWeight: 600, textDecoration: 'none' }}
+                        >
+                            • Aviso de Privacidad y Autorización de Tratamiento de Datos Personales →
+                        </a>
+                        <a
+                            href="/legal?doc=politica-tratamiento-datos"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#0284c7', fontWeight: 600, textDecoration: 'none' }}
+                        >
+                            • Política de Tratamiento de Datos Personales (Ley 1581 de 2012) →
+                        </a>
+                        <a
+                            href="/legal"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#64748b', fontWeight: 600, textDecoration: 'none' }}
+                        >
+                            • Centro Legal Completo (Términos y Condiciones) →
+                        </a>
+                    </Box>
+                </Paper>
+
                 <Snackbar
                     open={snackOpen}
                     autoHideDuration={2000}
