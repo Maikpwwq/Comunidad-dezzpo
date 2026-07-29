@@ -14,6 +14,7 @@
 
 import { useState, useEffect } from 'react'
 import { auth } from '@services/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 import { navigate } from 'vike/client/router'
 
 interface AdminGuardState {
@@ -28,43 +29,36 @@ export function useAdminGuard(): AdminGuardState {
     })
 
     useEffect(() => {
-        let cancelled = false
+        if (!auth) {
+            setState({ isAdmin: false, isLoading: false })
+            navigate('/')
+            return
+        }
 
-        async function checkAdminClaim() {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                setState({ isAdmin: false, isLoading: false })
+                navigate('/')
+                return
+            }
+
             try {
-                const user = auth?.currentUser
-                if (!user) {
-                    if (!cancelled) {
-                        setState({ isAdmin: false, isLoading: false })
-                        navigate('/')
-                    }
-                    return
-                }
-
-                // Force refresh to pick up latest claims
+                // Force refresh token to read latest custom claims
                 const tokenResult = await user.getIdTokenResult(true)
                 const isAdmin = tokenResult.claims.admin === true
 
-                if (!cancelled) {
-                    setState({ isAdmin, isLoading: false })
-                    if (!isAdmin) {
-                        navigate('/')
-                    }
+                setState({ isAdmin, isLoading: false })
+                if (!isAdmin) {
+                    navigate('/')
                 }
             } catch (error) {
                 console.error('Admin guard error:', error)
-                if (!cancelled) {
-                    setState({ isAdmin: false, isLoading: false })
-                    navigate('/')
-                }
+                setState({ isAdmin: false, isLoading: false })
+                navigate('/')
             }
-        }
+        })
 
-        checkAdminClaim()
-
-        return () => {
-            cancelled = true
-        }
+        return () => unsubscribe()
     }, [])
 
     return state
