@@ -1,7 +1,9 @@
 import { initializeApp, cert } from 'firebase-admin/app'
 import { getFirestore, type Firestore } from 'firebase-admin/firestore'
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs'
+import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from 'fs'
 import { resolve, dirname } from 'path'
+import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { zones } from '@assets/data/ListadoZonas'
 
 // Helper to slugify text
 function slugify(text: string): string {
@@ -17,6 +19,7 @@ function slugify(text: string): string {
 }
 
 const DOMAIN = 'https://comunidad-dezzpo.vercel.app'
+const TODAY = new Date().toISOString().split('T')[0]
 
 // Static URLs
 const staticUrls = [
@@ -34,19 +37,17 @@ const staticUrls = [
     '/calificaciones',
     '/profesionales-servicios',
     '/app/portal-servicios',
-    '/app/directorio-requerimientos'
+    '/app/directorio-requerimientos',
 ]
 
-// zones imported from ListadoZonas
-
-// Import ListadoCategorias from ts/tsx source by reading it or using a manual list.
-// To keep it simple and ultra-reliable at build time without compile errors, let's extract labels from the file or use a fallback list.
-// Better yet, let's load it from the source file! Since tsx runs this, we can import ListadoCategorias directly!
-import { ListadoCategorias } from '@assets/data/ListadoCategorias'
-import { zones } from '@assets/data/ListadoZonas'
+// Fallback blog post slugs if DB is not available at build time
+const fallbackBlogSlugs = [
+    'guia-definitiva-publicar-proyecto-propietario-dezzpo',
+    'como-hacer-crecer-tu-negocio-comerciantes-calificados-dezzpo',
+]
 
 async function generateSitemap() {
-    console.log('Generating sitemap.xml...')
+    console.log('Generating sitemap.xml and sitemap.xsl...')
 
     // Initialize Admin SDK
     const serviceAccountPath = resolve(process.cwd(), 'serviceAccountKey.json')
@@ -73,8 +74,25 @@ async function generateSitemap() {
         }
     }
 
-    // 2. Fetch Comerciante URLs if DB is available
+    // 2. Fetch Blog Posts & Comerciantes if DB is available
     if (db) {
+        try {
+            const blogSnap = await db.collection('blog_posts').get()
+            if (!blogSnap.empty) {
+                blogSnap.forEach((doc: any) => {
+                    const data = doc.data()
+                    if (data.status === 'published' && data.slug) {
+                        urls.push(`/blog/${data.slug}`)
+                    }
+                })
+            } else {
+                fallbackBlogSlugs.forEach((slug) => urls.push(`/blog/${slug}`))
+            }
+        } catch (err) {
+            console.error('Error fetching blog posts for sitemap:', err)
+            fallbackBlogSlugs.forEach((slug) => urls.push(`/blog/${slug}`))
+        }
+
         try {
             const snap = await db.collection('usersComerciantesCalificados').get()
             snap.forEach((doc: any) => {
@@ -87,33 +105,51 @@ async function generateSitemap() {
         } catch (err) {
             console.error('Error fetching comerciantes for sitemap:', err)
         }
+    } else {
+        fallbackBlogSlugs.forEach((slug) => urls.push(`/blog/${slug}`))
     }
 
-    // Generate XML content
-    const xmlHeader = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+    // Generate XML content with XSLT stylesheet & lastmod
+    const xmlHeader = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`
     const xmlFooter = '</urlset>'
-    const xmlEntries = urls.map(url => {
-        const fullUrl = `${DOMAIN}${url.startsWith('/') ? url : '/' + url}`
-        return `  <url>\n    <loc>${fullUrl}</loc>\n    <changefreq>daily</changefreq>\n    <priority>${url === '/' ? '1.0' : '0.8'}</priority>\n  </url>`
-    }).join('\n')
+    const xmlEntries = urls
+        .map((url) => {
+            const fullUrl = `${DOMAIN}${url.startsWith('/') ? url : '/' + url}`
+            const priority = url === '/' ? '1.0' : url.startsWith('/blog/') ? '0.9' : '0.8'
+            return `  <url>
+    <loc>${fullUrl}</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>${priority}</priority>
+  </url>`
+        })
+        .join('\n')
 
     const xmlContent = `${xmlHeader}\n${xmlEntries}\n${xmlFooter}`
 
-    // Write to public/
+    // Write sitemap.xml to public/
     const publicPath = resolve(process.cwd(), 'public', 'sitemap.xml')
     writeFileSync(publicPath, xmlContent, 'utf-8')
     console.log(`✓ Sitemap written to: ${publicPath} (${urls.length} URLs)`)
 
-    // Write to dist/client/ if directory exists
-    const distPath = resolve(process.cwd(), 'dist', 'client', 'sitemap.xml')
+    // Ensure sitemap.xsl is copied to dist/client/ if dist exists
+    const distSitemapXml = resolve(process.cwd(), 'dist', 'client', 'sitemap.xml')
+    const distSitemapXsl = resolve(process.cwd(), 'dist', 'client', 'sitemap.xsl')
+    const publicSitemapXsl = resolve(process.cwd(), 'public', 'sitemap.xsl')
+
     try {
-        if (!existsSync(dirname(distPath))) {
-            mkdirSync(dirname(distPath), { recursive: true })
+        if (!existsSync(dirname(distSitemapXml))) {
+            mkdirSync(dirname(distSitemapXml), { recursive: true })
         }
-        writeFileSync(distPath, xmlContent, 'utf-8')
-        console.log(`✓ Sitemap written to: ${distPath}`)
+        writeFileSync(distSitemapXml, xmlContent, 'utf-8')
+        if (existsSync(publicSitemapXsl)) {
+            copyFileSync(publicSitemapXsl, distSitemapXsl)
+        }
+        console.log(`✓ Sitemap and XSL stylesheet written to: dist/client/`)
     } catch (e) {
-        console.log('Skipped writing to dist/client/sitemap.xml (directory not built yet)')
+        console.log('Skipped writing to dist/client/ (directory not built yet)')
     }
 }
 

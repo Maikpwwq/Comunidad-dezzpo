@@ -106,41 +106,41 @@ export default function Page() {
         navigate('/nuevo-proyecto')
     }
 
-interface PublicClassificationFilterOption {
-    id: string
-    label: string
-    matchTerms: string[]
-}
+    interface PublicClassificationFilterOption {
+        id: string
+        label: string
+        matchTerms: string[]
+    }
 
-const PUBLIC_MERCHANT_FILTERS: PublicClassificationFilterOption[] = [
-    {
-        id: 'persona-natural',
-        label: 'Persona Natural',
-        matchTerms: ['persona natural'],
-    },
-    {
-        id: 'micro-empresa',
-        label: 'Micro Empresa (Empresa Emergente)',
-        matchTerms: ['empresa emergente', 'emergente'],
-    },
-    {
-        id: 'pyme-servicios',
-        label: 'PyME de Servicios',
-        matchTerms: ['pyme de servicios', 'pyme'],
-    },
-    {
-        id: 'empresas',
-        label: 'Empresas',
-        matchTerms: [
-            'empresa gacela',
-            'gacela',
-            'empresa tractora',
-            'tractora',
-            'corporativo escalable',
-            'escalable',
-        ],
-    },
-]
+    const PUBLIC_MERCHANT_FILTERS: PublicClassificationFilterOption[] = [
+        {
+            id: 'persona-natural',
+            label: 'Persona Natural',
+            matchTerms: ['persona natural'],
+        },
+        {
+            id: 'micro-empresa',
+            label: 'Micro Empresa',
+            matchTerms: ['empresa emergente', 'emergente'],
+        },
+        {
+            id: 'pyme-servicios',
+            label: 'PyME de Servicios',
+            matchTerms: ['pyme de servicios', 'pyme'],
+        },
+        {
+            id: 'empresas',
+            label: 'Empresas',
+            matchTerms: [
+                'empresa gacela',
+                'gacela',
+                'empresa tractora',
+                'tractora',
+                'corporativo escalable',
+                'escalable',
+            ],
+        },
+    ]
 
     // Filter merchant users by public classification category
     const filterUserList = (list: UserFirestoreDocument[]) => {
