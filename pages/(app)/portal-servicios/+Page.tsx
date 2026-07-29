@@ -106,20 +106,52 @@ export default function Page() {
         navigate('/nuevo-proyecto')
     }
 
-    // Filter merchant users by classification tier
+interface PublicClassificationFilterOption {
+    id: string
+    label: string
+    matchTerms: string[]
+}
+
+const PUBLIC_MERCHANT_FILTERS: PublicClassificationFilterOption[] = [
+    {
+        id: 'persona-natural',
+        label: 'Persona Natural',
+        matchTerms: ['persona natural'],
+    },
+    {
+        id: 'micro-empresa',
+        label: 'Micro Empresa (Empresa Emergente)',
+        matchTerms: ['empresa emergente', 'emergente'],
+    },
+    {
+        id: 'pyme-servicios',
+        label: 'PyME de Servicios',
+        matchTerms: ['pyme de servicios', 'pyme'],
+    },
+    {
+        id: 'empresas',
+        label: 'Empresas',
+        matchTerms: [
+            'empresa gacela',
+            'gacela',
+            'empresa tractora',
+            'tractora',
+            'corporativo escalable',
+            'escalable',
+        ],
+    },
+]
+
+    // Filter merchant users by public classification category
     const filterUserList = (list: UserFirestoreDocument[]) => {
         if (selectedMerchantClassification === 'all') return list
-        const tiers = COMERCIANTE_RANKINGS.clasificacion?.tiers || []
-        const targetTier = tiers.find(
-            (t) => t.id === selectedMerchantClassification
+        const selectedFilter = PUBLIC_MERCHANT_FILTERS.find(
+            (f) => f.id === selectedMerchantClassification
         )
-        if (!targetTier) return list
+        if (!selectedFilter) return list
         return list.filter((u) => {
             const clas = (u.userClasification || '').toLowerCase()
-            return (
-                clas.includes(targetTier.name.toLowerCase()) ||
-                clas.includes(targetTier.id.toLowerCase())
-            )
+            return selectedFilter.matchTerms.some((term) => clas.includes(term))
         })
     }
 
@@ -166,18 +198,14 @@ export default function Page() {
                                 variant={selectedMerchantClassification === 'all' ? 'filled' : 'outlined'}
                                 sx={{ fontWeight: 600 }}
                             />
-                            {(COMERCIANTE_RANKINGS.clasificacion?.tiers || []).map((tier) => (
+                            {PUBLIC_MERCHANT_FILTERS.map((filter) => (
                                 <Chip
-                                    key={tier.id}
-                                    label={tier.name}
-                                    onClick={() => setSelectedMerchantClassification(tier.id)}
-                                    color={selectedMerchantClassification === tier.id ? 'primary' : 'default'}
-                                    variant={selectedMerchantClassification === tier.id ? 'filled' : 'outlined'}
-                                    sx={{
-                                        fontWeight: 600,
-                                        bgcolor: selectedMerchantClassification === tier.id ? tier.color : undefined,
-                                        color: selectedMerchantClassification === tier.id ? '#ffffff' : undefined,
-                                    }}
+                                    key={filter.id}
+                                    label={filter.label}
+                                    onClick={() => setSelectedMerchantClassification(filter.id)}
+                                    color={selectedMerchantClassification === filter.id ? 'primary' : 'default'}
+                                    variant={selectedMerchantClassification === filter.id ? 'filled' : 'outlined'}
+                                    sx={{ fontWeight: 600 }}
                                 />
                             ))}
                         </Box>
