@@ -287,6 +287,15 @@ pending_payment → active → completed → disputed
 ## 9. Learned Lessons
 
 
+### DataGrid User Classification Columns (`/admin/usuarios` - 2026-07-25)
+- **Visible Columns**: Added `Categoría` (`userCategorie`), `Clasificación` (`userClasification`), and `Grado` (`userGrade`) columns to the MUI DataGrid table in `/admin/usuarios`.
+- **Badge Chips**: Rendered using `getBadgeDetails()` helper with color-coded background and text chips for instant visual auditing by administrators without opening user modals.
+
+### Mandatory Legal Privacy Placement (2026-07-25)
+- **Registration Flow (`/registro`)**: Added mandatory `Form.Check` checkbox for *Aviso de Privacidad y Autorización de Tratamiento de Datos Personales*. Account creation and Google Sign-in are gated until checked.
+- **Privacy Settings (`/app/configuracion-privacidad`)**: Permanent legal links section added under privacy toggles linking to `/legal?doc=aviso-privacidad`, `/legal?doc=politica-tratamiento-datos`, and `/legal`.
+- **Module Disclaimers**: Visible, non-intrusive legal footers added to *Mis Inmuebles*, *Formas de Pago*, *Certificaciones*, and *Nuevo Proyecto*.
+
 ### Blog & Inbound Marketing System (2026-07-21)
 - **Service Layer**: `@services/blog/blogService.ts` handles full CRUD (create, read, update, delete), slug generation, audience tagging (`propietarios`/`comerciantes`/`general`), and view-count metrics.
 - **Admin Workbench**: `/admin/blog` provides a content management interface with rich-text editing, image upload, audience targeting, publish/draft toggle, and article metrics table.
