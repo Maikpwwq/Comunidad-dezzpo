@@ -15,6 +15,10 @@ export {
     getGeographicDensity,
     getPlatformRevenueStats,
     updateUserClassification,
+    getCertificationDashboardStats,
+    getReferralDashboardStats,
+    getUserClassificationBreakdown,
+    getMultiStreamMonetization,
 } from './adminService'
 
 export type {
@@ -27,4 +31,9 @@ export type {
     FunnelMetric,
     ZoneDensity,
     RevenueStats,
+    CertificationDashboardStats,
+    ReferralDashboardStats,
+    ClassificationBreakdownItem,
+    UserClassificationBreakdown,
+    MultiStreamMonetizationStats,
 } from './adminService'

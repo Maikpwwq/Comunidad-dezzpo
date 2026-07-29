@@ -592,3 +592,227 @@ export async function getPlatformRevenueStats(): Promise<RevenueStats> {
     }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// 5. Untracked Data & Business Funding Model Analytics
+// ─────────────────────────────────────────────────────────────────────────────
+
+import { PRICING } from '@config/pricing.config'
+
+export interface CertificationDashboardStats {
+    totalRequests: number
+    pendingCount: number
+    scheduledCount: number
+    evaluatedCount: number
+    approvedCount: number
+    rejectedCount: number
+    revenueGenerated: number
+}
+
+export interface ReferralDashboardStats {
+    totalInvitations: number
+    totalRegistered: number
+    conversionRate: number
+    totalPointsDistributed: number
+}
+
+export interface ClassificationBreakdownItem {
+    name: string
+    propietariosCount: number
+    comerciantesCount: number
+    total: number
+}
+
+export interface UserClassificationBreakdown {
+    categories: ClassificationBreakdownItem[]
+    classifications: ClassificationBreakdownItem[]
+    grades: ClassificationBreakdownItem[]
+}
+
+export interface MultiStreamMonetizationStats {
+    comerciantesMembershipPotential: number
+    certificationsApprovedRevenue: number
+    contractEscrowVolume: number
+    platformFeeRevenue: number
+    totalGrossPlatformVolume: number
+}
+
+export async function getCertificationDashboardStats(): Promise<CertificationDashboardStats> {
+    if (!isFirebaseAvailable() || !firestore) {
+        return { totalRequests: 0, pendingCount: 0, scheduledCount: 0, evaluatedCount: 0, approvedCount: 0, rejectedCount: 0, revenueGenerated: 0 }
+    }
+    try {
+        const colRef = collection(firestore, 'certificationRequests')
+        const snap = await getDocs(colRef)
+        let pendingCount = 0
+        let scheduledCount = 0
+        let evaluatedCount = 0
+        let approvedCount = 0
+        let rejectedCount = 0
+
+        snap.forEach((docSnap) => {
+            const data = docSnap.data()
+            const st = data.status || 'pending'
+            if (st === 'pending' || st === 'pending_payment') pendingCount++
+            else if (st === 'scheduled') scheduledCount++
+            else if (st === 'evaluated') evaluatedCount++
+            else if (st === 'approved') approvedCount++
+            else if (st === 'rejected') rejectedCount++
+        })
+
+        const totalRequests = snap.size
+        const revenueGenerated = approvedCount * (PRICING.CERTIFICATION_SKILLS_VAL?.amount || 290000)
+
+        return {
+            totalRequests,
+            pendingCount,
+            scheduledCount,
+            evaluatedCount,
+            approvedCount,
+            rejectedCount,
+            revenueGenerated,
+        }
+    } catch (err) {
+        console.error('Error fetching certification dashboard stats:', err)
+        return { totalRequests: 0, pendingCount: 0, scheduledCount: 0, evaluatedCount: 0, approvedCount: 0, rejectedCount: 0, revenueGenerated: 0 }
+    }
+}
+
+export async function getReferralDashboardStats(): Promise<ReferralDashboardStats> {
+    if (!isFirebaseAvailable() || !firestore) {
+        return { totalInvitations: 0, totalRegistered: 0, conversionRate: 0, totalPointsDistributed: 0 }
+    }
+    try {
+        const colRef = collection(firestore, 'referrals')
+        const snap = await getDocs(colRef)
+        const totalInvitations = snap.size
+        let totalRegistered = 0
+        let totalPointsDistributed = 0
+
+        snap.forEach((docSnap) => {
+            const data = docSnap.data()
+            if (data.status === 'registered' || data.status === 'contract_completed') {
+                totalRegistered++
+            }
+            totalPointsDistributed += Number(data.pointsEarned || 0)
+        })
+
+        const conversionRate = totalInvitations > 0 ? (totalRegistered / totalInvitations) * 100 : 0
+
+        return {
+            totalInvitations,
+            totalRegistered,
+            conversionRate: Number(conversionRate.toFixed(1)),
+            totalPointsDistributed,
+        }
+    } catch (err) {
+        console.error('Error fetching referral dashboard stats:', err)
+        return { totalInvitations: 0, totalRegistered: 0, conversionRate: 0, totalPointsDistributed: 0 }
+    }
+}
+
+export async function getUserClassificationBreakdown(): Promise<UserClassificationBreakdown> {
+    if (!isFirebaseAvailable() || !firestore) {
+        return { categories: [], classifications: [], grades: [] }
+    }
+
+    try {
+        const propCol = collection(firestore, PROPIETARIOS)
+        const comCol = collection(firestore, COMERCIANTES)
+
+        const [propSnap, comSnap] = await Promise.all([
+            getDocs(propCol),
+            getDocs(comCol),
+        ])
+
+        const catCounts: Record<string, { prop: number; com: number }> = {}
+        const clasCounts: Record<string, { prop: number; com: number }> = {}
+        const gradeCounts: Record<string, { prop: number; com: number }> = {}
+
+        propSnap.forEach((docSnap) => {
+            const d = docSnap.data()
+            const cat = d.userCategorie || 'Sin Asignar'
+            const clas = d.userClasification || 'Sin Asignar'
+            const grd = d.userGrade || 'Sin Asignar'
+
+            if (!catCounts[cat]) catCounts[cat] = { prop: 0, com: 0 }
+            catCounts[cat].prop++
+
+            if (!clasCounts[clas]) clasCounts[clas] = { prop: 0, com: 0 }
+            clasCounts[clas].prop++
+
+            if (!gradeCounts[grd]) gradeCounts[grd] = { prop: 0, com: 0 }
+            gradeCounts[grd].prop++
+        })
+
+        comSnap.forEach((docSnap) => {
+            const d = docSnap.data()
+            const cat = d.userCategorie || 'Sin Asignar'
+            const clas = d.userClasification || 'Sin Asignar'
+            const grd = d.userGrade || 'Sin Asignar'
+
+            if (!catCounts[cat]) catCounts[cat] = { prop: 0, com: 0 }
+            catCounts[cat].com++
+
+            if (!clasCounts[clas]) clasCounts[clas] = { prop: 0, com: 0 }
+            clasCounts[clas].com++
+
+            if (!gradeCounts[grd]) gradeCounts[grd] = { prop: 0, com: 0 }
+            gradeCounts[grd].com++
+        })
+
+        const mapToBreakdown = (countsMap: Record<string, { prop: number; com: number }>) =>
+            Object.entries(countsMap)
+                .map(([name, { prop, com }]) => ({
+                    name,
+                    propietariosCount: prop,
+                    comerciantesCount: com,
+                    total: prop + com,
+                }))
+                .sort((a, b) => b.total - a.total)
+
+        return {
+            categories: mapToBreakdown(catCounts),
+            classifications: mapToBreakdown(clasCounts),
+            grades: mapToBreakdown(gradeCounts),
+        }
+    } catch (err) {
+        console.error('Error fetching user classification breakdown:', err)
+        return { categories: [], classifications: [], grades: [] }
+    }
+}
+
+export async function getMultiStreamMonetization(): Promise<MultiStreamMonetizationStats> {
+    if (!isFirebaseAvailable() || !firestore) {
+        return { comerciantesMembershipPotential: 0, certificationsApprovedRevenue: 0, contractEscrowVolume: 0, platformFeeRevenue: 0, totalGrossPlatformVolume: 0 }
+    }
+
+    try {
+        const [adminStats, certStats, revStats] = await Promise.all([
+            getAdminStats(),
+            getCertificationDashboardStats(),
+            getPlatformRevenueStats(),
+        ])
+
+        const comerciantesMembershipPotential = adminStats.totalComerciantes * (PRICING.COMERCIANTE_MEMBERSHIP_ANNUAL?.amount || 150000)
+        const certificationsApprovedRevenue = certStats.revenueGenerated
+        const contractEscrowVolume = revStats.totalRevenue
+        const platformFeeRevenue = revStats.platformFees
+
+        const totalGrossPlatformVolume =
+            comerciantesMembershipPotential +
+            certificationsApprovedRevenue +
+            contractEscrowVolume
+
+        return {
+            comerciantesMembershipPotential,
+            certificationsApprovedRevenue,
+            contractEscrowVolume,
+            platformFeeRevenue,
+            totalGrossPlatformVolume,
+        }
+    } catch (err) {
+        console.error('Error fetching multi-stream monetization:', err)
+        return { comerciantesMembershipPotential: 0, certificationsApprovedRevenue: 0, contractEscrowVolume: 0, platformFeeRevenue: 0, totalGrossPlatformVolume: 0 }
+    }
+}
+
