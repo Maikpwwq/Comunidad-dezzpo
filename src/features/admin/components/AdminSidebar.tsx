@@ -24,6 +24,7 @@ import ArticleIcon from '@mui/icons-material/Article'
 
 import { ADMIN_SIDEBAR } from '@components/layout/navigation.config'
 import { navigate } from 'vike/client/router'
+import { useUserStore } from '@stores/userStore'
 
 /* ── Brand palette ─────────────────────────────────────────────── */
 export const BRAND = {
@@ -59,41 +60,60 @@ interface AdminSidebarProps {
 }
 
 export function AdminSidebar({ onCloseMobile }: AdminSidebarProps) {
+    const userId = useUserStore((state) => state.userId)
     const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
 
     return (
-        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            {/* Sidebar header */}
+        <Box
+            sx={{
+                width: DRAWER_WIDTH,
+                height: '100%',
+                background: BRAND.sidebarBg,
+                color: '#ffffff',
+                display: 'flex',
+                flexDirection: 'column',
+            }}
+        >
+            {/* Logo Header */}
             <Toolbar
                 sx={{
-                    justifyContent: 'center',
+                    px: 2.5,
+                    py: 2,
+                    display: 'flex',
+                    alignItems: 'center',
                     gap: 1.5,
-                    py: 2.5,
+                    minHeight: '70px !important',
                 }}
             >
-                <Avatar sx={{ bgcolor: 'rgba(30, 199, 230, 0.2)', width: 40, height: 40 }}>
-                    <AdminPanelSettingsIcon sx={{ color: BRAND.tealLight, fontSize: 24 }} />
+                <Avatar
+                    sx={{
+                        bgcolor: 'rgba(255,255,255,0.15)',
+                        color: '#ffffff',
+                        width: 40,
+                        height: 40,
+                    }}
+                >
+                    <AdminPanelSettingsIcon />
                 </Avatar>
                 <Box>
-                    <Typography variant="subtitle1" fontWeight={700} color="#fff">
-                        Panel de Administración
+                    <Typography variant="subtitle1" fontWeight={700} lineHeight={1.2}>
+                        Panel de
                     </Typography>
-                    <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)' }}>
-                        Centro de Control
+                    <Typography variant="subtitle2" fontWeight={800} color={BRAND.tealLight} lineHeight={1.2}>
+                        Administración
                     </Typography>
                 </Box>
             </Toolbar>
 
             <Divider sx={{ borderColor: 'rgba(255,255,255,0.12)' }} />
 
-            {/* Navigation */}
-            <List sx={{ px: 1.5, pt: 2, flex: 1 }}>
+            {/* Navigation items */}
+            <List sx={{ px: 1.5, py: 1.5, flexGrow: 1 }}>
                 {ADMIN_SIDEBAR.items.map((item) => {
-                    const isSelected = currentPath === item.route
+                    const isSelected = currentPath.startsWith(item.route)
                     return (
                         <ListItemButton
                             key={item.id}
-                            selected={isSelected}
                             onClick={() => {
                                 navigate(item.route)
                                 onCloseMobile?.()
@@ -101,22 +121,20 @@ export function AdminSidebar({ onCloseMobile }: AdminSidebarProps) {
                             sx={{
                                 borderRadius: 2,
                                 mb: 0.5,
-                                py: 1.2,
-                                color: 'rgba(255,255,255,0.7)',
-                                transition: 'all 0.2s ease',
+                                bgcolor: isSelected ? BRAND.selectedBg : 'transparent',
+                                color: isSelected ? BRAND.selectedColor : 'rgba(255,255,255,0.75)',
                                 '&:hover': {
-                                    bgcolor: BRAND.hoverBg,
-                                    color: '#fff',
-                                },
-                                '&.Mui-selected': {
-                                    bgcolor: BRAND.selectedBg,
-                                    color: BRAND.selectedColor,
-                                    '& .MuiListItemIcon-root': { color: BRAND.selectedColor },
-                                    '&:hover': { bgcolor: BRAND.selectedBg },
+                                    bgcolor: isSelected ? BRAND.selectedBg : BRAND.hoverBg,
+                                    color: '#ffffff',
                                 },
                             }}
                         >
-                            <ListItemIcon sx={{ minWidth: 40, color: 'inherit' }}>
+                            <ListItemIcon
+                                sx={{
+                                    minWidth: 40,
+                                    color: isSelected ? BRAND.selectedColor : 'inherit',
+                                }}
+                            >
                                 {ICON_MAP[item.icon]}
                             </ListItemIcon>
                             <ListItemText
@@ -132,7 +150,13 @@ export function AdminSidebar({ onCloseMobile }: AdminSidebarProps) {
             <Divider sx={{ borderColor: 'rgba(255,255,255,0.12)' }} />
             <List sx={{ px: 1.5, pb: 2 }}>
                 <ListItemButton
-                    onClick={() => navigate('/app/ajustes')}
+                    onClick={() => {
+                        if (userId) {
+                            navigate(`/app/ajustes/${userId}`)
+                        } else {
+                            navigate('/app/portal-servicios')
+                        }
+                    }}
                     sx={{
                         borderRadius: 2,
                         color: 'rgba(255,255,255,0.6)',

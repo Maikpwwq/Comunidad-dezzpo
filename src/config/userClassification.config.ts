@@ -373,11 +373,6 @@ export const COMERCIANTE_OPTIONS = {
         'Empresa Gacela',
         'Empresa Tractora',
         'Corporativo Escalable',
-        'Emergente',
-        'PyME',
-        'Gacela',
-        'Tractora',
-        'Escalable',
     ],
     userGrade: [
         'Activo',
@@ -404,7 +399,6 @@ export const PROPIETARIO_OPTIONS = {
         'Propiedad Horizontal',
         'Inmobiliaria',
         'Aliado Estratégico',
-        'Aliado',
     ],
     userGrade: [
         'Nuevo Miembro',
