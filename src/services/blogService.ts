@@ -53,7 +53,7 @@ const INITIAL_BLOG_POSTS: Omit<BlogPost, 'id'>[] = [
         publishedAt: '2026-07-21T10:00:00Z',
         status: 'published',
         featured: true,
-        viewsCount: 142,
+        viewsCount: 0,
         content: `
 # Guía Definitiva para Propietarios y Residentes en Dezzpo
 
@@ -106,7 +106,7 @@ Para garantizar la seguridad de ambas partes:
         publishedAt: '2026-07-21T11:30:00Z',
         status: 'published',
         featured: false,
-        viewsCount: 215,
+        viewsCount: 0,
         content: `
 # Guía de Crecimiento Profesional para Comerciantes Calificados
 
