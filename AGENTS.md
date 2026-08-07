@@ -296,6 +296,16 @@ pending_payment → active → completed → disputed
 - **Privacy Settings (`/app/configuracion-privacidad`)**: Permanent legal links section added under privacy toggles linking to `/legal?doc=aviso-privacidad`, `/legal?doc=politica-tratamiento-datos`, and `/legal`.
 - **Module Disclaimers**: Visible, non-intrusive legal footers added to *Mis Inmuebles*, *Formas de Pago*, *Certificaciones*, and *Nuevo Proyecto*.
 
+### Ecosystem Testing Master Plan & Quality Architecture (2026-08-07)
+- **Local Emulator Isolation**: Firebase Local Emulator Suite ports mapped in `firebase.json` (`auth`: 9099, `firestore`: 8080, `storage`: 9199). Zero production billable calls or data leakage during automated testing.
+- **Security Rules Integration (`tests/integration/rules/`)**:
+  - `firestore.rules.test.ts`: 14 test groups covering `quotations`, `contracts`, `usersPropietariosResidentes`, `usersComerciantesCalificados`, `inmuebles`, `paymentMethods`, `certificationRequests`, `inspectionRequests`, `referrals`, `referralRedemptions`, `notifications`, `drafts`, `subscriptions`, `blog_posts`, `asesorias`, `funnel_events`, `categoriasServicios`, and catch-all deny rule.
+  - `storage.rules.test.ts`: 5 test groups covering public assets (`site/`, `html/`), user profile ownership (`profiles/{uid}/*`), identity verification privacy (`verifications/{uid}/*`), image MIME type validation, and catch-all deny.
+- **Property-Based Fuzzing (`fast-check`)**: `tests/unit/services/paymentSecurity.property.test.ts` (ePayco HMAC MD5 signatures), `referralCode.property.test.ts`, `slugifyAndZones.property.test.ts`, and `userStore.property.test.ts` (Zustand state invariants).
+- **Playwright E2E Multi-Role (`tests/e2e/`)**: POMs (`AuthPage`, `DashboardPage`, `ContractPage`), multi-role contract lifecycle flow, `adminSecurityGuard.spec.ts` (protecting 7 admin routes with non-admin redirect), and an anti-crash guard testing 11 critical authenticated routes.
+- **Mutation & Accessibility**: `stryker.config.json` targeting `src/services/**/*.ts` with Vitest runner (50% break threshold). `tests/e2e/a11y/accessibility.spec.ts` executing `@axe-core/playwright` WCAG 2.1 AA audits.
+- **GitHub Actions Pipelines (`.github/workflows/`)**: `ci.yml` (PR gate: lint → typecheck → vitest coverage → firebase rules emulators → production build) and `nightly.yml` (midnight UTC: parallel Playwright E2E on Chromium + Firefox, StrykerJS mutation, and axe-core a11y).
+
 ### Blog & Inbound Marketing System (2026-07-21)
 - **Service Layer**: `@services/blog/blogService.ts` handles full CRUD (create, read, update, delete), slug generation, audience tagging (`propietarios`/`comerciantes`/`general`), and view-count metrics.
 - **Admin Workbench**: `/admin/blog` provides a content management interface with rich-text editing, image upload, audience targeting, publish/draft toggle, and article metrics table.

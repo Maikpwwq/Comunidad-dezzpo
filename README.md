@@ -271,19 +271,27 @@ NODE_OPTIONS=--max-old-space-size=8192 pnpm build
 
 ### Testing
 
-See [docs/testing-architecture.md](./docs/testing-architecture.md) for the full testing guide.
+See [docs/testing-architecture.md](./docs/testing-architecture.md) for the full architecture guide and [`docs/testing_phase0_audit.md`](./docs/testing_phase0_audit.md) for the initial risk matrix.
 
 ```bash
-# Unit + Integration (Vitest)
-pnpm exec vitest run              # Run all tests
-pnpm exec vitest run --coverage   # Run with coverage report
-pnpm exec vitest                  # Watch mode
+# Unit + Integration + Property Tests (Vitest + Fast-Check)
+pnpm test                         # Run unit, property, and component tests
+pnpm test:coverage                # Run with V8 coverage report (80% threshold)
+pnpm test:watch                   # Vitest watch mode
 
-# E2E (Playwright — auto-starts dev server)
-pnpm exec playwright install      # First-time: install browsers
-pnpm exec playwright test         # Run all E2E tests
-pnpm exec playwright test --ui    # Interactive UI mode
-pnpm exec playwright show-report  # View HTML report
+# Security Rules Integration (Firebase Local Emulator Suite)
+pnpm test:emulators               # Runs firestore.rules.test.ts and storage.rules.test.ts against emulators
+
+# E2E & Accessibility (Playwright + axe-core)
+pnpm test:e2e                     # Run Playwright multi-browser E2E suite
+pnpm test:e2e:ui                  # Interactive Playwright UI mode
+pnpm exec playwright test tests/e2e/a11y/ # Run WCAG 2.1 AA accessibility audit
+
+# Mutation Testing (StrykerJS)
+pnpm test:stryker                 # Run mutation testing on src/services/**/*.ts
+
+# CI/CD Quality Gate
+pnpm lint:gate                    # Zero ESLint warnings gate
 ```
 
 ### Type Checking
@@ -427,6 +435,7 @@ All geographic zones are centralized in [`src/assets/data/ListadoZonas.ts`](./sr
 | **Contracts & Payments** | ✅ Implemented | ePayco integration, server-side signatures, contract lifecycle |
 | **RAG Chatbot** | ✅ Implemented | Gemini 2.5 Flash + Supabase pgvector, knowledge seeding |
 | **Referral Program** | ✅ Implemented | Code generation, sign-up attribution, points/rewards, admin audit |
+| **Ecosystem Testing** | ✅ Implemented | 100% Local Emulator isolation, Vitest/Fast-Check property tests, Firestore/Storage rules tests, Playwright E2E POMs, StrykerJS mutation, axe-core a11y, GitHub Actions CI/CD |
 
 ## Service Standards
 
