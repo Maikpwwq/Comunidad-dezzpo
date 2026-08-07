@@ -1,0 +1,198 @@
+name: Nightly — Full Test Suite
+
+on:
+  schedule:
+    # Runs at midnight UTC (7pm COT) every day
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+concurrency:
+  group: nightly
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '22'
+
+jobs:
+  e2e-chromium:
+    name: 🎭 E2E Playwright (Chromium)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Setup Java (Firebase Emulators)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Run E2E Tests (Chromium)
+        run: pnpm test:e2e -- --project=chromium
+        env:
+          CI: true
+          VITE_APP_FIREBASE_API_KEY: 'ci-dummy'
+          VITE_APP_FIREBASE_AUTH_DOMAIN: 'ci-dummy'
+          VITE_APP_FIREBASE_PROJECT_ID: 'ci-dummy'
+          VITE_APP_EPAYCO_PUBLIC_KEY: 'ci-dummy'
+
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-chromium
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-results-chromium
+          path: test-results/
+          retention-days: 7
+
+  e2e-firefox:
+    name: 🎭 E2E Playwright (Firefox)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps firefox
+
+      - name: Run E2E Tests (Firefox)
+        run: pnpm test:e2e -- --project=firefox
+        env:
+          CI: true
+          VITE_APP_FIREBASE_API_KEY: 'ci-dummy'
+          VITE_APP_FIREBASE_AUTH_DOMAIN: 'ci-dummy'
+          VITE_APP_FIREBASE_PROJECT_ID: 'ci-dummy'
+          VITE_APP_EPAYCO_PUBLIC_KEY: 'ci-dummy'
+
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-firefox
+          path: playwright-report/
+          retention-days: 14
+
+  mutation-testing:
+    name: 🧬 Mutation Testing (Stryker)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Run Stryker Mutation Testing
+        run: pnpm test:stryker
+
+      - name: Upload Mutation Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mutation-report
+          path: reports/mutation/
+          retention-days: 14
+
+  accessibility:
+    name: ♿ Accessibility Audit (axe-core)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Accessibility Tests
+        run: npx playwright test tests/e2e/a11y/ --project=chromium
+        env:
+          CI: true
+          VITE_APP_FIREBASE_API_KEY: 'ci-dummy'
+          VITE_APP_FIREBASE_AUTH_DOMAIN: 'ci-dummy'
+          VITE_APP_FIREBASE_PROJECT_ID: 'ci-dummy'
+
+      - name: Upload A11y Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: a11y-report
+          path: playwright-report/
+          retention-days: 14
+
+  summary:
+    name: 📊 Nightly Summary
+    runs-on: ubuntu-latest
+    needs: [e2e-chromium, e2e-firefox, mutation-testing, accessibility]
+    if: always()
+    steps:
+      - name: Check Results
+        run: |
+          echo "🌙 Nightly Test Suite Summary"
+          echo "=============================="
+          echo "E2E Chromium: ${{ needs.e2e-chromium.result }}"
+          echo "E2E Firefox:  ${{ needs.e2e-firefox.result }}"
+          echo "Mutation:     ${{ needs.mutation-testing.result }}"
+          echo "A11y:         ${{ needs.accessibility.result }}"
+
+          if [[ "${{ needs.e2e-chromium.result }}" == "failure" ]] || \
+             [[ "${{ needs.e2e-firefox.result }}" == "failure" ]] || \
+             [[ "${{ needs.mutation-testing.result }}" == "failure" ]]; then
+            echo "❌ Some nightly jobs failed!"
+            exit 1
+          fi
+
+          echo "✅ All nightly jobs passed!"
