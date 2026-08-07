@@ -5,7 +5,6 @@ import { resolve, dirname } from 'path'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 import { zones } from '@assets/data/ListadoZonas'
 
-// Helper to slugify text
 function slugify(text: string): string {
     return text
         .toString()
@@ -13,9 +12,11 @@ function slugify(text: string): string {
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .trim()
+        .replace(/_/g, '-')
         .replace(/\s+/g, '-')
-        .replace(/[^\w-]+/g, '')
+        .replace(/[^a-z0-9-]+/g, '')
         .replace(/--+/g, '-')
+        .replace(/^-+|-+$/g, '')
 }
 
 const DOMAIN = 'https://comunidad-dezzpo.vercel.app'
