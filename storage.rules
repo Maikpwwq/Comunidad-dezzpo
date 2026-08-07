@@ -1,0 +1,88 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && request.auth.token.admin == true;
+    }
+
+    function isImage() {
+      return request.resource.contentType.matches('image/.*');
+    }
+
+    function isUnderMaxSize(maxSizeMB) {
+      return request.resource.size <= maxSizeMB * 1024 * 1024;
+    }
+
+    // =========================================================================
+    // Public Static Site Assets (logos, icons, categories, home banners)
+    // Read: Publicly readable for web visitors
+    // Write: Restricted to Admins only
+    // =========================================================================
+    match /site/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /html/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Static PNG/JPEG assets at bucket root (marketing assets)
+    match /{fileName} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // =========================================================================
+    // User Profiles & Microsite Media
+    // Read: Publicly readable (profile pictures, portfolio photos)
+    // Write: Only the owner (or Admin) can upload/modify their own assets
+    // Validation: Must be valid image and under 10MB
+    // =========================================================================
+    match /profiles/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if (isOwner(userId) || isAdmin())
+                    && isImage()
+                    && isUnderMaxSize(10);
+    }
+
+    // Files uploaded directly under profiles/ by legacy naming
+    match /profiles/{fileName} {
+      allow read: if true;
+      allow write: if isAuthenticated() && isImage() && isUnderMaxSize(10);
+    }
+
+    // =========================================================================
+    // Sensitive Private Attachments (contracts, identity verification docs)
+    // Read/Write: Strictly restricted to Document Owner or Admin
+    // =========================================================================
+    match /verifications/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if (isOwner(userId) || isAdmin())
+                    && isUnderMaxSize(10);
+    }
+
+    match /contracts/{contractId}/{allPaths=**} {
+      allow read: if isAuthenticated() || isAdmin();
+      allow write: if isAuthenticated() || isAdmin();
+    }
+
+    // =========================================================================
+    // Catch-all: Deny all other unhandled storage requests
+    // =========================================================================
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

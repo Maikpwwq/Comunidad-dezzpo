@@ -61,17 +61,25 @@ service cloud.firestore {
     // Certification Requests (skills verification for comerciantes)
     // =========================================================================
     match /certificationRequests/{requestId} {
-      allow read: if isAuthenticated();
-      allow create, update: if isAuthenticated();
+      allow read: if isAuthenticated()
+        && (resource.data.comercianteId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated()
+        && request.resource.data.comercianteId == request.auth.uid;
+      allow update: if isAuthenticated()
+        && (resource.data.comercianteId == request.auth.uid || isAdmin());
       allow delete: if false;
     }
 
     // =========================================================================
-    // Inspection Requests (technical property inspections)
+    // Inspection Requests (technical property inspections for propietarios)
     // =========================================================================
     match /inspectionRequests/{requestId} {
-      allow read: if isAuthenticated();
-      allow create, update: if isAuthenticated();
+      allow read: if isAuthenticated()
+        && (resource.data.propietarioId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated()
+        && request.resource.data.propietarioId == request.auth.uid;
+      allow update: if isAuthenticated()
+        && (resource.data.propietarioId == request.auth.uid || isAdmin());
       allow delete: if false;
     }
 
@@ -79,15 +87,28 @@ service cloud.firestore {
     // Referral Program (Voz a Voz) & Redemptions
     // =========================================================================
     match /referrals/{referralId} {
-      allow read: if isAuthenticated();
+      allow read: if isAuthenticated()
+        && (resource.data.referrerId == request.auth.uid || resource.data.referredUserId == request.auth.uid || isAdmin());
       allow create, update: if isAuthenticated();
       allow delete: if false;
     }
 
     match /referralRedemptions/{redemptionId} {
-      allow read: if isAuthenticated();
-      allow create, update: if isAuthenticated();
+      allow read: if isAuthenticated()
+        && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+      allow update: if isAdmin();
       allow delete: if false;
+    }
+
+    // =========================================================================
+    // Notifications (System and mass broadcasts)
+    // =========================================================================
+    match /notifications/{notificationId} {
+      allow read: if isAuthenticated()
+        && (resource.data.recipientId == request.auth.uid || resource.data.recipientId == 'ALL' || isAdmin());
+      allow create, update, delete: if isAdmin();
     }
 
     // =========================================================================
@@ -95,7 +116,7 @@ service cloud.firestore {
     // =========================================================================
     match /funnel_events/{eventId} {
       allow create: if true;
-      allow read: if isAuthenticated();
+      allow read: if isAdmin();
     }
 
     // =========================================================================
@@ -109,18 +130,35 @@ service cloud.firestore {
       allow create: if isAuthenticated();
       allow update: if isAuthenticated()
         && (resource.data.draftPropietarioResidente == request.auth.uid
-            || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['draftApply']));
+            || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['draftApply'])
+            || isAdmin());
       allow delete: if false;
     }
 
     // =========================================================================
     // Quotations (proposals sent by comerciantes)
+    // Readable only by submitting merchant, recipient client, or admin.
     // =========================================================================
     match /quotations/{quotationId} {
-      allow read: if isAuthenticated();
-      allow create: if isAuthenticated();
-      allow update: if isAuthenticated();
+      allow read: if isAuthenticated()
+        && (resource.data.comercianteId == request.auth.uid
+            || resource.data.clientId == request.auth.uid
+            || isAdmin());
+      allow create: if isAuthenticated()
+        && request.resource.data.comercianteId == request.auth.uid;
+      allow update: if isAuthenticated()
+        && (resource.data.comercianteId == request.auth.uid
+            || resource.data.clientId == request.auth.uid
+            || isAdmin());
       allow delete: if false;
+    }
+
+    // =========================================================================
+    // Blog Posts & Content Management
+    // =========================================================================
+    match /blog_posts/{postId} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     // =========================================================================

@@ -32,11 +32,16 @@ describe('Auth-gated route access (Integration)', () => {
       it(`allows authenticated user to access ${route}`, () => {
         const pageContext = {
           urlPathname: route,
-          isAuthenticated: true,
         };
+
+        // Populate localStorage matching +guard.ts check
+        localStorage.setItem('user-storage', JSON.stringify({ state: { isAuth: true, userId: 'test-user-123' } }));
         
-        // Guard should not throw
-        expect(() => guard(pageContext as any)).not.toThrow();
+        try {
+          expect(() => guard(pageContext as any)).not.toThrow();
+        } finally {
+          localStorage.clear();
+        }
       });
 
       it(`redirects unauthenticated user to /ingreso for ${route}`, () => {
