@@ -271,7 +271,7 @@ NODE_OPTIONS=--max-old-space-size=8192 pnpm build
 
 ### Testing
 
-See [docs/testing-architecture.md](./docs/testing-architecture.md) for the full architecture guide and [`docs/testing_phase0_audit.md`](./docs/testing_phase0_audit.md) for the initial risk matrix.
+See [docs/testing-architecture.md](./docs/testing-architecture.md) for the complete architecture guide and threat matrix.
 
 ```bash
 # Unit + Integration + Property Tests (Vitest + Fast-Check)
