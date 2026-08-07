@@ -8,6 +8,7 @@ export interface Inmueble {
     alias: string
     direccion: string
     ciudad: string
+    tipo?: string
     codigoPostal?: string
     zona?: string
     lat?: number
