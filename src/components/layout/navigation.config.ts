@@ -34,6 +34,7 @@ export const COMERCIANTE_SIDEBAR: NavSectionConfig[] = [
             { id: 'suscripciones', label: 'Suscripciones', route: '/app/suscripciones', icon: 'LoyaltyIcon' },
             { id: 'contratos', label: 'Mis Contratos', route: '/app/historial-servicios', icon: 'ReceiptLongIcon' },
             { id: 'certificaciones', label: 'Certificaciones', route: '/app/certificaciones', icon: 'HowToRegIcon' },
+            { id: 'tiendas', label: 'Tiendas y Proveedores', route: '/app/tiendas', icon: 'StorefrontIcon' },
             { id: 'biblioteca', label: 'Biblioteca', route: '/app/biblioteca', icon: 'CollectionsBookmarkIcon' },
             { id: 'invitar', label: 'Invitar a un Amigo', route: '/app/invitar-amigos', icon: 'CardMembershipIcon' },
             { id: 'ajustes', label: 'Ajustes', route: '/app/ajustes/:userId', icon: 'ManageAccountsIcon' },
@@ -63,6 +64,7 @@ export const PROPIETARIO_SIDEBAR: NavSectionConfig[] = [
             { id: 'suscripciones', label: 'Suscripciones', route: '/app/suscripciones', icon: 'LoyaltyIcon' },
             { id: 'contratos', label: 'Mis Contratos', route: '/app/historial-servicios', icon: 'ReceiptLongIcon' },
             { id: 'inmuebles', label: 'Mis Inmuebles', route: '/app/mis-inmuebles', icon: 'HomeWorkIcon' },
+            { id: 'tiendas', label: 'Tiendas y Proveedores', route: '/app/tiendas', icon: 'StorefrontIcon' },
             { id: 'biblioteca', label: 'Biblioteca', route: '/app/biblioteca', icon: 'CollectionsBookmarkIcon' },
             { id: 'invitar', label: 'Invitar a un Amigo', route: '/app/invitar-amigos', icon: 'CardMembershipIcon' },
             { id: 'ajustes', label: 'Ajustes', route: '/app/ajustes/:userId', icon: 'ManageAccountsIcon' },
@@ -87,6 +89,7 @@ export const GUEST_SIDEBAR: NavSectionConfig[] = [
         items: [
             { id: 'portal', label: 'Portal de servicios', route: '/app/portal-servicios', icon: 'StoreIcon' },
             { id: 'directorio', label: 'Directorio de Requerimientos', route: '/app/directorio-requerimientos', icon: 'DriveFileMoveIcon' },
+            { id: 'tiendas', label: 'Tiendas y Proveedores', route: '/app/tiendas', icon: 'StorefrontIcon' },
             { id: 'suscripciones', label: 'Suscripciones', route: '/app/suscripciones', icon: 'LoyaltyIcon' },
         ],
     },
@@ -106,6 +109,7 @@ export const ADMIN_SIDEBAR: NavSectionConfig = {
         { id: 'admin-referidos', label: 'Referidos', route: '/admin/referidos', icon: 'CardMembershipIcon' },
         { id: 'admin-notificaciones', label: 'Notificaciones', route: '/admin/notificaciones', icon: 'NotificationsIcon' },
         { id: 'admin-blog', label: 'Blog', route: '/admin/blog', icon: 'ArticleIcon' },
+        { id: 'admin-tiendas', label: 'Tiendas', route: '/admin/tiendas', icon: 'StorefrontIcon' },
     ],
 }
 

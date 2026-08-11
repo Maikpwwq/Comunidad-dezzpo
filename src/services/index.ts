@@ -51,3 +51,5 @@ export * from './inmuebles'
 export * from './notificationService'
 // Blog services
 export * from './blogService'
+// Tiendas services
+export * from './tiendas'

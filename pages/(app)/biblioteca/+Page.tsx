@@ -92,7 +92,9 @@ export default function Page() {
                     </Row>
                     <Row className="p-4" md={10}>
                         <Typography className="type-section-title">Libreta de direcciones</Typography>
-                        <span className="btn btn-round btn-high">Tiendas</span>
+                        <a href="/app/tiendas" className="btn btn-round btn-high" style={{ width: 'fit-content', textDecoration: 'none' }}>
+                            Ir a Tiendas y Proveedores
+                        </a>
                     </Row>
                 </Col>
             </Row>

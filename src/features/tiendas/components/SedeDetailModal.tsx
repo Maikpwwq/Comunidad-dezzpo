@@ -1,0 +1,155 @@
+import React from 'react'
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Button,
+    Typography,
+    Box,
+    Chip,
+    Divider,
+    IconButton,
+    Paper,
+} from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import PhoneIcon from '@mui/icons-material/Phone'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import StorefrontIcon from '@mui/icons-material/Storefront'
+import { zoneNames } from '@assets/data/ListadoZonas'
+import type { TiendaDocument } from '@services/tiendas'
+
+interface SedeDetailModalProps {
+    open: boolean
+    onClose: () => void
+    tienda: TiendaDocument | null
+}
+
+export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
+    open,
+    onClose,
+    tienda,
+}) => {
+    if (!tienda) return null
+
+    return (
+        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+            <DialogTitle sx={{ m: 0, p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <StorefrontIcon color="primary" />
+                    <Box>
+                        <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2 }}>
+                            {tienda.nombre}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                            {tienda.sedes.length} {tienda.sedes.length === 1 ? 'sede disponible' : 'sedes disponibles'}
+                        </Typography>
+                    </Box>
+                </Box>
+                <IconButton onClick={onClose} size="small">
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>
+            <Divider />
+            <DialogContent sx={{ p: 2.5 }}>
+                {tienda.descripcion && (
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2, fontStyle: 'italic' }}>
+                        "{tienda.descripcion}"
+                    </Typography>
+                )}
+
+                <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1.5, color: '#0A2540' }}>
+                    Sedes y Puntos de Atención
+                </Typography>
+
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    {tienda.sedes.map((sede, index) => {
+                        const zoneLabel = zoneNames[sede.zona] || sede.zona
+
+                        return (
+                            <Paper
+                                key={sede.id || index}
+                                variant="outlined"
+                                sx={{
+                                    p: 2,
+                                    borderRadius: 2,
+                                    borderColor: 'divider',
+                                    backgroundColor: '#fafafa',
+                                }}
+                            >
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+                                    <Typography variant="subtitle1" fontWeight={700} color="primary.main">
+                                        {sede.nombreSede || `Sede ${index + 1}`}
+                                    </Typography>
+                                    <Chip
+                                        icon={<LocationOnIcon fontSize="small" />}
+                                        label={zoneLabel}
+                                        size="small"
+                                        color="primary"
+                                        variant="outlined"
+                                        sx={{ fontWeight: 600 }}
+                                    />
+                                </Box>
+
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                                    <LocationOnIcon fontSize="small" color="action" />
+                                    <Typography variant="body2" fontWeight={500}>
+                                        {sede.direccion}, {sede.ciudad}
+                                    </Typography>
+                                </Box>
+
+                                {sede.horario && (
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+                                        <AccessTimeIcon fontSize="small" color="action" />
+                                        <Typography variant="caption" color="text.secondary">
+                                            {sede.horario}
+                                        </Typography>
+                                    </Box>
+                                )}
+
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
+                                    {sede.telefonos.map((tel, tIdx) => (
+                                        <Button
+                                            key={tIdx}
+                                            variant="outlined"
+                                            size="small"
+                                            color="primary"
+                                            startIcon={<PhoneIcon fontSize="small" />}
+                                            href={`tel:${tel}`}
+                                            sx={{ borderRadius: 4, textTransform: 'none' }}
+                                        >
+                                            Llamar: {tel}
+                                        </Button>
+                                    ))}
+
+                                    {sede.whatsapp && (
+                                        <Button
+                                            variant="contained"
+                                            size="small"
+                                            color="success"
+                                            startIcon={<WhatsAppIcon fontSize="small" />}
+                                            href={`https://wa.me/${sede.whatsapp.replace(/[^0-9]/g, '')}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            sx={{ borderRadius: 4, textTransform: 'none' }}
+                                        >
+                                            WhatsApp
+                                        </Button>
+                                    )}
+                                </Box>
+                            </Paper>
+                        )
+                    })}
+                </Box>
+            </DialogContent>
+            <Divider />
+            <DialogActions sx={{ px: 2.5, py: 1.5 }}>
+                <Button onClick={onClose} variant="contained" className="btn-primary" size="medium">
+                    Cerrar
+                </Button>
+            </DialogActions>
+        </Dialog>
+    )
+}
