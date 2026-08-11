@@ -19,7 +19,7 @@ import {
     limit as firestoreLimit,
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
-import type { ServiceResponse } from '@services/types'
+import type { ServiceResponse } from '@/types/services.d'
 import type {
     TiendaDocument,
     CreateTiendaInput,

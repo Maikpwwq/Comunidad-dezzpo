@@ -457,8 +457,7 @@ export interface NotificationDocument extends DocumentData {
         actorId?: string
         actorName?: string
         actorPhotoUrl?: string
-        relatedEntityId?: string
     }
 }
 
-
+export type { ServiceResponse } from '@/types/services.d'
