@@ -287,11 +287,13 @@ pending_payment → active → completed → disputed
 ## 9. Learned Lessons
 
 ### Supplier & Hardware Store Directory System (`/app/tiendas` & `/admin/tiendas` - 2026-08-11)
-- **Directory Architecture**: Dedicated module for sourcing materials, tools, equipment rental, and technical services filterable by 28 namespaced categories (`ListadoCategoriasTiendas.ts`). Accessible to both Propietarios, Comerciantes, and Guests without role gating.
-- **Service Layer & Firestore**: `@services/tiendas` (`tiendaService.ts`) handles CRUD, filtering by zone/category/query, and automatic seed of initial curated hardware stores transcribed from real business cards.
+- **Directory Architecture**: Dedicated module for sourcing materials, tools, equipment rental, and technical services filterable by 28 namespaced categories (`ListadoCategoriasTiendas.ts`). Accessible to Propietarios, Comerciantes, and Guests without role gating.
+- **Directory Metadata & Per-Sede Contact**: Store documents support legal metadata (`razonSocial`, `nit`) at the tienda level, plus granular branch details (`detallesUbicacion` for physical landmarks, `nombreContacto`, `cargoContacto`) per `SedeLocation`. Surfaced across card view (`TiendaCard.tsx`), modal (`SedeDetailModal.tsx`), and admin management table (`/admin/tiendas`).
+- **Colloquial Synonym Search**: `ListadoCategoriasTiendas.ts` defines trade term `synonyms[]` for all 28 categories (e.g. `plomería` → `tuberia_pvc_hidrosanitaria`, `esmalte`/`thinner` → `pinturas_insumos`). Both client-side `useMemo` and `tiendaService.ts` search evaluate terms against category synonyms, titles, and store metadata.
+- **Service Layer & Firestore**: `@services/tiendas` (`tiendaService.ts`) handles CRUD, filtering by zone/category/query/status, and lazy auto-seeding of initial curated hardware stores transcribed from real business cards with complete contact and location metadata.
 - **Interactive Maps & Live Places Fallback**: `TiendasMap.tsx` plots multi-branch (`SedeLocation`) markers using `@googlemaps/js-api-loader`. When a selected category has zero curated Dezzpo stores, it automatically triggers a live Google Places search via `google.maps.places.PlacesService` with an inline alert banner: *"Aún no tenemos tiendas verificadas por Dezzpo en esta categoría — mostrando resultados de Google Maps"*.
-- **Multi-Sede Management**: `SedeManager.tsx` and `TiendaFormModal.tsx` allow users and admins to register suppliers with multiple physical branches, phone contacts, business hours, and precise pin coordinates via `Ubicacion.tsx`.
-- **Admin Control Tower**: `/admin/tiendas` provides a tabbed workbench for managing published stores, editing branch details, and reviewing pending user submissions.
+- **Multi-Sede Management**: `SedeManager.tsx` and `TiendaFormModal.tsx` allow users and admins to register suppliers with multiple physical branches, phone contacts, WhatsApp, business hours, and precise pin coordinates via `Ubicacion.tsx`.
+- **Admin Control Tower**: `/admin/tiendas` provides a tabbed workbench for managing published stores, editing branch details, reviewing pending user submissions, and viewing location/WhatsApp summaries.
 
 
 ### DataGrid User Classification Columns (`/admin/usuarios` - 2026-07-25)
