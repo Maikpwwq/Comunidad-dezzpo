@@ -196,6 +196,35 @@ export const SedeManager: React.FC<SedeManagerProps> = ({ sedes, onChange }) => 
                                 </Button>
                             </Box>
 
+                            <TextField
+                                label="Detalles de ubicación física (Opcional)"
+                                size="small"
+                                placeholder="Ej: Al lado de la panadería La Victoria, local esquinero con fachada verde"
+                                value={sede.detallesUbicacion || ''}
+                                onChange={(e) => handleUpdateSede(idx, 'detallesUbicacion', e.target.value)}
+                                multiline
+                                rows={2}
+                            />
+
+                            <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+                                <TextField
+                                    label="Nombre de contacto en sede (Opcional)"
+                                    size="small"
+                                    placeholder="Ej: Pedro Gómez"
+                                    value={sede.nombreContacto || ''}
+                                    onChange={(e) => handleUpdateSede(idx, 'nombreContacto', e.target.value)}
+                                    sx={{ flex: 1, minWidth: 200 }}
+                                />
+                                <TextField
+                                    label="Cargo del contacto (Opcional)"
+                                    size="small"
+                                    placeholder="Ej: Administrador / Encargado de ventas"
+                                    value={sede.cargoContacto || ''}
+                                    onChange={(e) => handleUpdateSede(idx, 'cargoContacto', e.target.value)}
+                                    sx={{ flex: 1, minWidth: 200 }}
+                                />
+                            </Box>
+
                             {/* Phone numbers for this branch */}
                             <Box>
                                 <Typography variant="caption" fontWeight={600} color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>

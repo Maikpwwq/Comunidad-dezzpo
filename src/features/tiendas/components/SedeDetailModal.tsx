@@ -18,6 +18,8 @@ import PhoneIcon from '@mui/icons-material/Phone'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import StorefrontIcon from '@mui/icons-material/Storefront'
+import PersonIcon from '@mui/icons-material/Person'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { zoneNames } from '@assets/data/ListadoZonas'
 import type { TiendaDocument } from '@services/tiendas'
 
@@ -43,7 +45,12 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
                         <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2 }}>
                             {tienda.nombre}
                         </Typography>
-                        <Typography variant="caption" color="text.secondary">
+                        {(tienda.razonSocial || tienda.nit) && (
+                            <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+                                {tienda.razonSocial}{tienda.razonSocial && tienda.nit ? ' • ' : ''}{tienda.nit ? `NIT: ${tienda.nit}` : ''}
+                            </Typography>
+                        )}
+                        <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                             {tienda.sedes.length} {tienda.sedes.length === 1 ? 'sede disponible' : 'sedes disponibles'}
                         </Typography>
                     </Box>
@@ -99,6 +106,24 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
                                         {sede.direccion}, {sede.ciudad}
                                     </Typography>
                                 </Box>
+
+                                {sede.detallesUbicacion && (
+                                    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mb: 1, pl: 0.5 }}>
+                                        <InfoOutlinedIcon fontSize="small" color="action" sx={{ mt: 0.2 }} />
+                                        <Typography variant="caption" color="text.secondary">
+                                            {sede.detallesUbicacion}
+                                        </Typography>
+                                    </Box>
+                                )}
+
+                                {sede.nombreContacto && (
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1, pl: 0.5 }}>
+                                        <PersonIcon fontSize="small" color="primary" />
+                                        <Typography variant="caption" fontWeight={600} color="text.primary">
+                                            Contacto: {sede.nombreContacto} {sede.cargoContacto ? `(${sede.cargoContacto})` : ''}
+                                        </Typography>
+                                    </Box>
+                                )}
 
                                 {sede.horario && (
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>

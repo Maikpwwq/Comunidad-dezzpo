@@ -14,11 +14,16 @@ export interface SedeLocation {
     horario?: string              // e.g. "Lun-Vie 8:00 - 17:00, Sáb 8:00 - 13:00"
     lat?: number                  // Map pin latitude
     lng?: number                  // Map pin longitude
+    detallesUbicacion?: string    // Physical location hints (landmarks, "al lado de...")
+    nombreContacto?: string       // On-site contact person name
+    cargoContacto?: string        // On-site contact person role/title
 }
 
 export interface TiendaDocument {
     id: string
     nombre: string                // Required business name
+    razonSocial?: string          // Legal business name (optional)
+    nit?: string                  // Tax ID (optional)
     slug: string                  // URL-friendly slug
     categorias: string[]          // Array of category keys/labels from ListadoCategoriasTiendas (Min 1)
     descripcion?: string          // Short slogan or description

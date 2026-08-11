@@ -72,12 +72,27 @@ export default function Page() {
             // Search text query
             if (searchQuery.trim()) {
                 const term = searchQuery.trim().toLowerCase()
-                const matchesName = item.nombre.toLowerCase().includes(term)
+                const matchesName =
+                    item.nombre.toLowerCase().includes(term) ||
+                    item.razonSocial?.toLowerCase().includes(term) ||
+                    item.nit?.toLowerCase().includes(term)
                 const matchesDesc = item.descripcion?.toLowerCase().includes(term)
                 const matchesSede = item.sedes.some(
-                    (s) => s.direccion.toLowerCase().includes(term) || s.nombreSede.toLowerCase().includes(term)
+                    (s) =>
+                        s.direccion.toLowerCase().includes(term) ||
+                        s.nombreSede.toLowerCase().includes(term) ||
+                        s.detallesUbicacion?.toLowerCase().includes(term) ||
+                        s.nombreContacto?.toLowerCase().includes(term) ||
+                        s.cargoContacto?.toLowerCase().includes(term)
                 )
-                if (!matchesName && !matchesDesc && !matchesSede) return false
+                const matchesCategorySynonym = item.categorias.some((catKey) => {
+                    const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                    if (!catObj) return false
+                    if (catObj.label.toLowerCase().includes(term) || catObj.key.toLowerCase().includes(term)) return true
+                    return catObj.synonyms?.some((syn) => syn.toLowerCase().includes(term))
+                })
+
+                if (!matchesName && !matchesDesc && !matchesSede && !matchesCategorySynonym) return false
             }
             return true
         })

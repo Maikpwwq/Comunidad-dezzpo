@@ -17,6 +17,7 @@ export interface TiendaCategoryOption {
     parentTradeKey?: number | string
     iconName: string
     description?: string
+    synonyms?: string[]
 }
 
 export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
@@ -26,6 +27,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 24,
         iconName: 'Hardware',
         description: 'Herramientas manuales, tornillería, fijaciones y suministros generales.',
+        synonyms: ['ferretería', 'ferreteria', 'tornillos', 'tornillería', 'herramientas', 'clavos', 'chapas', 'remaches', 'fijaciones'],
     },
     {
         key: 'pinturas_insumos',
@@ -33,6 +35,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 62,
         iconName: 'FormatPaint',
         description: 'Pinturas arquitectónicas, esmaltes, brochas, rodillos y diluyentes.',
+        synonyms: ['pintura', 'pinturas', 'esmalte', 'vinilo', 'brochas', 'rodillos', 'thinner', 'estuco', 'diluyente', 'disolvente'],
     },
     {
         key: 'perfileria_aluminio',
@@ -40,6 +43,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 18,
         iconName: 'ViewSidebar',
         description: 'Perfiles de aluminio, rieles, accesorios para ventanería y fachadas.',
+        synonyms: ['aluminio', 'perfiles', 'perfilería', 'ventanería', 'ventanas', 'marcos', 'rieles'],
     },
     {
         key: 'vidrios_cristales',
@@ -47,6 +51,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 18,
         iconName: 'Window',
         description: 'Vidrio templado, laminado, espejos y accesorios de fijación.',
+        synonyms: ['vidrio', 'vidrios', 'cristal', 'cristales', 'espejos', 'templado', 'laminado'],
     },
     {
         key: 'andamios_equipos',
@@ -54,6 +59,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 50, // Oficial de obra / Construcción
         iconName: 'Engineering',
         description: 'Andamios tubulares, multidireccionales, cortadoras y mezcladoras.',
+        synonyms: ['andamio', 'andamios', 'mezcladora', 'trompo', 'alquiler de equipos', 'cortadora de ladrillo', 'maquinaria'],
     },
     {
         key: 'servicio_tecnico_herramientas',
@@ -61,6 +67,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 52, // Mantenimiento mecánico
         iconName: 'Build',
         description: 'Mantenimiento y repuestos de taladros, pulidoras y herramientas eléctricas.',
+        synonyms: ['reparación', 'repuestos', 'taladro', 'pulidora', 'servicio técnico', 'mantenimiento herramientas', 'carbones'],
     },
     {
         key: 'cerrajeria_insumos',
@@ -68,6 +75,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 13,
         iconName: 'Lock',
         description: 'Cerraduras de seguridad, cilindros, candados y dupicados.',
+        synonyms: ['chapas', 'cerraduras', 'candados', 'llaves', 'cerrajería', 'cilindros', 'pestillos'],
     },
     {
         key: 'tuberia_pvc_hidrosanitaria',
@@ -75,6 +83,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 63, // Plomería
         iconName: 'Plumbing',
         description: 'Tubería de presión, sanitaria, conduit, limpiadores y soldadura PVC.',
+        synonyms: ['tubo', 'tubería', 'tuberia', 'pvc', 'plomería', 'plomeria', 'codos', 'uniones', 'soldadura pvc', 'sanitaria', 'hidráulica'],
     },
     {
         key: 'materiales_electricos',
@@ -82,6 +91,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 66, // Red eléctrica
         iconName: 'ElectricMeter',
         description: 'Cableado, breakers, tableros, tomacorrientes y conduit metal/PVC.',
+        synonyms: ['cables', 'cableado', 'breakers', 'tomas', 'interruptores', 'eléctricos', 'electricidad', 'tablero eléctrico'],
     },
     {
         key: 'iluminacion_lamparas',
@@ -89,6 +99,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 37,
         iconName: 'Lightbulb',
         description: 'Luminarias LED, paneles, reflectores, tiras LED y lámparas decorativas.',
+        synonyms: ['lámparas', 'lamparas', 'led', 'bombillos', 'iluminación', 'luminarias', 'reflectores', 'tiras led'],
     },
     {
         key: 'gases_industriales_soldadura',
@@ -96,6 +107,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 67, // Red de gases / Soldadura
         iconName: 'LocalGasStation',
         description: 'Oxígeno, argón, nitrógeno, electrodos, inversores y caretas de soldar.',
+        synonyms: ['soldadura', 'electrodos', 'oxígeno', 'argón', 'caretas', 'inversor', 'gases', 'propano'],
     },
     {
         key: 'pisos_ceramicas_porcelanatos',
@@ -103,6 +115,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 33,
         iconName: 'GridOn',
         description: 'Pisos cerámicos, porcelanatos, laminados, vinílicos, pegantes y boquillas.',
+        synonyms: ['pisos', 'cerámica', 'ceramica', 'porcelanato', 'laminados', 'pegacor', 'boquilla', 'baldosa'],
     },
     {
         key: 'corte_dobleces_metalmecanica',
@@ -110,6 +123,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 53,
         iconName: 'SquareFoot',
         description: 'Servicio de corte en cizalla, doblez de láminas, punzonado y tubos.',
+        synonyms: ['corte', 'doblez', 'lámina', 'cizalla', 'metalmecánica', 'punzonado', 'planchas'],
     },
     {
         key: 'torno_mecanizado',
@@ -117,6 +131,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 53,
         iconName: 'PrecisionManufacturing',
         description: 'Mecanizado de piezas, bujes, roscas y rectificado industrial.',
+        synonyms: ['torno', 'mecanizado', 'bujes', 'roscas', 'rectificado', 'piezas metálicas'],
     },
     {
         key: 'ornamentacion_hierro',
@@ -124,6 +139,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 53,
         iconName: 'Fence',
         description: 'Perfiles de hierro, tubos estructurales, platinas, ángulos y mallas.',
+        synonyms: ['hierro', 'perfiles de hierro', 'ángulos', 'platinas', 'tubos estructurales', 'mallas', 'varillas', 'ornamentación'],
     },
     {
         key: 'impermeabilizantes_aditivos',
@@ -131,6 +147,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 38,
         iconName: 'WaterDrop',
         description: 'Mantos asfálticos, acrílicos, aditivos para concreto y selladores.',
+        synonyms: ['impermeabilizante', 'sika', 'manto asfáltico', 'aditivos', 'selladores', 'humedad', 'filtra'],
     },
     {
         key: 'control_acceso_seguridad',
@@ -138,6 +155,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 23,
         iconName: 'Fingerprint',
         description: 'Cerraduras electrónicas, talanqueras, biometría y electroimanes.',
+        synonyms: ['control de acceso', 'biometría', 'electroimán', 'talanquera', 'tarjeta de acceso', 'cerradura inteligente'],
     },
     {
         key: 'domotica_smart_home',
@@ -145,6 +163,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 28,
         iconName: 'SmartHome',
         description: 'Interruptores inteligentes, sensores Zigbee/WiFi y motores de cortinas.',
+        synonyms: ['domótica', 'domotica', 'smart home', 'wifi', 'zigbee', 'sensores', 'interruptor inteligente', 'automatización'],
     },
     {
         key: 'maderas_tableros_herrajes',
@@ -152,6 +171,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 17, // Carpintería
         iconName: 'Forest',
         description: 'Hojas de MDF, RH, triplex, canto PVC, bisagras y rieles telescópicos.',
+        synonyms: ['madera', 'maderas', 'triplex', 'mdf', 'rh', 'agomerados', 'bisagras', 'rieles', 'herrajes'],
     },
     {
         key: 'cubiertas_tejas_policarbonato',
@@ -159,6 +179,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 26, // Cubiertas y Techos
         iconName: 'Roofing',
         description: 'Tejas termoacústicas, policarbonato alveolar, zinc y accesorios.',
+        synonyms: ['tejas', 'cubiertas', 'policarbonato', 'zinc', 'termoacústica', 'techos', 'canales'],
     },
     {
         key: 'camaras_cctv_alarmas',
@@ -166,6 +187,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 10, // Cámaras de seguridad
         iconName: 'CameraOutdoor',
         description: 'Cámaras IP, DVR/NVR, disco duro para videovigilancia y sensores.',
+        synonyms: ['cámaras', 'camaras', 'cctv', 'dvr', 'nvr', 'alarmas', 'seguridad electrónica', 'sensores de movimiento'],
     },
     {
         key: 'calentadores_repuestos',
@@ -173,6 +195,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 13, // Calentadores
         iconName: 'DeviceThermostat',
         description: 'Calentadores a gas/eléctricos, mangueras, termostatos y diafragmas.',
+        synonyms: ['calentadores', 'calentador', 'repuestos calentador', 'termostato', 'diafragma', 'gas'],
     },
     {
         key: 'aislamiento_acustico_termico',
@@ -180,6 +203,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 3,
         iconName: 'GraphicEq',
         description: 'Lana de roca, fibra de vidrio, espumas acústicas y paneles frescasa.',
+        synonyms: ['aislamiento', 'lana de roca', 'fibra de vidrio', 'acústico', 'térmico', 'frescasa', 'insonorizar'],
     },
     {
         key: 'aseo_insumos_quimicos',
@@ -187,6 +211,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 11,
         iconName: 'CleaningServices',
         description: 'Desengrasantes industriales, ceras, selladores de pisos y maquinaria de aseo.',
+        synonyms: ['aseo', 'químicos', 'desengrasante', 'ceras', 'limpieza', 'detergentes industriales'],
     },
     {
         key: 'aires_acondicionados_repuestos',
@@ -194,6 +219,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 2,
         iconName: 'AcUnit',
         description: 'Equipos Mini Split, tubería de cobre, gas refrigerante R410/R32 y soportes.',
+        synonyms: ['aire acondicionado', 'mini split', 'gas refrigerante', 'cobre', 'refrigeración'],
     },
     {
         key: 'jardineria_insumos_abonos',
@@ -201,6 +227,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 47, // Jardinería
         iconName: 'Grass',
         description: 'Tierra abonada, fertilizantes, grama sintética, mangueras y guadañas.',
+        synonyms: ['jardinería', 'tierra abonada', 'fertilizantes', 'grama', 'mangueras', 'abono', 'plantas'],
     },
     {
         key: 'proteccion_incendio_extintores',
@@ -208,6 +235,7 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 65,
         iconName: 'FireExtinguisher',
         description: 'Recarga y venta de extintores, gabinetes, mangueras y detectores de humo.',
+        synonyms: ['extintores', 'recarga extintor', 'gabinete contra incendio', 'detectores de humo', 'mangueras contra incendio'],
     },
     {
         key: 'redes_cableado_estructurado',
@@ -215,5 +243,6 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         parentTradeKey: 68,
         iconName: 'Lan',
         description: 'Cable UTP/Fibra, racks, patch panels, jacks RJ45 y switches.',
+        synonyms: ['redes', 'utp', 'cable utp', 'fibra óptica', 'racks', 'patch panel', 'switches', 'rj45'],
     },
 ]

@@ -38,6 +38,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
     isAdminMode = false,
 }) => {
     const [nombre, setNombre] = useState('')
+    const [razonSocial, setRazonSocial] = useState('')
+    const [nit, setNit] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [email, setEmail] = useState('')
     const [sitioWeb, setSitioWeb] = useState('')
@@ -64,6 +66,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
     useEffect(() => {
         if (initialData) {
             setNombre(initialData.nombre || '')
+            setRazonSocial(initialData.razonSocial || '')
+            setNit(initialData.nit || '')
             setDescripcion(initialData.descripcion || '')
             setEmail(initialData.email || '')
             setSitioWeb(initialData.sitioWeb || '')
@@ -83,6 +87,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             ])
         } else {
             setNombre('')
+            setRazonSocial('')
+            setNit('')
             setDescripcion('')
             setEmail('')
             setSitioWeb('')
@@ -134,6 +140,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
         try {
             const payload: CreateTiendaInput = {
                 nombre: nombre.trim(),
+                razonSocial: razonSocial.trim() || undefined,
+                nit: nit.trim() || undefined,
                 descripcion: descripcion.trim(),
                 email: email.trim(),
                 sitioWeb: sitioWeb.trim(),
@@ -187,7 +195,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                     )}
 
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                        {/* Name & Categories */}
+                        {/* Name & Razón Social / NIT */}
                         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                             <TextField
                                 label="Nombre del Negocio / Tienda *"
@@ -196,38 +204,54 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                                 placeholder="Ej: Ferretería y Pinturas El Sol"
                                 value={nombre}
                                 onChange={(e) => setNombre(e.target.value)}
-                                sx={{ flex: 1, minWidth: 260 }}
+                                sx={{ flex: 2, minWidth: 240 }}
                             />
-
-                            <Autocomplete
-                                multiple
+                            <TextField
+                                label="Razón Social (Opcional)"
                                 size="small"
-                                options={ListadoCategoriasTiendas}
-                                getOptionLabel={(option) => option.label}
-                                value={ListadoCategoriasTiendas.filter((c) => selectedCategoryKeys.includes(c.key))}
-                                onChange={(_, newValue) => {
-                                    setSelectedCategoryKeys(newValue.map((c) => c.key))
-                                }}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Categorías *"
-                                        placeholder="Seleccionar categorías"
-                                    />
-                                )}
-                                renderTags={(value, getTagProps) =>
-                                    value.map((option, index) => (
-                                        <Chip
-                                            label={option.label}
-                                            size="small"
-                                            {...getTagProps({ index })}
-                                            key={option.key}
-                                        />
-                                    ))
-                                }
-                                sx={{ flex: 1, minWidth: 280 }}
+                                placeholder="Ej: Distribuidora El Sol S.A.S."
+                                value={razonSocial}
+                                onChange={(e) => setRazonSocial(e.target.value)}
+                                sx={{ flex: 1.5, minWidth: 180 }}
+                            />
+                            <TextField
+                                label="NIT (Opcional)"
+                                size="small"
+                                placeholder="Ej: 900.123.456-7"
+                                value={nit}
+                                onChange={(e) => setNit(e.target.value)}
+                                sx={{ flex: 1, minWidth: 140 }}
                             />
                         </Box>
+
+                        {/* Categories */}
+                        <Autocomplete
+                            multiple
+                            size="small"
+                            options={ListadoCategoriasTiendas}
+                            getOptionLabel={(option) => option.label}
+                            value={ListadoCategoriasTiendas.filter((c) => selectedCategoryKeys.includes(c.key))}
+                            onChange={(_, newValue) => {
+                                setSelectedCategoryKeys(newValue.map((c) => c.key))
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Categorías *"
+                                    placeholder="Seleccionar categorías"
+                                />
+                            )}
+                            renderTags={(value, getTagProps) =>
+                                value.map((option, index) => (
+                                    <Chip
+                                        label={option.label}
+                                        size="small"
+                                        {...getTagProps({ index })}
+                                        key={option.key}
+                                    />
+                                ))
+                            }
+                        />
 
                         {/* Description / Slogan */}
                         <TextField
@@ -281,7 +305,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                         disabled={isSubmitting}
                         startIcon={isSubmitting ? <CircularProgress size={18} color="inherit" /> : null}
                     >
-                        {isSubmitting ? 'Guardando...' : initialData ? 'Actualizar Tienda' : 'Enviar Registrar'}
+                        {isSubmitting ? 'Guardando...' : initialData ? 'Actualizar Tienda' : 'Enviar Registro'}
                     </Button>
                 </DialogActions>
             </form>

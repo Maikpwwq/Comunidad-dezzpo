@@ -19,6 +19,7 @@ import {
     limit as firestoreLimit,
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
+import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import type { ServiceResponse } from '@/types/services.d'
 import type {
     TiendaDocument,
@@ -43,11 +44,14 @@ export function slugify(text: string): string {
 }
 
 /**
- * Initial curated tiendas transcribed from real business cards
+ * Curated list of 6 seed tiendas transcribed from real business cards.
+ * Populated on first run when directory is empty.
  */
 const SEEDED_TIENDAS: CreateTiendaInput[] = [
     {
         nombre: 'Ferretería y Metales El Progreso',
+        razonSocial: 'Comercializadora El Progreso S.A.S.',
+        nit: '900.456.789-1',
         descripcion: 'Venta de perfiles de hierro, tubos, soldadura y ferretería pesada.',
         categorias: ['ferreteria_general', 'ornamentacion_hierro', 'gases_industriales_soldadura'],
         telefonoPrincipal: '6013456789',
@@ -64,6 +68,9 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
                 telefonos: ['6013456789', '3102345678'],
                 whatsapp: '573102345678',
                 horario: 'Lun-Vie 7:30 - 17:30, Sáb 8:00 - 14:00',
+                detallesUbicacion: 'Frente al costado sur de la Plaza de Paloquemao, fachada amarilla.',
+                nombreContacto: 'Carlos Martínez',
+                cargoContacto: 'Gerente de Ventas',
                 lat: 4.6125,
                 lng: -74.0881,
             },
@@ -75,6 +82,9 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
                 zona: 'barrios-unidos',
                 telefonos: ['6014567890'],
                 horario: 'Lun-Vie 8:00 - 17:00',
+                detallesUbicacion: 'A dos cuadras del parque principal del 7 de Agosto.',
+                nombreContacto: 'Sandra Gómez',
+                cargoContacto: 'Administradora de Sede',
                 lat: 4.6568,
                 lng: -74.0721,
             },
@@ -85,6 +95,8 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
     },
     {
         nombre: 'Pinturas & Color Tech Bogotá',
+        razonSocial: 'Inversiones Color Tech Colombia Ltda.',
+        nit: '830.123.987-4',
         descripcion: 'Distribuidor autorizado de pinturas acrílicas, esmaltes, impermeabilizantes y preparación de color.',
         categorias: ['pinturas_insumos', 'impermeabilizantes_aditivos'],
         telefonoPrincipal: '6015678901',
@@ -100,6 +112,9 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
                 telefonos: ['6015678901'],
                 whatsapp: '573153456789',
                 horario: 'Lun-Sáb 8:00 - 18:00',
+                detallesUbicacion: 'Al lado de la entidad bancaria, local esquinero.',
+                nombreContacto: 'Andrés López',
+                cargoContacto: 'Asesor Técnico de Color',
                 lat: 4.6702,
                 lng: -74.0582,
             },
@@ -110,6 +125,8 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
     },
     {
         nombre: 'Andamios & Equipos de Colombia',
+        razonSocial: 'Andamios y Maquinaria de Colombia S.A.S.',
+        nit: '901.334.556-2',
         descripcion: 'Alquiler y venta de andamios tubulares, multidireccionales, mezcladoras de concreto y cortadoras.',
         categorias: ['andamios_equipos', 'servicio_tecnico_herramientas'],
         telefonoPrincipal: '6016789012',
@@ -125,6 +142,9 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
                 telefonos: ['6016789012', '3204567890'],
                 whatsapp: '573204567890',
                 horario: 'Lun-Vie 7:00 - 17:00',
+                detallesUbicacion: 'Entrada por la bahía de carga, portón gris industrial.',
+                nombreContacto: 'Ing. Jorge Ramírez',
+                cargoContacto: 'Jefe de Operaciones y Logística',
                 lat: 4.6985,
                 lng: -74.0754,
             },
@@ -135,6 +155,8 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
     },
     {
         nombre: 'Vidrios y Perfiles del Norte',
+        razonSocial: 'Vidriería y Aluminio del Norte E.U.',
+        nit: '800.776.543-9',
         descripcion: 'Venta de cristal templado, espejos flotados, perfiles de aluminio y accesorios de acero inox.',
         categorias: ['vidrios_cristales', 'perfileria_aluminio'],
         telefonoPrincipal: '6017890123',
@@ -149,6 +171,9 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
                 telefonos: ['6017890123'],
                 whatsapp: '573185678901',
                 horario: 'Lun-Sáb 8:00 - 17:30',
+                detallesUbicacion: 'Diagonal al centro comercial Cedritos, local 102.',
+                nombreContacto: 'Martha Fernández',
+                cargoContacto: 'Atención al Cliente',
                 lat: 4.7182,
                 lng: -74.0415,
             },
@@ -159,6 +184,8 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
     },
     {
         nombre: 'Eléctricos & Iluminación del Sur',
+        razonSocial: 'Distribuidora Eléctrica del Sur S.A.S.',
+        nit: '900.887.654-3',
         descripcion: 'Materiales eléctricos residenciales e industriales, cableado estructurado y paneles LED.',
         categorias: ['materiales_electricos', 'iluminacion_lamparas', 'redes_cableado_estructurado'],
         telefonoPrincipal: '6018901234',
@@ -173,6 +200,9 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
                 telefonos: ['6018901234'],
                 whatsapp: '573126789012',
                 horario: 'Lun-Vie 8:00 - 18:00',
+                detallesUbicacion: 'En toda la esquina del sector comercial de Restrepo.',
+                nombreContacto: 'Wilson Cruz',
+                cargoContacto: 'Encargado de Mostrador',
                 lat: 4.5821,
                 lng: -74.0954,
             },
@@ -183,6 +213,8 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
     },
     {
         nombre: 'Distribuidora de Tubos y Accesorios PVC',
+        razonSocial: 'Hidrosanitarios y Plomería PVC S.A.S.',
+        nit: '901.112.233-5',
         descripcion: 'Tubería de presión, sanitaria, ventilación, conduit y pegantes PVC al por mayor y detal.',
         categorias: ['tuberia_pvc_hidrosanitaria'],
         telefonoPrincipal: '6019012345',
@@ -197,6 +229,9 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
                 telefonos: ['6019012345'],
                 whatsapp: '573147890123',
                 horario: 'Lun-Vie 7:30 - 17:00, Sáb 8:00 - 13:00',
+                detallesUbicacion: 'Cerca a la zona franca de Fontibón, bodega #3.',
+                nombreContacto: 'Hernando Patiño',
+                cargoContacto: 'Despachador Principal',
                 lat: 4.6734,
                 lng: -74.1432,
             },
@@ -254,12 +289,23 @@ export async function getTiendas(
             docs = docs.filter(
                 (item) =>
                     item.nombre.toLowerCase().includes(term) ||
+                    item.razonSocial?.toLowerCase().includes(term) ||
+                    item.nit?.toLowerCase().includes(term) ||
                     item.descripcion?.toLowerCase().includes(term) ||
                     item.sedes.some(
                         (s) =>
                             s.direccion.toLowerCase().includes(term) ||
-                            s.nombreSede.toLowerCase().includes(term)
-                    )
+                            s.nombreSede.toLowerCase().includes(term) ||
+                            s.detallesUbicacion?.toLowerCase().includes(term) ||
+                            s.nombreContacto?.toLowerCase().includes(term) ||
+                            s.cargoContacto?.toLowerCase().includes(term)
+                    ) ||
+                    item.categorias.some((catKey) => {
+                        const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                        if (!catObj) return false
+                        if (catObj.label.toLowerCase().includes(term) || catObj.key.toLowerCase().includes(term)) return true
+                        return catObj.synonyms?.some((syn) => syn.toLowerCase().includes(term))
+                    })
             )
         }
 

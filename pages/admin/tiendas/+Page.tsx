@@ -232,7 +232,23 @@ export default function Page() {
                                                     />
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography variant="body2">{tienda.telefonoPrincipal || '—'}</Typography>
+                                                    {(() => {
+                                                        const primarySede = tienda.sedes[0]
+                                                        const phone = tienda.telefonoPrincipal || primarySede?.telefonos[0]
+                                                        const wa = tienda.whatsappPrincipal || primarySede?.whatsapp
+                                                        return (
+                                                            <Box>
+                                                                {primarySede && (
+                                                                    <Typography variant="body2" fontWeight={600} noWrap sx={{ maxWidth: 200 }}>
+                                                                        📍 {primarySede.direccion}
+                                                                    </Typography>
+                                                                )}
+                                                                <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+                                                                    📞 {phone || 'Sin tel'} {wa ? `• WA: ${wa}` : ''}
+                                                                </Typography>
+                                                            </Box>
+                                                        )
+                                                    })()}
                                                 </TableCell>
                                                 <TableCell>
                                                     <Chip

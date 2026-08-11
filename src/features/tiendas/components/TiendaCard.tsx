@@ -62,11 +62,18 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
                 <CardContent sx={{ p: 2.5, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                     {/* Header: Title & Badges */}
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <StorefrontIcon color="primary" fontSize="medium" />
-                            <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2, color: '#0A2540' }}>
-                                {tienda.nombre}
-                            </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
+                            <StorefrontIcon color="primary" fontSize="medium" sx={{ mt: 0.3 }} />
+                            <Box>
+                                <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2, color: '#0A2540' }}>
+                                    {tienda.nombre}
+                                </Typography>
+                                {(tienda.razonSocial || tienda.nit) && (
+                                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.2 }}>
+                                        {tienda.razonSocial}{tienda.razonSocial && tienda.nit ? ' • ' : ''}{tienda.nit ? `NIT: ${tienda.nit}` : ''}
+                                    </Typography>
+                                )}
+                            </Box>
                         </Box>
                         {tienda.tierVisibilidad && tienda.tierVisibilidad !== 'estandar' && (
                             <Chip
@@ -121,25 +128,39 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
                     <Box sx={{ mt: 'auto' }}>
                         <Divider sx={{ my: 1.5 }} />
 
-                        {/* Location Summary */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, overflow: 'hidden' }}>
-                                <LocationOnIcon color="action" fontSize="small" />
-                                <Typography variant="body2" fontWeight={600} noWrap>
-                                    {primarySede.direccion} ({primaryZoneLabel})
-                                </Typography>
+                        {/* Location & Contact Summary */}
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75, mb: 1.5 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, overflow: 'hidden' }}>
+                                    <LocationOnIcon color="action" fontSize="small" />
+                                    <Typography variant="body2" fontWeight={600} noWrap>
+                                        {primarySede.direccion} ({primaryZoneLabel})
+                                    </Typography>
+                                </Box>
+
+                                {tienda.sedes.length > 1 && (
+                                    <Chip
+                                        icon={<LayersIcon fontSize="small" />}
+                                        label={`+${tienda.sedes.length - 1} sedes`}
+                                        size="small"
+                                        color="info"
+                                        variant="soft"
+                                        onClick={() => setDetailOpen(true)}
+                                        sx={{ fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}
+                                    />
+                                )}
                             </Box>
 
-                            {tienda.sedes.length > 1 && (
-                                <Chip
-                                    icon={<LayersIcon fontSize="small" />}
-                                    label={`+${tienda.sedes.length - 1} sedes`}
-                                    size="small"
-                                    color="info"
-                                    variant="soft"
-                                    onClick={() => setDetailOpen(true)}
-                                    sx={{ fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}
-                                />
+                            {primarySede.detallesUbicacion && (
+                                <Typography variant="caption" color="text.secondary" sx={{ pl: 3.2, fontStyle: 'italic' }} noWrap>
+                                    📍 {primarySede.detallesUbicacion}
+                                </Typography>
+                            )}
+
+                            {primarySede.nombreContacto && (
+                                <Typography variant="caption" color="primary.main" fontWeight={600} sx={{ pl: 3.2 }}>
+                                    👤 Contacto: {primarySede.nombreContacto} {primarySede.cargoContacto ? `(${primarySede.cargoContacto})` : ''}
+                                </Typography>
                             )}
                         </Box>
 
