@@ -140,8 +140,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
         try {
             const payload: CreateTiendaInput = {
                 nombre: nombre.trim(),
-                razonSocial: razonSocial.trim() || undefined,
-                nit: nit.trim() || undefined,
+                razonSocial: razonSocial.trim(),
+                nit: nit.trim(),
                 descripcion: descripcion.trim(),
                 email: email.trim(),
                 sitioWeb: sitioWeb.trim(),

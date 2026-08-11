@@ -114,4 +114,36 @@ describe('tiendaService Unit Tests', () => {
             }
         })
     })
+
+    describe('updateTienda', () => {
+        it('updates store name and sanitizes undefined values for updateDoc', async () => {
+            vi.spyOn(firestoreModule, 'getDoc').mockResolvedValueOnce({
+                exists: () => true,
+                id: 'tienda-1',
+                data: () => ({
+                    nombre: 'Old Name',
+                    estado: 'aprobado',
+                    categorias: [],
+                    sedes: [],
+                }),
+            } as any)
+
+            const res = await updateTienda('tienda-1', {
+                nombre: 'Sillas y Diseños',
+                razonSocial: '',
+                nit: '',
+            })
+
+            expect(res.success).toBe(true)
+            expect(firestoreModule.updateDoc).toHaveBeenCalledWith(
+                expect.anything(),
+                expect.objectContaining({
+                    nombre: 'Sillas y Diseños',
+                    slug: 'sillas-y-disenos',
+                    razonSocial: '',
+                    nit: '',
+                })
+            )
+        })
+    })
 })

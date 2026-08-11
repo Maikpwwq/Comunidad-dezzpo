@@ -365,6 +365,28 @@ export async function getTiendaById(
 }
 
 /**
+ * Recursively strips undefined values from an object or array to ensure compatibility with Firestore SDK.
+ */
+function sanitizeForFirestore<T>(val: T): T {
+    if (val === undefined || val === null) {
+        return val
+    }
+    if (Array.isArray(val)) {
+        return val.map((item) => sanitizeForFirestore(item)) as unknown as T
+    }
+    if (typeof val === 'object' && val.constructor === Object) {
+        const cleaned: Record<string, any> = {}
+        for (const [key, value] of Object.entries(val)) {
+            if (value !== undefined) {
+                cleaned[key] = sanitizeForFirestore(value)
+            }
+        }
+        return cleaned as T
+    }
+    return val
+}
+
+/**
  * Create a new tienda entry (user submission or admin creation)
  */
 export async function createTienda(
@@ -388,18 +410,29 @@ export async function createTienda(
         const documentData: TiendaDocument = {
             id: tiendaId,
             nombre: input.nombre.trim(),
+            razonSocial: input.razonSocial?.trim() || '',
+            nit: input.nit?.trim() || '',
             slug: generatedSlug,
-            categorias: input.categorias,
+            categorias: input.categorias || [],
             descripcion: input.descripcion?.trim() || '',
             email: input.email?.trim() || '',
             sitioWeb: input.sitioWeb?.trim() || '',
-            telefonoPrincipal: input.telefonoPrincipal?.trim() || input.sedes[0]?.telefonos[0] || '',
-            whatsappPrincipal: input.whatsappPrincipal?.trim() || input.sedes[0]?.whatsapp || '',
+            telefonoPrincipal: input.telefonoPrincipal?.trim() || input.sedes?.[0]?.telefonos?.[0] || '',
+            whatsappPrincipal: input.whatsappPrincipal?.trim() || input.sedes?.[0]?.whatsapp || '',
             logoUrl: input.logoUrl || '',
-            sedes: input.sedes.map((s, idx) => ({
+            sedes: (input.sedes || []).map((s, idx) => ({
                 ...s,
                 id: s.id || `sede_${idx + 1}_${Date.now()}`,
+                nombreSede: s.nombreSede?.trim() || `Sede ${idx + 1}`,
+                direccion: s.direccion?.trim() || '',
                 ciudad: s.ciudad || 'Bogotá, Colombia',
+                zona: s.zona || 'bogota',
+                telefonos: s.telefonos || [],
+                whatsapp: s.whatsapp?.trim() || '',
+                horario: s.horario?.trim() || '',
+                detallesUbicacion: s.detallesUbicacion?.trim() || '',
+                nombreContacto: s.nombreContacto?.trim() || '',
+                cargoContacto: s.cargoContacto?.trim() || '',
             })),
             estado: input.estado || 'pendiente',
             origen: input.origen || (userId === 'admin' ? 'equipo_dezzpo' : 'usuario'),
@@ -411,9 +444,10 @@ export async function createTienda(
             notasInternas: input.notasInternas || '',
         }
 
-        await setDoc(docRef, documentData)
+        const cleanedDocumentData = sanitizeForFirestore(documentData)
+        await setDoc(docRef, cleanedDocumentData)
 
-        return { success: true, data: documentData, error: null }
+        return { success: true, data: cleanedDocumentData, error: null }
     } catch (err: any) {
         console.error('[tiendaService] Error in createTienda:', err)
         return {
@@ -461,14 +495,53 @@ export async function updateTienda(
         }
 
         if (input.nombre) {
+            updatedData.nombre = input.nombre.trim()
             updatedData.slug = slugify(input.nombre)
         }
+        if (input.razonSocial !== undefined) {
+            updatedData.razonSocial = input.razonSocial.trim()
+        }
+        if (input.nit !== undefined) {
+            updatedData.nit = input.nit.trim()
+        }
+        if (input.descripcion !== undefined) {
+            updatedData.descripcion = input.descripcion.trim()
+        }
+        if (input.email !== undefined) {
+            updatedData.email = input.email.trim()
+        }
+        if (input.sitioWeb !== undefined) {
+            updatedData.sitioWeb = input.sitioWeb.trim()
+        }
+        if (input.telefonoPrincipal !== undefined) {
+            updatedData.telefonoPrincipal = input.telefonoPrincipal.trim()
+        }
+        if (input.whatsappPrincipal !== undefined) {
+            updatedData.whatsappPrincipal = input.whatsappPrincipal.trim()
+        }
+        if (input.sedes) {
+            updatedData.sedes = input.sedes.map((s, idx) => ({
+                ...s,
+                id: s.id || `sede_${idx + 1}_${Date.now()}`,
+                nombreSede: s.nombreSede?.trim() || `Sede ${idx + 1}`,
+                direccion: s.direccion?.trim() || '',
+                ciudad: s.ciudad || 'Bogotá, Colombia',
+                zona: s.zona || 'bogota',
+                telefonos: s.telefonos || [],
+                whatsapp: s.whatsapp?.trim() || '',
+                horario: s.horario?.trim() || '',
+                detallesUbicacion: s.detallesUbicacion?.trim() || '',
+                nombreContacto: s.nombreContacto?.trim() || '',
+                cargoContacto: s.cargoContacto?.trim() || '',
+            }))
+        }
 
-        await updateDoc(docRef, updatedData)
+        const cleanedUpdatedData = sanitizeForFirestore(updatedData)
+        await updateDoc(docRef, cleanedUpdatedData)
 
         const finalData: TiendaDocument = {
             ...current,
-            ...updatedData,
+            ...cleanedUpdatedData,
         }
 
         return { success: true, data: finalData, error: null }
