@@ -17,7 +17,7 @@ import StorefrontIcon from '@mui/icons-material/Storefront'
 import LayersIcon from '@mui/icons-material/Layers'
 import { zoneNames } from '@assets/data/ListadoZonas'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
-import type { TiendaDocument } from '@services/tiendas'
+import type { TiendaDocument, SedeLocation } from '@services/tiendas'
 import { SedeDetailModal } from './SedeDetailModal'
 
 interface TiendaCardProps {
@@ -27,11 +27,14 @@ interface TiendaCardProps {
 export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
     const [detailOpen, setDetailOpen] = useState(false)
 
-    const primarySede = tienda.sedes[0] || {
+    const primarySede: SedeLocation = tienda.sedes[0] || {
+        id: 'default_sede',
+        nombreSede: 'Sucursal Principal',
         direccion: 'Dirección no especificada',
         ciudad: 'Bogotá, Colombia',
         zona: 'bogota',
         telefonos: [],
+        whatsapp: '',
     }
 
     const primaryZoneLabel = zoneNames[primarySede.zona] || primarySede.zona

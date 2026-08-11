@@ -117,12 +117,12 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             return
         }
 
-        if (sedes.length === 0 || !sedes[0].direccion.trim()) {
+        if (sedes.length === 0 || !sedes[0]?.direccion?.trim()) {
             setErrorMsg('Por favor registra al menos una sede con su dirección exacta.')
             return
         }
 
-        const invalidSede = sedes.find(s => !s.direccion.trim() || s.telefonos.length === 0 || !s.telefonos[0].trim())
+        const invalidSede = sedes.find(s => !s.direccion?.trim() || !s.telefonos || s.telefonos.length === 0 || !s.telefonos[0]?.trim())
         if (invalidSede) {
             setErrorMsg('Todas las sedes registradas deben tener una dirección y al menos un teléfono de contacto.')
             return
