@@ -274,7 +274,7 @@ export async function getTiendas(
             success: false,
             data: null,
             error: {
-                code: 'FETCH_ERROR',
+                code: 'INTERNAL_ERROR',
                 message: err.message || 'Error al obtener las tiendas',
             },
         }
@@ -311,7 +311,7 @@ export async function getTiendaById(
             success: false,
             data: null,
             error: {
-                code: 'FETCH_ERROR',
+                code: 'INTERNAL_ERROR',
                 message: err.message || 'Error al consultar la tienda',
             },
         }
@@ -329,7 +329,7 @@ export async function createTienda(
         return {
             success: false,
             data: null,
-            error: { code: 'FIREBASE_UNAVAILABLE', message: 'Firebase no está inicializado' },
+            error: { code: 'INTERNAL_ERROR', message: 'Firebase no está inicializado' },
         }
     }
 
@@ -374,7 +374,7 @@ export async function createTienda(
             success: false,
             data: null,
             error: {
-                code: 'CREATE_ERROR',
+                code: 'INTERNAL_ERROR',
                 message: err.message || 'Error al guardar la tienda',
             },
         }
@@ -392,7 +392,7 @@ export async function updateTienda(
         return {
             success: false,
             data: null,
-            error: { code: 'FIREBASE_UNAVAILABLE', message: 'Firebase no está inicializado' },
+            error: { code: 'INTERNAL_ERROR', message: 'Firebase no está inicializado' },
         }
     }
 
@@ -404,7 +404,7 @@ export async function updateTienda(
             return {
                 success: false,
                 data: null,
-                error: { code: 'NOT_FOUND', message: 'La tienda especificada no existe' },
+                error: { code: 'FIRESTORE_NOT_FOUND', message: 'La tienda especificada no existe' },
             }
         }
 
@@ -432,7 +432,7 @@ export async function updateTienda(
             success: false,
             data: null,
             error: {
-                code: 'UPDATE_ERROR',
+                code: 'INTERNAL_ERROR',
                 message: err.message || 'Error al actualizar la tienda',
             },
         }
@@ -447,7 +447,7 @@ export async function deleteTienda(id: string): Promise<ServiceResponse<boolean>
         return {
             success: false,
             data: null,
-            error: { code: 'FIREBASE_UNAVAILABLE', message: 'Firebase no está inicializado' },
+            error: { code: 'INTERNAL_ERROR', message: 'Firebase no está inicializado' },
         }
     }
 
@@ -461,7 +461,7 @@ export async function deleteTienda(id: string): Promise<ServiceResponse<boolean>
             success: false,
             data: null,
             error: {
-                code: 'DELETE_ERROR',
+                code: 'INTERNAL_ERROR',
                 message: err.message || 'Error al eliminar la tienda',
             },
         }
@@ -504,7 +504,7 @@ export async function seedInitialTiendas(): Promise<ServiceResponse<TiendaDocume
         return {
             success: false,
             data: null,
-            error: { code: 'SEED_ERROR', message: err.message || 'Error al sembrar tiendas iniciales' },
+            error: { code: 'INTERNAL_ERROR', message: err.message || 'Error al sembrar tiendas iniciales' },
         }
     }
 }

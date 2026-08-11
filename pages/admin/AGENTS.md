@@ -30,6 +30,7 @@
 | `/admin/certificaciones` | Certifications Review | Evaluation queue workbench for comerciante skill verification |
 | `/admin/referidos` | Referral Audit | Global referral metrics (KPIs, conversion rate), filterable audit table |
 | `/admin/notificaciones` | Broadcast Workbench | Platform-wide mass notification broadcast to all or by role |
+| `/admin/tiendas` | Tiendas Workbench | Directory management, multi-branch sedes editor, and submission queue |
 
 ## 3. Data Service (`adminService.ts`)
 

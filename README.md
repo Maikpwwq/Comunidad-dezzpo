@@ -45,6 +45,7 @@ The project uses a **Tiered Access Model**:
    - `/app/directorio-requerimientos`
    - `/app/ver-requerimiento/[id]`
    - `/app/suscripciones`
+   - `/app/tiendas` (Directorio de Tiendas, Ferreterías y Proveedores)
    - `/app/perfil/[id]` (Public View)
 3. **Strict (App Auth):** Requires valid session (e.g., `/app/mensajes`, `/app/ajustes`).
 4. **Admin (Custom Claims):** Requires `claims.admin === true` via Firebase custom claims.
@@ -56,6 +57,7 @@ The project uses a **Tiered Access Model**:
    - `/admin/requerimientos` — Requirements Overview
    - `/admin/referidos` — Referral Program Auditing & Metrics
    - `/admin/notificaciones` — Platform-Wide Broadcast Workbench
+   - `/admin/tiendas` — Directory Workbench & Submission Moderation Queue
 
 ## Project Structure
 
