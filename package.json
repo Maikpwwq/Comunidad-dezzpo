@@ -80,9 +80,9 @@
     "hono": "^4.13.1",
     "html2pdf.js": "^0.14.0",
     "prop-types": "^15.8.1",
-    "react": "^19.2.8",
+    "react": "^19.0.0",
     "react-bootstrap": "^2.10.10",
-    "react-dom": "^19.2.8",
+    "react-dom": "^19.0.0",
     "react-google-autocomplete": "^2.7.5",
     "react-icomoon": "^2.6.1",
     "react-swipeable-views": "^0.14.2",
@@ -111,8 +111,8 @@
     "@types/compression": "^1.8.1",
     "@types/google.maps": "^3.65.5",
     "@types/node": "^26.2.0",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@types/react-swipeable-views": "^0.13.6",
     "@types/react-swipeable-views-utils": "^0.13.7",
     "@typescript-eslint/eslint-plugin": "^8.67.0",
@@ -134,5 +134,14 @@
     "vite": "^8.2.1",
     "vite-plugin-vercel": "^11.1.1",
     "vitest": "^4.1.10"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "^19.0.0",
+      "react-dom": "^19.0.0",
+      "@types/react": "^19.0.0",
+      "@types/react-dom": "^19.0.0",
+      "@mui/system": "6.5.0"
+    }
   }
 }
