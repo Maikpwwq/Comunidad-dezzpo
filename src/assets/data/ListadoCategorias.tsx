@@ -583,6 +583,13 @@ const ListadoCategorias = [
         variant: 'outlined',
         iconName: 'Handyman',
     },
+    {
+        key: 83,
+        label: 'Trabajos en altura',
+        rol: 'Técnicos de trabajos en altura y acceso vertical',
+        variant: 'outlined',
+        iconName: 'Engineering',
+    },
 ]
 
 export { ListadoCategorias }
