@@ -5,7 +5,7 @@
  * Uses MUI Autocomplete with brand-styled dropdown.
  */
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { navigate } from 'vike/client/router'
 import Link from '@hooks/Link'
 import {
@@ -34,17 +34,28 @@ export interface SearchBarProps {
     className?: string
     targetRoutePrefix?: string
     onCategorySelect?: (categoryLabel: string) => void
+    onSearchChange?: (queryText: string) => void
     placeholder?: string
+    initialValue?: string
 }
 
 export function SearchBar({
     className,
     targetRoutePrefix = '/app/portal-servicios',
     onCategorySelect,
+    onSearchChange,
     placeholder = 'Buscar categoría, comerciante o palabra clave...',
+    initialValue = '',
 }: SearchBarProps): React.ReactElement {
-    const [inputValue, setInputValue] = useState('')
-    const [selectedValue, setSelectedValue] = useState<string | CategoryOption | null>(null)
+    const [inputValue, setInputValue] = useState(initialValue)
+    const [selectedValue, setSelectedValue] = useState<string | CategoryOption | null>(initialValue || null)
+
+    useEffect(() => {
+        if (initialValue !== undefined) {
+            setInputValue(initialValue)
+            setSelectedValue(initialValue || null)
+        }
+    }, [initialValue])
 
     const executeSearch = useCallback(
         (queryText: string) => {
@@ -72,6 +83,13 @@ export function SearchBar({
         [executeSearch]
     )
 
+    const handleInputChange = (_event: React.SyntheticEvent, newInputValue: string, reason: string) => {
+        setInputValue(newInputValue)
+        if (onSearchChange && reason === 'input') {
+            onSearchChange(newInputValue)
+        }
+    }
+
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
             e.preventDefault()
@@ -89,8 +107,9 @@ export function SearchBar({
             className={className}
             sx={{
                 display: 'flex',
-                minWidth: '230px',
                 alignItems: 'center',
+                width: '100%',
+                maxWidth: '650px',
             }}
         >
             <Link href="/app/portal-servicios" className="activo body-2 p-2 d-flex flex-row">
@@ -114,7 +133,7 @@ export function SearchBar({
                 value={selectedValue}
                 onChange={handleCategorySelect}
                 inputValue={inputValue}
-                onInputChange={(_e, newInputValue) => setInputValue(newInputValue)}
+                onInputChange={handleInputChange}
                 popupIcon={<ArrowDropDownIcon />}
                 noOptionsText={
                     <Box sx={{ py: 1.5, px: 2, textAlign: 'center' }}>
@@ -219,7 +238,8 @@ export function SearchBar({
                             '& .MuiOutlinedInput-root': {
                                 borderRadius: '20px',
                                 backgroundColor: '#fff',
-                                minWidth: '280px',
+                                width: '100%',
+                                minWidth: '340px',
                                 '& fieldset': {
                                     borderColor: 'var(--selected-border-light-gray-color)',
                                 },
@@ -234,7 +254,7 @@ export function SearchBar({
                         }}
                     />
                 )}
-                sx={{ minWidth: 280, maxWidth: 450 }}
+                sx={{ width: '100%', minWidth: 340, maxWidth: 580 }}
             />
         </Box>
     )

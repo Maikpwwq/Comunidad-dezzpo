@@ -182,8 +182,14 @@ export default function Page() {
         return result
     }
 
-    const filteredUsersData = filterUserListByKeywordAndClassification(usersData)
-    const filteredSearchData = searchData.docSnap ? filterUserListByKeywordAndClassification(searchData.docSnap) : []
+    // Combine usersData and searchData.docSnap deduplicated by userId/uid
+    const combinedUsers = Array.from(
+        new Map(
+            [...usersData, ...(searchData.docSnap || [])].map((u) => [u.userId || (u as any).uid || u.userMail, u])
+        ).values()
+    )
+
+    const filteredUsersData = filterUserListByKeywordAndClassification(combinedUsers)
 
     return (
         <Container fluid className="p-0 h-100" style={{ overflowX: 'hidden' }}>
@@ -198,7 +204,7 @@ export default function Page() {
                             Publica un proyecto
                         </Button>
                     </h1>
-                    <SearchBar />
+                    <SearchBar initialValue={spacedText} />
 
                     {/* Comerciante Classification Filter Bar */}
                     <Box
@@ -238,47 +244,15 @@ export default function Page() {
                         </Box>
                     </Box>
                 </Col>
-                {searchInput ? (
-                    <Row className="">
-                        <Typography className="type-body" component="div">
-                            Buscar comerciantes Calificados por categoria:{' '}
-                            <br />
-                            <span className="type-card-title">{spacedText}</span>
-                        </Typography>
-
-                        <Suspense fallback={<PortalSkeleton />}>
-                            <section className={styles['directory-wrapper']}>
-                                {filteredSearchData && filteredSearchData.length > 0 ? (
-                                    filteredSearchData.map((user) => (
-                                        <UserCard
-                                            key={user.userId || user.uid}
-                                            {...user}
-                                        />
-                                    ))
-                                ) : (
-                                    <div style={{ gridColumn: '1 / -1' }}>
-                                        <Typography
-                                            className="type-body"
-                                            fontSize={'1.125rem'}
-                                        >
-                                            No se encontraron resultados de la
-                                            búsqueda para la categoría o filtro seleccionado!
-                                            <br />
-                                            {spacedText}
-                                        </Typography>
-                                    </div>
-                                )}
-                            </section>
-                        </Suspense>
-                    </Row>
-                ) : null}
             </Row>
 
             <Row className="m-0 w-100 pt-4 pb-4" style={{ overflow: 'hidden' }}>
                 <Col xs={12} className="p-0">
                     <div className="pb-2 p-0 px-3">
                         <h3 className="type-section-title">
-                            Todos los profesionales
+                            {spacedText
+                                ? `Resultados de búsqueda para: "${spacedText}"`
+                                : 'Todos los profesionales'}
                         </h3>
                     </div>
                     <p className="type-caption px-3">
@@ -297,9 +271,11 @@ export default function Page() {
                                     />
                                 ))
                             ) : (
-                                <div style={{ gridColumn: '1 / -1' }}>
-                                    <Typography className="type-body" fontSize={'1rem'} color="text.secondary">
-                                        No se encontraron profesionales para el nivel de clasificación seleccionado.
+                                <div style={{ gridColumn: '1 / -1', padding: '2rem 1rem' }}>
+                                    <Typography className="type-body" fontSize={'1.1rem'} color="text.secondary">
+                                        {spacedText
+                                            ? `No se encontraron comerciantes o empresas que coincidan con "${spacedText}".`
+                                            : 'No se encontraron profesionales para el nivel de clasificación seleccionado.'}
                                     </Typography>
                                 </div>
                             )}

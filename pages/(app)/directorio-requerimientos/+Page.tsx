@@ -172,14 +172,15 @@ export default function Page() {
                 <Box sx={{ my: 2 }}>
                     <SearchBar
                         targetRoutePrefix="/app/directorio-requerimientos"
-                        placeholder="Buscar requerimientos por categoría..."
+                        placeholder="Buscar requerimientos por categoría, título o palabra clave..."
+                        initialValue={spacedText}
                     />
                 </Box>
 
                 {spacedText && (
                     <Box sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Typography variant="body2" fontWeight={600} color="text.secondary">
-                            Búsqueda por categoría:
+                            Filtro de búsqueda:
                         </Typography>
                         <Chip
                             label={spacedText}
