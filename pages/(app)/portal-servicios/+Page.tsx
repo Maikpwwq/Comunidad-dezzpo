@@ -142,21 +142,48 @@ export default function Page() {
         },
     ]
 
-    // Filter merchant users by public classification category
-    const filterUserList = (list: UserFirestoreDocument[]) => {
-        if (selectedMerchantClassification === 'all') return list
-        const selectedFilter = PUBLIC_MERCHANT_FILTERS.find(
-            (f) => f.id === selectedMerchantClassification
-        )
-        if (!selectedFilter) return list
-        return list.filter((u) => {
-            const clas = (u.userClasification || '').toLowerCase()
-            return selectedFilter.matchTerms.some((term) => clas.includes(term))
-        })
+    // Comprehensive search filter (Name, Company/Razón Social, Profession/Slogan, Description, Categories)
+    const filterUserListByKeywordAndClassification = (list: UserFirestoreDocument[]) => {
+        let result = list
+
+        // 1. Keyword search (from SearchBar URL parameter)
+        if (spacedText && spacedText.trim()) {
+            const term = spacedText.trim().toLowerCase()
+            result = result.filter((u) => {
+                const name = (u.userName || '').toLowerCase()
+                const razon = (u.userRazonSocial || '').toLowerCase()
+                const prof = ((u as any).userProfession || '').toLowerCase()
+                const desc = ((u as any).userDescription || '').toLowerCase()
+                const cats = (u.userCategories || []).map((c) => String(c).toLowerCase())
+
+                return (
+                    name.includes(term) ||
+                    razon.includes(term) ||
+                    prof.includes(term) ||
+                    desc.includes(term) ||
+                    cats.some((c) => c.includes(term) || term.includes(c))
+                )
+            })
+        }
+
+        // 2. Comerciante Classification filter
+        if (selectedMerchantClassification !== 'all') {
+            const selectedFilter = PUBLIC_MERCHANT_FILTERS.find(
+                (f) => f.id === selectedMerchantClassification
+            )
+            if (selectedFilter) {
+                result = result.filter((u) => {
+                    const clas = (u.userClasification || '').toLowerCase()
+                    return selectedFilter.matchTerms.some((t) => clas.includes(t))
+                })
+            }
+        }
+
+        return result
     }
 
-    const filteredUsersData = filterUserList(usersData)
-    const filteredSearchData = searchData.docSnap ? filterUserList(searchData.docSnap) : []
+    const filteredUsersData = filterUserListByKeywordAndClassification(usersData)
+    const filteredSearchData = searchData.docSnap ? filterUserListByKeywordAndClassification(searchData.docSnap) : []
 
     return (
         <Container fluid className="p-0 h-100" style={{ overflowX: 'hidden' }}>

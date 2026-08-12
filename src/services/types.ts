@@ -71,6 +71,18 @@ export interface Property {
     isMain: boolean
 }
 
+export interface UserLocationItem {
+    id: string
+    nombre?: string
+    direccion: string
+    ciudad: string
+    codigoPostal?: string
+    zona?: string
+    lat?: number
+    lng?: number
+    isPrimary?: boolean
+}
+
 // =============================================================================
 // User Types
 // =============================================================================
@@ -100,9 +112,11 @@ export interface UserFirestoreDocument extends DocumentData {
     userProfession?: string
     userExperience?: string
     userDescription?: string
+    userIdentificationType?: string
     userIdentification?: string
     userWebSite?: string
     userGalleryUrl?: string[]
+    userLocations?: UserLocationItem[]
     userLikes?: {
         likedsProfiles: string[]
         likedsDrafts: string[]

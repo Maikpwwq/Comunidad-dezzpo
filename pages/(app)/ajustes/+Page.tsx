@@ -14,7 +14,7 @@ import { useAuth } from '@hooks/useAuth'
 
 // Services
 import { getUser, updateUser } from '@services/users'
-import type { UserRole, ContactEmail, ContactPhone, SocialLink, Property } from '@services/types'
+import type { UserRole, ContactEmail, ContactPhone, SocialLink, Property, UserLocationItem } from '@services/types'
 import { storage } from '@services/firebase'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { createEmptyEmail, createEmptyPhone } from '@utilities/contactUtils'
@@ -82,6 +82,7 @@ interface UserEditInfo {
     userCiudad: string
     userCodigoPostal: string
     userRazonSocial: string
+    userIdentificationType: string
     userIdentification: string
     userDescription: string
     userWebSite: string
@@ -118,12 +119,14 @@ export default function Page() {
     const [uploadProgress, setUploadProgress] = useState<number>(0)
     const [isUploading, setIsUploading] = useState(false)
 
-    // Multi-channel contacts state
+    // Multi-channel contacts & multi-location state
     const [emails, setEmails] = useState<ContactEmail[]>([])
     const [phones, setPhones] = useState<ContactPhone[]>([])
     const [socialLinks, setSocialLinks] = useState<SocialLink[]>([])
     const [socialUrlErrors, setSocialUrlErrors] = useState<Record<string, boolean>>({})
     const [properties, setProperties] = useState<Property[]>([])
+    const [locations, setLocations] = useState<UserLocationItem[]>([])
+    const [activeLocationIdxForMap, setActiveLocationIdxForMap] = useState<number | null>(null)
 
     // Coverage zones state (comerciante only)
     const [coverageZones, setCoverageZones] = useState<string[]>([])
@@ -147,6 +150,7 @@ export default function Page() {
         userCiudad: '',
         userCodigoPostal: '',
         userRazonSocial: '',
+        userIdentificationType: 'CC',
         userIdentification: '',
         userDescription: '',
         userWebSite: '',
@@ -187,16 +191,33 @@ export default function Page() {
                         userCiudad: userData.userCiudad || '',
                         userCodigoPostal: userData.userCodigoPostal || '',
                         userRazonSocial: userData.userRazonSocial || '',
+                        userIdentificationType: (userData as any).userIdentificationType || 'CC',
                         userIdentification: (userData as any).userIdentification || '',
                         userDescription: (userData as any).userDescription || '',
                         userWebSite: (userData as any).userWebSite || '',
                     })
 
-                    // Load multi-channel contacts (already migrated by getUser)
+                    // Load multi-channel contacts & multi-location
                     setEmails(userData.emails || [])
                     setPhones(userData.phones || [])
                     setSocialLinks(userData.socialLinks || [])
                     setProperties(userData.properties || [])
+
+                    const rawLocations: UserLocationItem[] = (userData as any).userLocations || []
+                    if (rawLocations.length > 0) {
+                        setLocations(rawLocations)
+                    } else {
+                        setLocations([
+                            {
+                                id: 'loc_1',
+                                nombre: 'Ubicación Principal',
+                                direccion: userData.userDirection || '',
+                                ciudad: userData.userCiudad || 'Bogotá, Colombia',
+                                codigoPostal: userData.userCodigoPostal || '',
+                                isPrimary: true,
+                            },
+                        ])
+                    }
 
                     // Load coverage zones
                     setCoverageZones(userData.userZonasCobertura || [])
@@ -307,7 +328,7 @@ export default function Page() {
 
         // Build combined payload: regular fields + contact arrays
         const contactFields = [
-            'userName', 'userIdentification', 'userWebSite', 'userRazonSocial',
+            'userName', 'userIdentificationType', 'userIdentification', 'userWebSite', 'userRazonSocial',
             ...(userRol.rol === 2 ? ['userProfession', 'userExperience'] : []),
         ]
         const sectionData: Record<string, any> = {}
@@ -329,6 +350,97 @@ export default function Page() {
             setAlert({ open: true, message: 'Error al actualizar. Intenta de nuevo.', severity: 'error' })
         }
     }, [userAuthID, userRol.rol, userEditInfo, emails, phones])
+
+    // ── Location handlers ────────────────────────────────────────────────
+    const handleAddLocation = () => {
+        const newLoc: UserLocationItem = {
+            id: `loc_${Date.now()}_${locations.length + 1}`,
+            nombre: locations.length === 0 ? 'Ubicación Principal' : `Sede / Ubicación ${locations.length + 1}`,
+            direccion: '',
+            ciudad: userEditInfo.userCiudad || 'Bogotá, Colombia',
+            codigoPostal: '',
+            isPrimary: locations.length === 0,
+        }
+        setLocations((prev) => [...prev, newLoc])
+    }
+
+    const handleLocationChange = (index: number, field: keyof UserLocationItem, value: any) => {
+        setLocations((prev) =>
+            prev.map((loc, i) => (i === index ? { ...loc, [field]: value } : loc))
+        )
+    }
+
+    const handleSetPrimaryLocation = (index: number) => {
+        setLocations((prev) =>
+            prev.map((loc, i) => ({ ...loc, isPrimary: i === index }))
+        )
+    }
+
+    const handleRemoveLocation = (index: number) => {
+        if (locations[index]?.isPrimary && locations.length > 1) {
+            return
+        }
+        setLocations((prev) => prev.filter((_, i) => i !== index))
+    }
+
+    const handleMapLocationSelected = (locInfo: any) => {
+        if (activeLocationIdxForMap !== null && locations[activeLocationIdxForMap]) {
+            const updatedDir = locInfo.userDirection || locInfo.street || locations[activeLocationIdxForMap].direccion
+            const updatedCity = locInfo.userCiudad || locInfo.city || locations[activeLocationIdxForMap].ciudad
+            const updatedPostal = locInfo.userCodigoPostal || locInfo.postalCode || locations[activeLocationIdxForMap].codigoPostal
+
+            setLocations((prev) =>
+                prev.map((loc, i) =>
+                    i === activeLocationIdxForMap
+                        ? {
+                              ...loc,
+                              direccion: updatedDir,
+                              ciudad: updatedCity,
+                              codigoPostal: updatedPostal,
+                              lat: locInfo.lat || loc.lat,
+                              lng: locInfo.lng || loc.lng,
+                          }
+                        : loc
+                )
+            )
+        }
+        setLocationModalOpen(false)
+        setActiveLocationIdxForMap(null)
+    }
+
+    const handleSaveLocations = useCallback(async () => {
+        if (!userRol.rol) {
+            setAlert({ open: true, message: 'Error: Rol no identificado.', severity: 'error' })
+            return
+        }
+
+        const primaryLoc = locations.find((l) => l.isPrimary) || locations[0]
+
+        try {
+            await updateUser({
+                userId: userAuthID,
+                role: userRol.rol,
+                data: {
+                    userLocations: locations,
+                    userDirection: primaryLoc?.direccion || '',
+                    userCiudad: primaryLoc?.ciudad || '',
+                    userCodigoPostal: primaryLoc?.codigoPostal || '',
+                },
+            })
+
+            setUserEditInfo((prev) => ({
+                ...prev,
+                userDirection: primaryLoc?.direccion || '',
+                userCiudad: primaryLoc?.ciudad || '',
+                userCodigoPostal: primaryLoc?.codigoPostal || '',
+            }))
+
+            setAlert({ open: true, message: '¡Ubicaciones actualizadas correctamente!', severity: 'success' })
+        } catch (error) {
+            console.error('Error updating locations:', error)
+            setAlert({ open: true, message: 'Error al actualizar ubicaciones. Intenta de nuevo.', severity: 'error' })
+        }
+    }, [userAuthID, userRol.rol, locations])
 
     // ── Social links handlers ────────────────────────────────────────────
     const handleSocialChange = (id: string, field: string, value: any) => {

@@ -41,27 +41,51 @@ export function SearchBar({
     className,
     targetRoutePrefix = '/app/portal-servicios',
     onCategorySelect,
-    placeholder = 'Buscar categoría...',
+    placeholder = 'Buscar categoría, comerciante o palabra clave...',
 }: SearchBarProps): React.ReactElement {
-    const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null)
+    const [inputValue, setInputValue] = useState('')
+    const [selectedValue, setSelectedValue] = useState<string | CategoryOption | null>(null)
 
-    const handleCategorySelect = useCallback(
-        (_event: React.SyntheticEvent, value: CategoryOption | null) => {
-            setSelectedCategory(value)
-            if (value) {
-                if (onCategorySelect) {
-                    onCategorySelect(value.label)
-                } else {
-                    const encoded = value.label.replace(/ /g, '+')
-                    navigate(`${targetRoutePrefix}/${encoded}`)
-                }
+    const executeSearch = useCallback(
+        (queryText: string) => {
+            const cleanQuery = queryText.trim()
+            if (!cleanQuery) return
+
+            if (onCategorySelect) {
+                onCategorySelect(cleanQuery)
+            } else {
+                const encoded = encodeURIComponent(cleanQuery).replace(/%20/g, '+')
+                navigate(`${targetRoutePrefix}/${encoded}`)
             }
         },
         [onCategorySelect, targetRoutePrefix]
     )
 
+    const handleCategorySelect = useCallback(
+        (_event: React.SyntheticEvent, value: string | CategoryOption | null) => {
+            setSelectedValue(value)
+            if (value) {
+                const queryText = typeof value === 'string' ? value : value.label
+                executeSearch(queryText)
+            }
+        },
+        [executeSearch]
+    )
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+            executeSearch(inputValue)
+        }
+    }
+
     return (
         <Box
+            component="form"
+            onSubmit={(e) => {
+                e.preventDefault()
+                executeSearch(inputValue)
+            }}
             className={className}
             sx={{
                 display: 'flex',
@@ -81,21 +105,21 @@ export function SearchBar({
 
             <Autocomplete
                 id="search-select-category"
+                freeSolo
                 options={ListadoCategorias as CategoryOption[]}
-                getOptionLabel={(option) => option.label}
-                value={selectedCategory}
+                getOptionLabel={(option) => {
+                    if (typeof option === 'string') return option
+                    return option.label
+                }}
+                value={selectedValue}
                 onChange={handleCategorySelect}
+                inputValue={inputValue}
+                onInputChange={(_e, newInputValue) => setInputValue(newInputValue)}
                 popupIcon={<ArrowDropDownIcon />}
                 noOptionsText={
-                    <Box sx={{ py: 2, textAlign: 'center' }}>
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                color: 'var(--secondary-text-gray-color)',
-                                fontStyle: 'italic',
-                            }}
-                        >
-                            No se encontraron categorías
+                    <Box sx={{ py: 1.5, px: 2, textAlign: 'center' }}>
+                        <Typography variant="body2" sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
+                            Presiona Enter para buscar "{inputValue}"
                         </Typography>
                     </Box>
                 }
@@ -104,7 +128,7 @@ export function SearchBar({
                         {...(props as any)}
                         sx={{
                             borderRadius: '20px',
-                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
                             border: '1px solid var(--selected-border-light-gray-color)',
                             mt: 0.5,
                             overflow: 'hidden',
@@ -112,8 +136,16 @@ export function SearchBar({
                     />
                 )}
                 renderOption={(props, option) => {
+                    if (typeof option === 'string') {
+                        return (
+                            <Box component="li" {...props} key={option}>
+                                <Typography variant="body2">{option}</Typography>
+                            </Box>
+                        )
+                    }
                     const IconComponent = CategoryIcons[option.iconName as string]
-                    const isSelected = selectedCategory?.key === option.key
+                    const isSelected =
+                        typeof selectedValue !== 'string' && selectedValue?.key === option.key
                     return (
                         <Box
                             component="li"
@@ -165,17 +197,19 @@ export function SearchBar({
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        InputLabelProps={params.InputLabelProps as any}
                         placeholder={placeholder}
                         size="small"
+                        onKeyDown={handleKeyDown}
                         InputProps={{
                             ...params.InputProps,
                             startAdornment: (
                                 <InputAdornment position="start">
                                     <SearchIcon
+                                        onClick={() => executeSearch(inputValue)}
                                         sx={{
                                             color: 'var(--primary-green-text-color)',
                                             fontSize: '1.4rem',
+                                            cursor: 'pointer',
                                         }}
                                     />
                                 </InputAdornment>
@@ -185,7 +219,7 @@ export function SearchBar({
                             '& .MuiOutlinedInput-root': {
                                 borderRadius: '20px',
                                 backgroundColor: '#fff',
-                                minWidth: '250px',
+                                minWidth: '280px',
                                 '& fieldset': {
                                     borderColor: 'var(--selected-border-light-gray-color)',
                                 },
@@ -200,7 +234,7 @@ export function SearchBar({
                         }}
                     />
                 )}
-                sx={{ minWidth: 280, maxWidth: 350 }}
+                sx={{ minWidth: 280, maxWidth: 450 }}
             />
         </Box>
     )

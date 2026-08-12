@@ -138,6 +138,18 @@ export interface SocialLink {
 // Firestore Document Types (extended from services/types.ts)
 // =============================================================================
 
+export interface UserLocationItem {
+    id: string
+    nombre?: string
+    direccion: string
+    ciudad: string
+    codigoPostal?: string
+    zona?: string
+    lat?: number
+    lng?: number
+    isPrimary?: boolean
+}
+
 export interface UserFirestoreDocument {
     userId: string
     userName: string | null
@@ -151,9 +163,12 @@ export interface UserFirestoreDocument {
     userCodigoPostal?: string
     userTel?: string
     userImage?: string
+    userIdentificationType?: string
+    userIdentification?: string
     emails?: ContactEmail[]
     phones?: ContactPhone[]
     socialLinks?: SocialLink[]
+    userLocations?: UserLocationItem[]
     userZonasCobertura?: string[]
     coberturaTodaLaCiudad?: boolean
     isAvailableNow?: boolean

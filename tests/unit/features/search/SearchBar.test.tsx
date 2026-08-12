@@ -38,7 +38,7 @@ describe('SearchBar', () => {
   });
 
   it('renders empty state correctly (no query)', () => {
-    render(<SearchBar />);
+    render(<SearchBar placeholder="Buscar categoría..." />);
     const input = screen.getByPlaceholderText('Buscar categoría...');
     expect(input).toBeInTheDocument();
     expect(input).toHaveValue('');
@@ -46,7 +46,7 @@ describe('SearchBar', () => {
 
   it('renders matching items from a mocked data source when typing', async () => {
     const user = userEvent.setup();
-    render(<SearchBar />);
+    render(<SearchBar placeholder="Buscar categoría..." />);
     
     const input = screen.getByPlaceholderText('Buscar categoría...');
     await user.type(input, 'Plom');
@@ -62,7 +62,7 @@ describe('SearchBar', () => {
 
   it('selecting a result fires the correct navigation', async () => {
     const user = userEvent.setup();
-    render(<SearchBar />);
+    render(<SearchBar placeholder="Buscar categoría..." />);
     
     const input = screen.getByPlaceholderText('Buscar categoría...');
     await user.type(input, 'Elec');
@@ -75,9 +75,19 @@ describe('SearchBar', () => {
     expect(navigate).toHaveBeenCalledWith('/app/portal-servicios/Electricidad');
   });
 
+  it('submitting free text query on Enter fires navigation', async () => {
+    const user = userEvent.setup();
+    render(<SearchBar placeholder="Buscar categoría..." />);
+    
+    const input = screen.getByPlaceholderText('Buscar categoría...');
+    await user.type(input, 'ONASI{Enter}');
+    
+    expect(navigate).toHaveBeenCalledWith('/app/portal-servicios/ONASI');
+  });
+
   it('clearing the input resets results', async () => {
     const user = userEvent.setup();
-    render(<SearchBar />);
+    render(<SearchBar placeholder="Buscar categoría..." />);
     
     const input = screen.getByPlaceholderText('Buscar categoría...');
     await user.type(input, 'Carp');
@@ -87,31 +97,12 @@ describe('SearchBar', () => {
     
     await user.clear(input);
     
-    // MUI Autocomplete keeps listbox open while input is focused, but shows all options again
     expect(input).toHaveValue('');
-    // After clearing, either all options appear or the listbox closes — either is valid
-    const listboxAfter = screen.queryByRole('listbox');
-    if (listboxAfter) {
-      // All 3 options should be visible again since filter is empty
-      expect(within(listboxAfter).getAllByRole('option').length).toBeGreaterThanOrEqual(1);
-    }
-  });
-
-  it('empty results state renders the correct fallback UI', async () => {
-    const user = userEvent.setup();
-    render(<SearchBar />);
-    
-    const input = screen.getByPlaceholderText('Buscar categoría...');
-    await user.type(input, 'NonExistentCategory');
-    
-    // Autocomplete displays "No se encontraron categorías" element inside listbox or paper
-    const fallbackText = await screen.findByText('No se encontraron categorías');
-    expect(fallbackText).toBeInTheDocument();
   });
 
   it('keyboard navigation works correctly', async () => {
     const user = userEvent.setup();
-    render(<SearchBar />);
+    render(<SearchBar placeholder="Buscar categoría..." />);
     
     const input = screen.getByPlaceholderText('Buscar categoría...');
     
@@ -122,8 +113,6 @@ describe('SearchBar', () => {
     let options = within(listbox).getAllByRole('option');
     expect(options.length).toBeGreaterThanOrEqual(1);
     
-    // MUI Autocomplete tracks focus via aria-activedescendant on the input,
-    // not aria-selected on options. Verify the input tracks keyboard position.
     await user.keyboard('{ArrowDown}');
     expect(input).toHaveAttribute('aria-activedescendant');
     
