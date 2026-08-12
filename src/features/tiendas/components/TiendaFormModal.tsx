@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import {
     Dialog,
     DialogTitle,
@@ -18,8 +18,11 @@ import {
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import StorefrontIcon from '@mui/icons-material/Storefront'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import type { TiendaDocument, CreateTiendaInput, SedeLocation } from '@services/tiendas'
+import { useTiendaFormDraftStore, EMPTY_SEDE } from '@stores/useTiendaFormDraftStore'
 import { SedeManager } from './SedeManager'
 
 interface TiendaFormModalProps {
@@ -37,78 +40,100 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
     initialData = null,
     isAdminMode = false,
 }) => {
+    // ── Zustand draft store (sessionStorage-persisted) ──
+    const draft = useTiendaFormDraftStore((s) => s.draft)
+    const updateDraft = useTiendaFormDraftStore((s) => s.updateDraft)
+    const clearDraft = useTiendaFormDraftStore((s) => s.clearDraft)
+
+    // ── Determine if we're in "create" mode (use draft) or "edit" mode (use initialData) ──
+    const isEditMode = !!initialData
+
+    // ── Local state sourced from either draft store or initialData ──
     const [nombre, setNombre] = useState('')
     const [razonSocial, setRazonSocial] = useState('')
     const [nit, setNit] = useState('')
     const [descripcion, setDescripcion] = useState('')
-    const [email, setEmail] = useState('')
+    const [emails, setEmails] = useState<string[]>([''])
     const [sitioWeb, setSitioWeb] = useState('')
     const [telefonoPrincipal, setTelefonoPrincipal] = useState('')
     const [whatsappPrincipal, setWhatsappPrincipal] = useState('')
     const [selectedCategoryKeys, setSelectedCategoryKeys] = useState<string[]>([])
-    const [sedes, setSedes] = useState<SedeLocation[]>([
-        {
-            id: 'sede_1',
-            nombreSede: 'Sucursal Principal',
-            direccion: '',
-            ciudad: 'Bogotá, Colombia',
-            codigoPostal: '',
-            zona: 'bogota',
-            telefonos: [''],
-            whatsapp: '',
-            horario: 'Lun-Vie 8:00 - 17:00',
-        },
-    ])
+    const [sedes, setSedes] = useState<SedeLocation[]>([EMPTY_SEDE])
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
+    const handleEmailChange = (index: number, value: string) => {
+        const updated = [...emails]
+        updated[index] = value
+        setEmails(updated)
+    }
+
+    const handleAddEmail = () => {
+        setEmails([...emails, ''])
+    }
+
+    const handleRemoveEmail = (index: number) => {
+        if (emails.length === 1) {
+            setEmails([''])
+        } else {
+            setEmails(emails.filter((_, i) => i !== index))
+        }
+    }
+
+    // ── Hydrate local state from draft (create) or initialData (edit) ──
     useEffect(() => {
-        if (initialData) {
+        if (!open) return
+
+        if (isEditMode) {
+            // Edit mode: load from initialData
             setNombre(initialData.nombre || '')
             setRazonSocial(initialData.razonSocial || '')
             setNit(initialData.nit || '')
             setDescripcion(initialData.descripcion || '')
-            setEmail(initialData.email || '')
+            if (initialData.emails && initialData.emails.length > 0) {
+                setEmails(initialData.emails)
+            } else if (initialData.email) {
+                setEmails(initialData.email.split(',').map((e) => e.trim()).filter(Boolean))
+            } else {
+                setEmails([''])
+            }
             setSitioWeb(initialData.sitioWeb || '')
             setTelefonoPrincipal(initialData.telefonoPrincipal || '')
             setWhatsappPrincipal(initialData.whatsappPrincipal || '')
             setSelectedCategoryKeys(initialData.categorias || [])
-            setSedes(initialData.sedes && initialData.sedes.length > 0 ? initialData.sedes : [
-                {
-                    id: 'sede_1',
-                    nombreSede: 'Sucursal Principal',
-                    direccion: '',
-                    ciudad: 'Bogotá, Colombia',
-                    codigoPostal: '',
-                    zona: 'bogota',
-                    telefonos: [''],
-                },
-            ])
+            setSedes(initialData.sedes && initialData.sedes.length > 0 ? initialData.sedes : [EMPTY_SEDE])
         } else {
-            setNombre('')
-            setRazonSocial('')
-            setNit('')
-            setDescripcion('')
-            setEmail('')
-            setSitioWeb('')
-            setTelefonoPrincipal('')
-            setWhatsappPrincipal('')
-            setSelectedCategoryKeys([])
-            setSedes([
-                {
-                    id: 'sede_1',
-                    nombreSede: 'Sucursal Principal',
-                    direccion: '',
-                    ciudad: 'Bogotá, Colombia',
-                    codigoPostal: '',
-                    zona: 'bogota',
-                    telefonos: [''],
-                },
-            ])
+            // Create mode: restore from sessionStorage draft
+            setNombre(draft.nombre)
+            setRazonSocial(draft.razonSocial)
+            setNit(draft.nit)
+            setDescripcion(draft.descripcion)
+            setEmails(draft.emails.length > 0 ? draft.emails : [''])
+            setSitioWeb(draft.sitioWeb)
+            setTelefonoPrincipal(draft.telefonoPrincipal)
+            setWhatsappPrincipal(draft.whatsappPrincipal)
+            setSelectedCategoryKeys(draft.selectedCategoryKeys)
+            setSedes(draft.sedes.length > 0 ? draft.sedes : [EMPTY_SEDE])
         }
         setErrorMsg(null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialData, open])
+
+    // ── Persist local state changes to Zustand draft (create mode only) ──
+    const syncDraft = useCallback(() => {
+        if (isEditMode) return
+        updateDraft({
+            nombre, razonSocial, nit, descripcion, emails,
+            sitioWeb, telefonoPrincipal, whatsappPrincipal,
+            selectedCategoryKeys, sedes,
+        })
+    }, [isEditMode, updateDraft, nombre, razonSocial, nit, descripcion, emails, sitioWeb, telefonoPrincipal, whatsappPrincipal, selectedCategoryKeys, sedes])
+
+    useEffect(() => {
+        if (!open || isEditMode) return
+        syncDraft()
+    }, [open, isEditMode, syncDraft])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -138,12 +163,15 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
         setErrorMsg(null)
 
         try {
+            const cleanEmails = emails.map((e) => e.trim()).filter(Boolean)
+
             const payload: CreateTiendaInput = {
                 nombre: nombre.trim(),
                 razonSocial: razonSocial.trim(),
                 nit: nit.trim(),
                 descripcion: descripcion.trim(),
-                email: email.trim(),
+                emails: cleanEmails,
+                email: cleanEmails.join(', ') || undefined,
                 sitioWeb: sitioWeb.trim(),
                 telefonoPrincipal: telefonoPrincipal.trim() || sedes[0].telefonos[0],
                 whatsappPrincipal: whatsappPrincipal.trim() || sedes[0].whatsapp,
@@ -230,6 +258,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                             size="small"
                             options={ListadoCategoriasTiendas}
                             getOptionLabel={(option) => option.label}
+                            getOptionDisabled={() => selectedCategoryKeys.length >= 4}
                             filterOptions={(options, state) => {
                                 const query = state.inputValue
                                     .trim()
@@ -258,13 +287,23 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                             }}
                             value={ListadoCategoriasTiendas.filter((c) => selectedCategoryKeys.includes(c.key))}
                             onChange={(_, newValue) => {
-                                setSelectedCategoryKeys(newValue.map((c) => c.key))
+                                if (newValue.length <= 4) {
+                                    setSelectedCategoryKeys(newValue.map((c) => c.key))
+                                }
                             }}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
                                     label="Categorías *"
-                                    placeholder="Seleccionar categorías"
+                                    placeholder={selectedCategoryKeys.length >= 4 ? '' : 'Seleccionar categorías'}
+                                    helperText={
+                                        selectedCategoryKeys.length >= 4
+                                            ? 'Máximo 4 categorías permitidas'
+                                            : `${selectedCategoryKeys.length}/4 categorías seleccionadas`
+                                    }
+                                    FormHelperTextProps={{
+                                        sx: { color: selectedCategoryKeys.length >= 4 ? 'warning.main' : 'text.secondary' },
+                                    }}
                                 />
                             )}
                             renderTags={(value, getTagProps) =>
@@ -290,25 +329,52 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                             onChange={(e) => setDescripcion(e.target.value)}
                         />
 
-                        {/* Contact & Website */}
-                        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                            <TextField
-                                label="Sitio Web (Opcional)"
+                        {/* Contact Website */}
+                        <TextField
+                            label="Sitio Web (Opcional)"
+                            size="small"
+                            placeholder="Ej: https://mi-tienda.com"
+                            value={sitioWeb}
+                            onChange={(e) => setSitioWeb(e.target.value)}
+                            fullWidth
+                        />
+
+                        {/* Dynamic Emails Section */}
+                        <Box sx={{ p: 2, borderRadius: 2, bgcolor: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                            <Typography variant="subtitle2" fontWeight={700} color="text.primary" sx={{ mb: 1.5 }}>
+                                Correos Electrónicos de Contacto (Opcional)
+                            </Typography>
+                            {emails.map((emailVal, idx) => (
+                                <Box key={idx} sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1.5 }}>
+                                    <TextField
+                                        label={idx === 0 ? "Correo Electrónico Principal" : `Correo Secundario #${idx + 1}`}
+                                        size="small"
+                                        type="email"
+                                        placeholder="contacto@mitienda.com"
+                                        value={emailVal}
+                                        onChange={(e) => handleEmailChange(idx, e.target.value)}
+                                        sx={{ flex: 1 }}
+                                    />
+                                    <IconButton
+                                        size="small"
+                                        color="default"
+                                        onClick={() => handleRemoveEmail(idx)}
+                                        disabled={emails.length === 1 && !emails[0]}
+                                        title="Eliminar correo"
+                                    >
+                                        <DeleteOutlineIcon fontSize="small" />
+                                    </IconButton>
+                                </Box>
+                            ))}
+                            <Button
+                                variant="outlined"
                                 size="small"
-                                placeholder="Ej: https://mi-tienda.com"
-                                value={sitioWeb}
-                                onChange={(e) => setSitioWeb(e.target.value)}
-                                sx={{ flex: 1, minWidth: 200 }}
-                            />
-                            <TextField
-                                label="Correo Electrónico (Opcional)"
-                                size="small"
-                                type="email"
-                                placeholder="contacto@mitienda.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                sx={{ flex: 1, minWidth: 200 }}
-                            />
+                                startIcon={<AddCircleOutlineIcon />}
+                                onClick={handleAddEmail}
+                                sx={{ textTransform: 'none', borderRadius: 2, fontWeight: 600 }}
+                            >
+                                Agregar otro correo
+                            </Button>
                         </Box>
 
                         <Divider />

@@ -27,7 +27,8 @@ export interface TiendaDocument {
     slug: string                  // URL-friendly slug
     categorias: string[]          // Array of category keys/labels from ListadoCategoriasTiendas (Min 1)
     descripcion?: string          // Short slogan or description
-    email?: string
+    email?: string                // Primary email or summary
+    emails?: string[]             // Array of registered contact emails (Min 1)
     sitioWeb?: string
     telefonoPrincipal?: string    // Top-level summary contact phone
     whatsappPrincipal?: string    // Top-level summary WhatsApp

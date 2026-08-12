@@ -20,6 +20,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 import PersonIcon from '@mui/icons-material/Person'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import EmailIcon from '@mui/icons-material/Email'
 import { zoneNames } from '@assets/data/ListadoZonas'
 import type { TiendaDocument } from '@services/tiendas'
 
@@ -35,6 +36,13 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
     tienda,
 }) => {
     if (!tienda) return null
+
+    // Resolve emails: prefer emails array, fallback to legacy email string
+    const resolvedEmails: string[] = tienda.emails && tienda.emails.length > 0
+        ? tienda.emails
+        : tienda.email
+            ? tienda.email.split(',').map((e) => e.trim()).filter(Boolean)
+            : []
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
@@ -65,6 +73,26 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2, fontStyle: 'italic' }}>
                         "{tienda.descripcion}"
                     </Typography>
+                )}
+
+                {/* Emails Section */}
+                {resolvedEmails.length > 0 && (
+                    <Box sx={{ mb: 2, display: 'flex', flexWrap: 'wrap', gap: 1, alignItems: 'center' }}>
+                        <EmailIcon fontSize="small" color="action" />
+                        {resolvedEmails.map((em, idx) => (
+                            <Chip
+                                key={idx}
+                                label={em}
+                                size="small"
+                                component="a"
+                                href={`mailto:${em}`}
+                                clickable
+                                variant="outlined"
+                                color="primary"
+                                sx={{ fontWeight: 500 }}
+                            />
+                        ))}
+                    </Box>
                 )}
 
                 <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1.5, color: '#0A2540' }}>
