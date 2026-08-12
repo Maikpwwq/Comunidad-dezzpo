@@ -207,11 +207,18 @@ export default function Page({
                                 </Col>
                             </>
                         )}
-                        <p className="body-1 pt-2">
-                            <Link className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")} href="/ingreso/">
-                                Ingresar
-                            </Link>
-                        </p>
+                        <Box sx={{ mt: 3, pt: 2, borderTop: '1px solid #e2e8f0', width: '100%', textAlign: 'center' }}>
+                            <Typography variant="body2" sx={{ color: '#475569' }}>
+                                ¿Ya tienes una cuenta?{' '}
+                                <Link
+                                    href="/ingreso/"
+                                    className={clsx(styles.Link, styles.Green)}
+                                    style={{ fontWeight: 700, textDecoration: 'underline' }}
+                                >
+                                    Inicia sesión aquí
+                                </Link>
+                            </Typography>
+                        </Box>
                     </Col>
                 </Form>
             </Paper>

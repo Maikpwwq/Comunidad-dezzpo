@@ -98,33 +98,21 @@ export default function Page({
                 <Col className={clsx(styles.FormWrapper, "m-0 p-0 mb-4 mt-4")} lg={4} md={5} sm={10} xs={10}>
                     <Paper elevation={16} className={clsx(styles.FormCard, "pt-4 pb-4")}>
                         <Form action="" className="p-4" onSubmit={handleEmailLogin}>
-                            <Col className="d-flex pt-4 pb-4">
-                                <h1 className="type-hero-title">
+                            <Col className="d-flex flex-column align-items-center text-center pt-2 pb-2">
+                                <h1 className="type-hero-title mb-3">
                                     Iniciar sesión
                                 </h1>
                                 {/* Step 1: Role Selection */}
                                 {step === 1 && (
-                                    <>
-                                        <RoleSelector
-                                            onSelect={handleSelectRole}
-                                            selectedRole={role}
-                                        />
-                                        <p className="body-1 pt-2 m-0">
-                                            <Link className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")} href="/registro/">
-                                                Registrarme
-                                            </Link>
-                                        </p>
-                                        <Link className={clsx(styles.Link, styles.Green, "body-2 btn-TEXT")} href="/restaurar-contrasena/">
-                                            <Button className={clsx(styles.TealButton, "btn-round btn-high")} variant="light">
-                                                Olvidé mi contraseña
-                                            </Button>
-                                        </Link>
-                                    </>
+                                    <RoleSelector
+                                        onSelect={handleSelectRole}
+                                        selectedRole={role}
+                                    />
                                 )}
                                 {/* Step 2: Login Form */}
                                 {step === 2 && (
                                     <>
-                                        <Form.Label className="mb-0 body-1 pt-4">
+                                        <Form.Label className="mb-0 body-1 pt-2">
                                             {role === 1 ? 'Soy propietario/residente' : 'Soy comerciante calificado'}
                                         </Form.Label>
                                         <GoogleAuthButton
@@ -154,15 +142,14 @@ export default function Page({
                                                 />
                                             </Form.Group>
                                         </Col>
-                                        <Col className="pt-4 pb-2">
+                                        <Col className="pt-3 pb-2 d-flex flex-wrap justify-content-center gap-2">
                                             <Button
                                                 onClick={() => setStep(1)}
-                                                className="mb-4 btn-round btn-middle w-auto"
+                                                className="btn-round btn-middle w-auto"
                                                 variant="secondary"
                                             >
                                                 <KeyboardBackspaceIcon /> Volver atrás
                                             </Button>
-                                            <span className="mt-1" style={{ marginBottom: '1rem' }} />
                                             <Button
                                                 className={clsx(styles.TealButton, "btn-buscador btn-round btn-high body-1")}
                                                 variant="light"
@@ -174,6 +161,27 @@ export default function Page({
                                         </Col>
                                     </>
                                 )}
+
+                                {/* Permanent links visible on both Step 1 & Step 2 */}
+                                <Box sx={{ mt: 3, pt: 2, borderTop: '1px solid #e2e8f0', width: '100%', textAlign: 'center' }}>
+                                    <Typography variant="body2" sx={{ color: '#475569', mb: 1 }}>
+                                        ¿No tienes una cuenta aún?{' '}
+                                        <Link
+                                            href="/registro/"
+                                            className={clsx(styles.Link, styles.Green)}
+                                            style={{ fontWeight: 700, textDecoration: 'underline' }}
+                                        >
+                                            Regístrate aquí
+                                        </Link>
+                                    </Typography>
+                                    <Link
+                                        href="/restaurar-contrasena/"
+                                        className={clsx(styles.Link)}
+                                        style={{ color: '#64748b', fontSize: '0.85rem', textDecoration: 'underline' }}
+                                    >
+                                        ¿Olvidaste tu contraseña?
+                                    </Link>
+                                </Box>
                             </Col>
                         </Form>
                     </Paper>
