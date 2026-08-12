@@ -691,22 +691,48 @@ export default function Page() {
                         </div>
 
                         {/* ── Other fields ── */}
-                        <div className={styles['field-row']}>
+                        <div className={styles['field-row']} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                            <FormControl size="small" sx={{ minWidth: 120 }}>
+                                <InputLabel id="id-type-select-label">Tipo Doc.</InputLabel>
+                                <Select
+                                    labelId="id-type-select-label"
+                                    id="userIdentificationType"
+                                    name="userIdentificationType"
+                                    label="Tipo Doc."
+                                    value={userEditInfo.userIdentificationType || 'CC'}
+                                    onChange={(e) =>
+                                        setUserEditInfo((prev) => ({
+                                            ...prev,
+                                            userIdentificationType: e.target.value,
+                                        }))
+                                    }
+                                >
+                                    <MenuItem value="CC">C.C.</MenuItem>
+                                    <MenuItem value="NIT">NIT</MenuItem>
+                                    <MenuItem value="CE">C.E.</MenuItem>
+                                    <MenuItem value="Pasaporte">Pasaporte</MenuItem>
+                                    <MenuItem value="Otro">Otro</MenuItem>
+                                </Select>
+                            </FormControl>
                             <TextField
                                 id="userIdentification"
                                 name="userIdentification"
-                                label="Identificación"
+                                label="Número de Identificación"
+                                placeholder="Ej: 1020304050 o 900123456-1"
                                 value={userEditInfo.userIdentification}
                                 onChange={handleChange}
                                 size="small"
+                                sx={{ flex: 1 }}
                             />
                             <TextField
                                 id="userWebSite"
                                 name="userWebSite"
                                 label="Sitio web"
+                                placeholder="https://..."
                                 value={userEditInfo.userWebSite}
                                 onChange={handleChange}
                                 size="small"
+                                sx={{ flex: 1 }}
                             />
                         </div>
 
@@ -716,6 +742,7 @@ export default function Page() {
                                     id="userRazonSocial"
                                     name="userRazonSocial"
                                     label="Razón Social"
+                                    placeholder="Ej: Prime Domotics S.A.S. o Constructora Dezzpo"
                                     value={userEditInfo.userRazonSocial}
                                     onChange={handleChange}
                                     size="small"
@@ -725,18 +752,22 @@ export default function Page() {
                                     <TextField
                                         id="userProfession"
                                         name="userProfession"
-                                        label="Profesión"
+                                        label="Profesión / Slogan"
+                                        placeholder="Ej: Automatización de espacios o Ingeniero Electrónico"
                                         value={userEditInfo.userProfession}
                                         onChange={handleChange}
                                         size="small"
+                                        sx={{ flex: 2 }}
                                     />
                                     <TextField
                                         id="userExperience"
                                         name="userExperience"
                                         label="Experiencia"
+                                        placeholder="Ej: 15 años"
                                         value={userEditInfo.userExperience}
                                         onChange={handleChange}
                                         size="small"
+                                        sx={{ flex: 1 }}
                                     />
                                 </div>
                             </>
