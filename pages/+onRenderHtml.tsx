@@ -89,7 +89,10 @@ async function onRenderHtml(pageContext: PageContextServer) {
       name="keywords"
       content="Contratistas de mantenimiento residencial confiables, Red profesional confiable, Contratista calificado ideal, Proyecto en tu hogar a un clic"
     />
+    <!-- https://comunidad-dezzpo.vercel.app/ -->
     <meta name="google-site-verification" content="YR9BPQLIFQ3lXvQgOQNJp6b6llUUWUHwM3toS-US5P8" />
+    <!-- https://dezzpo.com/ -->
+    <meta name="google-site-verification" content="QW8c9O6KDsA0u250MQ-Pu2MKvSIeCFOo4PegEowLvfA" />
     <link
       rel="icon"
       type="image/png"
