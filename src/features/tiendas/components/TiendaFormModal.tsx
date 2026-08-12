@@ -230,6 +230,32 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                             size="small"
                             options={ListadoCategoriasTiendas}
                             getOptionLabel={(option) => option.label}
+                            filterOptions={(options, state) => {
+                                const query = state.inputValue
+                                    .trim()
+                                    .toLowerCase()
+                                    .normalize('NFD')
+                                    .replace(/[\u0300-\u036f]/g, '')
+                                if (!query) return options
+                                return options.filter((option) => {
+                                    const labelNorm = option.label
+                                        .toLowerCase()
+                                        .normalize('NFD')
+                                        .replace(/[\u0300-\u036f]/g, '')
+                                    const descNorm = (option.description || '')
+                                        .toLowerCase()
+                                        .normalize('NFD')
+                                        .replace(/[\u0300-\u036f]/g, '')
+                                    const synonymMatch = (option.synonyms || []).some((syn) => {
+                                        const synNorm = syn
+                                            .toLowerCase()
+                                            .normalize('NFD')
+                                            .replace(/[\u0300-\u036f]/g, '')
+                                        return synNorm.includes(query) || query.includes(synNorm)
+                                    })
+                                    return labelNorm.includes(query) || descNorm.includes(query) || synonymMatch
+                                })
+                            }}
                             value={ListadoCategoriasTiendas.filter((c) => selectedCategoryKeys.includes(c.key))}
                             onChange={(_, newValue) => {
                                 setSelectedCategoryKeys(newValue.map((c) => c.key))

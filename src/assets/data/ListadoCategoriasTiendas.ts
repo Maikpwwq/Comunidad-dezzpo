@@ -183,11 +183,11 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
     },
     {
         key: 'camaras_cctv_alarmas',
-        label: 'Equipos de Videovigilancia y CCTV',
+        label: 'Cámaras de Seguridad, Alarmas y CCTV',
         parentTradeKey: 10, // Cámaras de seguridad
         iconName: 'CameraOutdoor',
-        description: 'Cámaras IP, DVR/NVR, disco duro para videovigilancia y sensores.',
-        synonyms: ['cámaras', 'camaras', 'cctv', 'dvr', 'nvr', 'alarmas', 'seguridad electrónica', 'sensores de movimiento'],
+        description: 'Cámaras IP, DVR/NVR, disco duro para videovigilancia, alarmas y sensores de movimiento.',
+        synonyms: ['cámaras', 'camaras', 'cámara', 'camara', 'cctv', 'dvr', 'nvr', 'alarmas', 'alarma', 'videovigilancia', 'seguridad electrónica', 'seguridad electronica', 'sensores de movimiento', 'camaras de seguridad'],
     },
     {
         key: 'calentadores_repuestos',
