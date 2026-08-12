@@ -16,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import MapIcon from '@mui/icons-material/Map'
 import PhoneIcon from '@mui/icons-material/Phone'
-import { zoneNames } from '@assets/data/ListadoZonas'
+import { zoneNames, getZonesForCity, isBogotaRegion } from '@assets/data/ListadoZonas'
 import { Ubicacion } from '@features/marketing'
 import type { SedeLocation } from '@services/tiendas'
 
@@ -56,6 +56,25 @@ export const SedeManager: React.FC<SedeManagerProps> = ({ sedes, onChange }) => 
         updated[idx] = {
             ...updated[idx],
             [field]: value,
+        }
+        onChange(updated)
+    }
+
+    const handleCityChange = (idx: number, newCity: string) => {
+        const updated = [...sedes]
+        const currentSede = updated[idx]
+        const availableZones = getZonesForCity(newCity)
+        const validZoneKeys = Object.keys(availableZones)
+
+        let newZona = currentSede.zona
+        if (!validZoneKeys.includes(currentSede.zona)) {
+            newZona = validZoneKeys[0] || 'centro'
+        }
+
+        updated[idx] = {
+            ...currentSede,
+            ciudad: newCity,
+            zona: newZona,
         }
         onChange(updated)
     }
@@ -117,84 +136,90 @@ export const SedeManager: React.FC<SedeManagerProps> = ({ sedes, onChange }) => 
             </Box>
 
             <Stack spacing={2}>
-                {sedes.map((sede, idx) => (
-                    <Paper
-                        key={sede.id || idx}
-                        variant="outlined"
-                        sx={{ p: 2, borderRadius: 2, backgroundColor: '#fcfcfc', borderColor: 'divider' }}
-                    >
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
-                            <Typography variant="body2" fontWeight={700} color="primary.main">
-                                Sede #{idx + 1}
-                            </Typography>
-                            {sedes.length > 1 && (
-                                <IconButton
-                                    size="small"
-                                    color="error"
-                                    onClick={() => handleRemoveSede(idx)}
-                                    title="Eliminar sede"
-                                >
-                                    <DeleteIcon fontSize="small" />
-                                </IconButton>
-                            )}
-                        </Box>
+                {sedes.map((sede, idx) => {
+                    const currentCityZones = getZonesForCity(sede.ciudad)
+                    const isBogota = isBogotaRegion(sede.ciudad)
 
-                        <Stack spacing={2}>
-                            <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
-                                <TextField
-                                    label="Nombre de la Sede"
-                                    size="small"
-                                    placeholder="Ej: Sede Chapinero"
-                                    value={sede.nombreSede}
-                                    onChange={(e) => handleUpdateSede(idx, 'nombreSede', e.target.value)}
-                                    sx={{ flex: 1, minWidth: 200 }}
-                                />
-                                <TextField
-                                    select
-                                    label="Zona de Bogotá"
-                                    size="small"
-                                    value={sede.zona || 'bogota'}
-                                    onChange={(e) => handleUpdateSede(idx, 'zona', e.target.value)}
-                                    sx={{ minWidth: 180 }}
-                                >
-                                    {Object.entries(zoneNames).map(([slug, name]) => (
-                                        <MenuItem key={slug} value={slug}>
-                                            {name}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                    return (
+                        <Paper
+                            key={sede.id || idx}
+                            variant="outlined"
+                            sx={{ p: 2, borderRadius: 2, backgroundColor: '#fcfcfc', borderColor: 'divider' }}
+                        >
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+                                <Typography variant="body2" fontWeight={700} color="primary.main">
+                                    Sede #{idx + 1}
+                                </Typography>
+                                {sedes.length > 1 && (
+                                    <IconButton
+                                        size="small"
+                                        color="error"
+                                        onClick={() => handleRemoveSede(idx)}
+                                        title="Eliminar sede"
+                                    >
+                                        <DeleteIcon fontSize="small" />
+                                    </IconButton>
+                                )}
                             </Box>
 
-                            <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', flexWrap: 'wrap' }}>
-                                <TextField
-                                    label="Dirección exacta"
-                                    size="small"
-                                    placeholder="Ej: Calle 15 # 85-30"
-                                    value={sede.direccion}
-                                    onChange={(e) => handleUpdateSede(idx, 'direccion', e.target.value)}
-                                    sx={{ flex: 2, minWidth: 220 }}
-                                />
-                                <TextField
-                                    label="Ciudad"
-                                    size="small"
-                                    value={sede.ciudad}
-                                    onChange={(e) => handleUpdateSede(idx, 'ciudad', e.target.value)}
-                                    sx={{ flex: 1, minWidth: 150 }}
-                                />
-                                <Button
-                                    variant="outlined"
-                                    size="small"
-                                    color="secondary"
-                                    startIcon={<MapIcon />}
-                                    onClick={() => {
-                                        setActiveSedeForMap(idx)
-                                        setOpenMapModal(true)
-                                    }}
-                                    sx={{ textTransform: 'none', height: 40 }}
-                                >
-                                    Registrar en mapa
-                                </Button>
-                            </Box>
+                            <Stack spacing={2}>
+                                <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+                                    <TextField
+                                        label="Nombre de la Sede"
+                                        size="small"
+                                        placeholder="Ej: Sede Chapinero"
+                                        value={sede.nombreSede}
+                                        onChange={(e) => handleUpdateSede(idx, 'nombreSede', e.target.value)}
+                                        sx={{ flex: 1, minWidth: 180 }}
+                                    />
+                                    <TextField
+                                        label="Ciudad"
+                                        size="small"
+                                        placeholder="Ej: Bogotá, Medellín, Cali..."
+                                        value={sede.ciudad}
+                                        onChange={(e) => handleCityChange(idx, e.target.value)}
+                                        sx={{ flex: 1, minWidth: 180 }}
+                                    />
+                                    <TextField
+                                        select
+                                        label={isBogota ? "Localidad / Zona" : "Zona / Sector"}
+                                        size="small"
+                                        value={sede.zona && Object.keys(currentCityZones).includes(sede.zona) ? sede.zona : Object.keys(currentCityZones)[0]}
+                                        onChange={(e) => handleUpdateSede(idx, 'zona', e.target.value)}
+                                        sx={{ flex: 1, minWidth: 180 }}
+                                    >
+                                        {Object.entries(currentCityZones).map(([slug, name]) => (
+                                            <MenuItem key={slug} value={slug}>
+                                                {name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Box>
+
+                                <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+                                    <TextField
+                                        label="Dirección exacta"
+                                        size="small"
+                                        placeholder="Ej: Calle 15 # 85-30"
+                                        value={sede.direccion}
+                                        onChange={(e) => handleUpdateSede(idx, 'direccion', e.target.value)}
+                                        sx={{ flex: 2, minWidth: 240 }}
+                                        helperText="Escribe la dirección en texto libre (no requiere marcar en el mapa)"
+                                    />
+                                    <Button
+                                        variant="outlined"
+                                        size="small"
+                                        color="secondary"
+                                        startIcon={<MapIcon />}
+                                        onClick={() => {
+                                            setActiveSedeForMap(idx)
+                                            setOpenMapModal(true)
+                                        }}
+                                        sx={{ textTransform: 'none', height: 40, whiteSpace: 'nowrap', mt: 0.2 }}
+                                    >
+                                        Marcar en mapa (Opcional)
+                                    </Button>
+                                </Box>
 
                             <TextField
                                 label="Detalles de ubicación física (Opcional)"
@@ -270,7 +295,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({ sedes, onChange }) => 
                             </Box>
                         </Stack>
                     </Paper>
-                ))}
+                )})}
             </Stack>
 
             {/* Map Location Picker Modal */}

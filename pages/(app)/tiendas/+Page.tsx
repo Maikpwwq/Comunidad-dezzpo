@@ -175,7 +175,7 @@ export default function Page() {
                             select
                             fullWidth
                             size="small"
-                            label="Filtrar por Zona de Bogotá"
+                            label="Filtrar por Zona"
                             value={selectedZone}
                             onChange={(e) => setSelectedZone(e.target.value)}
                         >

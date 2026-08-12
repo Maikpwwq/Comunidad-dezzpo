@@ -1,4 +1,4 @@
-export const zoneNames: Record<string, string> = {
+export const bogotaZoneNames: Record<string, string> = {
     'bogota': 'Bogotá',
     'bogota-norte': 'Bogotá Norte',
     'bogota-sur': 'Bogotá Sur',
@@ -37,4 +37,42 @@ export const zoneNames: Record<string, string> = {
     'sopo': 'Sopó'
 }
 
+export const standardCityZoneNames: Record<string, string> = {
+    'centro': 'Centro',
+    'norte': 'Norte',
+    'sur': 'Sur',
+    'occidente': 'Occidente',
+    'oriente': 'Oriente',
+    'noroccidente': 'Noroccidente',
+    'nororiente': 'Nororiente',
+    'suroccidente': 'Suroccidente',
+    'suroriente': 'Suroriente',
+    'alrededores': 'Área Metropolitana / Alrededores',
+    'otra-zona': 'Otra Zona',
+}
+
+export const zoneNames: Record<string, string> = {
+    ...bogotaZoneNames,
+    ...standardCityZoneNames,
+}
+
 export const zones = Object.keys(zoneNames)
+
+/**
+ * Checks if a city string is Bogotá or one of its Cundinamarca metropolitan municipalities.
+ */
+export function isBogotaRegion(ciudad: string = ''): boolean {
+    if (!ciudad || !ciudad.trim()) return true
+    const norm = ciudad.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim()
+    if (norm.includes('bogota')) return true
+    
+    const metroKeys = ['soacha', 'chia', 'cajica', 'zipaquira', 'cota', 'funza', 'mosquera', 'madrid', 'facatativa', 'la calera', 'sopo']
+    return metroKeys.some(m => norm.includes(m))
+}
+
+/**
+ * Returns appropriate zone selection dictionary (slug -> label) based on selected city.
+ */
+export function getZonesForCity(ciudad: string = ''): Record<string, string> {
+    return isBogotaRegion(ciudad) ? bogotaZoneNames : standardCityZoneNames
+}
