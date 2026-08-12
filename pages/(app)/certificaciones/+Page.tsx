@@ -46,7 +46,7 @@ import {
 } from '@services/membershipAndCertService'
 import { navigate } from 'vike/client/router'
 
-const EPAYCO_PUBLIC_KEY = (import.meta as any).env?.VITE_APP_EPAYCO_PUBLIC_KEY || ''
+const EPAYCO_PUBLIC_KEY = import.meta.env.VITE_APP_EPAYCO_PUBLIC_KEY || ''
 
 const STATUS_CHIPS: Record<string, { label: string; color: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' }> = {
     pending_payment: { label: 'Pago Pendiente', color: 'warning' },

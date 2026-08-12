@@ -44,7 +44,7 @@ import { PropertySelector } from '@features/inmuebles'
 import { navigate } from 'vike/client/router'
 
 
-const EPAYCO_PUBLIC_KEY = (import.meta as any).env?.VITE_APP_EPAYCO_PUBLIC_KEY || ''
+const EPAYCO_PUBLIC_KEY = import.meta.env.VITE_APP_EPAYCO_PUBLIC_KEY || ''
 
 const beneficiosPropietarios = [
     { title: 'Servicio de inspección premium para tu inmueble.' },

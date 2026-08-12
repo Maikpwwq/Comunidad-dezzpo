@@ -134,14 +134,5 @@
     "vite": "^8.2.1",
     "vite-plugin-vercel": "^11.1.1",
     "vitest": "^4.1.10"
-  },
-  "pnpm": {
-    "overrides": {
-      "react": "^19.0.0",
-      "react-dom": "^19.0.0",
-      "@types/react": "^19.0.0",
-      "@types/react-dom": "^19.0.0",
-      "@mui/system": "6.5.0"
-    }
   }
 }
