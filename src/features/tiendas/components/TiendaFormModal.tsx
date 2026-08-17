@@ -183,6 +183,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
 
             const success = await onSave(payload)
             if (success) {
+                clearDraft()
                 onClose()
             }
         } catch (err: any) {
