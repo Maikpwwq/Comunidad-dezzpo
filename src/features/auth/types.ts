@@ -54,6 +54,7 @@ export interface UserFirestoreData {
     userChannelUrl: string
     userCreatedDrafts: string[]
     userName: string | null
+    userContactName?: string
 }
 
 /** Auth form shared props */

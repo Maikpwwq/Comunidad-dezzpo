@@ -115,6 +115,7 @@ export default function Page() {
         userCiudad: '',
         userCodigoPostal: '',
         userRazonSocial: '',
+        userContactName: '',
         userIdentification: '',
         userDescription: '',
         userVotes: {
@@ -168,6 +169,7 @@ export default function Page() {
                             userCiudad: userData.userCiudad || '',
                             userCodigoPostal: userData.userCodigoPostal || '',
                             userRazonSocial: userData.userRazonSocial || '',
+                            userContactName: userData.userContactName || '',
                             userIdentification: userData.userIdentification || '',
                             userDescription: userData.userDescription || '',
                             userWebSite: userData.userWebSite || '',
@@ -238,6 +240,7 @@ export default function Page() {
                         userCiudad: userData.userCiudad || '',
                         userCodigoPostal: userData.userCodigoPostal || '',
                         userRazonSocial: userData.userRazonSocial || '',
+                        userContactName: userData.userContactName || '',
                         userIdentification: userData.userIdentification || '',
                         userDescription: userData.userDescription || '',
                         userWebSite: userData.userWebSite || '',
@@ -330,8 +333,13 @@ export default function Page() {
                         )}
                     </Typography>
                     {userInfo?.userRazonSocial && userInfo?.userName && userInfo.userRazonSocial !== userInfo.userName && (
-                        <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', mt: -0.5, mb: 1 }}>
+                        <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', mt: -0.5, mb: 0.5 }}>
                             {userInfo.userRazonSocial}
+                        </Typography>
+                    )}
+                    {userInfo?.userContactName && (
+                        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.8 }}>
+                            Contacto / Representante: <strong>{userInfo.userContactName}</strong>
                         </Typography>
                     )}
                     <Typography
