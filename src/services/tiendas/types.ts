@@ -6,10 +6,12 @@ export interface SedeLocation {
     id: string
     nombreSede: string            // e.g. "Sede Chapinero" or "Sucursal Principal"
     direccion: string             // Required address
+    departamento?: string         // e.g. "Cundinamarca", "Meta", "Huila", "Bogotá D.C."
     ciudad: string                // Default: "Bogotá, Colombia"
     codigoPostal?: string
     zona: string                  // Zone slug from ListadoZonas (e.g. "chapinero", "suba")
-    telefonos: string[]           // Min 1 required phone for this specific branch
+    hasCustomPhones?: boolean     // False = inherits top-level telefonoPrincipal & whatsappPrincipal
+    telefonos?: string[]          // Branch-specific phones (optional if hasCustomPhones is false)
     whatsapp?: string             // Branch-specific WhatsApp number
     horario?: string              // e.g. "Lun-Vie 8:00 - 17:00, Sáb 8:00 - 13:00"
     lat?: number                  // Map pin latitude

@@ -134,7 +134,7 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, overflow: 'hidden' }}>
                                     <LocationOnIcon color="action" fontSize="small" />
                                     <Typography variant="body2" fontWeight={600} noWrap>
-                                        {primarySede.direccion} ({primaryZoneLabel})
+                                        {primarySede.direccion} ({primaryZoneLabel}{primarySede.departamento && !primarySede.ciudad.toLowerCase().includes(primarySede.departamento.toLowerCase()) ? ` • ${primarySede.departamento}` : ''})
                                     </Typography>
                                 </Box>
 

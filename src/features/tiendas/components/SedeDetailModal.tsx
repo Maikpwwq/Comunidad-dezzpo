@@ -131,7 +131,7 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                                     <LocationOnIcon fontSize="small" color="action" />
                                     <Typography variant="body2" fontWeight={500}>
-                                        {sede.direccion}, {sede.ciudad}
+                                        {sede.direccion}, {sede.ciudad}{sede.departamento && !sede.ciudad.toLowerCase().includes(sede.departamento.toLowerCase()) ? ` (${sede.departamento})` : ''}
                                     </Typography>
                                 </Box>
 
@@ -162,36 +162,48 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
                                     </Box>
                                 )}
 
-                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
-                                    {sede.telefonos.map((tel, tIdx) => (
-                                        <Button
-                                            key={tIdx}
-                                            variant="outlined"
-                                            size="small"
-                                            color="primary"
-                                            startIcon={<PhoneIcon fontSize="small" />}
-                                            href={`tel:${tel}`}
-                                            sx={{ borderRadius: 4, textTransform: 'none' }}
-                                        >
-                                            Llamar: {tel}
-                                        </Button>
-                                    ))}
+                                {(() => {
+                                    const resolvedTelefonos = (sede.hasCustomPhones && sede.telefonos && sede.telefonos.filter(Boolean).length > 0)
+                                        ? sede.telefonos.filter(Boolean)
+                                        : (tienda.telefonoPrincipal ? [tienda.telefonoPrincipal] : (sede.telefonos?.filter(Boolean) || []))
 
-                                    {sede.whatsapp && (
-                                        <Button
-                                            variant="contained"
-                                            size="small"
-                                            color="success"
-                                            startIcon={<WhatsAppIcon fontSize="small" />}
-                                            href={`https://wa.me/${sede.whatsapp.replace(/[^0-9]/g, '')}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            sx={{ borderRadius: 4, textTransform: 'none' }}
-                                        >
-                                            WhatsApp
-                                        </Button>
-                                    )}
-                                </Box>
+                                    const resolvedWhatsApp = (sede.hasCustomPhones && sede.whatsapp)
+                                        ? sede.whatsapp
+                                        : (tienda.whatsappPrincipal || sede.whatsapp || '')
+
+                                    return (
+                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
+                                            {resolvedTelefonos.map((tel, tIdx) => (
+                                                <Button
+                                                    key={tIdx}
+                                                    variant="outlined"
+                                                    size="small"
+                                                    color="primary"
+                                                    startIcon={<PhoneIcon fontSize="small" />}
+                                                    href={`tel:${tel}`}
+                                                    sx={{ borderRadius: 4, textTransform: 'none' }}
+                                                >
+                                                    Llamar: {tel}
+                                                </Button>
+                                            ))}
+
+                                            {resolvedWhatsApp && (
+                                                <Button
+                                                    variant="contained"
+                                                    size="small"
+                                                    color="success"
+                                                    startIcon={<WhatsAppIcon fontSize="small" />}
+                                                    href={`https://wa.me/${resolvedWhatsApp.replace(/[^0-9]/g, '')}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    sx={{ borderRadius: 4, textTransform: 'none' }}
+                                                >
+                                                    WhatsApp
+                                                </Button>
+                                            )}
+                                        </Box>
+                                    )
+                                })()}
                             </Paper>
                         )
                     })}

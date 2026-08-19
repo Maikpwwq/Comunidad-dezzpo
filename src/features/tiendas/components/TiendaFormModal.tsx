@@ -156,14 +156,14 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             return
         }
 
-        if (sedes.length === 0 || !sedes[0]?.direccion?.trim()) {
+        if (!sedes || sedes.length === 0) {
             setErrorMsg('Por favor registra al menos una sede con su dirección exacta.')
             return
         }
 
-        const invalidSede = sedes.find(s => !s.direccion?.trim() || !s.telefonos || s.telefonos.length === 0 || !s.telefonos[0]?.trim())
+        const invalidSede = sedes.find(s => !s.direccion?.trim())
         if (invalidSede) {
-            setErrorMsg('Todas las sedes registradas deben tener una dirección y al menos un teléfono de contacto.')
+            setErrorMsg('Todas las sedes registradas deben tener una dirección exacta.')
             return
         }
 
@@ -173,6 +173,19 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
         try {
             const cleanEmails = emails.map((e) => e.trim()).filter(Boolean)
 
+            // Clean up sedes telefonos & whatsapp
+            const cleanedSedes = sedes.map((s) => ({
+                ...s,
+                telefonos: s.hasCustomPhones && s.telefonos
+                    ? s.telefonos.map(t => t.trim()).filter(Boolean)
+                    : (s.telefonos?.map(t => t.trim()).filter(Boolean).length
+                        ? s.telefonos.map(t => t.trim()).filter(Boolean)
+                        : (telefonoPrincipal.trim() ? [telefonoPrincipal.trim()] : [])),
+                whatsapp: s.hasCustomPhones && s.whatsapp
+                    ? s.whatsapp.trim()
+                    : (s.whatsapp?.trim() || whatsappPrincipal.trim() || undefined),
+            }))
+
             const payload: CreateTiendaInput = {
                 nombre: nombre.trim(),
                 razonSocial: razonSocial.trim(),
@@ -181,10 +194,10 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                 emails: cleanEmails,
                 email: cleanEmails.join(', ') || undefined,
                 sitioWeb: sitioWeb.trim(),
-                telefonoPrincipal: telefonoPrincipal.trim() || sedes[0].telefonos[0],
-                whatsappPrincipal: whatsappPrincipal.trim() || sedes[0].whatsapp,
+                telefonoPrincipal: telefonoPrincipal.trim() || (cleanedSedes[0]?.telefonos?.[0] || ''),
+                whatsappPrincipal: whatsappPrincipal.trim() || (cleanedSedes[0]?.whatsapp || ''),
                 categorias: selectedCategoryKeys,
-                sedes,
+                sedes: cleanedSedes,
                 estado: isAdminMode ? (initialData?.estado || 'aprobado') : 'pendiente',
                 origen: isAdminMode ? 'equipo_dezzpo' : 'usuario',
             }
@@ -232,28 +245,38 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                     )}
 
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                        {/* Name & Razón Social / NIT */}
-                        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                        {/* Name and Duplicate Alert */}
+                        <Box>
                             <TextField
-                                label="Nombre del Negocio / Tienda *"
+                                label="Nombre del Comercio / Tienda *"
                                 size="small"
                                 required
-                                placeholder="Ej: Ferretería y Pinturas El Sol"
+                                fullWidth
+                                placeholder="Ej: Distribuidora Eléctrica Andina"
                                 value={nombre}
                                 onChange={(e) => {
                                     setNombre(e.target.value)
-                                    if (nameCheck.status !== 'idle') nameCheck.reset()
+                                    nameCheck.reset()
                                 }}
-                                onBlur={(e) => nameCheck.handleBlur(e.target.value)}
-                                sx={{ flex: 2, minWidth: 240 }}
+                                onBlur={() => nameCheck.checkName(nombre)}
                             />
+                            <DuplicateNameAlert
+                                status={nameCheck.status}
+                                matches={nameCheck.matches}
+                                name={nameCheck.checkedName}
+                                type="tienda"
+                            />
+                        </Box>
+
+                        {/* Legal Details */}
+                        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                             <TextField
                                 label="Razón Social (Opcional)"
                                 size="small"
-                                placeholder="Ej: Distribuidora El Sol S.A.S."
+                                placeholder="Ej: Distribuidora Eléctrica Andina S.A.S."
                                 value={razonSocial}
                                 onChange={(e) => setRazonSocial(e.target.value)}
-                                sx={{ flex: 1.5, minWidth: 180 }}
+                                sx={{ flex: 1.5, minWidth: 240 }}
                             />
                             <TextField
                                 label="NIT (Opcional)"
@@ -261,44 +284,34 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                                 placeholder="Ej: 900.123.456-7"
                                 value={nit}
                                 onChange={(e) => setNit(e.target.value)}
-                                sx={{ flex: 1, minWidth: 140 }}
+                                sx={{ flex: 1, minWidth: 160 }}
                             />
                         </Box>
 
-                        {/* Real-time duplicate name alert */}
-                        <DuplicateNameAlert
-                            status={nameCheck.status}
-                            isChecking={nameCheck.isChecking}
-                            matches={nameCheck.matches}
-                            exactMatch={nameCheck.exactMatch}
-                            type="tienda"
-                            checkedValue={nameCheck.checkedValue}
-                        />
-
-                        {/* Categories */}
+                        {/* Categories Autocomplete */}
                         <Autocomplete
                             multiple
                             size="small"
                             options={ListadoCategoriasTiendas}
                             getOptionLabel={(option) => option.label}
                             getOptionDisabled={() => selectedCategoryKeys.length >= 4}
-                            filterOptions={(options, state) => {
-                                const query = state.inputValue
-                                    .trim()
+                            filterOptions={(options, { inputValue }) => {
+                                const query = inputValue
                                     .toLowerCase()
                                     .normalize('NFD')
                                     .replace(/[\u0300-\u036f]/g, '')
+                                    .trim()
                                 if (!query) return options
-                                return options.filter((option) => {
-                                    const labelNorm = option.label
+                                return options.filter((opt) => {
+                                    const labelNorm = opt.label
                                         .toLowerCase()
                                         .normalize('NFD')
                                         .replace(/[\u0300-\u036f]/g, '')
-                                    const descNorm = (option.description || '')
+                                    const descNorm = (opt.description || '')
                                         .toLowerCase()
                                         .normalize('NFD')
                                         .replace(/[\u0300-\u036f]/g, '')
-                                    const synonymMatch = (option.synonyms || []).some((syn) => {
+                                    const synonymMatch = (opt.synonyms || []).some((syn) => {
                                         const synNorm = syn
                                             .toLowerCase()
                                             .normalize('NFD')
@@ -352,19 +365,44 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                             onChange={(e) => setDescripcion(e.target.value)}
                         />
 
-                        {/* Contact Website */}
-                        <TextField
-                            label="Sitio Web (Opcional)"
-                            size="small"
-                            placeholder="Ej: https://mi-tienda.com"
-                            value={sitioWeb}
-                            onChange={(e) => setSitioWeb(e.target.value)}
-                            fullWidth
-                        />
-
-                        {/* Dynamic Emails Section */}
+                        {/* Store General Contact Channels Section */}
                         <Box sx={{ p: 2, borderRadius: 2, bgcolor: '#f8fafc', border: '1px solid #e2e8f0' }}>
                             <Typography variant="subtitle2" fontWeight={700} color="text.primary" sx={{ mb: 1.5 }}>
+                                Canales de Contacto Principales del Comercio
+                            </Typography>
+                            
+                            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
+                                <TextField
+                                    label="Teléfono Principal de Contacto"
+                                    size="small"
+                                    placeholder="Ej: 6013004050 o 3102345678"
+                                    value={telefonoPrincipal}
+                                    onChange={(e) => setTelefonoPrincipal(e.target.value)}
+                                    helperText="Se reutiliza en todas las sedes automáticamente"
+                                    sx={{ flex: 1, minWidth: 220 }}
+                                />
+                                <TextField
+                                    label="WhatsApp Principal (Opcional)"
+                                    size="small"
+                                    placeholder="Ej: 573102345678"
+                                    value={whatsappPrincipal}
+                                    onChange={(e) => setWhatsappPrincipal(e.target.value)}
+                                    helperText="Número para cotizaciones y pedidos directos"
+                                    sx={{ flex: 1, minWidth: 220 }}
+                                />
+                            </Box>
+
+                            <TextField
+                                label="Sitio Web (Opcional)"
+                                size="small"
+                                placeholder="Ej: https://mi-tienda.com"
+                                value={sitioWeb}
+                                onChange={(e) => setSitioWeb(e.target.value)}
+                                fullWidth
+                                sx={{ mb: 2 }}
+                            />
+
+                            <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ display: 'block', mb: 1 }}>
                                 Correos Electrónicos de Contacto (Opcional)
                             </Typography>
                             {emails.map((emailVal, idx) => (
@@ -403,7 +441,12 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                         <Divider />
 
                         {/* Multi-Sede Manager */}
-                        <SedeManager sedes={sedes} onChange={setSedes} />
+                        <SedeManager
+                            sedes={sedes}
+                            onChange={setSedes}
+                            defaultTelefonoPrincipal={telefonoPrincipal}
+                            defaultWhatsappPrincipal={whatsappPrincipal}
+                        />
                     </Box>
                 </DialogContent>
 
@@ -418,9 +461,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                         variant="contained"
                         className="btn-primary"
                         disabled={isSubmitting}
-                        startIcon={isSubmitting ? <CircularProgress size={18} color="inherit" /> : null}
                     >
-                        {isSubmitting ? 'Guardando...' : initialData ? 'Actualizar Tienda' : 'Enviar Registro'}
+                        {isSubmitting ? 'Guardando...' : (initialData ? 'Actualizar Tienda' : 'Enviar Tienda')}
                     </Button>
                 </DialogActions>
             </form>
