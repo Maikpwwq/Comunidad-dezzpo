@@ -83,6 +83,7 @@ interface UserEditInfo {
     userChannelUrl: string
     userCategories: any[]
     userDirection: string
+    userDirectionDetails?: string
     userCiudad: string
     userCodigoPostal: string
     userRazonSocial: string
@@ -130,9 +131,9 @@ export default function Page() {
     const [uploadProgress, setUploadProgress] = useState<number>(0)
     const [isUploading, setIsUploading] = useState(false)
 
-    // Multi-channel contacts & multi-location state
+    // Multi-channel contacts & multi-location state (default 1 active phone entry)
     const [emails, setEmails] = useState<ContactEmail[]>([])
-    const [phones, setPhones] = useState<ContactPhone[]>([])
+    const [phones, setPhones] = useState<ContactPhone[]>([{ number: '', isPrimary: true, type: 'personal' }])
     const [socialLinks, setSocialLinks] = useState<SocialLink[]>([])
     const [socialUrlErrors, setSocialUrlErrors] = useState<Record<string, boolean>>({})
     const [properties, setProperties] = useState<Property[]>([])
@@ -158,6 +159,7 @@ export default function Page() {
         userChannelUrl: '',
         userCategories: [],
         userDirection: '',
+        userDirectionDetails: '',
         userCiudad: '',
         userCodigoPostal: '',
         userRazonSocial: '',
@@ -200,6 +202,7 @@ export default function Page() {
                         userChannelUrl: userData.userChannelUrl || '',
                         userCategories: userData.userCategories || [],
                         userDirection: userData.userDirection || '',
+                        userDirectionDetails: (userData as any).userDirectionDetails || '',
                         userCiudad: userData.userCiudad || '',
                         userCodigoPostal: userData.userCodigoPostal || '',
                         userRazonSocial: userData.userRazonSocial || '',
@@ -212,7 +215,13 @@ export default function Page() {
 
                     // Load multi-channel contacts & multi-location
                     setEmails(userData.emails || [])
-                    setPhones(userData.phones || [])
+                    const loadedPhones = userData.phones || []
+                    if (loadedPhones.length > 0) {
+                        setPhones(loadedPhones)
+                    } else {
+                        const legacyPhone = (userData as any).userPhone || (userData as any).userTel || ''
+                        setPhones([{ number: legacyPhone, isPrimary: true, type: 'personal' }])
+                    }
                     setSocialLinks(userData.socialLinks || [])
                     setProperties(userData.properties || [])
 
@@ -341,7 +350,7 @@ export default function Page() {
 
         // Build combined payload: regular fields + contact arrays
         const contactFields = [
-            'userName', 'userIdentificationType', 'userIdentification', 'userWebSite', 'userRazonSocial',
+            'userName', 'userIdentificationType', 'userIdentification', 'userWebSite', 'userRazonSocial', 'userContactName',
             ...(userRol.rol === 2 ? ['userProfession', 'userExperience'] : []),
         ]
         const sectionData: Record<string, any> = {}
@@ -630,7 +639,7 @@ export default function Page() {
                             </>
                         )}
 
-                        {/* ── Other fields ── */}
+                        {/* ── Identification Document ── */}
                         <div className={styles['field-row']} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                             <FormControl size="small" sx={{ minWidth: 120 }}>
                                 <InputLabel id="id-type-select-label">Tipo Doc.</InputLabel>
@@ -664,17 +673,19 @@ export default function Page() {
                                 size="small"
                                 sx={{ flex: 1 }}
                             />
-                            <TextField
-                                id="userWebSite"
-                                name="userWebSite"
-                                label="Sitio web"
-                                placeholder="https://..."
-                                value={userEditInfo.userWebSite}
-                                onChange={handleChange}
-                                size="small"
-                                sx={{ flex: 1 }}
-                            />
                         </div>
+
+                        {/* ── Website (ocupa renglón completo) ── */}
+                        <TextField
+                            id="userWebSite"
+                            name="userWebSite"
+                            label="Sitio web"
+                            placeholder="https://..."
+                            value={userEditInfo.userWebSite}
+                            onChange={handleChange}
+                            size="small"
+                            fullWidth
+                        />
 
                         {isComerciante && (
                             <>
@@ -877,7 +888,7 @@ export default function Page() {
                             className="btn btn-primary"
                             size="small"
                             onClick={() => handleSaveSection([
-                                'userDirection', 'userCiudad', 'userCodigoPostal',
+                                'userDirection', 'userDirectionDetails', 'userCiudad', 'userCodigoPostal',
                             ])}
                         >
                             Guardar
@@ -889,6 +900,12 @@ export default function Page() {
                             <span className={styles['info-pill__label']}>Dirección</span>
                             <span className={styles['info-pill__value']}>
                                 {userEditInfo.userDirection || '—'}
+                            </span>
+                        </div>
+                        <div className={styles['info-pill']}>
+                            <span className={styles['info-pill__label']}>Detalles</span>
+                            <span className={styles['info-pill__value']}>
+                                {userEditInfo.userDirectionDetails || '—'}
                             </span>
                         </div>
                         <div className={styles['info-pill']}>
@@ -905,15 +922,15 @@ export default function Page() {
                         </div>
                     </div>
 
-                    <div className={styles['location-row']}>
+                    <div className={styles['location-row']} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
                         <TextField
                             id="userDirection"
                             name="userDirection"
-                            label="Dirección"
+                            label="Dirección exacta"
                             value={userEditInfo.userDirection}
                             onChange={handleChange}
                             size="small"
-                            sx={{ flex: 1 }}
+                            sx={{ flex: 2, minWidth: 220 }}
                         />
                         <TextField
                             id="userCiudad"
@@ -922,7 +939,7 @@ export default function Page() {
                             value={userEditInfo.userCiudad}
                             onChange={handleChange}
                             size="small"
-                            sx={{ flex: 1 }}
+                            sx={{ flex: 1, minWidth: 160 }}
                         />
                         <TextField
                             id="userCodigoPostal"
@@ -931,16 +948,29 @@ export default function Page() {
                             value={userEditInfo.userCodigoPostal}
                             onChange={handleChange}
                             size="small"
-                            sx={{ width: 150 }}
+                            sx={{ width: 140 }}
                         />
                         <Button
                             className="btn-round btn-low"
                             size="small"
                             onClick={() => setLocationModalOpen(true)}
+                            sx={{ whiteSpace: 'nowrap' }}
                         >
                             Registrar en mapa
                         </Button>
                     </div>
+
+                    <TextField
+                        id="userDirectionDetails"
+                        name="userDirectionDetails"
+                        label="Detalles de ubicación física (Opcional)"
+                        placeholder="Ej: Oficina 402, Piso 4, Local esquinero, Edificio Prime, Torre 2"
+                        value={userEditInfo.userDirectionDetails || ''}
+                        onChange={handleChange}
+                        size="small"
+                        fullWidth
+                        helperText="Indica referencias adicionales como piso, oficina, local o puntos de referencia para facilitar la llegada"
+                    />
 
                     <Modal
                         open={locationModalOpen}
