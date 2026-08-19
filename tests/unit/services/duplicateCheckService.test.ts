@@ -66,8 +66,8 @@ describe('duplicateCheckService Unit Tests', () => {
             expect(result.isAvailable).toBe(false)
             expect(result.exactMatch).toBe(true)
             expect(result.matches.length).toBe(1)
-            expect(result.matches[0].userId).toBe('user_123')
-            expect(result.matches[0].userName).toBe('Prime Domotics')
+            expect(result.matches[0]!.userId).toBe('user_123')
+            expect(result.matches[0]!.userName).toBe('Prime Domotics')
         })
 
         it('excludes current user ID in edit mode', async () => {
@@ -141,8 +141,8 @@ describe('duplicateCheckService Unit Tests', () => {
             expect(result.isAvailable).toBe(false)
             expect(result.exactMatch).toBe(true)
             expect(result.matches.length).toBe(1)
-            expect(result.matches[0].nombre).toBe('Ferretería y Metales El Progreso')
-            expect(result.matches[0].sedes[0].nombreSede).toBe('Sede Paloquemao')
+            expect(result.matches[0]!.nombre).toBe('Ferretería y Metales El Progreso')
+            expect(result.matches[0]!.sedes[0]!.nombreSede).toBe('Sede Paloquemao')
         })
 
         it('excludes current tienda ID in edit mode', async () => {
@@ -196,8 +196,8 @@ describe('duplicateCheckService Unit Tests', () => {
             const result = await checkCategorySuggestionAvailability('instalacion de paneles solares')
             expect(result.isAvailable).toBe(false)
             expect(result.exactMatch).toBe(true)
-            expect(result.matches[0].source).toBe('pending_suggestion')
-            expect(result.matches[0].name).toBe('Instalación de Paneles Solares')
+            expect(result.matches[0]!.source).toBe('pending_suggestion')
+            expect(result.matches[0]!.name).toBe('Instalación de Paneles Solares')
         })
 
         it('detects similar category matches', async () => {

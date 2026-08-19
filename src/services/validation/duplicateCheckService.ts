@@ -21,21 +21,21 @@ const SUGGESTED_CATEGORIES_COLLECTION = 'suggestedCategories'
 export interface ComercianteDuplicateMatch {
     userId: string
     userName: string
-    userRazonSocial?: string
-    userContactName?: string
-    userProfession?: string
-    userCategories?: string[]
-    userCiudad?: string
-    userDirection?: string
-    userZonasCobertura?: string[]
+    userRazonSocial?: string | undefined
+    userContactName?: string | undefined
+    userProfession?: string | undefined
+    userCategories?: string[] | undefined
+    userCiudad?: string | undefined
+    userDirection?: string | undefined
+    userZonasCobertura?: string[] | undefined
     similarity: 'exact' | 'similar'
 }
 
 export interface TiendaDuplicateMatch {
     id: string
     nombre: string
-    razonSocial?: string
-    nit?: string
+    razonSocial?: string | undefined
+    nit?: string | undefined
     categorias: string[]
     sedes: {
         nombreSede: string
@@ -50,9 +50,9 @@ export interface CategoryDuplicateMatch {
     name: string
     source: 'catalog' | 'pending_suggestion' | 'approved_suggestion'
     similarity: 'exact' | 'similar'
-    categoryKey?: number
-    description?: string
-    createdAt?: string
+    categoryKey?: number | undefined
+    description?: string | undefined
+    createdAt?: string | undefined
 }
 
 export interface DuplicateCheckResult<T> {
@@ -138,7 +138,10 @@ export async function checkComercianteNameAvailability(
         })
 
         // Sort exact matches first
-        matches.sort((a, b) => (a.similarity === 'exact' ? -1 : 1))
+        matches.sort((a, b) => {
+            if (a.similarity === b.similarity) return 0
+            return a.similarity === 'exact' ? -1 : 1
+        })
 
         return {
             isAvailable: matches.length === 0,
@@ -219,7 +222,10 @@ export async function checkTiendaNameAvailability(
         })
 
         // Sort exact matches first
-        matches.sort((a, b) => (a.similarity === 'exact' ? -1 : 1))
+        matches.sort((a, b) => {
+            if (a.similarity === b.similarity) return 0
+            return a.similarity === 'exact' ? -1 : 1
+        })
 
         return {
             isAvailable: matches.length === 0,
