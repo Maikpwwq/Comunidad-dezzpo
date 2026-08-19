@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react'
 import { getUser, getUserByUsername } from '@services/users'
 import { useUserStore } from '@stores/userStore'
 import { usePageContext } from '@hooks/usePageContext'
-import { getPrimaryEmail, getPrimaryPhone } from '@utilities/contactUtils'
 import { PLATFORM_CONFIG } from '@utilities/socialUtils'
 import type { ContactEmail, ContactPhone, SocialLink } from '@services/types'
 
@@ -374,23 +373,85 @@ export default function Page() {
                         >
                             Datos de contacto
                         </Typography>
-                        <Box className={clsx(styles.ContactCard)}>
-                            <Typography
-                                variant="body2"
-                                className={clsx(styles.InfoPill, "body-2")}
-                            >
-                                <MailIcon fontSize="large" />{' '}
-                                {getPrimaryEmail(userInfo.emails) || userInfo.userMail || '—'}
-                            </Typography>
+                        {(() => {
+                            const activeEmails = (userInfo.emails || []).filter((e) => e.address && e.address.trim() !== '')
+                            const displayEmails = activeEmails.length > 0
+                                ? activeEmails
+                                : (userInfo.userMail ? [{ address: userInfo.userMail, isPrimary: true, verified: false }] : [])
 
-                            <Typography
-                                variant="body2"
-                                className={clsx(styles.InfoPill, "body-2")}
-                            >
-                                <PhoneIphoneIcon fontSize="large" />{' '}
-                                {getPrimaryPhone(userInfo.phones) || userInfo.userPhone || '—'}
-                            </Typography>
-                        </Box>
+                            const activePhones = (userInfo.phones || []).filter((p) => p.number && p.number.trim() !== '')
+                            const displayPhones = activePhones.length > 0
+                                ? activePhones
+                                : (userInfo.userPhone ? [{ number: userInfo.userPhone, isPrimary: true, type: 'personal' as const }] : [])
+
+                            const hasContacts = displayEmails.length > 0 || displayPhones.length > 0
+
+                            if (!hasContacts) {
+                                return (
+                                    <Typography variant="body2" className="body-2" style={{ color: '#888' }}>
+                                        No hay canales directos de contacto registrados
+                                    </Typography>
+                                )
+                            }
+
+                            return (
+                                <Box className={clsx(styles.ContactCard)}>
+                                    {displayEmails.length > 0 && (
+                                        <div className={styles.ContactGroup}>
+                                            <span className={styles.ContactGroupTitle}>
+                                                <MailIcon fontSize="small" /> Correos electrónicos
+                                            </span>
+                                            <div className={styles.ContactList}>
+                                                {displayEmails.map((email, idx) => (
+                                                    <a
+                                                        key={`email-${idx}`}
+                                                        href={`mailto:${email.address}`}
+                                                        className={styles.ContactItemLink}
+                                                        aria-label={`Enviar correo a ${email.address}`}
+                                                    >
+                                                        <MailIcon className={styles.ContactItemIcon} />
+                                                        <span className={styles.ContactItemText}>{email.address}</span>
+                                                        {email.isPrimary && (
+                                                            <span className={styles.ContactPrimaryBadge}>Principal</span>
+                                                        )}
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {displayPhones.length > 0 && (
+                                        <div className={styles.ContactGroup}>
+                                            <span className={styles.ContactGroupTitle}>
+                                                <PhoneIphoneIcon fontSize="small" /> Teléfonos de contacto
+                                            </span>
+                                            <div className={styles.ContactList}>
+                                                {displayPhones.map((phone, idx) => {
+                                                    const cleanPhone = phone.number.replace(/\s+/g, '')
+                                                    return (
+                                                        <a
+                                                            key={`phone-${idx}`}
+                                                            href={`tel:${cleanPhone}`}
+                                                            className={styles.ContactItemLink}
+                                                            aria-label={`Llamar al teléfono ${phone.number}`}
+                                                        >
+                                                            <PhoneIphoneIcon className={styles.ContactItemIcon} />
+                                                            <span className={styles.ContactItemText}>{phone.number}</span>
+                                                            {phone.type === 'trabajo' && (
+                                                                <span className={styles.ContactTypeBadge}>Trabajo</span>
+                                                            )}
+                                                            {phone.isPrimary && (
+                                                                <span className={styles.ContactPrimaryBadge}>Principal</span>
+                                                            )}
+                                                        </a>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                </Box>
+                            )
+                        })()}
                     </Col>
                 </Row>
 
