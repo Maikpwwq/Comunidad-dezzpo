@@ -682,7 +682,56 @@ describe('Firestore Security Rules Isolation & Privacy (Rules Unit Testing)', ()
     })
 
     // =========================================================================
-    // 14. Catch-all — deny everything else
+    // 14. Suggested Categories (/suggestedCategories)
+    // =========================================================================
+    describe('Suggested Categories (/suggestedCategories)', () => {
+        it('allows authenticated user to create own category suggestion', async () => {
+            const user1 = testEnv.authenticatedContext('user-1').firestore()
+            await assertSucceeds(
+                setDoc(doc(user1, 'suggestedCategories', 'sug-1'), {
+                    userId: 'user-1',
+                    userName: 'User One',
+                    suggestedName: 'Paneles Solares',
+                    status: 'pending',
+                    createdAt: '2026-08-18T20:00:00Z',
+                })
+            )
+        })
+
+        it('denies user from creating suggestion on behalf of another user', async () => {
+            const user1 = testEnv.authenticatedContext('user-1').firestore()
+            await assertFails(
+                setDoc(doc(user1, 'suggestedCategories', 'sug-2'), {
+                    userId: 'user-2',
+                    userName: 'Impersonated User',
+                    suggestedName: 'Cerrajería Digital',
+                    status: 'pending',
+                })
+            )
+        })
+
+        it('allows author and admin to read, denies other users', async () => {
+            await testEnv.withSecurityRulesDisabled(async (context) => {
+                const db = context.firestore()
+                await setDoc(doc(db, 'suggestedCategories', 'sug-author'), {
+                    userId: 'user-author',
+                    suggestedName: 'Domótica Avanzada',
+                    status: 'pending',
+                })
+            })
+
+            const author = testEnv.authenticatedContext('user-author').firestore()
+            const otherUser = testEnv.authenticatedContext('other-user').firestore()
+            const admin = testEnv.authenticatedContext('admin-user', { admin: true }).firestore()
+
+            await assertSucceeds(getDoc(doc(author, 'suggestedCategories', 'sug-author')))
+            await assertFails(getDoc(doc(otherUser, 'suggestedCategories', 'sug-author')))
+            await assertSucceeds(getDoc(doc(admin, 'suggestedCategories', 'sug-author')))
+        })
+    })
+
+    // =========================================================================
+    // 15. Catch-all — deny everything else
     // =========================================================================
     describe('Catch-all Deny Rule', () => {
         it('denies read/write to undefined collections', async () => {

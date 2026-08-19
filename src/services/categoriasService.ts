@@ -8,11 +8,31 @@
 import {
     collection,
     getDocs,
+    addDoc,
+    query,
+    where,
+    orderBy,
+    doc,
+    updateDoc,
 } from 'firebase/firestore'
 import { firestore } from './firebase'
 import { ListadoCategorias } from '../assets/data/ListadoCategorias'
 
 // Types
+export interface CategorySuggestion {
+    id?: string
+    userId: string
+    userName: string
+    userMail: string
+    suggestedName: string
+    description?: string
+    area?: string
+    status: 'pending' | 'approved' | 'rejected'
+    createdAt: string
+    reviewedAt?: string
+    adminNotes?: string
+}
+
 export interface CategoriaItem {
     subSistema?: string
     subCategoria?: string
@@ -239,5 +259,64 @@ export const CategoriasService = {
         if (typeof window !== 'undefined') {
             localStorage.removeItem(CACHE_KEY)
         }
-    }
+    },
+
+    /**
+     * Propose a new service category for admin review.
+     */
+    createSuggestion: async (
+        data: Omit<CategorySuggestion, 'status' | 'createdAt'>
+    ): Promise<string> => {
+        if (!firestore) throw new Error('Firestore not initialized')
+        const colRef = collection(firestore, 'suggestedCategories')
+        const docRef = await addDoc(colRef, {
+            ...data,
+            status: 'pending',
+            createdAt: new Date().toISOString(),
+        })
+        return docRef.id
+    },
+
+    /**
+     * Get category suggestions for admin control tower.
+     */
+    getSuggestions: async (status?: 'pending' | 'approved' | 'rejected'): Promise<CategorySuggestion[]> => {
+        if (!firestore) return []
+        try {
+            const colRef = collection(firestore, 'suggestedCategories')
+            const q = status
+                ? query(colRef, where('status', '==', status), orderBy('createdAt', 'desc'))
+                : query(colRef, orderBy('createdAt', 'desc'))
+            const snapshot = await getDocs(q)
+            return snapshot.docs.map((docSnap) => ({
+                id: docSnap.id,
+                ...(docSnap.data() as Omit<CategorySuggestion, 'id'>),
+            }))
+        } catch (error) {
+            console.error('Error fetching category suggestions:', error)
+            return []
+        }
+    },
+
+    /**
+     * Update category suggestion status (admin only).
+     */
+    updateSuggestionStatus: async (
+        id: string,
+        status: 'approved' | 'rejected',
+        adminNotes?: string
+    ): Promise<void> => {
+        if (!firestore) throw new Error('Firestore not initialized')
+        const docRef = doc(firestore, 'suggestedCategories', id)
+        await updateDoc(docRef, {
+            status,
+            reviewedAt: new Date().toISOString(),
+            ...(adminNotes ? { adminNotes } : {}),
+        })
+    },
 }
+
+// Named export aliases for ergonomic usage
+export const createCategorySuggestion = CategoriasService.createSuggestion
+export const getCategorySuggestions = CategoriasService.getSuggestions
+export const updateCategorySuggestionStatus = CategoriasService.updateSuggestionStatus
