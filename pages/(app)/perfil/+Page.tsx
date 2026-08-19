@@ -318,7 +318,7 @@ export default function Page() {
                         sx={{ maxWidth: '480px' }}
                         className={clsx(styles.BusinessName)}
                     >
-                        {userInfo?.userRazonSocial}{' '}
+                        {userInfo?.userName || userInfo?.userRazonSocial || 'Usuario'}{' '}
                         {!!userInfo?.userWebSite && (
                             <Tooltip title="Copiar sitio web">
                                 <LinkIcon
@@ -329,6 +329,11 @@ export default function Page() {
                             </Tooltip>
                         )}
                     </Typography>
+                    {userInfo?.userRazonSocial && userInfo?.userName && userInfo.userRazonSocial !== userInfo.userName && (
+                        <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', mt: -0.5, mb: 1 }}>
+                            {userInfo.userRazonSocial}
+                        </Typography>
+                    )}
                     <Typography
                         variant="h5"
                         id="userProfession"

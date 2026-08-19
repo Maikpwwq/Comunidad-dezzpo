@@ -163,6 +163,11 @@ export interface UserFirestoreDocument {
     userCodigoPostal?: string
     userTel?: string
     userImage?: string
+    userRazonSocial?: string
+    userContactName?: string
+    userProfession?: string
+    userExperience?: string
+    userWebSite?: string
     userIdentificationType?: string
     userIdentification?: string
     emails?: ContactEmail[]

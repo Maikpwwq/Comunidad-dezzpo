@@ -62,6 +62,10 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 
+// Hooks & Services
+import { useDuplicateNameCheck } from '@hooks/useDuplicateNameCheck'
+import { DuplicateNameAlert } from '@components/common'
+
 // Styles
 import styles from './Ajustes.module.scss'
 
@@ -82,6 +86,7 @@ interface UserEditInfo {
     userCiudad: string
     userCodigoPostal: string
     userRazonSocial: string
+    userContactName?: string
     userIdentificationType: string
     userIdentification: string
     userDescription: string
@@ -102,6 +107,12 @@ export default function Page() {
     const [isLoaded, setIsLoaded] = useState(false)
     const [userRol, setUserRol] = useState<{ rol: UserRole | undefined }>({
         rol: currentUser?.rol as UserRole | undefined,
+    })
+
+    // Duplicate name validation hook for merchants
+    const nameCheck = useDuplicateNameCheck({
+        type: 'comerciante',
+        excludeId: userAuthID,
     })
 
     const [alert, setAlert] = useState<AlertState>({
@@ -150,6 +161,7 @@ export default function Page() {
         userCiudad: '',
         userCodigoPostal: '',
         userRazonSocial: '',
+        userContactName: '',
         userIdentificationType: 'CC',
         userIdentification: '',
         userDescription: '',
@@ -191,6 +203,7 @@ export default function Page() {
                         userCiudad: userData.userCiudad || '',
                         userCodigoPostal: userData.userCodigoPostal || '',
                         userRazonSocial: userData.userRazonSocial || '',
+                        userContactName: userData.userContactName || (userData as any).userContactName || '',
                         userIdentificationType: (userData as any).userIdentificationType || 'CC',
                         userIdentification: (userData as any).userIdentification || '',
                         userDescription: (userData as any).userDescription || '',
@@ -393,13 +406,13 @@ export default function Page() {
                 prev.map((loc, i) =>
                     i === activeLocationIdxForMap
                         ? {
-                              ...loc,
-                              direccion: updatedDir,
-                              ciudad: updatedCity,
-                              codigoPostal: updatedPostal,
-                              lat: locInfo.lat || loc.lat,
-                              lng: locInfo.lng || loc.lng,
-                          }
+                            ...loc,
+                            direccion: updatedDir,
+                            ciudad: updatedCity,
+                            codigoPostal: updatedPostal,
+                            lat: locInfo.lat || loc.lat,
+                            lng: locInfo.lng || loc.lng,
+                        }
                         : loc
                 )
             )
@@ -576,119 +589,46 @@ export default function Page() {
                         <TextField
                             id="userName"
                             name="userName"
-                            label="Nombre de usuario"
+                            label={isComerciante ? 'Nombre de usuario / Nombre Comercial' : 'Nombre de usuario'}
                             value={userEditInfo.userName}
-                            onChange={handleChange}
+                            onChange={(e) => {
+                                handleChange(e as any)
+                                if (nameCheck.status !== 'idle') nameCheck.reset()
+                            }}
+                            onBlur={(e) => {
+                                if (isComerciante) {
+                                    nameCheck.handleBlur(e.target.value)
+                                }
+                            }}
                             size="small"
                             fullWidth
                         />
 
-                        {/* ── Emails dynamic list ── */}
-                        <span className={styles['contact-section-label']}>Correos electrónicos</span>
-                        <div className={styles['contact-list']}>
-                            {emails.map((email, idx) => (
-                                <div
-                                    key={idx}
-                                    className={`${styles['contact-row']} ${email.isPrimary ? styles['contact-row--primary'] : ''}`}
-                                >
-                                    <TextField
-                                        className={styles['contact-row__input'] || ''}
-                                        value={email.address}
-                                        onChange={(e) => handleEmailChange(idx, e.target.value)}
-                                        placeholder="correo@ejemplo.com"
-                                        size="small"
-                                        type="email"
-                                    />
-                                    <Tooltip title={email.isPrimary ? 'Correo principal' : 'Establecer como principal'}>
-                                        <IconButton
-                                            size="small"
-                                            onClick={() => handleSetPrimaryEmail(idx)}
-                                            className={email.isPrimary ? (styles['primary-indicator'] || '') : (styles['primary-indicator--inactive'] || '')}
-                                        >
-                                            {email.isPrimary ? <StarIcon /> : <StarBorderIcon />}
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title={email.isPrimary ? 'No puedes eliminar el principal' : 'Eliminar'}>
-                                        <span>
-                                            <IconButton
-                                                size="small"
-                                                onClick={() => handleRemoveEmail(idx)}
-                                                disabled={email.isPrimary}
-                                            >
-                                                <DeleteOutlineIcon fontSize="small" />
-                                            </IconButton>
-                                        </span>
-                                    </Tooltip>
-                                </div>
-                            ))}
-                            <Button
-                                variant="outlined"
-                                size="small"
-                                className={styles['contact-add-btn'] || ''}
-                                startIcon={<AddCircleOutlineIcon />}
-                                onClick={handleAddEmail}
-                            >
-                                Agregar correo
-                            </Button>
-                        </div>
+                        {isComerciante && (
+                            <DuplicateNameAlert
+                                status={nameCheck.status}
+                                isChecking={nameCheck.isChecking}
+                                matches={nameCheck.matches}
+                                exactMatch={nameCheck.exactMatch}
+                                type="comerciante"
+                                checkedValue={nameCheck.checkedValue}
+                            />
+                        )}
 
-                        {/* ── Phones dynamic list ── */}
-                        <span className={styles['contact-section-label']}>Teléfonos</span>
-                        <div className={styles['contact-list']}>
-                            {phones.map((phone, idx) => (
-                                <div
-                                    key={idx}
-                                    className={`${styles['contact-row']} ${phone.isPrimary ? styles['contact-row--primary'] : ''}`}
-                                >
-                                    <TextField
-                                        className={styles['contact-row__input'] || ''}
-                                        value={phone.number}
-                                        onChange={(e) => handlePhoneChange(idx, 'number', e.target.value)}
-                                        placeholder="+57 300 000 0000"
-                                        size="small"
-                                        type="tel"
-                                    />
-                                    <FormControl size="small" className={styles['contact-row__type'] || ''}>
-                                        <Select
-                                            value={phone.type}
-                                            onChange={(e) => handlePhoneChange(idx, 'type', e.target.value)}
-                                        >
-                                            <MenuItem value="personal">Personal</MenuItem>
-                                            <MenuItem value="trabajo">Trabajo</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                    <Tooltip title={phone.isPrimary ? 'Teléfono principal' : 'Establecer como principal'}>
-                                        <IconButton
-                                            size="small"
-                                            onClick={() => handleSetPrimaryPhone(idx)}
-                                            className={phone.isPrimary ? (styles['primary-indicator'] || '') : (styles['primary-indicator--inactive'] || '')}
-                                        >
-                                            {phone.isPrimary ? <StarIcon /> : <StarBorderIcon />}
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title={phone.isPrimary ? 'No puedes eliminar el principal' : 'Eliminar'}>
-                                        <span>
-                                            <IconButton
-                                                size="small"
-                                                onClick={() => handleRemovePhone(idx)}
-                                                disabled={phone.isPrimary}
-                                            >
-                                                <DeleteOutlineIcon fontSize="small" />
-                                            </IconButton>
-                                        </span>
-                                    </Tooltip>
-                                </div>
-                            ))}
-                            <Button
-                                variant="outlined"
-                                size="small"
-                                className={styles['contact-add-btn'] || ''}
-                                startIcon={<AddCircleOutlineIcon />}
-                                onClick={handleAddPhone}
-                            >
-                                Agregar teléfono
-                            </Button>
-                        </div>
+                        {isComerciante && (
+                            <>
+                                <TextField
+                                    id="userProfession"
+                                    name="userProfession"
+                                    label="Profesión / Slogan"
+                                    placeholder="Ej: Automatización de espacios o Ingeniero Electrónico"
+                                    value={userEditInfo.userProfession}
+                                    onChange={handleChange}
+                                    size="small"
+                                    fullWidth
+                                />
+                            </>
+                        )}
 
                         {/* ── Other fields ── */}
                         <div className={styles['field-row']} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
@@ -750,14 +690,14 @@ export default function Page() {
                                 />
                                 <div className={styles['field-row']}>
                                     <TextField
-                                        id="userProfession"
-                                        name="userProfession"
-                                        label="Profesión / Slogan"
-                                        placeholder="Ej: Automatización de espacios o Ingeniero Electrónico"
-                                        value={userEditInfo.userProfession}
+                                        id="userContactName"
+                                        name="userContactName"
+                                        label="Nombre de contacto / Representante"
+                                        placeholder="Ej: Juan Perez"
+                                        value={userEditInfo.userContactName}
                                         onChange={handleChange}
                                         size="small"
-                                        sx={{ flex: 2 }}
+                                        sx={{ flex: 1 }}
                                     />
                                     <TextField
                                         id="userExperience"
@@ -772,6 +712,114 @@ export default function Page() {
                                 </div>
                             </>
                         )}
+
+                        {/* ── Phones dynamic list ── */}
+                        <span className={styles['contact-section-label']}>Teléfonos</span>
+                        <div className={styles['contact-list']}>
+                            {phones.map((phone, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`${styles['contact-row']} ${phone.isPrimary ? styles['contact-row--primary'] : ''}`}
+                                >
+                                    <TextField
+                                        className={styles['contact-row__input'] || ''}
+                                        value={phone.number}
+                                        onChange={(e) => handlePhoneChange(idx, 'number', e.target.value)}
+                                        placeholder="+57 300 000 0000"
+                                        size="small"
+                                        type="tel"
+                                    />
+                                    <FormControl size="small" className={styles['contact-row__type'] || ''}>
+                                        <Select
+                                            value={phone.type}
+                                            onChange={(e) => handlePhoneChange(idx, 'type', e.target.value)}
+                                        >
+                                            <MenuItem value="personal">Personal</MenuItem>
+                                            <MenuItem value="trabajo">Trabajo</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    <Tooltip title={phone.isPrimary ? 'Teléfono principal' : 'Establecer como principal'}>
+                                        <IconButton
+                                            size="small"
+                                            onClick={() => handleSetPrimaryPhone(idx)}
+                                            className={phone.isPrimary ? (styles['primary-indicator'] || '') : (styles['primary-indicator--inactive'] || '')}
+                                        >
+                                            {phone.isPrimary ? <StarIcon /> : <StarBorderIcon />}
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title={phone.isPrimary ? 'No puedes eliminar el principal' : 'Eliminar'}>
+                                        <span>
+                                            <IconButton
+                                                size="small"
+                                                onClick={() => handleRemovePhone(idx)}
+                                                disabled={phone.isPrimary}
+                                            >
+                                                <DeleteOutlineIcon fontSize="small" />
+                                            </IconButton>
+                                        </span>
+                                    </Tooltip>
+                                </div>
+                            ))}
+                            <Button
+                                variant="outlined"
+                                size="small"
+                                className={styles['contact-add-btn'] || ''}
+                                startIcon={<AddCircleOutlineIcon />}
+                                onClick={handleAddPhone}
+                            >
+                                Agregar teléfono
+                            </Button>
+                        </div>
+
+                        {/* ── Emails dynamic list ── */}
+                        <span className={styles['contact-section-label']}>Correos electrónicos</span>
+                        <div className={styles['contact-list']}>
+                            {emails.map((email, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`${styles['contact-row']} ${email.isPrimary ? styles['contact-row--primary'] : ''}`}
+                                >
+                                    <TextField
+                                        className={styles['contact-row__input'] || ''}
+                                        value={email.address}
+                                        onChange={(e) => handleEmailChange(idx, e.target.value)}
+                                        placeholder="correo@ejemplo.com"
+                                        size="small"
+                                        type="email"
+                                    />
+                                    <Tooltip title={email.isPrimary ? 'Correo principal' : 'Establecer como principal'}>
+                                        <IconButton
+                                            size="small"
+                                            onClick={() => handleSetPrimaryEmail(idx)}
+                                            className={email.isPrimary ? (styles['primary-indicator'] || '') : (styles['primary-indicator--inactive'] || '')}
+                                        >
+                                            {email.isPrimary ? <StarIcon /> : <StarBorderIcon />}
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title={email.isPrimary ? 'No puedes eliminar el principal' : 'Eliminar'}>
+                                        <span>
+                                            <IconButton
+                                                size="small"
+                                                onClick={() => handleRemoveEmail(idx)}
+                                                disabled={email.isPrimary}
+                                            >
+                                                <DeleteOutlineIcon fontSize="small" />
+                                            </IconButton>
+                                        </span>
+                                    </Tooltip>
+                                </div>
+                            ))}
+                            <Button
+                                variant="outlined"
+                                size="small"
+                                className={styles['contact-add-btn'] || ''}
+                                startIcon={<AddCircleOutlineIcon />}
+                                onClick={handleAddEmail}
+                            >
+                                Agregar correo
+                            </Button>
+                        </div>
+
                     </div>
                 </div>
 

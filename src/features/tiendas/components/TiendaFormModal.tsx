@@ -23,6 +23,8 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import type { TiendaDocument, CreateTiendaInput, SedeLocation } from '@services/tiendas'
 import { useTiendaFormDraftStore, EMPTY_SEDE } from '@stores/useTiendaFormDraftStore'
+import { useDuplicateNameCheck } from '@hooks/useDuplicateNameCheck'
+import { DuplicateNameAlert } from '@components/common'
 import { SedeManager } from './SedeManager'
 
 interface TiendaFormModalProps {
@@ -44,6 +46,12 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
     const draft = useTiendaFormDraftStore((s) => s.draft)
     const updateDraft = useTiendaFormDraftStore((s) => s.updateDraft)
     const clearDraft = useTiendaFormDraftStore((s) => s.clearDraft)
+
+    // ── Duplicate name check hook ──
+    const nameCheck = useDuplicateNameCheck({
+        type: 'tienda',
+        excludeId: initialData?.id,
+    })
 
     // ── Determine if we're in "create" mode (use draft) or "edit" mode (use initialData) ──
     const isEditMode = !!initialData
@@ -232,7 +240,11 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                                 required
                                 placeholder="Ej: Ferretería y Pinturas El Sol"
                                 value={nombre}
-                                onChange={(e) => setNombre(e.target.value)}
+                                onChange={(e) => {
+                                    setNombre(e.target.value)
+                                    if (nameCheck.status !== 'idle') nameCheck.reset()
+                                }}
+                                onBlur={(e) => nameCheck.handleBlur(e.target.value)}
                                 sx={{ flex: 2, minWidth: 240 }}
                             />
                             <TextField
@@ -252,6 +264,16 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                                 sx={{ flex: 1, minWidth: 140 }}
                             />
                         </Box>
+
+                        {/* Real-time duplicate name alert */}
+                        <DuplicateNameAlert
+                            status={nameCheck.status}
+                            isChecking={nameCheck.isChecking}
+                            matches={nameCheck.matches}
+                            exactMatch={nameCheck.exactMatch}
+                            type="tienda"
+                            checkedValue={nameCheck.checkedValue}
+                        />
 
                         {/* Categories */}
                         <Autocomplete

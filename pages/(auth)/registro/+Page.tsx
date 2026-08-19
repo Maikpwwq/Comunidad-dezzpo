@@ -6,6 +6,7 @@
  */
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { Link } from '@hooks'
+import { useDuplicateNameCheck } from '@hooks/useDuplicateNameCheck'
 // Auth feature components & hooks
 import {
     useAuthActions,
@@ -16,7 +17,7 @@ import {
     type DraftInfo,
 } from '@features/auth'
 // Components
-import { SnackBarAlert } from '@components/common'
+import { SnackBarAlert, DuplicateNameAlert } from '@components/common'
 // Styles
 import clsx from 'clsx'
 import styles from './Register.module.scss'
@@ -63,9 +64,15 @@ export default function Page({
     const [role, setRole] = useState<UserRoleNumeric>(null)
     const [acceptedPrivacy, setAcceptedPrivacy] = useState(false)
 
+    // Duplicate check for merchant name
+    const nameCheck = useDuplicateNameCheck({
+        type: 'comerciante',
+    })
+
     // Role selection
     const handleSelectRole = (selectedRole: UserRoleNumeric) => {
         setRole(selectedRole)
+        nameCheck.reset()
         setStep(2)
     }
     // Email signup
@@ -124,14 +131,36 @@ export default function Page({
                                 <OrDivider />
                                 <Col className="d-flex flex-column align-items-center" lg={10} md={12} sm={10} xs={12}>
                                     <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                        <Form.Label className="mb-0 body-1">Nombre de usuario</Form.Label>
+                                        <Form.Label className="mb-0 body-1">
+                                            {role === 2 ? 'Nombre de usuario / Marca o Empresa' : 'Nombre de usuario'}
+                                        </Form.Label>
                                         <Form.Control
                                             className={clsx(styles.Input)}
                                             type="text"
-                                            placeholder="elija su usuario"
+                                            placeholder={role === 2 ? 'nombre de su empresa o marca comercial' : 'elija su usuario'}
                                             value={name}
-                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                                setName(e.target.value)
+                                                if (nameCheck.status !== 'idle') nameCheck.reset()
+                                            }}
+                                            onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+                                                if (role === 2) {
+                                                    nameCheck.handleBlur(e.target.value)
+                                                }
+                                            }}
                                         />
+                                        {role === 2 && (
+                                            <Box sx={{ width: '100%' }}>
+                                                <DuplicateNameAlert
+                                                    status={nameCheck.status}
+                                                    isChecking={nameCheck.isChecking}
+                                                    matches={nameCheck.matches}
+                                                    exactMatch={nameCheck.exactMatch}
+                                                    type="comerciante"
+                                                    checkedValue={nameCheck.checkedValue}
+                                                />
+                                            </Box>
+                                        )}
                                     </Form.Group>
                                     <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
                                         <Form.Label className="mb-0 body-1">Email</Form.Label>

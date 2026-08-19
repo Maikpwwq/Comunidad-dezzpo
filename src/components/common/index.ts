@@ -35,3 +35,6 @@ export { MapaPerfil } from './MapaPerfil'
 export { CincoEstrellas } from './CincoEstrellas'
 
 export { AdjuntarArchivos } from './AdjuntarArchivos'
+
+export { DuplicateNameAlert } from './DuplicateNameAlert'
+export type { DuplicateNameAlertProps } from './DuplicateNameAlert'

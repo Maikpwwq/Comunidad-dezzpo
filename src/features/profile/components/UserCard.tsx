@@ -43,7 +43,9 @@ import ShareIcon from '@mui/icons-material/Share'
 // Types
 export interface UserCardProps {
     userId: string
+    userName?: string | null
     userRazonSocial?: string
+    userContactName?: string
     userDirection?: string
     userProfession?: string
     userPhotoUrl?: string
@@ -62,7 +64,9 @@ interface CategoryChip {
 
 export function UserCard({
     userId,
+    userName = '',
     userRazonSocial = '',
+    userContactName,
     userDirection,
     userProfession,
     userPhotoUrl,
@@ -73,6 +77,9 @@ export function UserCard({
     userClasification,
     userGrade,
 }: UserCardProps): React.ReactElement {
+    // Primary display name: priority to userName (commercial name), fallback to legal userRazonSocial
+    const displayName = userName || userRazonSocial || 'Comerciante'
+
     // Zustand selectors (atomic)
     const currentUserId = useUserStore((state) => state.userId)
     const userRole = useUserStore((state) => state.rol)
@@ -112,7 +119,7 @@ export function UserCard({
         }
         try {
             setIsCreatingChannel(true)
-            const channelUrl = await getOrCreateDirectChannel(currentUserId, userId, userRazonSocial)
+            const channelUrl = await getOrCreateDirectChannel(currentUserId, userId, displayName)
             window.location.assign(`/app/mensajes?channel=${channelUrl}`)
         } catch (error) {
             console.error('Error creating direct channel:', error)
@@ -121,7 +128,7 @@ export function UserCard({
         } finally {
             setIsCreatingChannel(false)
         }
-    }, [currentUserId, userId, userRazonSocial])
+    }, [currentUserId, userId, displayName])
 
     const handleFavorite = useCallback(async () => {
         if (isSaving.current) return
@@ -199,9 +206,14 @@ export function UserCard({
                     </Typography>
                 </Avatar>
                 <div>
-                    <h3 className={styles['text-name']}>{userRazonSocial}</h3>
+                    <h3 className={styles['text-name']}>{displayName}</h3>
+                    {userRazonSocial && userName && userRazonSocial !== userName && (
+                        <Typography variant="caption" display="block" color="text.secondary" sx={{ fontStyle: 'italic', lineHeight: 1.2 }}>
+                            {userRazonSocial}
+                        </Typography>
+                    )}
                     <Typography variant="caption" display="block" color="text.secondary">
-                        {userProfession} • Se unió el {userJoined}
+                        {userProfession || 'Profesional / Comercio'} • Se unió el {userJoined || '—'}
                     </Typography>
                     {userClasification && (
                         <Box sx={{ mt: 0.5 }}>

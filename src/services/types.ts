@@ -108,6 +108,7 @@ export interface UserFirestoreDocument extends DocumentData {
     userTel?: string
     userImage?: string
     userRazonSocial?: string
+    userContactName?: string
     userPhotoUrl?: string
     userProfession?: string
     userExperience?: string
