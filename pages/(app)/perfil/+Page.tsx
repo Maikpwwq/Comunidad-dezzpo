@@ -409,7 +409,7 @@ export default function Page() {
                                                         className={styles.ContactItemLink}
                                                         aria-label={`Enviar correo a ${email.address}`}
                                                     >
-                                                        <MailIcon className={styles.ContactItemIcon} />
+                                                        <MailIcon className={styles.ContactItemIcon || ''} />
                                                         <span className={styles.ContactItemText}>{email.address}</span>
                                                         {email.isPrimary && (
                                                             <span className={styles.ContactPrimaryBadge}>Principal</span>
@@ -435,7 +435,7 @@ export default function Page() {
                                                             className={styles.ContactItemLink}
                                                             aria-label={`Llamar al teléfono ${phone.number}`}
                                                         >
-                                                            <PhoneIphoneIcon className={styles.ContactItemIcon} />
+                                                            <PhoneIphoneIcon className={styles.ContactItemIcon || ''} />
                                                             <span className={styles.ContactItemText}>{phone.number}</span>
                                                             {phone.type === 'trabajo' && (
                                                                 <span className={styles.ContactTypeBadge}>Trabajo</span>
