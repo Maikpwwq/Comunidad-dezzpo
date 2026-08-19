@@ -286,6 +286,29 @@ pending_payment → active → completed → disputed
 
 ## 9. Learned Lessons
 
+### Category Search, Selection Tray & Moderated Suggestions (`/app/ajustes` - 2026-08-18)
+- **Searchable Category Selector**: Upgraded `ChipsCategories.tsx` with live accent/case-insensitive search (`normalizeSearchText`), keyword filtering, and dynamic category display.
+- **Selection Summary Tray**: Displays selected categories (`X / 4`) at the top of the interface with one-click removal (`onDelete`) chips and max limit feedback.
+- **Category Suggestion Engine**: If a user cannot find their specialty, a modal dialog captures `suggestedName`, `suggestedArea`, and `suggestedDescription`, persisting them to the `suggestedCategories` collection with author metadata (`userId`, `userName`, `userMail`, `status: 'pending'`).
+- **Multi-Level Duplicate Checking**: `checkCategorySuggestionAvailability` evaluates proposed category names against the official 92-category catalog (`ListadoCategorias`) and pending/approved Firestore submissions with word overlap (>= 3 chars) and substring (>= 4 chars) matching. Exact catalog matches provide an instant *"Seleccionar en mi perfil"* CTA.
+- **Firestore Security Rules**: Protected `/suggestedCategories/{suggestionId}` allowing authenticated authors to create and view their submissions, reserving updates and approvals to admins.
+
+### Specialized Tiendas & Supplier Directory Taxonomy (2026-08-18)
+- **Expanded Hardware & Retail Taxonomy**: Added 5 dedicated supplier categories to `ListadoCategoriasTiendas.ts`: `inoxidables` (stainless steel sheets/tubes/fittings), `mallas_metalicas` (chainlink/welded meshes/concertinas), `puertas` (wooden/metal/fire/security doors), `transmision_potencia` (bearings/pulleys/belts/chains/sprockets), and `depositos_materiales` (cement/aggregates/sand/bricks).
+- **Taxonomy Segregation**:
+  - Split `ornamentacion_hierro` into `ornamentacion` (artistic ironwork, railings, gates) and `perfiles_hierro` (structural iron, tubes, beams, sheets).
+  - Split `muebles_modulares_tapiceria` into `muebles_closets` (cabinetry, modular furniture, closets) and `tapiceria` (upholstery fabrics, foams, leatherette, re-upholstery).
+- **Shared Slug Utility**: Centralized URL slug generation in `@services/utils/slugify.ts` to eliminate duplicate definitions across blog and tienda services.
+
+### Specialized Engineering & Building Services Taxonomy (2026-08-18)
+- **Niche-Specific Expansion**: Expanded `ListadoCategorias.tsx` (92 categories) and `CategoryIcons.tsx` with high-value technical services:
+  - `Cálculos y Diseños de Ingeniería` (structural NSR-10, MEP, calculations), `Topografía y Agrimensura` (surveys, plot boundaries, subdivision), `Estudios de Suelos y Geotecnia` (soil test pits, geotechnical engineering), `Energía Solar y Fotovoltaica` (PV solar design & installation), `Puertas Automáticas y Motores` (vehicular gates, barriers, boom gates), `Fumigación y Control de Plagas` (sanitary pest control certification), `Peritajes y Avalúos` (certified appraisals & structural forensics), `Diseño 3D y Renders` (BIM/3D architectural renders).
+- **Strategic Boundary Enforcement**: Deliberately rejected consumer electronics repair (cellphones/PCs/TVs) to protect Dezzpo's clear positioning as a specialized construction, habitat, property horizontal, and architectural maintenance platform.
+
+### TypeScript `exactOptionalPropertyTypes` & Firestore Serialization
+- **Zero Incompatible `undefined` Assigns**: With `exactOptionalPropertyTypes: true` enabled in `tsconfig.json`, all optional interface properties receiving runtime `undefined` values (e.g. `raw || undefined`) MUST be explicitly typed with `| undefined` (e.g. `razonSocial?: string | undefined`).
+- **Partial Updates**: `updateDoc` payload objects that accept partial inputs must avoid `Partial<T>` when `T` contains strict non-undefined properties, using `Record<string, unknown>` and `sanitizeForFirestore(data)` before persistence.
+
 ### Supplier & Hardware Store Directory System (`/app/tiendas` & `/admin/tiendas` - 2026-08-11)
 - **Directory Architecture**: Dedicated module for sourcing materials, tools, equipment rental, and technical services filterable by 28 namespaced categories (`ListadoCategoriasTiendas.ts`). Accessible to Propietarios, Comerciantes, and Guests without role gating.
 - **Directory Metadata & Per-Sede Contact**: Store documents support legal metadata (`razonSocial`, `nit`) at the tienda level, plus granular branch details (`detallesUbicacion` for physical landmarks, `nombreContacto`, `cargoContacto`) per `SedeLocation`. Surfaced across card view (`TiendaCard.tsx`), modal (`SedeDetailModal.tsx`), and admin management table (`/admin/tiendas`).
