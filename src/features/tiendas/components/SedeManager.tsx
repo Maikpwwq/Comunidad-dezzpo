@@ -9,17 +9,14 @@ import {
     IconButton,
     Stack,
     Modal,
-    Divider,
     Checkbox,
     FormControlLabel,
     Autocomplete,
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
 import MapIcon from '@mui/icons-material/Map'
-import PhoneIcon from '@mui/icons-material/Phone'
-import { zoneNames, getZonesForCity, isBogotaRegion, departamentosColombia } from '@assets/data/ListadoZonas'
+import { getZonesForCity, isBogotaRegion, departamentosColombia } from '@assets/data/ListadoZonas'
 import { Ubicacion } from '@features/marketing'
 import type { SedeLocation } from '@services/tiendas'
 
@@ -64,8 +61,10 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
 
     const handleUpdateSede = (idx: number, field: keyof SedeLocation, value: any) => {
         const updated = [...sedes]
+        const current = updated[idx]
+        if (!current) return
         updated[idx] = {
-            ...updated[idx],
+            ...current,
             [field]: value,
         }
         onChange(updated)
@@ -74,6 +73,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
     const handleCityChange = (idx: number, newCity: string) => {
         const updated = [...sedes]
         const currentSede = updated[idx]
+        if (!currentSede) return
         const availableZones = getZonesForCity(newCity)
         const validZoneKeys = Object.keys(availableZones)
 
@@ -92,10 +92,12 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
 
     const handleUpdatePhone = (sedeIdx: number, phoneIdx: number, value: string) => {
         const updated = [...sedes]
-        const telefonos = [...(updated[sedeIdx].telefonos || [''])]
+        const currentSede = updated[sedeIdx]
+        if (!currentSede) return
+        const telefonos = [...(currentSede.telefonos || [''])]
         telefonos[phoneIdx] = value
         updated[sedeIdx] = {
-            ...updated[sedeIdx],
+            ...currentSede,
             telefonos,
         }
         onChange(updated)
@@ -103,9 +105,11 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
 
     const handleAddPhone = (sedeIdx: number) => {
         const updated = [...sedes]
-        const currentTels = updated[sedeIdx].telefonos || ['']
+        const currentSede = updated[sedeIdx]
+        if (!currentSede) return
+        const currentTels = currentSede.telefonos || ['']
         updated[sedeIdx] = {
-            ...updated[sedeIdx],
+            ...currentSede,
             telefonos: [...currentTels, ''],
         }
         onChange(updated)
@@ -195,7 +199,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                         onInputChange={(_, newInputValue) => handleUpdateSede(idx, 'departamento', newInputValue)}
                                         renderInput={(params) => (
                                             <TextField
-                                                {...params}
+                                                {...(params as unknown as Record<string, unknown>)}
                                                 label="Departamento"
                                                 placeholder="Ej: Meta, Huila, Cundinamarca"
                                                 size="small"
