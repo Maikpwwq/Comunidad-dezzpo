@@ -12,7 +12,7 @@ export type DuplicateCheckStatus = 'idle' | 'checking' | 'available' | 'matches_
 
 export interface UseDuplicateNameCheckOptions {
     type: DuplicateCheckType
-    excludeId?: string
+    excludeId?: string | undefined
 }
 
 export interface UseDuplicateNameCheckReturn<T> {

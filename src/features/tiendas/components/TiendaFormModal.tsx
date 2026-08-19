@@ -6,11 +6,9 @@ import {
     DialogActions,
     Button,
     TextField,
-    MenuItem,
     Box,
     Typography,
     Alert,
-    CircularProgress,
     IconButton,
     Autocomplete,
     Chip,
@@ -258,12 +256,12 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                                     setNombre(e.target.value)
                                     nameCheck.reset()
                                 }}
-                                onBlur={() => nameCheck.checkName(nombre)}
+                                onBlur={() => nameCheck.handleBlur(nombre)}
                             />
                             <DuplicateNameAlert
                                 status={nameCheck.status}
                                 matches={nameCheck.matches}
-                                name={nameCheck.checkedName}
+                                checkedValue={nameCheck.checkedValue}
                                 type="tienda"
                             />
                         </Box>
@@ -329,7 +327,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                             }}
                             renderInput={(params) => (
                                 <TextField
-                                    {...params}
+                                    {...(params as unknown as Record<string, unknown>)}
+                                    size="small"
                                     label="Categorías *"
                                     placeholder={selectedCategoryKeys.length >= 4 ? '' : 'Seleccionar categorías'}
                                     helperText={
