@@ -3,7 +3,7 @@ import { Box, Paper, Typography, Alert, AlertTitle, CircularProgress } from '@mu
 import InfoIcon from '@mui/icons-material/Info'
 import { googleLoader } from '@services/utils/googleMapsLoader'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
-import type { TiendaDocument, SedeLocation } from '@services/tiendas'
+import type { TiendaDocument } from '@services/tiendas'
 
 interface TiendasMapProps {
     tiendas: TiendaDocument[]
@@ -97,7 +97,7 @@ export const TiendasMap: React.FC<TiendasMapProps> = ({
                         title: `${tienda.nombre} - ${sede.nombreSede}`,
                     })
 
-                    const phoneString = sede.telefonos.join(', ')
+                    const phoneString = (sede.telefonos || []).join(', ')
                     const contentString = `
                         <div style="padding: 8px; max-width: 250px; font-family: sans-serif;">
                             <h4 style="margin: 0 0 4px 0; color: #0A2540;">${tienda.nombre}</h4>
@@ -245,7 +245,9 @@ export const TiendasMap: React.FC<TiendasMapProps> = ({
                                 : 'Aún no tenemos tiendas verificadas por Dezzpo en esta categoría'}
                         </AlertTitle>
                         <Typography variant="caption" color="text.secondary">
-                            Mostrando resultados de búsqueda en tiempo real de Google Maps para tu comodidad.
+                            {fallbackItems.length > 0
+                                ? `Mostrando ${fallbackItems.length} resultados de búsqueda en tiempo real de Google Maps para tu comodidad.`
+                                : 'Mostrando resultados de búsqueda en tiempo real de Google Maps para tu comodidad.'}
                         </Typography>
                     </Alert>
                 </Box>

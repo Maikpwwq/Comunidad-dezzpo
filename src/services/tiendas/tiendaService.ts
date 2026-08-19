@@ -16,32 +16,21 @@ import {
     query,
     where,
     orderBy,
-    limit as firestoreLimit,
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
+import { slugify } from '@services/utils/slugify'
 import type { ServiceResponse } from '@/types/services.d'
 import type {
     TiendaDocument,
     CreateTiendaInput,
     UpdateTiendaInput,
     TiendaFilters,
-    SedeLocation,
 } from './types'
 
-const COLLECTION_NAME = 'tiendas'
+export { slugify }
 
-export function slugify(text: string): string {
-    return text
-        .toString()
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .trim()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]+/g, '')
-        .replace(/--+/g, '-')
-}
+const COLLECTION_NAME = 'tiendas'
 
 /**
  * Curated list of 6 seed tiendas transcribed from real business cards.
@@ -503,7 +492,7 @@ export async function updateTienda(
         }
 
         const current = currentRes.data
-        const updatedData: Partial<TiendaDocument> = {
+        const updatedData: Record<string, unknown> = {
             ...input,
             updatedAt: new Date().toISOString(),
         }

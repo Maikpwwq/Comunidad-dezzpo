@@ -10,31 +10,19 @@ import {
     getDocs,
     getDoc,
     addDoc,
-    setDoc,
     updateDoc,
     deleteDoc,
     increment,
     query,
     where,
-    orderBy,
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
+import { slugify } from '@services/utils/slugify'
 import type { BlogPost } from '@services/types'
 
-const COLLECTION_NAME = 'blog_posts'
+export { slugify }
 
-// Helper to generate clean URL slug
-export function slugify(text: string): string {
-    return text
-        .toString()
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .trim()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]+/g, '')
-        .replace(/--+/g, '-')
-}
+const COLLECTION_NAME = 'blog_posts'
 
 /** Initial high-value inbound articles to seed if the collection is empty */
 const INITIAL_BLOG_POSTS: Omit<BlogPost, 'id'>[] = [

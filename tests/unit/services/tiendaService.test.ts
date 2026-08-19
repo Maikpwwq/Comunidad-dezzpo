@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import {
-    getTiendas,
-    getTiendaById,
     createTienda,
     updateTienda,
     approveTienda,
