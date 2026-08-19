@@ -10,11 +10,13 @@
 
 import { collection, getDocs, query } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
+import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 import type { TiendaDocument } from '@services/tiendas'
 import type { UserFirestoreDocument } from '@services/types'
 
 const COMERCIANTES_COLLECTION = 'usersComerciantesCalificados'
 const TIENDAS_COLLECTION = 'tiendas'
+const SUGGESTED_CATEGORIES_COLLECTION = 'suggestedCategories'
 
 export interface ComercianteDuplicateMatch {
     userId: string
@@ -42,6 +44,15 @@ export interface TiendaDuplicateMatch {
         ciudad: string
     }[]
     similarity: 'exact' | 'similar'
+}
+
+export interface CategoryDuplicateMatch {
+    name: string
+    source: 'catalog' | 'pending_suggestion' | 'approved_suggestion'
+    similarity: 'exact' | 'similar'
+    categoryKey?: number
+    description?: string
+    createdAt?: string
 }
 
 export interface DuplicateCheckResult<T> {
@@ -218,5 +229,103 @@ export async function checkTiendaNameAvailability(
     } catch (error) {
         console.error('[duplicateCheckService] Error checking tienda name:', error)
         return { isAvailable: true, exactMatch: false, matches: [] }
+    }
+}
+
+/**
+ * Check if a suggested category already exists in the official catalog (ListadoCategorias)
+ * or has already been submitted to suggestedCategories.
+ */
+export async function checkCategorySuggestionAvailability(
+    inputName: string
+): Promise<DuplicateCheckResult<CategoryDuplicateMatch>> {
+    const cleanInput = normalizeSearchString(inputName)
+    if (!cleanInput || cleanInput.length < 2) {
+        return { isAvailable: true, exactMatch: false, matches: [] }
+    }
+
+    const matches: CategoryDuplicateMatch[] = []
+    let hasExactMatch = false
+
+    // 1. Check against official ListadoCategorias catalog
+    const inputWords = cleanInput.split(' ').filter((w) => w.length >= 3)
+
+    for (const cat of ListadoCategorias as any[]) {
+        const rawLabel = cat.label || ''
+        const normLabel = normalizeSearchString(rawLabel)
+        if (!normLabel) continue
+
+        const isExact = normLabel === cleanInput
+        const labelWords = normLabel.split(' ').filter((w) => w.length >= 3)
+        const hasWordOverlap =
+            inputWords.some((w) => labelWords.includes(w)) ||
+            (normLabel.length >= 4 && cleanInput.includes(normLabel)) ||
+            (cleanInput.length >= 4 && normLabel.includes(cleanInput))
+
+        const isSimilar = !isExact && hasWordOverlap
+
+        if (isExact || isSimilar) {
+            if (isExact) hasExactMatch = true
+            matches.push({
+                name: rawLabel,
+                source: 'catalog',
+                similarity: isExact ? 'exact' : 'similar',
+                categoryKey: cat.key,
+            })
+        }
+    }
+
+    // 2. Check against Firestore suggestedCategories
+    if (isFirebaseAvailable() && firestore) {
+        try {
+            const colRef = collection(firestore, SUGGESTED_CATEGORIES_COLLECTION)
+            const snapshot = await getDocs(query(colRef))
+
+            snapshot.forEach((docSnap) => {
+                const data = docSnap.data() as any
+                const rawName = data.suggestedName || ''
+                const normName = normalizeSearchString(rawName)
+                if (!normName) return
+
+                const isExact = normName === cleanInput
+                const suggWords = normName.split(' ').filter((w) => w.length >= 3)
+                const hasWordOverlap =
+                    inputWords.some((w) => suggWords.includes(w)) ||
+                    (normName.length >= 4 && cleanInput.includes(normName)) ||
+                    (cleanInput.length >= 4 && normName.includes(cleanInput))
+
+                const isSimilar = !isExact && hasWordOverlap
+
+                if (isExact || isSimilar) {
+                    if (isExact) hasExactMatch = true
+                    const status = data.status || 'pending'
+                    matches.push({
+                        name: rawName,
+                        source: status === 'approved' ? 'approved_suggestion' : 'pending_suggestion',
+                        similarity: isExact ? 'exact' : 'similar',
+                        description: data.description,
+                        createdAt: data.createdAt,
+                    })
+                }
+            })
+        } catch (err) {
+            console.error('[duplicateCheckService] Error querying suggestedCategories:', err)
+        }
+    }
+
+    // Sort exact matches first, then catalog matches first
+    matches.sort((a, b) => {
+        if (a.similarity !== b.similarity) {
+            return a.similarity === 'exact' ? -1 : 1
+        }
+        if (a.source === 'catalog' && b.source !== 'catalog') return -1
+        if (b.source === 'catalog' && a.source !== 'catalog') return 1
+        return 0
+    })
+
+    return {
+        isAvailable: matches.length === 0,
+        exactMatch: hasExactMatch,
+        matches,
     }
 }

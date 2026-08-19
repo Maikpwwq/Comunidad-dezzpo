@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import {
     checkComercianteNameAvailability,
     checkTiendaNameAvailability,
+    checkCategorySuggestionAvailability,
     normalizeSearchString,
 } from '@services/validation/duplicateCheckService'
 import * as firestoreModule from 'firebase/firestore'
@@ -160,6 +161,62 @@ describe('duplicateCheckService Unit Tests', () => {
 
             const result = await checkTiendaNameAvailability('Ferretería y Metales El Progreso', 'tienda_001')
             expect(result.isAvailable).toBe(true)
+            expect(result.matches.length).toBe(0)
+        })
+    })
+
+    describe('checkCategorySuggestionAvailability', () => {
+        it('detects exact matches in the official ListadoCategorias catalog', async () => {
+            vi.mocked(firestoreModule.getDocs).mockResolvedValueOnce({
+                forEach: (cb: any) => [].forEach(cb),
+            } as any)
+
+            const result = await checkCategorySuggestionAvailability('pintura')
+            expect(result.isAvailable).toBe(false)
+            expect(result.exactMatch).toBe(true)
+            expect(result.matches.some((m) => m.source === 'catalog' && m.similarity === 'exact')).toBe(true)
+        })
+
+        it('detects exact matches in existing Firestore category suggestions', async () => {
+            const mockSuggestions = [
+                {
+                    id: 'sug_1',
+                    data: () => ({
+                        suggestedName: 'Instalación de Paneles Solares',
+                        status: 'pending',
+                        description: 'Sistemas fotovoltaicos',
+                    }),
+                },
+            ]
+
+            vi.mocked(firestoreModule.getDocs).mockResolvedValueOnce({
+                forEach: (cb: any) => mockSuggestions.forEach(cb),
+            } as any)
+
+            const result = await checkCategorySuggestionAvailability('instalacion de paneles solares')
+            expect(result.isAvailable).toBe(false)
+            expect(result.exactMatch).toBe(true)
+            expect(result.matches[0].source).toBe('pending_suggestion')
+            expect(result.matches[0].name).toBe('Instalación de Paneles Solares')
+        })
+
+        it('detects similar category matches', async () => {
+            vi.mocked(firestoreModule.getDocs).mockResolvedValueOnce({
+                forEach: (cb: any) => [].forEach(cb),
+            } as any)
+
+            const result = await checkCategorySuggestionAvailability('Pintura Industrial Especializada')
+            expect(result.matches.some((m) => m.name === 'Pintura' && m.similarity === 'similar')).toBe(true)
+        })
+
+        it('returns available when the suggested category does not match catalog or existing suggestions', async () => {
+            vi.mocked(firestoreModule.getDocs).mockResolvedValueOnce({
+                forEach: (cb: any) => [].forEach(cb),
+            } as any)
+
+            const result = await checkCategorySuggestionAvailability('Astronomia Cuantica Interestelar 99')
+            expect(result.isAvailable).toBe(true)
+            expect(result.exactMatch).toBe(false)
             expect(result.matches.length).toBe(0)
         })
     })

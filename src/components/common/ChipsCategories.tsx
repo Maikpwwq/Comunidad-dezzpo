@@ -20,10 +20,16 @@ import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Clear'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import WarningAmberIcon from '@mui/icons-material/WarningAmber'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import TagFacesIcon from '@mui/icons-material/TagFaces'
 import { styled } from '@mui/material/styles'
 import { useAuth } from '@hooks/useAuth'
 import { createCategorySuggestion } from '@services/categoriasService'
+import {
+    checkCategorySuggestionAvailability,
+    type CategoryDuplicateMatch,
+} from '@services/validation/duplicateCheckService'
 
 const ListItem = styled('li')(({ theme }) => ({
     margin: theme.spacing(0.4),
@@ -82,6 +88,80 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
         type: 'success' | 'error'
         message: string
     } | null>(null)
+
+    // Duplicate check state for category suggestions
+    const [duplicateCheck, setDuplicateCheck] = useState<{
+        isChecking: boolean
+        status: 'idle' | 'available' | 'exact_catalog' | 'exact_pending' | 'similar_matches'
+        matches: CategoryDuplicateMatch[]
+        exactMatch: boolean
+    }>({
+        isChecking: false,
+        status: 'idle',
+        matches: [],
+        exactMatch: false,
+    })
+
+    // Perform duplicate check on suggested category name
+    const performDuplicateCheck = async (name: string) => {
+        const trimmed = name.trim()
+        if (!trimmed || trimmed.length < 2) {
+            setDuplicateCheck({ isChecking: false, status: 'idle', matches: [], exactMatch: false })
+            return
+        }
+
+        setDuplicateCheck((prev) => ({ ...prev, isChecking: true }))
+
+        try {
+            const result = await checkCategorySuggestionAvailability(trimmed)
+            let newStatus: 'available' | 'exact_catalog' | 'exact_pending' | 'similar_matches' = 'available'
+
+            if (result.exactMatch) {
+                const exactItem = result.matches.find((m) => m.similarity === 'exact')
+                if (exactItem?.source === 'catalog') {
+                    newStatus = 'exact_catalog'
+                } else {
+                    newStatus = 'exact_pending'
+                }
+            } else if (result.matches.length > 0) {
+                newStatus = 'similar_matches'
+            }
+
+            setDuplicateCheck({
+                isChecking: false,
+                status: newStatus,
+                matches: result.matches,
+                exactMatch: result.exactMatch,
+            })
+        } catch (err) {
+            console.error('Error checking duplicate category:', err)
+            setDuplicateCheck({ isChecking: false, status: 'idle', matches: [], exactMatch: false })
+        }
+    }
+
+    // Select category directly from catalog duplicate match
+    const handleSelectFromMatch = (match: CategoryDuplicateMatch) => {
+        if (!match.categoryKey) return
+        const categoryIndex = categoriesState.findIndex((c) => c.key === match.categoryKey)
+        if (categoryIndex !== -1) {
+            const newCategories = [...categoriesState]
+            const currentSelectedCount = categoriesState.filter((c) => c.variant === 'filled').length
+            if (currentSelectedCount < maxCategories) {
+                newCategories[categoryIndex] = {
+                    ...newCategories[categoryIndex],
+                    variant: 'filled',
+                } as CategoryItem
+                setCategoriesState(newCategories)
+                if (setUserEditInfo && userEditInfo) {
+                    const selectedLabels = newCategories
+                        .filter((c) => c.variant === 'filled')
+                        .map((c) => c.label)
+                    setUserEditInfo({ ...userEditInfo, userCategories: selectedLabels })
+                }
+            }
+        }
+        setIsSuggestModalOpen(false)
+    }
 
     // Sync state when props change or component mounts
     useEffect(() => {
@@ -188,11 +268,17 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
 
     // Open suggestion modal
     const handleOpenSuggestModal = (initialName = '') => {
-        setSuggestedName(initialName || searchQuery.trim())
+        const nameToUse = initialName || searchQuery.trim()
+        setSuggestedName(nameToUse)
         setSuggestedArea('')
         setSuggestedDescription('')
         setSuggestionFeedback(null)
         setIsSuggestModalOpen(true)
+        if (nameToUse.length >= 2) {
+            performDuplicateCheck(nameToUse)
+        } else {
+            setDuplicateCheck({ isChecking: false, status: 'idle', matches: [], exactMatch: false })
+        }
     }
 
     // Submit suggestion to Firestore
@@ -202,6 +288,11 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
                 type: 'error',
                 message: 'Por favor ingresa el nombre de la categoría.',
             })
+            return
+        }
+
+        // Final duplicate check before sending
+        if (duplicateCheck.status === 'exact_catalog' || duplicateCheck.status === 'exact_pending') {
             return
         }
 
@@ -229,6 +320,7 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
                 setSuggestedArea('')
                 setSuggestedDescription('')
                 setSuggestionFeedback(null)
+                setDuplicateCheck({ isChecking: false, status: 'idle', matches: [], exactMatch: false })
             }, 2500)
         } catch (error) {
             console.error('Error creating category suggestion:', error)
@@ -283,6 +375,13 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
             </Paper>
         )
     }
+
+    const isSubmitDisabled =
+        isSubmittingSuggestion ||
+        !suggestedName.trim() ||
+        duplicateCheck.isChecking ||
+        duplicateCheck.status === 'exact_catalog' ||
+        duplicateCheck.status === 'exact_pending'
 
     return (
         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -510,17 +609,141 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
                         </Alert>
                     )}
 
-                    <TextField
-                        id="suggested-category-name"
-                        label="Nombre de la nueva categoría *"
-                        placeholder="Ej: Instalación de Paneles Solares, Tapicería Náutica..."
-                        value={suggestedName}
-                        onChange={(e) => setSuggestedName(e.target.value)}
-                        size="small"
-                        fullWidth
-                        disabled={isSubmittingSuggestion}
-                        autoFocus
-                    />
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                        <TextField
+                            id="suggested-category-name"
+                            label="Nombre de la nueva categoría *"
+                            placeholder="Ej: Instalación de Paneles Solares, Tapicería Náutica..."
+                            value={suggestedName}
+                            onChange={(e) => {
+                                setSuggestedName(e.target.value)
+                                if (duplicateCheck.status !== 'idle') {
+                                    setDuplicateCheck({ isChecking: false, status: 'idle', matches: [], exactMatch: false })
+                                }
+                            }}
+                            onBlur={(e) => {
+                                performDuplicateCheck(e.target.value)
+                            }}
+                            size="small"
+                            fullWidth
+                            disabled={isSubmittingSuggestion}
+                            autoFocus
+                        />
+
+                        {/* Duplicate checking spinner */}
+                        {duplicateCheck.isChecking && (
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 1, py: 0.5 }}>
+                                <CircularProgress size={14} color="primary" />
+                                <Typography variant="caption" color="text.secondary">
+                                    Verificando disponibilidad de la categoría en Dezzpo...
+                                </Typography>
+                            </Box>
+                        )}
+
+                        {/* 1. Exact match in official catalog */}
+                        {!duplicateCheck.isChecking && duplicateCheck.status === 'exact_catalog' && (
+                            <Alert
+                                severity="warning"
+                                icon={<WarningAmberIcon fontSize="small" />}
+                                sx={{ p: 1.5, borderRadius: '8px', border: '1px solid #f59e0b' }}
+                            >
+                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+                                    <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                                        La categoría "{suggestedName}" ya existe en el catálogo oficial de Dezzpo ({duplicateCheck.matches[0]?.name}).
+                                    </Typography>
+                                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                        No es necesario crear una sugerencia. Puedes seleccionarla directamente para tu perfil profesional:
+                                    </Typography>
+                                    {duplicateCheck.matches[0]?.categoryKey && (
+                                        <Button
+                                            size="small"
+                                            variant="contained"
+                                            color="success"
+                                            onClick={() => handleSelectFromMatch(duplicateCheck.matches[0])}
+                                            sx={{
+                                                alignSelf: 'flex-start',
+                                                textTransform: 'none',
+                                                borderRadius: '16px',
+                                                mt: 0.5,
+                                                fontWeight: 600,
+                                            }}
+                                        >
+                                            Seleccionar "{duplicateCheck.matches[0]?.name}" en mi perfil
+                                        </Button>
+                                    )}
+                                </Box>
+                            </Alert>
+                        )}
+
+                        {/* 2. Exact match in pending/approved suggestions */}
+                        {!duplicateCheck.isChecking && duplicateCheck.status === 'exact_pending' && (
+                            <Alert
+                                severity="info"
+                                icon={<InfoOutlinedIcon fontSize="small" />}
+                                sx={{ p: 1.5, borderRadius: '8px', border: '1px solid #60a5fa' }}
+                            >
+                                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                                    Esta categoría ya fue sugerida previamente
+                                </Typography>
+                                <Typography variant="caption" sx={{ display: 'block', mt: 0.25 }}>
+                                    La categoría <strong>"{duplicateCheck.matches[0]?.name}"</strong> ya fue enviada y se encuentra actualmente <strong>en revisión por el equipo administrador</strong>.
+                                </Typography>
+                            </Alert>
+                        )}
+
+                        {/* 3. Similar matches */}
+                        {!duplicateCheck.isChecking && duplicateCheck.status === 'similar_matches' && (
+                            <Alert
+                                severity="info"
+                                icon={<InfoOutlinedIcon fontSize="small" />}
+                                sx={{ p: 1.5, borderRadius: '8px', border: '1px solid #93c5fd' }}
+                            >
+                                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                                    Coincidencias similares en Dezzpo:
+                                </Typography>
+                                <Typography variant="caption" sx={{ display: 'block', mb: 0.75 }}>
+                                    Verifica si alguna de estas categorías ya registradas cubre tu actividad:
+                                </Typography>
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {duplicateCheck.matches.map((match, idx) => (
+                                        <Chip
+                                            key={`similar-match-${idx}`}
+                                            label={`${match.name} (${match.source === 'catalog' ? 'Catálogo' : 'En revisión'})`}
+                                            size="small"
+                                            color={match.source === 'catalog' ? 'primary' : 'default'}
+                                            variant={match.source === 'catalog' ? 'filled' : 'outlined'}
+                                            onClick={match.source === 'catalog' ? () => handleSelectFromMatch(match) : undefined}
+                                            sx={{
+                                                cursor: match.source === 'catalog' ? 'pointer' : 'default',
+                                                fontWeight: 500,
+                                            }}
+                                        />
+                                    ))}
+                                </Box>
+                            </Alert>
+                        )}
+
+                        {/* 4. Available for registration */}
+                        {!duplicateCheck.isChecking && duplicateCheck.status === 'available' && (
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 0.8,
+                                    px: 1.2,
+                                    py: 0.6,
+                                    borderRadius: '6px',
+                                    bgcolor: 'rgba(46, 125, 50, 0.08)',
+                                    border: '1px solid rgba(46, 125, 50, 0.25)',
+                                }}
+                            >
+                                <CheckCircleOutlineIcon sx={{ fontSize: 16, color: 'success.main' }} />
+                                <Typography variant="caption" sx={{ color: 'success.dark', fontWeight: 600 }}>
+                                    Categoría disponible para enviar a revisión
+                                </Typography>
+                            </Box>
+                        )}
+                    </Box>
 
                     <TextField
                         id="suggested-category-area"
@@ -556,7 +779,7 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
                     </Button>
                     <Button
                         onClick={handleSubmitSuggestion}
-                        disabled={isSubmittingSuggestion || !suggestedName.trim()}
+                        disabled={isSubmitDisabled}
                         variant="contained"
                         color="success"
                         startIcon={isSubmittingSuggestion ? <CircularProgress size={18} color="inherit" /> : null}
