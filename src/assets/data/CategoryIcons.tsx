@@ -64,6 +64,13 @@ import {
     Cottage,
     Desk,
     BorderBottom,
+    Calculate,
+    Explore,
+    SolarPower,
+    Garage,
+    PestControl,
+    FactCheck,
+    ViewInAr,
 } from '@mui/icons-material'
 
 export const CategoryIcons: Record<string, React.ElementType> = {
@@ -126,4 +133,11 @@ export const CategoryIcons: Record<string, React.ElementType> = {
     Cottage,
     Desk,
     BorderBottom,
+    Calculate,
+    Explore,
+    SolarPower,
+    Garage,
+    PestControl,
+    FactCheck,
+    ViewInAr,
 }

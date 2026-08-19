@@ -590,6 +590,62 @@ const ListadoCategorias = [
         variant: 'outlined',
         iconName: 'Engineering',
     },
+    {
+        key: 84,
+        label: 'Cálculos y Diseños de Ingeniería',
+        rol: 'Ingenieros Calculistas y Estructurales',
+        variant: 'outlined',
+        iconName: 'Calculate',
+    },
+    {
+        key: 85,
+        label: 'Topografía y Agrimensura',
+        rol: 'Topógrafos y Agrimensores',
+        variant: 'outlined',
+        iconName: 'Explore',
+    },
+    {
+        key: 86,
+        label: 'Estudios de Suelos y Geotecnia',
+        rol: 'Ingenieros Geotécnicos',
+        variant: 'outlined',
+        iconName: 'Landscape',
+    },
+    {
+        key: 87,
+        label: 'Energía Solar y Fotovoltaica',
+        rol: 'Instaladores de Energía Solar',
+        variant: 'outlined',
+        iconName: 'SolarPower',
+    },
+    {
+        key: 88,
+        label: 'Puertas Automáticas y Motores',
+        rol: 'Técnicos de Puertas Automáticas',
+        variant: 'outlined',
+        iconName: 'Garage',
+    },
+    {
+        key: 89,
+        label: 'Fumigación y Control de Plagas',
+        rol: 'Especialistas en Fumigación y Control de Plagas',
+        variant: 'outlined',
+        iconName: 'PestControl',
+    },
+    {
+        key: 90,
+        label: 'Peritajes y Avalúos',
+        rol: 'Peritos y Avaluadores Certificados',
+        variant: 'outlined',
+        iconName: 'FactCheck',
+    },
+    {
+        key: 91,
+        label: 'Diseño 3D y Renders',
+        rol: 'Modeladores y Diseñadores 3D',
+        variant: 'outlined',
+        iconName: 'ViewInAr',
+    },
 ]
 
 export { ListadoCategorias }

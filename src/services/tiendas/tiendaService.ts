@@ -53,7 +53,7 @@ const SEEDED_TIENDAS: CreateTiendaInput[] = [
         razonSocial: 'Comercializadora El Progreso S.A.S.',
         nit: '900.456.789-1',
         descripcion: 'Venta de perfiles de hierro, tubos, soldadura y ferretería pesada.',
-        categorias: ['ferreteria_general', 'ornamentacion_hierro', 'gases_industriales_soldadura'],
+        categorias: ['ferreteria_general', 'perfiles_hierro', 'gases_industriales_soldadura'],
         telefonoPrincipal: '6013456789',
         whatsappPrincipal: '573102345678',
         email: 'ventas@elprogresometales.com',
