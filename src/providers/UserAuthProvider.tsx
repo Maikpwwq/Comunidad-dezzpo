@@ -85,6 +85,7 @@ export const UserAuthProvider: React.FC<UserAuthProviderProps> = ({ children }) 
                     ...prev,
                     userId: user.uid,
                     email: user.email ?? null,
+                    phoneNumber: user.phoneNumber ?? null,
                     displayName: user.displayName ?? null,
                     photoUrl: user.photoURL ?? null,
                     isAuth: true,
@@ -94,6 +95,7 @@ export const UserAuthProvider: React.FC<UserAuthProviderProps> = ({ children }) 
                 useUserStore.getState().updateUser({
                     userId: user.uid,
                     email: user.email ?? null,
+                    phoneNumber: user.phoneNumber ?? null,
                     displayName: user.displayName ?? null,
                     photoUrl: user.photoURL ?? null,
                     isAuth: true,

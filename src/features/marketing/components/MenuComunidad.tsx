@@ -35,6 +35,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import Login from '@mui/icons-material/Login'
 import Storefront from '@mui/icons-material/Storefront'
+import Search from '@mui/icons-material/Search'
 import PriceChange from '@mui/icons-material/PriceChange'
 import Person from '@mui/icons-material/Person'
 
@@ -113,7 +114,11 @@ export function MenuComunidad(): React.ReactElement {
                         <div className="d-flex">
                             <Link href="/app/portal-servicios" className="d-flex align-items-center me-4 text-white hover-underline">
                                 <Storefront className="me-2" fontSize="small" />
-                                <strong>Directorio Comerciantes</strong>
+                                <strong>Directorio de Comerciantes</strong>
+                            </Link>
+                            <Link href="/app/tiendas" className="d-flex align-items-center me-4 text-white hover-underline">
+                                <Search className="me-2" fontSize="small" />
+                                <strong>Buscar Tiendas</strong>
                             </Link>
                             {isAuth ? (
                                 <Link href={profileHref} className="d-flex align-items-center text-white hover-underline">
@@ -158,8 +163,8 @@ export function MenuComunidad(): React.ReactElement {
 
                         {/* Mobile Links & Toggle */}
                         <Col xs={6} className="d-flex d-md-none justify-content-end align-items-center">
-                            <Link 
-                                href="/app/portal-servicios" 
+                            <Link
+                                href="/app/portal-servicios"
                                 className="d-flex align-items-center me-3"
                                 style={{ color: '#28a745' }}
                             >

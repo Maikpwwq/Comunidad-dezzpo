@@ -23,6 +23,7 @@ export interface UserState {
   userId: string | null
   displayName: string | null
   email: string | null
+  phoneNumber: string | null
   photoUrl: string | null
   rol: 1 | 2 | null // 1 = Propietario, 2 = Comerciante
   isAuth: boolean
@@ -71,6 +72,7 @@ const initialState: UserState = {
   userId: null,
   displayName: null,
   email: null,
+  phoneNumber: null,
   photoUrl: null,
   rol: null,
   isAuth: false,

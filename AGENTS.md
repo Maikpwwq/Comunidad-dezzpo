@@ -300,6 +300,18 @@ pending_payment → active → completed → disputed
   - Split `muebles_modulares_tapiceria` into `muebles_closets` (cabinetry, modular furniture, closets) and `tapiceria` (upholstery fabrics, foams, leatherette, re-upholstery).
 - **Shared Slug Utility**: Centralized URL slug generation in `@services/utils/slugify.ts` to eliminate duplicate definitions across blog and tienda services.
 
+### Phone Authentication (SMS OTP) Architecture (`/registro` & `/ingreso` - 2026-08-21)
+- **Primary Identifier**: Enables frictionless registration and login using only a mobile phone number via Firebase Phone Auth (`signInWithPhoneNumber` and `RecaptchaVerifier`), eliminating mandatory email and password entry.
+- **SSR Safety**: `RecaptchaVerifier` is strictly instantiated client-side inside an invisible container `<div id="recaptcha-container"></div>` when `isFirebaseAvailable() && auth && typeof window !== 'undefined'`, with proper instance cleanup (`cleanupRecaptchaVerifier`) to prevent hydration mismatches and memory leaks in Vike SSR.
+- **E.164 Normalization & Validation**: `@services/utils/phoneUtils.ts` provides `formatToE164`, `isValidColombianPhone`, and `formatPhoneDisplay` to guarantee standard phone formatting (+57 prefix for Colombian mobile numbers) with country code dropdown support.
+- **2-Step Wizard Flow**:
+  - Step 1: Role selection (Propietario vs Comerciante).
+  - Step 2: Auth Method tabs (📱 *Teléfono Celular* vs ✉️ *Correo Electrónico*).
+    - Phone: Step 2A captures Name/Brand + Phone number + Privacy Terms $\rightarrow$ triggers invisible reCAPTCHA $\rightarrow$ sends SMS OTP code.
+    - Step 2B renders `OTPCodeInput.tsx` (6-digit numeric input with auto-advance, paste handler, 60s cooldown resend timer, and number edit shortcut) $\rightarrow$ verifies code $\rightarrow$ creates or hydrates user profile.
+- **Firestore Profile Hydration**: Phone users are persisted with `userMail: null`, `userPhone: '+573XXXXXXXXX'`, and structured contact list `phones: [{ number: '+573XXXXXXXXX', isPrimary: true, type: 'personal' }]`. Global `UserAuthProvider` and Zustand `userStore` track `phoneNumber: string | null`.
+- **Development & Test Mode**: Native support for Firebase Console pre-configured test numbers (e.g. `+57 320 4842897` / code `250051`).
+
 ### Specialized Engineering & Building Services Taxonomy (2026-08-18)
 - **Niche-Specific Expansion**: Expanded `ListadoCategorias.tsx` (92 categories) and `CategoryIcons.tsx` with high-value technical services:
   - `Cálculos y Diseños de Ingeniería` (structural NSR-10, MEP, calculations), `Topografía y Agrimensura` (surveys, plot boundaries, subdivision), `Estudios de Suelos y Geotecnia` (soil test pits, geotechnical engineering), `Energía Solar y Fotovoltaica` (PV solar design & installation), `Puertas Automáticas y Motores` (vehicular gates, barriers, boom gates), `Fumigación y Control de Plagas` (sanitary pest control certification), `Peritajes y Avalúos` (certified appraisals & structural forensics), `Diseño 3D y Renders` (BIM/3D architectural renders).

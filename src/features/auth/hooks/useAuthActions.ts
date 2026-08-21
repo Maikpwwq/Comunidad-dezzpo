@@ -14,7 +14,12 @@ import {
     signInWithEmail,
     signInWithGoogle,
     registerWithEmail as registerService,
+    sendSMSCode,
+    verifySMSCode,
+    setupRecaptchaVerifier,
+    cleanupRecaptchaVerifier,
     logout as logoutService,
+    type ConfirmationResult,
 } from '@services/firebase/authService'
 import { setUser } from '@services/users'
 import { format } from 'date-fns'
@@ -23,6 +28,9 @@ import type {
     AlertState,
     LoginFormData,
     RegisterFormData,
+    PhoneRegisterFormData,
+    PhoneLoginFormData,
+    PhoneSMSRequestResult,
     AuthResult,
     UserFirestoreData,
     DraftInfo,
@@ -36,7 +44,20 @@ interface UseAuthActionsReturn {
     loginWithEmail: (data: LoginFormData, draftInfo?: DraftInfo) => Promise<AuthResult>
     loginWithGoogle: (role: UserRoleNumeric, draftInfo?: DraftInfo) => Promise<AuthResult>
     registerWithEmail: (data: RegisterFormData, draftInfo?: DraftInfo) => Promise<AuthResult>
-    registerWithGoogle: (data: { role: UserRoleNumeric; name?: string }, draftInfo?: DraftInfo) => Promise<AuthResult>
+    registerWithGoogle: (data: { role: UserRoleNumeric; name?: string | undefined }, draftInfo?: DraftInfo) => Promise<AuthResult>
+    sendPhoneSMSCode: (phoneNumber: string, containerId?: string) => Promise<PhoneSMSRequestResult>
+    verifyPhoneSMSCodeAndRegister: (
+        confirmationResult: ConfirmationResult,
+        code: string,
+        data: PhoneRegisterFormData,
+        draftInfo?: DraftInfo
+    ) => Promise<AuthResult>
+    verifyPhoneSMSCodeAndLogin: (
+        confirmationResult: ConfirmationResult,
+        code: string,
+        data: PhoneLoginFormData,
+        draftInfo?: DraftInfo
+    ) => Promise<AuthResult>
     logout: () => Promise<void>
     isLoading: boolean
 }
@@ -65,18 +86,19 @@ export function useAuthActions(): UseAuthActionsReturn {
      */
     const handleAuthSuccess = useCallback(
         async (
-            userData: { uid: string; email: string | null; displayName: string | null },
+            userData: { uid: string; email: string | null; phoneNumber?: string | null | undefined; displayName: string | null },
             role: UserRoleNumeric,
             draftInfo?: DraftInfo,
             isRegistration = false
         ): Promise<void> => {
-            const { uid, email, displayName } = userData
+            const { uid, email, phoneNumber, displayName } = userData
 
             // Update Zustand store
             updateUser({
                 displayName,
                 userId: uid,
                 email,
+                phoneNumber: phoneNumber ?? null,
                 isAuth: true,
                 rol: role,
             })
@@ -89,6 +111,8 @@ export function useAuthActions(): UseAuthActionsReturn {
             if (isRegistration && role) {
                 const data: UserFirestoreData = {
                     userMail: email,
+                    userPhone: phoneNumber || undefined,
+                    phones: phoneNumber ? [{ number: phoneNumber, isPrimary: true, type: 'personal' }] : [],
                     userJoined: format(new Date(), 'dd-MM-yyyy'),
                     userId: uid,
                     userChannelUrl: '',
@@ -194,8 +218,8 @@ export function useAuthActions(): UseAuthActionsReturn {
 
     // Register with Google - uses authService
     const registerWithGoogle = useCallback(
-        async (data: { role: UserRoleNumeric }, draftInfo?: DraftInfo): Promise<AuthResult> => {
-            const { role } = data
+        async (data: { role: UserRoleNumeric; name?: string | undefined }, draftInfo?: DraftInfo): Promise<AuthResult> => {
+            const { role, name } = data
 
             if (!role) {
                 showAlert('Selecciona un rol para registrarte!', 'info')
@@ -207,8 +231,135 @@ export function useAuthActions(): UseAuthActionsReturn {
             const result = await signInWithGoogle()
 
             if (result.success) {
-                await handleAuthSuccess(result.data, role, draftInfo, true)
+                const userData = name ? { ...result.data, displayName: name } : result.data
+                await handleAuthSuccess(userData, role, draftInfo, true)
                 showAlert('Cuenta creada con éxito!', 'success')
+                setIsLoading(false)
+                return { success: true }
+            } else {
+                showAlert(result.error.message, 'error')
+                setIsLoading(false)
+                return { success: false, error: result.error.message }
+            }
+        },
+        [showAlert, handleAuthSuccess]
+    )
+
+    // Send Phone SMS OTP code
+    const sendPhoneSMSCode = useCallback(
+        async (phoneNumber: string, containerId: string = 'recaptcha-container'): Promise<PhoneSMSRequestResult> => {
+            if (!phoneNumber || phoneNumber.trim().length < 7) {
+                showAlert('Por favor ingresa un número de teléfono celular válido.', 'info')
+                return { success: false, error: 'Invalid phone number' }
+            }
+
+            setIsLoading(true)
+
+            try {
+                const verifier = setupRecaptchaVerifier(containerId)
+                if (!verifier) {
+                    setIsLoading(false)
+                    showAlert('No se pudo inicializar la verificación de seguridad reCAPTCHA. Recarga la página.', 'error')
+                    return { success: false, error: 'RecaptchaVerifier initialization failed' }
+                }
+
+                const result = await sendSMSCode(phoneNumber, verifier)
+
+                setIsLoading(false)
+
+                if (result.success) {
+                    showAlert('Código SMS enviado. Revisa tus mensajes.', 'success')
+                    return { success: true, confirmationResult: result.data }
+                } else {
+                    cleanupRecaptchaVerifier(containerId)
+                    showAlert(result.error.message, 'error')
+                    return { success: false, error: result.error.message }
+                }
+            } catch (err: any) {
+                cleanupRecaptchaVerifier(containerId)
+                setIsLoading(false)
+                const msg = err?.message || 'Error al enviar código SMS'
+                showAlert(msg, 'error')
+                return { success: false, error: msg }
+            }
+        },
+        [showAlert]
+    )
+
+    // Verify SMS OTP and Register
+    const verifyPhoneSMSCodeAndRegister = useCallback(
+        async (
+            confirmationResult: ConfirmationResult,
+            code: string,
+            data: PhoneRegisterFormData,
+            draftInfo?: DraftInfo
+        ): Promise<AuthResult> => {
+            const { role, name, phoneNumber } = data
+
+            if (!role) {
+                showAlert('Selecciona un rol para registrarte!', 'info')
+                return { success: false, error: 'No role selected' }
+            }
+
+            if (!code || code.trim().length !== 6) {
+                showAlert('Ingresa el código de 6 dígitos que recibiste por SMS.', 'info')
+                return { success: false, error: 'Invalid OTP code' }
+            }
+
+            setIsLoading(true)
+
+            const result = await verifySMSCode(confirmationResult, code, name)
+
+            if (result.success) {
+                const finalData = {
+                    ...result.data,
+                    phoneNumber: result.data.phoneNumber || phoneNumber,
+                    displayName: name || result.data.displayName,
+                }
+                await handleAuthSuccess(finalData, role, draftInfo, true)
+                showAlert('¡Cuenta creada y verificada con éxito!', 'success')
+                setIsLoading(false)
+                return { success: true }
+            } else {
+                showAlert(result.error.message, 'error')
+                setIsLoading(false)
+                return { success: false, error: result.error.message }
+            }
+        },
+        [showAlert, handleAuthSuccess]
+    )
+
+    // Verify SMS OTP and Login
+    const verifyPhoneSMSCodeAndLogin = useCallback(
+        async (
+            confirmationResult: ConfirmationResult,
+            code: string,
+            data: PhoneLoginFormData,
+            draftInfo?: DraftInfo
+        ): Promise<AuthResult> => {
+            const { role, phoneNumber } = data
+
+            if (!role) {
+                showAlert('Selecciona un rol para ingresar!', 'info')
+                return { success: false, error: 'No role selected' }
+            }
+
+            if (!code || code.trim().length !== 6) {
+                showAlert('Ingresa el código de 6 dígitos que recibiste por SMS.', 'info')
+                return { success: false, error: 'Invalid OTP code' }
+            }
+
+            setIsLoading(true)
+
+            const result = await verifySMSCode(confirmationResult, code)
+
+            if (result.success) {
+                const finalData = {
+                    ...result.data,
+                    phoneNumber: result.data.phoneNumber || phoneNumber,
+                }
+                await handleAuthSuccess(finalData, role, draftInfo, false)
+                showAlert('¡Sesión iniciada con éxito!', 'success')
                 setIsLoading(false)
                 return { success: true }
             } else {
@@ -242,6 +393,9 @@ export function useAuthActions(): UseAuthActionsReturn {
         loginWithGoogle,
         registerWithEmail,
         registerWithGoogle,
+        sendPhoneSMSCode,
+        verifyPhoneSMSCodeAndRegister,
+        verifyPhoneSMSCodeAndLogin,
         logout,
         isLoading,
     }

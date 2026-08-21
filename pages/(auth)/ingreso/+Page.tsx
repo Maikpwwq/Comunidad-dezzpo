@@ -1,8 +1,7 @@
 /**
  * Auth Page: Ingreso (Login)
  *
- * Refactored to use @features/auth components and hooks.
- * Original: 384 lines → Current: ~170 lines (56% reduction)
+ * Refactored to use @features/auth components and hooks with SMS OTP & Email support.
  */
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { Link } from '@hooks'
@@ -12,9 +11,14 @@ import {
     RoleSelector,
     GoogleAuthButton,
     OrDivider,
+    AuthMethodTabs,
+    OTPCodeInput,
     type UserRoleNumeric,
     type DraftInfo,
+    type AuthMethod,
 } from '@features/auth'
+import type { ConfirmationResult } from 'firebase/auth'
+import { formatPhoneDisplay } from '@services/utils/phoneUtils'
 // Components
 import { SnackBarAlert } from '@components/common'
 // Styles
@@ -23,15 +27,18 @@ import styles from './Login.module.scss'
 // MUI
 import { Paper, Box, Typography } from '@mui/material'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
-// Bootstrap
+import EditIcon from '@mui/icons-material/Edit'
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 // Bootstrap
 import {
     Row,
     Col,
     Container,
     Button,
-    Form
+    Form,
+    InputGroup
 } from 'react-bootstrap'
+
 // Types
 interface PageProps {
     showLogo?: boolean
@@ -39,30 +46,47 @@ interface PageProps {
     setDraftInfo?: (info: DraftInfo) => void
     handleSave?: () => void
 }
+
 export default function Page({
     showLogo = true,
     draftInfo,
     setDraftInfo,
     handleSave
 }: PageProps) {
-    // Auth hook - all Firebase logic is now centralized
+    // Auth hook - all Firebase logic is centralized
     const {
         alert,
+        showAlert,
         closeAlert,
         loginWithEmail,
         loginWithGoogle,
+        sendPhoneSMSCode,
+        verifyPhoneSMSCodeAndLogin,
         isLoading
     } = useAuthActions()
+
     // Local state
     const [step, setStep] = useState<1 | 2>(1)
+    const [authMethod, setAuthMethod] = useState<AuthMethod>('phone')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [role, setRole] = useState<UserRoleNumeric>(null)
+
+    // Phone Auth specific state
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [countryCode, setCountryCode] = useState('+57')
+    const [phoneStep, setPhoneStep] = useState<'input' | 'otp'>('input')
+    const [otpCode, setOtpCode] = useState('')
+    const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null)
+
     // Role selection
     const handleSelectRole = (selectedRole: UserRoleNumeric) => {
         setRole(selectedRole)
         setStep(2)
+        setPhoneStep('input')
+        setOtpCode('')
     }
+
     // Email login
     const handleEmailLogin = async (e: FormEvent) => {
         e.preventDefault()
@@ -72,6 +96,7 @@ export default function Page({
             handleSave()
         }
     }
+
     // Google login
     const handleGoogleLogin = async () => {
         const result = await loginWithGoogle(role, draftInfo)
@@ -80,6 +105,62 @@ export default function Page({
             handleSave()
         }
     }
+
+    // Phone Auth: Send SMS OTP
+    const handleSendSMS = async (e?: FormEvent) => {
+        if (e) e.preventDefault()
+
+        if (!phoneNumber || phoneNumber.trim().length < 7) {
+            showAlert('Por favor ingresa un número de teléfono celular válido.', 'info')
+            return
+        }
+
+        const fullPhone = `${countryCode}${phoneNumber.trim()}`
+        const res = await sendPhoneSMSCode(fullPhone, 'recaptcha-container')
+
+        if (res.success && res.confirmationResult) {
+            setConfirmationResult(res.confirmationResult)
+            setPhoneStep('otp')
+            setOtpCode('')
+        }
+    }
+
+    // Phone Auth: Resend SMS OTP
+    const handleResendSMS = async () => {
+        const fullPhone = `${countryCode}${phoneNumber.trim()}`
+        const res = await sendPhoneSMSCode(fullPhone, 'recaptcha-container')
+        if (res.success && res.confirmationResult) {
+            setConfirmationResult(res.confirmationResult)
+        }
+    }
+
+    // Phone Auth: Verify OTP and Login
+    const handleVerifyPhoneOTP = async (codeToVerify?: string) => {
+        const code = codeToVerify || otpCode
+        if (!confirmationResult) {
+            showAlert('Sesión de verificación expirada. Solicita un nuevo código.', 'error')
+            setPhoneStep('input')
+            return
+        }
+        if (!code || code.trim().length !== 6) {
+            showAlert('Ingresa el código de 6 dígitos que recibiste por SMS.', 'info')
+            return
+        }
+
+        const fullPhone = `${countryCode}${phoneNumber.trim()}`
+        const result = await verifyPhoneSMSCodeAndLogin(
+            confirmationResult,
+            code,
+            { phoneNumber: fullPhone, role },
+            draftInfo
+        )
+
+        if (result.success && draftInfo && setDraftInfo && handleSave) {
+            setDraftInfo({ ...draftInfo, draftPropietarioResidente: result.user?.uid || '' })
+            handleSave()
+        }
+    }
+
     return (
         <Container fluid className={clsx(styles.Container, "p-0")}>
             <Row className={clsx(styles.MainRow, "m-0 w-100")}>
@@ -97,11 +178,15 @@ export default function Page({
                 )}
                 <Col className={clsx(styles.FormWrapper, "m-0 p-0 mb-4 mt-4")} lg={4} md={5} sm={10} xs={10}>
                     <Paper elevation={16} className={clsx(styles.FormCard, "pt-4 pb-4")}>
-                        <Form action="" className="p-4" onSubmit={handleEmailLogin}>
+                        {/* Invisible reCAPTCHA container */}
+                        <div id="recaptcha-container"></div>
+
+                        <Form action="" className="p-4" onSubmit={authMethod === 'phone' ? handleSendSMS : handleEmailLogin}>
                             <Col className="d-flex flex-column align-items-center text-center pt-2 pb-2">
                                 <h1 className="type-hero-title mb-3">
                                     Iniciar sesión
                                 </h1>
+
                                 {/* Step 1: Role Selection */}
                                 {step === 1 && (
                                     <RoleSelector
@@ -109,56 +194,182 @@ export default function Page({
                                         selectedRole={role}
                                     />
                                 )}
+
                                 {/* Step 2: Login Form */}
                                 {step === 2 && (
                                     <>
                                         <Form.Label className="mb-0 body-1 pt-2">
                                             {role === 1 ? 'Soy propietario/residente' : 'Soy comerciante calificado'}
                                         </Form.Label>
+
                                         <GoogleAuthButton
                                             onClick={handleGoogleLogin}
                                             label="Ingresar con Gmail"
                                         />
+
                                         <OrDivider />
-                                        <Col className="d-flex flex-column align-items-center" lg={10} md={12} sm={10} xs={12}>
-                                            <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                                <Form.Label className="mb-0 body-1">Email</Form.Label>
-                                                <Form.Control
-                                                    className={clsx(styles.Input)}
-                                                    type="email"
-                                                    placeholder="usa tu correo electrónico"
-                                                    value={email}
-                                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                                <Form.Label className="mb-0 body-1">Contraseña</Form.Label>
-                                                <Form.Control
-                                                    className={clsx(styles.Input)}
-                                                    type="password"
-                                                    placeholder="usa tu contraseña"
-                                                    value={password}
-                                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                                                />
-                                            </Form.Group>
-                                        </Col>
-                                        <Col className="pt-3 pb-2 d-flex flex-wrap justify-content-center gap-2">
-                                            <Button
-                                                onClick={() => setStep(1)}
-                                                className="btn-round btn-middle w-auto"
-                                                variant="secondary"
-                                            >
-                                                <KeyboardBackspaceIcon /> Volver atrás
-                                            </Button>
-                                            <Button
-                                                className={clsx(styles.TealButton, "btn-buscador btn-round btn-high body-1")}
-                                                variant="light"
-                                                type="submit"
-                                                disabled={isLoading}
-                                            >
-                                                {isLoading ? 'Cargando...' : 'Iniciar Sesión'}
-                                            </Button>
-                                        </Col>
+
+                                        {/* Method Switcher: Phone vs Email */}
+                                        <AuthMethodTabs
+                                            method={authMethod}
+                                            onChange={(m) => {
+                                                setAuthMethod(m)
+                                                setPhoneStep('input')
+                                                setOtpCode('')
+                                            }}
+                                        />
+
+                                        {authMethod === 'phone' ? (
+                                            /* =================== PHONE AUTH FLOW =================== */
+                                            phoneStep === 'input' ? (
+                                                /* Step 2A: Phone Input */
+                                                <>
+                                                    <Col className="d-flex flex-column align-items-center" lg={10} md={12} sm={10} xs={12}>
+                                                        <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
+                                                            <Form.Label className="mb-0 body-1">Número de Celular</Form.Label>
+                                                            <InputGroup>
+                                                                <Form.Select
+                                                                    value={countryCode}
+                                                                    onChange={(e) => setCountryCode(e.target.value)}
+                                                                    style={{ maxWidth: '95px', fontWeight: 600, borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px' }}
+                                                                >
+                                                                    <option value="+57">🇨🇴 +57</option>
+                                                                    <option value="+1">🇺🇸 +1</option>
+                                                                    <option value="+52">🇲🇽 +52</option>
+                                                                    <option value="+34">🇪🇸 +34</option>
+                                                                    <option value="+54">🇦🇷 +54</option>
+                                                                    <option value="+56">🇨🇱 +56</option>
+                                                                    <option value="+51">🇵🇪 +51</option>
+                                                                </Form.Select>
+                                                                <Form.Control
+                                                                    className={clsx(styles.Input)}
+                                                                    type="tel"
+                                                                    inputMode="tel"
+                                                                    placeholder="ej. 320 484 2897"
+                                                                    value={phoneNumber}
+                                                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value.replace(/[^\d\s-]/g, ''))}
+                                                                />
+                                                            </InputGroup>
+                                                            <Typography sx={{ fontSize: '0.78rem', color: '#64748b', mt: 0.5 }}>
+                                                                Te enviaremos un código SMS de 6 dígitos para verificar tu identidad.
+                                                            </Typography>
+                                                        </Form.Group>
+                                                    </Col>
+
+                                                    <Col className="pt-3 pb-2 d-flex flex-wrap justify-content-center gap-2">
+                                                        <Button
+                                                            onClick={() => setStep(1)}
+                                                            className="btn-round btn-middle w-auto"
+                                                            variant="secondary"
+                                                        >
+                                                            <KeyboardBackspaceIcon /> Volver atrás
+                                                        </Button>
+                                                        <Button
+                                                            className={clsx(styles.TealButton, "btn-buscador btn-round btn-high body-1 d-flex align-items-center justify-content-center gap-2")}
+                                                            variant="light"
+                                                            type="submit"
+                                                            disabled={isLoading || !phoneNumber}
+                                                        >
+                                                            <PhoneIphoneIcon sx={{ fontSize: 20 }} />
+                                                            {isLoading ? 'Enviando...' : 'Enviar Código SMS'}
+                                                        </Button>
+                                                    </Col>
+                                                </>
+                                            ) : (
+                                                /* Step 2B: OTP Verification */
+                                                <Col className="d-flex flex-column align-items-center px-2" lg={11} md={12} sm={11} xs={12}>
+                                                    <Box sx={{ bgcolor: 'rgba(4, 131, 101, 0.06)', borderRadius: '12px', p: 2, my: 1, width: '100%', textAlign: 'center' }}>
+                                                        <Typography sx={{ fontSize: '0.9rem', color: '#1f2937' }}>
+                                                            Código enviado al número:
+                                                        </Typography>
+                                                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mt: 0.5 }}>
+                                                            <Typography sx={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--primary-color, #048365)' }}>
+                                                                {formatPhoneDisplay(`${countryCode}${phoneNumber}`)}
+                                                            </Typography>
+                                                            <Button
+                                                                variant="link"
+                                                                size="sm"
+                                                                onClick={() => setPhoneStep('input')}
+                                                                className="p-0 text-muted"
+                                                                title="Modificar número"
+                                                            >
+                                                                <EditIcon sx={{ fontSize: 16 }} />
+                                                            </Button>
+                                                        </Box>
+                                                    </Box>
+
+                                                    <OTPCodeInput
+                                                        value={otpCode}
+                                                        onChange={setOtpCode}
+                                                        onComplete={(code) => handleVerifyPhoneOTP(code)}
+                                                        onResend={handleResendSMS}
+                                                        isLoading={isLoading}
+                                                    />
+
+                                                    <Col className="pt-3 pb-2 d-flex flex-wrap justify-content-center gap-2 w-100">
+                                                        <Button
+                                                            onClick={() => setPhoneStep('input')}
+                                                            className="btn-round btn-middle w-auto"
+                                                            variant="secondary"
+                                                        >
+                                                            <KeyboardBackspaceIcon /> Cambiar número
+                                                        </Button>
+                                                        <Button
+                                                            className={clsx(styles.TealButton, "btn-buscador btn-round btn-high body-1 flex-grow-1")}
+                                                            variant="light"
+                                                            type="button"
+                                                            onClick={() => handleVerifyPhoneOTP()}
+                                                            disabled={isLoading || otpCode.length !== 6}
+                                                        >
+                                                            {isLoading ? 'Verificando...' : 'Iniciar Sesión'}
+                                                        </Button>
+                                                    </Col>
+                                                </Col>
+                                            )
+                                        ) : (
+                                            /* =================== EMAIL AUTH FLOW =================== */
+                                            <>
+                                                <Col className="d-flex flex-column align-items-center" lg={10} md={12} sm={10} xs={12}>
+                                                    <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
+                                                        <Form.Label className="mb-0 body-1">Email</Form.Label>
+                                                        <Form.Control
+                                                            className={clsx(styles.Input)}
+                                                            type="email"
+                                                            placeholder="usa tu correo electrónico"
+                                                            value={email}
+                                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                                                        />
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
+                                                        <Form.Label className="mb-0 body-1">Contraseña</Form.Label>
+                                                        <Form.Control
+                                                            className={clsx(styles.Input)}
+                                                            type="password"
+                                                            placeholder="usa tu contraseña"
+                                                            value={password}
+                                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                                                        />
+                                                    </Form.Group>
+                                                </Col>
+                                                <Col className="pt-3 pb-2 d-flex flex-wrap justify-content-center gap-2">
+                                                    <Button
+                                                        onClick={() => setStep(1)}
+                                                        className="btn-round btn-middle w-auto"
+                                                        variant="secondary"
+                                                    >
+                                                        <KeyboardBackspaceIcon /> Volver atrás
+                                                    </Button>
+                                                    <Button
+                                                        className={clsx(styles.TealButton, "btn-buscador btn-round btn-high body-1")}
+                                                        variant="light"
+                                                        type="submit"
+                                                        disabled={isLoading}
+                                                    >
+                                                        {isLoading ? 'Cargando...' : 'Iniciar Sesión'}
+                                                    </Button>
+                                                </Col>
+                                            </>
+                                        )}
                                     </>
                                 )}
 

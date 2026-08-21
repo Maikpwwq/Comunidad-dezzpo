@@ -13,13 +13,17 @@
 export { useAuthActions } from './hooks'
 
 // Components
-export { RoleSelector, GoogleAuthButton, OrDivider } from './components'
+export { RoleSelector, GoogleAuthButton, OrDivider, AuthMethodTabs, OTPCodeInput } from './components'
 
 // Types
 export type {
     AlertState,
+    AuthMethod,
     LoginFormData,
     RegisterFormData,
+    PhoneRegisterFormData,
+    PhoneLoginFormData,
+    PhoneSMSRequestResult,
     AuthResult,
     DraftInfo,
     UserFirestoreData,
@@ -29,3 +33,4 @@ export type {
     RoleSelectionProps,
     GoogleAuthButtonProps,
 } from './types'
+

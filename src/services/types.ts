@@ -53,7 +53,7 @@ export interface SocialLink {
     id: string
     platform: SocialPlatform
     url: string
-    label?: string
+    label?: string | undefined
     isVisible: boolean
     priority: number
 }
@@ -73,14 +73,14 @@ export interface Property {
 
 export interface UserLocationItem {
     id: string
-    nombre?: string
+    nombre?: string | undefined
     direccion: string
     ciudad: string
-    codigoPostal?: string
-    zona?: string
-    lat?: number
-    lng?: number
-    isPrimary?: boolean
+    codigoPostal?: string | undefined
+    zona?: string | undefined
+    lat?: number | undefined
+    lng?: number | undefined
+    isPrimary?: boolean | undefined
 }
 
 // =============================================================================
@@ -97,73 +97,73 @@ export interface UserFirestoreDocument extends DocumentData {
     userId: string
     userName: string | null
     userMail: string | null
-    userPhone?: string
+    userPhone?: string | undefined
     userJoined: string
     userChannelUrl: string
     userCreatedDrafts: string[]
-    userCategories?: string[]
-    userDirection?: string
-    userDirectionDetails?: string
-    userCiudad?: string
-    userCodigoPostal?: string
-    userTel?: string
-    userImage?: string
-    userRazonSocial?: string
-    userContactName?: string
-    userPhotoUrl?: string
-    userProfession?: string
-    userExperience?: string
-    userDescription?: string
-    userIdentificationType?: string
-    userIdentification?: string
-    userWebSite?: string
-    userGalleryUrl?: string[]
-    userLocations?: UserLocationItem[]
+    userCategories?: string[] | undefined
+    userDirection?: string | undefined
+    userDirectionDetails?: string | undefined
+    userCiudad?: string | undefined
+    userCodigoPostal?: string | undefined
+    userTel?: string | undefined
+    userImage?: string | undefined
+    userRazonSocial?: string | undefined
+    userContactName?: string | undefined
+    userPhotoUrl?: string | undefined
+    userProfession?: string | undefined
+    userExperience?: string | undefined
+    userDescription?: string | undefined
+    userIdentificationType?: string | undefined
+    userIdentification?: string | undefined
+    userWebSite?: string | undefined
+    userGalleryUrl?: string[] | undefined
+    userLocations?: UserLocationItem[] | undefined
     userLikes?: {
         likedsProfiles: string[]
         likedsDrafts: string[]
-    }
-    savedDrafts?: string[]
-    privacySettings?: PrivacySettings
+    } | undefined
+    savedDrafts?: string[] | undefined
+    privacySettings?: PrivacySettings | undefined
     /** Zonas donde el comerciante presta servicio (array of zone slugs). */
-    userZonasCobertura?: string[]
+    userZonasCobertura?: string[] | undefined
     /** Indica si el comerciante cubre toda el area metropolitana/ciudad. */
-    coberturaTodaLaCiudad?: boolean
+    coberturaTodaLaCiudad?: boolean | undefined
     /** Structured email contacts array. */
-    emails?: ContactEmail[]
+    emails?: ContactEmail[] | undefined
     /** Structured phone contacts array. */
-    phones?: ContactPhone[]
+    phones?: ContactPhone[] | undefined
     /** Social / communication links array. */
-    socialLinks?: SocialLink[]
+    socialLinks?: SocialLink[] | undefined
     /** Propietario properties array. */
-    properties?: Property[]
+    properties?: Property[] | undefined
     /** Premium listing tier for merchants. */
-    profileTier?: 'free' | 'destacado'
+    profileTier?: 'free' | 'destacado' | undefined
     /** Phase 2: Active Lead Generation - Toggle for 'Available Now' status */
-    isAvailableNow?: boolean
+    isAvailableNow?: boolean | undefined
     /** Phase 2: Last active timestamp for tracking emergency capture */
-    lastActive?: string
+    lastActive?: string | undefined
     /** FCM Tokens for push notifications */
-    fcmTokens?: string[]
+    fcmTokens?: string[] | undefined
     /** Phase 3: Algorithmic trust score (0-100) computed from behavioral metrics */
-    trustScore?: number
+    trustScore?: number | undefined
     /** Subscription and Certification fields */
-    membershipStatus?: 'active' | 'inactive' | 'expired'
-    membershipExpiresAt?: string
-    earnedBadges?: Array<{ category: string; issuedAt: string; expiresAt?: string }>
+    membershipStatus?: 'active' | 'inactive' | 'expired' | undefined
+    membershipExpiresAt?: string | undefined
+    earnedBadges?: Array<{ category: string; issuedAt: string; expiresAt?: string | undefined }> | undefined
     /** Referral Program fields */
-    referralCode?: string
-    referredBy?: string | null
+    referralCode?: string | undefined
+    referredBy?: string | null | undefined
     /** Ranking, Classification and Honor Grade fields */
-    userCategorie?: string
-    userClasification?: string
-    userGrade?: string
+    userCategorie?: string | undefined
+    userClasification?: string | undefined
+    userGrade?: string | undefined
     referralStats?: {
         totalInvited: number
         activeReferrals: number
         pointsBalance: number
         totalPointsEarned: number
-    }
+    } | undefined
 }
 
 

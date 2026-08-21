@@ -17,6 +17,11 @@ import type { User } from 'firebase/auth'
 export type ServiceErrorCode = 
   | 'AUTH_INVALID_CREDENTIALS'
   | 'AUTH_NETWORK_ERROR'
+  | 'AUTH_INVALID_PHONE'
+  | 'AUTH_CODE_EXPIRED'
+  | 'AUTH_INVALID_CODE'
+  | 'AUTH_CAPTCHA_FAILED'
+  | 'AUTH_TOO_MANY_REQUESTS'
   | 'FIRESTORE_PERMISSION_DENIED'
   | 'FIRESTORE_NOT_FOUND'
   | 'SENDBIRD_CHANNEL_ERROR'
@@ -37,7 +42,7 @@ export type ServiceResponse<T> =
       success: true;
       data: T;
       error: null;
-    }
+      }
   | {
       success: false;
       data: null;
@@ -60,12 +65,18 @@ export interface EmailCredentials {
 }
 
 export interface RegisterCredentials extends EmailCredentials {
-    displayName?: string
+    displayName?: string | undefined
+}
+
+export interface PhoneCredentials {
+    phoneNumber: string
+    displayName?: string | undefined
 }
 
 export interface AuthUser {
     uid: string
     email: string | null
+    phoneNumber?: string | null | undefined
     displayName: string | null
     photoURL: string | null
     emailVerified: boolean
