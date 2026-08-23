@@ -58,11 +58,126 @@
 
 .Input {
     // .form-control
-    height: 27px;
-    background-color: var(--background-light-gray-color);
+    height: 44px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    border: 1.5px solid #d1d5db;
+    background-color: #ffffff;
+    padding: 8px 14px;
+    color: #111827;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
     
-    @media screen and (max-width: 600px) {
-        width: 100% !important;
+    &:focus {
+        border-color: var(--primary-color, #048365);
+        box-shadow: 0 0 0 3px rgba(4, 131, 101, 0.2);
+        background-color: #ffffff;
+    }
+}
+
+// Integrated, modern Phone Input Group
+.PhoneInputGroup {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    border-radius: 12px;
+    border: 1.5px solid #d1d5db;
+    background-color: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+
+    &:focus-within {
+        border-color: var(--primary-color, #048365);
+        box-shadow: 0 0 0 3px rgba(4, 131, 101, 0.2);
+    }
+}
+
+.CountrySelect {
+    height: 46px !important;
+    min-width: 112px !important;
+    max-width: 125px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #1f2937 !important;
+    border: none !important;
+    border-right: 1.5px solid #e5e7eb !important;
+    border-radius: 0 !important;
+    background-color: #f8fafc !important;
+    padding: 6px 8px 6px 12px !important;
+    cursor: pointer;
+    outline: none !important;
+    box-shadow: none !important;
+
+    &:focus {
+        background-color: #f1f5f9 !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+}
+
+.PhoneInput {
+    height: 46px !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background-color: #ffffff !important;
+    padding: 8px 14px !important;
+    color: #111827 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    flex-grow: 1;
+
+    &::placeholder {
+        color: #9ca3af;
+    }
+
+    &:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+}
+
+// High contrast primary action button with pure white text
+.PrimaryAuthButton {
+    background: linear-gradient(-90deg, #18B1A7 35%, #0099CC 100%) !important;
+    background-color: #18B1A7 !important;
+    border: none !important;
+    color: #ffffff !important;
+    border-radius: 30px !important;
+    padding: 12px 28px !important;
+    font-weight: 700 !important;
+    font-size: 1.02rem !important;
+    box-shadow: 0 4px 14px rgba(24, 177, 167, 0.4) !important;
+    transition: all 0.2s ease-in-out !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+
+    * {
+        color: #ffffff !important;
+        fill: #ffffff !important;
+    }
+
+    &:hover, &:focus {
+        background: linear-gradient(-90deg, #15a098 35%, #0088bb 100%) !important;
+        color: #ffffff !important;
+        box-shadow: 0 6px 18px rgba(24, 177, 167, 0.5) !important;
+        transform: translateY(-1px) !important;
+    }
+
+    &:active {
+        transform: translateY(0) !important;
+    }
+
+    &:disabled {
+        opacity: 0.65 !important;
+        cursor: not-allowed !important;
+        transform: none !important;
+        box-shadow: none !important;
+        color: #ffffff !important;
     }
 }
 

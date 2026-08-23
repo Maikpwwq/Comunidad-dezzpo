@@ -36,8 +36,7 @@ import {
     Col,
     Container,
     Button,
-    Form,
-    InputGroup
+    Form
 } from 'react-bootstrap'
 
 // Types
@@ -243,7 +242,7 @@ export default function Page({
                                         <>
                                             <Col className="d-flex flex-column align-items-center" lg={10} md={12} sm={10} xs={12}>
                                                 <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                                    <Form.Label className="mb-0 body-1">
+                                                    <Form.Label className="mb-1 body-1 font-weight-bold">
                                                         {role === 2 ? 'Nombre de usuario / Marca o Empresa' : 'Nombre de usuario'}
                                                     </Form.Label>
                                                     <Form.Control
@@ -276,12 +275,12 @@ export default function Page({
                                                 </Form.Group>
 
                                                 <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                                    <Form.Label className="mb-0 body-1">Número de Celular</Form.Label>
-                                                    <InputGroup>
-                                                        <Form.Select
+                                                    <Form.Label className="mb-1 body-1 font-weight-bold">Número de Celular</Form.Label>
+                                                    <div className={styles.PhoneInputGroup}>
+                                                        <select
+                                                            className={styles.CountrySelect}
                                                             value={countryCode}
                                                             onChange={(e) => setCountryCode(e.target.value)}
-                                                            style={{ maxWidth: '95px', fontWeight: 600, borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px' }}
                                                         >
                                                             <option value="+57">🇨🇴 +57</option>
                                                             <option value="+1">🇺🇸 +1</option>
@@ -290,17 +289,17 @@ export default function Page({
                                                             <option value="+54">🇦🇷 +54</option>
                                                             <option value="+56">🇨🇱 +56</option>
                                                             <option value="+51">🇵🇪 +51</option>
-                                                        </Form.Select>
-                                                        <Form.Control
-                                                            className={clsx(styles.Input)}
+                                                        </select>
+                                                        <input
+                                                            className={styles.PhoneInput}
                                                             type="tel"
                                                             inputMode="tel"
                                                             placeholder="ej. 320 484 2897"
                                                             value={phoneNumber}
                                                             onChange={(e: ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value.replace(/[^\d\s-]/g, ''))}
                                                         />
-                                                    </InputGroup>
-                                                    <Typography sx={{ fontSize: '0.78rem', color: '#64748b', mt: 0.5 }}>
+                                                    </div>
+                                                    <Typography sx={{ fontSize: '0.78rem', color: '#64748b', mt: 0.8, textAlign: 'left' }}>
                                                         Te enviaremos un código SMS de 6 dígitos para validar tu cuenta.
                                                     </Typography>
                                                 </Form.Group>
@@ -339,8 +338,7 @@ export default function Page({
                                                     <KeyboardBackspaceIcon /> Volver atrás
                                                 </Button>
                                                 <Button
-                                                    className="btn-buscador btn-round btn-high body-1 d-flex align-items-center justify-content-center gap-2"
-                                                    variant="primary"
+                                                    className={styles.PrimaryAuthButton}
                                                     type="submit"
                                                     disabled={isLoading || !acceptedPrivacy || !phoneNumber || !name}
                                                 >
@@ -389,8 +387,7 @@ export default function Page({
                                                     <KeyboardBackspaceIcon /> Cambiar número
                                                 </Button>
                                                 <Button
-                                                    className="btn-buscador btn-round btn-high body-1 w-100"
-                                                    variant="primary"
+                                                    className={clsx(styles.PrimaryAuthButton, "w-100")}
                                                     type="button"
                                                     onClick={() => handleVerifyPhoneOTP()}
                                                     disabled={isLoading || otpCode.length !== 6}
@@ -405,7 +402,7 @@ export default function Page({
                                     <>
                                         <Col className="d-flex flex-column align-items-center" lg={10} md={12} sm={10} xs={12}>
                                             <Form.Group className="pt-2 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                                <Form.Label className="mb-0 body-1">
+                                                <Form.Label className="mb-1 body-1">
                                                     {role === 2 ? 'Nombre de usuario / Marca o Empresa' : 'Nombre de usuario'}
                                                 </Form.Label>
                                                 <Form.Control
@@ -437,7 +434,7 @@ export default function Page({
                                                 )}
                                             </Form.Group>
                                             <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                                <Form.Label className="mb-0 body-1">Email</Form.Label>
+                                                <Form.Label className="mb-1 body-1">Email</Form.Label>
                                                 <Form.Control
                                                     className={clsx(styles.Input)}
                                                     type="email"
@@ -447,7 +444,7 @@ export default function Page({
                                                 />
                                             </Form.Group>
                                             <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                                <Form.Label className="mb-0 body-1">Contraseña</Form.Label>
+                                                <Form.Label className="mb-1 body-1">Contraseña</Form.Label>
                                                 <Form.Control
                                                     className={clsx(styles.Input)}
                                                     type="password"
@@ -457,7 +454,7 @@ export default function Page({
                                                 />
                                             </Form.Group>
                                             <Form.Group className="w-80 mb-2 d-flex flex-column align-items-start" style={{ width: 'inherit' }}>
-                                                <Form.Label className="mb-0 body-1">Confirmar contraseña</Form.Label>
+                                                <Form.Label className="mb-1 body-1">Confirmar contraseña</Form.Label>
                                                 <Form.Control
                                                     className={clsx(styles.Input)}
                                                     type="password"
@@ -500,8 +497,7 @@ export default function Page({
                                                 <KeyboardBackspaceIcon /> Volver atrás
                                             </Button>
                                             <Button
-                                                className="btn-buscador btn-round btn-high body-1"
-                                                variant="primary"
+                                                className={styles.PrimaryAuthButton}
                                                 type="submit"
                                                 disabled={isLoading || !acceptedPrivacy}
                                             >

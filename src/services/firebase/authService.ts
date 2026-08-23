@@ -322,8 +322,8 @@ export function getAuthInstance() {
 const recaptchaVerifiers: Record<string, RecaptchaVerifier> = {}
 
 /**
- * Sets up an invisible RecaptchaVerifier tied to a DOM container.
- * SSR-safe: returns null during server render or if Firebase is unavailable.
+ * Sets up an invisible RecaptchaVerifier on the specified DOM container.
+ * SSR-safe: returns null on server-side.
  */
 export function setupRecaptchaVerifier(containerId: string = 'recaptcha-container'): RecaptchaVerifier | null {
     if (!isFirebaseAvailable() || !auth || typeof window === 'undefined') {
@@ -337,13 +337,16 @@ export function setupRecaptchaVerifier(containerId: string = 'recaptcha-containe
             return null
         }
 
-        // Clean up previous instance on this container if any
+        // Clean up previous instance if any
         if (recaptchaVerifiers[containerId]) {
             try {
                 recaptchaVerifiers[containerId].clear()
             } catch (_) {}
             delete recaptchaVerifiers[containerId]
         }
+
+        // Reset container DOM to prevent "reCAPTCHA has already been rendered in this element"
+        container.innerHTML = ''
 
         const verifier = new RecaptchaVerifier(auth, containerId, {
             size: 'invisible',
@@ -357,8 +360,21 @@ export function setupRecaptchaVerifier(containerId: string = 'recaptcha-containe
 
         recaptchaVerifiers[containerId] = verifier
         return verifier
-    } catch (err) {
-        console.error('[authService] Error initializing RecaptchaVerifier:', err)
+    } catch (err: any) {
+        console.warn('[authService] Warning initializing RecaptchaVerifier, attempting reset:', err)
+        try {
+            const container = document.getElementById(containerId)
+            if (container) {
+                container.innerHTML = ''
+                const fallbackVerifier = new RecaptchaVerifier(auth, containerId, {
+                    size: 'invisible',
+                })
+                recaptchaVerifiers[containerId] = fallbackVerifier
+                return fallbackVerifier
+            }
+        } catch (retryErr) {
+            console.error('[authService] Retry RecaptchaVerifier failed:', retryErr)
+        }
         return null
     }
 }
@@ -372,6 +388,12 @@ export function cleanupRecaptchaVerifier(containerId: string = 'recaptcha-contai
             recaptchaVerifiers[containerId].clear()
         } catch (_) {}
         delete recaptchaVerifiers[containerId]
+    }
+    if (typeof document !== 'undefined') {
+        const container = document.getElementById(containerId)
+        if (container) {
+            container.innerHTML = ''
+        }
     }
 }
 
