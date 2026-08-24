@@ -97,7 +97,7 @@ export interface UserFirestoreDocument extends DocumentData {
     userId: string
     userName: string | null
     userMail: string | null
-    userPhone?: string | undefined
+    userPhone?: string | null | undefined
     userJoined: string
     userChannelUrl: string
     userCreatedDrafts: string[]

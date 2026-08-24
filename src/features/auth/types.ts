@@ -73,7 +73,7 @@ export interface DraftInfo {
 /** Firestore user document structure */
 export interface UserFirestoreData {
     userMail: string | null
-    userPhone?: string | undefined
+    userPhone?: string | null | undefined
     phones?: ContactPhone[] | undefined
     userJoined: string
     userId: string

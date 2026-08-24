@@ -111,7 +111,7 @@ export function useAuthActions(): UseAuthActionsReturn {
             if (isRegistration && role) {
                 const data: UserFirestoreData = {
                     userMail: email,
-                    userPhone: phoneNumber || undefined,
+                    userPhone: phoneNumber || null,
                     phones: phoneNumber ? [{ number: phoneNumber, isPrimary: true, type: 'personal' }] : [],
                     userJoined: format(new Date(), 'dd-MM-yyyy'),
                     userId: uid,

@@ -479,62 +479,128 @@ pending_payment → active → completed → disputed
 - Use `pnpm run <script>` for package scripts.
 
 
-## 12. CSS & Typography Guide (STRICT)
+## 12. CSS, Typography & Brand Identity (STRICT)
+
+> **CANONICAL REFERENCE**: [docs/design-system.md](docs/design-system.md) is the **single source of truth** for all visual styles. You **MUST** read it before writing any CSS, SCSS, or MUI `sx` styling code.
+
+### Live Style Guide (Dev Routes)
+
+The project maintains a **live interactive style guide** that renders all typography classes, button variants, color swatches, and contrast enforcement patterns:
+
+| Route | Component | Purpose |
+|-------|-----------|---------|
+| `/dev` | [`AllFontStyles.tsx`](src/components/dev/AllFontStyles.tsx) | Full design system reference |
+| `/dev/typography` | Same | Legacy URL (same component) |
+
+**Route files**: `pages/(marketing)/dev/+Page.tsx` and `pages/(marketing)/dev/typography/+Page.tsx`.
+These routes are prerendered via the `(marketing)` group. **Do NOT remove, rename, or modify these routes.**
+
+### CSS Architecture
+
+```
+src/styles/
+├── _variables.scss          # CSS custom properties (colors, fonts) — SINGLE SOURCE
+├── components/
+│   ├── _typography.scss     # Fluid typography system (6 preset classes)
+│   └── _buttons.scss        # Centralized button system (6 variants + legacy map)
+├── _globals.scss            # Global resets, font-face, utility classes
+└── main.scss                # Entry point
+```
 
 ### Naming Convention
 - **Kebab-case only**: All SCSS classes must use `kebab-case`.
-- **Forbidden**: `camelCase` classes are prohibited.
+- **Forbidden**: `camelCase` CSS classes are prohibited.
 
-### Typography System
-File: `src/styles/components/_typography.scss`
+### Typography Classes (Quick Reference)
 
-**Heading Classes:**
 | Class | Fluid Size | Intent |
 |-------|-----------|--------|
-| `.type-hero-title` | 60px → 32px | Hero titles |
-| `.type-section-title` | 36px → 24px | Section headers |
-| `.type-card-title` | 24px → 18px | Card titles |
+| `.type-hero-title` | 32px → 60px | Hero/landing page titles |
+| `.type-section-title` | 24px → 36px | Section headers |
+| `.type-card-title` | 18px → 24px | Card titles |
+| `.type-body-lg` | 16px → 18px | Lead paragraphs |
+| `.type-body` | 14px → 16px | Standard content |
+| `.type-caption` | 12px → 14px | Captions, metadata |
 
-**Body Classes:**
-| Class | Size | Intent |
+### Button Classes (Quick Reference)
+
+| Class | Visual | Intent |
+|-------|--------|--------|
+| `.btn-primary-gradient` | Teal→Blue gradient, pill | **Main CTAs** (Siguiente, Guardar) |
+| `.btn-secondary-outline` | Teal border, transparent | **Secondary** (Volver, Cancelar) |
+| `.btn-icon-action` | Solid teal + icon slot | Icon buttons (PUBLICAR) |
+| `.btn-floating-action` | Purple + shadow | Asísteme floating bar |
+| `.btn-menu-nav` | Dark semi-transparent pill | Navigation menu items |
+| `.btn-card-action` | Solid teal, square corners | Card action links |
+
+### Auth Module Buttons (CSS Modules)
+
+| Class | File | Intent |
 |-------|------|--------|
-| `.type-body-lg` | 18px → 16px | Lead paragraphs |
-| `.type-body` | 16px → 14px | Standard content |
-| `.type-caption` | 14px → 12px | Captions |
+| `.PrimaryAuthButton` | `Login.module.scss` / `Register.module.scss` | Phone/email submit (white text on gradient) |
+| `.TealButton` | `Login.module.scss` / `Register.module.scss` | Google sign-in (white text on solid teal) |
 
-**Fluid Mixin Usage:**
-```scss
-@include fluid-type(16px, 24px); // Scales between mobile→desktop
-```
+### Primary Brand Colors (Quick Reference)
 
-### Text Variants
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `--background-main-green-color` | `#00b0ab` | Primary buttons, CTAs |
+| `--logo-comunidad-dezzpo-color` | `#209da1` | Logo, brand accent |
+| `--background-dark-purple-color` | `#662382` | Asísteme, premium |
+| `--content-text-color` | `#4b4b4b` | Body text |
+| `--primary-titles-text-color` | `#4d4d4d` | Headings |
+
+### ❌ FORBIDDEN Anti-Patterns (Brand Identity Protection)
+
+1. **Never invent new colors.** Use ONLY CSS custom properties from `_variables.scss`.
+2. **Never hardcode hex values in components.** Use `var(--variable-name)`.
+3. **Never create new button styles inline.** Use the 6 existing variants from `_buttons.scss`.
+4. **Never override `.TealButton` or `.PrimaryAuthButton`** — these are WCAG-compliant auth buttons.
+5. **Never use Tailwind CSS.** The project uses SCSS + CSS custom properties.
+6. **Never use MUI `sx` prop for brand colors.** Use SCSS classes or CSS variables.
+7. **Never change font families.** Helvetica SemiBold (headings) + Work Sans (body) only.
+8. **Never remove utility classes** (`.bg-verde`, `.opacidad-negro`, `.TealButton`, etc.).
+9. **Never modify the primary gradient** `linear-gradient(-90deg, #18B1A7 35%, #0099CC 100%)` — it is the Dezzpo brand signature.
+
+### Text Variant Utilities
+
 | Class | Effect |
 |-------|--------|
-| `.text-bold` | Bold weight (700) |
-| `.text-italic` | Italic style |
-| `.text-underline` | Underline decoration |
-| `.text-strikethrough` | Line-through |
+| `.text-bold` | `font-weight: 700` |
+| `.text-italic` | `font-style: italic` |
+| `.text-underline` | `text-decoration: underline` |
+| `.text-strikethrough` | `text-decoration: line-through` |
 
 ### Contrast Enforcement
+
 | Class | Use When |
 |-------|----------|
 | `.text-on-light` | Text on white/cream backgrounds |
 | `.text-on-dark` | Text on dark backgrounds |
-| `.opacidad-negro` | Dark overlay on images |
-
-### Button System
-File: `src/styles/components/_buttons.scss`
-
-| Class | Style | Intent |
-|-------|-------|--------|
-| `.btn-primary-gradient` | Teal gradient | Main CTAs |
-| `.btn-secondary-outline` | Border only | Secondary actions |
-| `.btn-icon-action` | Solid + icon | Form submits |
+| `.opacidad-negro` | Dark overlay on images (WCAG) |
+| `.opacidad-blanco` | Light overlay on images |
+| `.step-card-text` | Forces dark text in light cards |
 
 ### Accessibility (WCAG 2.1)
-- Line width: Use `.text-optimal-width` (max 65 characters)
-- Focus states: Use `.focus-visible` for keyboard navigation
-- Screen readers: Use `.sr-only` for hidden labels
+- **Line width**: Use `.text-optimal-width` (max 65 characters per line)
+- **Focus states**: Use `.focus-visible` for keyboard navigation
+- **Screen readers**: Use `.sr-only` for hidden labels
+- **Button contrast**: All buttons on teal/gradient → white text mandatory
 
-### Dev Reference
-Live samples: `/dev/typography`
+### Fluid Typography Mixin
+
+```scss
+// In _typography.scss — use for responsive font sizing:
+@include fluid-type(16px, 24px); // Scales smoothly between mobile→desktop
+@include fluid-line-height(1.35, 1.6); // Responsive line-height
+```
+
+### ✅ MANDATORY Practices
+
+1. **Read `docs/design-system.md`** before writing any styling code.
+2. **Check `/dev` route** to visually verify your changes match the system.
+3. **Use fluid typography classes** instead of fixed pixel sizes.
+4. **Use CSS variables** for all colors.
+5. **Apply contrast classes** (`.text-on-light`, `.text-on-dark`) for WCAG compliance.
+6. **All button text on teal/gradient backgrounds must be white** (`#ffffff`).
+
