@@ -11,12 +11,13 @@ import type { ContactEmail, ContactPhone } from '@services/types'
 // Migration
 // =============================================================================
 
-interface LegacyUserFields {
-    userMail?: string | null
-    userPhone?: string | null
-    userTel?: string | null
-    emails?: ContactEmail[]
-    phones?: ContactPhone[]
+export interface LegacyUserFields {
+    userMail?: string | null | undefined
+    userPhone?: string | null | undefined
+    userTel?: string | null | undefined
+    emails?: ContactEmail[] | undefined
+    phones?: ContactPhone[] | undefined
+    [key: string]: unknown
 }
 
 /**

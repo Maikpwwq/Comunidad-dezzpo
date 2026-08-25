@@ -75,6 +75,7 @@ export interface UserLocationItem {
     id: string
     nombre?: string | undefined
     direccion: string
+    departamento?: string | undefined
     ciudad: string
     codigoPostal?: string | undefined
     zona?: string | undefined
@@ -104,6 +105,7 @@ export interface UserFirestoreDocument extends DocumentData {
     userCategories?: string[] | undefined
     userDirection?: string | undefined
     userDirectionDetails?: string | undefined
+    userDepartamento?: string | undefined
     userCiudad?: string | undefined
     userCodigoPostal?: string | undefined
     userTel?: string | undefined

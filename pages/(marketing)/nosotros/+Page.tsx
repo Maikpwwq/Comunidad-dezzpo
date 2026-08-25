@@ -37,10 +37,11 @@ export default function Page() {
                                 HISTORIA
                             </h1>
                             <p className="body-1 text-blanco">
-                                Únete a la red profesional de Comunidad Dezzpo: brindamos soluciones de
-                                mantenimiento, remodelaciones, instalaciones y acabados inmobiliarios
-                                basados en experiencia, prevención y empatía. ¡Accede a información
-                                confiiable y selecciona perfiles según estadísticas en nuestro marketplace!
+                                Bienvenidos a la red profesional de Comunidad Dezzpo!
+                                Brindamos soluciones de mantenimiento, remodelaciones, instalaciones y
+                                acabados inmobiliarios basados en experiencia, prevención y empatía.
+                                ¡Accede a información confiable y selecciona perfiles según estadísticas en
+                                nuestro marketplace!
                             </p>
                         </div>
                     </Col>
@@ -58,9 +59,9 @@ export default function Page() {
                                 <p className="body-1 text-blanco ps-lg-5" style={{ maxWidth: '800px' }}>
                                     Trabajamos para las personas, destacándonos por la calidad del
                                     servicio al cliente, el crecimiento continuo del ser y la gestión
-                                    tecnológica. Somos una Comunidad de Comerciantes Calificados en
-                                    mantenimiento general doméstico, brindando gestión oportuna del
-                                    talento humano adecuado.
+                                    tecnológica. Somos una Comunidad de Comerciantes Profesionales
+                                    Calificados en servicios de mantenimiento general doméstico y
+                                    comercial, brindando gestión oportuna del talento humano adecuado.
                                 </p>
                             </Col>
                         </Row>
@@ -70,10 +71,7 @@ export default function Page() {
                                     <h2 className="headline-xl text-blanco">VISIÓN</h2>
                                 </span>
                                 <p className="body-1 text-blanco pe-lg-5" style={{ maxWidth: '800px' }}>
-                                    Dezzpo será en 2024 una marca colombiana posicionada, referente de
-                                    consulta para la gestión en proyectos de mantenimiento, ofreciendo a
-                                    la comunidad una propuesta de valor amigable para los Comerciantes
-                                    calificados y propietarios.
+                                    Ser en el 2027 una marca colombiana reconocida, con presencia nacional, siendo un referente consultivo y apoyo en la gestión de mantenimiento residencial, ofreciendo a la comunidad dezzpo una propuesta de valor atractiva para los comerciantes calificados y propietarios inmobiliarios.
                                 </p>
                             </Col>
                         </Row>

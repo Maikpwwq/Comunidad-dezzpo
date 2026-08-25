@@ -3,6 +3,12 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import type { SedeLocation } from '@services/tiendas'
 
 /** Shape of the draft data persisted to sessionStorage */
+/** A single primary contact entry (phone + optional WhatsApp) */
+export interface ContactoPrincipal {
+    telefono: string
+    whatsapp: string
+}
+
 export interface TiendaFormDraft {
     nombre: string
     razonSocial: string
@@ -10,8 +16,12 @@ export interface TiendaFormDraft {
     descripcion: string
     emails: string[]
     sitioWeb: string
+    /** @deprecated Kept for backwards compat with existing sessionStorage drafts */
     telefonoPrincipal: string
+    /** @deprecated Kept for backwards compat with existing sessionStorage drafts */
     whatsappPrincipal: string
+    /** New multi-number support */
+    telefonosPrincipales: ContactoPrincipal[]
     selectedCategoryKeys: string[]
     sedes: SedeLocation[]
 }
@@ -20,7 +30,7 @@ const EMPTY_SEDE: SedeLocation = {
     id: 'sede_1',
     nombreSede: 'Sucursal Principal',
     direccion: '',
-    departamento: 'Cundinamarca',
+    departamento: 'Bogotá D.C.',
     ciudad: 'Bogotá, Colombia',
     codigoPostal: '',
     zona: 'bogota',
@@ -29,6 +39,8 @@ const EMPTY_SEDE: SedeLocation = {
     whatsapp: '',
     horario: 'Lun-Vie 8:00 - 17:00',
 }
+
+const EMPTY_CONTACTO: ContactoPrincipal = { telefono: '', whatsapp: '' }
 
 const INITIAL_DRAFT: TiendaFormDraft = {
     nombre: '',
@@ -39,6 +51,7 @@ const INITIAL_DRAFT: TiendaFormDraft = {
     sitioWeb: '',
     telefonoPrincipal: '',
     whatsappPrincipal: '',
+    telefonosPrincipales: [EMPTY_CONTACTO],
     selectedCategoryKeys: [],
     sedes: [EMPTY_SEDE],
 }
@@ -75,4 +88,4 @@ export const useTiendaFormDraftStore = create<TiendaFormDraftState>()(
     ),
 )
 
-export { INITIAL_DRAFT, EMPTY_SEDE }
+export { INITIAL_DRAFT, EMPTY_SEDE, EMPTY_CONTACTO }

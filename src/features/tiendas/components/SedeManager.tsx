@@ -19,10 +19,12 @@ import MapIcon from '@mui/icons-material/Map'
 import { getZonesForCity, isBogotaRegion, departamentosColombia } from '@assets/data/ListadoZonas'
 import { Ubicacion } from '@features/marketing'
 import type { SedeLocation } from '@services/tiendas'
+import type { ContactoPrincipal } from '@stores/useTiendaFormDraftStore'
 
 interface SedeManagerProps {
     sedes: SedeLocation[]
     onChange: (sedes: SedeLocation[]) => void
+    defaultTelefonosPrincipales?: ContactoPrincipal[]
     defaultTelefonoPrincipal?: string
     defaultWhatsappPrincipal?: string
 }
@@ -30,6 +32,7 @@ interface SedeManagerProps {
 export const SedeManager: React.FC<SedeManagerProps> = ({
     sedes,
     onChange,
+    defaultTelefonosPrincipales = [],
     defaultTelefonoPrincipal = '',
     defaultWhatsappPrincipal = '',
 }) => {
@@ -41,7 +44,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
             id: `sede_${Date.now()}_${sedes.length + 1}`,
             nombreSede: sedes.length === 0 ? 'Sucursal Principal' : `Sede ${sedes.length + 1}`,
             direccion: '',
-            departamento: 'Cundinamarca',
+            departamento: 'Bogotá D.C.',
             ciudad: 'Bogotá, Colombia',
             codigoPostal: '',
             zona: 'bogota',
@@ -208,7 +211,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                         sx={{ flex: 1.2, minWidth: 170 }}
                                     />
                                     <TextField
-                                        label="Ciudad"
+                                        label="Ciudad / Municipio"
                                         size="small"
                                         placeholder="Ej: Bogotá, Villavicencio, Neiva..."
                                         value={sede.ciudad}
@@ -308,9 +311,19 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                             <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.25 }}>
                                                 ℹ️ <strong>Reutilizando datos de contacto principales del comercio:</strong>
                                             </Typography>
-                                            <Typography variant="body2" color="text.primary">
-                                                📞 Teléfono: <strong>{defaultTelefonoPrincipal || 'Sin registrar aún'}</strong> &nbsp;•&nbsp; 💬 WhatsApp: <strong>{defaultWhatsappPrincipal || 'Sin registrar aún'}</strong>
-                                            </Typography>
+                                            {defaultTelefonosPrincipales.length > 0 ? (
+                                                defaultTelefonosPrincipales
+                                                    .filter(c => c.telefono.trim() || c.whatsapp.trim())
+                                                    .map((c, ci) => (
+                                                        <Typography key={ci} variant="body2" color="text.primary">
+                                                            📞 Teléfono: <strong>{c.telefono || 'Sin registrar'}</strong> &nbsp;•&nbsp; 💬 WhatsApp: <strong>{c.whatsapp || 'Sin registrar'}</strong>
+                                                        </Typography>
+                                                    ))
+                                            ) : (
+                                                <Typography variant="body2" color="text.primary">
+                                                    📞 Teléfono: <strong>{defaultTelefonoPrincipal || 'Sin registrar aún'}</strong> &nbsp;•&nbsp; 💬 WhatsApp: <strong>{defaultWhatsappPrincipal || 'Sin registrar aún'}</strong>
+                                                </Typography>
+                                            )}
                                         </Box>
                                     ) : (
                                         <Box sx={{ mt: 1, display: 'flex', flexDirection: 'column', gap: 1.5 }}>

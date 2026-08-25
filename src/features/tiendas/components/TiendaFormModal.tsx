@@ -20,7 +20,8 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import type { TiendaDocument, CreateTiendaInput, SedeLocation } from '@services/tiendas'
-import { useTiendaFormDraftStore, EMPTY_SEDE } from '@stores/useTiendaFormDraftStore'
+import { useTiendaFormDraftStore, EMPTY_SEDE, EMPTY_CONTACTO } from '@stores/useTiendaFormDraftStore'
+import type { ContactoPrincipal } from '@stores/useTiendaFormDraftStore'
 import { useDuplicateNameCheck } from '@hooks/useDuplicateNameCheck'
 import { DuplicateNameAlert } from '@components/common'
 import { SedeManager } from './SedeManager'
@@ -61,8 +62,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
     const [descripcion, setDescripcion] = useState('')
     const [emails, setEmails] = useState<string[]>([''])
     const [sitioWeb, setSitioWeb] = useState('')
-    const [telefonoPrincipal, setTelefonoPrincipal] = useState('')
-    const [whatsappPrincipal, setWhatsappPrincipal] = useState('')
+    const [telefonosPrincipales, setTelefonosPrincipales] = useState<ContactoPrincipal[]>([EMPTY_CONTACTO])
     const [selectedCategoryKeys, setSelectedCategoryKeys] = useState<string[]>([])
     const [sedes, setSedes] = useState<SedeLocation[]>([EMPTY_SEDE])
 
@@ -87,6 +87,28 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
         }
     }
 
+    const handleContactoChange = (index: number, field: keyof ContactoPrincipal, value: string) => {
+        const updated = [...telefonosPrincipales]
+        const current = updated[index] ?? EMPTY_CONTACTO
+        updated[index] = {
+            telefono: field === 'telefono' ? value : current.telefono,
+            whatsapp: field === 'whatsapp' ? value : current.whatsapp,
+        }
+        setTelefonosPrincipales(updated)
+    }
+
+    const handleAddContacto = () => {
+        setTelefonosPrincipales([...telefonosPrincipales, { ...EMPTY_CONTACTO }])
+    }
+
+    const handleRemoveContacto = (index: number) => {
+        if (telefonosPrincipales.length === 1) {
+            setTelefonosPrincipales([{ ...EMPTY_CONTACTO }])
+        } else {
+            setTelefonosPrincipales(telefonosPrincipales.filter((_, i) => i !== index))
+        }
+    }
+
     // ── Hydrate local state from draft (create) or initialData (edit) ──
     useEffect(() => {
         if (!open) return
@@ -105,8 +127,15 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                 setEmails([''])
             }
             setSitioWeb(initialData.sitioWeb || '')
-            setTelefonoPrincipal(initialData.telefonoPrincipal || '')
-            setWhatsappPrincipal(initialData.whatsappPrincipal || '')
+            // Hydrate multi-phone from legacy single fields
+            if (initialData.telefonoPrincipal || initialData.whatsappPrincipal) {
+                setTelefonosPrincipales([{
+                    telefono: initialData.telefonoPrincipal || '',
+                    whatsapp: initialData.whatsappPrincipal || '',
+                }])
+            } else {
+                setTelefonosPrincipales([{ ...EMPTY_CONTACTO }])
+            }
             setSelectedCategoryKeys(initialData.categorias || [])
             setSedes(initialData.sedes && initialData.sedes.length > 0 ? initialData.sedes : [EMPTY_SEDE])
         } else {
@@ -117,8 +146,14 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             setDescripcion(draft.descripcion)
             setEmails(draft.emails.length > 0 ? draft.emails : [''])
             setSitioWeb(draft.sitioWeb)
-            setTelefonoPrincipal(draft.telefonoPrincipal)
-            setWhatsappPrincipal(draft.whatsappPrincipal)
+            // Restore multi-phone from draft (backwards-compat with old drafts)
+            if (draft.telefonosPrincipales && draft.telefonosPrincipales.length > 0) {
+                setTelefonosPrincipales(draft.telefonosPrincipales)
+            } else if (draft.telefonoPrincipal || draft.whatsappPrincipal) {
+                setTelefonosPrincipales([{ telefono: draft.telefonoPrincipal, whatsapp: draft.whatsappPrincipal }])
+            } else {
+                setTelefonosPrincipales([{ ...EMPTY_CONTACTO }])
+            }
             setSelectedCategoryKeys(draft.selectedCategoryKeys)
             setSedes(draft.sedes.length > 0 ? draft.sedes : [EMPTY_SEDE])
         }
@@ -127,14 +162,19 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
     }, [initialData, open])
 
     // ── Persist local state changes to Zustand draft (create mode only) ──
+    // Derive legacy single-phone fields from the first entry for backwards compat
+    const telefonoPrincipal = telefonosPrincipales[0]?.telefono || ''
+    const whatsappPrincipal = telefonosPrincipales[0]?.whatsapp || ''
+
     const syncDraft = useCallback(() => {
         if (isEditMode) return
         updateDraft({
             nombre, razonSocial, nit, descripcion, emails,
             sitioWeb, telefonoPrincipal, whatsappPrincipal,
+            telefonosPrincipales,
             selectedCategoryKeys, sedes,
         })
-    }, [isEditMode, updateDraft, nombre, razonSocial, nit, descripcion, emails, sitioWeb, telefonoPrincipal, whatsappPrincipal, selectedCategoryKeys, sedes])
+    }, [isEditMode, updateDraft, nombre, razonSocial, nit, descripcion, emails, sitioWeb, telefonoPrincipal, whatsappPrincipal, telefonosPrincipales, selectedCategoryKeys, sedes])
 
     useEffect(() => {
         if (!open || isEditMode) return
@@ -171,6 +211,10 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
         try {
             const cleanEmails = emails.map((e) => e.trim()).filter(Boolean)
 
+            // Flatten multi-phone entries: primary phone = first non-empty telefono
+            const primaryPhone = telefonosPrincipales.find(c => c.telefono.trim())?.telefono.trim() || ''
+            const primaryWhatsapp = telefonosPrincipales.find(c => c.whatsapp.trim())?.whatsapp.trim() || ''
+
             // Clean up sedes telefonos & whatsapp
             const cleanedSedes = sedes.map((s) => ({
                 ...s,
@@ -178,10 +222,10 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                     ? s.telefonos.map(t => t.trim()).filter(Boolean)
                     : (s.telefonos?.map(t => t.trim()).filter(Boolean).length
                         ? s.telefonos.map(t => t.trim()).filter(Boolean)
-                        : (telefonoPrincipal.trim() ? [telefonoPrincipal.trim()] : [])),
+                        : (primaryPhone ? [primaryPhone] : [])),
                 whatsapp: s.hasCustomPhones && s.whatsapp
                     ? s.whatsapp.trim()
-                    : (s.whatsapp?.trim() || whatsappPrincipal.trim() || undefined),
+                    : (s.whatsapp?.trim() || primaryWhatsapp || undefined),
             }))
 
             const payload: CreateTiendaInput = {
@@ -192,8 +236,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                 emails: cleanEmails,
                 email: cleanEmails.join(', ') || undefined,
                 sitioWeb: sitioWeb.trim(),
-                telefonoPrincipal: telefonoPrincipal.trim() || (cleanedSedes[0]?.telefonos?.[0] || ''),
-                whatsappPrincipal: whatsappPrincipal.trim() || (cleanedSedes[0]?.whatsapp || ''),
+                telefonoPrincipal: primaryPhone || (cleanedSedes[0]?.telefonos?.[0] || ''),
+                whatsappPrincipal: primaryWhatsapp || (cleanedSedes[0]?.whatsapp || ''),
                 categorias: selectedCategoryKeys,
                 sedes: cleanedSedes,
                 estado: isAdminMode ? (initialData?.estado || 'aprobado') : 'pendiente',
@@ -369,27 +413,51 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                             <Typography variant="subtitle2" fontWeight={700} color="text.primary" sx={{ mb: 1.5 }}>
                                 Canales de Contacto Principales del Comercio
                             </Typography>
-                            
-                            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
-                                <TextField
-                                    label="Teléfono Principal de Contacto"
-                                    size="small"
-                                    placeholder="Ej: 6013004050 o 3102345678"
-                                    value={telefonoPrincipal}
-                                    onChange={(e) => setTelefonoPrincipal(e.target.value)}
-                                    helperText="Se reutiliza en todas las sedes automáticamente"
-                                    sx={{ flex: 1, minWidth: 220 }}
-                                />
-                                <TextField
-                                    label="WhatsApp Principal (Opcional)"
-                                    size="small"
-                                    placeholder="Ej: 573102345678"
-                                    value={whatsappPrincipal}
-                                    onChange={(e) => setWhatsappPrincipal(e.target.value)}
-                                    helperText="Número para cotizaciones y pedidos directos"
-                                    sx={{ flex: 1, minWidth: 220 }}
-                                />
-                            </Box>
+
+                            {/* ── Multi-phone entries ── */}
+                            <Typography variant="caption" fontWeight={700} color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+                                Números de Contacto
+                            </Typography>
+                            {telefonosPrincipales.map((contacto, idx) => (
+                                <Box key={idx} sx={{ display: 'flex', gap: 1.5, alignItems: 'center', mb: 1.5, flexWrap: 'wrap' }}>
+                                    <TextField
+                                        label={idx === 0 ? 'Teléfono Principal de Contacto' : `Teléfono de Contacto #${idx + 1}`}
+                                        size="small"
+                                        placeholder="Ej: 6013004050 o 3102345678"
+                                        value={contacto.telefono}
+                                        onChange={(e) => handleContactoChange(idx, 'telefono', e.target.value)}
+                                        helperText={idx === 0 ? 'Se reutiliza en todas las sedes automáticamente' : undefined}
+                                        sx={{ flex: 1, minWidth: 200 }}
+                                    />
+                                    <TextField
+                                        label={idx === 0 ? 'WhatsApp Principal (Opcional)' : `WhatsApp #${idx + 1} (Opcional)`}
+                                        size="small"
+                                        placeholder="Ej: 573102345678"
+                                        value={contacto.whatsapp}
+                                        onChange={(e) => handleContactoChange(idx, 'whatsapp', e.target.value)}
+                                        helperText={idx === 0 ? 'Número para cotizaciones y pedidos directos' : undefined}
+                                        sx={{ flex: 1, minWidth: 200 }}
+                                    />
+                                    <IconButton
+                                        size="small"
+                                        color="default"
+                                        onClick={() => handleRemoveContacto(idx)}
+                                        disabled={telefonosPrincipales.length === 1 && !contacto.telefono && !contacto.whatsapp}
+                                        title="Eliminar número"
+                                    >
+                                        <DeleteOutlineIcon fontSize="small" />
+                                    </IconButton>
+                                </Box>
+                            ))}
+                            <Button
+                                variant="outlined"
+                                size="small"
+                                startIcon={<AddCircleOutlineIcon />}
+                                onClick={handleAddContacto}
+                                sx={{ textTransform: 'none', borderRadius: 2, fontWeight: 600, mb: 2 }}
+                            >
+                                Agregar otro número
+                            </Button>
 
                             <TextField
                                 label="Sitio Web (Opcional)"
@@ -443,6 +511,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                         <SedeManager
                             sedes={sedes}
                             onChange={setSedes}
+                            defaultTelefonosPrincipales={telefonosPrincipales}
                             defaultTelefonoPrincipal={telefonoPrincipal}
                             defaultWhatsappPrincipal={whatsappPrincipal}
                         />

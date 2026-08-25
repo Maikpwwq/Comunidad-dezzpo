@@ -317,6 +317,15 @@ pending_payment → active → completed → disputed
   - `Cálculos y Diseños de Ingeniería` (structural NSR-10, MEP, calculations), `Topografía y Agrimensura` (surveys, plot boundaries, subdivision), `Estudios de Suelos y Geotecnia` (soil test pits, geotechnical engineering), `Energía Solar y Fotovoltaica` (PV solar design & installation), `Puertas Automáticas y Motores` (vehicular gates, barriers, boom gates), `Fumigación y Control de Plagas` (sanitary pest control certification), `Peritajes y Avalúos` (certified appraisals & structural forensics), `Diseño 3D y Renders` (BIM/3D architectural renders).
 - **Strategic Boundary Enforcement**: Deliberately rejected consumer electronics repair (cellphones/PCs/TVs) to protect Dezzpo's clear positioning as a specialized construction, habitat, property horizontal, and architectural maintenance platform.
 
+### Multi-Provider Account Linking & Phone Identity Resolution (`findUserByPhone` - 2026-08-25)
+- **Problem**: Firebase Auth creates independent `uid`s per sign-in method (Google vs Phone OTP vs Email/Password). When an existing user signs in via SMS OTP, Firebase creates a new `uid` with no Firestore document, resulting in a *"User not found"* error on `/app/perfil/[id]`.
+- **Auto-Linking Strategy**: `findUserByPhone(phoneNumber, role)` resolves existing Firestore profiles matching any phone representation (E.164, local 10-digit, 12-digit, formatted display) across both collections (`usersComerciantesCalificados`, `usersPropietariosResidentes`).
+- **Seamless Re-Routing**: When SMS OTP verification succeeds:
+  1. If an existing profile is found, `handleAuthSuccess` accepts `overrideUid` to bind Zustand, `localStorage`, and navigation to the existing `existingUid` instead of the orphaned phone-auth UID.
+  2. If registered with phone and the number already exists, the user is cleanly auto-linked and logged in without duplication.
+  3. `UserAuthProvider` includes fallback rehydration via `findUserByPhone` if a session's Firestore profile is initially not found by raw `user.uid`.
+- **Payload Sanitization (`sanitizeForFirestore`)**: Cloud Firestore SDK strictly rejects `undefined` values (`Unsupported field value: undefined`). All Firestore document writes (`setUser`, `updateUser`) pass payloads through `sanitizeForFirestore` to strip undefined properties while preserving valid `null` and empty arrays.
+
 ### TypeScript `exactOptionalPropertyTypes` & Firestore Serialization
 - **Zero Incompatible `undefined` Assigns**: With `exactOptionalPropertyTypes: true` enabled in `tsconfig.json`, all optional interface properties receiving runtime `undefined` values (e.g. `raw || undefined`) MUST be explicitly typed with `| undefined` (e.g. `razonSocial?: string | undefined`).
 - **Partial Updates**: `updateDoc` payload objects that accept partial inputs must avoid `Partial<T>` when `T` contains strict non-undefined properties, using `Record<string, unknown>` and `sanitizeForFirestore(data)` before persistence.

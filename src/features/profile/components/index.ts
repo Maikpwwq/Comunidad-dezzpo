@@ -28,3 +28,7 @@ export type { ComentariosProps } from './Comentarios'
 
 export { HiloComentarios } from './HiloComentarios'
 export type { HiloComentariosProps, CommentThread } from './HiloComentarios'
+
+// Auth Providers Management
+export { AuthProvidersManager } from './AuthProvidersManager'
+

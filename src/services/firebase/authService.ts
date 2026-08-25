@@ -13,6 +13,10 @@ import {
     signOut,
     onAuthStateChanged,
     GoogleAuthProvider,
+    PhoneAuthProvider,
+    linkWithPopup,
+    linkWithCredential,
+    unlink,
     updateProfile,
     RecaptchaVerifier,
     signInWithPhoneNumber,
@@ -26,6 +30,7 @@ import type {
     EmailCredentials,
     RegisterCredentials,
     AuthUser,
+    LinkedAuthProvider,
     AuthCallback,
     Unsubscribe,
 } from '@/types/services.d'
@@ -504,3 +509,167 @@ export async function verifySMSCode(
         }
     }
 }
+
+function mapProviderErrorCode(code?: string): ServiceErrorCode {
+    switch (code) {
+        case 'auth/credential-already-in-use':
+        case 'auth/email-already-in-use':
+        case 'auth/account-exists-with-different-credential':
+            return 'AUTH_PROVIDER_ALREADY_LINKED'
+        case 'auth/no-such-provider':
+            return 'AUTH_UNLINK_FAILED'
+        default:
+            return 'INTERNAL_ERROR'
+    }
+}
+
+function mapProviderErrorMessage(code?: string, defaultMsg?: string): string {
+    switch (code) {
+        case 'auth/credential-already-in-use':
+        case 'auth/email-already-in-use':
+        case 'auth/account-exists-with-different-credential':
+            return 'Esta cuenta o número ya está vinculado a otro usuario en Dezzpo.'
+        case 'auth/no-such-provider':
+            return 'El método de acceso no se encuentra vinculado a tu cuenta.'
+        default:
+            return defaultMsg || 'Ocurrió un error al procesar el método de acceso.'
+    }
+}
+
+/**
+ * Returns all active authentication providers linked to the current user.
+ */
+export function getLinkedProviders(): LinkedAuthProvider[] {
+    if (!isFirebaseAvailable() || !auth?.currentUser) {
+        return []
+    }
+
+    return auth.currentUser.providerData.map((p) => ({
+        providerId: p.providerId,
+        displayName: p.displayName,
+        email: p.email,
+        phoneNumber: p.phoneNumber,
+        photoURL: p.photoURL,
+    }))
+}
+
+/**
+ * Links Google Account to the currently authenticated user session.
+ */
+export async function linkGoogleProvider(): Promise<ServiceResponse<AuthUser>> {
+    if (!isFirebaseAvailable() || !auth?.currentUser) {
+        return ssrErrorResponse()
+    }
+
+    try {
+        const provider = getGoogleProvider()
+        const result = await linkWithPopup(auth.currentUser, provider)
+        const authUser = toAuthUser(result.user)
+
+        return {
+            success: true,
+            data: authUser,
+            error: null,
+        }
+    } catch (error) {
+        const firebaseError = error as { code?: string; message?: string }
+        return {
+            success: false,
+            data: null,
+            error: {
+                code: mapProviderErrorCode(firebaseError.code),
+                message: mapProviderErrorMessage(firebaseError.code, firebaseError.message),
+            },
+        }
+    }
+}
+
+/**
+ * Links a verified phone number (via SMS OTP code) to the currently authenticated user.
+ */
+export async function linkPhoneProvider(
+    confirmationResult: ConfirmationResult,
+    code: string
+): Promise<ServiceResponse<AuthUser>> {
+    const cleanCode = code.trim().replace(/\D/g, '')
+    if (cleanCode.length !== 6) {
+        return {
+            success: false,
+            data: null,
+            error: {
+                code: 'AUTH_INVALID_CODE',
+                message: 'El código de verificación debe contener 6 dígitos.',
+            },
+        }
+    }
+
+    if (!isFirebaseAvailable() || !auth?.currentUser) {
+        return ssrErrorResponse()
+    }
+
+    try {
+        const credential = PhoneAuthProvider.credential(confirmationResult.verificationId, cleanCode)
+        const result = await linkWithCredential(auth.currentUser, credential)
+        const authUser = toAuthUser(result.user)
+
+        return {
+            success: true,
+            data: authUser,
+            error: null,
+        }
+    } catch (error) {
+        const firebaseError = error as { code?: string; message?: string }
+        return {
+            success: false,
+            data: null,
+            error: {
+                code: mapProviderErrorCode(firebaseError.code),
+                message: mapProviderErrorMessage(firebaseError.code, firebaseError.message),
+            },
+        }
+    }
+}
+
+/**
+ * Unlinks an authentication provider from the current user.
+ * Blocks unlinking if only one provider remains to prevent locking the user out.
+ */
+export async function unlinkProvider(providerId: string): Promise<ServiceResponse<AuthUser>> {
+    if (!isFirebaseAvailable() || !auth?.currentUser) {
+        return ssrErrorResponse()
+    }
+
+    try {
+        const providers = auth.currentUser.providerData
+        if (providers.length <= 1) {
+            return {
+                success: false,
+                data: null,
+                error: {
+                    code: 'AUTH_CANNOT_UNLINK_LAST_PROVIDER',
+                    message: 'No puedes desvincular tu único método de acceso. Agrega otro primero para proteger tu cuenta.',
+                },
+            }
+        }
+
+        const result = await unlink(auth.currentUser, providerId)
+        const authUser = toAuthUser(result)
+
+        return {
+            success: true,
+            data: authUser,
+            error: null,
+        }
+    } catch (error) {
+        const firebaseError = error as { code?: string; message?: string }
+        return {
+            success: false,
+            data: null,
+            error: {
+                code: mapProviderErrorCode(firebaseError.code),
+                message: mapProviderErrorMessage(firebaseError.code, firebaseError.message),
+            },
+        }
+    }
+}
+

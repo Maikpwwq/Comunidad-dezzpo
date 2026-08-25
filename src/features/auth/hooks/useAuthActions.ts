@@ -21,7 +21,7 @@ import {
     logout as logoutService,
     type ConfirmationResult,
 } from '@services/firebase/authService'
-import { setUser } from '@services/users'
+import { setUser, findUserByPhone } from '@services/users'
 import { format } from 'date-fns'
 
 import type {
@@ -82,21 +82,24 @@ export function useAuthActions(): UseAuthActionsReturn {
     }, [])
 
     /**
-     * Common success handler - updates Zustand, localStorage, and Firestore
+     * Common success handler - updates Zustand, localStorage, and Firestore.
+     * Supports overrideUid for phone-auth multi-provider resolution.
      */
     const handleAuthSuccess = useCallback(
         async (
             userData: { uid: string; email: string | null; phoneNumber?: string | null | undefined; displayName: string | null },
             role: UserRoleNumeric,
             draftInfo?: DraftInfo,
-            isRegistration = false
+            isRegistration = false,
+            overrideUid?: string
         ): Promise<void> => {
             const { uid, email, phoneNumber, displayName } = userData
+            const effectiveUid = overrideUid || uid
 
             // Update Zustand store
             updateUser({
                 displayName,
-                userId: uid,
+                userId: effectiveUid,
                 email,
                 phoneNumber: phoneNumber ?? null,
                 isAuth: true,
@@ -105,7 +108,7 @@ export function useAuthActions(): UseAuthActionsReturn {
 
             // Legacy localStorage
             localStorage.setItem('role', JSON.stringify(role))
-            localStorage.setItem('userID', JSON.stringify(uid))
+            localStorage.setItem('userID', JSON.stringify(effectiveUid))
 
             // Create Firestore document for new registrations
             if (isRegistration && role) {
@@ -113,22 +116,23 @@ export function useAuthActions(): UseAuthActionsReturn {
                     userMail: email,
                     userPhone: phoneNumber || null,
                     phones: phoneNumber ? [{ number: phoneNumber, isPrimary: true, type: 'personal' }] : [],
+                    emails: email ? [{ address: email, isPrimary: true, verified: false }] : [],
                     userJoined: format(new Date(), 'dd-MM-yyyy'),
-                    userId: uid,
+                    userId: effectiveUid,
                     userChannelUrl: '',
                     userCreatedDrafts: draftInfo ? [draftInfo.draftId] : [],
                     userName: displayName,
                 }
-                await setUser({ userId: uid, role, data })
+                await setUser({ userId: effectiveUid, role, data })
             }
 
             // Navigate based on context
             if (draftInfo) {
                 // Draft flow handled by parent component
             } else if (isRegistration) {
-                navigate(`/app/ajustes/${uid}`)
+                navigate(`/app/ajustes/${effectiveUid}`)
             } else {
-                navigate(`/app/perfil/${uid}`)
+                navigate(`/app/perfil/${effectiveUid}`)
             }
         },
         [updateUser]
@@ -311,9 +315,26 @@ export function useAuthActions(): UseAuthActionsReturn {
             const result = await verifySMSCode(confirmationResult, code, name)
 
             if (result.success) {
+                const targetPhone = result.data.phoneNumber || phoneNumber
+
+                // Multi-Provider Account Linking: check if account already exists with this phone
+                const existing = await findUserByPhone(targetPhone, role)
+                if (existing) {
+                    const finalData = {
+                        ...result.data,
+                        phoneNumber: targetPhone,
+                        displayName: existing.user.userName || name || result.data.displayName,
+                        email: existing.user.userMail || null,
+                    }
+                    await handleAuthSuccess(finalData, existing.role || role, draftInfo, false, existing.existingUid)
+                    showAlert('¡Bienvenido de nuevo! Tu cuenta ha sido vinculada con éxito.', 'success')
+                    setIsLoading(false)
+                    return { success: true }
+                }
+
                 const finalData = {
                     ...result.data,
-                    phoneNumber: result.data.phoneNumber || phoneNumber,
+                    phoneNumber: targetPhone,
                     displayName: name || result.data.displayName,
                 }
                 await handleAuthSuccess(finalData, role, draftInfo, true)
@@ -354,9 +375,27 @@ export function useAuthActions(): UseAuthActionsReturn {
             const result = await verifySMSCode(confirmationResult, code)
 
             if (result.success) {
+                const targetPhone = result.data.phoneNumber || phoneNumber
+
+                // Multi-Provider Account Linking: Resolve existing profile in Firestore
+                const existing = await findUserByPhone(targetPhone, role)
+
+                if (existing) {
+                    const finalData = {
+                        ...result.data,
+                        phoneNumber: targetPhone,
+                        displayName: existing.user.userName || result.data.displayName,
+                        email: existing.user.userMail || null,
+                    }
+                    await handleAuthSuccess(finalData, existing.role || role, draftInfo, false, existing.existingUid)
+                    showAlert('¡Sesión iniciada con éxito!', 'success')
+                    setIsLoading(false)
+                    return { success: true }
+                }
+
                 const finalData = {
                     ...result.data,
-                    phoneNumber: result.data.phoneNumber || phoneNumber,
+                    phoneNumber: targetPhone,
                 }
                 await handleAuthSuccess(finalData, role, draftInfo, false)
                 showAlert('¡Sesión iniciada con éxito!', 'success')

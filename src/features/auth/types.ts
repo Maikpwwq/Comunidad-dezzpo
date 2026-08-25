@@ -5,7 +5,7 @@
  */
 
 import type { User, ConfirmationResult } from 'firebase/auth'
-import type { ContactPhone } from '@services/types'
+import type { ContactPhone, ContactEmail } from '@services/types'
 
 /** User role types */
 export type UserRoleNumeric = 1 | 2 | null  // 1 = Propietario, 2 = Comerciante
@@ -75,6 +75,7 @@ export interface UserFirestoreData {
     userMail: string | null
     userPhone?: string | null | undefined
     phones?: ContactPhone[] | undefined
+    emails?: ContactEmail[] | undefined
     userJoined: string
     userId: string
     userChannelUrl: string

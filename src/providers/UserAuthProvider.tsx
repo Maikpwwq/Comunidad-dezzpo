@@ -1,6 +1,6 @@
 import React, { useState, createContext, useEffect, type ReactNode } from 'react'
 import { subscribeToAuth } from '@services/firebase/authService'
-import { getUser } from '@services/users'
+import { getUser, findUserByPhone } from '@services/users'
 import { useUserStore } from '@stores/userStore'
 
 interface UserData {
@@ -112,18 +112,39 @@ export const UserAuthProvider: React.FC<UserAuthProviderProps> = ({ children }) 
                     }
                 })
 
-                // Recover role from localStorage (legacy pattern)
+                // Recover role and user ID from localStorage (supports linked accounts)
+                let storedUid = user.uid
+                try {
+                    const rawStoredId = localStorage.getItem('userID')
+                    if (rawStoredId) {
+                        const parsed = JSON.parse(rawStoredId)
+                        if (typeof parsed === 'string' && parsed.length > 0) {
+                            storedUid = parsed
+                        }
+                    }
+                } catch (_) { }
+
                 const storedRole = localStorage.getItem('role')
                 if (storedRole) {
                     const rol = parseInt(storedRole) as 1 | 2
                     updateRol(rol)
                     useUserStore.getState().updateRol(rol)
 
-                    // Hydrate favorites from Firestore
-                    getUser({ userId: user.uid, role: rol }).then((userData) => {
+                    // Hydrate favorites and profile data from Firestore
+                    getUser({ userId: storedUid, role: rol }).then(async (userData) => {
                         if (userData) {
                             useUserStore.getState().setSavedDrafts(userData.savedDrafts ?? [])
                             useUserStore.getState().setLikedProfiles(userData.userLikes?.likedsProfiles ?? [])
+                        } else if (user.phoneNumber) {
+                            // Fallback: search by phone number if account was auto-linked
+                            const found = await findUserByPhone(user.phoneNumber, rol)
+                            if (found) {
+                                localStorage.setItem('userID', JSON.stringify(found.existingUid))
+                                useUserStore.getState().updateUser({ userId: found.existingUid })
+                                setCurrentUser(prev => ({ ...prev, userId: found.existingUid }))
+                                useUserStore.getState().setSavedDrafts(found.user.savedDrafts ?? [])
+                                useUserStore.getState().setLikedProfiles(found.user.userLikes?.likedsProfiles ?? [])
+                            }
                         }
                     }).catch((err) => {
                         console.error('[Favorites] Error hydrating user favorites:', err)

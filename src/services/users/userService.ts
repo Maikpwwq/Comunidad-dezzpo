@@ -70,6 +70,10 @@ export async function getUser({ userId, role }: ReadUserParams): Promise<UserFir
     }
 }
 
+import { sanitizeForFirestore } from '@services/utils/firestoreUtils'
+import { getStoredReferralCode, clearStoredReferralCode } from '@hooks/useReferralTracker'
+import { trackReferralRegistration } from '../referralService'
+
 /**
  * Update a user document
  */
@@ -82,15 +86,13 @@ export async function updateUser({ userId, role, data }: UpdateUserParams): Prom
     
     try {
         const docRef = doc(userCol, userId)
-        await updateDoc(docRef, data)
+        const sanitized = sanitizeForFirestore(data)
+        await updateDoc(docRef, sanitized)
     } catch (error) {
         console.error('Error updating user:', error)
         throw error
     }
 }
-
-import { getStoredReferralCode, clearStoredReferralCode } from '@hooks/useReferralTracker'
-import { trackReferralRegistration } from '../referralService'
 
 /**
  * Create or overwrite a user document
@@ -104,7 +106,8 @@ export async function setUser({ userId, role, data }: UpdateUserParams): Promise
     
     try {
         const docRef = doc(userCol, userId)
-        await setDoc(docRef, data, { merge: true })
+        const sanitized = sanitizeForFirestore(data)
+        await setDoc(docRef, sanitized, { merge: true })
 
         // Check for pending referral attribution
         const storedRefCode = getStoredReferralCode()

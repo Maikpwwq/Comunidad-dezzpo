@@ -112,10 +112,11 @@ export function createEmptySocialLink(priority?: number): SocialLink {
 // Legacy Migration
 // =============================================================================
 
-interface LegacySocialFields {
-    userWebSite?: string | null
-    userChannelUrl?: string | null
-    socialLinks?: SocialLink[]
+export interface LegacySocialFields {
+    userWebSite?: string | null | undefined
+    userChannelUrl?: string | null | undefined
+    socialLinks?: SocialLink[] | undefined
+    [key: string]: unknown
 }
 
 /**

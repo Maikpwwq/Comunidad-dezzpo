@@ -22,6 +22,9 @@ export type ServiceErrorCode =
   | 'AUTH_INVALID_CODE'
   | 'AUTH_CAPTCHA_FAILED'
   | 'AUTH_TOO_MANY_REQUESTS'
+  | 'AUTH_PROVIDER_ALREADY_LINKED'
+  | 'AUTH_CANNOT_UNLINK_LAST_PROVIDER'
+  | 'AUTH_UNLINK_FAILED'
   | 'FIRESTORE_PERMISSION_DENIED'
   | 'FIRESTORE_NOT_FOUND'
   | 'SENDBIRD_CHANNEL_ERROR'
@@ -80,6 +83,14 @@ export interface AuthUser {
     displayName: string | null
     photoURL: string | null
     emailVerified: boolean
+}
+
+export interface LinkedAuthProvider {
+    providerId: string
+    displayName: string | null
+    email: string | null
+    phoneNumber: string | null
+    photoURL: string | null
 }
 
 export type AuthCallback = (user: AuthUser | null) => void
@@ -153,6 +164,7 @@ export interface UserLocationItem {
     id: string
     nombre?: string
     direccion: string
+    departamento?: string
     ciudad: string
     codigoPostal?: string
     zona?: string
@@ -171,6 +183,7 @@ export interface UserFirestoreDocument {
     userCategories?: string[]
     userDirection?: string
     userDirectionDetails?: string
+    userDepartamento?: string
     userCiudad?: string
     userCodigoPostal?: string
     userTel?: string

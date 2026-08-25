@@ -28,9 +28,10 @@ import {
 // Components
 import { Ubicacion } from '@features/marketing'
 import PropertiesManager from '@features/profile/components/PropertiesManager'
+import { AuthProvidersManager } from '@features/profile'
 import { SnackBarAlert, ChipsCategories } from '@components/common'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
-import { zones, zoneNames } from '@assets/data/ListadoZonas'
+import { zones, zoneNames, departamentosColombia } from '@assets/data/ListadoZonas'
 
 // MUI
 import {
@@ -48,6 +49,7 @@ import {
     LinearProgress,
     IconButton,
     Tooltip,
+    Autocomplete,
 } from '@mui/material'
 import PublicIcon from '@mui/icons-material/Public'
 import FlashOnIcon from '@mui/icons-material/FlashOn'
@@ -84,6 +86,7 @@ interface UserEditInfo {
     userCategories: any[]
     userDirection: string
     userDirectionDetails?: string
+    userDepartamento?: string
     userCiudad: string
     userCodigoPostal: string
     userRazonSocial: string
@@ -160,6 +163,7 @@ export default function Page() {
         userCategories: [],
         userDirection: '',
         userDirectionDetails: '',
+        userDepartamento: 'Bogotá D.C.',
         userCiudad: '',
         userCodigoPostal: '',
         userRazonSocial: '',
@@ -170,96 +174,100 @@ export default function Page() {
         userWebSite: '',
     })
 
-    // Fetch user data
-    useEffect(() => {
-        const fetchUserData = async () => {
-            if (!userAuthID) return
+    const fetchUserData = useCallback(async () => {
+        if (!userAuthID) return
 
-            let roleToUse: UserRole | undefined = userRol.rol
-            if (!roleToUse) {
-                const localRole = localStorage.getItem('role')
-                if (localRole) {
-                    const parsed = parseInt(JSON.parse(localRole))
-                    if (!isNaN(parsed)) roleToUse = parsed as UserRole
-                }
-            }
-            if (!roleToUse) return
-
-            try {
-                const userData = await getUser({ userId: userAuthID, role: roleToUse })
-                if (userData) {
-                    setUserEditInfo({
-                        userName: userData.userName || '',
-                        userMail: userData.userMail || '',
-                        userPhone: (userData as any).userPhone || '',
-                        userPhotoUrl: (userData as any).userPhotoUrl || '',
-                        userGalleryUrl: (userData as any).userGalleryUrl || [],
-                        userCreatedDrafts: userData.userCreatedDrafts || [],
-                        userId: userData.userId || userAuthID,
-                        userJoined: userData.userJoined || '',
-                        userProfession: (userData as any).userProfession || '',
-                        userExperience: (userData as any).userExperience || '',
-                        userChannelUrl: userData.userChannelUrl || '',
-                        userCategories: userData.userCategories || [],
-                        userDirection: userData.userDirection || '',
-                        userDirectionDetails: (userData as any).userDirectionDetails || '',
-                        userCiudad: userData.userCiudad || '',
-                        userCodigoPostal: userData.userCodigoPostal || '',
-                        userRazonSocial: userData.userRazonSocial || '',
-                        userContactName: userData.userContactName || (userData as any).userContactName || '',
-                        userIdentificationType: (userData as any).userIdentificationType || 'CC',
-                        userIdentification: (userData as any).userIdentification || '',
-                        userDescription: (userData as any).userDescription || '',
-                        userWebSite: (userData as any).userWebSite || '',
-                    })
-
-                    // Load multi-channel contacts & multi-location
-                    setEmails(userData.emails || [])
-                    const loadedPhones = userData.phones || []
-                    if (loadedPhones.length > 0) {
-                        setPhones(loadedPhones)
-                    } else {
-                        const legacyPhone = (userData as any).userPhone || (userData as any).userTel || ''
-                        setPhones([{ number: legacyPhone, isPrimary: true, type: 'personal' }])
-                    }
-                    setSocialLinks(userData.socialLinks || [])
-                    setProperties(userData.properties || [])
-
-                    const rawLocations: UserLocationItem[] = (userData as any).userLocations || []
-                    if (rawLocations.length > 0) {
-                        setLocations(rawLocations)
-                    } else {
-                        setLocations([
-                            {
-                                id: 'loc_1',
-                                nombre: 'Ubicación Principal',
-                                direccion: userData.userDirection || '',
-                                ciudad: userData.userCiudad || 'Bogotá, Colombia',
-                                codigoPostal: userData.userCodigoPostal || '',
-                                isPrimary: true,
-                            },
-                        ])
-                    }
-
-                    // Load coverage zones
-                    setCoverageZones(userData.userZonasCobertura || [])
-                    setCoverageCityWide(userData.coberturaTodaLaCiudad || false)
-                    setIsAvailableNow(userData.isAvailableNow || false)
-
-                    setIsLoaded(true)
-
-                    // Load identity verification data if present
-                    const idVerification = (userData as any).identityVerification
-                    if (idVerification) {
-                        setIdDocType(idVerification.docType || 'cedula')
-                        setIdDocUrl(idVerification.docUrl || '')
-                        setIdVerificationStatus(idVerification.status || 'none')
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching user data:', error)
+        let roleToUse: UserRole | undefined = userRol.rol
+        if (!roleToUse) {
+            const localRole = localStorage.getItem('role')
+            if (localRole) {
+                const parsed = parseInt(JSON.parse(localRole))
+                if (!isNaN(parsed)) roleToUse = parsed as UserRole
             }
         }
+        if (!roleToUse) return
+
+        try {
+            const userData = await getUser({ userId: userAuthID, role: roleToUse })
+            if (userData) {
+                setUserEditInfo({
+                    userName: userData.userName || '',
+                    userMail: userData.userMail || '',
+                    userPhone: (userData as any).userPhone || '',
+                    userPhotoUrl: (userData as any).userPhotoUrl || '',
+                    userGalleryUrl: (userData as any).userGalleryUrl || [],
+                    userCreatedDrafts: userData.userCreatedDrafts || [],
+                    userId: userData.userId || userAuthID,
+                    userJoined: userData.userJoined || '',
+                    userProfession: (userData as any).userProfession || '',
+                    userExperience: (userData as any).userExperience || '',
+                    userChannelUrl: userData.userChannelUrl || '',
+                    userCategories: userData.userCategories || [],
+                    userDirection: userData.userDirection || '',
+                    userDirectionDetails: (userData as any).userDirectionDetails || '',
+                    userDepartamento: (userData as any).userDepartamento || 'Bogotá D.C.',
+                    userCiudad: userData.userCiudad || '',
+                    userCodigoPostal: userData.userCodigoPostal || '',
+                    userRazonSocial: userData.userRazonSocial || '',
+                    userContactName: userData.userContactName || (userData as any).userContactName || '',
+                    userIdentificationType: (userData as any).userIdentificationType || 'CC',
+                    userIdentification: (userData as any).userIdentification || '',
+                    userDescription: (userData as any).userDescription || '',
+                    userWebSite: (userData as any).userWebSite || '',
+                })
+
+                // Load multi-channel contacts & multi-location
+                setEmails(userData.emails || [])
+                const loadedPhones = userData.phones || []
+                if (loadedPhones.length > 0) {
+                    setPhones(loadedPhones)
+                } else {
+                    const legacyPhone = (userData as any).userPhone || (userData as any).userTel || ''
+                    setPhones([{ number: legacyPhone, isPrimary: true, type: 'personal' }])
+                }
+                setSocialLinks(userData.socialLinks || [])
+                setProperties(userData.properties || [])
+
+                const rawLocations: UserLocationItem[] = (userData as any).userLocations || []
+                if (rawLocations.length > 0) {
+                    setLocations(rawLocations.map(l => ({ ...l, departamento: l.departamento || (userData as any).userDepartamento || 'Bogotá D.C.' })))
+                } else {
+                    setLocations([
+                        {
+                            id: 'loc_1',
+                            nombre: 'Ubicación Principal',
+                            direccion: userData.userDirection || '',
+                            departamento: (userData as any).userDepartamento || 'Bogotá D.C.',
+                            ciudad: userData.userCiudad || 'Bogotá, Colombia',
+                            codigoPostal: userData.userCodigoPostal || '',
+                            isPrimary: true,
+                        },
+                    ])
+                }
+
+                // Load coverage zones
+                setCoverageZones(userData.userZonasCobertura || [])
+                setCoverageCityWide(userData.coberturaTodaLaCiudad || false)
+                setIsAvailableNow(userData.isAvailableNow || false)
+
+                setIsLoaded(true)
+
+                // Load identity verification data if present
+                const idVerification = (userData as any).identityVerification
+                if (idVerification) {
+                    setIdDocType(idVerification.docType || 'cedula')
+                    setIdDocUrl(idVerification.docUrl || '')
+                    setIdVerificationStatus(idVerification.status || 'none')
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error)
+        }
+    }, [userAuthID, userRol.rol])
+
+    // Fetch user data
+    useEffect(() => {
+        fetchUserData()
 
         if (!userRol.rol) {
             const localRole = localStorage.getItem('role')
@@ -270,11 +278,7 @@ export default function Page() {
                 }
             }
         }
-
-        if (!isLoaded && userAuthID) {
-            fetchUserData()
-        }
-    }, [isLoaded, userAuthID, userRol.rol])
+    }, [fetchUserData, userRol.rol])
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setUserEditInfo({
@@ -379,6 +383,7 @@ export default function Page() {
             id: `loc_${Date.now()}_${locations.length + 1}`,
             nombre: locations.length === 0 ? 'Ubicación Principal' : `Sede / Ubicación ${locations.length + 1}`,
             direccion: '',
+            departamento: userEditInfo.userDepartamento || 'Bogotá D.C.',
             ciudad: userEditInfo.userCiudad || 'Bogotá, Colombia',
             codigoPostal: '',
             isPrimary: locations.length === 0,
@@ -408,6 +413,7 @@ export default function Page() {
     const handleMapLocationSelected = (locInfo: any) => {
         if (activeLocationIdxForMap !== null && locations[activeLocationIdxForMap]) {
             const updatedDir = locInfo.userDirection || locInfo.street || locations[activeLocationIdxForMap].direccion
+            const updatedDep = locInfo.state || locInfo.department || locations[activeLocationIdxForMap].departamento || userEditInfo.userDepartamento || 'Bogotá D.C.'
             const updatedCity = locInfo.userCiudad || locInfo.city || locations[activeLocationIdxForMap].ciudad
             const updatedPostal = locInfo.userCodigoPostal || locInfo.postalCode || locations[activeLocationIdxForMap].codigoPostal
 
@@ -417,6 +423,7 @@ export default function Page() {
                         ? {
                             ...loc,
                             direccion: updatedDir,
+                            departamento: updatedDep,
                             ciudad: updatedCity,
                             codigoPostal: updatedPostal,
                             lat: locInfo.lat || loc.lat,
@@ -445,6 +452,7 @@ export default function Page() {
                 data: {
                     userLocations: locations,
                     userDirection: primaryLoc?.direccion || '',
+                    userDepartamento: primaryLoc?.departamento || userEditInfo.userDepartamento || 'Bogotá D.C.',
                     userCiudad: primaryLoc?.ciudad || '',
                     userCodigoPostal: primaryLoc?.codigoPostal || '',
                 },
@@ -453,6 +461,7 @@ export default function Page() {
             setUserEditInfo((prev) => ({
                 ...prev,
                 userDirection: primaryLoc?.direccion || '',
+                userDepartamento: primaryLoc?.departamento || userEditInfo.userDepartamento || 'Bogotá D.C.',
                 userCiudad: primaryLoc?.ciudad || '',
                 userCodigoPostal: primaryLoc?.codigoPostal || '',
             }))
@@ -888,7 +897,7 @@ export default function Page() {
                             className="btn btn-primary"
                             size="small"
                             onClick={() => handleSaveSection([
-                                'userDirection', 'userDirectionDetails', 'userCiudad', 'userCodigoPostal',
+                                'userDepartamento', 'userDirection', 'userDirectionDetails', 'userCiudad', 'userCodigoPostal',
                             ])}
                         >
                             Guardar
@@ -896,6 +905,12 @@ export default function Page() {
                     </div>
 
                     <div className={styles['info-pills']}>
+                        <div className={styles['info-pill']}>
+                            <span className={styles['info-pill__label']}>Departamento</span>
+                            <span className={styles['info-pill__value']}>
+                                {userEditInfo.userDepartamento || '—'}
+                            </span>
+                        </div>
                         <div className={styles['info-pill']}>
                             <span className={styles['info-pill__label']}>Dirección</span>
                             <span className={styles['info-pill__value']}>
@@ -909,7 +924,7 @@ export default function Page() {
                             </span>
                         </div>
                         <div className={styles['info-pill']}>
-                            <span className={styles['info-pill__label']}>Ciudad</span>
+                            <span className={styles['info-pill__label']}>Ciudad / Municipio</span>
                             <span className={styles['info-pill__value']}>
                                 {userEditInfo.userCiudad || '—'}
                             </span>
@@ -932,10 +947,31 @@ export default function Page() {
                             size="small"
                             sx={{ flex: 2, minWidth: 220 }}
                         />
+                        <Autocomplete
+                            freeSolo
+                            options={departamentosColombia}
+                            size="small"
+                            value={userEditInfo.userDepartamento || 'Bogotá D.C.'}
+                            onChange={(_, newValue) => {
+                                setUserEditInfo((prev) => ({ ...prev, userDepartamento: newValue || '' }))
+                            }}
+                            onInputChange={(_, newInputValue) => {
+                                setUserEditInfo((prev) => ({ ...prev, userDepartamento: newInputValue }))
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...(params as unknown as Record<string, unknown>)}
+                                    label="Departamento"
+                                    placeholder="Ej: Meta, Huila, Cundinamarca"
+                                    size="small"
+                                />
+                            )}
+                            sx={{ flex: 1.2, minWidth: 170 }}
+                        />
                         <TextField
                             id="userCiudad"
                             name="userCiudad"
-                            label="Ciudad"
+                            label="Ciudad / Municipio"
                             value={userEditInfo.userCiudad}
                             onChange={handleChange}
                             size="small"
@@ -1262,6 +1298,18 @@ export default function Page() {
                             Agregar red social
                         </Button>
                     </div>
+                </div>
+
+                {/* ===================== Card 6: Métodos de Acceso y Seguridad ===================== */}
+                <div className={styles['settings-card']}>
+                    <div className={styles['card-header']}>
+                        <h2 className={styles['card-title']}>Métodos de Acceso y Seguridad</h2>
+                    </div>
+                    <AuthProvidersManager
+                        userId={userAuthID}
+                        userRole={userRol.rol as 1 | 2}
+                        onSyncUser={fetchUserData}
+                    />
                 </div>
             </div>
 
