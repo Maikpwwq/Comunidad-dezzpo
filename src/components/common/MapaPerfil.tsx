@@ -4,12 +4,12 @@ import { Container, Row, Col } from 'react-bootstrap'
 
 interface MapaPerfilProps {
     userInfo: {
-        userId?: string | null
-        userRazonSocial?: string | null
-        userName?: string | null
-        userDirection?: string | null
-        userCiudad?: string | null
-        userCodigoPostal?: string | null
+        userId?: string | null | undefined
+        userRazonSocial?: string | null | undefined
+        userName?: string | null | undefined
+        userDirection?: string | null | undefined
+        userCiudad?: string | null | undefined
+        userCodigoPostal?: string | null | undefined
         [key: string]: any
     }
 }

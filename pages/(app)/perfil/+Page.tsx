@@ -27,6 +27,7 @@ import { Row, Col, Container } from 'react-bootstrap'
 import {
     Box,
     Button,
+    IconButton,
     Tooltip,
     Typography,
     Skeleton,
@@ -325,13 +326,37 @@ export default function Page() {
                     >
                         {userInfo?.userName || userInfo?.userRazonSocial || 'Usuario'}{' '}
                         {!!userInfo?.userWebSite && (
-                            <Tooltip title="Copiar sitio web">
-                                <LinkIcon
-                                    onClick={copyUserWebSiteLink}
-                                    fontSize="large"
-                                    className={clsx(styles.LinkIcon)}
-                                />
-                            </Tooltip>
+                            <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, verticalAlign: 'middle' }}>
+                                <Tooltip title="Copiar sitio web">
+                                    <IconButton
+                                        size="small"
+                                        onClick={copyUserWebSiteLink}
+                                        aria-label="Copiar enlace del sitio web"
+                                        sx={{ color: 'inherit', p: 0.5 }}
+                                    >
+                                        <LinkIcon
+                                            fontSize="medium"
+                                            className={clsx(styles.LinkIcon)}
+                                        />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Visitar sitio web">
+                                    <IconButton
+                                        size="small"
+                                        component="a"
+                                        href={userInfo.userWebSite.match(/^https?:\/\//i) ? userInfo.userWebSite : `https://${userInfo.userWebSite}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label="Visitar sitio web en nueva pestaña"
+                                        sx={{ color: 'inherit', p: 0.5 }}
+                                    >
+                                        <OpenInNewIcon
+                                            fontSize="medium"
+                                            className={clsx(styles.LinkIcon)}
+                                        />
+                                    </IconButton>
+                                </Tooltip>
+                            </Box>
                         )}
                     </Typography>
                     {userInfo?.userRazonSocial && userInfo?.userName && userInfo.userRazonSocial !== userInfo.userName && (
@@ -364,144 +389,172 @@ export default function Page() {
                     </span>
                 </Box>
 
+                {/* ── Chips Section ── */}
                 <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                    <Col md={10} className="col-10 pt-4 pb-4">
-                        <Typography
-                            variant="h5"
-                            className={clsx(styles.SectionTitle)}
-                            align="left"
-                        >
-                            Datos de contacto
-                        </Typography>
-                        {(() => {
-                            const activeEmails = (userInfo.emails || []).filter((e) => e.address && e.address.trim() !== '')
-                            const displayEmails = activeEmails.length > 0
-                                ? activeEmails
-                                : (userInfo.userMail ? [{ address: userInfo.userMail, isPrimary: true, verified: false }] : [])
+                    <Col md={10} className="col-10 py-4">
+                        {userInfo.userCategoriesChips.length > 0 && (
+                            <>
+                                <Typography
+                                    variant="h5"
+                                    className={clsx(styles.SectionTitle, "py-4")}
+                                    align="left"
+                                >
+                                    Habilidades
+                                </Typography>
 
-                            const activePhones = (userInfo.phones || []).filter((p) => p.number && p.number.trim() !== '')
-                            const displayPhones = activePhones.length > 0
-                                ? activePhones
-                                : (userInfo.userPhone ? [{ number: userInfo.userPhone, isPrimary: true, type: 'personal' as const }] : [])
-
-                            const hasContacts = displayEmails.length > 0 || displayPhones.length > 0
-
-                            if (!hasContacts) {
-                                return (
-                                    <Typography variant="body2" className="body-2" style={{ color: '#888' }}>
-                                        No hay canales directos de contacto registrados
-                                    </Typography>
-                                )
-                            }
-
-                            return (
-                                <Box className={clsx(styles.ContactCard)}>
-                                    {displayEmails.length > 0 && (
-                                        <div className={styles.ContactGroup}>
-                                            <span className={styles.ContactGroupTitle}>
-                                                <MailIcon fontSize="small" /> Correos electrónicos
-                                            </span>
-                                            <div className={styles.ContactList}>
-                                                {displayEmails.map((email, idx) => (
-                                                    <a
-                                                        key={`email-${idx}`}
-                                                        href={`mailto:${email.address}`}
-                                                        className={styles.ContactItemLink}
-                                                        aria-label={`Enviar correo a ${email.address}`}
-                                                    >
-                                                        <MailIcon className={styles.ContactItemIcon || ''} />
-                                                        <span className={styles.ContactItemText}>{email.address}</span>
-                                                        {email.isPrimary && (
-                                                            <span className={styles.ContactPrimaryBadge}>Principal</span>
-                                                        )}
-                                                    </a>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {displayPhones.length > 0 && (
-                                        <div className={styles.ContactGroup}>
-                                            <span className={styles.ContactGroupTitle}>
-                                                <PhoneIphoneIcon fontSize="small" /> Teléfonos de contacto
-                                            </span>
-                                            <div className={styles.ContactList}>
-                                                {displayPhones.map((phone, idx) => {
-                                                    const cleanPhone = phone.number.replace(/\s+/g, '')
-                                                    return (
-                                                        <a
-                                                            key={`phone-${idx}`}
-                                                            href={`tel:${cleanPhone}`}
-                                                            className={styles.ContactItemLink}
-                                                            aria-label={`Llamar al teléfono ${phone.number}`}
-                                                        >
-                                                            <PhoneIphoneIcon className={styles.ContactItemIcon || ''} />
-                                                            <span className={styles.ContactItemText}>{phone.number}</span>
-                                                            {phone.type === 'trabajo' && (
-                                                                <span className={styles.ContactTypeBadge}>Trabajo</span>
-                                                            )}
-                                                            {phone.isPrimary && (
-                                                                <span className={styles.ContactPrimaryBadge}>Principal</span>
-                                                            )}
-                                                        </a>
-                                                    )
-                                                })}
-                                            </div>
-                                        </div>
-                                    )}
-                                </Box>
-                            )
-                        })()}
+                                <div className={styles.ChipsSection || ''}>
+                                    <ChipsCategories
+                                        listadoCategorias={userInfo.userCategoriesChips}
+                                        editableContent={false}
+                                    />
+                                </div>
+                            </>
+                        )}
                     </Col>
                 </Row>
 
-                {/* ── Social Links Section ── */}
+                {/* ── Datos de contacto & Redes Sociales Section ── */}
                 <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                    <Col md={10} className="col-10 pt-2 pb-4">
-                        <Typography
-                            variant="h5"
-                            className={clsx(styles.SectionTitle)}
-                            align="left"
-                        >
-                            Redes Sociales
-                        </Typography>
-                        {(() => {
-                            const visibleLinks = (userInfo.socialLinks || [])
-                                .filter((sl) => sl.isVisible)
-                                .sort((a, b) => a.priority - b.priority)
+                    <Col md={10} className="col-10 pt-4 pb-4">
+                        <Row className="g-4 align-items-start">
+                            {/* Datos de contacto (2/3 width on desktop) */}
+                            <Col lg={8} md={7} xs={12}>
+                                <Typography
+                                    variant="h5"
+                                    className={clsx(styles.SectionTitle)}
+                                    align="left"
+                                >
+                                    Datos de contacto
+                                </Typography>
+                                {(() => {
+                                    const activeEmails = (userInfo.emails || []).filter((e) => e.address && e.address.trim() !== '')
+                                    const displayEmails = activeEmails.length > 0
+                                        ? activeEmails
+                                        : (userInfo.userMail ? [{ address: userInfo.userMail, isPrimary: true, verified: false }] : [])
 
-                            if (visibleLinks.length === 0) {
-                                return (
-                                    <Typography variant="body2" className="body-2" style={{ color: '#888' }}>
-                                        No hay canales de comunicación configurados
-                                    </Typography>
-                                )
-                            }
+                                    const activePhones = (userInfo.phones || []).filter((p) => p.number && p.number.trim() !== '')
+                                    const displayPhones = activePhones.length > 0
+                                        ? activePhones
+                                        : (userInfo.userPhone ? [{ number: userInfo.userPhone, isPrimary: true, type: 'personal' as const }] : [])
 
-                            return (
-                                <div className={styles.SocialLinksGrid || ''}>
-                                    {visibleLinks.map((sl) => (
-                                        <a
-                                            key={sl.id}
-                                            href={sl.url.match(/^https?:\/\//) ? sl.url : `https://${sl.url}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={styles.SocialLinkChip || ''}
-                                        >
-                                            <span className={styles.SocialLinkChipName || ''}>
-                                                {PLATFORM_CONFIG[sl.platform].name}
-                                            </span>
-                                            {sl.label && (
-                                                <span className={styles.SocialLinkChipLabel || ''}>
-                                                    {sl.label}
-                                                </span>
+                                    const hasContacts = displayEmails.length > 0 || displayPhones.length > 0
+
+                                    if (!hasContacts) {
+                                        return (
+                                            <Typography variant="body2" className="body-2" style={{ color: '#888' }}>
+                                                No hay canales directos de contacto registrados
+                                            </Typography>
+                                        )
+                                    }
+
+                                    return (
+                                        <Box className={clsx(styles.ContactCard)}>
+                                            {displayEmails.length > 0 && (
+                                                <div className={styles.ContactGroup}>
+                                                    <span className={styles.ContactGroupTitle}>
+                                                        Correos electrónicos
+                                                    </span>
+                                                    <div className={styles.ContactList}>
+                                                        {displayEmails.map((email, idx) => (
+                                                            <a
+                                                                key={`email-${idx}`}
+                                                                href={`mailto:${email.address}`}
+                                                                className={styles.ContactItemLink}
+                                                                aria-label={`Enviar correo a ${email.address}`}
+                                                            >
+                                                                <MailIcon className={styles.ContactItemIcon || ''} />
+                                                                <span className={styles.ContactItemText}>{email.address}</span>
+                                                                {email.isPrimary && (
+                                                                    <span className={styles.ContactPrimaryBadge}>Principal</span>
+                                                                )}
+                                                            </a>
+                                                        ))}
+                                                    </div>
+                                                </div>
                                             )}
-                                            <OpenInNewIcon fontSize="small" />
-                                        </a>
-                                    ))}
-                                </div>
-                            )
-                        })()}
+
+                                            {displayPhones.length > 0 && (
+                                                <div className={styles.ContactGroup}>
+                                                    <span className={styles.ContactGroupTitle}>
+                                                        Teléfonos de contacto
+                                                    </span>
+                                                    <div className={styles.ContactList}>
+                                                        {displayPhones.map((phone, idx) => {
+                                                            const cleanPhone = phone.number.replace(/\s+/g, '')
+                                                            return (
+                                                                <a
+                                                                    key={`phone-${idx}`}
+                                                                    href={`tel:${cleanPhone}`}
+                                                                    className={styles.ContactItemLink}
+                                                                    aria-label={`Llamar al teléfono ${phone.number}`}
+                                                                >
+                                                                    <PhoneIphoneIcon className={styles.ContactItemIcon || ''} />
+                                                                    <span className={styles.ContactItemText}>{phone.number}</span>
+                                                                    {phone.type === 'trabajo' && (
+                                                                        <span className={styles.ContactTypeBadge}>Trabajo</span>
+                                                                    )}
+                                                                    {phone.isPrimary && (
+                                                                        <span className={styles.ContactPrimaryBadge}>Principal</span>
+                                                                    )}
+                                                                </a>
+                                                            )
+                                                        })}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Box>
+                                    )
+                                })()}
+                            </Col>
+
+                            {/* Redes Sociales (1/3 width on desktop) */}
+                            <Col lg={4} md={5} xs={12}>
+                                <Typography
+                                    variant="h5"
+                                    className={clsx(styles.SectionTitle)}
+                                    align="left"
+                                >
+                                    Redes Sociales
+                                </Typography>
+                                {(() => {
+                                    const visibleLinks = (userInfo.socialLinks || [])
+                                        .filter((sl) => sl.isVisible)
+                                        .sort((a, b) => a.priority - b.priority)
+
+                                    if (visibleLinks.length === 0) {
+                                        return (
+                                            <Typography variant="body2" className="body-2" style={{ color: '#888' }}>
+                                                No hay canales de comunicación configurados
+                                            </Typography>
+                                        )
+                                    }
+
+                                    return (
+                                        <div className={styles.SocialLinksGrid || ''}>
+                                            {visibleLinks.map((sl) => (
+                                                <a
+                                                    key={sl.id}
+                                                    href={sl.url.match(/^https?:\/\//) ? sl.url : `https://${sl.url}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className={styles.SocialLinkChip || ''}
+                                                >
+                                                    <span className={styles.SocialLinkChipName || ''}>
+                                                        {PLATFORM_CONFIG[sl.platform]?.name || sl.platform}
+                                                    </span>
+                                                    {sl.label && (
+                                                        <span className={styles.SocialLinkChipLabel || ''}>
+                                                            {sl.label}
+                                                        </span>
+                                                    )}
+                                                    <OpenInNewIcon fontSize="small" />
+                                                </a>
+                                            ))}
+                                        </div>
+                                    )
+                                })()}
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
 
@@ -542,28 +595,7 @@ export default function Page() {
                     </Col>
                 </Row>
 
-                <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                    <Col md={10} className="col-10 py-4">
-                        {userInfo.userCategoriesChips.length > 0 && (
-                            <>
-                                <Typography
-                                    variant="h5"
-                                    className={clsx(styles.SectionTitle, "py-4")}
-                                    align="left"
-                                >
-                                    Habilidades
-                                </Typography>
 
-                                <div className={styles.ChipsSection || ''}>
-                                    <ChipsCategories
-                                        listadoCategorias={userInfo.userCategoriesChips}
-                                        editableContent={false}
-                                    />
-                                </div>
-                            </>
-                        )}
-                    </Col>
-                </Row>
 
                 <Row className="p-0 m-0 w-100 d-flex align-items-start">
                     <Col className="col-10 py-4">
@@ -576,27 +608,32 @@ export default function Page() {
                                 >
                                     Portafolio
                                 </Typography>
-                                <Row className="w-100 pb-4">
+                                <Row className="w-100 g-4 pb-4">
                                     {userInfo.userGalleryUrl.map((imagen: string, index: number) => (
-                                        <Box
-                                            key={index}
-                                            component="img"
-                                            src={imagen || ''}
-                                            alt="galleria-usuario"
-                                            className={clsx(styles.GalleryImage)}
-                                        />
+                                         <Col key={index} lg={6} md={6} xs={12} className="d-flex justify-content-center">
+                                             <Box className={clsx(styles.GalleryCard)}>
+                                                 <Box
+                                                     component="img"
+                                                     src={imagen || ''}
+                                                     alt={`Publicación ${index + 1} de ${userInfo.userName || 'comercio'}`}
+                                                     className={clsx(styles.GalleryImage)}
+                                                 />
+                                             </Box>
+                                         </Col>
                                     ))}
 
                                     {isOwnProfile && currentUserId && (
-                                        <AdjuntarArchivos
-                                            name={'galleryPhoto'}
-                                            multiple={true}
-                                            idPerson={currentUserId}
-                                            rol={viewerRole}
-                                            route={`profiles/${currentUserId}`}
-                                            functionState={setUserInfo}
-                                            state={userInfo}
-                                        />
+                                         <Col xs={12} className="mt-3">
+                                             <AdjuntarArchivos
+                                                 name={'galleryPhoto'}
+                                                 multiple={true}
+                                                 idPerson={currentUserId}
+                                                 rol={viewerRole}
+                                                 route={`profiles/${currentUserId}`}
+                                                 functionState={setUserInfo}
+                                                 state={userInfo}
+                                             />
+                                         </Col>
                                     )}
                                 </Row>
                             </>
