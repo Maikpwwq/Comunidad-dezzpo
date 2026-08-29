@@ -649,5 +649,21 @@ src/styles/
   - `META_PAGE_ACCESS_TOKEN`: System User Token with 60-day TTL
   - `META_PAGE_ID`: `375828669832688`
   - `META_BUSINESS_ID`: `350306805830712`
+  - `META_WEBHOOK_VERIFY_TOKEN`: Verification token for Webhook subscriptions
+
+### Meta Webhooks & Real-Time Ingestion (`server/api/meta/webhook.ts`)
+- **Subscription Architecture**: Eliminates polling overhead by receiving real-time event notifications (`GET` challenge handshake + `POST` signed event payloads).
+- **HMAC-SHA256 Security**: Every incoming POST notification is verified against the `X-Hub-Signature-256` header using `META_APP_SECRET`.
+- **Endpoints Registered**:
+  - `GET /api/v1/meta/webhook` (Handshake verification challenge with `hub.mode`, `hub.verify_token`, `hub.challenge`).
+  - `POST /api/v1/meta/webhook` (Real-time feed, post and comment event ingestion).
+  - `POST /api/v1/meta/data-deletion` (GDPR user data deletion callback handler).
+- **Meta Developers App Settings Guide**:
+  - **Valid OAuth Redirect URIs**: `https://dezzpo.com/`, `https://dezzpo.com/auth/callback`, `https://comunidad-dezzpo.vercel.app/`
+  - **Webhook Callback URL**: `https://dezzpo.com/api/v1/meta/webhook` (or `https://comunidad-dezzpo.vercel.app/api/v1/meta/webhook`)
+  - **Verify Token**: Matching `META_WEBHOOK_VERIFY_TOKEN`
+  - **User Data Deletion Callback URL**: `https://dezzpo.com/api/v1/meta/data-deletion`
+  - **Server IP Allowlist**: Must remain **empty/disabled** in serverless/Edge deployment (Vercel) to prevent blocking dynamic Anycast egress IPs.
+
 
 

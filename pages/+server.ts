@@ -17,6 +17,8 @@ import { emailNotificationHandler } from '../server/api/notifications/email.ts'
 import { fanoutNotificationHandler } from '../server/api/notifications/fanout.ts'
 import { trustScoreHandler } from '../server/api/trust-score.ts'
 import { reviewRequestsHandler } from '../server/api/review-requests.ts'
+import { metaWebhookGetHandler, metaWebhookPostHandler } from '../server/api/meta/webhook.ts'
+import { metaDataDeletionHandler } from '../server/api/meta/data-deletion.ts'
 
 const app = new Hono()
 
@@ -125,6 +127,19 @@ app.post('/api/v1/cron/review-requests', async (c) => {
     console.error('[/api/v1/cron/review-requests] Route error:', message)
     return c.json({ error: message || 'Review requests cron failed' }, 500)
   }
+})
+
+// Meta Graph API Webhooks & Data Deletion
+app.get('/api/v1/meta/webhook', async (c) => {
+  return await metaWebhookGetHandler(c)
+})
+
+app.post('/api/v1/meta/webhook', async (c) => {
+  return await metaWebhookPostHandler(c)
+})
+
+app.post('/api/v1/meta/data-deletion', async (c) => {
+  return await metaDataDeletionHandler(c)
 })
 
 vike(app)
