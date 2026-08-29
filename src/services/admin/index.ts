@@ -19,6 +19,7 @@ export {
     getReferralDashboardStats,
     getUserClassificationBreakdown,
     getMultiStreamMonetization,
+    getSocialInterceptorStats,
 } from './adminService'
 
 export type {
@@ -36,4 +37,5 @@ export type {
     ClassificationBreakdownItem,
     UserClassificationBreakdown,
     MultiStreamMonetizationStats,
+    SocialInterceptorStats,
 } from './adminService'

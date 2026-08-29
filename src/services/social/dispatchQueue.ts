@@ -56,6 +56,9 @@ export class DispatchQueue {
    * Checks if current time falls within configured quiet hours.
    */
   public isQuietHour(now: Date = new Date()): boolean {
+    if (this.quietHoursStart === -1 || this.quietHoursStart === this.quietHoursEnd) {
+      return false
+    }
     const hour = now.getHours()
     if (this.quietHoursStart > this.quietHoursEnd) {
       // Overnight (e.g. 23:00 to 06:00)

@@ -28,6 +28,10 @@ import CategoryIcon from '@mui/icons-material/Category'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import HandshakeIcon from '@mui/icons-material/Handshake'
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
+import HubIcon from '@mui/icons-material/Hub'
+import SpeedIcon from '@mui/icons-material/Speed'
+import ShareIcon from '@mui/icons-material/Share'
+import ShieldIcon from '@mui/icons-material/Shield'
 
 import {
     PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -44,6 +48,7 @@ import {
     getReferralDashboardStats,
     getUserClassificationBreakdown,
     getMultiStreamMonetization,
+    getSocialInterceptorStats,
     type AdminStats,
     type ContractStats,
     type FunnelMetric,
@@ -53,6 +58,7 @@ import {
     type ReferralDashboardStats,
     type UserClassificationBreakdown,
     type MultiStreamMonetizationStats,
+    type SocialInterceptorStats,
 } from '@services/admin'
 
 import { PRICING } from '@config/pricing.config'
@@ -73,6 +79,7 @@ export default function Page() {
     const [referrals, setReferrals] = useState<ReferralDashboardStats | null>(null)
     const [classificationBreakdown, setClassificationBreakdown] = useState<UserClassificationBreakdown | null>(null)
     const [monetizationStreams, setMonetizationStreams] = useState<MultiStreamMonetizationStats | null>(null)
+    const [socialStats, setSocialStats] = useState<SocialInterceptorStats | null>(null)
     const [loading, setLoading] = useState(true)
 
     // Filter tab for User Classification breakdown (categories, classifications, grades)
@@ -82,7 +89,7 @@ export default function Page() {
         async function loadData() {
             setLoading(true)
             try {
-                const [s, c, f, z, r, cert, ref, cls, mon] = await Promise.all([
+                const [s, c, f, z, r, cert, ref, cls, mon, soc] = await Promise.all([
                     getAdminStats(),
                     getContractStats(),
                     getFunnelMetrics(),
@@ -92,6 +99,7 @@ export default function Page() {
                     getReferralDashboardStats(),
                     getUserClassificationBreakdown(),
                     getMultiStreamMonetization(),
+                    getSocialInterceptorStats(),
                 ])
                 setStats(s)
                 setContracts(c)
@@ -102,6 +110,7 @@ export default function Page() {
                 setReferrals(ref)
                 setClassificationBreakdown(cls)
                 setMonetizationStreams(mon)
+                setSocialStats(soc)
             } catch (err) {
                 console.error('Error loading admin dashboard data:', err)
             } finally {
@@ -419,6 +428,110 @@ export default function Page() {
                                 <Bar dataKey="count" fill="#9c27b0" radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
+                    )}
+                </Paper>
+
+                {/* Social Growth & Meta Interceptor Live Control Tower */}
+                <Paper sx={{ p: 3, borderRadius: 3, gridColumn: { xs: '1 / -1', lg: '1 / -1' } }} elevation={0} variant="outlined">
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                            <Box sx={{ p: 1, bgcolor: '#1877f214', borderRadius: 2, display: 'flex' }}>
+                                <ShareIcon sx={{ color: '#1877f2' }} />
+                            </Box>
+                            <Box>
+                                <Typography variant="h6" fontWeight={700}>
+                                    Automatización Social & Meta Graph API v19.0+
+                                </Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                    Monitor de interceptor de demanda, cuotas anti-baneo y despachos inteligentes
+                                </Typography>
+                            </Box>
+                        </Box>
+                        <Chip
+                            icon={<ShieldIcon />}
+                            label={socialStats?.breakerState === 'CLOSED' ? 'Circuito Seguro (<80% Cuota)' : 'Circuito Pausado'}
+                            color={socialStats?.breakerState === 'CLOSED' ? 'success' : 'warning'}
+                            size="small"
+                            sx={{ fontWeight: 700 }}
+                        />
+                    </Box>
+
+                    {/* Social Sub-KPIs */}
+                    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 2, mb: 3 }}>
+                        <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
+                            <Typography variant="caption" color="text.secondary" fontWeight={600}>Total Intercepciones</Typography>
+                            <Typography variant="h5" fontWeight={800} color="#0f172a">{socialStats?.totalInterceptions ?? 0}</Typography>
+                            <Typography variant="caption" color="#64748b">{socialStats?.demandInterceptions ?? 0} Demanda | {socialStats?.supplyInterceptions ?? 0} Oferta</Typography>
+                        </Box>
+                        <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
+                            <Typography variant="caption" color="text.secondary" fontWeight={600}>Comentarios Despachados</Typography>
+                            <Typography variant="h5" fontWeight={800} color="#00897b">{socialStats?.dispatchedComments ?? 0}</Typography>
+                            <Typography variant="caption" color="#64748b">Jitter 45s-120s (FIFO)</Typography>
+                        </Box>
+                        <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
+                            <Typography variant="caption" color="text.secondary" fontWeight={600}>Consumo Cuota Meta API</Typography>
+                            <Typography variant="h5" fontWeight={800} color={socialStats && socialStats.appUsage.callCountPercent >= 80 ? '#f44336' : '#1877f2'}>
+                                {socialStats?.appUsage.callCountPercent ?? 0}%
+                            </Typography>
+                            <Typography variant="caption" color="#64748b">Umbral de Corte: 80%</Typography>
+                        </Box>
+                        <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
+                            <Typography variant="caption" color="text.secondary" fontWeight={600}>Simulaciones en Dev (MCP)</Typography>
+                            <Typography variant="h5" fontWeight={800} color="#9c27b0">{socialStats?.simulatedComments ?? 0}</Typography>
+                            <Typography variant="caption" color="#64748b">Pruebas Seguras IDE</Typography>
+                        </Box>
+                    </Box>
+
+                    {/* Recent Events Table */}
+                    <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1 }}>
+                        Registro de Intercepciones Recientes
+                    </Typography>
+                    {loading ? (
+                        <Skeleton variant="rectangular" height={160} sx={{ borderRadius: 2 }} />
+                    ) : (socialStats?.recentEvents.length ?? 0) === 0 ? (
+                        <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
+                            No hay eventos de intercepción registrados.
+                        </Typography>
+                    ) : (
+                        <Box sx={{ overflowX: 'auto' }}>
+                            <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8125rem' }}>
+                                <Box component="thead">
+                                    <Box component="tr" sx={{ borderBottom: '2px solid #e2e8f0', textAlign: 'left', color: '#64748b' }}>
+                                        <Box component="th" sx={{ py: 1, px: 1.5 }}>Autor / Post</Box>
+                                        <Box component="th" sx={{ py: 1, px: 1.5 }}>Intención</Box>
+                                        <Box component="th" sx={{ py: 1, px: 1.5 }}>Oficio</Box>
+                                        <Box component="th" sx={{ py: 1, px: 1.5 }}>Copy ID</Box>
+                                        <Box component="th" sx={{ py: 1, px: 1.5 }}>Estado</Box>
+                                    </Box>
+                                </Box>
+                                <Box component="tbody">
+                                    {socialStats?.recentEvents.map((evt) => (
+                                        <Box component="tr" key={evt.id} sx={{ borderBottom: '1px solid #f1f5f9', '&:hover': { bgcolor: '#f8fafc' } }}>
+                                            <Box component="td" sx={{ py: 1.2, px: 1.5, fontWeight: 600 }}>{evt.authorName}</Box>
+                                            <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
+                                                <Chip
+                                                    label={evt.intent === 'DEMAND' ? 'DEMANDA' : 'OFERTA'}
+                                                    color={evt.intent === 'DEMAND' ? 'primary' : 'secondary'}
+                                                    size="small"
+                                                    sx={{ fontSize: '0.7rem', height: 20 }}
+                                                />
+                                            </Box>
+                                            <Box component="td" sx={{ py: 1.2, px: 1.5, textTransform: 'capitalize' }}>{evt.detectedTrade}</Box>
+                                            <Box component="td" sx={{ py: 1.2, px: 1.5, fontFamily: 'monospace' }}>{evt.copyId}</Box>
+                                            <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
+                                                <Chip
+                                                    label={evt.status}
+                                                    color={evt.status === 'dispatched' ? 'success' : 'default'}
+                                                    size="small"
+                                                    variant="outlined"
+                                                    sx={{ fontSize: '0.7rem', height: 20 }}
+                                                />
+                                            </Box>
+                                        </Box>
+                                    ))}
+                                </Box>
+                            </Box>
+                        </Box>
                     )}
                 </Paper>
             </Box>

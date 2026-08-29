@@ -60,8 +60,8 @@ describe('Facebook Interceptor Orchestrator', () => {
         pageAccessToken: 'token_123',
         jitterMinMs: 2,
         jitterMaxMs: 5,
-        quietHoursStart: 3,
-        quietHoursEnd: 4,
+        quietHoursStart: -1,
+        quietHoursEnd: -1,
       },
       { customFetch: mockFetch as unknown as typeof fetch }
     )

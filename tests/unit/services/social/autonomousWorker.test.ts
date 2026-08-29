@@ -59,8 +59,8 @@ describe('Autonomous Worker (Production Cron Engine)', () => {
         jitterMinMs: 5,
         jitterMaxMs: 10,
         maxCommentsPerHour: 10,
-        quietHoursStart: 3,
-        quietHoursEnd: 4,
+        quietHoursStart: -1,
+        quietHoursEnd: -1,
       },
       { customFetch: mockCustomFetch as unknown as typeof fetch }
     )

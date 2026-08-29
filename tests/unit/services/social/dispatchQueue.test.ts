@@ -11,8 +11,8 @@ describe('Social Dispatch Queue with Jitter', () => {
       jitterMinMs: 5, // Fast for testing
       jitterMaxMs: 10,
       maxCommentsPerHour: 3,
-      quietHoursStart: 3, // Set to 3 AM - 4 AM so it doesn't collide with 00:xx local time
-      quietHoursEnd: 4,
+      quietHoursStart: -1, // Disabled for testing
+      quietHoursEnd: -1,
     })
   })
 
