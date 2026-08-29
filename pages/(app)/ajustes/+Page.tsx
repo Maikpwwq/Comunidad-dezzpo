@@ -76,6 +76,7 @@ interface UserEditInfo {
     userMail: string
     userPhone: string
     userPhotoUrl: string
+    userCoverUrl?: string
     userGalleryUrl: string[]
     userCreatedDrafts: any[]
     userId: string
@@ -153,6 +154,7 @@ export default function Page() {
         userMail: '',
         userPhone: '',
         userPhotoUrl: '',
+        userCoverUrl: '',
         userGalleryUrl: [],
         userCreatedDrafts: [],
         userId: '',
@@ -195,6 +197,7 @@ export default function Page() {
                     userMail: userData.userMail || '',
                     userPhone: (userData as any).userPhone || '',
                     userPhotoUrl: (userData as any).userPhotoUrl || '',
+                    userCoverUrl: (userData as any).userCoverUrl || '',
                     userGalleryUrl: (userData as any).userGalleryUrl || [],
                     userCreatedDrafts: userData.userCreatedDrafts || [],
                     userId: userData.userId || userAuthID,

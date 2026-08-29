@@ -103,6 +103,7 @@ export default function Page() {
         userPhone: '',
         userChannelUrl: '',
         userPhotoUrl: ProfilePhoto,
+        userCoverUrl: '',
         userGalleryUrl: [],
         userCreatedDrafts: [],
         userId: '',
@@ -158,6 +159,7 @@ export default function Page() {
                             userChannelUrl: userData.userChannelUrl || '',
                             userPhone: userData.userPhone || '',
                             userPhotoUrl: userData.userPhotoUrl || ProfilePhoto,
+                            userCoverUrl: userData.userCoverUrl || '',
                             userId: userData.userId || '',
                             userMail: userData.userMail || '',
                             userName: userData.userName || '',
@@ -230,6 +232,7 @@ export default function Page() {
                         userChannelUrl: userData.userChannelUrl || '',
                         userPhone: userData.userPhone || '',
                         userPhotoUrl: userData.userPhotoUrl || ProfilePhoto,
+                        userCoverUrl: userData.userCoverUrl || '',
                         userId: userData.userId || '',
                         userMail: userData.userMail || '',
                         userName: userData.userName || '',
@@ -293,7 +296,38 @@ export default function Page() {
 
     return (
         <Container fluid className={clsx(styles.Container, "p-0")}>
-            <Col className={clsx(styles.GreenBackground, "col-12 w-100")}>
+            <Col
+                className={clsx(styles.GreenBackground, "col-12 w-100")}
+                style={userInfo.userCoverUrl ? { backgroundImage: `url(${userInfo.userCoverUrl})` } : undefined}
+            >
+                {userInfo.userCoverUrl && <div className={styles.CoverOverlay} />}
+
+                {isOwnProfile && currentUserId && (
+                    <div className={styles.CoverActionContainer}>
+                        <AdjuntarArchivos
+                            name="coverPhoto"
+                            multiple={false}
+                            idPerson={currentUserId}
+                            rol={viewerRole}
+                            route={`profiles/${currentUserId}`}
+                            functionState={setUserInfo}
+                            state={userInfo}
+                            variant="button"
+                            buttonText={userInfo.userCoverUrl ? 'Editar imagen de portada' : '+ Agregar imagen de portada'}
+                            tooltipTitle="Recomendado: 1584 x 396 px (Aspect Ratio 4:1)"
+                            aspectRatioHint="1584 x 396 px"
+                            sx={{
+                                backgroundColor: 'rgba(255, 255, 255, 0.92)',
+                                color: '#2e7d32',
+                                '&:hover': {
+                                    backgroundColor: '#ffffff',
+                                    color: '#1b5e20',
+                                }
+                            }}
+                        />
+                    </div>
+                )}
+
                 <Row className={clsx(styles.HeaderRow)}>
                     <div className={clsx(styles.ProfileImageContainer)}>
                         <img

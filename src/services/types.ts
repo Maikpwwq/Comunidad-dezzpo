@@ -113,6 +113,7 @@ export interface UserFirestoreDocument extends DocumentData {
     userRazonSocial?: string | undefined
     userContactName?: string | undefined
     userPhotoUrl?: string | undefined
+    userCoverUrl?: string | undefined
     userProfession?: string | undefined
     userExperience?: string | undefined
     userDescription?: string | undefined

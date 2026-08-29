@@ -190,6 +190,8 @@ export interface UserFirestoreDocument {
     userImage?: string
     userRazonSocial?: string
     userContactName?: string
+    userPhotoUrl?: string
+    userCoverUrl?: string
     userProfession?: string
     userExperience?: string
     userWebSite?: string

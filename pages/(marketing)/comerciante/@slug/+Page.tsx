@@ -60,6 +60,7 @@ export default function Page() {
         userMail = '',
         userPhone = '',
         userPhotoUrl = ProfilePhoto,
+        userCoverUrl = '',
         userGalleryUrl = [],
         userJoined = '',
         userProfession = '',
@@ -85,7 +86,7 @@ export default function Page() {
         '@type': 'LocalBusiness',
         'name': userRazonSocial || userName,
         'description': userDescription,
-        'image': userPhotoUrl,
+        'image': userCoverUrl ? [userCoverUrl, userPhotoUrl] : userPhotoUrl,
         'address': {
             '@type': 'PostalAddress',
             'addressLocality': userDirection || 'Bogotá',
@@ -147,7 +148,11 @@ export default function Page() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJson) }}
             />
 
-            <Col className={clsx(styles.GreenBackground, "col-12 w-100")}>
+            <Col
+                className={clsx(styles.GreenBackground, "col-12 w-100")}
+                style={userCoverUrl ? { backgroundImage: `url(${userCoverUrl})` } : undefined}
+            >
+                {userCoverUrl && <div className={styles.CoverOverlay} />}
                 <Row className={clsx(styles.HeaderRow)}>
                     <div className={clsx(styles.ProfileImageContainer)}>
                         <img

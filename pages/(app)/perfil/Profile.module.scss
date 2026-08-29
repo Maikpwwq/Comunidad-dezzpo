@@ -6,7 +6,36 @@
 
 .GreenBackground {
     // .fondoVerde
+    position: relative;
     background-color: var(--primary-green-text-color);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 180px;
+    transition: background-image 0.3s ease;
+
+    @media (min-width: 768px) {
+        min-height: 220px;
+    }
+}
+
+.CoverOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
+}
+
+.CoverActionContainer {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    z-index: 5;
+
+    @media (max-width: 576px) {
+        top: 0.5rem;
+        right: 0.5rem;
+    }
 }
 
 .HeaderRow {
@@ -16,6 +45,8 @@
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
+    position: relative;
+    z-index: 2;
 }
 
 .ProfileImageContainer {
