@@ -429,6 +429,9 @@ All geographic zones are centralized in [`src/assets/data/ListadoZonas.ts`](./sr
 | `META_PAGE_ACCESS_TOKEN` | Server ONLY | System User Token (`Comunidad_Dezzpo` - 60-day rotation) |
 | `META_PAGE_ID` | Server ONLY | Facebook Page ID (`Comunidad Dezzpo` - `375828669832688`) |
 | `META_BUSINESS_ID` | Server ONLY | Business Portfolio ID (`comunidad.dezzpo` - `350306805830712`) |
+| `META_COMMERCIAL_PORTFOLIO_ID` | Server ONLY | Business Portfolio ID alias (`350306805830712`) |
+| `META_ADVERTISING_ACCOUNT_ID` | Server ONLY | Ad Account ID (`Marketing Dezzpo` - `836577536843754`) |
+| `META_WEBHOOK_VERIFY_TOKEN` | Server ONLY | Verification token for Webhook subscriptions |
 
 ## Migration Status
 

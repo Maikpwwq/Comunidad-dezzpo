@@ -638,17 +638,21 @@ src/styles/
 ### Meta Business Suite & Credential Infrastructure
 - **Business Portfolio**: `comunidad.dezzpo` (Business ID: `350306805830712`).
 - **Registered Meta App**: `DEZZPO` (App ID: `965094149947204`).
+- **Ad Account**: `Marketing Dezzpo` (Ad Account ID: `836577536843754`).
 - **System User**: `Comunidad_Dezzpo` (System User ID: `61593606435383`) with Full Admin access to connected assets (`Comunidad Dezzpo` Page ID: `375828669832688`, Instagram `@comunidad_dezzpo`, App `DEZZPO`).
 - **Token Lifecycle & Cadence**: System User Page Access Token rotates on a **60-day cadence**.
 - **Assigned Scopes / Permissions**:
   - `pages_read_engagement`, `pages_manage_ads`, `pages_show_list`, `business_management`, `ads_read`, `ads_management`, `catalog_management`, `manage_app_solution`, `threads_business_basic`, `whatsapp_business_manage_events`.
-- **Domain Verification**: Validated via `<meta name="facebook-domain-verification" content="jjqyumqkxcli69h47cd1bo8lli07od" />` rendered in `pages/+onRenderHtml.tsx`.
+- **Domain Verifications (HTML Meta Tags)**:
+  - `dezzpo.com`: `<meta name="facebook-domain-verification" content="jjqyumqkxcli69h47cd1bo8lli07od" />`
+  - `comunidad-dezzpo.vercel.app`: `<meta name="facebook-domain-verification" content="ofh35wmj89aldsondp23zx9pjk9044" />`
 - **Environment Variables (Server-Only)**:
   - `META_APP_ID`: `965094149947204`
   - `META_APP_SECRET`: Meta App Secret (Vercel & server `.env`)
   - `META_PAGE_ACCESS_TOKEN`: System User Token with 60-day TTL
   - `META_PAGE_ID`: `375828669832688`
-  - `META_BUSINESS_ID`: `350306805830712`
+  - `META_BUSINESS_ID` / `META_COMMERCIAL_PORTFOLIO_ID`: `350306805830712`
+  - `META_ADVERTISING_ACCOUNT_ID`: `836577536843754`
   - `META_WEBHOOK_VERIFY_TOKEN`: Verification token for Webhook subscriptions
 
 ### Meta Webhooks & Real-Time Ingestion (`server/api/meta/webhook.ts`)
@@ -659,10 +663,12 @@ src/styles/
   - `POST /api/v1/meta/webhook` (Real-time feed, post and comment event ingestion).
   - `POST /api/v1/meta/data-deletion` (GDPR user data deletion callback handler).
 - **Meta Developers App Settings Guide**:
+  - **Object Tabs**: Subscribe in both **`Page`** (for `feed`, `ratings`, `mention`) and **`User`** (for `feed`).
   - **Valid OAuth Redirect URIs**: `https://dezzpo.com/`, `https://dezzpo.com/auth/callback`, `https://comunidad-dezzpo.vercel.app/`
   - **Webhook Callback URL**: `https://dezzpo.com/api/v1/meta/webhook` (or `https://comunidad-dezzpo.vercel.app/api/v1/meta/webhook`)
-  - **Verify Token**: Matching `META_WEBHOOK_VERIFY_TOKEN`
+  - **Verify Token**: Matching `META_WEBHOOK_VERIFY_TOKEN` (or `META_APP_SECRET`)
   - **User Data Deletion Callback URL**: `https://dezzpo.com/api/v1/meta/data-deletion`
+  - **Deauthorization Callback URL**: `https://dezzpo.com/api/v1/meta/data-deletion`
   - **Server IP Allowlist**: Must remain **empty/disabled** in serverless/Edge deployment (Vercel) to prevent blocking dynamic Anycast egress IPs.
 
 
