@@ -91,6 +91,7 @@ async function onRenderHtml(pageContext: PageContextServer) {
     />
     <!-- https://comunidad-dezzpo.vercel.app/ -->
     <meta name="google-site-verification" content="YR9BPQLIFQ3lXvQgOQNJp6b6llUUWUHwM3toS-US5P8" />
+    <meta name="facebook-domain-verification" content="ofh35wmj89aldsondp23zx9pjk9044" />
     <!-- https://dezzpo.com/ -->
     <meta name="google-site-verification" content="QW8c9O6KDsA0u250MQ-Pu2MKvSIeCFOo4PegEowLvfA" />
     <meta name="facebook-domain-verification" content="jjqyumqkxcli69h47cd1bo8lli07od" />
