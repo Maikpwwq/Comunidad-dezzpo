@@ -613,3 +613,25 @@ src/styles/
 5. **Apply contrast classes** (`.text-on-light`, `.text-on-dark`) for WCAG compliance.
 6. **All button text on teal/gradient backgrounds must be white** (`#ffffff`).
 
+## 10. Social Media Automation & Rate Limiting (Meta Graph API v19.0+ / MCP)
+
+### Architecture & Anti-Ban Laws
+- **Strict Execution Separation (Hybrid Model)**:
+  - **Production (Autonomous Worker)**: `AutonomousWorker` (`src/services/social/autonomousWorker.ts`) runs continuously in background / serverless cron (e.g. Cloud Functions / Cloud Run) with delta timestamp tracking and Firestore logging.
+  - **Development (MCP Simulation)**: `mcpTools.ts` exposes `mcpSimulateFacebookScan`, `mcpSimulateRateLimitScenario`, `mcpPreviewCopyInjection`, and `mcpControlWorker` for offline IDE testing without risking Meta account credentials.
+- **Circuit Breaker Quota Threshold (80%)**:
+  - Automatically parses `X-App-Usage` and `X-Business-Usecase-Usage` response headers.
+  - If `call_count`, `total_cputime`, or `total_time` $\ge 80\%$, the `CircuitBreaker` (`src/services/social/circuitBreaker.ts`) immediately trips to `OPEN`.
+  - **Exponential Backoff**: 5 min $\rightarrow$ 10 min $\rightarrow$ 20 min $\rightarrow$ max 60 min with $\pm 10\%$ jitter.
+  - **Error 368 Kill Switch**: Native Meta Error `368` (Spam / Policy restriction) permanently trips the breaker to `HALTED`, suspending all queues immediately.
+- **Humanized Dispatch Queue with Jitter (`DispatchQueue`)**:
+  - Serialized FIFO queue. **Forbidden**: `Promise.all` or parallel burst requests.
+  - Random delay (**Jitter**) between **45s and 120s** per comment.
+  - Rolling hourly limit (default: max 12 comments/hour).
+  - Quiet hours auto-pause (11:00 PM - 06:00 AM Bogotá local time).
+- **Intent Parsing & Dynamic Copy Injection**:
+  - `classifyPostIntent()` categorizes group posts into `SUPPLY` (Contractors/Maestros), `DEMAND` (Homeowners/Clients), or `NEUTRAL`.
+  - Consumes `FACEBOOK_CAMPAIGN_COPYS` (from `@types/copys`) for supply and `CLIENT_INTERCEPT_COPYS` (from `@types/interceptCopys`) for demand.
+  - Author tagging (`@[authorId]` / `¿[authorName]...?`) and full UTM tracking via `buildUtmUrl()` / `buildClientUtmUrl()`.
+  - Rotational copy selection and string interpolation to break cryptographic text fingerprinting.
+

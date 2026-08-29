@@ -53,3 +53,5 @@ export * from './notificationService'
 export * from './blogService'
 // Tiendas services
 export * from './tiendas'
+// Social & Facebook Interceptor services
+export * from './social'

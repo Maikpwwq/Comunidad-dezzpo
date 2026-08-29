@@ -20,6 +20,7 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 | **Messaging** | Sendbird Chat v4 + UIKit v3 | Real-time messaging, channel orchestration |
 | **Payments** | ePayco | Colombian payment gateway, server-side signatures |
 | **Build** | Vite 8 + SWC | `@vitejs/plugin-react-swc` |
+| **Social Automation** | Meta Graph API v19.0+ / MCP | Hybrid interceptor: Autonomous Cron Worker + Dev MCP Simulation |
 | **TypeScript** | v6.x | Zero `any` policy, `ServiceResponse<T>` pattern |
 | **Testing** | Vitest + Playwright | 3-Layer Testing Pyramid (`tests/` directory) |
 | **Deployment** | Vercel | Serverless Functions, custom Node→Web adapter |
@@ -31,6 +32,7 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 |----------|---------|---------------------------|
 | **Firebase Auth** | Identity & Session | Global `AuthProvider` |
 | **Google Auth** | SSO Provider | Firebase Client SDK |
+| **Meta Graph API** | B2C/B2B Demand Interception & Group Growth | Page Access Token (`Comunidad Dezzpo`, ID: `375828669832688`) |
 | **Sendbird** | Real-time Messaging | Authenticated UID (Auth-only). Orchestration via `@services/sendbird/sendbird.service.ts` |
 | **ePayco** | Payment Processing | Server-side signature generation via `/api/v1/payment/signature` |
 | **Supabase** | Vector DB (pgvector) | RAG chatbot embeddings + document matching |
@@ -181,6 +183,7 @@ comunidad-dezzpo/
 │   │   ├── quotations/                       # Quotation management
 │   │   ├── search/                           # Search service
 │   │   ├── sendbird/                         # Channel orchestration
+│   │   ├── social/                           # Meta Graph API Interceptor & Anti-Spam Worker
 │   │   ├── users/                            # User profiles
 │   │   ├── referralService.ts                # Referral code gen, attribution, points, rewards
 │   │   └── utils/                            # Service utilities
