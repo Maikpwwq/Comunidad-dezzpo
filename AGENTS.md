@@ -635,3 +635,19 @@ src/styles/
   - Author tagging (`@[authorId]` / `¿[authorName]...?`) and full UTM tracking via `buildUtmUrl()` / `buildClientUtmUrl()`.
   - Rotational copy selection and string interpolation to break cryptographic text fingerprinting.
 
+### Meta Business Suite & Credential Infrastructure
+- **Business Portfolio**: `comunidad.dezzpo` (Business ID: `350306805830712`).
+- **Registered Meta App**: `DEZZPO` (App ID: `965094149947204`).
+- **System User**: `Comunidad_Dezzpo` (System User ID: `61593606435383`) with Full Admin access to connected assets (`Comunidad Dezzpo` Page ID: `375828669832688`, Instagram `@comunidad_dezzpo`, App `DEZZPO`).
+- **Token Lifecycle & Cadence**: System User Page Access Token rotates on a **60-day cadence**.
+- **Assigned Scopes / Permissions**:
+  - `pages_read_engagement`, `pages_manage_ads`, `pages_show_list`, `business_management`, `ads_read`, `ads_management`, `catalog_management`, `manage_app_solution`, `threads_business_basic`, `whatsapp_business_manage_events`.
+- **Domain Verification**: Validated via `<meta name="facebook-domain-verification" content="jjqyumqkxcli69h47cd1bo8lli07od" />` rendered in `pages/+onRenderHtml.tsx`.
+- **Environment Variables (Server-Only)**:
+  - `META_APP_ID`: `965094149947204`
+  - `META_APP_SECRET`: Meta App Secret (Vercel & server `.env`)
+  - `META_PAGE_ACCESS_TOKEN`: System User Token with 60-day TTL
+  - `META_PAGE_ID`: `375828669832688`
+  - `META_BUSINESS_ID`: `350306805830712`
+
+
