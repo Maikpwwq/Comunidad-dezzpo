@@ -28,7 +28,7 @@ import type {
 } from './types'
 
 // =============================================================================
-// REGEX TAXONOMY: SUPPLY VS DEMAND
+// REGEX TAXONOMY: SUPPLY VS DEMAND & COMPLETE 92-CATEGORY SERVICE CATALOG
 // =============================================================================
 
 const SUPPLY_PATTERNS: readonly { pattern: RegExp; trade?: TradeSpecialty }[] = [
@@ -39,33 +39,43 @@ const SUPPLY_PATTERNS: readonly { pattern: RegExp; trade?: TradeSpecialty }[] = 
   { pattern: /electricista\s+(certificado|a\s+domicilio|disponible|instalador)/i, trade: 'electricista' },
   { pattern: /pintor\s+(profesional|disponible|a\s+domicilio|experto)/i, trade: 'pintor' },
   { pattern: /se\s+realizan\s+trabajos/i },
-  { pattern: /hacemos\s+(estuco|pintura|remodelaci[oó]n|enchape|mantenimiento)/i },
+  { pattern: /hacemos\s+(estuco|pintura|remodelaci[oó]n|enchape|mantenimiento|drywall|carpinter[ií]a)/i },
   { pattern: /enchapador\s+profesional|instalador\s+de\s+piso/i, trade: 'albanil' },
-  { pattern: /trabajos\s+de\s+(construcci[oó]n|remodelaci[oó]n|plomer[ií]a|electricidad|carpinter[ií]a)/i },
-  { pattern: /disponible\s+para\s+(trabajar|obras|contratos|turnos)/i },
-  { pattern: /servicio\s+de\s+(estuco|pintura|drywall|impermeabilizaci[oó]n)/i, trade: 'pintor' },
+  { pattern: /trabajos\s+de\s+(construcci[oó]n|remodelaci[oó]n|plomer[ií]a|electricidad|carpinter[ií]a|ornamentaci[oó]n|cerrajer[ií]a|impermeabilizaci[oó]n)/i },
+  { pattern: /disponible\s+para\s+(trabajar|obras|contratos|turnos|reparaciones)/i },
+  { pattern: /servicio\s+de\s+(estuco|pintura|drywall|impermeabilizaci[oó]n|techos|calentadores)/i, trade: 'pintor' },
+  { pattern: /taller\s+de\s+(ornamentaci[oó]n|carpinter[ií]a|cerrajer[ií]a|soldadura)/i, trade: 'maestro' },
 ]
 
 const DEMAND_PATTERNS: readonly { pattern: RegExp; trade?: TargetTrade }[] = [
-  { pattern: /(busco|solicito|necesito|requiero)\s+(un\s+)?(maestro|plomero|electricista|pintor|remodelador|alba[ñn]il|contratista|t[eé]cnico|instalador)/i },
-  { pattern: /alguien\s+que\s+(haga|sepa|trabaje|repare|instale|pinte|enchape)/i },
+  { pattern: /(busco|solicito|necesito|requiero)\s+(un\s+)?(maestro|plomero|electricista|pintor|remodelador|alba[ñn]il|contratista|t[eé]cnico|instalador|carpintero|cerrajero|soldador|vidriero|enchapador)/i },
+  { pattern: /alguien\s+que\s+(haga|sepa|trabaje|repare|instale|pinte|enchape|impermeabilice|suelde|arme)/i },
   { pattern: /cotizaci[oó]n\s+(para|de|urgente)/i },
-  { pattern: /recomienden\s+(un\s+)?(maestro|plomero|electricista|pintor|remodelador|buen)/i },
+  { pattern: /recomienden\s+(un\s+)?(maestro|plomero|electricista|pintor|remodelador|carpintero|cerrajero|buen)/i },
   { pattern: /cu[aá]nto\s+cobran\s+por/i },
   { pattern: /presupuesto\s+(para|de)/i },
   { pattern: /qui[eé]n\s+(hace|conoce\s+un|me\s+recomienda)/i },
-  { pattern: /urgente\s+(plomero|electricista|fuga|corto\s+circuito|destape)/i },
-  { pattern: /aver[ií]a\s+de\s+(tuber[ií]a|luz|agua|ba[ñn]o)/i },
+  { pattern: /urgente\s+(plomero|electricista|fuga|corto\s+circuito|destape|gotera|cerradura|da[ñn]o)/i },
+  { pattern: /aver[ií]a\s+de\s+(tuber[ií]a|luz|agua|ba[ñn]o|calentador|gas|cerradura|chapa)/i },
+  { pattern: /filtraci[oó]n|humedad|gotera\s+en\s+(techo|pared|teja|cubierta)/i },
 ]
 
 const TRADE_LOOKUP: readonly { keyword: RegExp; trade: TradeSpecialty }[] = [
-  { keyword: /plomer[oí]a|tubo|fuga|grifo|inodoro|destape|lavamanos/i, trade: 'plomero' },
-  { keyword: /electric|corto|breaker|luz|cableado|tomacorriente|trif[aá]sica/i, trade: 'electricista' },
-  { keyword: /pintur|estuco|fachada|vinilo|impermeabiliz|resanar/i, trade: 'pintor' },
-  { keyword: /maestro|acabados|drywall|cielo\s+raso|estructura|obra\s+blanca/i, trade: 'maestro' },
-  { keyword: /remodela|dise[ñn]o|apartamento|cocina\s+integral|ba[ñn]o/i, trade: 'remodelador' },
-  { keyword: /alba[ñn]il|mamposter|bloque|cemento|viga|enchap/i, trade: 'albanil' },
-  { keyword: /contratista|licitaci|obra\s+civil/i, trade: 'contratista' },
+  { keyword: /plomer[oí]a|tubo|fuga|grifo|inodoro|destape|lavamanos|sif[oó]n|hidr[aá]ulic/i, trade: 'plomero' },
+  { keyword: /electric|corto|breaker|luz|cableado|tomacorriente|trif[aá]sica|iluminaci[oó]n|tablero/i, trade: 'electricista' },
+  { keyword: /pintur|estuco|fachada|vinilo|impermeabiliz|resanar|impermeabilizaci[oó]n|gotera|humedad/i, trade: 'pintor' },
+  { keyword: /maestro|acabados|drywall|cielo\s+raso|estructura|obra\s+blanca|superboard/i, trade: 'maestro' },
+  { keyword: /remodela|dise[ñn]o|apartamento|cocina\s+integral|ba[ñn]o|ampliaci[oó]n|obra\s+civil/i, trade: 'remodelador' },
+  { keyword: /alba[ñn]il|mamposter|bloque|cemento|viga|enchap|porcelanato|baldosa|piso/i, trade: 'albanil' },
+  { keyword: /contratista|licitaci|obra\s+civil|ingenier[ií]a|arquitectura/i, trade: 'contratista' },
+  { keyword: /carpinter|ebanist|closet|madera|puerta\s+de\s+madera|mueble\s+modular/i, trade: 'maestro' },
+  { keyword: /cerrajer|chapa|cerradura|candado|apertura\s+de\s+puerta/i, trade: 'remodelador' },
+  { keyword: /ornamentac|soldador|soldadura|reja|port[oó]n|estructura\s+met[aá]lica/i, trade: 'maestro' },
+  { keyword: /vidrio|vidrier|ventana\s+aluminio|espejo|divisi[oó]n\s+de\s+ba[ñn]o/i, trade: 'remodelador' },
+  { keyword: /calentador|gasodom[eé]stico|red\s+de\s+gas|estufa\s+a\s+gas/i, trade: 'plomero' },
+  { keyword: /aire\s+acondicionado|refrigeraci[oó]n|hvac/i, trade: 'electricista' },
+  { keyword: /topograf|peritaje|aval[uú]o|geotecnia|estudio\s+de\s+suelo|dise[ñn]o\s+3d/i, trade: 'contratista' },
+  { keyword: /fumigac|control\s+de\s+plaga|desinfecci[oó]n/i, trade: 'remodelador' },
 ]
 
 const ZONES_LOOKUP: readonly { pattern: RegExp; zoneName: string }[] = [
@@ -76,11 +86,24 @@ const ZONES_LOOKUP: readonly { pattern: RegExp; zoneName: string }[] = [
   { pattern: /kennedy/i, zoneName: 'Kennedy' },
   { pattern: /bosa/i, zoneName: 'Bosa' },
   { pattern: /fontib[oó]n/i, zoneName: 'Fontibón' },
+  { pattern: /teusaquillo/i, zoneName: 'Teusaquillo' },
+  { pattern: /barrios\s+unidos/i, zoneName: 'Barrios Unidos' },
+  { pattern: /puente\s+aranda/i, zoneName: 'Puente Aranda' },
+  { pattern: /tunjuelito/i, zoneName: 'Tunjuelito' },
+  { pattern: /ciudad\s+bol[ií]var/i, zoneName: 'Ciudad Bolívar' },
+  { pattern: /san\s+crist[oó]bal/i, zoneName: 'San Cristóbal' },
+  { pattern: /santa\s+fe/i, zoneName: 'Santa Fe' },
+  { pattern: /la\s+candelaria/i, zoneName: 'La Candelaria' },
+  { pattern: /los\s+m[aá]rtires/i, zoneName: 'Los Mártires' },
+  { pattern: /antonio\s+nari[ñn]o/i, zoneName: 'Antonio Nariño' },
+  { pattern: /usme/i, zoneName: 'Usme' },
+  { pattern: /sumapaz/i, zoneName: 'Sumapaz' },
   { pattern: /ch[ií]a/i, zoneName: 'Chía' },
   { pattern: /soacha/i, zoneName: 'Soacha' },
   { pattern: /cajic[aá]/i, zoneName: 'Cajicá' },
   { pattern: /zipaquir[aá]/i, zoneName: 'Zipaquirá' },
   { pattern: /madrid|mosquera|funza/i, zoneName: 'Sabana Occidente' },
+  { pattern: /cota|facatativ[aá]|la\s+calera|sop[oó]/i, zoneName: 'Sabana Centro' },
 ]
 
 // =============================================================================
