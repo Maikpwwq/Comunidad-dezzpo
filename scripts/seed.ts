@@ -22,7 +22,7 @@ import { embedMany } from 'ai'
 
 // ── Config ───────────────────────────────────────────────────────────────────
 
-const TARGET_URL = 'https://comunidad-dezzpo.vercel.app'
+const TARGET_URL = 'https://dezzpo.com'
 const CHUNK_SIZE = 800   // chars per chunk (sweet spot for embedding quality)
 const CHUNK_OVERLAP = 100 // overlap to preserve context across boundaries
 

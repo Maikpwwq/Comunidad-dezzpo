@@ -29,7 +29,7 @@ import * as path from 'path'
 const KNOWLEDGE_DIR = path.resolve(process.cwd(), 'knowledge')
 const TARGET_DIMS = 768
 const BATCH_SIZE = 10  // Small batches for free-tier rate limits
-const BASE_URL = 'https://comunidad-dezzpo.vercel.app'
+const BASE_URL = 'https://dezzpo.com'
 
 // ── Clients ──────────────────────────────────────────────────────────────────
 
@@ -90,25 +90,24 @@ function parseMarkdownSections(filePath: string): KnowledgeChunk[] {
 
 function guessPathname(title: string): string {
     const lower = title.toLowerCase()
-    if (lower.includes('contacto') || lower.includes('teléfono') || lower.includes('email')) return '/contactenos'
-    if (lower.includes('misión')) return '/nosotros'
-    if (lower.includes('visión')) return '/nosotros'
-    if (lower.includes('política') || lower.includes('hseq')) return '/nosotros'
-    if (lower.includes('valores')) return '/nosotros'
-    if (lower.includes('qué es')) return '/nosotros'
-    if (lower.includes('historia')) return '/nosotros'
-    if (lower.includes('equipo')) return '/nosotros'
+    if (lower.includes('tienda') || lower.includes('proveedor') || lower.includes('ferretería')) return '/tiendas'
+    if (lower.includes('celular') || lower.includes('sms') || lower.includes('otp') || lower.includes('registro')) return '/registro'
+    if (lower.includes('ingreso') || lower.includes('login') || lower.includes('iniciar sesión')) return '/ingreso'
+    if (lower.includes('referido') || lower.includes('voz a voz') || lower.includes('invitar')) return '/app/invitar-amigos'
+    if (lower.includes('micrositio') || lower.includes('perfil') || lower.includes('tarjeta de presentación')) return '/app/perfil'
+    if (lower.includes('contacto') || lower.includes('teléfono') || lower.includes('email') || lower.includes('whatsapp')) return '/contactenos'
+    if (lower.includes('misión') || lower.includes('visión') || lower.includes('valores') || lower.includes('hseq') || lower.includes('qué es') || lower.includes('historia')) return '/nosotros'
     if (lower.includes('presupuesto') || lower.includes('solicitud de servicio')) return '/presupuestos'
-    if (lower.includes('certificación')) return '/asi-trabajamos'
-    if (lower.includes('calificacion')) return '/asi-trabajamos'
-    if (lower.includes('propietario')) return '/asi-trabajamos'
-    if (lower.includes('comerciante')) return '/asi-trabajamos'
-    if (lower.includes('servicios') || lower.includes('portal') || lower.includes('directorio')) return '/app/portal-servicios'
+    if (lower.includes('certificación') || lower.includes('calificacion') || lower.includes('cómo funciona')) return '/asi-trabajamos'
+    if (lower.includes('catálogo') || lower.includes('especialidad') || lower.includes('portal') || lower.includes('directorio de profesionales')) return '/app/portal-servicios'
     if (lower.includes('ayuda') || lower.includes('pqrs') || lower.includes('servicio al cliente')) return '/ayuda-pqrs'
     if (lower.includes('legal') || lower.includes('términos') || lower.includes('privacidad') || lower.includes('cookies')) return '/legal'
     if (lower.includes('requerimiento') || lower.includes('nuevo proyecto')) return '/app/nuevo-proyecto'
-    if (lower.includes('página') || lower.includes('sitio')) return '/'
-    if (lower.includes('redes social')) return '/contactenos'
+    if (lower.includes('clasificación') || lower.includes('niveles de usuario')) return '/clasificacion-usuarios'
+    if (lower.includes('asesoría') || lower.includes('foro')) return '/asesorias'
+    if (lower.includes('blog')) return '/blog'
+    if (lower.includes('contrato') || lower.includes('anticipo') || lower.includes('epayco') || lower.includes('pago')) return '/app/formas-pago'
+    if (lower.includes('tarifa') || lower.includes('precio') || lower.includes('membresía')) return '/app/suscripciones'
     return '/'
 }
 
@@ -147,29 +146,61 @@ async function seedKnowledge() {
         .like('metadata->>source', 'knowledge/%')
     if (delError) console.warn('   ⚠️ Delete warning:', delError.message)
 
-    // 4. Generate embeddings
-    console.log(`🧠 Generating embeddings (gemini-embedding-001 → ${TARGET_DIMS}d)...`)
+    // 4. Generate embeddings (with local cache support)
+    const CACHE_FILE = path.join(KNOWLEDGE_DIR, '.embeddings-cache.json')
+    let cache: Record<string, number[]> = {}
+    if (fs.existsSync(CACHE_FILE)) {
+        try {
+            cache = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8'))
+            console.log(`📦 Loaded ${Object.keys(cache).length} cached embeddings from .embeddings-cache.json`)
+        } catch { /* ignore corrupted cache */ }
+    }
+
     const allEmbeddings: number[][] = []
-    const totalBatches = Math.ceil(allChunks.length / BATCH_SIZE)
+    const chunksToEmbed: { chunk: KnowledgeChunk; index: number }[] = []
 
-    for (let i = 0; i < allChunks.length; i += BATCH_SIZE) {
-        const batch = allChunks.slice(i, i + BATCH_SIZE)
-        const { embeddings } = await embedMany({
-            model: google.textEmbeddingModel('gemini-embedding-001'),
-            values: batch.map(c => c.content),
-        })
-
-        const truncated = embeddings.map(emb => emb.slice(0, TARGET_DIMS))
-        allEmbeddings.push(...truncated)
-
-        const batchNum = Math.floor(i / BATCH_SIZE) + 1
-        console.log(`   ✓ Batch ${batchNum}/${totalBatches}`)
-
-        // Rate-limit delay
-        if (batchNum < totalBatches) {
-            console.log('   ⏳ Waiting 35s (free-tier rate limit)...')
-            await new Promise(r => setTimeout(r, 35_000))
+    for (let i = 0; i < allChunks.length; i++) {
+        const chunk = allChunks[i]!
+        if (cache[chunk.content]) {
+            allEmbeddings[i] = cache[chunk.content]!
+        } else {
+            chunksToEmbed.push({ chunk, index: i })
         }
+    }
+
+    if (chunksToEmbed.length > 0) {
+        console.log(`🧠 Generating ${chunksToEmbed.length} new embeddings (gemini-embedding-001 → ${TARGET_DIMS}d)...`)
+        const totalBatches = Math.ceil(chunksToEmbed.length / BATCH_SIZE)
+
+        for (let i = 0; i < chunksToEmbed.length; i += BATCH_SIZE) {
+            const batch = chunksToEmbed.slice(i, i + BATCH_SIZE)
+            const { embeddings } = await embedMany({
+                model: google.textEmbeddingModel('gemini-embedding-001'),
+                values: batch.map(b => b.chunk.content),
+            })
+
+            for (let j = 0; j < batch.length; j++) {
+                const targetIndex = batch[j]!.index
+                const content = batch[j]!.chunk.content
+                const truncated = embeddings[j]!.slice(0, TARGET_DIMS)
+                allEmbeddings[targetIndex] = truncated
+                cache[content] = truncated
+            }
+
+            const batchNum = Math.floor(i / BATCH_SIZE) + 1
+            console.log(`   ✓ Batch ${batchNum}/${totalBatches}`)
+
+            if (batchNum < totalBatches) {
+                console.log('   ⏳ Waiting 35s (free-tier rate limit)...')
+                await new Promise(r => setTimeout(r, 35_000))
+            }
+        }
+
+        // Persist cache to disk
+        fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2), 'utf-8')
+        console.log(`💾 Saved updated embeddings to .embeddings-cache.json`)
+    } else {
+        console.log('⚡ All chunks retrieved from local cache (0 API calls needed)!')
     }
 
     // 5. Insert into Supabase
@@ -189,8 +220,7 @@ async function seedKnowledge() {
         }
     }
 
-    console.log(`\n✅ Knowledge seed complete! ${rows.length} chunks inserted.`)
-    console.log('   These supplement the Firecrawl-scraped data (not replaced).')
+    console.log(`\n✅ Knowledge seed complete! ${rows.length} chunks inserted into Supabase.`)
 }
 
 seedKnowledge().catch(err => {

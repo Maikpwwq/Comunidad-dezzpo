@@ -18,7 +18,8 @@ import { google } from '@ai-sdk/google'
 import { generateText, embed } from 'ai'
 
 // Bridge VITE_APP_ env vars to AI SDK expected names
-process.env.GOOGLE_GENERATIVE_AI_API_KEY ??= process.env.VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY
+process.env.GOOGLE_GENERATIVE_AI_API_KEY ??=
+    process.env.VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY
 
 // ── Supabase server client (lazy init) ───────────────────────────────────────
 
@@ -44,28 +45,31 @@ interface RetrievedDoc {
 
 // ── System Prompt ────────────────────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `Eres el asistente oficial de Comunidad Dezzpo, una plataforma digital que conecta propietarios residenciales con comerciantes profesionales calificados en mantenimiento general, reformas y servicios para el hogar.
+const SYSTEM_PROMPT = `Eres el asistente oficial de Comunidad Dezzpo, la red profesional digital líder en Colombia especializada en hábitat, construcción, reformas, mantenimiento residencial y propiedad horizontal (https://dezzpo.com).
 
-Comunidad Dezzpo es una red profesional similar a LinkedIn pero especializada en el sector de mantenimiento residencial. Los comerciantes verificados ofrecen servicios como:
-- Mantenimiento general e instalaciones
-- Acabados inmobiliarios y remodelaciones
-- Construcción civil, carpintería, plomería, electricidad
-- Administración de propiedad horizontal
+Comunidad Dezzpo es "el LinkedIn para maestros de obra y trabajadores de la construcción"
+
+Comunidad Dezzpo conecta a propietarios, residentes y administradores con:
+1. Comerciantes y profesionales calificados en 92 especialidades (ingeniería, obra civil, acabados, redes, plomería, electricidad, carpintería, cerrajería, etc.).
+2. Directorio de Tiendas y Proveedores locales en 17 categorías de materiales, insumos y herramientas (/tiendas).
+3. Registro ágil por celular con SMS OTP (+57), contratos inteligentes con anticipos seguros (ePayco), certificación técnica de habilidades y programa de referidos "Voz a Voz".
 
 Tu comportamiento:
-- Profesional, directo, resolutivo.
-- Si la información NO está en el contexto proporcionado, admítelo claramente: "No tengo información específica sobre eso en este momento."
+- Profesional, cordial, directo y resolutivo.
+- Si la información NO está en el contexto proporcionado, admítelo con honestidad: "No tengo información específica sobre eso en este momento."
 - NUNCA inventes datos, precios, nombres de comerciantes o servicios que no estén en el contexto.
 - Incluye citas a las URLs fuente cuando uses información del contexto, en formato: [Fuente](url)
-- Responde en español colombiano.
-- Sé conciso pero completo.`
+- Responde en español colombiano natural y claro.
+- Sé conciso pero completo en tus explicaciones.`
 
 // ── Handler ──────────────────────────────────────────────────────────────────
 
 export async function chatHandler(c: Context) {
     try {
         // Debug: check env vars are loaded
-        const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY
+        const apiKey =
+            process.env.GOOGLE_GENERATIVE_AI_API_KEY ||
+            process.env.VITE_APP_GOOGLE_GENERATIVE_AI_API_KEY
         const supaUrl = process.env.VITE_APP_SUPABASE_PROJECT_URL
         const supaKey = process.env.VITE_APP_SUPABASE_SECRET_KEY
 
@@ -98,7 +102,12 @@ export async function chatHandler(c: Context) {
         }
 
         const queryText = lastUserMessage.content as string
-        console.log('[chat API] Query:', queryText, '| Pathname:', currentPathname)
+        console.log(
+            '[chat API] Query:',
+            queryText,
+            '| Pathname:',
+            currentPathname
+        )
 
         // Step 1: Generate embedding for the user query
         const { embedding: rawEmbedding } = await embed({
@@ -106,30 +115,42 @@ export async function chatHandler(c: Context) {
             value: queryText,
         })
         const queryEmbedding = rawEmbedding.slice(0, 768)
-        console.log('[chat API] Embedding generated:', queryEmbedding.length, 'dims')
+        console.log(
+            '[chat API] Embedding generated:',
+            queryEmbedding.length,
+            'dims'
+        )
 
         const db = getSupabase()
 
         // Step 2a: Retrieve context filtered by pathname (local context)
         const localDocs: RetrievedDoc[] = []
         if (currentPathname && currentPathname !== '/') {
-            const { data, error: rpcError } = await db.rpc('match_dezzpo_documents', {
-                query_embedding: queryEmbedding,
-                match_count: 3,
-                filter_pathname: currentPathname,
-            } as any)
+            const { data, error: rpcError } = await db.rpc(
+                'match_dezzpo_documents',
+                {
+                    query_embedding: queryEmbedding,
+                    match_count: 3,
+                    filter_pathname: currentPathname,
+                } as any
+            )
             if (rpcError) console.error('[chat API] Local RPC error:', rpcError)
             if (data) localDocs.push(...(data as RetrievedDoc[]))
         }
 
         // Step 2b: Retrieve global fallback (no pathname filter)
-        const { data: globalData, error: globalError } = await db.rpc('match_dezzpo_documents', {
-            query_embedding: queryEmbedding,
-            match_count: 2,
-            filter_pathname: null,
-        } as any)
-        if (globalError) console.error('[chat API] Global RPC error:', globalError)
-        const globalDocs: RetrievedDoc[] = (globalData as unknown as RetrievedDoc[]) || []
+        const { data: globalData, error: globalError } = await db.rpc(
+            'match_dezzpo_documents',
+            {
+                query_embedding: queryEmbedding,
+                match_count: 2,
+                filter_pathname: null,
+            } as any
+        )
+        if (globalError)
+            console.error('[chat API] Global RPC error:', globalError)
+        const globalDocs: RetrievedDoc[] =
+            (globalData as unknown as RetrievedDoc[]) || []
 
         // Merge and deduplicate by id, local docs first
         const seenIds = new Set<number>()
@@ -143,15 +164,16 @@ export async function chatHandler(c: Context) {
         console.log('[chat API] Retrieved', allDocs.length, 'docs')
 
         // Step 3: Build context block with citations
-        const contextBlock = allDocs.length > 0
-            ? allDocs
-                .map((doc, i) => {
-                    const url = doc.metadata?.url || ''
-                    const title = doc.metadata?.title || 'Documento'
-                    return `[Fuente ${i + 1}: ${title}](${url})\n${doc.content}`
-                })
-                .join('\n\n---\n\n')
-            : 'No se encontró contexto relevante en la base de conocimiento.'
+        const contextBlock =
+            allDocs.length > 0
+                ? allDocs
+                      .map((doc, i) => {
+                          const url = doc.metadata?.url || ''
+                          const title = doc.metadata?.title || 'Documento'
+                          return `[Fuente ${i + 1}: ${title}](${url})\n${doc.content}`
+                      })
+                      .join('\n\n---\n\n')
+                : 'No se encontró contexto relevante en la base de conocimiento.'
 
         // Build the full system message with injected context
         const systemWithContext = `${SYSTEM_PROMPT}
@@ -176,9 +198,12 @@ Recuerda: responde SOLO con base en el contexto anterior. Si la pregunta no pued
     } catch (error: any) {
         console.error('[chat API] Error:', error?.message || error)
         return c.json(
-            { error: error?.message || 'Internal server error during chat processing' },
+            {
+                error:
+                    error?.message ||
+                    'Internal server error during chat processing',
+            },
             500
         )
     }
 }
-

@@ -1,385 +1,307 @@
-# Comunidad Dezzpo — Base de Conocimiento
+# Comunidad Dezzpo — Base de Conocimiento Central
 
-> Este archivo es leído automáticamente por el script de seed (`scripts/seed.ts`).
-> Edita libremente. Cada sección `##` se convierte en un chunk independiente para el chatbot.
-> Después de editar, ejecuta: `npx tsx scripts/seed-knowledge.ts`
+> Este archivo es el System of Record de conocimiento RAG para el Chatbot oficial de Comunidad Dezzpo.
+> Cada sección encabezada por `##` se indexa como un vector semántico independiente en Supabase (`dezzpo_documents`).
+> Para re-indexar la memoria, ejecuta: `npx tsx scripts/seed-knowledge.ts`
 
 ---
 
-## Información de Contacto
+## Información General y Canales de Contacto
 
-- **Teléfono / WhatsApp:** +57 320 484 2897
-- **Email:** comunidad.dezzpo@gmail.com
-- **Dirección:** Calle 159 No. 8c-45, Piso 5, Bogotá, Colombia
-- **Sitio web:** https://comunidad-dezzpo.vercel.app
-- **WhatsApp directo:** https://wa.me/573204842897
-- **Google Maps:** https://maps.google.com/?q=Calle+159+No+8c-45+Bogota
-- **Horario de atención:** Lunes a Viernes, 8:00 AM - 6:00 PM
-- **Año de fundación:** 2022
+- **Nombre Oficial:** Comunidad Dezzpo Inc.
+- **Sitio Web Principal:** https://dezzpo.com
+- **Dominio de Despliegue:** https://comunidad-dezzpo.vercel.app
+- **Teléfono / WhatsApp Oficial:** +57 320 484 2897
+- **Enlace de WhatsApp Directo:** https://wa.me/573204842897
+- **Correo Electrónico de Soporte:** comunidad.dezzpo@gmail.com
+- **Dirección Física:** Calle 159 No. 8c-45, Piso 5, Bogotá, Colombia
+- **Ubicación en Google Maps:** https://maps.google.com/?q=Calle+159+No+8c-45+Bogota
+- **Horario de Atención:** Lunes a Viernes, 8:00 AM - 6:00 PM (Hora Colombia, UTC-5)
+- **Año de Fundación:** 2022
 - **Copyright:** © 2026 Comunidad Dezzpo Inc. Todos los derechos reservados.
 
 ---
 
 ## ¿Qué es Comunidad Dezzpo?
 
-Comunidad Dezzpo es una red profesional digital colombiana que conecta propietarios residenciales con comerciantes profesionales calificados en mantenimiento general, reformas y servicios para el hogar. 
+Comunidad Dezzpo es la red profesional digital líder en Colombia especializada en el sector de hábitat, construcción, mantenimiento residencial y propiedad horizontal. Opera con una arquitectura tipo LinkedIn pero verticalizada y diseñada a la medida de la industria inmobiliaria y de reformas.
 
-Es similar a LinkedIn pero especializada en el sector de mantenimiento residencial y propiedad horizontal.
+**Propósito Central:**
+Conectar a propietarios, residentes, administradores de conjuntos residenciales y empresas con comerciantes, maestros de obra, técnicos y empresas de ingeniería verificadas. Proporciona herramientas completas de contratación segura, contratos inteligentes con anticipos protegidos (ePayco), calificaciones transparentes, directorio de proveedores de insumos y perfiles profesionales con micrositio público.
 
-La plataforma permite a los propietarios encontrar y contratar personal calificado para todo tipo de trabajos, desde soluciones de mantenimiento e instalaciones pequeñas hasta acabados inmobiliarios y remodelaciones completas. Los comerciantes pueden crear perfiles profesionales, mostrar su portafolio, recibir calificaciones y acceder a proyectos.
+**Misión:**
+Trabajamos para las personas, destacándonos por la calidad del servicio al cliente, el crecimiento continuo del ser y la gestión tecnológica. Somos una Comunidad de Comerciantes Calificados en mantenimiento general doméstico, obras y acabados, brindando gestión oportuna del talento humano adecuado.
 
----
+**Visión:**
+Ser la marca colombiana posicionada y referente de consulta indispensable para la gestión en proyectos de mantenimiento, hábitat y propiedad horizontal, ofreciendo una propuesta de valor de alta confianza para comerciantes y propietarios.
 
-## Misión
-
-Trabajamos para las personas, destacándonos por la calidad del servicio al cliente, el crecimiento continuo del ser y la gestión tecnológica. Somos una Comunidad de Comerciantes Calificados en mantenimiento general doméstico, brindando gestión oportuna del talento humano adecuado.
-
----
-
-## Visión
-
-Dezzpo será una marca colombiana posicionada, referente de consulta para la gestión en proyectos de mantenimiento, ofreciendo a la comunidad una propuesta de valor amigable para los Comerciantes calificados y propietarios.
+**Política Integral HSEQ:**
+Propendemos por mitigar el impacto ambiental y garantizar la seguridad laboral. Usamos controles, técnicas y productos de alta calidad, asegurando la satisfacción del cliente y el cumplimiento estricto de las normas de Seguridad y Salud en el Trabajo (SST y ARL en Colombia).
 
 ---
 
-## Política Integral HSEQ
+## Catálogo Oficial de 92 Especialidades y Servicios
 
-Propendemos por mitigar el impacto ambiental. Nuestro propósito es asegurar la creación de valor y perduración en el tiempo. Usamos controles, técnicas y productos de calidad, alcanzando con nuestro trabajo la satisfacción y rentabilidad del cliente y el bienestar de nuestros colaboradores.
+Comunidad Dezzpo cuenta con una taxonomía oficial de 92 especialidades técnicas de construcción, mantenimiento, ingeniería y hábitat:
 
----
-
-## Valores y Principios
-
-- Disciplina
-- Eficiencia
-- Empatía y humanismo
-- Excelencia y calidad
-- Trabajo en equipo
-- Crecimiento personal
-- Orden y limpieza
+1. **Ingeniería y Estudios Técnicos Especializados:** Cálculos y Diseños de Ingeniería (estructural NSR-10, hidrosanitario, eléctrico RETIE), Topografía y Agrimensura, Estudios de Suelos y Geotecnia, Energía Solar y Fotovoltaica, Peritajes Técnicos y Avalúos Estructurales, Diseño 3D y Renders Arquitectónicos.
+2. **Obra Civil y Acabados:** Construcción Civil, Albañilería, Oficial de Obra, Mampostería, Drywall y Superboard, Cielos Rasos, Estuco y Pintura Arquitectónica, Enchapes, Porcelanatos, Cerámicas, Pisos Laminados, Pulido y Cristalizado de Pisos.
+3. **Instalaciones Técnicas y Redes:** Plomería y Redes Hidrosanitarias, Detección de Fugas con Geófono, Electricidad Residencial e Industrial, Tableros y Acometidas Eléctricas, Redes de Gas y Calentadores (instalación y mantenimiento), Aire Acondicionado y Climatización (HVAC), Cableado Estructurado y Redes de Voz y Datos.
+4. **Carpintería, Cerrajería y Metalmecánica:** Carpintería Fina y Muebles Modulares, Closets y Cocinas Integrales, Cerrajería Tradicional y Digital, Puertas Automáticas y Motores Vehiculares, Ornamentación y Forja Artística, Perfiles de Hierro y Estructuras Metálicas, Vidrios y Aluminio Arquitectónico, Vidrio Templado y Fachadas Flotantes.
+5. **Techos, Impermeabilización y Aislamiento:** Impermeabilización de Terrazas, Cubiertas y Techos Termoacústicos, Mantenimiento de Tejas y Canales, Aislamiento Acústico y Térmico.
+6. **Mantenimiento y Administración de Propiedad Horizontal:** Administración de PH, Mantenimiento de Bombas Eyectoras y de Presión, Mantenimiento de Plantas Eléctricas, Piscinas y Zonas Húmedas, Jardinería y Paisajismo, Fumigación y Control de Plagas Certificado, Aseo y Desinfección Profesional, Mantenimiento de Ascensores.
+7. **Seguridad y Automatización:** Cámaras de Seguridad y CCTV, Alarmas y Sensores, Control de Acceso Biométrico y Vehicular, Domótica y Smart Home, Redes Contra Incendio y Extintores.
 
 ---
 
-## Servicios Disponibles en la Plataforma
+## Selección de Categorías y Sugerencias de Nuevas Especialidades
 
-Los comerciantes registrados ofrecen servicios en las siguientes categorías:
-
-- **Mantenimiento general:** Reparaciones, instalaciones, mantenimiento preventivo y correctivo residencial
-- **Acabados inmobiliarios:** Pintura, estuco, enchapes, pisos, cielos rasos
-- **Remodelaciones:** Reformas completas de cocinas, baños, espacios interiores
-- **Construcción civil:** Obra gris, mampostería, estructura
-- **Carpintería:** Muebles a medida, closets, cocinas integrales
-- **Plomería:** Instalaciones hidráulicas y sanitarias, reparación de fugas
-- **Electricidad:** Instalaciones eléctricas, puntos eléctricos, iluminación, canaletas
-- **Redes e instalaciones:** Cableado estructurado, redes, puntos de datos
-- **Administración de propiedad horizontal:** Gestión y mantenimiento de edificios y conjuntos
-- **Cambio de tomas e interruptores**
-- **Impermeabilización**
+- **Bandeja de Selección (Chips):** Los comerciantes pueden seleccionar hasta 4 especialidades principales para destacar en su perfil público y en los resultados del directorio (`/app/ajustes`).
+- **Motor de Búsqueda Dinámico:** Búsqueda en tiempo real con normalización de tildes y sinónimos técnicos.
+- **Sugerencia de Nuevas Categorías:** Si un profesional ofrece un servicio técnico no listado, puede enviar una propuesta formal mediante el modal *"Sugerir nueva categoría"*. El sistema evalúa duplicados y envía la solicitud a la colección `suggestedCategories` para revisión y aprobación administrativa.
 
 ---
 
-## Cómo Funciona — Para Propietarios
+## Registro y Autenticación con Teléfono Celular (SMS OTP)
 
-1. **Regístrate gratis** en la plataforma
-2. **Publica un proyecto:** Describe lo que necesitas (gratis, sin compromiso)
-3. **Recibe cotizaciones:** Los profesionales disponibles te contactarán con presupuestos
-4. **Compara perfiles:** Consulta públicamente los perfiles, calificaciones, portafolios y reputación de los comerciantes
-5. **Contrata:** Elige al profesional que te brinde más confianza, mayor calidad y mejor precio
-6. **Califica el servicio** después de completado
+Comunidad Dezzpo ofrece un sistema de registro e inicio de sesión moderno y sin fricción mediante **número de teléfono celular**:
 
----
+1. **Sin Contraseña Obligatoria:** El usuario solo ingresa su número móvil de Colombia (+57).
+2. **Código de Verificación SMS OTP:** Recibe un código numérico seguro de 6 dígitos que se autoverifica al instante.
+3. **Vinculación Inteligente de Cuentas (`findUserByPhone`):** Si un usuario ya se había registrado previamente con Google o correo electrónico y luego inicia sesión con su número celular, la plataforma detecta automáticamente su perfil existente en Firestore y vincula la sesión sin duplicar cuentas ni perder su historial o contratos.
+4. **Métodos de Acceso Soportados:** Teléfono Celular (+57 OTP), Cuenta de Google (SSO) y Correo Electrónico con Contraseña.
 
-## Cómo Funciona — Para Comerciantes
-
-1. **Regístrate gratis** como comerciante en la plataforma
-2. **Crea tu perfil profesional:** Agrega experiencia, habilidades, portafolio y certificaciones
-3. **Recibe notificaciones** de proyectos publicados por propietarios
-4. **Envía cotizaciones** y haz seguimiento a tus propuestas
-5. **Solicita certificación Dezzpo:** La insignia de validación de habilidades aumenta tu confianza ante propietarios
-6. **Accede a proyectos** de mayor complejidad con la certificación
+URLs de Acceso:
+- **Registro:** https://dezzpo.com/registro
+- **Ingreso:** https://dezzpo.com/ingreso
 
 ---
 
-## Certificación Dezzpo
+## Directorio de Tiendas, Ferreterías y Proveedores de Materiales
 
-La certificación Dezzpo es una insignia de validación de habilidades técnicas y profesionales para comerciantes calificados. El proceso incluye:
+El Directorio de Tiendas de Comunidad Dezzpo (`/tiendas` y `/app/tiendas`) conecta a comerciantes, constructores y propietarios con los mejores proveedores locales de materiales, herramientas, equipos y suministros.
 
-1. **Solicitud y Pago de Visita Técnica:** El comerciante selecciona la especialidad a certificar y agenda la fecha/hora desde `/app/certificaciones`. Realiza el pago previo de la tasa de gestión e inspección técnica ($290.000 COP) a través de ePayco.
-2. **Evaluación en Terreno:** Un evaluador calificado realiza la visita técnica presencial para verificar: certificados, herramientas, equipos e idoneidad en la ejecución del oficio.
-3. **Aprobación en Centro de Control Admin:** El evaluador revisa y aprueba la solicitud desde el panel de administración (`/admin/certificaciones`).
-4. **Insignia y Estatus Destacado:** Al ser aprobada, el comerciante recibe automáticamente la insignia de verificación en su perfil público y su estatus cambia a `profileTier: 'destacado'`.
+**Funcionalidades del Directorio:**
+- Directorio geolocalizado en Bogotá y municipios de la Sabana.
+- Filtros por categoría especializada de insumos, zona o palabra clave.
+- Ficha completa de cada tienda con dirección, horarios de atención, teléfonos de contacto directo, WhatsApp y botón de ubicación en Google Maps.
+- Indicador de tienda verificada por el equipo de Comunidad Dezzpo.
 
-**Beneficios:**
-- Insignia de habilidades verificadas visible en el perfil público
-- Mayor tasa de conversión y preferencia de propietarios
-- Clasificación como comerciante destacado en el directorio
-- Acceso prioritario en búsquedas y cotizaciones
-
+URLs de Acceso:
+- **Directorio Público de Tiendas:** https://dezzpo.com/tiendas
+- **Directorio dentro de la App:** https://dezzpo.com/app/tiendas
 
 ---
 
-## Sistema de Calificaciones
+## Categorías Especializadas de Tiendas y Suministros
 
-Los propietarios califican a los comerciantes luego de que contratan el servicio con base en los siguientes tres criterios:
+El directorio de proveedores clasifica a las tiendas en 17 categorías especializadas (`ListadoCategoriasTiendas.ts`):
 
-- Cumplimiento con los tiempos de entrega. El servicio fue prestado en las fechas y horario programados
-- El servicio cumplió con las especificaciones y normas técnicas establecidas.Fue suficiente el personal y tenía todas las competencias necesarias
-- Las facturas, soportes y documentos contractuales fueron entregados oportunamente
-
----
-
-## Presupuestos y Solicitud de Servicios
-
-La página de Presupuestos (https://comunidad-dezzpo.vercel.app/presupuestos) es una página informativa que explica cómo solicitar cotizaciones online, de forma gratuita y sin compromiso. Contamos con los mejores precios del mercado de reformas.
-
-En esta página se encuentra el formulario **"Solicitar Servicios"**, que es el primer paso para crear un requerimiento. El formulario tiene dos campos iniciales:
-- **¿Qué tipo de proyecto es?** — Selecciona el tipo de proyecto (ej. mantenimiento, remodelación, construcción)
-- **¿Qué tipo de profesional necesitas?** — Selecciona la categoría del profesional
-
-Al hacer clic en el botón **"Siguiente"**, el usuario es redirigido a la página **"Nuevo Proyecto"** (https://comunidad-dezzpo.vercel.app/app/nuevo-proyecto), donde se completa el formulario de 4 pasos para crear el requerimiento completo:
-
-1. **Categoría/Subcategoría:** Detalla la categoría y subcategoría del servicio requerido
-2. **Elige tus ajustes:** Configura los detalles específicos del proyecto
-3. **Programa la visita:** Selecciona fecha y horario para la visita del profesional
-4. **Regístrase:** El usuario se registra o inicia sesión para completar la solicitud
-
-Una vez creado el requerimiento, los profesionales disponibles reciben notificación y pueden enviar sus cotizaciones.
-
-Con ayuda de la comunidad haz realidad la casa que desees. Encuentra un profesional Seguro y Confiable, para cada trabajo. Desde iluminación y pequeños arreglos, hasta diseños de ingeniería y remodelaciones completas.
+1. **Ferreterías General:** Herramientas manuales, tornillería, chazos, fijaciones y suministros generales.
+2. **Venta de Pinturas e Insumos:** Vinilos, esmaltes, estuco plástico, brochas, rodillos y diluyentes.
+3. **Perfilería y Aluminio:** Perfiles extruidos, rieles y accesorios para ventanería.
+4. **Vidrios y Cristalería:** Vidrio templado, laminado, espejos y herrajes de sujeción.
+5. **Alquiler y Venta de Andamios:** Andamios tubulares, multidireccionales, trompos y cortadoras de ladrillo.
+6. **Servicio Técnico de Herramientas:** Mantenimiento y repuestos para taladros, pulidoras y rotomartillos.
+7. **Cerrajería (Insumos y Chapas):** Cerraduras de alta seguridad, cilindros, candados y duplicados.
+8. **Tubería y Accesorios PVC:** Tubería sanitaria, de presión, conduit y pegantes PVC.
+9. **Materiales y Equipos Eléctricos:** Cableado THHN, breakers, tableros de distribución y tomacorrientes.
+10. **Iluminación y Lámparas:** Paneles LED, reflectores para intemperie, lámparas colgantes y tiras LED.
+11. **Gases Industriales y Soldadura:** Oxígeno, argón, electrodos, caretas fotosensibles e inversores.
+12. **Cerámicas, Porcelanatos y Pisos:** Baldosas, pisos laminados, SPC, pegantes (Pegacor) y boquillas.
+13. **Inoxidables:** Láminas, tubos y accesorios en acero inoxidable 304 y 316.
+14. **Mallas Metálicas:** Malla eslabonada, ondulada, electrosoldada y concertinas de seguridad.
+15. **Puertas y Portones:** Puertas en madera maciza, metálicas, cortafuego y de seguridad.
+16. **Transmisión de Potencia:** Rodamientos, poleas, correas industriales, cadenas y piñones.
+17. **Depósitos de Materiales:** Cemento, arena, gravilla, ladrillo tolete, bloque estructural y drywall.
 
 ---
 
-## Portal de Servicios (Directorio de Profesionales)
+## Publicación y Registro de Tiendas para Proveedores
 
-El portal de servicios es el Directorio de Comerciantes Profesionales de Comunidad Dezzpo. Aquí puedes:
+Cualquier fabricante, distribuidor mayorista, depósito de materiales o ferretería local puede registrar su negocio en Comunidad Dezzpo:
 
-- Buscar profesionales por categoría de servicio
-- Ver perfiles con experiencia, ubicación, habilidades y portafolio
-- Consultar calificaciones y reputación
-- Contactar directamente para cotizar
-- Publicar un proyecto y recibir propuestas
-
-URL: https://comunidad-dezzpo.vercel.app/app/portal-servicios
+1. **Formulario de Registro:** Desde `/app/tiendas` hacer clic en *"Registrar Tienda"*.
+2. **Datos Requeridos:** Nombre comercial, razón social, NIT o documento, categoría especializada, dirección exacta, barrio, localidad/municipio, teléfonos de contacto, WhatsApp, horario y catálogo o fotos del establecimiento.
+3. **Flujo de Moderación:** La tienda se crea con estado `pendiente` y es evaluada por el equipo administrativo en `/admin/tiendas`. Una vez verificada su autenticidad, pasa a estado `aprobado` y se publica inmediatamente en el directorio nacional.
 
 ---
 
-## Ayuda y PQRS (Preguntas, Quejas, Reclamos y Sugerencias)
+## Cómo Funciona — Para Propietarios y Administradores
 
-La página de Ayuda y PQRS (https://comunidad-dezzpo.vercel.app/ayuda-pqrs) ofrece soporte y preguntas frecuentes organizadas por tipo de usuario.
-
-**Preguntas frecuentes para Propietarios:**
-- Adquirir servicios
-- Modificar proyectos
-- ¿Cómo escoger el mejor personal?
-
-**Preguntas frecuentes para Comerciantes Calificados:**
-- Ofrecer servicios
-- ¿Cuál es el costo de un proyecto?
-- ¿Cómo certifico mis habilidades y servicios?
-- ¿Cuánto me cobra la comunidad Dezzpo?
-- ¿Cómo puedo aplicar a un proyecto?
-- ¿Cómo responder con un presupuesto?
-
-**Preguntas frecuentes generales:**
-- ¿Cómo actualizo mi perfil en Dezzpo?
-- ¿Cómo trabajan las calificaciones de los perfiles?
-- ¿Cómo solicitar y realizar calificaciones?
-- Configurar mi cuenta
-- Seguridad
-- No puedo usar mi cuenta
-- Consejos prácticos para Comerciantes calificados
-- Reglamentación del Sistema de Salud y seguridad en el trabajo
-
-**Servicio al Cliente:**
-Si tienes una pregunta que no haya sido resuelta en la sección de preguntas frecuentes, el equipo de Dezzpo responde mensajes de lunes a viernes. Puedes comunicarte con un asesor a través del chat en vivo por WhatsApp: https://wa.me/573204842897
+1. **Registro Gratuito:** Crea tu cuenta con número de celular (+57), Google o correo en https://dezzpo.com/registro.
+2. **Publica tu Proyecto:** Ingresa a https://dezzpo.com/presupuestos o https://dezzpo.com/app/nuevo-proyecto y describe tu requerimiento en 4 sencillos pasos.
+3. **Recibe Propuestas:** Comerciantes y empresas calificadas de tu zona recibirán tu proyecto y te enviarán cotizaciones formales.
+4. **Compara y Elige:** Revisa perfiles, experiencia, fotos de trabajos anteriores, insignia de certificación Dezzpo y calificaciones de otros propietarios.
+5. **Contrato y Anticipo Seguro:** Acepta la propuesta y paga el anticipo convenido mediante ePayco para blindar el inicio de la obra.
+6. **Calificación Final:** Al terminar el trabajo, califica al comerciante en cumplimiento, calidad y soporte.
 
 ---
 
-## Documentos Legales
+## Cómo Funciona — Para Comerciantes y Contratistas
 
-La página Legal (https://comunidad-dezzpo.vercel.app/legal) contiene los documentos legales oficiales de Comunidad Dezzpo, disponibles para descarga:
-
-1. **Términos y Condiciones de Uso — Propietarios:** https://drive.google.com/file/d/1_bGEdb1nTqY0-NpixhWZQVR7vXpN0tJM/view?usp=sharing
-2. **Términos y Condiciones de Uso — Comerciantes Calificados:** https://drive.google.com/file/d/1w7Da1cFH3_MjLy7CUZaV3QBHARpn_ogk/view?usp=sharing
-3. **Política de Privacidad:** https://drive.google.com/file/d/10I8CNmXfatwNigiICp7UP40WQyMENC_f/view?usp=sharing
-4. **Cookies:** Información sobre el uso de cookies en la plataforma
-
----
-
-## Preguntas Frecuentes
-
-### Generales
-
-**¿Cuánto cuesta registrarse?** — El registro es completamente gratuito tanto para propietarios como para comerciantes. No hay cargos ocultos por crear una cuenta.
-
-**¿Cómo contacto a servicio al cliente?** — Escríbenos por WhatsApp al +57 320 484 2897 o por email a comunidad.dezzpo@gmail.com. Nuestro equipo responde mensajes de lunes a viernes. También puedes usar el chat en vivo desde https://wa.me/573204842897
-
-**¿Dónde encuentro los documentos legales?** — En https://comunidad-dezzpo.vercel.app/legal puedes descargar los Términos y Condiciones (para Propietarios y Comerciantes), la Política de Privacidad y la información sobre Cookies.
-
-**¿Cómo actualizo mi perfil en Dezzpo?** — Inicia sesión en tu cuenta y dirígete a "Mi cuenta" o "Ver tu perfil" en el menú principal. Desde allí puedes editar tu información personal, foto de perfil, habilidades, portafolio y datos de contacto.
-
-**¿Cómo trabajan las calificaciones de los perfiles?** — Los propietarios califican a los comerciantes después de recibir un servicio. Se evalúan tres aspectos: cumplimiento de tiempos, calidad técnica del servicio, y entrega oportuna de documentos. El promedio de calificaciones se muestra públicamente en el perfil del comerciante con estrellas.
-
-**¿Cómo solicitar y realizar calificaciones?** — Al finalizar un servicio contratado a través de la plataforma, el propietario recibe la opción de calificar al comerciante desde su historial de servicio. La calificación incluye puntuación en estrellas y comentarios opcionales.
-
-**Configurar mi cuenta** — Desde el menú lateral izquierdo puedes acceder a las secciones: Mi cuenta (datos personales), Ajustes (preferencias), Privacidad, Formas de Pago, y Cambiar Clave.
-
-**Seguridad** — Comunidad Dezzpo protege tu información con políticas de privacidad estrictas. Puedes cambiar tu contraseña en cualquier momento desde Configuración > Cambiar Clave. Nunca compartas tus credenciales de acceso.
-
-**No puedo usar mi cuenta** — Si tienes problemas para acceder a tu cuenta, intenta restablecer tu contraseña desde la página de inicio de sesión. Si el problema persiste, contacta a servicio al cliente por WhatsApp al +57 320 484 2897 o por email a comunidad.dezzpo@gmail.com.
-
-### Para Propietarios
-
-**¿Cómo adquirir servicios?** — Ingresa a https://comunidad-dezzpo.vercel.app/presupuestos, selecciona el tipo de proyecto y la categoría del profesional que necesitas, haz clic en "Siguiente" y completa el formulario de 4 pasos en la página de nuevo proyecto. Los profesionales disponibles recibirán tu solicitud y te enviarán cotizaciones.
-
-**¿Cómo modificar proyectos?** — Desde tu cuenta, accede a "Directorio de Requerimientos" en el menú principal. Allí puedes ver tus proyectos activos y editarlos según sea necesario.
-
-**¿Cómo escoger el mejor personal?** — Consulta el Directorio de Profesionales (https://comunidad-dezzpo.vercel.app/app/portal-servicios). Compara perfiles, revisa calificaciones con estrellas, experiencia en años, ubicación, habilidades específicas y portafolio de trabajos anteriores. Los comerciantes con la insignia de certificación Dezzpo han pasado una validación presencial de sus habilidades.
-
-**¿Cómo solicito un presupuesto?** — Ingresa a https://comunidad-dezzpo.vercel.app/presupuestos, completa el formulario "Solicitar Servicios" seleccionando tipo de proyecto y categoría, haz clic en "Siguiente" y completa el formulario de 4 pasos en la página de nuevo proyecto. Es gratuito y sin compromiso.
-
-### Para Comerciantes Calificados
-
-**¿Cómo ofrecer servicios?** — Regístrate como comerciante, completa tu perfil profesional con experiencia, habilidades y portafolio. Tu perfil será visible en el Directorio de Profesionales. Los propietarios podrán contactarte directamente o recibirás notificaciones cuando publiquen proyectos en tu categoría.
-
-**¿Cuál es el costo de un proyecto?** — El costo depende del tipo de trabajo, complejidad y materiales necesarios. Cada comerciante define sus propios precios y envía cotizaciones personalizadas a los propietarios. La plataforma no establece precios fijos.
-
-**¿Cómo certifico mis habilidades y servicios?** — Solicita la certificación Dezzpo desde tu perfil. Se programará una visita de inspección donde se validan tus certificados, diplomas, equipos y técnica. Al aprobar, recibes la insignia de verificación que se muestra en tu perfil público.
-
-**¿Cuánto me cobra la comunidad Dezzpo?** — Actualmente el registro y uso de la plataforma es gratuito para comerciantes. Comunidad Dezzpo no cobra comisiones por los servicios prestados.
-
-**¿Cómo puedo aplicar a un proyecto?** — Cuando un propietario publica un requerimiento en tu categoría de servicio, recibirás una notificación. Desde el Directorio de Requerimientos puedes ver los proyectos disponibles y enviar tu propuesta con presupuesto.
-
-**¿Cómo responder con un presupuesto?** — Al ver un requerimiento publicado, selecciona "Cotizar" para enviar tu propuesta. Incluye el valor estimado del trabajo, tiempo de ejecución y cualquier detalle relevante. El propietario comparará las cotizaciones recibidas.
-
-**Consejos prácticos para Comerciantes calificados** — Mantén tu perfil actualizado con fotos de trabajos recientes en tu portafolio. Responde rápidamente a las solicitudes. Obtén la certificación Dezzpo para mayor visibilidad. Solicita calificaciones a tus clientes para mejorar tu reputación.
-
-**Reglamentación del Sistema de Salud y seguridad en el trabajo** — Los comerciantes deben cumplir con la normatividad colombiana de seguridad y salud en el trabajo (SST). Usar equipos de protección personal adecuados, seguir protocolos de seguridad y contar con ARL vigente. Dezzpo promueve la seguridad como parte de su Política Integral HSEQ.
+1. **Registro Gratuito:** Regístrate como Comerciante Calificado en https://dezzpo.com/registro seleccionando tu rol.
+2. **Completa tu Perfil Profesional:** Agrega tus especialidades (hasta 4 categorías), años de experiencia, zona de cobertura, portafolio de fotos y datos de contacto.
+3. **Obtén tu Micrositio Comercial:** Recibe tu URL personalizada (ej: `dezzpo.com/app/perfil/Tu-Nombre-Comercial`) para compartir como tarjeta de presentación digital.
+4. **Postúlate a Requerimientos:** Revisa las solicitudes de trabajo publicadas por propietarios en `/app/directorio-requerimientos` y envía cotizaciones competitivas.
+5. **Solicita Certificación Dezzpo:** Agenda tu visita técnica presencial para obtener la insignia de validación de habilidades y estatus destacado.
+6. **Cobra Anticipos con ePayco:** Establece requerimientos de anticipo (Upfront Deposits) para compra de materiales sin arriesgar tu liquidez operativa.
 
 ---
 
-## Tarifas y Estructura de Precios
+## Micrositios de Perfil Comercial y Tarjeta de Presentación Digital
 
-La plataforma cuenta con tarifas transparentes configuradas centralizadamente (`src/config/pricing.config.ts`):
+Cada usuario y comerciante en Comunidad Dezzpo cuenta con un micrositio público indexable y accesible mediante múltiples estrategias de URL:
 
-- **Membresía Anual Comerciante Calificado:** `$150.000 COP / año`. Otorga ficha de perfil optimizada, notificaciones en tiempo real, crédito de publicidad y estatus destacado.
-- **Certificación de Validación de Habilidades:** `$290.000 COP` por especialidad. Incluye visita técnica presencial y otorgamiento de insignia verificada.
-- **Propietarios VIP +Plus:** Acceso a servicio de inspección técnica del inmueble mediante formulario in-app (`/app/suscripciones`).
+**Estructura de URLs Disponibles:**
+- **URL Comercial Canónica (Recomendada):** `https://dezzpo.com/app/perfil/[nombre-comercial-slug]` (Ej: `https://dezzpo.com/app/perfil/Dezzpo-Profesionales-Calificados`).
+- **URL por Razón Social:** `https://dezzpo.com/app/perfil/Comunidad-Dezzpo`.
+- **URL con Vanity Prefix:** `https://dezzpo.com/app/perfil/@Dezzpo-Profesionales-Calificados`.
+- **URL Técnica por UID:** `https://dezzpo.com/app/perfil/pbEr6iR3LjOOsYISvBEkZfwdXlx2`.
 
----
-
-## Modelo de Negocio: Pagos y Anticipos (Upfront Deposits)
-
-
-El modelo de negocio de Comunidad Dezzpo permite a los comerciantes asegurar financieramente sus proyectos mediante un sistema de **Anticipos (Upfront Deposits)** gestionado a través de nuestra pasarela de pagos integrada (ePayco).
-
-**¿Cómo funciona?**
-1. Al momento de cotizar un servicio, el comerciante puede habilitar la opción de requerir un anticipo y establecer el monto específico necesario para iniciar la obra.
-2. El propietario, al aceptar la cotización, es redirigido a realizar el pago seguro de este anticipo (no de la totalidad del contrato, a menos que así se pacte) a través de la plataforma.
-3. El pago del saldo restante se acuerda según el avance o al finalizar el proyecto.
-
-**Impacto en el Modelo de Negocio y Rentabilidad:**
-- **Compromiso Financiero (Financial Commitment):** El requerimiento de un anticipo elimina la informalidad y el riesgo de cancelación o "no-shows". Garantiza que el comerciante cuente con los fondos operativos inmediatos para compra de materiales y logística.
-- **Incremento de Rentabilidad y Ganancias:** Al reducir la incertidumbre de pago, los comerciantes operan con mayor liquidez, permitiéndoles escalar y asumir múltiples proyectos simultáneos. Esto incrementa de manera directa sus ganancias mensuales (profits).
-- **Consolidación del Ecosistema:** Para Comunidad Dezzpo, procesar estos pagos iniciales consolida la retención de usuarios. Los propietarios perciben un entorno profesional y estructurado, mientras que el volumen de transacciones en la plataforma crece, impactando positivamente los ingresos y comisiones globales.
+**Tarjeta Interactiva "Mi Micrositio Dezzpo":**
+Dentro de la sección *Datos de contacto* de cada perfil, se incluye un componente interactivo que muestra la URL amigable y un botón de copiado en 1 clic para compartir por WhatsApp, correo o redes sociales como tarjeta de presentación profesional.
 
 ---
 
-## Páginas Principales del Sitio
+## Certificación Dezzpo de Habilidades Técnicas
 
-- **Inicio:** https://comunidad-dezzpo.vercel.app
-- **Nosotros:** https://comunidad-dezzpo.vercel.app/nosotros (historia, misión, visión, equipo)
-- **Así Trabajamos:** https://comunidad-dezzpo.vercel.app/asi-trabajamos (proceso para propietarios y comerciantes)
-- **Presupuestos:** https://comunidad-dezzpo.vercel.app/presupuestos (solicitar cotizaciones gratis)
-- **Contáctenos:** https://comunidad-dezzpo.vercel.app/contactenos (teléfono, email, dirección)
-- **Portal de Servicios:** https://comunidad-dezzpo.vercel.app/app/portal-servicios (directorio de profesionales)
-- **Legal:** https://comunidad-dezzpo.vercel.app/legal
-- **Ayuda / PQRS:** https://comunidad-dezzpo.vercel.app/ayuda-pqrs
-- **Blog:** https://comunidad-dezzpo.vercel.app/blog
-- **Clasificación de Usuarios:** https://comunidad-dezzpo.vercel.app/clasificacion-usuarios
-- **Asesorías Comunitarias:** https://comunidad-dezzpo.vercel.app/asesorias
+La Certificación Dezzpo es el sello de confianza y validación técnica presencial que distingue a los mejores comerciantes de la plataforma:
+
+1. **Solicitud en Línea:** El comerciante selecciona la especialidad a certificar y agenda la fecha de visita desde `/app/certificaciones`.
+2. **Inversión:** Tasa de inspección técnica fijada en `$290.000 COP` por especialidad (pago seguro vía ePayco).
+3. **Visita Técnica en Terreno:** Un evaluador calificado inspecciona: diplomas o certificaciones SENA/universitarias, dotación, herramientas especializadas, protocolos de seguridad y destreza en obra.
+4. **Otorgamiento de Insignia:** Tras la aprobación administrativa, el comerciante recibe la insignia verificada en su perfil y pasa a estatus `profileTier: 'destacado'`, multiplicando su visibilidad y preferencia de contratación.
 
 ---
 
-## Blog de Comunidad Dezzpo
+## Sistema de Calificaciones y Reputación Profesional
 
-El Blog de Comunidad Dezzpo (https://comunidad-dezzpo.vercel.app/blog) es un centro de contenido educativo y de inbound marketing que publica artículos segmentados por audiencia:
+El sistema de reputación de Comunidad Dezzpo es 100% transparente y se basa en tres criterios objetivos calificados por el propietario:
 
-- **Para Propietarios:** Guías sobre cómo publicar proyectos, comparar cotizaciones, elegir al profesional adecuado, y aprovechar al máximo la plataforma.
-- **Para Comerciantes Calificados:** Artículos sobre cómo optimizar tu perfil profesional, aumentar tu visibilidad, obtener la certificación Dezzpo, y gestionar cotizaciones eficientemente.
-- **General:** Novedades de la plataforma, tendencias del sector de mantenimiento residencial, y consejos de seguridad laboral.
+1. **Cumplimiento de Tiempos:** Entrega del servicio en las fechas y horarios acordados.
+2. **Calidad y Competencia Técnica:** Cumplimiento de normas técnicas de construcción y suficiente personal idóneo.
+3. **Soporte y Documentación:** Entrega oportuna de cuentas de cobro, facturas, garantías y soportes.
 
-Los artículos se pueden filtrar por audiencia (Propietarios, Comerciantes, General) usando las pestañas en la parte superior del blog. Cada artículo incluye la fecha de publicación, autor, y llamados a la acción específicos según la audiencia del lector.
-
----
-
-## Clasificación y Niveles de Usuarios
-
-Comunidad Dezzpo asigna clasificaciones y niveles a cada usuario según su tamaño de operación, experiencia en la plataforma y tipo de membresía. Los detalles de las clasificaciones se pueden consultar públicamente en https://comunidad-dezzpo.vercel.app/clasificacion-usuarios.
-
-### Para Comerciantes Calificados
-
-**Clasificación (Tipo de Operación):**
-- Persona Natural — Profesional independiente
-- Emergente — Equipo pequeño en crecimiento
-- PyME de Servicios — Pequeña/mediana empresa
-- Gacela — Empresa de rápido crecimiento
-- Tractora — Empresa consolidada
-- Escalable — Gran operación escalable
-
-**Categoría (Membresía):**
-- Hierro I, Hierro II, Hierro III — Niveles iniciales
-- Bronce, Plata, Oro, Platino — Niveles intermedios
-- Diamante, Black Diamond — Niveles premium
-
-**Gradación (Experiencia en la Plataforma):**
-- Aprendiz, Oficial, Maestro Constructor, Gran Maestro
-
-### Para Propietarios
-
-**Clasificación (Tipo de Inmueble):**
-- Hogar — Vivienda individual
-- Negocio — Local comercial
-- Propiedad Horizontal — Edificio o conjunto residencial
-- Inmobiliaria — Empresa inmobiliaria
-- Aliado — Socio estratégico
-
-**Categoría (Membresía):**
-- Básico, Plus, Premium, VIP, Black
-
-**Gradación (Experiencia en la Plataforma):**
-- Miembro Activo, Vecino Confiable, Referente Comunitario, Embajador Dezzpo
-
-Los filtros de clasificación están disponibles en el Portal de Servicios y en el Directorio de Requerimientos para facilitar el match entre usuarios.
+El promedio se refleja en el perfil público mediante estrellas (1 a 5) y comentarios verificados.
 
 ---
 
-## Asesorías Comunitarias
+## Contratos Inteligentes, Pagos Seguros y Anticipos (Upfront Deposits)
 
-La sección de Asesorías (https://comunidad-dezzpo.vercel.app/asesorias) es un foro comunitario donde los usuarios pueden publicar preguntas y recibir respuestas de la comunidad. Funciona como un sistema de preguntas y respuestas donde:
+Comunidad Dezzpo elimina la informalidad y los incumplimientos en la contratación de obras mediante contratos vinculados a la pasarela de pagos ePayco:
 
-- Cualquier usuario registrado puede crear un hilo de consulta
-- Otros usuarios pueden responder con comentarios
-- Las respuestas pueden recibir "likes" para destacar las más útiles
-- El historial de preguntas está disponible públicamente para consulta
+**Ciclo de Vida del Contrato:**
+`pending_payment` $\rightarrow$ `active` $\rightarrow$ `completed` (o `disputed` en caso de mediación).
+
+**Arquitectura de Anticipos (Upfront Deposits):**
+- El comerciante puede exigir un anticipo porcentual o fijo al enviar su cotización.
+- Al aceptar la oferta, el propietario paga el monto del anticipo con tarjeta de crédito, débito, PSE, Nequi o Daviplata a través de ePayco.
+- El pago del anticipo activa formalmente el contrato y genera una orden de trabajo con soporte legal para ambas partes.
+
+---
+
+## Clasificación, Categorías y Niveles de Usuarios
+
+La plataforma clasifica a los usuarios según su tamaño y experiencia (`/clasificacion-usuarios`):
+
+**Comerciantes Calificados:**
+- **Clasificación:** Persona Natural, Emergente, PyME de Servicios, Gacela, Tractora, Escalable.
+- **Categoría (Membresía):** Hierro I-III, Bronce, Plata, Oro, Platino, Diamante, Black Diamond.
+- **Gradación:** Aprendiz, Oficial, Maestro Constructor, Gran Maestro.
+
+**Propietarios y Clientes:**
+- **Clasificación:** Hogar, Negocio, Propiedad Horizontal, Inmobiliaria, Aliado.
+- **Categoría:** Básico, Plus, Premium, VIP, Black.
+- **Gradación:** Miembro Activo, Vecino Confiable, Referente Comunitario, Embajador Dezzpo.
 
 ---
 
 ## Programa de Referidos "Voz a Voz"
 
-Comunidad Dezzpo cuenta con un programa de referidos que recompensa a los usuarios que inviten a nuevos miembros:
+El programa de recompensas de Comunidad Dezzpo (`/app/invitar-amigos`) premia a los miembros que hacen crecer la comunidad:
 
-- **+50 puntos** cuando un nuevo usuario se registra usando tu código de referido
-- **+200 puntos** cuando el usuario referido completa su primer contrato
-
-Los puntos acumulados se pueden canjear por recompensas del catálogo desde el Dashboard de Referidos en `/app/invitar-amigos`. El código de referido se puede compartir por WhatsApp, Facebook o Email.
+- **+50 Puntos:** Cuando un amigo o colega se registra usando tu enlace o código de referido.
+- **+200 Puntos:** Cuando tu referido completa su primer contrato formal en la plataforma.
+- **Canje de Puntos:** Los puntos acumulados se canjean por cupones de descuento, saldo en membresías y beneficios del catálogo de recompensas (`src/config/referrals.config.ts`).
 
 ---
 
-## Redes Sociales
+## Presupuestos y Solicitud de Servicios (Flujo de Requerimientos)
 
-- **LinkedIn:** comunidad-dezzpo
-- **Instagram:** @comunidaddezzpo
-- **Facebook:** Comunidad Dezzpo
-- **WhatsApp:** +57 320 484 2897
+La página de Presupuestos (https://dezzpo.com/presupuestos) es el canal guiado para solicitar cotizaciones sin costo:
 
+1. **Paso 1:** Selecciona el tipo de proyecto (mantenimiento, remodelación, obra civil o ingeniería).
+2. **Paso 2:** Selecciona la categoría del profesional requerido.
+3. **Paso 3:** En el formulario de nuevo proyecto (`/app/nuevo-proyecto`), define alcance, fotos del área y ubicación.
+4. **Paso 4:** Programa la fecha y franja horaria preferida para la visita o recepción de ofertas.
+
+---
+
+## Asesorías Comunitarias y Foro Técnico
+
+En la sección de Asesorías (https://dezzpo.com/asesorias), propietarios y profesionales interactúan en un foro técnico abierto:
+- Publicar dudas sobre reparaciones, materiales, normas de construcción o propiedad horizontal.
+- Respuestas de comerciantes y expertos de la comunidad.
+- Votación comunitaria de respuestas más útiles.
+
+---
+
+## Blog Especializado y Contenido Inbound
+
+El Blog de Comunidad Dezzpo (https://dezzpo.com/blog) ofrece guías prácticas, manuales de remodelación, normatividad de propiedad horizontal y consejos de seguridad laboral clasificados en tres pestañas:
+- **Para Propietarios:** Guías de mantenimiento y selección de contratistas.
+- **Para Comerciantes:** Estrategias de precios, marketing y certificación.
+- **General:** Tendencias del sector y normatividad colombiana.
+
+---
+
+## Cobertura Geográfica (Bogotá y Sabana de Cundinamarca)
+
+Comunidad Dezzpo ofrece cobertura completa centralizada en `ListadoZonas.ts`:
+
+- **20 Localidades de Bogotá:** Usaquén, Chapinero, Santa Fe, San Cristóbal, Usme, Tunjuelito, Bosa, Kennedy, Fontibón, Engativá, Suba, Barrios Unidos, Teusaquillo, Los Mártires, Antonio Nariño, Puente Aranda, La Candelaria, Rafael Uribe Uribe, Ciudad Bolívar, Sumapaz.
+- **11 Municipios Metropolitanos de la Sabana:** Soacha, Chía, Cajicá, Zipaquirá, Cota, Funza, Mosquera, Madrid, Facatativá, La Calera, Sopó.
+
+---
+
+## Tarifas, Membresías y Estructura de Precios
+
+Configuradas centralizadamente en `src/config/pricing.config.ts`:
+- **Registro y Uso Básico:** 100% Gratuito para Propietarios y Comerciantes.
+- **Membresía Anual Comerciante Destacado:** `$150.000 COP / año`.
+- **Certificación de Validación Técnica:** `$290.000 COP` por especialidad (incluye visita presencial y sello verificado).
+- **Inspección Técnica de Inmuebles para Propietarios VIP+:** Formulario in-app en `/app/suscripciones`.
+
+---
+
+## Documentos Legales y Políticas de Uso
+
+Los documentos oficiales de Comunidad Dezzpo se encuentran disponibles para consulta pública en https://dezzpo.com/legal:
+
+1. **Términos y Condiciones de Uso — Propietarios:** Normas de publicación de proyectos, pagos y garantías.
+2. **Términos y Condiciones de Uso — Comerciantes Calificados:** Obligaciones de calidad, cumplimiento y seguridad social.
+3. **Política de Tratamiento de Datos Personales y Privacidad (Ley 1581 de 2012 de Colombia):** Custodia y protección de datos.
+4. **Política de Cookies y Seguridad de la Información:** Estándares de navegación segura y protección contra fraudes.
+
+---
+
+## Preguntas Frecuentes (FAQ)
+
+### ¿Cuánto cuesta registrarse en Dezzpo?
+El registro es 100% gratuito tanto para propietarios como para comerciantes y técnicos. No existen cobros ocultos por crear tu cuenta ni por cotizar proyectos.
+
+### ¿Puedo registrarme solo con mi número de celular?
+Sí. Puedes registrarte e iniciar sesión directamente con tu número móvil de Colombia (+57) recibiendo un código SMS de 6 dígitos, sin necesidad de ingresar contraseña.
+
+### ¿Cómo encuentro tiendas de materiales o ferreterías cerca de mi obra?
+Ingresa a https://dezzpo.com/tiendas para explorar el directorio con más de 17 categorías especializadas (pinturas, tubería PVC, perfiles de hierro, impermeabilizantes, maderas, mallas, etc.) filtrando por tu localidad o municipio.
+
+### ¿Cómo comparto mi perfil comercial con mis clientes?
+Entra a tu perfil en `/app/perfil` y en la sección *Datos de contacto* copia tu enlace comercial canónico (ej: `https://dezzpo.com/app/perfil/Tu-Nombre-Comercial`) para enviarlo por WhatsApp o redes sociales.
+
+### ¿Cómo solicito la certificación de habilidades Dezzpo?
+Desde tu cuenta en `/app/certificaciones`, selecciona tu especialidad y agenda la fecha de visita técnica presencial. Al aprobarla, tu perfil exhibirá la insignia oficial de validación técnica.
+
+### ¿Cómo gano puntos con el programa de referidos?
+Comparte tu código de invitación desde `/app/invitar-amigos`. Ganarás +50 puntos por cada usuario nuevo que se registre y +200 puntos adicionales cuando tu referido complete su primer contrato en la plataforma.
