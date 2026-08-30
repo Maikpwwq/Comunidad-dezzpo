@@ -110,6 +110,19 @@ return (
 
 ---
 
+## Public Profile & Microsite Routing (`/app/perfil`)
+
+- **Hybrid Route**: Profiles are accessible to unauthenticated visitors as public landing pages / digital business cards for merchants.
+- **Route Resolution**: Handled dynamically in `pages/(app)/perfil/+route.ts` and resolved in `src/services/users/userService.ts` (`resolveUserByIdOrSlug`):
+  - **UID**: `/app/perfil/pbEr6iR3LjOOsYISvBEkZfwdXlx2`
+  - **Commercial/Brand Slug**: `/app/perfil/Dezzpo-Profesionales-Calificados` (Standard/Canonical)
+  - **Razon Social Slug**: `/app/perfil/Comunidad-Dezzpo`
+  - **Vanity URL**: `/app/perfil/@Dezzpo-Profesionales-Calificados`
+  - **Own Profile**: `/app/perfil` (requires auth; falls back to current session UID)
+- **Share Card UI**: Profiles feature a **Mi Micrositio Dezzpo** card with a 1-click clipboard copy button and domain/slug breakdown for marketing and client sharing.
+
+---
+
 ## Migration Pattern
 
 ```typescript

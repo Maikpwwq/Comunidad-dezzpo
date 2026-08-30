@@ -21,7 +21,12 @@
 
 ### 🧬 DYNAMIC DATA REQUIREMENTS
 
-* **Profile Hydration:** For `/app/perfil/[id]`, the `id` must be extracted from the Vike `pageContext`.
+* **Profile Hydration & Multi-Strategy Routing:** For `/app/perfil/[identifier]`, the identifier is resolved dynamically via `resolveUserByIdOrSlug` supporting:
+  1. Direct Firebase UID (e.g., `/app/perfil/pbEr6iR3LjOOsYISvBEkZfwdXlx2`)
+  2. Professional/Brand slug (e.g., `/app/perfil/Dezzpo-Profesionales-Calificados` or `/app/perfil/dezzpo-profesionales-calificados`)
+  3. Commercial/Legal Name (e.g., `/app/perfil/Comunidad-Dezzpo` matching `userRazonSocial`)
+  4. Vanity `@` prefix (e.g., `/app/perfil/@Dezzpo-Profesionales-Calificados`)
+  5. Own profile fallback when visiting `/app/perfil` (authenticated user UID from Zustand).
 * **Fetching State:** Implement mandatory loading skeletons for profile data to prevent UI "jerkiness" during Firestore fetches.
 
 ### Path Aliases are Mandatory
@@ -655,6 +660,19 @@ src/styles/
   - `META_ADVERTISING_ACCOUNT_ID`: `836577536843754`
   - `META_WEBHOOK_VERIFY_TOKEN`: Verification token for Webhook subscriptions
 
+### Public Profile Routing, Vanity URLs & Microsite Share Card (`resolveUserByIdOrSlug` - 2026-08-30)
+- **Problem**: When a user or client navigated to a human-friendly vanity URL such as `/app/perfil/Comunidad-Dezzpo` or `/app/perfil/Dezzpo-Profesionales-Calificados`, the routing resolver passed the slug directly to `getUser({ userId })`, which only performed direct document ID lookups in Firestore. Because document IDs are 28-character Firebase UIDs, this resulted in a false *"User not found"* error.
+- **Cascading Resolution Engine (`resolveUserByIdOrSlug`)**:
+  1. **Direct UID Lookup**: Checks `doc(collection, identifier)` in `usersComerciantesCalificados` then `usersPropietariosResidentes`.
+  2. **Exact `userName` Query**: Matches exact string `where('userName', '==', identifier)`.
+  3. **Unslugified `userName` Query**: Replaces hyphens with spaces (`Dezzpo-Profesionales-Calificados` $\rightarrow$ `Dezzpo Profesionales Calificados`) and performs index-backed query.
+  4. **Exact & Unslugified `userRazonSocial` Query**: Matches legal/commercial entity name (e.g. `Comunidad-Dezzpo` $\rightarrow$ `Comunidad Dezzpo`).
+  5. **Slug Scan Fallback**: Compares target slug with `slugify(doc.userName)`, `slugify(doc.userRazonSocial)`, or `slugify(doc.userContactName)`.
+- **Shareable Microsite Card UI**:
+  - Embedded inside the **Datos de contacto** card on `/app/perfil/[id-or-slug]`.
+  - Displays the canonical commercial URL (`dezzpo.com/app/perfil/{slug}`) in monospace typography.
+  - Features an interactive 1-click clipboard button with immediate visual feedback (`✓ Copiado` pulse animation), serving as a digital business card for merchants.
+
 ### Meta Webhooks & Real-Time Ingestion (`server/api/meta/webhook.ts`)
 - **Subscription Architecture**: Eliminates polling overhead by receiving real-time event notifications (`GET` challenge handshake + `POST` signed event payloads).
 - **HMAC-SHA256 Security**: Every incoming POST notification is verified against the `X-Hub-Signature-256` header using `META_APP_SECRET`.
@@ -669,7 +687,6 @@ src/styles/
   - **Verify Token**: Matching `META_WEBHOOK_VERIFY_TOKEN` (or `META_APP_SECRET`)
   - **User Data Deletion Callback URL**: `https://dezzpo.com/api/v1/meta/data-deletion`
   - **Deauthorization Callback URL**: `https://dezzpo.com/api/v1/meta/data-deletion`
-  - **Server IP Allowlist**: Must remain **empty/disabled** in serverless/Edge deployment (Vercel) to prevent blocking dynamic Anycast egress IPs.
 
 
 

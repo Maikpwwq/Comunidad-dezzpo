@@ -48,7 +48,7 @@ The project uses a **Tiered Access Model**:
    - `/app/ver-requerimiento/[id]`
    - `/app/suscripciones`
    - `/app/tiendas` (Directorio de Tiendas, Ferreterías y Proveedores)
-   - `/app/perfil/[id]` (Public View)
+   - `/app/perfil/[id-or-slug]` (Public Microsite / Digital Business Card — resolves by UID, username, commercial name, or slug)
 3. **Strict (App Auth):** Requires valid session (e.g., `/app/mensajes`, `/app/ajustes`).
 4. **Admin (Custom Claims):** Requires `claims.admin === true` via Firebase custom claims.
    - `/admin/dashboard` — KPI Command Center + Monetization Analytics
