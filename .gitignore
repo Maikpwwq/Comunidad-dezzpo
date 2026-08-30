@@ -144,3 +144,4 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/node,react
 .vercel
+knowledge/.embeddings-cache.json
