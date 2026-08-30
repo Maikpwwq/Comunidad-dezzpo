@@ -731,7 +731,41 @@ describe('Firestore Security Rules Isolation & Privacy (Rules Unit Testing)', ()
     })
 
     // =========================================================================
-    // 15. Catch-all — deny everything else
+    // 15. Social Interception Logs (/socialInterceptionLogs)
+    // =========================================================================
+    describe('Social Interception Logs Collection (/socialInterceptionLogs)', () => {
+        it('allows admin to read and write telemetry logs, denies regular users', async () => {
+            const admin = testEnv.authenticatedContext('admin-user', { admin: true }).firestore()
+            const regularUser = testEnv.authenticatedContext('regular-user').firestore()
+
+            // Admin write -> MUST SUCCEED
+            await assertSucceeds(
+                setDoc(doc(admin, 'socialInterceptionLogs', 'log-101'), {
+                    postId: 'fb_post_1',
+                    authorName: 'Carlos',
+                    intent: 'DEMAND',
+                    detectedTrade: 'plomero',
+                    status: 'dispatched',
+                    timestamp: Date.now(),
+                })
+            )
+
+            // Admin read -> MUST SUCCEED
+            await assertSucceeds(getDoc(doc(admin, 'socialInterceptionLogs', 'log-101')))
+
+            // Regular user read & write -> MUST FAIL
+            await assertFails(getDoc(doc(regularUser, 'socialInterceptionLogs', 'log-101')))
+            await assertFails(
+                setDoc(doc(regularUser, 'socialInterceptionLogs', 'log-102'), {
+                    postId: 'fb_post_2',
+                    status: 'dispatched',
+                })
+            )
+        })
+    })
+
+    // =========================================================================
+    // 16. Catch-all — deny everything else
     // =========================================================================
     describe('Catch-all Deny Rule', () => {
         it('denies read/write to undefined collections', async () => {

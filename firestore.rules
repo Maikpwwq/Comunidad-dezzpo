@@ -227,6 +227,14 @@ service cloud.firestore {
     }
 
     // =========================================================================
+    // Social Interception Logs (Meta Graph API & Anti-Spam Automation)
+    // Admin read/write for telemetries, audits, and dashboard metrics.
+    // =========================================================================
+    match /socialInterceptionLogs/{logId} {
+      allow read, write: if isAdmin();
+    }
+
+    // =========================================================================
     // Catch-all: deny everything else
     // =========================================================================
     match /{document=**} {
