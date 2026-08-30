@@ -41,6 +41,14 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import CheckIcon from '@mui/icons-material/Check'
 import BadgeIcon from '@mui/icons-material/Badge'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import TelegramIcon from '@mui/icons-material/Telegram'
+import TwitterIcon from '@mui/icons-material/Twitter'
+import EmailIcon from '@mui/icons-material/Email'
+import ShareIcon from '@mui/icons-material/Share'
+import VerifiedIcon from '@mui/icons-material/Verified'
 
 // Types
 import type { UserFirestoreDocument, UserRole } from '@services/types'
@@ -575,44 +583,158 @@ export default function Page() {
                                 })()}
 
                                 {/* ── Microsite Share Card ── */}
-                                {micrositeUrl && (
-                                    <div className={styles.MicrositeCard}>
-                                        <div className={styles.MicrositeHeader}>
-                                            <BadgeIcon className={styles.MicrositeHeaderIcon || ''} />
-                                            Mi Micrositio Dezzpo
-                                        </div>
-                                        <div
-                                            className={styles.MicrositeUrlRow}
-                                            onClick={copyMicrositeUrl}
-                                            role="button"
-                                            tabIndex={0}
-                                            aria-label="Copiar enlace del micrositio"
-                                            onKeyDown={(e) => { if (e.key === 'Enter') copyMicrositeUrl() }}
-                                        >
-                                            <span className={styles.MicrositeUrlText}>
-                                                <span className={styles.MicrositeDomain}>dezzpo.com/app/perfil/</span>
-                                                <span className={styles.MicrositeSlug}>{micrositeSlug}</span>
-                                            </span>
-                                            <button
-                                                className={clsx(
-                                                    styles.MicrositeCopyBtn,
-                                                    micrositeCopied && styles.MicrositeCopied
-                                                )}
-                                                onClick={(e) => { e.stopPropagation(); copyMicrositeUrl() }}
-                                                type="button"
+                                {micrositeUrl && (() => {
+                                    const profileName = userInfo?.userName || userInfo?.userRazonSocial || 'Profesional'
+                                    const shareText = `Conoce el perfil profesional de ${profileName} en Comunidad Dezzpo`
+                                    const shareSubject = `${profileName} — Perfil Profesional | Comunidad Dezzpo`
+
+                                    const shareLinks = [
+                                        {
+                                            key: 'whatsapp',
+                                            label: 'WhatsApp',
+                                            icon: <WhatsAppIcon sx={{ fontSize: 20 }} />,
+                                            className: styles.ShareBtnWhatsapp,
+                                            href: `https://wa.me/?text=${encodeURIComponent(`${shareText}\n${micrositeUrl}`)}`
+                                        },
+                                        {
+                                            key: 'facebook',
+                                            label: 'Facebook',
+                                            icon: <FacebookIcon sx={{ fontSize: 20 }} />,
+                                            className: styles.ShareBtnFacebook,
+                                            href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(micrositeUrl)}`
+                                        },
+                                        {
+                                            key: 'twitter',
+                                            label: 'X',
+                                            icon: <TwitterIcon sx={{ fontSize: 20 }} />,
+                                            className: styles.ShareBtnTwitter,
+                                            href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(micrositeUrl)}`
+                                        },
+                                        {
+                                            key: 'linkedin',
+                                            label: 'LinkedIn',
+                                            icon: <LinkedInIcon sx={{ fontSize: 20 }} />,
+                                            className: styles.ShareBtnLinkedin,
+                                            href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(micrositeUrl)}`
+                                        },
+                                        {
+                                            key: 'telegram',
+                                            label: 'Telegram',
+                                            icon: <TelegramIcon sx={{ fontSize: 20 }} />,
+                                            className: styles.ShareBtnTelegram,
+                                            href: `https://t.me/share/url?url=${encodeURIComponent(micrositeUrl)}&text=${encodeURIComponent(shareText)}`
+                                        },
+                                        {
+                                            key: 'email',
+                                            label: 'Correo',
+                                            icon: <EmailIcon sx={{ fontSize: 20 }} />,
+                                            className: styles.ShareBtnEmail,
+                                            href: `mailto:?subject=${encodeURIComponent(shareSubject)}&body=${encodeURIComponent(`${shareText}\n\n${micrositeUrl}`)}`
+                                        }
+                                    ]
+
+                                    const handleNativeShare = async () => {
+                                        if (typeof navigator !== 'undefined' && navigator.share) {
+                                            try {
+                                                await navigator.share({
+                                                    title: shareSubject,
+                                                    text: shareText,
+                                                    url: micrositeUrl
+                                                })
+                                            } catch (_) { /* user cancelled */ }
+                                        }
+                                    }
+
+                                    const hasNativeShare = typeof navigator !== 'undefined' && typeof navigator.share === 'function'
+
+                                    return (
+                                        <div className={styles.MicrositeCard}>
+                                            {/* Header row */}
+                                            <div className={styles.MicrositeTopBar}>
+                                                <div className={styles.MicrositeHeader}>
+                                                    <BadgeIcon className={styles.MicrositeHeaderIcon || ''} />
+                                                    Mi Micrositio Dezzpo
+                                                </div>
+                                                <span className={styles.MicrositeBadge}>
+                                                    <VerifiedIcon sx={{ fontSize: 14 }} /> Tarjeta Digital
+                                                </span>
+                                            </div>
+
+                                            {/* URL Row — click to copy */}
+                                            <div
+                                                className={styles.MicrositeUrlRow}
+                                                onClick={copyMicrositeUrl}
+                                                role="button"
+                                                tabIndex={0}
+                                                aria-label="Haz clic para copiar el enlace del micrositio"
+                                                onKeyDown={(e) => { if (e.key === 'Enter') copyMicrositeUrl() }}
                                             >
-                                                {micrositeCopied ? (
-                                                    <><CheckIcon sx={{ fontSize: 16 }} /> Copiado</>
-                                                ) : (
-                                                    <><ContentCopyIcon sx={{ fontSize: 14 }} /> Copiar</>
-                                                )}
-                                            </button>
+                                                <span className={styles.MicrositeUrlText}>
+                                                    <span className={styles.MicrositeDomain}>dezzpo.com/app/perfil/</span>
+                                                    <span className={styles.MicrositeSlug}>{micrositeSlug}</span>
+                                                </span>
+                                                <button
+                                                    className={clsx(
+                                                        styles.MicrositeCopyBtn,
+                                                        micrositeCopied && styles.MicrositeCopied
+                                                    )}
+                                                    onClick={(e) => { e.stopPropagation(); copyMicrositeUrl() }}
+                                                    type="button"
+                                                >
+                                                    {micrositeCopied ? (
+                                                        <><CheckIcon sx={{ fontSize: 16 }} /> Copiado</>
+                                                    ) : (
+                                                        <><ContentCopyIcon sx={{ fontSize: 14 }} /> Copiar</>
+                                                    )}
+                                                </button>
+                                            </div>
+
+                                            {/* Copied feedback pill */}
+                                            {micrositeCopied && (
+                                                <div className={styles.CopiedAlertPill}>
+                                                    <CheckIcon sx={{ fontSize: 14 }} />
+                                                    Enlace copiado al portapapeles
+                                                </div>
+                                            )}
+
+                                            {/* Social Share Buttons */}
+                                            <div className={styles.ShareSection}>
+                                                <span className={styles.ShareSectionTitle}>Compartir en</span>
+                                                <div className={styles.ShareButtonsRow}>
+                                                    {shareLinks.map((link) => (
+                                                        <Tooltip key={link.key} title={link.label} arrow>
+                                                            <a
+                                                                className={clsx(styles.SocialShareBtn, link.className)}
+                                                                href={link.href}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                aria-label={`Compartir en ${link.label}`}
+                                                            >
+                                                                {link.icon}
+                                                            </a>
+                                                        </Tooltip>
+                                                    ))}
+                                                    {hasNativeShare && (
+                                                        <Tooltip title="Más opciones" arrow>
+                                                            <button
+                                                                className={clsx(styles.SocialShareBtn, styles.ShareBtnNative)}
+                                                                onClick={handleNativeShare}
+                                                                type="button"
+                                                                aria-label="Compartir con las opciones del dispositivo"
+                                                            >
+                                                                <ShareIcon sx={{ fontSize: 20 }} />
+                                                            </button>
+                                                        </Tooltip>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            <span className={styles.MicrositeHint}>
+                                                Comparte este enlace como tu tarjeta de presentación profesional
+                                            </span>
                                         </div>
-                                        <span className={styles.MicrositeHint}>
-                                            Comparte este enlace como tu tarjeta de presentación profesional
-                                        </span>
-                                    </div>
-                                )}
+                                    )
+                                })()}
                             </Col>
 
                             {/* Redes Sociales (1/3 width on desktop) */}
