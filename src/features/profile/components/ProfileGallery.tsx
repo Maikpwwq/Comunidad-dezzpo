@@ -36,42 +36,55 @@ export const ProfileGallery: React.FC<ProfileGalleryProps> = ({
     }
 
     return (
-        <>
+        <div className="w-100">
             <Typography
                 variant="h5"
-                className={clsx(styles.SectionTitle, 'pt-4 pb-4 w-100')}
+                className={clsx(styles.SectionTitle, 'pt-4 pb-3 w-100')}
                 align="left"
             >
                 Portafolio
             </Typography>
-            <Row className="w-100 g-4 pb-4">
-                {images.map((imagen: string, index: number) => (
-                    <Col key={`gallery-${index}`} lg={6} md={6} xs={12} className="d-flex justify-content-center">
-                        <Box className={clsx(styles.GalleryCard)}>
-                            <Box
-                                component="img"
-                                src={imagen || ''}
-                                alt={`Publicación ${index + 1} de ${userName}`}
-                                className={clsx(styles.GalleryImage)}
-                            />
-                        </Box>
-                    </Col>
-                ))}
 
-                {isOwnProfile && currentUserId && (
-                    <Col xs={12} className="mt-3">
-                        <AdjuntarArchivos
-                            name="galleryPhoto"
-                            multiple={true}
-                            idPerson={currentUserId}
-                            rol={viewerRole}
-                            route={`profiles/${currentUserId}`}
-                            functionState={onUpdateUserInfo}
-                            state={userInfoState}
-                        />
-                    </Col>
-                )}
-            </Row>
-        </>
+            {images.length > 0 ? (
+                <Row className="w-100 g-4 pb-3 m-0">
+                    {images.map((imagen: string, index: number) => (
+                        <Col
+                            key={`gallery-${index}`}
+                            lg={images.length === 1 ? 8 : 6}
+                            md={6}
+                            xs={12}
+                            className="p-2"
+                        >
+                            <Box className={clsx(styles.GalleryCard)}>
+                                <Box
+                                    component="img"
+                                    src={imagen || ''}
+                                    alt={`Publicación ${index + 1} de ${userName}`}
+                                    className={clsx(styles.GalleryImage)}
+                                />
+                            </Box>
+                        </Col>
+                    ))}
+                </Row>
+            ) : (
+                <Typography variant="body2" className="body-2 mb-3" style={{ color: '#888' }}>
+                    No hay imágenes publicadas en el portafolio
+                </Typography>
+            )}
+
+            {isOwnProfile && currentUserId && (
+                <div className="mt-2 mb-4">
+                    <AdjuntarArchivos
+                        name="galleryPhoto"
+                        multiple={true}
+                        idPerson={currentUserId}
+                        rol={viewerRole}
+                        route={`profiles/${currentUserId}`}
+                        functionState={onUpdateUserInfo}
+                        state={userInfoState}
+                    />
+                </div>
+            )}
+        </div>
     )
 }

@@ -9,6 +9,7 @@ import { Box, Typography } from '@mui/material'
 import MailIcon from '@mui/icons-material/Mail'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import type { ContactEmail, ContactPhone } from '@services/types'
+import { formatPhoneDisplay } from '@services/utils/phoneUtils'
 import styles from './ContactInfoCard.module.scss'
 
 export interface ContactInfoCardProps {
@@ -49,7 +50,7 @@ export const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
     return (
         <Box className={clsx(styles.ContactCard, className)}>
             {displayEmails.length > 0 && (
-                <div className={styles.ContactGroup}>
+                <div className={clsx(styles.ContactGroup, styles.ContactGroupEmails)}>
                     <span className={styles.ContactGroupTitle}>
                         Correos electrónicos
                     </span>
@@ -60,6 +61,7 @@ export const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
                                 href={`mailto:${email.address}`}
                                 className={styles.ContactItemLink}
                                 aria-label={`Enviar correo a ${email.address}`}
+                                title={email.address}
                             >
                                 <MailIcon className={styles.ContactItemIcon || ''} />
                                 <span className={styles.ContactItemText}>{email.address}</span>
@@ -73,22 +75,24 @@ export const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
             )}
 
             {displayPhones.length > 0 && (
-                <div className={styles.ContactGroup}>
+                <div className={clsx(styles.ContactGroup, styles.ContactGroupPhones)}>
                     <span className={styles.ContactGroupTitle}>
                         Teléfonos de contacto
                     </span>
                     <div className={styles.ContactList}>
                         {displayPhones.map((phone, idx) => {
                             const cleanPhone = phone.number.replace(/\s+/g, '')
+                            const formattedPhone = formatPhoneDisplay(phone.number) || phone.number
                             return (
                                 <a
                                     key={`phone-${idx}`}
                                     href={`tel:${cleanPhone}`}
                                     className={styles.ContactItemLink}
                                     aria-label={`Llamar al teléfono ${phone.number}`}
+                                    title={phone.number}
                                 >
                                     <PhoneIphoneIcon className={styles.ContactItemIcon || ''} />
-                                    <span className={styles.ContactItemText}>{phone.number}</span>
+                                    <span className={styles.ContactItemText}>{formattedPhone}</span>
                                     {phone.type === 'trabajo' && (
                                         <span className={styles.ContactTypeBadge}>Trabajo</span>
                                     )}

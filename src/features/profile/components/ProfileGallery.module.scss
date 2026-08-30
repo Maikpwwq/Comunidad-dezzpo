@@ -7,28 +7,43 @@
     font-weight: 600;
     line-height: 1.25em;
     text-align: left;
-    padding-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
 }
 
 .GalleryCard {
     position: relative;
-    border-radius: 16px;
+    border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background-color: var(--background-category-card-grey-color, #f7f9fa);
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    max-width: 460px;
-    background-color: #f7f9fa;
+    min-height: 260px;
+    padding: 0.75rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    @media (min-width: 768px) {
+        min-height: 300px;
+    }
+
+    @media (min-width: 992px) {
+        min-height: 340px;
+    }
 
     &:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
     }
 }
 
 .GalleryImage {
     width: 100%;
-    height: 240px;
-    object-fit: cover;
+    height: 100%;
+    max-height: 440px;
+    object-fit: contain;
+    border-radius: 12px;
     display: block;
 }
