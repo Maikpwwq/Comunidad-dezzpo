@@ -310,3 +310,121 @@
     color: var(--content-text-color, #666);
     font-size: 0.8rem;
 }
+
+/* ──────────── Microsite Share Card ──────────── */
+.MicrositeCard {
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #fff8e1 100%);
+    border: 1.5px solid rgba(46, 125, 50, 0.18);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: box-shadow 0.25s ease, transform 0.15s ease;
+
+    &:hover {
+        box-shadow: 0 6px 20px rgba(46, 125, 50, 0.12);
+        transform: translateY(-1px);
+    }
+}
+
+.MicrositeHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--primary-green-text-color, #2e7d32);
+}
+
+.MicrositeHeaderIcon {
+    font-size: 1.1rem !important;
+    color: var(--primary-green-text-color, #2e7d32);
+}
+
+.MicrositeUrlRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        border-color: var(--primary-green-text-color, #2e7d32);
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.12);
+    }
+}
+
+.MicrositeUrlText {
+    flex: 1;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--primary-green-text-color, #2e7d32);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    user-select: all;
+    font-family: 'Inter', 'Roboto Mono', monospace;
+    letter-spacing: -0.2px;
+}
+
+.MicrositeDomain {
+    color: #666;
+    font-weight: 400;
+}
+
+.MicrositeSlug {
+    font-weight: 600;
+    color: var(--primary-green-text-color, #2e7d32);
+}
+
+.MicrositeCopyBtn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 10px;
+    border: none;
+    background: var(--primary-green-text-color, #2e7d32);
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.12s ease;
+    white-space: nowrap;
+
+    &:hover {
+        background: #1b5e20;
+        transform: scale(1.03);
+    }
+
+    &:active {
+        transform: scale(0.97);
+    }
+}
+
+.MicrositeCopied {
+    background: #43a047 !important;
+    animation: copiedPulse 0.4s ease;
+}
+
+@keyframes copiedPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+.MicrositeHint {
+    font-size: 0.72rem;
+    color: #888;
+    font-style: italic;
+    line-height: 1.3;
+}

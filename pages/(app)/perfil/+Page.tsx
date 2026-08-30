@@ -38,9 +38,13 @@ import MailIcon from '@mui/icons-material/Mail'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import LinkIcon from '@mui/icons-material/Link'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import CheckIcon from '@mui/icons-material/Check'
+import BadgeIcon from '@mui/icons-material/Badge'
 
 // Types
 import type { UserFirestoreDocument, UserRole } from '@services/types'
+import { slugify } from '@services/utils/slugify'
 
 interface UserInfoState extends Partial<UserFirestoreDocument> {
     userCategoriesChips: any[]
@@ -279,6 +283,27 @@ export default function Page() {
 
         fetchProfile()
     }, [targetUserId, routeUsername, isOwnProfile, viewerRole])
+
+    // ── Microsite URL ──
+    const [micrositeCopied, setMicrositeCopied] = useState(false)
+
+    const micrositeSlug = userInfo?.userName
+        ? slugify(userInfo.userName)
+        : userInfo?.userRazonSocial
+            ? slugify(userInfo.userRazonSocial)
+            : userInfo?.userId || ''
+
+    const micrositeUrl = micrositeSlug
+        ? `https://dezzpo.com/app/perfil/${micrositeSlug}`
+        : ''
+
+    const copyMicrositeUrl = () => {
+        if (!micrositeUrl) return
+        navigator.clipboard.writeText(micrositeUrl).then(() => {
+            setMicrositeCopied(true)
+            setTimeout(() => setMicrositeCopied(false), 2500)
+        })
+    }
 
     const copyUserWebSiteLink = () => {
         if (userInfo?.userWebSite) {
@@ -548,6 +573,46 @@ export default function Page() {
                                         </Box>
                                     )
                                 })()}
+
+                                {/* ── Microsite Share Card ── */}
+                                {micrositeUrl && (
+                                    <div className={styles.MicrositeCard}>
+                                        <div className={styles.MicrositeHeader}>
+                                            <BadgeIcon className={styles.MicrositeHeaderIcon || ''} />
+                                            Mi Micrositio Dezzpo
+                                        </div>
+                                        <div
+                                            className={styles.MicrositeUrlRow}
+                                            onClick={copyMicrositeUrl}
+                                            role="button"
+                                            tabIndex={0}
+                                            aria-label="Copiar enlace del micrositio"
+                                            onKeyDown={(e) => { if (e.key === 'Enter') copyMicrositeUrl() }}
+                                        >
+                                            <span className={styles.MicrositeUrlText}>
+                                                <span className={styles.MicrositeDomain}>dezzpo.com/app/perfil/</span>
+                                                <span className={styles.MicrositeSlug}>{micrositeSlug}</span>
+                                            </span>
+                                            <button
+                                                className={clsx(
+                                                    styles.MicrositeCopyBtn,
+                                                    micrositeCopied && styles.MicrositeCopied
+                                                )}
+                                                onClick={(e) => { e.stopPropagation(); copyMicrositeUrl() }}
+                                                type="button"
+                                            >
+                                                {micrositeCopied ? (
+                                                    <><CheckIcon sx={{ fontSize: 16 }} /> Copiado</>
+                                                ) : (
+                                                    <><ContentCopyIcon sx={{ fontSize: 14 }} /> Copiar</>
+                                                )}
+                                            </button>
+                                        </div>
+                                        <span className={styles.MicrositeHint}>
+                                            Comparte este enlace como tu tarjeta de presentación profesional
+                                        </span>
+                                    </div>
+                                )}
                             </Col>
 
                             {/* Redes Sociales (1/3 width on desktop) */}
