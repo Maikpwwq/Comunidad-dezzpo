@@ -1,0 +1,102 @@
+@use '@styles/_variables' as *;
+
+.ContactCard {
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.06);
+    background-color: var(--background-category-card-grey-color, #f7f9fa);
+    border-radius: 20px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.ContactGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1 1 200px;
+    min-width: 180px;
+}
+
+.ContactGroupTitle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--primary-green-text-color, #2e7d32);
+}
+
+.ContactList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ContactItemLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: var(--content-text-color, #2b2b2b);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    &:hover {
+        background-color: #e8f5e9;
+        border-color: var(--primary-green-text-color, #2e7d32);
+        color: var(--primary-green-text-color, #2e7d32);
+        transform: translateY(-1px);
+        box-shadow: 0 3px 8px rgba(46, 125, 50, 0.15);
+        text-decoration: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--primary-green-text-color, #2e7d32);
+        outline-offset: 2px;
+    }
+}
+
+.ContactItemIcon {
+    font-size: 1.2rem !important;
+    color: var(--primary-green-text-color, #2e7d32);
+    flex-shrink: 0;
+}
+
+.ContactItemText {
+    flex: 1;
+}
+
+.ContactPrimaryBadge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.45rem;
+    border-radius: 6px;
+    background-color: rgba(46, 125, 50, 0.12);
+    color: var(--primary-green-text-color, #2e7d32);
+    flex-shrink: 0;
+}
+
+.ContactTypeBadge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.45rem;
+    border-radius: 6px;
+    background-color: rgba(33, 150, 243, 0.12);
+    color: #1976d2;
+    flex-shrink: 0;
+}

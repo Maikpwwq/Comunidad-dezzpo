@@ -3,13 +3,15 @@
  * 
  * Displays user profile - either own profile (authenticated) or another user's (public view).
  * SSR-safe: Uses Zustand store instead of UserAuthContext, lazy Firebase loading.
+ * Orchestrator pattern: delegates display concerns to modular profile components.
  */
 import { useState, useEffect } from 'react'
 import { getUser, getUserByUsername, resolveUserByIdOrSlug } from '@services/users'
 import { useUserStore } from '@stores/userStore'
 import { usePageContext } from '@hooks/usePageContext'
-import { PLATFORM_CONFIG } from '@utilities/socialUtils'
-import type { ContactEmail, ContactPhone, SocialLink } from '@services/types'
+import type { ContactEmail, ContactPhone, SocialLink, UserFirestoreDocument, UserRole } from '@services/types'
+import type { CategoryItem } from '@components/common/ChipsCategories'
+import { slugify } from '@services/utils/slugify'
 
 // Styles & Assets
 // @ts-ignore
@@ -17,56 +19,61 @@ import ProfilePhoto from '@assets/img/Profile.png'
 import clsx from 'clsx'
 import styles from './Profile.module.scss'
 
-// @ts-ignore
-import { Comentarios } from '@features/profile'
-import { ChipsCategories, MapaPerfil, AdjuntarArchivos, CincoEstrellas } from '@components/common'
+// Modular Profile Components
+import {
+    Comentarios,
+    MicrositeShareCard,
+    ContactInfoCard,
+    SocialLinksCard,
+    ProfileHeader,
+    ProfileGallery
+} from '@features/profile'
+import { ChipsCategories, MapaPerfil } from '@components/common'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 // UI Libs
 import { Row, Col, Container } from 'react-bootstrap'
 import {
-    Box,
     Button,
-    IconButton,
-    Tooltip,
     Typography,
     Skeleton,
     Stack
 } from '@mui/material'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
-import MailIcon from '@mui/icons-material/Mail'
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
-import LinkIcon from '@mui/icons-material/Link'
-import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import CheckIcon from '@mui/icons-material/Check'
-import BadgeIcon from '@mui/icons-material/Badge'
-import WhatsAppIcon from '@mui/icons-material/WhatsApp'
-import FacebookIcon from '@mui/icons-material/Facebook'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import TelegramIcon from '@mui/icons-material/Telegram'
-import TwitterIcon from '@mui/icons-material/Twitter'
-import EmailIcon from '@mui/icons-material/Email'
-import ShareIcon from '@mui/icons-material/Share'
-import VerifiedIcon from '@mui/icons-material/Verified'
 
-// Types
-import type { UserFirestoreDocument, UserRole } from '@services/types'
-import { slugify } from '@services/utils/slugify'
-
-interface UserInfoState extends Partial<UserFirestoreDocument> {
-    userCategoriesChips: any[]
+export interface UserInfoState {
+    userId: string
+    userName: string
+    userMail: string
+    userPhone: string
+    userJoined: string
+    userChannelUrl: string
+    userPhotoUrl: string
+    userCoverUrl: string
+    userGalleryUrl: string[]
+    userCreatedDrafts: string[]
+    userProfession: string
+    userExperience: string
+    userCategories: string[]
+    userCategoriesChips: CategoryItem[]
+    userDirection: string
+    userDirectionDetails: string
+    userCiudad: string
+    userCodigoPostal: string
+    userRazonSocial: string
+    userContactName: string
+    userIdentification: string
+    userDescription: string
+    userWebSite: string
     userVotes: {
-        reviews: any[]
+        reviews: unknown[]
         mean: number
         votes: number
     }
     userLikes: {
-        likedsProfiles: any[]
-        likedsDrafts: any[]
+        likedsProfiles: unknown[]
+        likedsDrafts: unknown[]
     }
-    userCreatedDrafts: any[]
-    userGalleryUrl: string[]
     emails: ContactEmail[]
     phones: ContactPhone[]
     socialLinks: SocialLink[]
@@ -158,13 +165,14 @@ export default function Page() {
                     const result = await getUserByUsername(routeUsername)
                     if (result) {
                         const { user: userData } = result
-                        // Map categories to chips
-                        let chipsInfo: any[] = []
+                        const chipsInfo: CategoryItem[] = []
                         if (userData.userCategories && Array.isArray(userData.userCategories)) {
-                            chipsInfo = userData.userCategories.map(chip => {
-                                const found = ListadoCategorias.find((cat: any) => cat.label === chip)
-                                return found || null
-                            }).filter(item => item !== null)
+                            userData.userCategories.forEach(chip => {
+                                const found = ListadoCategorias.find((cat) => cat.label === chip)
+                                if (found) {
+                                    chipsInfo.push(found as CategoryItem)
+                                }
+                            })
                         }
 
                         setUserInfo({
@@ -179,9 +187,10 @@ export default function Page() {
                             userJoined: userData.userJoined || '',
                             userProfession: userData.userProfession || '',
                             userExperience: userData.userExperience || '',
+                            userCategories: userData.userCategories || [],
                             userCategoriesChips: chipsInfo,
                             userDirection: userData.userDirection || '',
-                            userDirectionDetails: (userData as any).userDirectionDetails || '',
+                            userDirectionDetails: (userData as unknown as { userDirectionDetails?: string }).userDirectionDetails || '',
                             userCiudad: userData.userCiudad || '',
                             userCodigoPostal: userData.userCodigoPostal || '',
                             userRazonSocial: userData.userRazonSocial || '',
@@ -232,7 +241,6 @@ export default function Page() {
                 }
 
                 // Fallback: if direct UID lookup failed, try slug/name resolution
-                // This handles /app/perfil/Comunidad-Dezzpo or /app/perfil/Dezzpo-Profesionales-Calificados
                 if (!userData) {
                     const resolved = await resolveUserByIdOrSlug(targetUserId)
                     if (resolved) {
@@ -241,12 +249,14 @@ export default function Page() {
                 }
 
                 if (userData) {
-                    let chipsInfo: any[] = []
+                    const chipsInfo: CategoryItem[] = []
                     if (userData.userCategories && Array.isArray(userData.userCategories)) {
-                        chipsInfo = userData.userCategories.map(chip => {
-                            const found = ListadoCategorias.find((cat: any) => cat.label === chip)
-                            return found || null
-                        }).filter(item => item !== null)
+                        userData.userCategories.forEach(chip => {
+                            const found = ListadoCategorias.find((cat) => cat.label === chip)
+                            if (found) {
+                                chipsInfo.push(found as CategoryItem)
+                            }
+                        })
                     }
 
                     setUserInfo({
@@ -261,9 +271,10 @@ export default function Page() {
                         userJoined: userData.userJoined || '',
                         userProfession: userData.userProfession || '',
                         userExperience: userData.userExperience || '',
+                        userCategories: userData.userCategories || [],
                         userCategoriesChips: chipsInfo,
                         userDirection: userData.userDirection || '',
-                        userDirectionDetails: (userData as any).userDirectionDetails || '',
+                        userDirectionDetails: (userData as unknown as { userDirectionDetails?: string }).userDirectionDetails || '',
                         userCiudad: userData.userCiudad || '',
                         userCodigoPostal: userData.userCodigoPostal || '',
                         userRazonSocial: userData.userRazonSocial || '',
@@ -292,9 +303,7 @@ export default function Page() {
         fetchProfile()
     }, [targetUserId, routeUsername, isOwnProfile, viewerRole])
 
-    // ── Microsite URL ──
-    const [micrositeCopied, setMicrositeCopied] = useState(false)
-
+    // ── Computed Microsite URL & Slug ──
     const micrositeSlug = userInfo?.userName
         ? slugify(userInfo.userName)
         : userInfo?.userRazonSocial
@@ -305,19 +314,7 @@ export default function Page() {
         ? `https://dezzpo.com/app/perfil/${micrositeSlug}`
         : ''
 
-    const copyMicrositeUrl = () => {
-        if (!micrositeUrl) return
-        navigator.clipboard.writeText(micrositeUrl).then(() => {
-            setMicrositeCopied(true)
-            setTimeout(() => setMicrositeCopied(false), 2500)
-        })
-    }
-
-    const copyUserWebSiteLink = () => {
-        if (userInfo?.userWebSite) {
-            navigator.clipboard.writeText(userInfo.userWebSite)
-        }
-    }
+    const profileName = userInfo?.userName || userInfo?.userRazonSocial || 'Profesional'
 
     // Show loading state
     if (isLoading) {
@@ -337,163 +334,31 @@ export default function Page() {
     }
 
     return (
-        <Container fluid className={clsx(styles.Container, "p-0")}>
-            <Col
-                className={clsx(styles.GreenBackground, "col-12 w-100")}
-                style={userInfo.userCoverUrl ? { backgroundImage: `url(${userInfo.userCoverUrl})` } : undefined}
-            >
-                {userInfo.userCoverUrl && <div className={styles.CoverOverlay} />}
+        <Container fluid className={clsx(styles.Container, 'p-0')}>
+            {/* Hero / Cover / Avatar / Name Section */}
+            <ProfileHeader
+                userName={userInfo.userName}
+                userRazonSocial={userInfo.userRazonSocial}
+                userContactName={userInfo.userContactName}
+                userProfession={userInfo.userProfession}
+                userExperience={userInfo.userExperience}
+                userWebSite={userInfo.userWebSite}
+                userPhotoUrl={userInfo.userPhotoUrl}
+                userCoverUrl={userInfo.userCoverUrl}
+                votesCount={userInfo.userVotes?.votes || 0}
+                isOwnProfile={isOwnProfile}
+                currentUserId={currentUserId}
+                viewerRole={viewerRole}
+                onUpdateUserInfo={setUserInfo}
+                userInfoState={userInfo as unknown as Record<string, unknown>}
+            />
 
-                {isOwnProfile && currentUserId && (
-                    <div className={styles.CoverActionContainer}>
-                        <AdjuntarArchivos
-                            name="coverPhoto"
-                            multiple={false}
-                            idPerson={currentUserId}
-                            rol={viewerRole}
-                            route={`profiles/${currentUserId}`}
-                            functionState={setUserInfo}
-                            state={userInfo}
-                            variant="button"
-                            buttonText={userInfo.userCoverUrl ? 'Editar imagen de portada' : '+ Agregar imagen de portada'}
-                            tooltipTitle="Recomendado: 1584 x 396 px (Aspect Ratio 4:1)"
-                            aspectRatioHint="1584 x 396 px"
-                            sx={{
-                                backgroundColor: 'rgba(255, 255, 255, 0.92)',
-                                color: '#2e7d32',
-                                '&:hover': {
-                                    backgroundColor: '#ffffff',
-                                    color: '#1b5e20',
-                                }
-                            }}
-                        />
-                    </div>
-                )}
-
-                <Row className={clsx(styles.HeaderRow)}>
-                    <div className={clsx(styles.ProfileImageContainer)}>
-                        <img
-                            src={userInfo.userPhotoUrl || ''}
-                            alt="imagen de perfil"
-                            className={styles.ProfileImage}
-                        />
-
-                        {isOwnProfile && currentUserId && (
-                            <AdjuntarArchivos
-                                name={'profilePhoto'}
-                                multiple={false}
-                                idPerson={currentUserId}
-                                rol={viewerRole}
-                                route={`profiles/${currentUserId}`}
-                                functionState={setUserInfo}
-                                state={userInfo}
-                            />
-                        )}
-                    </div>
-                </Row>
-            </Col>
             <Col className="col mx-auto pt-4" md={10} sm={12}>
-                <Box className={clsx(styles.UserInfoBox)}>
-                    <Typography
-                        variant="h3"
-                        id="userRazonSocial"
-                        sx={{ maxWidth: '480px' }}
-                        className={clsx(styles.BusinessName)}
-                    >
-                        {userInfo?.userName || userInfo?.userRazonSocial || 'Usuario'}{' '}
-                        {!!userInfo?.userWebSite && (
-                            <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, verticalAlign: 'middle' }}>
-                                <Tooltip title="Copiar sitio web">
-                                    <IconButton
-                                        size="small"
-                                        onClick={copyUserWebSiteLink}
-                                        aria-label="Copiar enlace del sitio web"
-                                        sx={{ color: 'inherit', p: 0.5 }}
-                                    >
-                                        <LinkIcon
-                                            fontSize="medium"
-                                            className={clsx(styles.LinkIcon)}
-                                        />
-                                    </IconButton>
-                                </Tooltip>
-                                <Tooltip title="Visitar sitio web">
-                                    <IconButton
-                                        size="small"
-                                        component="a"
-                                        href={userInfo.userWebSite.match(/^https?:\/\//i) ? userInfo.userWebSite : `https://${userInfo.userWebSite}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        aria-label="Visitar sitio web en nueva pestaña"
-                                        sx={{ color: 'inherit', p: 0.5 }}
-                                    >
-                                        <OpenInNewIcon
-                                            fontSize="medium"
-                                            className={clsx(styles.LinkIcon)}
-                                        />
-                                    </IconButton>
-                                </Tooltip>
-                            </Box>
-                        )}
-                    </Typography>
-                    {userInfo?.userRazonSocial && userInfo?.userName && userInfo.userRazonSocial !== userInfo.userName && (
-                        <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', mt: -0.5, mb: 0.5 }}>
-                            {userInfo.userRazonSocial}
-                        </Typography>
-                    )}
-                    {userInfo?.userContactName && (
-                        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.8 }}>
-                            Contacto / Representante: <strong>{userInfo.userContactName}</strong>
-                        </Typography>
-                    )}
-                    <Typography
-                        variant="h5"
-                        id="userProfession"
-                        className={clsx(styles.Profession)}
-                    >
-                        {userInfo.userProfession}
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        id="userExperience"
-                        className={clsx(styles.Experience)}
-                    >
-                        Experiencia: {userInfo.userExperience}
-                    </Typography>
-                    <CincoEstrellas />
-                    <span className={clsx(styles.Experience, "fs-6")}>
-                        {userInfo.userVotes.votes} Personas votaron
-                    </span>
-                </Box>
-
-                {/* ── Chips Section ── */}
-                <Row className="p-0 m-0 w-100 d-flex align-items-start">
-                    <Col md={10} className="col-10 py-4">
-                        {userInfo.userCategoriesChips.length > 0 && (
-                            <>
-                                <Typography
-                                    variant="h5"
-                                    className={clsx(styles.SectionTitle, "py-4")}
-                                    align="left"
-                                >
-                                    Habilidades
-                                </Typography>
-
-                                <div className={styles.ChipsSection || ''}>
-                                    <ChipsCategories
-                                        listadoCategorias={userInfo.userCategoriesChips}
-                                        editableContent={false}
-                                    />
-                                </div>
-                            </>
-                        )}
-                    </Col>
-                </Row>
-
-                {/* ── Datos de contacto & Redes Sociales Section ── */}
+                {/* ── Datos de contacto, Micrositio, Habilidades y Redes Sociales ── */}
                 <Row className="p-0 m-0 w-100 d-flex align-items-start">
                     <Col md={10} className="col-10 pt-4 pb-4">
                         <Row className="g-4 align-items-start">
-                            {/* Datos de contacto (2/3 width on desktop) */}
+                            {/* Columna Izquierda: Contacto + Micrositio (2/3 en desktop) */}
                             <Col lg={8} md={7} xs={12}>
                                 <Typography
                                     variant="h5"
@@ -502,243 +367,46 @@ export default function Page() {
                                 >
                                     Datos de contacto
                                 </Typography>
-                                {(() => {
-                                    const activeEmails = (userInfo.emails || []).filter((e) => e.address && e.address.trim() !== '')
-                                    const displayEmails = activeEmails.length > 0
-                                        ? activeEmails
-                                        : (userInfo.userMail ? [{ address: userInfo.userMail, isPrimary: true, verified: false }] : [])
 
-                                    const activePhones = (userInfo.phones || []).filter((p) => p.number && p.number.trim() !== '')
-                                    const displayPhones = activePhones.length > 0
-                                        ? activePhones
-                                        : (userInfo.userPhone ? [{ number: userInfo.userPhone, isPrimary: true, type: 'personal' as const }] : [])
+                                <ContactInfoCard
+                                    emails={userInfo.emails}
+                                    phones={userInfo.phones}
+                                    userMail={userInfo.userMail}
+                                    userPhone={userInfo.userPhone}
+                                />
 
-                                    const hasContacts = displayEmails.length > 0 || displayPhones.length > 0
-
-                                    if (!hasContacts) {
-                                        return (
-                                            <Typography variant="body2" className="body-2" style={{ color: '#888' }}>
-                                                No hay canales directos de contacto registrados
-                                            </Typography>
-                                        )
-                                    }
-
-                                    return (
-                                        <Box className={clsx(styles.ContactCard)}>
-                                            {displayEmails.length > 0 && (
-                                                <div className={styles.ContactGroup}>
-                                                    <span className={styles.ContactGroupTitle}>
-                                                        Correos electrónicos
-                                                    </span>
-                                                    <div className={styles.ContactList}>
-                                                        {displayEmails.map((email, idx) => (
-                                                            <a
-                                                                key={`email-${idx}`}
-                                                                href={`mailto:${email.address}`}
-                                                                className={styles.ContactItemLink}
-                                                                aria-label={`Enviar correo a ${email.address}`}
-                                                            >
-                                                                <MailIcon className={styles.ContactItemIcon || ''} />
-                                                                <span className={styles.ContactItemText}>{email.address}</span>
-                                                                {email.isPrimary && (
-                                                                    <span className={styles.ContactPrimaryBadge}>Principal</span>
-                                                                )}
-                                                            </a>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            )}
-
-                                            {displayPhones.length > 0 && (
-                                                <div className={styles.ContactGroup}>
-                                                    <span className={styles.ContactGroupTitle}>
-                                                        Teléfonos de contacto
-                                                    </span>
-                                                    <div className={styles.ContactList}>
-                                                        {displayPhones.map((phone, idx) => {
-                                                            const cleanPhone = phone.number.replace(/\s+/g, '')
-                                                            return (
-                                                                <a
-                                                                    key={`phone-${idx}`}
-                                                                    href={`tel:${cleanPhone}`}
-                                                                    className={styles.ContactItemLink}
-                                                                    aria-label={`Llamar al teléfono ${phone.number}`}
-                                                                >
-                                                                    <PhoneIphoneIcon className={styles.ContactItemIcon || ''} />
-                                                                    <span className={styles.ContactItemText}>{phone.number}</span>
-                                                                    {phone.type === 'trabajo' && (
-                                                                        <span className={styles.ContactTypeBadge}>Trabajo</span>
-                                                                    )}
-                                                                    {phone.isPrimary && (
-                                                                        <span className={styles.ContactPrimaryBadge}>Principal</span>
-                                                                    )}
-                                                                </a>
-                                                            )
-                                                        })}
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </Box>
-                                    )
-                                })()}
-
-                                {/* ── Microsite Share Card ── */}
-                                {micrositeUrl && (() => {
-                                    const profileName = userInfo?.userName || userInfo?.userRazonSocial || 'Profesional'
-                                    const shareText = `Conoce el perfil profesional de ${profileName} en Comunidad Dezzpo`
-                                    const shareSubject = `${profileName} — Perfil Profesional | Comunidad Dezzpo`
-
-                                    const shareLinks = [
-                                        {
-                                            key: 'whatsapp',
-                                            label: 'WhatsApp',
-                                            icon: <WhatsAppIcon sx={{ fontSize: 20 }} />,
-                                            className: styles.ShareBtnWhatsapp,
-                                            href: `https://wa.me/?text=${encodeURIComponent(`${shareText}\n${micrositeUrl}`)}`
-                                        },
-                                        {
-                                            key: 'facebook',
-                                            label: 'Facebook',
-                                            icon: <FacebookIcon sx={{ fontSize: 20 }} />,
-                                            className: styles.ShareBtnFacebook,
-                                            href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(micrositeUrl)}`
-                                        },
-                                        {
-                                            key: 'twitter',
-                                            label: 'X',
-                                            icon: <TwitterIcon sx={{ fontSize: 20 }} />,
-                                            className: styles.ShareBtnTwitter,
-                                            href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(micrositeUrl)}`
-                                        },
-                                        {
-                                            key: 'linkedin',
-                                            label: 'LinkedIn',
-                                            icon: <LinkedInIcon sx={{ fontSize: 20 }} />,
-                                            className: styles.ShareBtnLinkedin,
-                                            href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(micrositeUrl)}`
-                                        },
-                                        {
-                                            key: 'telegram',
-                                            label: 'Telegram',
-                                            icon: <TelegramIcon sx={{ fontSize: 20 }} />,
-                                            className: styles.ShareBtnTelegram,
-                                            href: `https://t.me/share/url?url=${encodeURIComponent(micrositeUrl)}&text=${encodeURIComponent(shareText)}`
-                                        },
-                                        {
-                                            key: 'email',
-                                            label: 'Correo',
-                                            icon: <EmailIcon sx={{ fontSize: 20 }} />,
-                                            className: styles.ShareBtnEmail,
-                                            href: `mailto:?subject=${encodeURIComponent(shareSubject)}&body=${encodeURIComponent(`${shareText}\n\n${micrositeUrl}`)}`
-                                        }
-                                    ]
-
-                                    const handleNativeShare = async () => {
-                                        if (typeof navigator !== 'undefined' && navigator.share) {
-                                            try {
-                                                await navigator.share({
-                                                    title: shareSubject,
-                                                    text: shareText,
-                                                    url: micrositeUrl
-                                                })
-                                            } catch (_) { /* user cancelled */ }
-                                        }
-                                    }
-
-                                    const hasNativeShare = typeof navigator !== 'undefined' && typeof navigator.share === 'function'
-
-                                    return (
-                                        <div className={styles.MicrositeCard}>
-                                            {/* Header row */}
-                                            <div className={styles.MicrositeTopBar}>
-                                                <div className={styles.MicrositeHeader}>
-                                                    <BadgeIcon className={styles.MicrositeHeaderIcon || ''} />
-                                                    Mi Micrositio Dezzpo
-                                                </div>
-                                                <span className={styles.MicrositeBadge}>
-                                                    <VerifiedIcon sx={{ fontSize: 14 }} /> Tarjeta Digital
-                                                </span>
-                                            </div>
-
-                                            {/* URL Row — click to copy */}
-                                            <div
-                                                className={styles.MicrositeUrlRow}
-                                                onClick={copyMicrositeUrl}
-                                                role="button"
-                                                tabIndex={0}
-                                                aria-label="Haz clic para copiar el enlace del micrositio"
-                                                onKeyDown={(e) => { if (e.key === 'Enter') copyMicrositeUrl() }}
-                                            >
-                                                <span className={styles.MicrositeUrlText}>
-                                                    <span className={styles.MicrositeDomain}>dezzpo.com/app/perfil/</span>
-                                                    <span className={styles.MicrositeSlug}>{micrositeSlug}</span>
-                                                </span>
-                                                <button
-                                                    className={clsx(
-                                                        styles.MicrositeCopyBtn,
-                                                        micrositeCopied && styles.MicrositeCopied
-                                                    )}
-                                                    onClick={(e) => { e.stopPropagation(); copyMicrositeUrl() }}
-                                                    type="button"
-                                                >
-                                                    {micrositeCopied ? (
-                                                        <><CheckIcon sx={{ fontSize: 16 }} /> Copiado</>
-                                                    ) : (
-                                                        <><ContentCopyIcon sx={{ fontSize: 14 }} /> Copiar</>
-                                                    )}
-                                                </button>
-                                            </div>
-
-                                            {/* Copied feedback pill */}
-                                            {micrositeCopied && (
-                                                <div className={styles.CopiedAlertPill}>
-                                                    <CheckIcon sx={{ fontSize: 14 }} />
-                                                    Enlace copiado al portapapeles
-                                                </div>
-                                            )}
-
-                                            {/* Social Share Buttons */}
-                                            <div className={styles.ShareSection}>
-                                                <span className={styles.ShareSectionTitle}>Compartir en</span>
-                                                <div className={styles.ShareButtonsRow}>
-                                                    {shareLinks.map((link) => (
-                                                        <Tooltip key={link.key} title={link.label} arrow>
-                                                            <a
-                                                                className={clsx(styles.SocialShareBtn, link.className)}
-                                                                href={link.href}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                aria-label={`Compartir en ${link.label}`}
-                                                            >
-                                                                {link.icon}
-                                                            </a>
-                                                        </Tooltip>
-                                                    ))}
-                                                    {hasNativeShare && (
-                                                        <Tooltip title="Más opciones" arrow>
-                                                            <button
-                                                                className={clsx(styles.SocialShareBtn, styles.ShareBtnNative)}
-                                                                onClick={handleNativeShare}
-                                                                type="button"
-                                                                aria-label="Compartir con las opciones del dispositivo"
-                                                            >
-                                                                <ShareIcon sx={{ fontSize: 20 }} />
-                                                            </button>
-                                                        </Tooltip>
-                                                    )}
-                                                </div>
-                                            </div>
-
-                                            <span className={styles.MicrositeHint}>
-                                                Comparte este enlace como tu tarjeta de presentación profesional
-                                            </span>
-                                        </div>
-                                    )
-                                })()}
+                                {micrositeUrl && (
+                                    <MicrositeShareCard
+                                        micrositeUrl={micrositeUrl}
+                                        micrositeSlug={micrositeSlug}
+                                        profileName={profileName}
+                                    />
+                                )}
                             </Col>
 
-                            {/* Redes Sociales (1/3 width on desktop) */}
+                            {/* Columna Derecha: Habilidades + Redes Sociales (1/3 en desktop) */}
                             <Col lg={4} md={5} xs={12}>
+                                {userInfo.userCategoriesChips.length > 0 && (
+                                    <Row className="p-0 m-0 w-100 d-flex align-items-start">
+                                        <Col md={10} className="col-10 py-4">
+                                            <Typography
+                                                variant="h5"
+                                                className={clsx(styles.SectionTitle, 'py-4')}
+                                                align="left"
+                                            >
+                                                Habilidades
+                                            </Typography>
+
+                                            <div className={styles.ChipsSection || ''}>
+                                                <ChipsCategories
+                                                    listadoCategorias={userInfo.userCategoriesChips}
+                                                    editableContent={false}
+                                                />
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                )}
+
                                 <Typography
                                     variant="h5"
                                     className={clsx(styles.SectionTitle)}
@@ -746,54 +414,20 @@ export default function Page() {
                                 >
                                     Redes Sociales
                                 </Typography>
-                                {(() => {
-                                    const visibleLinks = (userInfo.socialLinks || [])
-                                        .filter((sl) => sl.isVisible)
-                                        .sort((a, b) => a.priority - b.priority)
 
-                                    if (visibleLinks.length === 0) {
-                                        return (
-                                            <Typography variant="body2" className="body-2" style={{ color: '#888' }}>
-                                                No hay canales de comunicación configurados
-                                            </Typography>
-                                        )
-                                    }
-
-                                    return (
-                                        <div className={styles.SocialLinksGrid || ''}>
-                                            {visibleLinks.map((sl) => (
-                                                <a
-                                                    key={sl.id}
-                                                    href={sl.url.match(/^https?:\/\//) ? sl.url : `https://${sl.url}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className={styles.SocialLinkChip || ''}
-                                                >
-                                                    <span className={styles.SocialLinkChipName || ''}>
-                                                        {PLATFORM_CONFIG[sl.platform]?.name || sl.platform}
-                                                    </span>
-                                                    {sl.label && (
-                                                        <span className={styles.SocialLinkChipLabel || ''}>
-                                                            {sl.label}
-                                                        </span>
-                                                    )}
-                                                    <OpenInNewIcon fontSize="small" />
-                                                </a>
-                                            ))}
-                                        </div>
-                                    )
-                                })()}
+                                <SocialLinksCard socialLinks={userInfo.socialLinks} />
                             </Col>
                         </Row>
                     </Col>
                 </Row>
 
+                {/* ── Acerca de mi ── */}
                 <Row className="p-0 m-0 w-100 d-flex align-items-start">
                     <Col className="p-0 col-10">
                         <Row className="m-0 d-flex w-100 justify-content-start">
                             <Typography
                                 variant="h5"
-                                className={clsx(styles.SectionTitle, "w-auto pt-4 pb-4")}
+                                className={clsx(styles.SectionTitle, 'w-auto pt-4 pb-4')}
                                 align="left"
                             >
                                 Acerca de mi
@@ -825,56 +459,25 @@ export default function Page() {
                     </Col>
                 </Row>
 
-
-
+                {/* ── Portafolio, Ubicación y Comentarios ── */}
                 <Row className="p-0 m-0 w-100 d-flex align-items-start">
                     <Col className="col-10 py-4">
-                        {(userInfo.userGalleryUrl.length > 0 || isOwnProfile) && (
-                            <>
-                                <Typography
-                                    variant="h5"
-                                    className={clsx(styles.SectionTitle, "pt-4 pb-4 w-100")}
-                                    align="left"
-                                >
-                                    Portafolio
-                                </Typography>
-                                <Row className="w-100 g-4 pb-4">
-                                    {userInfo.userGalleryUrl.map((imagen: string, index: number) => (
-                                         <Col key={index} lg={6} md={6} xs={12} className="d-flex justify-content-center">
-                                             <Box className={clsx(styles.GalleryCard)}>
-                                                 <Box
-                                                     component="img"
-                                                     src={imagen || ''}
-                                                     alt={`Publicación ${index + 1} de ${userInfo.userName || 'comercio'}`}
-                                                     className={clsx(styles.GalleryImage)}
-                                                 />
-                                             </Box>
-                                         </Col>
-                                    ))}
-
-                                    {isOwnProfile && currentUserId && (
-                                         <Col xs={12} className="mt-3">
-                                             <AdjuntarArchivos
-                                                 name={'galleryPhoto'}
-                                                 multiple={true}
-                                                 idPerson={currentUserId}
-                                                 rol={viewerRole}
-                                                 route={`profiles/${currentUserId}`}
-                                                 functionState={setUserInfo}
-                                                 state={userInfo}
-                                             />
-                                         </Col>
-                                    )}
-                                </Row>
-                            </>
-                        )}
+                        <ProfileGallery
+                            images={userInfo.userGalleryUrl}
+                            userName={userInfo.userName}
+                            isOwnProfile={isOwnProfile}
+                            currentUserId={currentUserId}
+                            viewerRole={viewerRole}
+                            onUpdateUserInfo={setUserInfo}
+                            userInfoState={userInfo as unknown as Record<string, unknown>}
+                        />
 
                         {userInfo.userDirection && (
                             <Col className="col-12">
                                 <Row className="m-0 d-flex w-100 justify-content-start">
                                     <Typography
                                         variant="h5"
-                                        className={clsx(styles.SectionTitle, "w-auto pt-4 pb-4")}
+                                        className={clsx(styles.SectionTitle, 'w-auto pt-4 pb-4')}
                                         align="left"
                                     >
                                         Ubicación
@@ -889,7 +492,7 @@ export default function Page() {
                                 <Typography
                                     variant="h5"
                                     align="left"
-                                    className={clsx(styles.SectionTitle, "pt-4 pb-4 w-100")}
+                                    className={clsx(styles.SectionTitle, 'pt-4 pb-4 w-100')}
                                 >
                                     Comentarios
                                 </Typography>
