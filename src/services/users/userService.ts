@@ -152,42 +152,138 @@ export async function getUsersByCategories(categories: string[]): Promise<UserFi
     }
 }
 
+import { slugify } from '@services/utils/slugify'
+
 /**
- * Get a user by their userName field (for vanity URLs).
+ * Robust User Resolver: Finds a user document by Firebase UID, userName,
+ * userRazonSocial (Commercial Name), userContactName, or their URL-friendly slug.
  * Searches comerciantes (role 2) first, then propietarios (role 1).
- * Returns the user document and the role it was found in, or null if not found.
  */
-export async function getUserByUsername(
-    username: string
+export async function resolveUserByIdOrSlug(
+    identifier: string
 ): Promise<{ user: UserFirestoreDocument; role: UserRole } | null> {
-    if (!isFirebaseAvailable() || !firestore) {
-        console.log('[SSR] getUserByUsername skipped - Firebase not available')
+    if (!isFirebaseAvailable() || !firestore || !identifier) {
         return null
     }
 
-    const rolesToTry: UserRole[] = [2, 1] // Comerciante first, then propietario
+    const cleanIdentifier = decodeURIComponent(identifier).trim()
+    if (!cleanIdentifier) return null
+
+    const rolesToTry: UserRole[] = [2, 1] // Comerciante first, then Propietario
+
+    // 1. Direct UID document lookup
+    for (const role of rolesToTry) {
+        const userCol = getUserCollection(role)
+        if (!userCol) continue
+
+        try {
+            const docRef = doc(userCol, cleanIdentifier) as DocumentReference<UserFirestoreDocument>
+            const snapshot = await getDoc(docRef)
+            if (snapshot.exists()) {
+                const raw = { ...snapshot.data(), userId: snapshot.id }
+                const { emails, phones } = migrateContactFields(raw)
+                const socialLinks = migrateLegacySocialFields(raw)
+                return {
+                    user: { ...raw, emails, phones, socialLinks },
+                    role,
+                }
+            }
+        } catch {
+            // Identifier might not be a valid document ID, proceed to query
+        }
+    }
+
+    // 2. Query candidates in Firestore
+    const unslugified = cleanIdentifier.replace(/[-_]+/g, ' ').trim()
+    const targetSlug = slugify(cleanIdentifier)
 
     for (const role of rolesToTry) {
         const userCol = getUserCollection(role)
         if (!userCol) continue
 
         try {
-            const q = query(userCol, where('userName', '==', username))
-            const snapshot = await getDocs(q)
+            // A. Exact userName match
+            let q = query(userCol, where('userName', '==', cleanIdentifier))
+            let snap = await getDocs(q)
+            if (!snap.empty) {
+                const docSnap = snap.docs[0]!
+                const raw = { ...docSnap.data(), userId: docSnap.id } as UserFirestoreDocument
+                const { emails, phones } = migrateContactFields(raw)
+                const socialLinks = migrateLegacySocialFields(raw)
+                return { user: { ...raw, emails, phones, socialLinks }, role }
+            }
 
-            if (!snapshot.empty) {
-                const docSnap = snapshot.docs[0]!
-                return {
-                    user: { ...docSnap.data(), userId: docSnap.id } as UserFirestoreDocument,
-                    role,
+            // B. Unslugified userName match (e.g. "Dezzpo-Profesionales-Calificados" -> "Dezzpo Profesionales Calificados")
+            if (unslugified !== cleanIdentifier) {
+                q = query(userCol, where('userName', '==', unslugified))
+                snap = await getDocs(q)
+                if (!snap.empty) {
+                    const docSnap = snap.docs[0]!
+                    const raw = { ...docSnap.data(), userId: docSnap.id } as UserFirestoreDocument
+                    const { emails, phones } = migrateContactFields(raw)
+                    const socialLinks = migrateLegacySocialFields(raw)
+                    return { user: { ...raw, emails, phones, socialLinks }, role }
+                }
+            }
+
+            // C. Exact userRazonSocial match (e.g. "Comunidad Dezzpo")
+            q = query(userCol, where('userRazonSocial', '==', cleanIdentifier))
+            snap = await getDocs(q)
+            if (!snap.empty) {
+                const docSnap = snap.docs[0]!
+                const raw = { ...docSnap.data(), userId: docSnap.id } as UserFirestoreDocument
+                const { emails, phones } = migrateContactFields(raw)
+                const socialLinks = migrateLegacySocialFields(raw)
+                return { user: { ...raw, emails, phones, socialLinks }, role }
+            }
+
+            // D. Unslugified userRazonSocial match (e.g. "Comunidad-Dezzpo" -> "Comunidad Dezzpo")
+            if (unslugified !== cleanIdentifier) {
+                q = query(userCol, where('userRazonSocial', '==', unslugified))
+                snap = await getDocs(q)
+                if (!snap.empty) {
+                    const docSnap = snap.docs[0]!
+                    const raw = { ...docSnap.data(), userId: docSnap.id } as UserFirestoreDocument
+                    const { emails, phones } = migrateContactFields(raw)
+                    const socialLinks = migrateLegacySocialFields(raw)
+                    return { user: { ...raw, emails, phones, socialLinks }, role }
+                }
+            }
+
+            // E. Case-insensitive / Slugified scan across collection documents
+            const allUsersSnap = await getDocs(userCol)
+            for (const docSnap of allUsersSnap.docs) {
+                const data = docSnap.data() as UserFirestoreDocument
+                const userNameSlug = data.userName ? slugify(data.userName) : ''
+                const userRazonSocialSlug = data.userRazonSocial ? slugify(data.userRazonSocial) : ''
+                const userContactNameSlug = data.userContactName ? slugify(data.userContactName) : ''
+
+                if (
+                    (userNameSlug && userNameSlug === targetSlug) ||
+                    (userRazonSocialSlug && userRazonSocialSlug === targetSlug) ||
+                    (userContactNameSlug && userContactNameSlug === targetSlug)
+                ) {
+                    const raw = { ...data, userId: docSnap.id }
+                    const { emails, phones } = migrateContactFields(raw)
+                    const socialLinks = migrateLegacySocialFields(raw)
+                    return { user: { ...raw, emails, phones, socialLinks }, role }
                 }
             }
         } catch (error) {
-            console.error(`Error querying userName in role ${role}:`, error)
+            console.error(`Error querying user by slug/name in role ${role}:`, error)
         }
     }
 
     return null
+}
+
+/**
+ * Get a user by their userName or identifier field (for vanity URLs).
+ */
+export async function getUserByUsername(
+    username: string
+): Promise<{ user: UserFirestoreDocument; role: UserRole } | null> {
+    return resolveUserByIdOrSlug(username)
 }
 
 /**

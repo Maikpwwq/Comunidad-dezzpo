@@ -8,6 +8,7 @@ export {
     setUser,
     getUsersByCategories,
     getUserByUsername,
+    resolveUserByIdOrSlug,
     getUsers,
 } from './userService'
 

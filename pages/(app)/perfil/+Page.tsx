@@ -5,7 +5,7 @@
  * SSR-safe: Uses Zustand store instead of UserAuthContext, lazy Firebase loading.
  */
 import { useState, useEffect } from 'react'
-import { getUser, getUserByUsername } from '@services/users'
+import { getUser, getUserByUsername, resolveUserByIdOrSlug } from '@services/users'
 import { useUserStore } from '@stores/userStore'
 import { usePageContext } from '@hooks/usePageContext'
 import { PLATFORM_CONFIG } from '@utilities/socialUtils'
@@ -217,6 +217,15 @@ export default function Page() {
                 for (const role of rolesToTry) {
                     userData = await getUser({ userId: targetUserId, role })
                     if (userData) break
+                }
+
+                // Fallback: if direct UID lookup failed, try slug/name resolution
+                // This handles /app/perfil/Comunidad-Dezzpo or /app/perfil/Dezzpo-Profesionales-Calificados
+                if (!userData) {
+                    const resolved = await resolveUserByIdOrSlug(targetUserId)
+                    if (resolved) {
+                        userData = resolved.user
+                    }
                 }
 
                 if (userData) {
