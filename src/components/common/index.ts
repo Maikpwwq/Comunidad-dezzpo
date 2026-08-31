@@ -38,3 +38,6 @@ export { AdjuntarArchivos } from './AdjuntarArchivos'
 
 export { DuplicateNameAlert } from './DuplicateNameAlert'
 export type { DuplicateNameAlertProps } from './DuplicateNameAlert'
+
+export { SocialShareMenu } from './SocialShareMenu'
+export type { SocialShareMenuProps } from './SocialShareMenu'

@@ -127,6 +127,8 @@ export interface UserFirestoreDocument extends DocumentData {
         likedsDrafts: string[]
     } | undefined
     savedDrafts?: string[] | undefined
+    /** Total number of users who added this profile to their favorites */
+    favoritesCount?: number | undefined
     privacySettings?: PrivacySettings | undefined
     /** Zonas donde el comerciante presta servicio (array of zone slugs). */
     userZonasCobertura?: string[] | undefined

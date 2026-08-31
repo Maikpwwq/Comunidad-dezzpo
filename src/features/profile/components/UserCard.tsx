@@ -7,25 +7,27 @@
  * Changes:
  * - TypeScript conversion with interfaces
  * - Zustand selectors instead of UserAuthContext
- * - Fixed handleFavorite to update CURRENT user's likedsProfiles
- * - Share fallback with clipboard toast
+ * - Fixed handleFavorite to update current user's likedProfiles & target merchant's favoritesCount
+ * - Reusable SocialShareMenu integration with clipboard copy and social channels
+ * - Real-time favorites count display
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { navigate } from 'vike/client/router'
+import clsx from 'clsx'
 
-// Note: Ensure vite.config.ts supports logical scss modules
 import styles from './UserCard.module.scss'
 
 // Zustand store
 import { useUserStore } from '@stores/userStore'
 
 // Firebase
-import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
+import { doc, updateDoc, arrayUnion, arrayRemove, increment } from 'firebase/firestore'
 import { firestore } from '@services/firebase'
 import { getOrCreateDirectChannel } from '@services/sendbird'
 
 import { getBadgeDetails } from '@config/userClassification.config'
+import { SocialShareMenu } from '@components/common/SocialShareMenu'
 
 // MUI Components
 import {
@@ -43,18 +45,21 @@ import ShareIcon from '@mui/icons-material/Share'
 // Types
 export interface UserCardProps {
     userId: string
-    userName?: string | null
-    userRazonSocial?: string
-    userContactName?: string
-    userDirection?: string
-    userProfession?: string
-    userPhotoUrl?: string
-    userJoined?: string
-    userExperience?: string
-    userDescription?: string
-    userCategories?: string[]
-    userClasification?: string
-    userGrade?: string
+    userName?: string | null | undefined
+    userRazonSocial?: string | undefined
+    userContactName?: string | undefined
+    userDirection?: string | undefined
+    userProfession?: string | undefined
+    userPhotoUrl?: string | undefined
+    userJoined?: string | undefined
+    userExperience?: string | undefined
+    userDescription?: string | undefined
+    userCategories?: string[] | undefined
+    userClasification?: string | undefined
+    userGrade?: string | undefined
+    favoritesCount?: number | undefined
+    likesCount?: number | undefined
+    [key: string]: unknown
 }
 
 interface CategoryChip {
@@ -66,7 +71,7 @@ export function UserCard({
     userId,
     userName = '',
     userRazonSocial = '',
-    userContactName,
+    userContactName: _userContactName,
     userDirection,
     userProfession,
     userPhotoUrl,
@@ -75,7 +80,9 @@ export function UserCard({
     userDescription,
     userCategories = [],
     userClasification,
-    userGrade,
+    userGrade: _userGrade,
+    favoritesCount,
+    likesCount,
 }: UserCardProps): React.ReactElement {
     // Primary display name: priority to userName (commercial name), fallback to legal userRazonSocial
     const displayName = userName || userRazonSocial || 'Comerciante'
@@ -92,15 +99,29 @@ export function UserCard({
 
     // Race condition guard
     const isSaving = useRef(false)
+    const shareBtnRef = useRef<HTMLButtonElement | null>(null)
 
     // Local state
     const [chips, setChips] = useState<CategoryChip[]>([])
     const [snackOpen, setSnackOpen] = useState(false)
     const [snackMessage, setSnackMessage] = useState('')
+    const [isShareOpen, setIsShareOpen] = useState(false)
+    const [favCount, setFavCount] = useState<number>(() => {
+        return favoritesCount ?? likesCount ?? 0
+    })
+
+    useEffect(() => {
+        if (typeof favoritesCount === 'number') {
+            setFavCount(favoritesCount)
+        } else if (typeof likesCount === 'number') {
+            setFavCount(likesCount)
+        }
+    }, [favoritesCount, likesCount])
 
     // Computed
     const userLink = `/app/perfil/${userId}`
-    // Legacy logic for avatar background - keeping dynamic for now due to url dependency
+    const shareUrl = typeof window !== 'undefined' ? `${window.location.origin}${userLink}` : `https://dezzpo.com${userLink}`
+
     const bgAvatar = userPhotoUrl
         ? { bgcolor: 'var(--background-light-gray-color)' }
         : { bgcolor: 'var(--background-hover-green-color)' }
@@ -114,7 +135,7 @@ export function UserCard({
 
     const handleCotizarVisitaTecnica = useCallback(async () => {
         if (!currentUserId) {
-            navigate('/sign-in')
+            navigate('/ingreso')
             return
         }
         try {
@@ -142,22 +163,37 @@ export function UserCard({
         isSaving.current = true
         const wasLiked = useUserStore.getState().likedProfiles.includes(userId)
 
-        // Optimistic: update store immediately for responsive UI
+        // Optimistic: update store and local counter immediately
         toggleLikedProfile(userId)
+        setFavCount((prev) => (wasLiked ? Math.max(0, prev - 1) : prev + 1))
 
         try {
             const collectionName = userRole === 1 ? 'usersPropietariosResidentes' : 'usersComerciantesCalificados'
             const currentUserRef = doc(firestore, collectionName, currentUserId)
+            
+            // 1. Update current user's likedProfiles array
             await updateDoc(currentUserRef, {
                 'userLikes.likedsProfiles': wasLiked
                     ? arrayRemove(userId)
                     : arrayUnion(userId)
             })
+
+            // 2. Update target professional's favorites count
+            try {
+                const targetMerchantRef = doc(firestore, 'usersComerciantesCalificados', userId)
+                await updateDoc(targetMerchantRef, {
+                    favoritesCount: increment(wasLiked ? -1 : 1)
+                })
+            } catch (merchantErr) {
+                console.warn('Could not update merchant favoritesCount:', merchantErr)
+            }
+
             setSnackMessage(wasLiked ? 'Eliminado de favoritos' : 'Guardado en favoritos')
             setSnackOpen(true)
         } catch (error) {
             // Revert optimistic update on failure
             toggleLikedProfile(userId)
+            setFavCount((prev) => (wasLiked ? prev + 1 : Math.max(0, prev - 1)))
             console.error('Error updating favorites:', error)
             setSnackMessage('Error al actualizar favoritos')
             setSnackOpen(true)
@@ -165,25 +201,6 @@ export function UserCard({
             isSaving.current = false
         }
     }, [userId, currentUserId, userRole, toggleLikedProfile])
-
-    const handleShare = useCallback(async () => {
-        try {
-            const shareData = {
-                title: userRazonSocial,
-                text: userDescription ?? '',
-                url: window.location.origin + userLink,
-            }
-            if (navigator.share) {
-                await navigator.share(shareData)
-            } else {
-                await navigator.clipboard.writeText(shareData.url)
-                setSnackMessage('¡Enlace copiado!')
-                setSnackOpen(true)
-            }
-        } catch (error) {
-            console.error('Share error:', error)
-        }
-    }, [userRazonSocial, userDescription, userLink])
 
     // Build category chips
     useEffect(() => {
@@ -258,29 +275,31 @@ export function UserCard({
             </div>
 
             <div className={styles['actions']}>
-                <Button
-                    className="btn-round btn-low"
-                    onClick={handleVerSitio}
-                    fullWidth
-                    size="small"
-                    sx={{ py: 0.5, px: 1, whiteSpace: 'nowrap' }}
-                >
-                    Ver sitio
-                </Button>
+                <div className={styles.ActionButtonsLeft}>
+                    <Button
+                        className="btn-round btn-low"
+                        onClick={handleVerSitio}
+                        size="small"
+                        sx={{ py: 0.5, px: 1.2, whiteSpace: 'nowrap', textTransform: 'none', fontSize: '0.8rem' }}
+                    >
+                        Ver sitio
+                    </Button>
 
-                {isAuthenticated && (
-                    <>
+                    {isAuthenticated && (
                         <Button
                             className="btn-round btn-high"
                             onClick={handleCotizarVisitaTecnica}
-                            fullWidth
                             size="small"
                             disabled={isCreatingChannel}
-                            sx={{ py: 0.5, px: 1.5 }}
+                            sx={{ py: 0.5, px: 1.5, textTransform: 'none', fontSize: '0.8rem' }}
                         >
                             {isCreatingChannel ? 'Abriendo chat...' : 'Cotizar'}
                         </Button>
+                    )}
+                </div>
 
+                <div className={styles.ActionIconsRight}>
+                    <Box className={styles.FavoriteContainer} title={`${favCount} ${favCount === 1 ? 'favorito' : 'favoritos'}`}>
                         <IconButton
                             aria-label="add to favorites"
                             onClick={handleFavorite}
@@ -289,12 +308,39 @@ export function UserCard({
                         >
                             <FavoriteIcon fontSize="small" />
                         </IconButton>
-                    </>
-                )}
+                        <span className={styles.FavoriteCount}>
+                            {favCount}
+                        </span>
+                    </Box>
 
-                <IconButton aria-label="share" onClick={handleShare} size="small">
-                    <ShareIcon fontSize="small" />
-                </IconButton>
+                    <Box className={styles.ShareWrapper}>
+                        <IconButton
+                            ref={shareBtnRef}
+                            aria-label="share"
+                            onClick={() => setIsShareOpen((prev) => !prev)}
+                            size="small"
+                            className={clsx(isShareOpen && styles.ShareButtonActive)}
+                        >
+                            <ShareIcon fontSize="small" />
+                        </IconButton>
+
+                        <SocialShareMenu
+                            url={shareUrl}
+                            title={displayName}
+                            text={`Conoce el perfil profesional de ${displayName} en Comunidad Dezzpo`}
+                            subject={`${displayName} — Perfil Profesional | Comunidad Dezzpo`}
+                            isOpen={isShareOpen}
+                            onClose={() => setIsShareOpen(false)}
+                            triggerRef={shareBtnRef}
+                            placement="top"
+                            align="right"
+                            onCopied={() => {
+                                setSnackMessage('¡Enlace copiado al portapapeles!')
+                                setSnackOpen(true)
+                            }}
+                        />
+                    </Box>
+                </div>
             </div>
 
             <Snackbar

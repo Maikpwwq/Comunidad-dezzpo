@@ -43,6 +43,7 @@ import {
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
 import { getBadgeDetails } from '@config/userClassification.config'
+import { SocialShareMenu } from '@components/common/SocialShareMenu'
 
 // Types
 export interface DraftCardProps {
@@ -79,10 +80,12 @@ export function DraftCard({
 
     // Race condition guard
     const isSaving = useRef(false)
+    const shareBtnRef = useRef<HTMLButtonElement | null>(null)
 
     // Local state
     const [snackOpen, setSnackOpen] = useState(false)
     const [snackMessage, setSnackMessage] = useState('')
+    const [isShareOpen, setIsShareOpen] = useState(false)
     const [ownerName, setOwnerName] = useState<string>(draftPropietarioResidente)
     const [ownerClassification, setOwnerClassification] = useState<string | undefined>(draftPropietarioClassification)
 
@@ -159,29 +162,11 @@ export function DraftCard({
         }
     }, [draftId, currentUserId, userRole, toggleSavedDraft])
 
-    const handleShare = useCallback(async () => {
-        try {
-            const shareData = {
-                title: draftName,
-                text: draftDescription,
-                url: window.location.origin + draftLink,
-            }
-            if (navigator.share) {
-                await navigator.share(shareData)
-            } else {
-                await navigator.clipboard.writeText(shareData.url)
-                setSnackMessage('¡Enlace copiado!')
-                setSnackOpen(true)
-            }
-        } catch (error) {
-            console.error('Share error:', error)
-        }
-    }, [draftName, draftDescription, draftLink])
+    const shareUrl = typeof window !== 'undefined' ? `${window.location.origin}${draftLink}` : `https://dezzpo.com${draftLink}`
 
     return (
         <Card
             className={clsx(styles.Card)}
-        // Elevation removed for modern shadow
         >
             <CardHeader
                 className={clsx(styles.Header)}
@@ -229,7 +214,7 @@ export function DraftCard({
                 disableSpacing
             >
                 <Button className={clsx(styles['btn-text'])} onClick={handleVerRequerimiento}>
-                    Ver requerimiento
+                    Ver
                 </Button>
 
                 {/* Edit button - only for owner propietario */}
@@ -244,7 +229,11 @@ export function DraftCard({
 
                 {/* Apply button - only for commerciantes when slots available */}
                 {isCommerciante && canApply && (
-                    <Button className="btn-primary-gradient btn-round" size="small" onClick={handleAplicar}>
+                    <Button
+                        className={clsx(styles.ApplyButton)}
+                        size="small"
+                        onClick={handleAplicar}
+                    >
                         Aplicar
                     </Button>
                 )}
@@ -258,9 +247,32 @@ export function DraftCard({
                     <FavoriteIcon />
                 </IconButton>
 
-                <IconButton aria-label="share" onClick={handleShare}>
-                    <ShareIcon />
-                </IconButton>
+                <Box className={styles.ShareWrapper}>
+                    <IconButton
+                        ref={shareBtnRef}
+                        aria-label="share"
+                        onClick={() => setIsShareOpen((prev) => !prev)}
+                        className={clsx(isShareOpen && styles.ShareButtonActive)}
+                    >
+                        <ShareIcon />
+                    </IconButton>
+
+                    <SocialShareMenu
+                        url={shareUrl}
+                        title={draftName}
+                        text={`Mira este requerimiento en Comunidad Dezzpo: ${draftName} (${draftCategory})`}
+                        subject={`Requerimiento: ${draftName} | Comunidad Dezzpo`}
+                        isOpen={isShareOpen}
+                        onClose={() => setIsShareOpen(false)}
+                        triggerRef={shareBtnRef}
+                        placement="top"
+                        align="right"
+                        onCopied={() => {
+                            setSnackMessage('¡Enlace copiado al portapapeles!')
+                            setSnackOpen(true)
+                        }}
+                    />
+                </Box>
             </CardActions>
 
             <Snackbar

@@ -7,19 +7,13 @@
  * - Conditional floating popover/dropdown for direct social sharing (WhatsApp, FB, X, LinkedIn, Telegram, Email, WebShare)
  * - SSR-safe onClickOutside and Escape key listeners
  */
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import clsx from 'clsx'
-import { Tooltip } from '@mui/material'
 import BadgeIcon from '@mui/icons-material/Badge'
 import VerifiedIcon from '@mui/icons-material/Verified'
 import ShareIcon from '@mui/icons-material/Share'
 import CheckIcon from '@mui/icons-material/Check'
-import WhatsAppIcon from '@mui/icons-material/WhatsApp'
-import FacebookIcon from '@mui/icons-material/Facebook'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import TelegramIcon from '@mui/icons-material/Telegram'
-import TwitterIcon from '@mui/icons-material/Twitter'
-import EmailIcon from '@mui/icons-material/Email'
+import { SocialShareMenu } from '@components/common/SocialShareMenu'
 import styles from './MicrositeShareCard.module.scss'
 
 export interface MicrositeShareCardProps {
@@ -33,49 +27,11 @@ export const MicrositeShareCard: React.FC<MicrositeShareCardProps> = ({
     micrositeUrl,
     micrositeSlug,
     profileName,
-    className
+    className,
 }) => {
     const [micrositeCopied, setMicrositeCopied] = useState(false)
     const [isShareMenuOpen, setIsShareMenuOpen] = useState(false)
-    const shareMenuRef = useRef<HTMLDivElement | null>(null)
     const shareBtnRef = useRef<HTMLButtonElement | null>(null)
-
-    // Client-only click outside & escape key handler
-    useEffect(() => {
-        if (!isShareMenuOpen) return
-
-        const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-            const target = event.target as Node | null
-            if (!target) return
-
-            const clickedInsideMenu = shareMenuRef.current && shareMenuRef.current.contains(target)
-            const clickedInsideBtn = shareBtnRef.current && shareBtnRef.current.contains(target)
-
-            if (!clickedInsideMenu && !clickedInsideBtn) {
-                setIsShareMenuOpen(false)
-            }
-        }
-
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                setIsShareMenuOpen(false)
-            }
-        }
-
-        if (typeof window !== 'undefined') {
-            document.addEventListener('mousedown', handleClickOutside)
-            document.addEventListener('touchstart', handleClickOutside)
-            document.addEventListener('keydown', handleKeyDown)
-        }
-
-        return () => {
-            if (typeof window !== 'undefined') {
-                document.removeEventListener('mousedown', handleClickOutside)
-                document.removeEventListener('touchstart', handleClickOutside)
-                document.removeEventListener('keydown', handleKeyDown)
-            }
-        }
-    }, [isShareMenuOpen])
 
     const copyMicrositeUrl = () => {
         if (!micrositeUrl) return
@@ -91,65 +47,6 @@ export const MicrositeShareCard: React.FC<MicrositeShareCardProps> = ({
 
     const shareText = `Conoce el perfil profesional de ${profileName} en Comunidad Dezzpo`
     const shareSubject = `${profileName} — Perfil Profesional | Comunidad Dezzpo`
-
-    const shareLinks = [
-        {
-            key: 'whatsapp',
-            label: 'WhatsApp',
-            icon: <WhatsAppIcon sx={{ fontSize: 20 }} />,
-            className: styles.ShareBtnWhatsapp,
-            href: `https://wa.me/?text=${encodeURIComponent(`${shareText}\n${micrositeUrl}`)}`
-        },
-        {
-            key: 'facebook',
-            label: 'Facebook',
-            icon: <FacebookIcon sx={{ fontSize: 20 }} />,
-            className: styles.ShareBtnFacebook,
-            href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(micrositeUrl)}`
-        },
-        {
-            key: 'twitter',
-            label: 'X',
-            icon: <TwitterIcon sx={{ fontSize: 20 }} />,
-            className: styles.ShareBtnTwitter,
-            href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(micrositeUrl)}`
-        },
-        {
-            key: 'linkedin',
-            label: 'LinkedIn',
-            icon: <LinkedInIcon sx={{ fontSize: 20 }} />,
-            className: styles.ShareBtnLinkedin,
-            href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(micrositeUrl)}`
-        },
-        {
-            key: 'telegram',
-            label: 'Telegram',
-            icon: <TelegramIcon sx={{ fontSize: 20 }} />,
-            className: styles.ShareBtnTelegram,
-            href: `https://t.me/share/url?url=${encodeURIComponent(micrositeUrl)}&text=${encodeURIComponent(shareText)}`
-        },
-        {
-            key: 'email',
-            label: 'Correo',
-            icon: <EmailIcon sx={{ fontSize: 20 }} />,
-            className: styles.ShareBtnEmail,
-            href: `mailto:?subject=${encodeURIComponent(shareSubject)}&body=${encodeURIComponent(`${shareText}\n\n${micrositeUrl}`)}`
-        }
-    ]
-
-    const handleNativeShare = async () => {
-        if (typeof navigator !== 'undefined' && navigator.share) {
-            try {
-                await navigator.share({
-                    title: shareSubject,
-                    text: shareText,
-                    url: micrositeUrl
-                })
-            } catch (_) { /* user cancelled */ }
-        }
-    }
-
-    const hasNativeShare = typeof navigator !== 'undefined' && typeof navigator.share === 'function'
 
     return (
         <div className={clsx(styles.MicrositeCard, className)}>
@@ -173,7 +70,9 @@ export const MicrositeShareCard: React.FC<MicrositeShareCardProps> = ({
                     tabIndex={0}
                     title="Haz clic para copiar el enlace al portapapeles"
                     aria-label="Haz clic para copiar el enlace del micrositio"
-                    onKeyDown={(e) => { if (e.key === 'Enter') copyMicrositeUrl() }}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') copyMicrositeUrl()
+                    }}
                 >
                     <span className={styles.MicrositeUrlText}>
                         <span className={styles.MicrositeDomain}>dezzpo.com/app/perfil/</span>
@@ -201,61 +100,22 @@ export const MicrositeShareCard: React.FC<MicrositeShareCardProps> = ({
                     </button>
                 </div>
 
-                {/* Panel de Difusión Flotante Condicional */}
-                {isShareMenuOpen && (
-                    <div
-                        ref={shareMenuRef}
-                        className={styles.ShareDropdownMenu}
-                        role="dialog"
-                        aria-label="Opciones de difusión"
-                    >
-                        <div className={styles.ShareDropdownHeader}>
-                            <span className={styles.ShareDropdownTitle}>Compartir en</span>
-                            <button
-                                className={styles.ShareDropdownCloseBtn}
-                                onClick={(e) => {
-                                    e.stopPropagation()
-                                    setIsShareMenuOpen(false)
-                                }}
-                                type="button"
-                                aria-label="Cerrar opciones de compartir"
-                            >
-                                ✕
-                            </button>
-                        </div>
-                        <div className={styles.ShareButtonsRow}>
-                            {shareLinks.map((link) => (
-                                <Tooltip key={link.key} title={link.label} arrow>
-                                    <a
-                                        className={clsx(styles.SocialShareBtn, link.className)}
-                                        href={link.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        aria-label={`Compartir en ${link.label}`}
-                                        onClick={() => setIsShareMenuOpen(false)}
-                                    >
-                                        {link.icon}
-                                    </a>
-                                </Tooltip>
-                            ))}
-                            {hasNativeShare && (
-                                <Tooltip title="Más opciones" arrow>
-                                    <button
-                                        className={clsx(styles.SocialShareBtn, styles.ShareBtnNative)}
-                                        onClick={() => {
-                                            handleNativeShare()
-                                            setIsShareMenuOpen(false)
-                                        }}
-                                        type="button"
-                                        aria-label="Compartir con las opciones del dispositivo"
-                                    >
-                                        <ShareIcon sx={{ fontSize: 20 }} />
-                                    </button>
-                                </Tooltip>
-                            )}
-                        </div>
-                    </div>
-                )}
+                {/* Panel de Difusión Flotante Compartido */}
+                <SocialShareMenu
+                    url={micrositeUrl}
+                    title={profileName}
+                    text={shareText}
+                    subject={shareSubject}
+                    isOpen={isShareMenuOpen}
+                    onClose={() => setIsShareMenuOpen(false)}
+                    triggerRef={shareBtnRef}
+                    placement="bottom"
+                    align="right"
+                    onCopied={() => {
+                        setMicrositeCopied(true)
+                        setTimeout(() => setMicrositeCopied(false), 2500)
+                    }}
+                />
             </div>
 
             {/* Copied feedback pill */}
@@ -272,3 +132,4 @@ export const MicrositeShareCard: React.FC<MicrositeShareCardProps> = ({
         </div>
     )
 }
+

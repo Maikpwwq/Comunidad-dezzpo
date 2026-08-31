@@ -72,19 +72,56 @@
 
 .Actions {
     display: flex;
-    padding: $spacing-3;
+    padding: $spacing-2 $spacing-3;
     margin-top: auto; // Push to bottom
     border-top: 1px solid var(--selected-border-light-gray-color);
+    align-items: center;
     justify-content: space-between;
     gap: $spacing-2;
+    position: relative;
 }
 
 .btn-text {
-    text-transform: none;
-    font-weight: 600;
+    text-transform: none !important;
+    font-weight: 600 !important;
+    font-size: 0.8125rem !important;
+    padding: 4px 10px !important;
+    min-width: unset !important;
     color: var(--primary-green-text-color) !important;
+}
+
+.ApplyButton {
+    background: linear-gradient(-90deg, #18B1A7 35%, #0099CC 100%) !important;
+    color: #ffffff !important;
+    border-radius: 20px !important;
+    padding: 5px 16px !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    font-family: var(--font-helvetica-semibold, sans-serif) !important;
+    text-transform: none !important;
+    min-width: unset !important;
+    line-height: 1.4 !important;
+    box-shadow: 0 2px 6px rgba(24, 177, 167, 0.25) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+
+    &:hover {
+        background: linear-gradient(-90deg, #15a098 35%, #0088bb 100%) !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(24, 177, 167, 0.35) !important;
+    }
 }
 
 .FavoriteButton {
     margin-left: auto;
+}
+
+.ShareWrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.ShareButtonActive {
+    color: var(--primary-green-text-color) !important;
+    background-color: rgba(46, 125, 50, 0.08) !important;
 }

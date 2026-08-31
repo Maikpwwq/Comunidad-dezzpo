@@ -9,7 +9,6 @@ import { UserCard } from '@features/profile'
 import { Row, Col, Container, Button } from 'react-bootstrap'
 import { Box, Chip, Skeleton, Stack, Typography } from '@mui/material'
 import FilterListIcon from '@mui/icons-material/FilterList'
-import { COMERCIANTE_RANKINGS } from '@config/userClassification.config'
 // Types
 import type { UserFirestoreDocument } from '@services/types'
 

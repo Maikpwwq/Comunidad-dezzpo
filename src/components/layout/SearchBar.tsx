@@ -31,12 +31,12 @@ interface CategoryOption {
 }
 
 export interface SearchBarProps {
-    className?: string
-    targetRoutePrefix?: string
-    onCategorySelect?: (categoryLabel: string) => void
-    onSearchChange?: (queryText: string) => void
-    placeholder?: string
-    initialValue?: string
+    className?: string | undefined
+    targetRoutePrefix?: string | undefined
+    onCategorySelect?: ((categoryLabel: string) => void) | undefined
+    onSearchChange?: ((queryText: string) => void) | undefined
+    placeholder?: string | undefined
+    initialValue?: string | undefined
 }
 
 export function SearchBar({

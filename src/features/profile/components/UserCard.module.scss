@@ -49,7 +49,50 @@
 
 .actions {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     margin-top: auto; // Push to bottom
     gap: $spacing-2;
+    position: relative;
+    padding-top: $spacing-2;
+}
+
+.ActionButtonsLeft {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+}
+
+.ActionIconsRight {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.FavoriteContainer {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+}
+
+.FavoriteCount {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    color: var(--secondary-text-gray-color);
+    line-height: 1 !important;
+    padding-right: 2px;
+    user-select: none;
+}
+
+.ShareWrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.ShareButtonActive {
+    color: var(--primary-green-text-color) !important;
+    background-color: rgba(46, 125, 50, 0.08) !important;
 }
