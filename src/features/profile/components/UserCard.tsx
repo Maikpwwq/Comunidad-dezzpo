@@ -299,7 +299,10 @@ export function UserCard({
                 </div>
 
                 <div className={styles.ActionIconsRight}>
-                    <Box className={styles.FavoriteContainer} title={`${favCount} ${favCount === 1 ? 'favorito' : 'favoritos'}`}>
+                    <Box
+                        className={styles.FavoriteContainer}
+                        title={favCount > 0 ? `${favCount} ${favCount === 1 ? 'favorito' : 'favoritos'}` : 'Agregar a favoritos'}
+                    >
                         <IconButton
                             aria-label="add to favorites"
                             onClick={handleFavorite}
@@ -308,9 +311,11 @@ export function UserCard({
                         >
                             <FavoriteIcon fontSize="small" />
                         </IconButton>
-                        <span className={styles.FavoriteCount}>
-                            {favCount}
-                        </span>
+                        {favCount > 0 && (
+                            <span className={styles.FavoriteCount}>
+                                {favCount}
+                            </span>
+                        )}
                     </Box>
 
                     <Box className={styles.ShareWrapper}>
