@@ -25,7 +25,6 @@ import StarIcon from '@mui/icons-material/Star'
 
 import { PROPIETARIO_RANKINGS } from '@config/userClassification.config'
 import FilterListIcon from '@mui/icons-material/FilterList'
-import SearchIcon from '@mui/icons-material/Search'
 
 interface Draft {
     id?: string
@@ -218,7 +217,7 @@ export default function Page() {
                             variant={selectedClassification === 'all' ? 'filled' : 'outlined'}
                             sx={{ fontWeight: 600 }}
                         />
-                        {PROPIETARIO_RANKINGS.clasificacion.tiers.map((tier) => (
+                        {(PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).map((tier) => (
                             <Chip
                                 key={tier.id}
                                 label={tier.name}

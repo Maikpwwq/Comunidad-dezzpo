@@ -215,7 +215,7 @@ export function SearchBar({
                 }}
                 renderInput={(params) => (
                     <TextField
-                        {...params}
+                        {...(params as unknown as Record<string, unknown>)}
                         placeholder={placeholder}
                         size="small"
                         onKeyDown={handleKeyDown}

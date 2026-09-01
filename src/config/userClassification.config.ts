@@ -33,7 +33,10 @@ export interface UserRankingCategory {
    1. COMERCIANTE CALIFICADO CONFIGURATION
    ============================================================================= */
 
-export const COMERCIANTE_RANKINGS: Record<string, UserRankingCategory> = {
+export type ComercianteRankingKey = 'clasificacion' | 'gradacion' | 'categoria'
+export type PropietarioRankingKey = 'clasificacion' | 'gradacion' | 'categoria'
+
+export const COMERCIANTE_RANKINGS: Record<ComercianteRankingKey, UserRankingCategory> = {
     clasificacion: {
         title: 'Clasificación por Tamaño de Operación',
         description: 'Evalúa la capacidad operativa, estructura empresarial y volumen de proyectos del comerciante.',
@@ -180,7 +183,7 @@ export const COMERCIANTE_RANKINGS: Record<string, UserRankingCategory> = {
    2. PROPIETARIO / RESIDENTE CONFIGURATION
    ============================================================================= */
 
-export const PROPIETARIO_RANKINGS: Record<string, UserRankingCategory> = {
+export const PROPIETARIO_RANKINGS: Record<PropietarioRankingKey, UserRankingCategory> = {
     clasificacion: {
         title: 'Clasificación por Tipo de Proyecto e Inmueble',
         description: 'Segmenta el alcance del propietario según el tipo de inmueble a intervenir.',
