@@ -1909,42 +1909,157 @@ export const CLIENT_INTERCEPT_STARTER_PACK: readonly string[] = [
 ] as const;
 
 // =============================================================================
-// ADAPTACIÓN AL CONTEXTO DE CADA PUBLICACIÓN
+// ADAPTACIÓN AL CONTEXTO DE CADA PUBLICACIÓN (EMPIRICAL REGEX ENGINE)
 // =============================================================================
 
 export interface ContextTriggerResponse {
+  readonly id: string;
   readonly queryPattern: string;
+  readonly testRegex: RegExp;
   readonly recommendedCopy: string;
   readonly targetTrade: TargetTrade;
   readonly rationale: string;
+  readonly fallbackCopyId: string;
+  readonly sampleEmpiricalPosts?: readonly string[];
 }
+
+/**
+ * Pre-compiled, catastrophic-backtracking safe regex patterns for Intent Disambiguation.
+ * STRICT RULE: "Busco trabajo" = SUPPLY (Offer), "Busco quien trabaje / trabajador" = DEMAND.
+ */
+export const DISAMBIGUATION_JOB_SEEKER_REGEX =
+  /\b(?:busco|buscando|en\s+busca\s+de|se\s+busca|necesito|solicito)\s+(?:trabajo|empleo|camello|chamba|contrato|vacante|puesto|obra\s+para\s+trabajar)\b/i;
+
+export const DISAMBIGUATION_HIRING_REGEX =
+  /\b(?:se\s+busca|busco|buscando|solicito|solicitamos|necesito|necesitamos|requiero|requerimos|se\s+solicita|se\s+requiere|se\s+necesita)\s+(?:un\s+|una\s+|a\s+un\s+|a\s+una\s+|a\s+)?(?:ayudante|oficial|maestro|soldador|plomero|electricista|pintor|remodelador|alba[ñn]il|alva[ñn]il|contratista|t[eé]cnico|instalador|carpintero|cerrajero|vidriero|enchapador|personal|cuadrilla|toder[oa]|operario|pegador|estucador)\b/i;
 
 export const CONTEXT_TRIGGER_RESPONSES: readonly ContextTriggerResponse[] = [
   {
-    queryPattern: 'Solicito plomero / Busco plomería',
+    id: 'TRG-PLOMERO-01',
+    queryPattern: 'Solicito plomero / Busco plomería / Destape / Fuga',
+    testRegex: /\b(?:busco|solicito|necesito|requiero|alguien\s+que(?:\s+sepa\s+de)?|qui[eé]n(?:\s+sabe\s+de)?)\s+(?:un\s+)?(?:plomero|plomer[ií]a|gasfitero|destape|fuga|tuber[ií]a)\b|\b(?:urgente|da[ñn]o)\s+(?:de\s+)?(?:plomer[ií]a|tuber[ií]a|fuga|inodoro|lavamanos)\b/i,
     recommendedCopy: '🚰 ¿Buscas plomero? Mira sus trabajos y encuentra opciones en dezzpo.com',
     targetTrade: 'plomero',
+    fallbackCopyId: 'CLI-CONF-CON-CON-01',
     rationale: 'Responde específicamente con el oficio solicitado en vez de términos genéricos.',
+    sampleEmpiricalPosts: [
+      'Solicito plomero urgente para una fuga',
+      'Busco plomería en Bogotá',
+      'Alguien que sepa de plomería para destapar cañería',
+    ],
   },
   {
-    queryPattern: 'Necesito electricista urgente / Corto circuito',
+    id: 'TRG-ELECTRICISTA-01',
+    queryPattern: 'Necesito electricista urgente / Corto circuito / Breaker',
+    testRegex: /\b(?:busco|solicito|necesito|requiero|alguien\s+que(?:\s+sepa\s+de)?|qui[eé]n(?:\s+sabe\s+de)?)\s+(?:un\s+)?(?:electricista|electricidad|t[eé]cnico\s+el[eé]ctrico|instalaci[oó]n\s+el[eé]ctrica)\b|\b(?:corto\s*circuito|breaker|acometida|tablero\s+el[eé]ctrico|sin\s+luz)\b/i,
     recommendedCopy: '⚡ Busca electricistas, mira sus trabajos y contacta directamente en dezzpo.com',
     targetTrade: 'electricista',
+    fallbackCopyId: 'CLI-CONF-CON-CON-20',
     rationale: 'Ataca el dolor de urgencia con llamada a la acción de contacto directo.',
+    sampleEmpiricalPosts: [
+      'Necesito electricista urgente',
+      'Corto circuito en la casa quien me ayuda',
+      'Busco electricista para cambio de breakers y cableado',
+    ],
   },
   {
-    queryPattern: 'Busco maestro para remodelación / Obra blanca',
+    id: 'TRG-MAESTRO-OBRA-01',
+    queryPattern: 'Busco maestro de obra / Obra civil / Pañete / Mampostería',
+    testRegex: /\b(?:busco|solicito|necesito|requiero|se\s+busca|alg[uú]n)\s+(?:a\s+un\s+|un\s+)?(?:maestro|oficial|alba[ñn]il|alva[ñn]il)\s*(?:de\s+obra(?:\s+civil)?)?\b|\b(?:maestro|alba[ñn]il)\s+disponible\s+para\s+(?:un\s+)?trabajo\b/i,
     recommendedCopy: '🛠️ Encuentra maestros y conoce sus trabajos antes de contactarlos en dezzpo.com',
     targetTrade: 'maestro',
-    rationale: 'Mitiga el miedo a malas remodelaciones enfatizando ver trabajos previos.',
+    fallbackCopyId: 'CLI-CONF-BEN-CON-05',
+    rationale: 'Mitiga el miedo a malas obras enfatizando ver trabajos previos y reputación.',
+    sampleEmpiricalPosts: [
+      'algún maestro de obra disponible para un trabajo',
+      'requiero un maestro de obra civil para rem...',
+      'Se busca maestro de obra con experiencia',
+    ],
   },
   {
-    queryPattern: 'Solicito cotización para pintura / Pintor',
+    id: 'TRG-REMODELACION-ENCHAPE-01',
+    queryPattern: 'Busco maestro para remodelación / Enchape / Drywall / Obra blanca',
+    testRegex: /\b(?:busco|solicito|necesito|requiero|se\s+busca|alguien\s+que\s+(?:haga|sepa|trabaje))\s+(?:a\s+un\s+|un\s+)?(?:maestro|enchapador|instalador|especialista)?\s*(?:para|en)?\s*(?:remodelar|remodelaci[oó]n|enchape|enchapar|drywall|obra\s+blanca|cielo\s+raso|pisos|porcelanato)\b/i,
+    recommendedCopy: '🎨 No arriesgues tu remodelación. Compara perfiles y fotos reales en dezzpo.com 🛠️',
+    targetTrade: 'remodelador',
+    fallbackCopyId: 'CLI-CONF-BEN-CON-01',
+    rationale: 'Ofrece validación visual de acabados y enchapes para evitar daños en la vivienda.',
+    sampleEmpiricalPosts: [
+      'requiero a un maestro para remodelar',
+      'Se busca maestro para enchape',
+      'Alguien que haga drywall en Kennedy',
+    ],
+  },
+  {
+    id: 'TRG-PINTOR-FACHADA-01',
+    queryPattern: 'Solicito cotización para pintura / Pintor / Estuco',
+    testRegex: /\b(?:busco|solicito|necesito|requiero|cotizaci[oó]n\s+para|alguien\s+que\s+pinte)\s+(?:un\s+)?(?:pintor|pintura|estuco|resanes?|fachada|vinilo)\b|\bqui[eé]n\s+para\s+pintar\b/i,
     recommendedCopy: '🎨 Mira trabajos de pintores y encuentra opciones para cotizar en dezzpo.com',
     targetTrade: 'pintor',
-    rationale: 'Ofrece comparación visual de acabados antes de pedir presupuesto.',
+    fallbackCopyId: 'CLI-CONF-INT-SIN-18',
+    rationale: 'Ofrece comparación visual de acabados y estucos antes de pedir presupuesto.',
+    sampleEmpiricalPosts: [
+      'Solicito cotización para pintura',
+      'Quien para pintar un apartamento en Chía',
+      'Busco pintor para estucar y pintar casa',
+    ],
+  },
+  {
+    id: 'TRG-SOLDADOR-ORNAMENTACION-01',
+    queryPattern: 'Se busca soldador / Cerrajería / Rejas / Ornamentación',
+    testRegex: /\b(?:se\s+busca|busco|solicito|necesito|requiero)\s+(?:un\s+)?(?:soldador|ornamentador|cerrajero|estructurero|taller\s+de\s+ornamentaci[oó]n)\b|\b(?:trabajo|arreglo)\s+de\s+(?:soldadura|rejas?|port[oó]n|estructura\s+met[aá]lica|cerrajer[ií]a)\b/i,
+    recommendedCopy: '🔧 Encuentra especialistas en soldadura y ornamentación con fotos en dezzpo.com',
+    targetTrade: 'maestro',
+    fallbackCopyId: 'CLI-CONF-CON-CON-06',
+    rationale: 'Conecta con especialistas en estructuras metálicas y seguridad para cerrajería.',
+    sampleEmpiricalPosts: [
+      'Se busca soldador',
+      'Busco taller de ornamentación para una reja',
+      'Necesito cerrajero para portón metálico',
+    ],
+  },
+  {
+    id: 'TRG-AYUDANTE-CONSTRUCCION-01',
+    queryPattern: 'SE BUSCA AYUDANTE DE CONSTRUCCIÓN / Cuadrilla / Personal',
+    testRegex: /\b(?:se\s+busca|busco|solicito|necesito|requiero)\s+(?:un\s+)?(?:ayudante(?:\s+de\s+(?:construcci[oó]n|obra))?|auxiliar\s+de\s+obra|personal(?:\s+de\s+(?:obra|construcci[oó]n))?|cuadrilla|toder[oa]|pe[oó]n)\b/i,
+    recommendedCopy: '👷 ¿Buscas personal o maestros de obra? Conecta con profesionales en dezzpo.com',
+    targetTrade: 'maestro',
+    fallbackCopyId: 'CLI-CONF-CON-CON-09',
+    rationale: 'Facilita la contratación rápida de mano de obra y ayudantes de construcción verificados.',
+    sampleEmpiricalPosts: [
+      'SE BUSCA AYUDANTE DE CONSTRUCCIÓN',
+      'Se busca ayudante para obra civil en Fontibón',
+      'Requiero personal de construcción con curso de alturas',
+    ],
+  },
+  {
+    id: 'TRG-QUIEN-TRABAJE-GENERAL-01',
+    queryPattern: 'Busco quien trabaje / Alguien que trabaje / Quien me haga un trabajo',
+    testRegex: /\b(?:busco|necesito|solicito|requiero)\s+(?:a\s+)?(?:qui[eé]n|quien|alguien|persona|gente)\s+(?:que\s+(?:me\s+)?)?(?:trabaje|haga|sepa|pueda|realice|repare|instale|construya|remodele)\b|\balguien\s+que\s+(?:haga|trabaje|repare|instale|arregle)\b/i,
+    recommendedCopy: '🛠️ Encuentra profesionales calificados para tu proyecto en dezzpo.com y mira sus trabajos reales.',
+    targetTrade: 'general',
+    fallbackCopyId: 'CLI-RAP-CON-CON-12',
+    rationale: 'Intercepta solicitudes abiertas de trabajo dirigiendo al directorio general con fotos reales.',
+    sampleEmpiricalPosts: [
+      'Busco quien trabaje en remodelación',
+      'Alguien que trabaje bien y cobre lo justo',
+      'Busco alguien que me haga un trabajo en la casa',
+    ],
   },
 ] as const;
+
+/**
+ * Evaluates raw text against empirical context triggers and returns the matching response.
+ */
+export function matchContextTriggerResponse(message: string): ContextTriggerResponse | undefined {
+  if (!message || !message.trim()) return undefined;
+  for (const trigger of CONTEXT_TRIGGER_RESPONSES) {
+    if (trigger.testRegex.test(message)) {
+      return trigger;
+    }
+  }
+  return undefined;
+}
 
 // =============================================================================
 // HELPER UTILITIES

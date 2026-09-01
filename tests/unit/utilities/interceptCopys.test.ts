@@ -3,6 +3,9 @@ import {
   CLIENT_INTERCEPT_COPYS,
   CLIENT_INTERCEPT_STARTER_PACK,
   CONTEXT_TRIGGER_RESPONSES,
+  matchContextTriggerResponse,
+  DISAMBIGUATION_JOB_SEEKER_REGEX,
+  DISAMBIGUATION_HIRING_REGEX,
   getFilteredInterceptCopys,
   getInterceptCopyById,
   getRandomInterceptCopy,
@@ -111,10 +114,49 @@ describe('Client Demand Interception Copys Library', () => {
     }
   })
 
-  it('should have contextual trigger responses for top query patterns', () => {
-    expect(CONTEXT_TRIGGER_RESPONSES.length).toBeGreaterThanOrEqual(4)
-    const plomeroResponse = CONTEXT_TRIGGER_RESPONSES.find((r) => r.targetTrade === 'plomero')
-    expect(plomeroResponse).toBeDefined()
-    expect(plomeroResponse?.recommendedCopy).toContain('dezzpo.com')
+  it('should have contextual trigger responses with regex compilation for top query patterns', () => {
+    expect(CONTEXT_TRIGGER_RESPONSES.length).toBeGreaterThanOrEqual(8)
+    for (const trigger of CONTEXT_TRIGGER_RESPONSES) {
+      expect(trigger.id).toBeDefined()
+      expect(trigger.testRegex).toBeInstanceOf(RegExp)
+      expect(trigger.recommendedCopy).toContain('dezzpo.com')
+      expect(trigger.fallbackCopyId).toBeDefined()
+      expect(getInterceptCopyById(trigger.fallbackCopyId)).toBeDefined()
+
+      // Validate sample empirical posts against trigger regex
+      if (trigger.sampleEmpiricalPosts) {
+        for (const sample of trigger.sampleEmpiricalPosts) {
+          expect(trigger.testRegex.test(sample)).toBe(true)
+        }
+      }
+    }
+  })
+
+  it('should match contextual triggers dynamically via matchContextTriggerResponse', () => {
+    const plomeroMatch = matchContextTriggerResponse('Solicito plomero urgente para arreglar un tubo roto')
+    expect(plomeroMatch).toBeDefined()
+    expect(plomeroMatch?.targetTrade).toBe('plomero')
+
+    const electricistaMatch = matchContextTriggerResponse('Necesito electricista urgente por corto circuito')
+    expect(electricistaMatch).toBeDefined()
+    expect(electricistaMatch?.targetTrade).toBe('electricista')
+
+    const ayudanteMatch = matchContextTriggerResponse('SE BUSCA AYUDANTE DE CONSTRUCCIÓN')
+    expect(ayudanteMatch).toBeDefined()
+    expect(ayudanteMatch?.id).toBe('TRG-AYUDANTE-CONSTRUCCION-01')
+
+    const noMatch = matchContextTriggerResponse('Vendo bicicleta de montaña')
+    expect(noMatch).toBeUndefined()
+  })
+
+  it('should accurately evaluate disambiguation regex constants', () => {
+    expect(DISAMBIGUATION_JOB_SEEKER_REGEX.test('Busco trabajo en obra')).toBe(true)
+    expect(DISAMBIGUATION_JOB_SEEKER_REGEX.test('En busca de empleo urgente')).toBe(true)
+    expect(DISAMBIGUATION_JOB_SEEKER_REGEX.test('Busco quien trabaje en mi casa')).toBe(false)
+
+    expect(DISAMBIGUATION_HIRING_REGEX.test('Se busca maestro de obra')).toBe(true)
+    expect(DISAMBIGUATION_HIRING_REGEX.test('Solicito ayudante de construcción')).toBe(true)
+    expect(DISAMBIGUATION_HIRING_REGEX.test('Busco trabajo')).toBe(false)
   })
 })
+

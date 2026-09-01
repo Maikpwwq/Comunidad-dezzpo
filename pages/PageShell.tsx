@@ -6,6 +6,7 @@ import { PageContextProvider } from '@hooks/usePageContext'
 import { UserAuthProvider } from '@providers/UserAuthProvider'
 import { theme } from '@config/theme'
 import { useReferralTracker } from '@hooks/useReferralTracker'
+import { useUtmTracker } from '@hooks/useUtmTracker'
 import '@styles/global.scss'
 import '@styles/index.scss'
 
@@ -23,6 +24,7 @@ export default function PageShell({
   pageContext: PageContext
 }) {
   useReferralTracker()
+  useUtmTracker()
 
   return (
 
@@ -36,3 +38,4 @@ export default function PageShell({
     </PageContextProvider>
   )
 }
+

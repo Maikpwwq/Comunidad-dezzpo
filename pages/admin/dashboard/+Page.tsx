@@ -461,12 +461,12 @@ export default function Page() {
                         <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
                             <Typography variant="caption" color="text.secondary" fontWeight={600}>Total Intercepciones</Typography>
                             <Typography variant="h5" fontWeight={800} color="#0f172a">{socialStats?.totalInterceptions ?? 0}</Typography>
-                            <Typography variant="caption" color="#64748b">{socialStats?.demandInterceptions ?? 0} Demanda | {socialStats?.supplyInterceptions ?? 0} Oferta</Typography>
+                            <Typography variant="caption" color="#64748b">{socialStats?.supplyInterceptions ?? 0} Oferta (60%) | {socialStats?.demandInterceptions ?? 0} Demanda (40%)</Typography>
                         </Box>
                         <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
                             <Typography variant="caption" color="text.secondary" fontWeight={600}>Comentarios Despachados</Typography>
                             <Typography variant="h5" fontWeight={800} color="#00897b">{socialStats?.dispatchedComments ?? 0}</Typography>
-                            <Typography variant="caption" color="#64748b">Jitter 45s-120s (FIFO)</Typography>
+                            <Typography variant="caption" color="#64748b">Ratio 6:4 • Jitter FIFO</Typography>
                         </Box>
                         <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
                             <Typography variant="caption" color="text.secondary" fontWeight={600}>Consumo Cuota Meta API</Typography>
@@ -498,16 +498,21 @@ export default function Page() {
                                 <Box component="thead">
                                     <Box component="tr" sx={{ borderBottom: '2px solid #e2e8f0', textAlign: 'left', color: '#64748b' }}>
                                         <Box component="th" sx={{ py: 1, px: 1.5 }}>Autor / Post</Box>
+                                        <Box component="th" sx={{ py: 1, px: 1.5 }}>Grupo de Origen</Box>
                                         <Box component="th" sx={{ py: 1, px: 1.5 }}>Intención</Box>
                                         <Box component="th" sx={{ py: 1, px: 1.5 }}>Oficio</Box>
                                         <Box component="th" sx={{ py: 1, px: 1.5 }}>Copy ID</Box>
+                                        <Box component="th" sx={{ py: 1, px: 1.5 }}>Fecha / Hora</Box>
                                         <Box component="th" sx={{ py: 1, px: 1.5 }}>Estado</Box>
                                     </Box>
                                 </Box>
                                 <Box component="tbody">
                                     {socialStats?.recentEvents.map((evt) => (
                                         <Box component="tr" key={evt.id} sx={{ borderBottom: '1px solid #f1f5f9', '&:hover': { bgcolor: '#f8fafc' } }}>
-                                            <Box component="td" sx={{ py: 1.2, px: 1.5, fontWeight: 600 }}>{evt.authorName}</Box>
+                                            <Box component="td" sx={{ py: 1.2, px: 1.5, fontWeight: 600, whiteSpace: 'nowrap' }}>{evt.authorName}</Box>
+                                            <Box component="td" sx={{ py: 1.2, px: 1.5, color: '#334155', maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                {evt.groupName || 'Facebook Grupos'}
+                                            </Box>
                                             <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
                                                 <Chip
                                                     label={evt.intent === 'DEMAND' ? 'DEMANDA' : 'OFERTA'}
@@ -516,15 +521,32 @@ export default function Page() {
                                                     sx={{ fontSize: '0.7rem', height: 20 }}
                                                 />
                                             </Box>
-                                            <Box component="td" sx={{ py: 1.2, px: 1.5, textTransform: 'capitalize' }}>{evt.detectedTrade}</Box>
-                                            <Box component="td" sx={{ py: 1.2, px: 1.5, fontFamily: 'monospace' }}>{evt.copyId}</Box>
+                                            <Box component="td" sx={{ py: 1.2, px: 1.5, textTransform: 'capitalize', whiteSpace: 'nowrap' }}>{evt.detectedTrade}</Box>
+                                            <Box component="td" sx={{ py: 1.2, px: 1.5, fontFamily: 'monospace', fontSize: '0.75rem' }}>{evt.copyId}</Box>
+                                            <Box component="td" sx={{ py: 1.2, px: 1.5, color: '#64748b', whiteSpace: 'nowrap' }}>
+                                                {formatRelativeTime(evt.timestamp)}
+                                            </Box>
                                             <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
                                                 <Chip
-                                                    label={evt.status}
-                                                    color={evt.status === 'dispatched' ? 'success' : 'default'}
+                                                    label={
+                                                        evt.status === 'converted'
+                                                            ? 'converted ⭐'
+                                                            : evt.status === 'visited'
+                                                            ? 'visited 👁️'
+                                                            : evt.status
+                                                    }
+                                                    color={
+                                                        evt.status === 'converted'
+                                                            ? 'secondary'
+                                                            : evt.status === 'visited'
+                                                            ? 'info'
+                                                            : evt.status === 'dispatched'
+                                                            ? 'success'
+                                                            : 'default'
+                                                    }
                                                     size="small"
                                                     variant="outlined"
-                                                    sx={{ fontSize: '0.7rem', height: 20 }}
+                                                    sx={{ fontSize: '0.7rem', height: 20, fontWeight: 600 }}
                                                 />
                                             </Box>
                                         </Box>
@@ -595,3 +617,22 @@ function KPICard({ title, value, subtitle, loading, icon, color, chip, isString 
         </Paper>
     )
 }
+
+function formatRelativeTime(isoString?: string): string {
+    if (!isoString) return '-'
+    const date = new Date(isoString)
+    const diffMs = Date.now() - date.getTime()
+    if (diffMs < 0 || isNaN(diffMs)) return 'Ahora'
+    const diffSec = Math.floor(diffMs / 1000)
+    const diffMin = Math.floor(diffSec / 60)
+    const diffHours = Math.floor(diffMin / 60)
+    const diffDays = Math.floor(diffHours / 24)
+
+    if (diffMin < 1) return 'Hace un momento'
+    if (diffMin < 60) return `Hace ${diffMin}m`
+    if (diffHours < 24) return `Hace ${diffHours}h`
+    if (diffDays === 1) return 'Ayer'
+    if (diffDays < 7) return `Hace ${diffDays}d`
+    return date.toLocaleDateString('es-CO', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+}
+

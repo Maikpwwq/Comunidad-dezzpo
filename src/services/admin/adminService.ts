@@ -820,6 +820,21 @@ export async function getMultiStreamMonetization(): Promise<MultiStreamMonetizat
 // Social Media Interceptor & Meta API Stats
 // ─────────────────────────────────────────────────────────────────────────────
 
+export interface InterceptionRecord {
+    id: string
+    postId: string
+    authorName: string
+    groupName: string
+    intent: 'DEMAND' | 'SUPPLY' | 'NEUTRAL' | string
+    detectedTrade: string
+    copyId: string
+    renderedComment: string
+    timestamp: string
+    status: 'dispatched' | 'visited' | 'converted' | 'pending' | 'failed' | 'skipped' | string
+    visitedAt?: string | null | undefined
+    convertedAt?: string | null | undefined
+}
+
 export interface SocialInterceptorStats {
     totalInterceptions: number
     demandInterceptions: number
@@ -833,24 +848,14 @@ export interface SocialInterceptorStats {
         totalTimePercent: number
         thresholdExceeded: boolean
     }
-    recentEvents: {
-        id: string
-        postId: string
-        authorName: string
-        intent: string
-        detectedTrade: string
-        copyId: string
-        renderedComment: string
-        timestamp: string
-        status: string
-    }[]
+    recentEvents: InterceptionRecord[]
 }
 
 export async function getSocialInterceptorStats(): Promise<SocialInterceptorStats> {
     const fallback: SocialInterceptorStats = {
         totalInterceptions: 24,
-        demandInterceptions: 15,
-        supplyInterceptions: 9,
+        demandInterceptions: 10,
+        supplyInterceptions: 14, // Aligned with 60/40 ratio
         dispatchedComments: 18,
         simulatedComments: 6,
         breakerState: 'CLOSED',
@@ -865,34 +870,52 @@ export async function getSocialInterceptorStats(): Promise<SocialInterceptorStat
                 id: 'evt_1',
                 postId: 'fb_post_9012',
                 authorName: 'Carlos Ramirez',
+                groupName: 'Plomería y Destapes Bogotá',
                 intent: 'DEMAND',
                 detectedTrade: 'plomero',
                 copyId: 'CLI-CONF-CON-CON-15',
                 renderedComment: '👋 Carlos Ramirez, antes de contratar revisa su perfil en dezzpo.com 👉 https://dezzpo.com/...',
                 timestamp: new Date(Date.now() - 1000 * 60 * 12).toISOString(),
-                status: 'dispatched',
+                status: 'visited',
+                visitedAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
             },
             {
                 id: 'evt_2',
                 postId: 'fb_post_9013',
                 authorName: 'Construcciones El Sol',
+                groupName: 'Maestros y Ayudantes de Construcción Bogotá',
                 intent: 'SUPPLY',
                 detectedTrade: 'maestro',
                 copyId: 'MAES-EXP-INT-URL-01',
                 renderedComment: 'Buenas maestro, muestra tus obras y recibe cotizaciones directas en dezzpo.com 👉 https://dezzpo.com/...',
                 timestamp: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
-                status: 'dispatched',
+                status: 'converted',
+                convertedAt: new Date(Date.now() - 1000 * 60 * 10).toISOString(),
             },
             {
                 id: 'evt_3',
                 postId: 'fb_post_9014',
                 authorName: 'Mariana Duarte',
+                groupName: 'Remodelaciones & Acabados Bogotá',
                 intent: 'DEMAND',
                 detectedTrade: 'electricista',
                 copyId: 'CLI-RAP-BEN-CON-03',
                 renderedComment: 'Hola Mariana Duarte, compara electricistas certificados sin intermediarios en dezzpo.com 👉 https://dezzpo.com/...',
                 timestamp: new Date(Date.now() - 1000 * 60 * 58).toISOString(),
                 status: 'dispatched',
+            },
+            {
+                id: 'evt_4',
+                postId: 'fb_post_9015',
+                authorName: 'Albañilería y Reformas SAS',
+                groupName: 'Construcción y Obras Cundinamarca',
+                intent: 'SUPPLY',
+                detectedTrade: 'albañil',
+                copyId: 'MAES-EXP-CON-URL-02',
+                renderedComment: 'Hola maestro, publica tu vitrina profesional y recibe clientes directos en dezzpo.com 👉 https://dezzpo.com/...',
+                timestamp: new Date(Date.now() - 1000 * 60 * 115).toISOString(),
+                status: 'visited',
+                visitedAt: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
             },
         ],
     }
@@ -915,23 +938,26 @@ export async function getSocialInterceptorStats(): Promise<SocialInterceptorStat
         let dispatched = 0
         let simulated = 0
 
-        const events = snap.docs.map((docSnap) => {
+        const events: InterceptionRecord[] = snap.docs.map((docSnap) => {
             const data = docSnap.data()
             if (data.intent === 'DEMAND') demand++
             if (data.intent === 'SUPPLY') supply++
-            if (data.status === 'dispatched') dispatched++
+            if (data.status === 'dispatched' || data.status === 'visited' || data.status === 'converted') dispatched++
             if (data.status === 'simulated') simulated++
 
             return {
                 id: docSnap.id,
                 postId: String(data.postId || docSnap.id),
                 authorName: String(data.authorName || 'Usuario Facebook'),
+                groupName: String(data.groupName || data.utmTerm || 'Grupo Facebook'),
                 intent: String(data.intent || 'NEUTRAL'),
                 detectedTrade: String(data.detectedTrade || 'general'),
                 copyId: String(data.copyId || 'DEFAULT'),
                 renderedComment: String(data.renderedComment || data.comment || ''),
                 timestamp: data.timestamp ? new Date(data.timestamp).toISOString() : new Date().toISOString(),
                 status: String(data.status || 'dispatched'),
+                visitedAt: data.visitedAt ? new Date(data.visitedAt).toISOString() : null,
+                convertedAt: data.convertedAt ? new Date(data.convertedAt).toISOString() : null,
             }
         })
 
@@ -948,7 +974,7 @@ export async function getSocialInterceptorStats(): Promise<SocialInterceptorStat
                 totalTimePercent: 18,
                 thresholdExceeded: false,
             },
-            recentEvents: events.slice(0, 10),
+            recentEvents: events.slice(0, 15),
         }
     } catch (err) {
         console.error('Error querying social interception logs:', err)

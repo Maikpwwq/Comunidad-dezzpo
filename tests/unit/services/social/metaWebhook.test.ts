@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { metaWebhookGetHandler, metaWebhookPostHandler } from '@/../server/api/meta/webhook'
 import { metaDataDeletionHandler } from '@/../server/api/meta/data-deletion'
 import type { Context } from 'hono'

@@ -126,6 +126,7 @@ export interface PreparedComment {
   readonly targetPostId: string
   readonly authorId: string
   readonly authorName: string
+  readonly groupName?: string | undefined
   readonly intent: PostIntent
   readonly selectedCopyId: string
   readonly rawCopy: string
@@ -135,7 +136,7 @@ export interface PreparedComment {
 }
 
 // =============================================================================
-// 5. ASYNC DISPATCH QUEUE & HUMANIZED JITTER
+// 5. ASYNC DISPATCH QUEUE, HUMANIZED JITTER & 6:4 RATIO BALANCING
 // =============================================================================
 
 export type DispatchTaskStatus = 'PENDING' | 'DISPATCHED' | 'FAILED' | 'SKIPPED'
@@ -146,6 +147,9 @@ export interface DispatchTask {
   readonly postPermalink: string
   readonly authorId: string
   readonly authorName: string
+  readonly groupId?: string | undefined
+  readonly groupName?: string | undefined
+  readonly detectedTrade?: string | undefined
   readonly commentBody: string
   readonly utmUrl: string
   readonly copyId: string
@@ -163,11 +167,26 @@ export interface QueueConfig {
   readonly maxCommentsPerHour?: number | undefined // Default: 12
   readonly quietHoursStart?: number | undefined // Default: 23 (11:00 PM)
   readonly quietHoursEnd?: number | undefined // Default: 6  (06:00 AM)
+  /**
+   * Target dispatch ratio between SUPPLY (Offer / Contractors) and DEMAND (Homeowners).
+   * Default: 60% SUPPLY / 40% DEMAND (6:4 ratio).
+   */
+  readonly targetRatio?: { readonly supply: number; readonly demand: number } | undefined
+  readonly enableRatioBalancing?: boolean | undefined // Default: true
+  readonly maxDemandSkew?: number | undefined // Maximum allowable demand percentage before throttling (default 0.45)
 }
 
 export interface QueueStats {
   readonly pending: number
+  readonly pendingSupply: number
+  readonly pendingDemand: number
   readonly dispatchedInCurrentHour: number
+  readonly dispatchedSupplyTotal: number
+  readonly dispatchedDemandTotal: number
+  readonly currentRatio: {
+    readonly supplyPercent: number
+    readonly demandPercent: number
+  }
   readonly maxPerHour: number
   readonly isQuietHour: boolean
 }
@@ -178,6 +197,7 @@ export interface QueueStats {
 
 export interface InterceptorConfig {
   readonly groupIds: readonly string[]
+  readonly groupNames?: Record<string, string> | undefined
   readonly pageAccessToken: string
   readonly maxCommentsPerHour?: number | undefined
   readonly jitterMinMs?: number | undefined
@@ -186,6 +206,22 @@ export interface InterceptorConfig {
   readonly quietHoursEnd?: number | undefined
   readonly circuitBreakerThreshold?: number | undefined
   readonly defaultBaseUrl?: string | undefined
+  readonly enableRatioBalancing?: boolean | undefined
+}
+
+export interface InterceptionRecord {
+  readonly id: string
+  readonly postId: string
+  readonly authorName: string
+  readonly groupName: string
+  readonly intent: 'DEMAND' | 'SUPPLY' | 'NEUTRAL' | string
+  readonly detectedTrade: string
+  readonly copyId: string
+  readonly renderedComment: string
+  readonly timestamp: string
+  readonly status: 'dispatched' | 'visited' | 'converted' | 'pending' | 'failed' | 'skipped' | string
+  readonly visitedAt?: string | null | undefined
+  readonly convertedAt?: string | null | undefined
 }
 
 export interface InterceptionMetrics {

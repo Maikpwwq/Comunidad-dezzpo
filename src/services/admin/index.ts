@@ -38,4 +38,5 @@ export type {
     UserClassificationBreakdown,
     MultiStreamMonetizationStats,
     SocialInterceptorStats,
+    InterceptionRecord,
 } from './adminService'

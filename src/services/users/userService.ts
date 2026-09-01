@@ -72,6 +72,7 @@ export async function getUser({ userId, role }: ReadUserParams): Promise<UserFir
 
 import { sanitizeForFirestore } from '@services/utils/firestoreUtils'
 import { getStoredReferralCode, clearStoredReferralCode } from '@hooks/useReferralTracker'
+import { getStoredUtmAttribution, clearStoredUtmAttribution, recordInterceptionConversion } from '@hooks/useUtmTracker'
 import { trackReferralRegistration } from '../referralService'
 
 /**
@@ -119,6 +120,14 @@ export async function setUser({ userId, role, data }: UpdateUserParams): Promise
                 storedRefCode
             ).then((success) => {
                 if (success) clearStoredReferralCode()
+            }).catch(console.error)
+        }
+
+        // Check for pending UTM interception attribution
+        const storedUtm = getStoredUtmAttribution()
+        if (storedUtm) {
+            recordInterceptionConversion(userId).then(() => {
+                clearStoredUtmAttribution()
             }).catch(console.error)
         }
     } catch (error) {

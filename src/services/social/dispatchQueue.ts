@@ -1,11 +1,13 @@
 /**
- * Humanized Asynchronous Dispatch Queue with Jitter & Hourly Rate Limiting
+ * Humanized Asynchronous Dispatch Queue with Jitter, Hourly Rate Limiting,
+ * and 6:4 (60% Supply / 40% Demand) Quota Ratio Balancing.
  * 
  * Strict Anti-Ban Enforcement:
  * - NO Promise.all or concurrent bursts.
  * - Random delays (Jitter) between 45s and 120s.
  * - Max 10-15 comments per hour rolling window.
  * - Automated pause during quiet/night hours (11:00 PM - 06:00 AM).
+ * - Weighted 6:4 Dispatch Scheduling (60% Supply / 40% Demand).
  */
 
 import type {
@@ -26,11 +28,17 @@ function getRandomJitter(minMs: number, maxMs: number): number {
 export class DispatchQueue {
   private queue: DispatchTask[] = []
   private dispatchedTimestamps: number[] = []
+  private dispatchedSupplyCount = 0
+  private dispatchedDemandCount = 0
+
   private readonly jitterMinMs: number
   private readonly jitterMaxMs: number
   private readonly maxCommentsPerHour: number
   private readonly quietHoursStart: number
   private readonly quietHoursEnd: number
+  private readonly targetSupplyRatio: number
+  private readonly targetDemandRatio: number
+  private readonly enableRatioBalancing: boolean
   private isProcessing = false
 
   constructor(config?: QueueConfig) {
@@ -39,10 +47,13 @@ export class DispatchQueue {
     this.maxCommentsPerHour = config?.maxCommentsPerHour ?? 12
     this.quietHoursStart = config?.quietHoursStart ?? 23
     this.quietHoursEnd = config?.quietHoursEnd ?? 6
+    this.targetSupplyRatio = config?.targetRatio?.supply ?? 0.60
+    this.targetDemandRatio = config?.targetRatio?.demand ?? 0.40
+    this.enableRatioBalancing = config?.enableRatioBalancing ?? true
   }
 
   /**
-   * Adds a prepared task to the FIFO queue.
+   * Adds a prepared task to the queue.
    */
   public enqueue(task: DispatchTask): void {
     // Avoid duplicate enqueues for the same post ID
@@ -76,13 +87,73 @@ export class DispatchQueue {
   }
 
   /**
+   * Selects the next pending task according to the target 6:4 (Supply:Demand) ratio policy.
+   */
+  public getNextPendingTask(): DispatchTask | undefined {
+    const pending = this.queue.filter((t) => t.status === 'PENDING')
+    if (pending.length === 0) return undefined
+
+    if (!this.enableRatioBalancing) {
+      return pending[0]
+    }
+
+    const pendingSupply = pending.filter((t) => t.intent === 'SUPPLY')
+    const pendingDemand = pending.filter((t) => t.intent === 'DEMAND')
+
+    // If both Supply and Demand tasks are pending, balance toward the 60/40 ratio
+    if (pendingSupply.length > 0 && pendingDemand.length > 0) {
+      const totalDispatched = this.dispatchedSupplyCount + this.dispatchedDemandCount
+      if (totalDispatched === 0) {
+        // Start cycle by prioritizing Supply (60% target)
+        return pendingSupply[0]
+      }
+
+      const currentSupplyRatio = this.dispatchedSupplyCount / totalDispatched
+      // If supply is below target (60%), dispatch Supply first
+      if (currentSupplyRatio < this.targetSupplyRatio) {
+        return pendingSupply[0]
+      }
+      // Otherwise, dispatch Demand
+      return pendingDemand[0]
+    }
+
+    // Only supply available
+    if (pendingSupply.length > 0) {
+      return pendingSupply[0]
+    }
+
+    // Only demand available
+    return pendingDemand[0]
+  }
+
+  /**
    * Returns current queue statistics and limits.
    */
   public getStats(): QueueStats {
     this.pruneHourlyWindow()
+    const pendingSupply = this.queue.filter((t) => t.status === 'PENDING' && t.intent === 'SUPPLY').length
+    const pendingDemand = this.queue.filter((t) => t.status === 'PENDING' && t.intent === 'DEMAND').length
+    const totalDispatched = this.dispatchedSupplyCount + this.dispatchedDemandCount
+
+    const supplyPercent = totalDispatched > 0
+      ? Math.round((this.dispatchedSupplyCount / totalDispatched) * 100)
+      : Math.round(this.targetSupplyRatio * 100)
+
+    const demandPercent = totalDispatched > 0
+      ? Math.round((this.dispatchedDemandCount / totalDispatched) * 100)
+      : Math.round(this.targetDemandRatio * 100)
+
     return {
       pending: this.queue.filter((t) => t.status === 'PENDING').length,
+      pendingSupply,
+      pendingDemand,
       dispatchedInCurrentHour: this.dispatchedTimestamps.length,
+      dispatchedSupplyTotal: this.dispatchedSupplyCount,
+      dispatchedDemandTotal: this.dispatchedDemandCount,
+      currentRatio: {
+        supplyPercent,
+        demandPercent,
+      },
       maxPerHour: this.maxCommentsPerHour,
       isQuietHour: this.isQuietHour(),
     }
@@ -107,7 +178,7 @@ export class DispatchQueue {
 
     try {
       while (this.queue.some((t) => t.status === 'PENDING')) {
-        const task = this.queue.find((t) => t.status === 'PENDING')
+        const task = this.getNextPendingTask()
         if (!task) break
 
         // 1. Check Quiet Hours
@@ -148,6 +219,11 @@ export class DispatchQueue {
           task.status = 'DISPATCHED'
           task.errorCode = null
           this.dispatchedTimestamps.push(task.dispatchedAt)
+          if (task.intent === 'SUPPLY') {
+            this.dispatchedSupplyCount += 1
+          } else if (task.intent === 'DEMAND') {
+            this.dispatchedDemandCount += 1
+          }
         } else {
           task.status = 'FAILED'
           task.errorCode = result.errorCode ?? 500
@@ -166,13 +242,19 @@ export class DispatchQueue {
   }
 
   /**
-   * Empties the queue.
+   * Empties the queue and resets dispatch counts if requested.
    */
-  public clearQueue(): void {
+  public clearQueue(resetCounts = false): void {
     this.queue = []
+    if (resetCounts) {
+      this.dispatchedTimestamps = []
+      this.dispatchedSupplyCount = 0
+      this.dispatchedDemandCount = 0
+    }
   }
 }
 
 export function createDispatchQueue(config?: QueueConfig): DispatchQueue {
   return new DispatchQueue(config)
 }
+

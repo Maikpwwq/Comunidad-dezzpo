@@ -292,25 +292,37 @@ Cuando un cliente publica una solicitud en un grupo, **los primeros 10 minutos s
 
 ---
 
-## 5. Matriz de Adaptación Contextual Inmediata
+## 5. Matriz de Adaptación Contextual Inmediata (Motor Empírico)
 
-Utiliza estas respuestas pre-diseñadas para responder en menos de 60 segundos ante los tipos de post más frecuentes:
+Utiliza estas respuestas pre-diseñadas y compiladas en `CONTEXT_TRIGGER_RESPONSES` para responder en menos de 60 segundos ante los tipos de post más frecuentes:
 
 ```
 ┌───────────────────────────────────────────────────┬────────────────────────────────────────────────────────────────────────┐
-│ PUBLICACIÓN ORIGINAL DEL CLIENTE EN FACEBOOK      │ COMENTARIO DE RESPUESTA RECOMENDADO                                    │
+│ PUBLICACIÓN EMPÍRICA EN FACEBOOK                  │ COMENTARIO DE RESPUESTA RECOMENDADO                                    │
 ├───────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
-│ "Solicito plomero" / "Fuga de agua"               │ 🚰 ¿Buscas plomero? Mira sus trabajos y encuentra opciones en          │
+│ "Solicito plomero" / "Fuga de agua" / "Destape"   │ 🚰 ¿Buscas plomero? Mira sus trabajos y encuentra opciones en          │
 │                                                   │ dezzpo.com                                                             │
 ├───────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
 │ "Necesito electricista urgente" / "Corto circuito"│ ⚡ Busca electricistas, mira sus trabajos y contacta directamente en    │
 │                                                   │ dezzpo.com                                                             │
 ├───────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
-│ "Busco maestro para remodelación" / "Obra blanca" │ 🛠️ Encuentra maestros y conoce sus trabajos antes de contactarlos en   │
-│                                                   │ dezzpo.com                                                             │
+│ "algún maestro de obra disponible para un trabajo"│ 🛠️ Encuentra maestros y conoce sus trabajos antes de contactarlos en   │
+│ "requiero un maestro de obra civil"               │ dezzpo.com                                                             │
 ├───────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
-│ "Solicito cotización para pintura"                │ 🎨 Mira trabajos de pintores y encuentra opciones para cotizar en       │
-│                                                   │ dezzpo.com                                                             │
+│ "requiero a un maestro para remodelar"            │ 🎨 No arriesgues tu remodelación. Compara perfiles y fotos reales en   │
+│ "Se busca maestro para enchape" / "Drywall"       │ dezzpo.com 🛠️                                                          │
+├───────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ "Solicito cotización para pintura / Pintor"       │ 🎨 Mira trabajos de pintores y encuentra opciones para cotizar en       │
+│ "Quien para pintar un apartamento en Chía"        │ dezzpo.com                                                             │
+├───────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ "Se busca soldador" / "Taller de ornamentación"   │ 🔧 Encuentra especialistas en soldadura y ornamentación con fotos en   │
+│ "Necesito cerrajero para portón metálico"         │ dezzpo.com                                                             │
+├───────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ "SE BUSCA AYUDANTE DE CONSTRUCCIÓN"               │ 👷 ¿Buscas personal o maestros de obra? Conecta con profesionales en   │
+│ "Se busca ayudante para obra civil en Fontibón"   │ dezzpo.com                                                             │
+├───────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────┤
+│ "Busco quien trabaje en remodelación"             │ 🛠️ Encuentra profesionales calificados para tu proyecto en dezzpo.com   │
+│ "Alguien que trabaje bien y cobre lo justo"       │ y mira sus trabajos reales.                                            │
 └───────────────────────────────────────────────────┴────────────────────────────────────────────────────────────────────────┘
 ```
 

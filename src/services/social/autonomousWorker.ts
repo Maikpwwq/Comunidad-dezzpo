@@ -9,6 +9,7 @@ import { MetaGraphClient } from './metaGraphClient'
 import { CircuitBreaker } from './circuitBreaker'
 import { DispatchQueue } from './dispatchQueue'
 import { classifyPostIntent, prepareComment } from './intentParser'
+import { TARGET_GROUPS_NAME_MAP, getTargetGroupById } from '@config/targetGroups'
 import type {
   InterceptorConfig,
   InterceptionMetrics,
@@ -16,6 +17,7 @@ import type {
   StatePersistenceAdapter,
   DispatchTask,
 } from './types'
+
 
 export class AutonomousWorker {
   private readonly config: InterceptorConfig
@@ -69,6 +71,8 @@ export class AutonomousWorker {
       maxCommentsPerHour: config.maxCommentsPerHour ?? 12,
       quietHoursStart: config.quietHoursStart ?? 23,
       quietHoursEnd: config.quietHoursEnd ?? 6,
+      targetRatio: { supply: 0.60, demand: 0.40 },
+      enableRatioBalancing: config.enableRatioBalancing ?? true,
     })
   }
 
@@ -97,12 +101,25 @@ export class AutonomousWorker {
     let tickNeutral = 0
     let tickEnqueued = 0
 
+    // Prioritize configured groups by seed weight if known
+    const prioritizedGroupIds = [...this.config.groupIds].sort((a, b) => {
+      const weightA = getTargetGroupById(a)?.weight ?? 5
+      const weightB = getTargetGroupById(b)?.weight ?? 5
+      return weightB - weightA
+    })
+
     // Scan each configured group
-    for (const groupId of this.config.groupIds) {
+    for (const groupId of prioritizedGroupIds) {
       // Check circuit breaker before each group call
       if (!this.circuitBreaker.canProceed()) {
         break
       }
+
+      const groupName =
+        this.config.groupNames?.[groupId] ??
+        TARGET_GROUPS_NAME_MAP[groupId] ??
+        (groupId.includes('remodel') ? 'Remodelaciones & Acabados Bogotá' : 'Maestros y Ayudantes de Construcción')
+
 
       // 1. Resolve last delta for group
       let sinceTimestamp = this.lastGroupDeltas[groupId]
@@ -156,6 +173,9 @@ export class AutonomousWorker {
             postPermalink: post.permalink_url,
             authorId: prepared.authorId,
             authorName: prepared.authorName,
+            groupId,
+            groupName,
+            detectedTrade: intentResult.detectedTrade,
             commentBody: prepared.formattedComment,
             utmUrl: prepared.utmUrl,
             copyId: prepared.selectedCopyId,
@@ -172,7 +192,7 @@ export class AutonomousWorker {
       }
     }
 
-    // 4. Process Enqueued Comments (Humanized execution with Jitter)
+    // 4. Process Enqueued Comments (Humanized execution with Jitter & 6:4 balance)
     const results = await this.dispatchQueue.processQueue(
       (postId, message) => this.client.postComment(postId, message),
       this.circuitBreaker
@@ -182,7 +202,25 @@ export class AutonomousWorker {
     let tickFailed = 0
 
     for (const r of results) {
-      if (r.status === 'DISPATCHED') tickDispatched += 1
+      if (r.status === 'DISPATCHED') {
+        tickDispatched += 1
+        if (this.persistence) {
+          await this.persistence
+            .logEvent('interception_record', {
+              id: r.id,
+              postId: r.postId,
+              authorName: r.authorName,
+              groupName: r.groupName || 'Grupo Facebook',
+              intent: r.intent,
+              detectedTrade: r.detectedTrade || 'general',
+              copyId: r.copyId,
+              renderedComment: r.commentBody,
+              timestamp: new Date(r.dispatchedAt || Date.now()).toISOString(),
+              status: 'dispatched',
+            })
+            .catch(() => null)
+        }
+      }
       if (r.status === 'FAILED') tickFailed += 1
     }
 

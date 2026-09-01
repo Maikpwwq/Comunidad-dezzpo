@@ -10,5 +10,7 @@
 export { theme } from './theme'
 export { PRICING } from './pricing.config'
 export * from './referrals.config'
+export * from './targetGroups'
+
 
 
