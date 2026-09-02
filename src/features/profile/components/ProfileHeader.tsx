@@ -9,7 +9,8 @@
  */
 import React from 'react'
 import clsx from 'clsx'
-import { Box, IconButton, Tooltip, Typography } from '@mui/material'
+import { Box, IconButton, Tooltip, Typography, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import LinkIcon from '@mui/icons-material/Link'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { AdjuntarArchivos, CincoEstrellas } from '@components/common'
@@ -49,6 +50,9 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     onUpdateUserInfo,
     userInfoState
 }) => {
+    const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
     const copyUserWebSiteLink = () => {
         if (userWebSite && typeof navigator !== 'undefined' && navigator.clipboard) {
             navigator.clipboard.writeText(userWebSite)
@@ -76,7 +80,9 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                             functionState={onUpdateUserInfo}
                             state={userInfoState}
                             variant="button"
-                            buttonText={userCoverUrl ? 'Editar imagen de portada' : '+ Agregar imagen de portada'}
+                            buttonText={userCoverUrl
+                                ? (isMobile ? 'Editar portada' : 'Editar imagen de portada')
+                                : (isMobile ? 'Agregar + portada' : '+ Agregar imagen de portada')}
                             tooltipTitle="Recomendado: 1584 x 396 px (Aspect Ratio 4:1)"
                             aspectRatioHint="1584 x 396 px"
                             sx={{

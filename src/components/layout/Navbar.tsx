@@ -17,7 +17,7 @@ import type { UserRole } from './types'
 import {
     AppBar,
     Toolbar,
-    Grid,
+    Box,
     Tab,
     Tabs,
     IconButton,
@@ -37,12 +37,14 @@ import HowToRegIcon from '@mui/icons-material/HowToReg'
 import StarRateIcon from '@mui/icons-material/StarRate'
 import LoginIcon from '@mui/icons-material/Login'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import StorefrontIcon from '@mui/icons-material/Storefront'
 
 // Types
 import type { NavbarProps } from './types'
 
 /** Icon resolver - maps icon name strings to MUI components */
 const ICON_MAP: Record<string, React.ReactNode> = {
+    StorefrontIcon: <StorefrontIcon />,
     PersonIcon: <PersonIcon className="ms-1" />,
     StoreIcon: <StoreIcon />,
     DriveFileMoveIcon: <DriveFileMoveIcon />,
@@ -114,89 +116,103 @@ function Navbar({ onMenuToggle, userInfo }: NavbarProps): React.ReactElement {
             color="primary"
             position="static"
             elevation={0}
-            sx={{ zIndex: 0, backgroundColor: 'var(--background-main-green-color, #4caf50)' }}
+            sx={{
+                zIndex: 0,
+                backgroundColor: 'var(--background-main-green-color, #4caf50)',
+                width: '100%',
+            }}
         >
-            <Toolbar sx={{ p: 0 }}>
-                <Grid
-                    container
-                    sx={{ p: 2, pb: 0 }}
-                    alignItems="center"
-                    spacing={1}
-                >
-                    {/* Mobile Menu + Search */}
-                    <Grid
-                        item
-                        xs="auto"
+            <Toolbar
+                variant="dense"
+                sx={{
+                    p: { xs: '0 8px', md: '0 16px' },
+                    minHeight: { xs: 48, md: 54 },
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'nowrap',
+                    width: '100%',
+                    gap: 0.5,
+                    overflow: 'hidden',
+                }}
+            >
+                {/* Mobile Menu Toggle Button */}
+                {isMobile && (
+                    <IconButton
+                        aria-label="open menu"
+                        onClick={onMenuToggle}
                         sx={{
-                            display: 'flex',
-                            maxWidth: 'fit-content',
-                            flexWrap: 'nowrap',
+                            color: 'inherit',
+                            flexShrink: 0,
+                            p: 0.75,
+                            mr: 0.5,
                         }}
                     >
-                        {isMobile && (
-                            <IconButton
-                                aria-label="open menu"
-                                onClick={onMenuToggle}
-                                sx={{ color: 'inherit' }}
-                            >
-                                <MenuIcon sx={{ fontSize: '30px' }} />
-                            </IconButton>
-                        )}
-                        {/* SearchBar will be added as separate component */}
-                    </Grid>
+                        <MenuIcon sx={{ fontSize: '28px' }} />
+                    </IconButton>
+                )}
 
-                    {/* Navigation Tabs */}
-                    <Grid item xs sx={{ paddingTop: '0 !important' }}>
-                        <Tabs
-                            value={activeTabIndex}
-                            onChange={handleTabChange}
-                            textColor="inherit"
-                            variant={isMobile ? 'scrollable' : 'standard'}
-                            scrollButtons={isMobile ? 'auto' : false}
-                            sx={{
-                                backgroundColor: 'var(--background-main-green-color)',
-                            }}
-                        >
-                            {headerItems.map((item) => (
-                                <Tab
-                                    key={item.id}
-                                    sx={{
-                                        color: 'inherit',
+                {/* Navigation Tabs (Single scrollable row) */}
+                <Box sx={{ flex: 1, minWidth: 0, width: '100%', overflow: 'hidden' }}>
+                    <Tabs
+                        value={activeTabIndex}
+                        onChange={handleTabChange}
+                        textColor="inherit"
+                        variant={isMobile ? 'scrollable' : 'standard'}
+                        scrollButtons={isMobile ? 'auto' : false}
+                        allowScrollButtonsMobile
+                        sx={{
+                            minHeight: 48,
+                            '& .MuiTabs-scroller': {
+                                overflowX: 'auto !important',
+                                scrollbarWidth: 'none',
+                                '&::-webkit-scrollbar': { display: 'none' },
+                            },
+                            '& .MuiTabs-indicator': {
+                                backgroundColor: '#ffffff',
+                                height: 3,
+                                borderRadius: '3px 3px 0 0',
+                            },
+                        }}
+                    >
+                        {headerItems.map((item) => (
+                            <Tab
+                                key={item.id}
+                                sx={{
+                                    color: 'inherit',
+                                    textDecoration: 'none',
+                                    minHeight: 48,
+                                    py: { xs: 0.5, md: 1 },
+                                    px: { xs: 1.5, md: 2 },
+                                    minWidth: { xs: 44, md: 'auto' },
+                                    whiteSpace: 'nowrap',
+                                    textTransform: 'none',
+                                    fontWeight: 600,
+                                    fontSize: '0.9rem',
+                                    borderRadius: '8px 8px 0 0',
+                                    transition: 'background-color 0.15s ease',
+                                    '&:hover': {
+                                        backgroundColor: 'var(--background-hover-green-color)',
                                         textDecoration: 'none',
-                                        minHeight: 48,
-                                        py: { xs: 0, md: 1 },
-                                        px: { xs: 2, md: 2 }, // Increased padding for desktop
-                                        mx: 0.5, // Added small margin between tabs
-                                        whiteSpace: 'nowrap',
-                                        textTransform: 'none',
-                                        minWidth: 'auto',
-                                        fontWeight: 600,
-                                        fontSize: '0.9rem',
-                                        backgroundColor: 'var(--background-main-green-color)',
-                                        '&:hover': {
-                                            backgroundColor: 'var(--background-hover-green-color)',
-                                            textDecoration: 'none',
-                                            color: '#ffffff',
-                                        },
-                                        '&.Mui-selected': {
-                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                            color: '#ffffff', // Ensure high contrast for selected state
-                                            textDecoration: 'none',
-                                        },
-                                    }}
-                                    label={
-                                        <>
-                                            {ICON_MAP[item.icon]}
-                                            {!isMobile && item.label}
-                                        </>
-                                    }
-                                    component={Link}
-                                    href={resolveRoute(item.route)}
-                                />
-                            ))}
-                        </Tabs>
-                    </Grid>
-                </Grid>
+                                        color: '#ffffff',
+                                    },
+                                    '&.Mui-selected': {
+                                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                        color: '#ffffff',
+                                        textDecoration: 'none',
+                                    },
+                                }}
+                                label={
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                        {ICON_MAP[item.icon]}
+                                        {!isMobile && <span>{item.label}</span>}
+                                    </Box>
+                                }
+                                component={Link}
+                                href={resolveRoute(item.route)}
+                            />
+                        ))}
+                    </Tabs>
+                </Box>
             </Toolbar>
         </AppBar>
     )

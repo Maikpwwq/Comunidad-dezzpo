@@ -112,14 +112,38 @@ export function SearchBar({
                 maxWidth: '650px',
             }}
         >
-            <Link href="/app/portal-servicios" className="activo body-2 p-2 d-flex flex-row">
-                <img
-                    src="/assets/img/logo/Logo-Comunidad-Dezzpo.png"
-                    alt="Logo Comunidad Dezzpo"
-                    className="logo-comunidad-dezzpo me-2"
-                    height="55px"
-                    width="55px"
-                />
+            <Link
+                href="/app/portal-servicios"
+                className="activo body-2 d-flex align-items-center justify-content-center text-decoration-none"
+                style={{ flexShrink: 0, paddingRight: '10px' }}
+            >
+                <Box
+                    sx={{
+                        width: { xs: 44, sm: 48 },
+                        height: { xs: 44, sm: 48 },
+                        minWidth: { xs: 44, sm: 48 },
+                        borderRadius: '14px',
+                        backgroundColor: '#ffffff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                        border: '1px solid var(--background-light-gray-color, #e2e8f0)',
+                        flexShrink: 0,
+                        p: 0.5,
+                    }}
+                >
+                    <img
+                        src="/assets/img/logo/IsoLogo-Dezzpo-Verde.png"
+                        alt="Logo Comunidad Dezzpo"
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain',
+                            display: 'block',
+                        }}
+                    />
+                </Box>
             </Link>
 
             <Autocomplete
@@ -239,7 +263,7 @@ export function SearchBar({
                                 borderRadius: '20px',
                                 backgroundColor: '#fff',
                                 width: '100%',
-                                minWidth: '340px',
+                                minWidth: 0,
                                 '& fieldset': {
                                     borderColor: 'var(--selected-border-light-gray-color)',
                                 },
@@ -254,7 +278,7 @@ export function SearchBar({
                         }}
                     />
                 )}
-                sx={{ width: '100%', minWidth: 340, maxWidth: 580 }}
+                sx={{ width: '100%', minWidth: 0, maxWidth: 580, flex: 1 }}
             />
         </Box>
     )

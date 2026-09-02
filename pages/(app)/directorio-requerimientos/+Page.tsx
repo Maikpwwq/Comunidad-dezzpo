@@ -20,7 +20,7 @@ import { DraftCard } from '@features/quotes'
 import styles from '@features/quotes/styles/Requerimientos.module.scss'
 // Bootstrap & MUI
 import { Container, Button } from 'react-bootstrap'
-import { Typography, Chip, Box, Divider } from '@mui/material'
+import { Typography, Chip, Box, Divider, FormControl, Select, MenuItem } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 
 import { PROPIETARIO_RANKINGS } from '@config/userClassification.config'
@@ -155,16 +155,21 @@ export default function Page() {
 
     return (
         <Container fluid className="p-0 h-100">
-            <div className="p-4">
+            <div className="p-3 p-md-4">
                 <header className={styles['page-header']}>
-                    <h1 className="type-hero-title">
-                        Directorio de Requerimientos
-                    </h1>
+                    <div>
+                        <h1 className="type-hero-title mb-1">
+                            Directorio de Requerimientos
+                        </h1>
+                        <p className="type-body text-muted mb-0">
+                            ¿Ofreces algún servicio? publícalo en el portal de servicios
+                        </p>
+                    </div>
                     <Button
-                        className="btn-primary-gradient"
+                        className="btn-primary-gradient mt-2 mt-md-0"
                         onClick={handleApplyClick}
                     >
-                        Aplica a un requerimiento
+                        Publica tus servicios
                     </Button>
                 </header>
 
@@ -189,10 +194,6 @@ export default function Page() {
                     </Box>
                 )}
 
-                <h3 className="type-section-title">
-                    Buscar Requerimientos: Obtener o Aplicar con Cotizaciones
-                </h3>
-
                 {/* Classification Tier Filter Bar */}
                 <Box
                     sx={{
@@ -209,7 +210,33 @@ export default function Page() {
                             Filtrar por Clasificación del Propietario / Tipo de Inmueble:
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                    {/* Mobile Selector Dropdown */}
+                    <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                        <FormControl fullWidth size="small">
+                            <Select
+                                value={selectedClassification}
+                                onChange={(e) => setSelectedClassification(e.target.value)}
+                                displayEmpty
+                                sx={{
+                                    borderRadius: '20px',
+                                    bgcolor: '#ffffff',
+                                    fontSize: '0.9rem',
+                                    fontWeight: 600,
+                                }}
+                            >
+                                <MenuItem value="all">
+                                    <em>Todos los Inmuebles</em>
+                                </MenuItem>
+                                {(PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).map((tier) => (
+                                    <MenuItem key={tier.id} value={tier.id}>
+                                        {tier.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    {/* Desktop Chips */}
+                    <Box sx={{ display: { xs: 'none', md: 'flex' }, flexWrap: 'wrap', gap: 1 }}>
                         <Chip
                             label="Todos los Inmuebles"
                             onClick={() => setSelectedClassification('all')}
@@ -276,11 +303,18 @@ export default function Page() {
                 )}
 
                 {/* All / Remaining Requirements */}
-                {/* TODO: Implementar filtros */}
-                <p className="type-body-sm">
-                    {isComerciante && matchingDrafts.length > 0
-                        ? 'Otros requerimientos activos'
-                        : 'Todos los requerimientos activos'}
+                <div className="pb-2 p-0">
+                    <h3 className="type-section-title">
+                        {spacedText
+                            ? `Resultados de búsqueda para: "${spacedText}"`
+                            : isComerciante && matchingDrafts.length > 0
+                                ? 'Otros requerimientos activos'
+                                : 'Todos los requerimientos activos'}
+                    </h3>
+                </div>
+                <p className="type-caption">
+                    Directorio de solicitudes activas y cotizaciones de proyectos. <br />
+                    ¡Aplica a los requerimientos de tu especialidad!
                 </p>
 
                 <section className={styles['grid-container']}>

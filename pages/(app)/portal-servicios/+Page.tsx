@@ -7,7 +7,7 @@ import { searchByCategories } from '@services/search' // Changed import
 import { UserCard } from '@features/profile'
 // UI Libs
 import { Row, Col, Container, Button } from 'react-bootstrap'
-import { Box, Chip, Skeleton, Stack, Typography } from '@mui/material'
+import { Box, Chip, Skeleton, Stack, Typography, FormControl, Select, MenuItem } from '@mui/material'
 import FilterListIcon from '@mui/icons-material/FilterList'
 // Types
 import type { UserFirestoreDocument } from '@services/types'
@@ -194,15 +194,23 @@ export default function Page() {
         <Container fluid className="p-0 h-100" style={{ overflowX: 'hidden' }}>
             <Row className="m-0 d-flex">
                 <Col className="pt-4 pb-2 p-0">
-                    <h1 className="type-hero-title">
-                        Directorio de Profesionales{'  '}
+                    <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 px-3">
+                        <div>
+                            <h1 className="type-hero-title mb-1">
+                                Directorio de Profesionales
+                            </h1>
+                            <p className="type-body text-muted mb-0">
+                                ¿Buscas una cotización? publícala en el directorio de requerimientos
+                            </p>
+                        </div>
                         <Button
-                            className="type-body ms-4 btn-round btn-high"
+                            className="type-body btn-round btn-high mt-2 mt-md-0"
                             onClick={handleNewProject}
                         >
                             Publica un proyecto
                         </Button>
-                    </h1>
+                    </div>
+
                     <SearchBar initialValue={spacedText} />
 
                     {/* Comerciante Classification Filter Bar */}
@@ -222,7 +230,33 @@ export default function Page() {
                                 Filtrar por Tamaño de Operación / Estructura del Comerciante:
                             </Typography>
                         </Box>
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                        {/* Mobile Selector Dropdown */}
+                        <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                            <FormControl fullWidth size="small">
+                                <Select
+                                    value={selectedMerchantClassification}
+                                    onChange={(e) => setSelectedMerchantClassification(e.target.value)}
+                                    displayEmpty
+                                    sx={{
+                                        borderRadius: '20px',
+                                        bgcolor: '#ffffff',
+                                        fontSize: '0.9rem',
+                                        fontWeight: 600,
+                                    }}
+                                >
+                                    <MenuItem value="all">
+                                        <em>Todos los Perfiles</em>
+                                    </MenuItem>
+                                    {PUBLIC_MERCHANT_FILTERS.map((filter) => (
+                                        <MenuItem key={filter.id} value={filter.id}>
+                                            {filter.label}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Box>
+                        {/* Desktop Chips */}
+                        <Box sx={{ display: { xs: 'none', md: 'flex' }, flexWrap: 'wrap', gap: 1 }}>
                             <Chip
                                 label="Todos los Perfiles"
                                 onClick={() => setSelectedMerchantClassification('all')}

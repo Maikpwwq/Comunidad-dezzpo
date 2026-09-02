@@ -340,6 +340,12 @@ export const APP_ADMIN_LINK_SIDEBAR: NavSectionConfig = {
 /** Header tabs for comerciante role */
 export const COMERCIANTE_HEADER: NavItemConfig[] = [
     {
+        id: 'tiendas',
+        label: 'Tiendas',
+        route: '/app/tiendas',
+        icon: 'StorefrontIcon',
+    },
+    {
         id: 'perfil',
         label: 'Ver tu perfil',
         route: '/app/perfil/:userId',
@@ -380,6 +386,12 @@ export const COMERCIANTE_HEADER: NavItemConfig[] = [
 /** Header tabs for propietario role */
 export const PROPIETARIO_HEADER: NavItemConfig[] = [
     {
+        id: 'tiendas',
+        label: 'Tiendas',
+        route: '/app/tiendas',
+        icon: 'StorefrontIcon',
+    },
+    {
         id: 'portal',
         label: 'Portal de servicios',
         route: '/app/portal-servicios',
@@ -413,6 +425,12 @@ export const PROPIETARIO_HEADER: NavItemConfig[] = [
 
 /** Header tabs for guest users */
 export const GUEST_HEADER: NavItemConfig[] = [
+    {
+        id: 'tiendas',
+        label: 'Tiendas',
+        route: '/app/tiendas',
+        icon: 'StorefrontIcon',
+    },
     {
         id: 'login',
         label: 'Iniciar Sesión',
