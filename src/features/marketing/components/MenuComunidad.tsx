@@ -35,6 +35,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import Login from '@mui/icons-material/Login'
 import Storefront from '@mui/icons-material/Storefront'
+import Store from '@mui/icons-material/Store'
 import Search from '@mui/icons-material/Search'
 import PriceChange from '@mui/icons-material/PriceChange'
 import Person from '@mui/icons-material/Person'
@@ -166,14 +167,25 @@ export function MenuComunidad(): React.ReactElement {
                             <Link
                                 href="/app/portal-servicios"
                                 className="d-flex align-items-center me-3"
-                                style={{ color: '#28a745' }}
+                                style={{ color: 'var(--primary-green-text-color, #28a745)' }}
+                                title="Directorio de Comerciantes"
+                                aria-label="Directorio de Comerciantes"
                             >
                                 <Storefront sx={{ fontSize: '28px' }} />
+                            </Link>
+                            <Link
+                                href="/app/tiendas"
+                                className="d-flex align-items-center me-3"
+                                style={{ color: 'var(--primary-green-text-color, #28a745)' }}
+                                title="Tiendas y Ferreterias"
+                                aria-label="Tiendas y Ferreterias"
+                            >
+                                <Store sx={{ fontSize: '28px' }} />
                             </Link>
                             <IconButton
                                 aria-label="mobile-more"
                                 onClick={handleToggleMenu}
-                                sx={{ color: '#28a745', p: 0 }}
+                                sx={{ color: 'var(--primary-green-text-color, #28a745)', p: 0 }}
                             >
                                 <MenuIcon sx={{ fontSize: '32px' }} />
                             </IconButton>
@@ -207,6 +219,24 @@ export function MenuComunidad(): React.ReactElement {
                             )}
                         </div>
                         <ul className="list-unstyled">
+                            <div className={clsx(styles.Dropdown, styles.MenuItem, "mb-2")}>
+                                <Link
+                                    href="/app/portal-servicios"
+                                    className={clsx(styles.NavLink, "body-1")}
+                                    onClick={handleClose}
+                                >
+                                    Directorio de comerciantes
+                                </Link>
+                            </div>
+                            <div className={clsx(styles.Dropdown, styles.MenuItem, "mb-2")}>
+                                <Link
+                                    href="/app/tiendas"
+                                    className={clsx(styles.NavLink, "body-1")}
+                                    onClick={handleClose}
+                                >
+                                    Tiendas y ferreterias
+                                </Link>
+                            </div>
                             {renderMenuItems(true)}
                         </ul>
                     </div>

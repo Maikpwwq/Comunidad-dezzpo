@@ -534,14 +534,19 @@ export default function Page({
         <Container fluid className={clsx(styles.Container, "p-0")}>
             <Row className={clsx(styles.MainRow, "m-0")} id="registrate">
                 <Col
-                    className={clsx(styles.ImageSection, "m-0 d-flex align-items-center justify-content-start")}
-                    md={6} sm={12}
+                    className={clsx(styles.ImageSection, "m-0 d-flex flex-column align-items-center justify-content-center")}
+                    lg={6} md={6} sm={12}
                 >
-                    <Box style={{ top: '16vh', position: 'relative' }}>
-                        <Typography className="text-white" variant="h4">
+                    <div className={styles.GreetingWrapper}>
+                        <h2 className={styles.GreetingText}>
                             Bienvenido a
-                        </Typography>
-                    </Box>
+                        </h2>
+                        <img
+                            src="/assets/img/logo/LOGO-11.png"
+                            alt="Comunidad Dezzpo"
+                            className={styles.LogoImage}
+                        />
+                    </div>
                 </Col>
                 {formContent}
             </Row>

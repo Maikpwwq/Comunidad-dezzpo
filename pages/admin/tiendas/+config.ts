@@ -1,5 +1,6 @@
 export default {
-  title: 'Gestión de Tiendas y Proveedores | Admin Control Tower',
-  description: 'Administración, moderación y control de directorio de tiendas y proveedores.',
-  ssr: false,
+    title: 'Gestión de Tiendas y Ferreterias | Admin Control Tower',
+    description:
+        'Administración, moderación y control de directorio de tiendas y ferreterias.',
+    ssr: false,
 }

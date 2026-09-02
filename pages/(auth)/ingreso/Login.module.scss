@@ -11,23 +11,70 @@
         rgba(24, 177, 167, 1) 35%,
         rgba(0, 153, 204, 1) 100%
     );
-    min-height: 540px;
+    min-height: calc(100vh - 120px);
     width: 100%;
     position: relative;
-    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     @media screen and (max-width: 800px) {
         flex-direction: column !important;
+        min-height: auto;
+        padding-bottom: 2rem;
     }
 }
 
 .ImageSection {
-    // .imagen-ingreso
-    background: url('/assets/img/logo/LOGO-11.png') no-repeat center;
-    background-attachment: scroll;
-    background-size: 50% auto;
-    min-height: 565px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     height: auto;
+    padding: 2rem 1rem;
+
+    @media screen and (max-width: 800px) {
+        width: 100%;
+        min-height: auto;
+        padding: 2rem 1rem 1rem;
+    }
+}
+
+.GreetingWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1.25rem;
+
+    @media screen and (max-width: 600px) {
+        gap: 0.75rem;
+    }
+}
+
+.GreetingText {
+    font-family: var(--font-helvetica-semibold, sans-serif) !important;
+    color: #ffffff !important;
+    font-size: 2rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    margin: 0;
+
+    @media screen and (max-width: 600px) {
+        font-size: 1.45rem !important;
+    }
+}
+
+.LogoImage {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    object-fit: contain;
+
+    @media screen and (max-width: 600px) {
+        max-width: 200px;
+    }
 }
 
 .FormWrapper {
@@ -37,9 +84,15 @@
     align-content: center;
     justify-content: center;
     text-align: left;
-    min-height: 480px;
+    height: auto;
     margin-top: 20px;
-    margin-right: 1em;
+    margin-bottom: 20px;
+
+    @media screen and (max-width: 800px) {
+        margin: 0 auto;
+        width: 90%;
+        max-width: 480px;
+    }
 }
 
 .FormCard {

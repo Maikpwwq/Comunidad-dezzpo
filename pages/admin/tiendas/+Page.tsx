@@ -127,7 +127,7 @@ export default function Page() {
                     <StorefrontIcon sx={{ fontSize: 36, color: 'primary.main' }} />
                     <Box>
                         <Typography variant="h5" fontWeight={800} color="#0A2540">
-                            Gestión de Tiendas y Proveedores
+                            Gestión de Tiendas y Ferreterias
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             Panel de administración, moderación y control de sedes de insumos y servicios técnicos.

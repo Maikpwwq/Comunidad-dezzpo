@@ -27,26 +27,96 @@ export const COMERCIANTE_SIDEBAR: NavSectionConfig[] = [
         id: 'inicio',
         title: 'Inicio',
         items: [
-            { id: 'perfil', label: 'Mi cuenta', route: '/app/perfil/:userId', icon: 'PersonIcon' },
-            { id: 'portal', label: 'Portal de servicios', route: '/app/portal-servicios', icon: 'StoreIcon' },
-            { id: 'directorio', label: 'Directorio de Requerimientos', route: '/app/directorio-requerimientos', icon: 'DriveFileMoveIcon' },
-            { id: 'notificaciones', label: 'Notificaciones', route: '/app/notificaciones', icon: 'NotificationsIcon' },
-            { id: 'suscripciones', label: 'Suscripciones', route: '/app/suscripciones', icon: 'LoyaltyIcon' },
-            { id: 'contratos', label: 'Mis Contratos', route: '/app/historial-servicios', icon: 'ReceiptLongIcon' },
-            { id: 'certificaciones', label: 'Certificaciones', route: '/app/certificaciones', icon: 'HowToRegIcon' },
-            { id: 'tiendas', label: 'Tiendas y Proveedores', route: '/app/tiendas', icon: 'StorefrontIcon' },
-            { id: 'biblioteca', label: 'Biblioteca', route: '/app/biblioteca', icon: 'CollectionsBookmarkIcon' },
-            { id: 'invitar', label: 'Invitar a un Amigo', route: '/app/invitar-amigos', icon: 'CardMembershipIcon' },
-            { id: 'ajustes', label: 'Ajustes', route: '/app/ajustes/:userId', icon: 'ManageAccountsIcon' },
+            {
+                id: 'perfil',
+                label: 'Mi cuenta',
+                route: '/app/perfil/:userId',
+                icon: 'PersonIcon',
+            },
+            {
+                id: 'portal',
+                label: 'Portal de servicios',
+                route: '/app/portal-servicios',
+                icon: 'StoreIcon',
+            },
+            {
+                id: 'directorio',
+                label: 'Directorio de Requerimientos',
+                route: '/app/directorio-requerimientos',
+                icon: 'DriveFileMoveIcon',
+            },
+            {
+                id: 'notificaciones',
+                label: 'Notificaciones',
+                route: '/app/notificaciones',
+                icon: 'NotificationsIcon',
+            },
+            {
+                id: 'suscripciones',
+                label: 'Suscripciones',
+                route: '/app/suscripciones',
+                icon: 'LoyaltyIcon',
+            },
+            {
+                id: 'contratos',
+                label: 'Mis Contratos',
+                route: '/app/historial-servicios',
+                icon: 'ReceiptLongIcon',
+            },
+            {
+                id: 'certificaciones',
+                label: 'Certificaciones',
+                route: '/app/certificaciones',
+                icon: 'HowToRegIcon',
+            },
+            {
+                id: 'tiendas',
+                label: 'Tiendas y Ferreterias',
+                route: '/app/tiendas',
+                icon: 'StorefrontIcon',
+            },
+            {
+                id: 'biblioteca',
+                label: 'Biblioteca',
+                route: '/app/biblioteca',
+                icon: 'CollectionsBookmarkIcon',
+            },
+            {
+                id: 'invitar',
+                label: 'Invitar a un Amigo',
+                route: '/app/invitar-amigos',
+                icon: 'CardMembershipIcon',
+            },
+            {
+                id: 'ajustes',
+                label: 'Ajustes',
+                route: '/app/ajustes/:userId',
+                icon: 'ManageAccountsIcon',
+            },
         ],
     },
     {
         id: 'configuracion',
         title: 'Configuración',
         items: [
-            { id: 'privacidad', label: 'Privacidad', route: '/app/configuracion-privacidad', icon: 'TuneIcon' },
-            { id: 'pago', label: 'Formas de Pago', route: '/app/formas-pago', icon: 'PaymentIcon' },
-            { id: 'clave', label: 'Cambiar Clave', route: '/app/cambiar-clave', icon: 'LockResetIcon' },
+            {
+                id: 'privacidad',
+                label: 'Privacidad',
+                route: '/app/configuracion-privacidad',
+                icon: 'TuneIcon',
+            },
+            {
+                id: 'pago',
+                label: 'Formas de Pago',
+                route: '/app/formas-pago',
+                icon: 'PaymentIcon',
+            },
+            {
+                id: 'clave',
+                label: 'Cambiar Clave',
+                route: '/app/cambiar-clave',
+                icon: 'LockResetIcon',
+            },
         ],
     },
 ]
@@ -57,26 +127,96 @@ export const PROPIETARIO_SIDEBAR: NavSectionConfig[] = [
         id: 'inicio',
         title: 'Inicio',
         items: [
-            { id: 'perfil', label: 'Mi cuenta', route: '/app/perfil/:userId', icon: 'PersonIcon' },
-            { id: 'portal', label: 'Portal de servicios', route: '/app/portal-servicios', icon: 'StoreIcon' },
-            { id: 'directorio', label: 'Directorio de Requerimientos', route: '/app/directorio-requerimientos', icon: 'DriveFileMoveIcon' },
-            { id: 'notificaciones', label: 'Notificaciones', route: '/app/notificaciones', icon: 'NotificationsIcon' },
-            { id: 'suscripciones', label: 'Suscripciones', route: '/app/suscripciones', icon: 'LoyaltyIcon' },
-            { id: 'contratos', label: 'Mis Contratos', route: '/app/historial-servicios', icon: 'ReceiptLongIcon' },
-            { id: 'inmuebles', label: 'Mis Inmuebles', route: '/app/mis-inmuebles', icon: 'HomeWorkIcon' },
-            { id: 'tiendas', label: 'Tiendas y Proveedores', route: '/app/tiendas', icon: 'StorefrontIcon' },
-            { id: 'biblioteca', label: 'Biblioteca', route: '/app/biblioteca', icon: 'CollectionsBookmarkIcon' },
-            { id: 'invitar', label: 'Invitar a un Amigo', route: '/app/invitar-amigos', icon: 'CardMembershipIcon' },
-            { id: 'ajustes', label: 'Ajustes', route: '/app/ajustes/:userId', icon: 'ManageAccountsIcon' },
+            {
+                id: 'perfil',
+                label: 'Mi cuenta',
+                route: '/app/perfil/:userId',
+                icon: 'PersonIcon',
+            },
+            {
+                id: 'portal',
+                label: 'Portal de servicios',
+                route: '/app/portal-servicios',
+                icon: 'StoreIcon',
+            },
+            {
+                id: 'directorio',
+                label: 'Directorio de Requerimientos',
+                route: '/app/directorio-requerimientos',
+                icon: 'DriveFileMoveIcon',
+            },
+            {
+                id: 'notificaciones',
+                label: 'Notificaciones',
+                route: '/app/notificaciones',
+                icon: 'NotificationsIcon',
+            },
+            {
+                id: 'suscripciones',
+                label: 'Suscripciones',
+                route: '/app/suscripciones',
+                icon: 'LoyaltyIcon',
+            },
+            {
+                id: 'contratos',
+                label: 'Mis Contratos',
+                route: '/app/historial-servicios',
+                icon: 'ReceiptLongIcon',
+            },
+            {
+                id: 'inmuebles',
+                label: 'Mis Inmuebles',
+                route: '/app/mis-inmuebles',
+                icon: 'HomeWorkIcon',
+            },
+            {
+                id: 'tiendas',
+                label: 'Tiendas y Ferreterias',
+                route: '/app/tiendas',
+                icon: 'StorefrontIcon',
+            },
+            {
+                id: 'biblioteca',
+                label: 'Biblioteca',
+                route: '/app/biblioteca',
+                icon: 'CollectionsBookmarkIcon',
+            },
+            {
+                id: 'invitar',
+                label: 'Invitar a un Amigo',
+                route: '/app/invitar-amigos',
+                icon: 'CardMembershipIcon',
+            },
+            {
+                id: 'ajustes',
+                label: 'Ajustes',
+                route: '/app/ajustes/:userId',
+                icon: 'ManageAccountsIcon',
+            },
         ],
     },
     {
         id: 'configuracion',
         title: 'Configuración',
         items: [
-            { id: 'privacidad', label: 'Privacidad', route: '/app/configuracion-privacidad', icon: 'TuneIcon' },
-            { id: 'pago', label: 'Formas de Pago', route: '/app/formas-pago', icon: 'PaymentIcon' },
-            { id: 'clave', label: 'Cambiar Clave', route: '/app/cambiar-clave', icon: 'LockResetIcon' },
+            {
+                id: 'privacidad',
+                label: 'Privacidad',
+                route: '/app/configuracion-privacidad',
+                icon: 'TuneIcon',
+            },
+            {
+                id: 'pago',
+                label: 'Formas de Pago',
+                route: '/app/formas-pago',
+                icon: 'PaymentIcon',
+            },
+            {
+                id: 'clave',
+                label: 'Cambiar Clave',
+                route: '/app/cambiar-clave',
+                icon: 'LockResetIcon',
+            },
         ],
     },
 ]
@@ -87,10 +227,30 @@ export const GUEST_SIDEBAR: NavSectionConfig[] = [
         id: 'inicio',
         title: 'Inicio',
         items: [
-            { id: 'portal', label: 'Portal de servicios', route: '/app/portal-servicios', icon: 'StoreIcon' },
-            { id: 'directorio', label: 'Directorio de Requerimientos', route: '/app/directorio-requerimientos', icon: 'DriveFileMoveIcon' },
-            { id: 'tiendas', label: 'Tiendas y Proveedores', route: '/app/tiendas', icon: 'StorefrontIcon' },
-            { id: 'suscripciones', label: 'Suscripciones', route: '/app/suscripciones', icon: 'LoyaltyIcon' },
+            {
+                id: 'portal',
+                label: 'Portal de servicios',
+                route: '/app/portal-servicios',
+                icon: 'StoreIcon',
+            },
+            {
+                id: 'directorio',
+                label: 'Directorio de Requerimientos',
+                route: '/app/directorio-requerimientos',
+                icon: 'DriveFileMoveIcon',
+            },
+            {
+                id: 'tiendas',
+                label: 'Tiendas y Ferreterias',
+                route: '/app/tiendas',
+                icon: 'StorefrontIcon',
+            },
+            {
+                id: 'suscripciones',
+                label: 'Suscripciones',
+                route: '/app/suscripciones',
+                icon: 'LoyaltyIcon',
+            },
         ],
     },
 ]
@@ -100,53 +260,171 @@ export const ADMIN_SIDEBAR: NavSectionConfig = {
     id: 'admin',
     title: 'Administración',
     items: [
-        { id: 'admin-dashboard', label: 'Dashboard', route: '/admin/dashboard', icon: 'DashboardIcon' },
-        { id: 'admin-usuarios', label: 'Usuarios', route: '/admin/usuarios', icon: 'GroupIcon' },
-        { id: 'admin-verificacion', label: 'Verificación', route: '/admin/verificacion', icon: 'VerifiedUserIcon' },
-        { id: 'admin-certificaciones', label: 'Certificaciones', route: '/admin/certificaciones', icon: 'HowToRegIcon' },
-        { id: 'admin-contratos', label: 'Contratos', route: '/admin/contratos', icon: 'ReceiptLongIcon' },
-        { id: 'admin-requerimientos', label: 'Requerimientos', route: '/admin/requerimientos', icon: 'AssignmentIcon' },
-        { id: 'admin-referidos', label: 'Referidos', route: '/admin/referidos', icon: 'CardMembershipIcon' },
-        { id: 'admin-notificaciones', label: 'Notificaciones', route: '/admin/notificaciones', icon: 'NotificationsIcon' },
-        { id: 'admin-blog', label: 'Blog', route: '/admin/blog', icon: 'ArticleIcon' },
-        { id: 'admin-tiendas', label: 'Tiendas', route: '/admin/tiendas', icon: 'StorefrontIcon' },
+        {
+            id: 'admin-dashboard',
+            label: 'Dashboard',
+            route: '/admin/dashboard',
+            icon: 'DashboardIcon',
+        },
+        {
+            id: 'admin-usuarios',
+            label: 'Usuarios',
+            route: '/admin/usuarios',
+            icon: 'GroupIcon',
+        },
+        {
+            id: 'admin-verificacion',
+            label: 'Verificación',
+            route: '/admin/verificacion',
+            icon: 'VerifiedUserIcon',
+        },
+        {
+            id: 'admin-certificaciones',
+            label: 'Certificaciones',
+            route: '/admin/certificaciones',
+            icon: 'HowToRegIcon',
+        },
+        {
+            id: 'admin-contratos',
+            label: 'Contratos',
+            route: '/admin/contratos',
+            icon: 'ReceiptLongIcon',
+        },
+        {
+            id: 'admin-requerimientos',
+            label: 'Requerimientos',
+            route: '/admin/requerimientos',
+            icon: 'AssignmentIcon',
+        },
+        {
+            id: 'admin-referidos',
+            label: 'Referidos',
+            route: '/admin/referidos',
+            icon: 'CardMembershipIcon',
+        },
+        {
+            id: 'admin-notificaciones',
+            label: 'Notificaciones',
+            route: '/admin/notificaciones',
+            icon: 'NotificationsIcon',
+        },
+        {
+            id: 'admin-blog',
+            label: 'Blog',
+            route: '/admin/blog',
+            icon: 'ArticleIcon',
+        },
+        {
+            id: 'admin-tiendas',
+            label: 'Tiendas',
+            route: '/admin/tiendas',
+            icon: 'StorefrontIcon',
+        },
     ],
 }
-
-
 
 /** Single Admin portal link for the App Sidebar */
 export const APP_ADMIN_LINK_SIDEBAR: NavSectionConfig = {
     id: 'admin',
     title: 'Administración',
     items: [
-        { id: 'admin-portal', label: 'Centro de Control', route: '/admin/dashboard', icon: 'AdminPanelSettingsIcon' }
+        {
+            id: 'admin-portal',
+            label: 'Centro de Control',
+            route: '/admin/dashboard',
+            icon: 'AdminPanelSettingsIcon',
+        },
     ],
 }
 
 /** Header tabs for comerciante role */
 export const COMERCIANTE_HEADER: NavItemConfig[] = [
-    { id: 'perfil', label: 'Ver tu perfil', route: '/app/perfil/:userId', icon: 'PersonIcon' },
-    { id: 'directorio', label: 'Directorio de Requerimientos', route: '/app/directorio-requerimientos', icon: 'DriveFileMoveIcon' },
-    { id: 'mensajes', label: 'Mensajes', route: '/app/mensajes', icon: 'MessageIcon' },
-    { id: 'historial', label: 'Historial de servicio', route: '/app/historial-servicios', icon: 'WorkHistoryIcon' },
-    { id: 'suscripciones', label: 'Suscripciones', route: '/app/suscripciones', icon: 'LoyaltyIcon' },
-    { id: 'certificaciones', label: 'Certificaciones', route: '/app/certificaciones', icon: 'HowToRegIcon' },
+    {
+        id: 'perfil',
+        label: 'Ver tu perfil',
+        route: '/app/perfil/:userId',
+        icon: 'PersonIcon',
+    },
+    {
+        id: 'directorio',
+        label: 'Directorio de Requerimientos',
+        route: '/app/directorio-requerimientos',
+        icon: 'DriveFileMoveIcon',
+    },
+    {
+        id: 'mensajes',
+        label: 'Mensajes',
+        route: '/app/mensajes',
+        icon: 'MessageIcon',
+    },
+    {
+        id: 'historial',
+        label: 'Historial de servicio',
+        route: '/app/historial-servicios',
+        icon: 'WorkHistoryIcon',
+    },
+    {
+        id: 'suscripciones',
+        label: 'Suscripciones',
+        route: '/app/suscripciones',
+        icon: 'LoyaltyIcon',
+    },
+    {
+        id: 'certificaciones',
+        label: 'Certificaciones',
+        route: '/app/certificaciones',
+        icon: 'HowToRegIcon',
+    },
 ]
 
 /** Header tabs for propietario role */
 export const PROPIETARIO_HEADER: NavItemConfig[] = [
-    { id: 'portal', label: 'Portal de servicios', route: '/app/portal-servicios', icon: 'StoreIcon' },
-    { id: 'mensajes', label: 'Mensajes', route: '/app/mensajes', icon: 'MessageIcon' },
-    { id: 'historial', label: 'Historial de servicio', route: '/app/historial-servicios', icon: 'WorkHistoryIcon' },
-    { id: 'suscripciones', label: 'Suscripciones', route: '/app/suscripciones', icon: 'LoyaltyIcon' },
-    { id: 'calificaciones', label: 'Calificaciones', route: '/app/calificaciones', icon: 'StarRateIcon' },
+    {
+        id: 'portal',
+        label: 'Portal de servicios',
+        route: '/app/portal-servicios',
+        icon: 'StoreIcon',
+    },
+    {
+        id: 'mensajes',
+        label: 'Mensajes',
+        route: '/app/mensajes',
+        icon: 'MessageIcon',
+    },
+    {
+        id: 'historial',
+        label: 'Historial de servicio',
+        route: '/app/historial-servicios',
+        icon: 'WorkHistoryIcon',
+    },
+    {
+        id: 'suscripciones',
+        label: 'Suscripciones',
+        route: '/app/suscripciones',
+        icon: 'LoyaltyIcon',
+    },
+    {
+        id: 'calificaciones',
+        label: 'Calificaciones',
+        route: '/app/calificaciones',
+        icon: 'StarRateIcon',
+    },
 ]
 
 /** Header tabs for guest users */
 export const GUEST_HEADER: NavItemConfig[] = [
-    { id: 'login', label: 'Iniciar Sesión', route: '/ingreso', icon: 'LoginIcon' },
-    { id: 'register', label: 'Registrarse', route: '/registro', icon: 'PersonAddIcon' },
+    {
+        id: 'login',
+        label: 'Iniciar Sesión',
+        route: '/ingreso',
+        icon: 'LoginIcon',
+    },
+    {
+        id: 'register',
+        label: 'Registrarse',
+        route: '/registro',
+        icon: 'PersonAddIcon',
+    },
 ]
 
 /** Footer links for marketing pages */
@@ -161,14 +439,37 @@ export const FOOTER_LINKS = [
 
 /** Social media links */
 export const SOCIAL_LINKS = [
-    { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/comunidad_dezzpo/', icon: 'IntagramSocialIcono' },
-    { id: 'twitter', label: 'Twitter', href: 'https://www.twitter.com/', icon: 'TwitterSocialIcono' },
-    { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/comunidad.dezzpo', icon: 'FacebookSocialIcono' },
-    { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/dezzpo-inc/', icon: 'LinkedinSocialIcono' },
+    {
+        id: 'instagram',
+        label: 'Instagram',
+        href: 'https://www.instagram.com/comunidad_dezzpo/',
+        icon: 'IntagramSocialIcono',
+    },
+    {
+        id: 'twitter',
+        label: 'Twitter',
+        href: 'https://www.twitter.com/',
+        icon: 'TwitterSocialIcono',
+    },
+    {
+        id: 'facebook',
+        label: 'Facebook',
+        href: 'https://www.facebook.com/comunidad.dezzpo',
+        icon: 'FacebookSocialIcono',
+    },
+    {
+        id: 'linkedin',
+        label: 'LinkedIn',
+        href: 'https://www.linkedin.com/company/dezzpo-inc/',
+        icon: 'LinkedinSocialIcono',
+    },
 ]
 
 /** Get sidebar config based on user role and admin status */
-export function getSidebarConfig(role: 'guest' | 'propietario' | 'comerciante', isAdmin = false): NavSectionConfig[] {
+export function getSidebarConfig(
+    role: 'guest' | 'propietario' | 'comerciante',
+    isAdmin = false
+): NavSectionConfig[] {
     let sections: NavSectionConfig[]
     switch (role) {
         case 'comerciante':
@@ -187,7 +488,9 @@ export function getSidebarConfig(role: 'guest' | 'propietario' | 'comerciante', 
 }
 
 /** Get header config based on user role */
-export function getHeaderConfig(role: 'guest' | 'propietario' | 'comerciante'): NavItemConfig[] {
+export function getHeaderConfig(
+    role: 'guest' | 'propietario' | 'comerciante'
+): NavItemConfig[] {
     switch (role) {
         case 'comerciante':
             return COMERCIANTE_HEADER

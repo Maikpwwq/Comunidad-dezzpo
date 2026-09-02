@@ -3,7 +3,7 @@
  *
  * Validates name availability and detects homonyms/duplicates for:
  * 1. Qualified Merchants (Comerciantes Profesionales)
- * 2. Hardware stores & suppliers (Tiendas y Proveedores)
+ * 2. Hardware stores & suppliers (Tiendas y Ferreterias)
  *
  * Normalizes diacritics (accents), whitespace, and case sensitivity.
  */
@@ -116,8 +116,12 @@ export async function checkComercianteNameAvailability(
 
             const isSimilar =
                 !isExact &&
-                ((normUserName && (normUserName.includes(cleanInput) || cleanInput.includes(normUserName))) ||
-                 (normRazonSocial && (normRazonSocial.includes(cleanInput) || cleanInput.includes(normRazonSocial))))
+                ((normUserName &&
+                    (normUserName.includes(cleanInput) ||
+                        cleanInput.includes(normUserName))) ||
+                    (normRazonSocial &&
+                        (normRazonSocial.includes(cleanInput) ||
+                            cleanInput.includes(normRazonSocial))))
 
             if (isExact || isSimilar) {
                 if (isExact) hasExactMatch = true
@@ -149,7 +153,10 @@ export async function checkComercianteNameAvailability(
             matches,
         }
     } catch (error) {
-        console.error('[duplicateCheckService] Error checking comerciante name:', error)
+        console.error(
+            '[duplicateCheckService] Error checking comerciante name:',
+            error
+        )
         return { isAvailable: true, exactMatch: false, matches: [] }
     }
 }
@@ -196,8 +203,12 @@ export async function checkTiendaNameAvailability(
 
             const isSimilar =
                 !isExact &&
-                ((normNombre && (normNombre.includes(cleanInput) || cleanInput.includes(normNombre))) ||
-                 (normRazonSocial && (normRazonSocial.includes(cleanInput) || cleanInput.includes(normRazonSocial))))
+                ((normNombre &&
+                    (normNombre.includes(cleanInput) ||
+                        cleanInput.includes(normNombre))) ||
+                    (normRazonSocial &&
+                        (normRazonSocial.includes(cleanInput) ||
+                            cleanInput.includes(normRazonSocial))))
 
             if (isExact || isSimilar) {
                 if (isExact) hasExactMatch = true
@@ -233,7 +244,10 @@ export async function checkTiendaNameAvailability(
             matches,
         }
     } catch (error) {
-        console.error('[duplicateCheckService] Error checking tienda name:', error)
+        console.error(
+            '[duplicateCheckService] Error checking tienda name:',
+            error
+        )
         return { isAvailable: true, exactMatch: false, matches: [] }
     }
 }
@@ -284,7 +298,10 @@ export async function checkCategorySuggestionAvailability(
     // 2. Check against Firestore suggestedCategories
     if (isFirebaseAvailable() && firestore) {
         try {
-            const colRef = collection(firestore, SUGGESTED_CATEGORIES_COLLECTION)
+            const colRef = collection(
+                firestore,
+                SUGGESTED_CATEGORIES_COLLECTION
+            )
             const snapshot = await getDocs(query(colRef))
 
             snapshot.forEach((docSnap) => {
@@ -294,7 +311,9 @@ export async function checkCategorySuggestionAvailability(
                 if (!normName) return
 
                 const isExact = normName === cleanInput
-                const suggWords = normName.split(' ').filter((w) => w.length >= 3)
+                const suggWords = normName
+                    .split(' ')
+                    .filter((w) => w.length >= 3)
                 const hasWordOverlap =
                     inputWords.some((w) => suggWords.includes(w)) ||
                     (normName.length >= 4 && cleanInput.includes(normName)) ||
@@ -307,7 +326,10 @@ export async function checkCategorySuggestionAvailability(
                     const status = data.status || 'pending'
                     matches.push({
                         name: rawName,
-                        source: status === 'approved' ? 'approved_suggestion' : 'pending_suggestion',
+                        source:
+                            status === 'approved'
+                                ? 'approved_suggestion'
+                                : 'pending_suggestion',
                         similarity: isExact ? 'exact' : 'similar',
                         description: data.description,
                         createdAt: data.createdAt,
@@ -315,7 +337,10 @@ export async function checkCategorySuggestionAvailability(
                 }
             })
         } catch (err) {
-            console.error('[duplicateCheckService] Error querying suggestedCategories:', err)
+            console.error(
+                '[duplicateCheckService] Error querying suggestedCategories:',
+                err
+            )
         }
     }
 

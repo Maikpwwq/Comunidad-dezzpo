@@ -126,7 +126,7 @@ export default function Page() {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
                         <StorefrontIcon sx={{ fontSize: 32, color: 'primary.main' }} />
                         <Typography variant="h4" fontWeight={800} sx={{ color: '#0A2540' }}>
-                            Tiendas y Proveedores
+                            Tiendas y Ferreterias
                         </Typography>
                     </Box>
                     <Typography variant="body1" color="text.secondary">

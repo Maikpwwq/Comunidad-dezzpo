@@ -165,14 +165,19 @@ export default function Page({
             <Row className={clsx(styles.MainRow, "m-0 w-100")}>
                 {showLogo && (
                     <Col
-                        className={clsx(styles.ImageSection, "d-flex align-items-start justify-content-center")}
+                        className={clsx(styles.ImageSection, "d-flex flex-column align-items-center justify-content-center")}
                         lg={6} md={6} sm={12}
                     >
-                        <Box style={{ top: '16vh', position: 'relative' }}>
-                            <Typography className="text-white" variant="h4">
+                        <div className={styles.GreetingWrapper}>
+                            <h2 className={styles.GreetingText}>
                                 Bienvenido a
-                            </Typography>
-                        </Box>
+                            </h2>
+                            <img
+                                src="/assets/img/logo/LOGO-11.png"
+                                alt="Comunidad Dezzpo"
+                                className={styles.LogoImage}
+                            />
+                        </div>
                     </Col>
                 )}
                 <Col className={clsx(styles.FormWrapper, "m-0 p-0 mb-4 mt-4")} lg={4} md={5} sm={10} xs={10}>

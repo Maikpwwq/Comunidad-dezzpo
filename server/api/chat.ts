@@ -51,7 +51,7 @@ Comunidad Dezzpo es "el LinkedIn para maestros de obra y trabajadores de la cons
 
 Comunidad Dezzpo conecta a propietarios, residentes y administradores con:
 1. Comerciantes y profesionales calificados en 92 especialidades (ingeniería, obra civil, acabados, redes, plomería, electricidad, carpintería, cerrajería, etc.).
-2. Directorio de Tiendas y Proveedores locales en 17 categorías de materiales, insumos y herramientas (/tiendas).
+2. Directorio de Tiendas y Ferreterias locales en 17 categorías de materiales, insumos y herramientas (/tiendas).
 3. Registro ágil por celular con SMS OTP (+57), contratos inteligentes con anticipos seguros (ePayco), certificación técnica de habilidades y programa de referidos "Voz a Voz".
 
 Tu comportamiento:
