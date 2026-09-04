@@ -298,6 +298,11 @@ pending_payment → active → completed → disputed
 - **Multi-Level Duplicate Checking**: `checkCategorySuggestionAvailability` evaluates proposed category names against the official 92-category catalog (`ListadoCategorias`) and pending/approved Firestore submissions with word overlap (>= 3 chars) and substring (>= 4 chars) matching. Exact catalog matches provide an instant *"Seleccionar en mi perfil"* CTA.
 - **Firestore Security Rules**: Protected `/suggestedCategories/{suggestionId}` allowing authenticated authors to create and view their submissions, reserving updates and approvals to admins.
 
+### User Registration Date Parsing & Real 30-Day Growth Velocity (2026-09-03)
+- **Root Cause of Zero New Users**: In `getAdminStats()`, a Firestore query using `where('userJoined', '>=', thirtyDaysTs)` failed to match documents because Firestore does not compare `Timestamp` instances against string types. In Dezzpo, registration dates are formatted as `"dd-MM-yyyy"` strings (e.g., `"21-08-2026"`), which also cannot be range-filtered lexicographically, causing range queries to return 0 and fall back to 0.
+- **`parseUserRegistrationDate` Engine**: Robust parser supporting `"dd-MM-yyyy"`, `"dd/MM/yyyy"`, `"yyyy-MM-dd"`, ISO 8601 strings, and Firestore Timestamp objects, parsing real document dates to calculate 30-day velocity reliably.
+- **Accurate Metric Aggregation**: `/admin/dashboard` now reflects real user growth (e.g. `14` new users in 30d with `0 Prop. | 14 Com.` breakdown) directly from live Firestore documents with zero mocks or fallbacks.
+
 ### Specialized Tiendas & Supplier Directory Taxonomy (2026-08-18)
 - **Expanded Hardware & Retail Taxonomy**: Added 5 dedicated supplier categories to `ListadoCategoriasTiendas.ts`: `inoxidables` (stainless steel sheets/tubes/fittings), `mallas_metalicas` (chainlink/welded meshes/concertinas), `puertas` (wooden/metal/fire/security doors), `transmision_potencia` (bearings/pulleys/belts/chains/sprockets), and `depositos_materiales` (cement/aggregates/sand/bricks).
 - **Taxonomy Segregation**:

@@ -36,44 +36,115 @@ export interface AdminStats {
     totalComerciantes: number
     totalUsers: number
     newUsersLast30d: number
+    newPropietariosLast30d?: number
+    newComerciantesLast30d?: number
     revenuePotential: number
+}
+
+/**
+ * Parse date strings or timestamps from user documents in Firestore.
+ * Supports:
+ * - Firestore Timestamp object (has .toDate())
+ * - String 'dd-MM-yyyy' or 'dd/MM/yyyy' (standard in Dezzpo: format(new Date(), 'dd-MM-yyyy'))
+ * - String 'yyyy-MM-dd' or 'yyyy/MM/dd'
+ * - ISO string or Date-parseable string
+ * - Numeric timestamp (seconds or milliseconds)
+ */
+export function parseUserRegistrationDate(val: unknown): Date | null {
+    if (!val) return null
+    if (typeof val === 'object' && val !== null && 'toDate' in val && typeof (val as { toDate: () => Date }).toDate === 'function') {
+        return (val as { toDate: () => Date }).toDate()
+    }
+    if (typeof val === 'number') {
+        return val < 10000000000 ? new Date(val * 1000) : new Date(val)
+    }
+    if (typeof val === 'string') {
+        const trimmed = val.trim()
+        if (!trimmed || trimmed === '—') return null
+
+        // If string contains 'T', parse directly as ISO
+        if (trimmed.includes('T')) {
+            const d = new Date(trimmed)
+            return isNaN(d.getTime()) ? null : d
+        }
+
+        // Match dd-MM-yyyy or dd/MM/yyyy
+        const ddmmyyyy = /^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/.exec(trimmed)
+        if (ddmmyyyy) {
+            const day = parseInt(ddmmyyyy[1], 10)
+            const month = parseInt(ddmmyyyy[2], 10) - 1
+            const year = parseInt(ddmmyyyy[3], 10)
+            const d = new Date(year, month, day)
+            return isNaN(d.getTime()) ? null : d
+        }
+
+        // Match yyyy-MM-dd or yyyy/MM/dd
+        const yyyymmdd = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/.exec(trimmed)
+        if (yyyymmdd) {
+            const year = parseInt(yyyymmdd[1], 10)
+            const month = parseInt(yyyymmdd[2], 10) - 1
+            const day = parseInt(yyyymmdd[3], 10)
+            const d = new Date(year, month, day)
+            return isNaN(d.getTime()) ? null : d
+        }
+
+        const parsed = new Date(trimmed)
+        return isNaN(parsed.getTime()) ? null : parsed
+    }
+    return null
 }
 
 export async function getAdminStats(): Promise<AdminStats> {
     if (!isFirebaseAvailable() || !firestore) {
-        return { totalPropietarios: 0, totalComerciantes: 0, totalUsers: 0, newUsersLast30d: 0, revenuePotential: 0 }
+        return {
+            totalPropietarios: 0,
+            totalComerciantes: 0,
+            totalUsers: 0,
+            newUsersLast30d: 0,
+            newPropietariosLast30d: 0,
+            newComerciantesLast30d: 0,
+            revenuePotential: 0,
+        }
     }
 
     const propCol = collection(firestore, PROPIETARIOS)
     const comCol = collection(firestore, COMERCIANTES)
 
-    // Count users
+    // Retrieve user collections to count totals and compute real registration dates
     const [propSnap, comSnap] = await Promise.all([
-        getCountFromServer(propCol),
-        getCountFromServer(comCol),
+        getDocs(propCol),
+        getDocs(comCol),
     ])
 
-    const totalPropietarios = propSnap.data().count
-    const totalComerciantes = comSnap.data().count
+    const totalPropietarios = propSnap.size
+    const totalComerciantes = comSnap.size
 
     // New users in last 30 days
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-    const thirtyDaysTs = Timestamp.fromDate(thirtyDaysAgo)
 
-    let newUsersLast30d = 0
-    try {
-        const recentPropQ = query(propCol, where('userJoined', '>=', thirtyDaysTs))
-        const recentComQ = query(comCol, where('userJoined', '>=', thirtyDaysTs))
-        const [recentProp, recentCom] = await Promise.all([
-            getCountFromServer(recentPropQ),
-            getCountFromServer(recentComQ),
-        ])
-        newUsersLast30d = recentProp.data().count + recentCom.data().count
-    } catch {
-        // userJoined may be stored as string, fallback to 0
-        newUsersLast30d = 0
-    }
+    let newPropietariosLast30d = 0
+    let newComerciantesLast30d = 0
+
+    propSnap.forEach((doc) => {
+        const d = doc.data()
+        const rawDate = d.userJoined || d.createdAt || d.userCreatedAt
+        const parsed = parseUserRegistrationDate(rawDate)
+        if (parsed && parsed >= thirtyDaysAgo) {
+            newPropietariosLast30d++
+        }
+    })
+
+    comSnap.forEach((doc) => {
+        const d = doc.data()
+        const rawDate = d.userJoined || d.createdAt || d.userCreatedAt
+        const parsed = parseUserRegistrationDate(rawDate)
+        if (parsed && parsed >= thirtyDaysAgo) {
+            newComerciantesLast30d++
+        }
+    })
+
+    const newUsersLast30d = newPropietariosLast30d + newComerciantesLast30d
 
     // Revenue potential from active drafts
     let revenuePotential = 0
@@ -94,6 +165,8 @@ export async function getAdminStats(): Promise<AdminStats> {
         totalComerciantes,
         totalUsers: totalPropietarios + totalComerciantes,
         newUsersLast30d,
+        newPropietariosLast30d,
+        newComerciantesLast30d,
         revenuePotential,
     }
 }

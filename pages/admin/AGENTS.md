@@ -86,6 +86,7 @@
 ### Zero-Tolerance Policy on Mocks & Prototypes (Admin & Social Automation)
 - **Strictly Forbidden**: Hardcoding fallback metrics, simulated counters, or fake user names (e.g. "Carlos Ramirez", "Mariana Duarte") in any admin service or UI component.
 - **Empty State Integrity**: When Firestore collections have 0 documents, return real zeroes and empty arrays (`recentEvents: []`), rendering polished empty states rather than mock fallbacks.
+- **User Date Parsing & 30-Day Velocity**: In Firestore, users store registration dates in string format (e.g. `userJoined: "dd-MM-yyyy"`). Direct Firestore Timestamp range queries (`where('userJoined', '>=', ts)`) evaluate to 0 against string types. Always parse real document dates with `parseUserRegistrationDate()` to guarantee 100% accurate metrics.
 - **Comment ID Requirement**: Status `dispatched` requires a verified, non-empty `comment_id` from Meta Graph API. Any failure must be flagged as `failed` with its `errorCode` and `errorDetails`.
 - **SSR Safety & Memory Leaks**: Real-time Firestore listeners (`onSnapshot`) must check `typeof window !== 'undefined'` and return cleanup functions (`unsubscribe()`) to prevent memory leaks during SPA navigation or Vike SSR rendering.
 

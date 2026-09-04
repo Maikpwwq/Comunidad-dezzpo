@@ -189,6 +189,7 @@ export default function Page() {
                 <KPICard
                     title="Nuevos Registros (30d)"
                     value={stats?.newUsersLast30d}
+                    subtitle={`${stats?.newPropietariosLast30d || 0} Prop. | ${stats?.newComerciantesLast30d || 0} Com.`}
                     loading={loading}
                     icon={<PersonAddIcon sx={{ color: '#4caf50' }} />}
                     color="#4caf50"
