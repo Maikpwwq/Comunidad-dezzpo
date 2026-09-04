@@ -14,8 +14,6 @@ import {
     Chip,
     Tabs,
     Tab,
-    Divider,
-    Grid,
 } from '@mui/material'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 import PeopleIcon from '@mui/icons-material/People'
@@ -27,15 +25,12 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium'
 import CategoryIcon from '@mui/icons-material/Category'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import HandshakeIcon from '@mui/icons-material/Handshake'
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
-import HubIcon from '@mui/icons-material/Hub'
-import SpeedIcon from '@mui/icons-material/Speed'
 import ShareIcon from '@mui/icons-material/Share'
 import ShieldIcon from '@mui/icons-material/Shield'
 
 import {
-    PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid,
-    Tooltip, ResponsiveContainer, Legend, LineChart, Line,
+    Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid,
+    Tooltip, ResponsiveContainer, Legend,
 } from 'recharts'
 
 import {
@@ -43,17 +38,16 @@ import {
     getContractStats,
     getFunnelMetrics,
     getGeographicDensity,
-    getPlatformRevenueStats,
     getCertificationDashboardStats,
     getReferralDashboardStats,
     getUserClassificationBreakdown,
     getMultiStreamMonetization,
     getSocialInterceptorStats,
+    subscribeToSocialInterceptions,
     type AdminStats,
     type ContractStats,
     type FunnelMetric,
     type ZoneDensity,
-    type RevenueStats,
     type CertificationDashboardStats,
     type ReferralDashboardStats,
     type UserClassificationBreakdown,
@@ -62,8 +56,6 @@ import {
 } from '@services/admin'
 
 import { PRICING } from '@config/pricing.config'
-
-const PALETTE = ['#00897b', '#3f51b5', '#ff9800', '#f50057', '#9c27b0', '#4caf50', '#00bcd4', '#795548']
 
 function formatCurrency(n: number): string {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n)
@@ -74,7 +66,6 @@ export default function Page() {
     const [contracts, setContracts] = useState<ContractStats | null>(null)
     const [funnel, setFunnel] = useState<FunnelMetric[]>([])
     const [zones, setZones] = useState<ZoneDensity[]>([])
-    const [revenue, setRevenue] = useState<RevenueStats | null>(null)
     const [certifications, setCertifications] = useState<CertificationDashboardStats | null>(null)
     const [referrals, setReferrals] = useState<ReferralDashboardStats | null>(null)
     const [classificationBreakdown, setClassificationBreakdown] = useState<UserClassificationBreakdown | null>(null)
@@ -89,12 +80,11 @@ export default function Page() {
         async function loadData() {
             setLoading(true)
             try {
-                const [s, c, f, z, r, cert, ref, cls, mon, soc] = await Promise.all([
+                const [s, c, f, z, cert, ref, cls, mon, soc] = await Promise.all([
                     getAdminStats(),
                     getContractStats(),
                     getFunnelMetrics(),
                     getGeographicDensity(),
-                    getPlatformRevenueStats(),
                     getCertificationDashboardStats(),
                     getReferralDashboardStats(),
                     getUserClassificationBreakdown(),
@@ -105,7 +95,6 @@ export default function Page() {
                 setContracts(c)
                 setFunnel(f)
                 setZones(z)
-                setRevenue(r)
                 setCertifications(cert)
                 setReferrals(ref)
                 setClassificationBreakdown(cls)
@@ -120,12 +109,16 @@ export default function Page() {
         loadData()
     }, [])
 
-    const userDistribution = stats
-        ? [
-            { name: 'Propietarios', value: stats.totalPropietarios },
-            { name: 'Comerciantes Calificados', value: stats.totalComerciantes },
-        ]
-        : []
+    // Real-time Firestore subscription for Social Interceptions (SSR-safe with unmount cleanup)
+    useEffect(() => {
+        if (typeof window === 'undefined') return
+        const unsubscribe = subscribeToSocialInterceptions((liveStats) => {
+            setSocialStats(liveStats)
+        })
+        return () => {
+            unsubscribe()
+        }
+    }, [])
 
     const contractData = contracts
         ? [
@@ -157,26 +150,32 @@ export default function Page() {
     return (
         <Box sx={{ pb: 6 }}>
             {/* Header */}
-            <Box sx={{ mb: 4 }}>
-                <Typography variant="h4" fontWeight={800} color="#0f172a" gutterBottom>
+            <Box sx={{ mb: { xs: 2.5, sm: 4 } }}>
+                <Typography
+                    variant="h4"
+                    fontWeight={800}
+                    color="#0f172a"
+                    gutterBottom
+                    sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' }, letterSpacing: '-0.02em' }}
+                >
                     Centro de Control Ejecutivo
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
                     Monitoreo en tiempo real del modelo de negocios, desempeño de la comunidad, conversiones y flujo de caja.
                 </Typography>
             </Box>
 
             {/* ── 1. GLOBAL PILLAR KPIS ────────────────────────────────────────────── */}
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1, fontSize: { xs: '1.05rem', sm: '1.25rem' }, flexWrap: 'wrap' }}>
                 <PeopleIcon sx={{ color: 'var(--brand-teal, #00897b)' }} /> Métricas Principales de la Comunidad
             </Typography>
 
             <Box
                 sx={{
                     display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' },
-                    gap: 2.5,
-                    mb: 4,
+                    gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' },
+                    gap: { xs: 1.5, sm: 2, md: 2.5 },
+                    mb: { xs: 3, sm: 4 },
                 }}
             >
                 <KPICard
@@ -223,7 +222,7 @@ export default function Page() {
             </Box>
 
             {/* ── 2. MODELO DE NEGOCIOS Y FUENTES DE FINANCIACIÓN ─────────────────── */}
-            <Typography variant="h6" fontWeight={700} sx={{ mt: 5, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mt: { xs: 3, sm: 5 }, mb: 2, display: 'flex', alignItems: 'center', gap: 1, fontSize: { xs: '1.05rem', sm: '1.25rem' }, flexWrap: 'wrap' }}>
                 <AccountBalanceIcon sx={{ color: '#00897b' }} /> Modelo de Negocio y Fuentes de Financiación
             </Typography>
 
@@ -231,8 +230,8 @@ export default function Page() {
             <Box
                 sx={{
                     display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' },
-                    gap: 2.5,
+                    gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' },
+                    gap: { xs: 1.5, sm: 2, md: 2.5 },
                     mb: 3,
                 }}
             >
@@ -279,74 +278,82 @@ export default function Page() {
                 sx={{
                     display: 'grid',
                     gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-                    gap: 3,
+                    gap: { xs: 2, sm: 3 },
                     mb: 4,
+                    minWidth: 0,
                 }}
             >
                 {/* Funding Streams Bar Chart */}
-                <Paper sx={{ p: 3, borderRadius: 3 }} elevation={0} variant="outlined">
-                    <Typography variant="h6" fontWeight={700} gutterBottom>
+                <Paper sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, minWidth: 0, overflow: 'hidden' }} elevation={0} variant="outlined">
+                    <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                         Volumen por Fuente de Ingresos (COP)
                     </Typography>
                     {loading ? (
                         <Skeleton variant="rectangular" height={280} />
                     ) : (
-                        <ResponsiveContainer width="100%" height={280}>
-                            <BarChart data={fundingStreamsData} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" tick={{ fontSize: 11 }} interval={0} angle={-10} textAnchor="end" />
-                                <YAxis tickFormatter={(v) => `$${(v / 1000000).toFixed(1)}M`} />
-                                <Tooltip formatter={(val: any) => formatCurrency(Number(val))} />
-                                <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                                    {fundingStreamsData.map((entry, index) => (
-                                        <Cell key={`funding-${index}`} fill={entry.fill} />
-                                    ))}
-                                </Bar>
-                            </BarChart>
-                        </ResponsiveContainer>
+                        <Box sx={{ width: '100%', height: { xs: 250, sm: 280 }, minWidth: 0, overflow: 'hidden' }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={fundingStreamsData} margin={{ top: 10, right: 15, left: 10, bottom: 20 }}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" tick={{ fontSize: 10 }} interval={0} angle={-10} textAnchor="end" />
+                                    <YAxis tickFormatter={(v) => `$${(v / 1000000).toFixed(1)}M`} tick={{ fontSize: 10 }} />
+                                    <Tooltip formatter={(val: any) => formatCurrency(Number(val))} />
+                                    <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                                        {fundingStreamsData.map((entry, index) => (
+                                            <Cell key={`funding-${index}`} fill={entry.fill} />
+                                        ))}
+                                    </Bar>
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </Box>
                     )}
                 </Paper>
 
                 {/* Contract Health Bar Chart */}
-                <Paper sx={{ p: 3, borderRadius: 3 }} elevation={0} variant="outlined">
-                    <Typography variant="h6" fontWeight={700} gutterBottom>
+                <Paper sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, minWidth: 0, overflow: 'hidden' }} elevation={0} variant="outlined">
+                    <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                         Salud de Contratos en Plataforma
                     </Typography>
                     {loading ? (
                         <Skeleton variant="rectangular" height={280} />
                     ) : (
-                        <ResponsiveContainer width="100%" height={280}>
-                            <BarChart data={contractData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis allowDecimals={false} />
-                                <Tooltip />
-                                <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                                    {contractData.map((entry, index) => (
-                                        <Cell key={`bar-${index}`} fill={entry.fill} />
-                                    ))}
-                                </Bar>
-                            </BarChart>
-                        </ResponsiveContainer>
+                        <Box sx={{ width: '100%', height: { xs: 250, sm: 280 }, minWidth: 0, overflow: 'hidden' }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={contractData} margin={{ top: 10, right: 15, left: 0, bottom: 10 }}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" tick={{ fontSize: 11 }} />
+                                    <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
+                                    <Tooltip />
+                                    <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                                        {contractData.map((entry, index) => (
+                                            <Cell key={`bar-${index}`} fill={entry.fill} />
+                                        ))}
+                                    </Bar>
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </Box>
                     )}
                 </Paper>
             </Box>
 
             {/* ── 3. CLASIFICACIÓN DE USUARIOS (CATEGORÍA, CLASIFICACIÓN, GRADO) ────── */}
-            <Typography variant="h6" fontWeight={700} sx={{ mt: 5, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mt: { xs: 3, sm: 5 }, mb: 2, display: 'flex', alignItems: 'center', gap: 1, fontSize: { xs: '1.05rem', sm: '1.25rem' }, flexWrap: 'wrap' }}>
                 <CategoryIcon sx={{ color: '#00897b' }} /> Perfilamiento y Clasificación de la Comunidad (Propietarios vs. Comerciantes)
             </Typography>
 
-            <Paper sx={{ p: 3, borderRadius: 3, mb: 4 }} elevation={0} variant="outlined">
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', mb: 2 }}>
-                    <Typography variant="h6" fontWeight={700}>
+            <Paper sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, mb: 4, minWidth: 0, overflow: 'hidden' }} elevation={0} variant="outlined">
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 1.5, mb: 2 }}>
+                    <Typography variant="h6" fontWeight={700} sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                         Desglose por Ejes de Clasificación
                     </Typography>
 
                     <Tabs
                         value={classificationTab}
                         onChange={(_, v) => setClassificationTab(v)}
-                        sx={{ minHeight: 40 }}
+                        variant="scrollable"
+                        scrollButtons="auto"
+                        allowScrollButtonsMobile
+                        sx={{ minHeight: 40, maxWidth: '100%' }}
                     >
                         <Tab label="Clasificación Escala" value="clasificacion" sx={{ fontWeight: 700, minHeight: 40 }} />
                         <Tab label="Categoría Rango" value="categoria" sx={{ fontWeight: 700, minHeight: 40 }} />
@@ -376,7 +383,7 @@ export default function Page() {
             </Paper>
 
             {/* ── 4. EMBUDO DE CONVERSIÓN Y DENSIDAD GEOGRÁFICA ─────────────────── */}
-            <Typography variant="h6" fontWeight={700} sx={{ mt: 5, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mt: { xs: 3, sm: 5 }, mb: 2, display: 'flex', alignItems: 'center', gap: 1, fontSize: { xs: '1.05rem', sm: '1.25rem' }, flexWrap: 'wrap' }}>
                 <TrendingUpIcon sx={{ color: '#00897b' }} /> Embudo de Conversión & Densidad Zonal
             </Typography>
 
@@ -384,32 +391,35 @@ export default function Page() {
                 sx={{
                     display: 'grid',
                     gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-                    gap: 3,
+                    gap: { xs: 2, sm: 3 },
+                    minWidth: 0,
                 }}
             >
                 {/* Conversion Funnel */}
-                <Paper sx={{ p: 3, borderRadius: 3 }} elevation={0} variant="outlined">
-                    <Typography variant="h6" fontWeight={700} gutterBottom>
+                <Paper sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, minWidth: 0, overflow: 'hidden' }} elevation={0} variant="outlined">
+                    <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                         Embudo de Operación (Funnel)
                     </Typography>
                     {loading ? (
                         <Skeleton variant="rectangular" height={280} />
                     ) : (
-                        <ResponsiveContainer width="100%" height={280}>
-                            <BarChart layout="vertical" data={funnel} margin={{ left: 50, right: 30, top: 10, bottom: 10 }}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis type="number" allowDecimals={false} />
-                                <YAxis type="category" dataKey="stage" width={100} />
-                                <Tooltip />
-                                <Bar dataKey="count" fill="#00897b" radius={[0, 4, 4, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
+                        <Box sx={{ width: '100%', height: { xs: 250, sm: 280 }, minWidth: 0, overflow: 'hidden' }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart layout="vertical" data={funnel} margin={{ left: 35, right: 20, top: 10, bottom: 10 }}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis type="number" allowDecimals={false} tick={{ fontSize: 10 }} />
+                                    <YAxis type="category" dataKey="stage" width={90} tick={{ fontSize: 10 }} />
+                                    <Tooltip />
+                                    <Bar dataKey="count" fill="#00897b" radius={[0, 4, 4, 0]} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </Box>
                     )}
                 </Paper>
 
                 {/* Geographic Density */}
-                <Paper sx={{ p: 3, borderRadius: 3 }} elevation={0} variant="outlined">
-                    <Typography variant="h6" fontWeight={700} gutterBottom>
+                <Paper sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, minWidth: 0, overflow: 'hidden' }} elevation={0} variant="outlined">
+                    <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                         Densidad Geográfica de Comerciantes (Bogotá & Zonas)
                     </Typography>
                     {loading ? (
@@ -419,15 +429,17 @@ export default function Page() {
                             <Typography color="text.secondary">No hay datos de ubicación disponibles.</Typography>
                         </Box>
                     ) : (
-                        <ResponsiveContainer width="100%" height={280}>
-                            <BarChart data={zones} margin={{ top: 10, bottom: 30 }}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="zone" tick={{ fontSize: 10 }} interval={0} angle={-20} textAnchor="end" />
-                                <YAxis allowDecimals={false} />
-                                <Tooltip />
-                                <Bar dataKey="count" fill="#9c27b0" radius={[4, 4, 0, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
+                        <Box sx={{ width: '100%', height: { xs: 250, sm: 280 }, minWidth: 0, overflow: 'hidden' }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={zones} margin={{ top: 10, right: 15, left: 0, bottom: 30 }}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="zone" tick={{ fontSize: 9 }} interval={0} angle={-25} textAnchor="end" />
+                                    <YAxis allowDecimals={false} tick={{ fontSize: 10 }} />
+                                    <Tooltip />
+                                    <Bar dataKey="count" fill="#9c27b0" radius={[4, 4, 0, 0]} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </Box>
                     )}
                 </Paper>
 
@@ -461,24 +473,41 @@ export default function Page() {
                         <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
                             <Typography variant="caption" color="text.secondary" fontWeight={600}>Total Intercepciones</Typography>
                             <Typography variant="h5" fontWeight={800} color="#0f172a">{socialStats?.totalInterceptions ?? 0}</Typography>
-                            <Typography variant="caption" color="#64748b">{socialStats?.supplyInterceptions ?? 0} Oferta (60%) | {socialStats?.demandInterceptions ?? 0} Demanda (40%)</Typography>
+                            <Typography variant="caption" color="#64748b">
+                                {socialStats && socialStats.totalInterceptions > 0
+                                    ? `${socialStats.supplyInterceptions} Oferta (${Math.round((socialStats.supplyInterceptions / socialStats.totalInterceptions) * 100)}%) | ${socialStats.demandInterceptions} Demanda (${Math.round((socialStats.demandInterceptions / socialStats.totalInterceptions) * 100)}%)`
+                                    : '0 Oferta (0%) | 0 Demanda (0%)'}
+                            </Typography>
                         </Box>
                         <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
                             <Typography variant="caption" color="text.secondary" fontWeight={600}>Comentarios Despachados</Typography>
                             <Typography variant="h5" fontWeight={800} color="#00897b">{socialStats?.dispatchedComments ?? 0}</Typography>
-                            <Typography variant="caption" color="#64748b">Ratio 6:4 • Jitter FIFO</Typography>
+                            <Typography variant="caption" color="#64748b">
+                                {socialStats && socialStats.dispatchedComments > 0
+                                    ? 'Confirmados con Comment ID Meta'
+                                    : 'Sin despachos activos'}
+                            </Typography>
                         </Box>
                         <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
                             <Typography variant="caption" color="text.secondary" fontWeight={600}>Consumo Cuota Meta API</Typography>
                             <Typography variant="h5" fontWeight={800} color={socialStats && socialStats.appUsage.callCountPercent >= 80 ? '#f44336' : '#1877f2'}>
                                 {socialStats?.appUsage.callCountPercent ?? 0}%
                             </Typography>
-                            <Typography variant="caption" color="#64748b">Umbral de Corte: 80%</Typography>
+                            <Typography variant="caption" color="#64748b">
+                                {socialStats?.appUsage.thresholdExceeded ? '⚠️ Umbral >80% Superado' : 'Umbral Seguro (<80%)'}
+                            </Typography>
                         </Box>
                         <Box sx={{ p: 2, bgcolor: '#f8fafc', borderRadius: 2, border: '1px solid #e2e8f0' }}>
-                            <Typography variant="caption" color="text.secondary" fontWeight={600}>Simulaciones en Dev (MCP)</Typography>
-                            <Typography variant="h5" fontWeight={800} color="#9c27b0">{socialStats?.simulatedComments ?? 0}</Typography>
-                            <Typography variant="caption" color="#64748b">Pruebas Seguras IDE</Typography>
+                            <Typography variant="caption" color="text.secondary" fontWeight={600}>Simulaciones / Fallos</Typography>
+                            <Typography variant="h5" fontWeight={800} color={socialStats && (socialStats.failedComments ?? 0) > 0 ? '#f44336' : '#9c27b0'}>
+                                {socialStats?.simulatedComments ?? 0}
+                                {socialStats && (socialStats.failedComments ?? 0) > 0 ? ` (${socialStats.failedComments} ⚠️)` : ''}
+                            </Typography>
+                            <Typography variant="caption" color="#64748b">
+                                {socialStats && (socialStats.failedComments ?? 0) > 0
+                                    ? `${socialStats.failedComments} errores Meta API registrados`
+                                    : 'Pruebas Seguras IDE'}
+                            </Typography>
                         </Box>
                     </Box>
 
@@ -489,9 +518,15 @@ export default function Page() {
                     {loading ? (
                         <Skeleton variant="rectangular" height={160} sx={{ borderRadius: 2 }} />
                     ) : (socialStats?.recentEvents.length ?? 0) === 0 ? (
-                        <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
-                            No hay eventos de intercepción registrados.
-                        </Typography>
+                        <Box sx={{ py: 4, px: 2, textAlign: 'center', bgcolor: '#f8fafc', borderRadius: 2, border: '1px dashed #cbd5e1' }}>
+                            <ShareIcon sx={{ fontSize: 36, color: '#94a3b8', mb: 1 }} />
+                            <Typography variant="body2" fontWeight={600} color="#475569">
+                                No hay eventos de intercepción registrados en Firestore
+                            </Typography>
+                            <Typography variant="caption" color="#94a3b8" display="block">
+                                Los comentarios despachados y visitas atribuidas aparecerán aquí automáticamente en tiempo real.
+                            </Typography>
+                        </Box>
                     ) : (
                         <Box sx={{ overflowX: 'auto' }}>
                             <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8125rem' }}>
@@ -515,8 +550,8 @@ export default function Page() {
                                             </Box>
                                             <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
                                                 <Chip
-                                                    label={evt.intent === 'DEMAND' ? 'DEMANDA' : 'OFERTA'}
-                                                    color={evt.intent === 'DEMAND' ? 'primary' : 'secondary'}
+                                                    label={evt.intent === 'DEMAND' ? 'DEMANDA' : evt.intent === 'SUPPLY' ? 'OFERTA' : evt.intent}
+                                                    color={evt.intent === 'DEMAND' ? 'primary' : evt.intent === 'SUPPLY' ? 'secondary' : 'default'}
                                                     size="small"
                                                     sx={{ fontSize: '0.7rem', height: 20 }}
                                                 />
@@ -533,6 +568,12 @@ export default function Page() {
                                                             ? 'converted ⭐'
                                                             : evt.status === 'visited'
                                                             ? 'visited 👁️'
+                                                            : evt.status === 'dispatched'
+                                                            ? 'dispatched ✅'
+                                                            : evt.status === 'failed'
+                                                            ? `failed ⚠️${evt.errorCode ? ` (${evt.errorCode})` : ''}`
+                                                            : evt.status === 'simulated'
+                                                            ? 'simulated 🧪'
                                                             : evt.status
                                                     }
                                                     color={
@@ -542,10 +583,15 @@ export default function Page() {
                                                             ? 'info'
                                                             : evt.status === 'dispatched'
                                                             ? 'success'
+                                                            : evt.status === 'failed'
+                                                            ? 'error'
+                                                            : evt.status === 'simulated'
+                                                            ? 'secondary'
                                                             : 'default'
                                                     }
                                                     size="small"
                                                     variant="outlined"
+                                                    title={evt.errorDetails || undefined}
                                                     sx={{ fontSize: '0.7rem', height: 20, fontWeight: 600 }}
                                                 />
                                             </Box>
@@ -580,36 +626,58 @@ function KPICard({ title, value, subtitle, loading, icon, color, chip, isString 
     return (
         <Paper
             sx={{
-                p: 2.5,
+                p: { xs: 1.75, sm: 2.2, md: 2.5 },
                 borderRadius: 3,
                 borderLeft: `4px solid ${color}`,
                 display: 'flex',
                 alignItems: 'center',
-                gap: 2,
+                gap: { xs: 1.5, sm: 2 },
                 boxShadow: '0 4px 16px rgba(0,0,0,0.03)',
+                minWidth: 0,
+                overflow: 'hidden',
             }}
             elevation={0}
             variant="outlined"
         >
-            <Box sx={{ p: 1.2, bgcolor: `${color}14`, borderRadius: 2.5, display: 'flex' }}>
+            <Box sx={{ p: { xs: 1, sm: 1.2 }, bgcolor: `${color}14`, borderRadius: 2.5, display: 'flex', flexShrink: 0 }}>
                 {icon}
             </Box>
-            <Box sx={{ flex: 1 }}>
-                <Typography variant="caption" color="text.secondary" fontWeight={600} display="block" noWrap>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+                <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    fontWeight={600}
+                    display="block"
+                    sx={{
+                        fontSize: { xs: '0.75rem', sm: '0.8rem' },
+                        lineHeight: 1.2,
+                        mb: 0.3,
+                        wordBreak: 'break-word',
+                    }}
+                >
                     {title}
                 </Typography>
                 {loading ? (
                     <Skeleton width={80} height={32} />
                 ) : (
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Typography variant="h5" fontWeight={800} color="#0f172a">
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                        <Typography
+                            variant="h5"
+                            fontWeight={800}
+                            color="#0f172a"
+                            sx={{ fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.5rem' }, lineHeight: 1.2 }}
+                        >
                             {isString ? value : String(value ?? 0)}
                         </Typography>
                         {chip}
                     </Box>
                 )}
                 {subtitle && (
-                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.75rem', mt: 0.2, display: 'block' }}>
+                    <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ fontSize: { xs: '0.7rem', sm: '0.75rem' }, mt: 0.3, display: 'block', wordBreak: 'break-word' }}
+                    >
                         {subtitle}
                     </Typography>
                 )}

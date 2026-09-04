@@ -202,13 +202,14 @@ export class AutonomousWorker {
     let tickFailed = 0
 
     for (const r of results) {
-      if (r.status === 'DISPATCHED') {
+      if (r.status === 'DISPATCHED' && r.commentId) {
         tickDispatched += 1
         if (this.persistence) {
           await this.persistence
             .logEvent('interception_record', {
               id: r.id,
               postId: r.postId,
+              commentId: r.commentId,
               authorName: r.authorName,
               groupName: r.groupName || 'Grupo Facebook',
               intent: r.intent,
@@ -220,8 +221,28 @@ export class AutonomousWorker {
             })
             .catch(() => null)
         }
+      } else if (r.status === 'FAILED') {
+        tickFailed += 1
+        if (this.persistence) {
+          await this.persistence
+            .logEvent('interception_record', {
+              id: r.id,
+              postId: r.postId,
+              commentId: null,
+              authorName: r.authorName,
+              groupName: r.groupName || 'Grupo Facebook',
+              intent: r.intent,
+              detectedTrade: r.detectedTrade || 'general',
+              copyId: r.copyId,
+              renderedComment: r.commentBody,
+              timestamp: new Date(Date.now()).toISOString(),
+              status: 'failed',
+              errorCode: r.errorCode,
+              errorDetails: r.errorDetails,
+            })
+            .catch(() => null)
+        }
       }
-      if (r.status === 'FAILED') tickFailed += 1
     }
 
     // 5. Update Metrics

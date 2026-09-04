@@ -17,6 +17,8 @@ import {
     Tooltip,
     Snackbar,
     CircularProgress,
+    Card,
+    CardContent,
 } from '@mui/material'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 import AddIcon from '@mui/icons-material/Add'
@@ -182,39 +184,50 @@ export default function Page() {
 
                 {/* Tab 0: Approved Tiendas */}
                 {currentTab === 0 && (
-                    <Box sx={{ p: { xs: 1, sm: 2 } }}>
+                    <Box sx={{ p: { xs: 1.5, sm: 2 } }}>
                         {loading ? (
                             <Box sx={{ display: 'flex', justifyContent: 'center', py: 5 }}>
                                 <CircularProgress />
                             </Box>
                         ) : approvedTiendas.length > 0 ? (
-                            <TableContainer sx={{ maxWidth: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-                                <Table size="medium">
-                                    <TableHead>
-                                        <TableRow sx={{ backgroundColor: '#f8fafc' }}>
-                                            <TableCell sx={{ fontWeight: 700 }}>Negocio / Nombre</TableCell>
-                                            <TableCell sx={{ fontWeight: 700 }}>Categorías</TableCell>
-                                            <TableCell sx={{ fontWeight: 700 }}>Sedes</TableCell>
-                                            <TableCell sx={{ fontWeight: 700 }}>Contacto Principal</TableCell>
-                                            <TableCell sx={{ fontWeight: 700 }}>Origen</TableCell>
-                                            <TableCell align="right" sx={{ fontWeight: 700 }}>Acciones</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {approvedTiendas.map((tienda) => (
-                                            <TableRow key={tienda.id} hover>
-                                                <TableCell>
-                                                    <Typography variant="subtitle2" fontWeight={700} color="#0A2540">
-                                                        {tienda.nombre}
-                                                    </Typography>
-                                                    {tienda.descripcion && (
-                                                        <Typography variant="caption" color="text.secondary" noWrap sx={{ maxWidth: 220, display: 'block' }}>
-                                                            {tienda.descripcion}
-                                                        </Typography>
-                                                    )}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            <>
+                                {/* Mobile Cards (< md) */}
+                                <Box sx={{ display: { xs: 'flex', md: 'none' }, flexDirection: 'column', gap: 1.5 }}>
+                                    {approvedTiendas.map((tienda) => {
+                                        const primarySede = tienda.sedes[0]
+                                        const phone = tienda.telefonoPrincipal || primarySede?.telefonos?.[0]
+                                        const wa = tienda.whatsappPrincipal || primarySede?.whatsapp
+                                        return (
+                                            <Card
+                                                key={tienda.id}
+                                                sx={{
+                                                    borderRadius: 2.5,
+                                                    border: '1px solid',
+                                                    borderColor: 'divider',
+                                                    boxShadow: 'none',
+                                                }}
+                                            >
+                                                <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+                                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+                                                        <Box sx={{ minWidth: 0 }}>
+                                                            <Typography variant="subtitle1" fontWeight={800} color="#0A2540">
+                                                                {tienda.nombre}
+                                                            </Typography>
+                                                            {tienda.descripcion && (
+                                                                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
+                                                                    {tienda.descripcion}
+                                                                </Typography>
+                                                            )}
+                                                        </Box>
+                                                        <Chip
+                                                            label={tienda.origen === 'equipo_dezzpo' ? 'Dezzpo' : 'Usuario'}
+                                                            size="small"
+                                                            color={tienda.origen === 'equipo_dezzpo' ? 'primary' : 'default'}
+                                                            sx={{ height: 20, fontSize: '0.68rem', flexShrink: 0 }}
+                                                        />
+                                                    </Box>
+
+                                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1.5 }}>
                                                         {tienda.categorias.map((catKey) => {
                                                             const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
                                                             return (
@@ -223,89 +236,193 @@ export default function Page() {
                                                                     label={catObj ? catObj.label : catKey}
                                                                     size="small"
                                                                     variant="outlined"
+                                                                    sx={{ height: 20, fontSize: '0.68rem' }}
                                                                 />
                                                             )
                                                         })}
                                                     </Box>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Chip
-                                                        label={`${tienda.sedes.length} sedes`}
-                                                        size="small"
-                                                        color="info"
-                                                        variant="outlined"
-                                                        onClick={() => {
-                                                            setDetailTienda(tienda)
-                                                            setDetailOpen(true)
-                                                        }}
-                                                        sx={{ cursor: 'pointer', fontWeight: 600 }}
-                                                    />
-                                                </TableCell>
-                                                <TableCell>
-                                                    {(() => {
-                                                        const primarySede = tienda.sedes[0]
-                                                        const phone = tienda.telefonoPrincipal || primarySede?.telefonos?.[0]
-                                                        const wa = tienda.whatsappPrincipal || primarySede?.whatsapp
-                                                        return (
-                                                            <Box>
-                                                                {primarySede && (
-                                                                    <Typography variant="body2" fontWeight={600} noWrap sx={{ maxWidth: 200 }}>
-                                                                        📍 {primarySede.direccion}
-                                                                    </Typography>
-                                                                )}
-                                                                <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-                                                                    📞 {phone || 'Sin tel'} {wa ? `• WA: ${wa}` : ''}
-                                                                </Typography>
-                                                            </Box>
-                                                        )
-                                                    })()}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Chip
-                                                        label={tienda.origen === 'equipo_dezzpo' ? 'Dezzpo' : 'Usuario'}
-                                                        size="small"
-                                                        color={tienda.origen === 'equipo_dezzpo' ? 'primary' : 'default'}
-                                                    />
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    <Tooltip title="Ver sedes">
-                                                        <IconButton
+
+                                                    <Box sx={{ p: 1, bgcolor: 'background.default', borderRadius: 2, mb: 1.5, fontSize: '0.78rem' }}>
+                                                        {primarySede && (
+                                                            <Typography variant="caption" display="block" fontWeight={600} color="text.primary">
+                                                                📍 {primarySede.direccion}
+                                                            </Typography>
+                                                        )}
+                                                        {(phone || wa) && (
+                                                            <Typography variant="caption" display="block" color="text.secondary">
+                                                                📞 {phone || 'Sin tel'} {wa ? `• WA: ${wa}` : ''}
+                                                            </Typography>
+                                                        )}
+                                                    </Box>
+
+                                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                        <Chip
+                                                            label={`${tienda.sedes.length} sede${tienda.sedes.length !== 1 ? 's' : ''}`}
                                                             size="small"
+                                                            color="info"
+                                                            variant="outlined"
                                                             onClick={() => {
                                                                 setDetailTienda(tienda)
                                                                 setDetailOpen(true)
                                                             }}
-                                                        >
-                                                            <VisibilityIcon fontSize="small" />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip title="Editar tienda">
-                                                        <IconButton
-                                                            size="small"
-                                                            color="primary"
-                                                            onClick={() => {
-                                                                setSelectedTienda(tienda)
-                                                                setFormOpen(true)
-                                                            }}
-                                                        >
-                                                            <EditIcon fontSize="small" />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip title="Eliminar">
-                                                        <IconButton
-                                                            size="small"
-                                                            color="error"
-                                                            onClick={() => handleDelete(tienda.id)}
-                                                        >
-                                                            <DeleteIcon fontSize="small" />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                </TableCell>
+                                                            sx={{ cursor: 'pointer', fontWeight: 700, height: 24, fontSize: '0.72rem' }}
+                                                        />
+
+                                                        <Box sx={{ display: 'flex', gap: 0.5 }}>
+                                                            <IconButton
+                                                                size="small"
+                                                                onClick={() => {
+                                                                    setDetailTienda(tienda)
+                                                                    setDetailOpen(true)
+                                                                }}
+                                                            >
+                                                                <VisibilityIcon fontSize="small" />
+                                                            </IconButton>
+                                                            <IconButton
+                                                                size="small"
+                                                                color="primary"
+                                                                onClick={() => {
+                                                                    setSelectedTienda(tienda)
+                                                                    setFormOpen(true)
+                                                                }}
+                                                            >
+                                                                <EditIcon fontSize="small" />
+                                                            </IconButton>
+                                                            <IconButton
+                                                                size="small"
+                                                                color="error"
+                                                                onClick={() => handleDelete(tienda.id)}
+                                                            >
+                                                                <DeleteIcon fontSize="small" />
+                                                            </IconButton>
+                                                        </Box>
+                                                    </Box>
+                                                </CardContent>
+                                            </Card>
+                                        )
+                                    })}
+                                </Box>
+
+                                {/* Desktop Table (>= md) */}
+                                <TableContainer sx={{ display: { xs: 'none', md: 'block' }, maxWidth: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+                                    <Table size="medium">
+                                        <TableHead>
+                                            <TableRow sx={{ backgroundColor: '#f8fafc' }}>
+                                                <TableCell sx={{ fontWeight: 700 }}>Negocio / Nombre</TableCell>
+                                                <TableCell sx={{ fontWeight: 700 }}>Categorías</TableCell>
+                                                <TableCell sx={{ fontWeight: 700 }}>Sedes</TableCell>
+                                                <TableCell sx={{ fontWeight: 700 }}>Contacto Principal</TableCell>
+                                                <TableCell sx={{ fontWeight: 700 }}>Origen</TableCell>
+                                                <TableCell align="right" sx={{ fontWeight: 700 }}>Acciones</TableCell>
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                                        </TableHead>
+                                        <TableBody>
+                                            {approvedTiendas.map((tienda) => (
+                                                <TableRow key={tienda.id} hover>
+                                                    <TableCell>
+                                                        <Typography variant="subtitle2" fontWeight={700} color="#0A2540">
+                                                            {tienda.nombre}
+                                                        </Typography>
+                                                        {tienda.descripcion && (
+                                                            <Typography variant="caption" color="text.secondary" noWrap sx={{ maxWidth: 220, display: 'block' }}>
+                                                                {tienda.descripcion}
+                                                            </Typography>
+                                                        )}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                            {tienda.categorias.map((catKey) => {
+                                                                const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                                                                return (
+                                                                    <Chip
+                                                                        key={catKey}
+                                                                        label={catObj ? catObj.label : catKey}
+                                                                        size="small"
+                                                                        variant="outlined"
+                                                                    />
+                                                                )
+                                                            })}
+                                                        </Box>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Chip
+                                                            label={`${tienda.sedes.length} sedes`}
+                                                            size="small"
+                                                            color="info"
+                                                            variant="outlined"
+                                                            onClick={() => {
+                                                                setDetailTienda(tienda)
+                                                                setDetailOpen(true)
+                                                            }}
+                                                            sx={{ cursor: 'pointer', fontWeight: 600 }}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {(() => {
+                                                            const primarySede = tienda.sedes[0]
+                                                            const phone = tienda.telefonoPrincipal || primarySede?.telefonos?.[0]
+                                                            const wa = tienda.whatsappPrincipal || primarySede?.whatsapp
+                                                            return (
+                                                                <Box>
+                                                                    {primarySede && (
+                                                                        <Typography variant="body2" fontWeight={600} noWrap sx={{ maxWidth: 200 }}>
+                                                                            📍 {primarySede.direccion}
+                                                                        </Typography>
+                                                                    )}
+                                                                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+                                                                        📞 {phone || 'Sin tel'} {wa ? `• WA: ${wa}` : ''}
+                                                                    </Typography>
+                                                                </Box>
+                                                            )
+                                                        })()}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Chip
+                                                            label={tienda.origen === 'equipo_dezzpo' ? 'Dezzpo' : 'Usuario'}
+                                                            size="small"
+                                                            color={tienda.origen === 'equipo_dezzpo' ? 'primary' : 'default'}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        <Tooltip title="Ver sedes">
+                                                            <IconButton
+                                                                size="small"
+                                                                onClick={() => {
+                                                                    setDetailTienda(tienda)
+                                                                    setDetailOpen(true)
+                                                                }}
+                                                            >
+                                                                <VisibilityIcon fontSize="small" />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                        <Tooltip title="Editar tienda">
+                                                            <IconButton
+                                                                size="small"
+                                                                color="primary"
+                                                                onClick={() => {
+                                                                    setSelectedTienda(tienda)
+                                                                    setFormOpen(true)
+                                                                }}
+                                                            >
+                                                                <EditIcon fontSize="small" />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                        <Tooltip title="Eliminar">
+                                                            <IconButton
+                                                                size="small"
+                                                                color="error"
+                                                                onClick={() => handleDelete(tienda.id)}
+                                                            >
+                                                                <DeleteIcon fontSize="small" />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </>
                         ) : (
                             <Box sx={{ p: 4, textAlign: 'center' }}>
                                 <Typography color="text.secondary">No hay tiendas registradas o aprobadas aún.</Typography>
@@ -316,45 +433,55 @@ export default function Page() {
 
                 {/* Tab 1: Moderation Queue */}
                 {currentTab === 1 && (
-                    <Box sx={{ p: { xs: 1, sm: 2 } }}>
+                    <Box sx={{ p: { xs: 1.5, sm: 2 } }}>
                         {loading ? (
                             <Box sx={{ display: 'flex', justifyContent: 'center', py: 5 }}>
                                 <CircularProgress />
                             </Box>
                         ) : pendingTiendas.length > 0 ? (
-                            <TableContainer sx={{ maxWidth: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-                                <Table size="medium">
-                                    <TableHead>
-                                        <TableRow sx={{ backgroundColor: '#fff7ed' }}>
-                                            <TableCell sx={{ fontWeight: 700 }}>Negocio Sugerido</TableCell>
-                                            <TableCell sx={{ fontWeight: 700 }}>Categorías</TableCell>
-                                            <TableCell sx={{ fontWeight: 700 }}>Sedes Registradas</TableCell>
-                                            <TableCell sx={{ fontWeight: 700 }}>Fecha Sugerencia</TableCell>
-                                            <TableCell align="right" sx={{ fontWeight: 700 }}>Acciones de Moderación</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {pendingTiendas.map((tienda) => (
-                                            <TableRow key={tienda.id} hover>
-                                                <TableCell>
-                                                    <Typography variant="subtitle2" fontWeight={700}>
+                            <>
+                                {/* Mobile Moderation Cards (< md) */}
+                                <Box sx={{ display: { xs: 'flex', md: 'none' }, flexDirection: 'column', gap: 1.5 }}>
+                                    {pendingTiendas.map((tienda) => (
+                                        <Card
+                                            key={tienda.id}
+                                            sx={{
+                                                borderRadius: 2.5,
+                                                border: '1px solid',
+                                                borderColor: 'warning.light',
+                                                bgcolor: 'rgba(255, 247, 237, 0.4)',
+                                                boxShadow: 'none',
+                                            }}
+                                        >
+                                            <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+                                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+                                                    <Typography variant="subtitle1" fontWeight={800} color="#0A2540">
                                                         {tienda.nombre}
                                                     </Typography>
                                                     <Typography variant="caption" color="text.secondary">
-                                                        {tienda.descripcion || 'Sin descripción'}
+                                                        {new Date(tienda.createdAt).toLocaleDateString()}
                                                     </Typography>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                                        {tienda.categorias.map((catKey) => {
-                                                            const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
-                                                            return (
-                                                                <Chip key={catKey} label={catObj ? catObj.label : catKey} size="small" />
-                                                            )
-                                                        })}
-                                                    </Box>
-                                                </TableCell>
-                                                <TableCell>
+                                                </Box>
+                                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5, fontSize: '0.82rem' }}>
+                                                    {tienda.descripcion || 'Sin descripción'}
+                                                </Typography>
+
+                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1.5 }}>
+                                                    {tienda.categorias.map((catKey) => {
+                                                        const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                                                        return (
+                                                            <Chip
+                                                                key={catKey}
+                                                                label={catObj ? catObj.label : catKey}
+                                                                size="small"
+                                                                variant="outlined"
+                                                                sx={{ height: 20, fontSize: '0.68rem' }}
+                                                            />
+                                                        )
+                                                    })}
+                                                </Box>
+
+                                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pt: 1, borderTop: '1px solid', borderColor: 'divider' }}>
                                                     <Chip
                                                         label={`${tienda.sedes.length} sedes`}
                                                         size="small"
@@ -363,39 +490,113 @@ export default function Page() {
                                                             setDetailTienda(tienda)
                                                             setDetailOpen(true)
                                                         }}
-                                                        sx={{ cursor: 'pointer' }}
+                                                        sx={{ cursor: 'pointer', height: 24, fontSize: '0.72rem', fontWeight: 600 }}
                                                     />
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Typography variant="caption">{new Date(tienda.createdAt).toLocaleDateString()}</Typography>
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    <Button
-                                                        variant="contained"
-                                                        color="success"
-                                                        size="small"
-                                                        startIcon={<CheckCircleIcon />}
-                                                        onClick={() => handleApprove(tienda.id)}
-                                                        sx={{ textTransform: 'none', mr: 1, borderRadius: 2 }}
-                                                    >
-                                                        Aprobar
-                                                    </Button>
-                                                    <Button
-                                                        variant="outlined"
-                                                        color="error"
-                                                        size="small"
-                                                        startIcon={<CancelIcon />}
-                                                        onClick={() => handleReject(tienda.id)}
-                                                        sx={{ textTransform: 'none', borderRadius: 2 }}
-                                                    >
-                                                        Rechazar
-                                                    </Button>
-                                                </TableCell>
+
+                                                    <Box sx={{ display: 'flex', gap: 1 }}>
+                                                        <Button
+                                                            variant="contained"
+                                                            color="success"
+                                                            size="small"
+                                                            startIcon={<CheckCircleIcon />}
+                                                            onClick={() => handleApprove(tienda.id)}
+                                                            sx={{ textTransform: 'none', borderRadius: 2, fontSize: '0.78rem', py: 0.4 }}
+                                                        >
+                                                            Aprobar
+                                                        </Button>
+                                                        <Button
+                                                            variant="outlined"
+                                                            color="error"
+                                                            size="small"
+                                                            startIcon={<CancelIcon />}
+                                                            onClick={() => handleReject(tienda.id)}
+                                                            sx={{ textTransform: 'none', borderRadius: 2, fontSize: '0.78rem', py: 0.4 }}
+                                                        >
+                                                            Rechazar
+                                                        </Button>
+                                                    </Box>
+                                                </Box>
+                                            </CardContent>
+                                        </Card>
+                                    ))}
+                                </Box>
+
+                                {/* Desktop Table (>= md) */}
+                                <TableContainer sx={{ display: { xs: 'none', md: 'block' }, maxWidth: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+                                    <Table size="medium">
+                                        <TableHead>
+                                            <TableRow sx={{ backgroundColor: '#fff7ed' }}>
+                                                <TableCell sx={{ fontWeight: 700 }}>Negocio Sugerido</TableCell>
+                                                <TableCell sx={{ fontWeight: 700 }}>Categorías</TableCell>
+                                                <TableCell sx={{ fontWeight: 700 }}>Sedes Registradas</TableCell>
+                                                <TableCell sx={{ fontWeight: 700 }}>Fecha Sugerencia</TableCell>
+                                                <TableCell align="right" sx={{ fontWeight: 700 }}>Acciones de Moderación</TableCell>
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                                        </TableHead>
+                                        <TableBody>
+                                            {pendingTiendas.map((tienda) => (
+                                                <TableRow key={tienda.id} hover>
+                                                    <TableCell>
+                                                        <Typography variant="subtitle2" fontWeight={700}>
+                                                            {tienda.nombre}
+                                                        </Typography>
+                                                        <Typography variant="caption" color="text.secondary">
+                                                            {tienda.descripcion || 'Sin descripción'}
+                                                        </Typography>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                            {tienda.categorias.map((catKey) => {
+                                                                const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                                                                return (
+                                                                    <Chip key={catKey} label={catObj ? catObj.label : catKey} size="small" />
+                                                                )
+                                                            })}
+                                                        </Box>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Chip
+                                                            label={`${tienda.sedes.length} sedes`}
+                                                            size="small"
+                                                            color="warning"
+                                                            onClick={() => {
+                                                                setDetailTienda(tienda)
+                                                                setDetailOpen(true)
+                                                            }}
+                                                            sx={{ cursor: 'pointer' }}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Typography variant="caption">{new Date(tienda.createdAt).toLocaleDateString()}</Typography>
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        <Button
+                                                            variant="contained"
+                                                            color="success"
+                                                            size="small"
+                                                            startIcon={<CheckCircleIcon />}
+                                                            onClick={() => handleApprove(tienda.id)}
+                                                            sx={{ textTransform: 'none', mr: 1, borderRadius: 2 }}
+                                                        >
+                                                            Aprobar
+                                                        </Button>
+                                                        <Button
+                                                            variant="outlined"
+                                                            color="error"
+                                                            size="small"
+                                                            startIcon={<CancelIcon />}
+                                                            onClick={() => handleReject(tienda.id)}
+                                                            sx={{ textTransform: 'none', borderRadius: 2 }}
+                                                        >
+                                                            Rechazar
+                                                        </Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </>
                         ) : (
                             <Box sx={{ p: 4, textAlign: 'center' }}>
                                 <Typography color="text.secondary">No hay sugerencias de tiendas pendientes en la cola.</Typography>

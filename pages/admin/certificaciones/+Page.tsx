@@ -159,25 +159,28 @@ export default function Page() {
 
     if (loading) {
         return (
-            <Box>
-                <Typography variant="h4" fontWeight={700} gutterBottom>Verificación de Certificaciones</Typography>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: 2, height: '70vh' }}>
+            <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+                <Typography variant="h4" fontWeight={700} sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' }, mb: 2 }}>
+                    Verificación de Certificaciones
+                </Typography>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '320px 1fr' }, gap: 2, height: '70vh' }}>
                     <Skeleton variant="rectangular" height="100%" sx={{ borderRadius: 2 }} />
-                    <Skeleton variant="rectangular" height="100%" sx={{ borderRadius: 2 }} />
+                    <Skeleton variant="rectangular" height="100%" sx={{ borderRadius: 2, display: { xs: 'none', md: 'block' } }} />
                 </Box>
             </Box>
         )
     }
 
     return (
-        <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Typography variant="h4" fontWeight={700}>
+        <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, gap: 1.5, mb: 3 }}>
+                <Typography variant="h4" fontWeight={700} sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' } }}>
                     Validación de Competencias Laborales
                 </Typography>
                 <Chip
                     label={`${queue.filter(q => q.status === 'pending' || q.status === 'scheduled').length} pendientes`}
                     color={queue.some(q => q.status === 'pending') ? 'warning' : 'default'}
+                    size="small"
                 />
             </Box>
 
@@ -194,14 +197,14 @@ export default function Page() {
                         display: 'grid',
                         gridTemplateColumns: { xs: '1fr', md: '320px 1fr' },
                         gap: 2,
-                        minHeight: '70vh',
+                        minHeight: { md: '70vh' },
                     }}
                 >
                     {/* Queue List */}
-                    <Paper sx={{ borderRadius: 2, overflow: 'auto' }} elevation={0} variant="outlined">
-                        <Box sx={{ p: 2 }}>
-                            <Typography variant="subtitle2" color="text.secondary">
-                                Listado de Evaluaciones
+                    <Paper sx={{ borderRadius: 2, maxHeight: { xs: 260, md: '75vh' }, overflow: 'auto' }} elevation={0} variant="outlined">
+                        <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
+                            <Typography variant="subtitle2" color="text.secondary" fontWeight={700}>
+                                Listado de Evaluaciones ({queue.length})
                             </Typography>
                         </Box>
                         <List disablePadding>
@@ -215,26 +218,27 @@ export default function Page() {
                                     }}
                                 >
                                     <ListItemAvatar>
-                                        <Avatar sx={{ bgcolor: '#0d9488' }}>
-                                            <BadgeIcon />
+                                        <Avatar sx={{ bgcolor: '#0d9488', width: 36, height: 36 }}>
+                                            <BadgeIcon sx={{ fontSize: 20 }} />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
                                         primary={item.category}
+                                        primaryTypographyProps={{ fontSize: '0.88rem', fontWeight: 600 }}
                                         secondary={
                                             <Box sx={{ mt: 0.5, display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                                 <Chip 
                                                     label={STATUS_LABELS[item.status]?.label || item.status} 
                                                     size="small" 
                                                     color={STATUS_LABELS[item.status]?.color || 'default'}
-                                                    sx={{ fontSize: '0.7rem' }}
+                                                    sx={{ fontSize: '0.68rem', height: 20 }}
                                                 />
                                                 <Chip 
                                                     label={item.paymentStatus === 'paid' ? 'PAGADO' : 'PENDIENTE'} 
                                                     size="small" 
                                                     variant="outlined" 
                                                     color={item.paymentStatus === 'paid' ? 'success' : 'warning'}
-                                                    sx={{ fontSize: '0.7rem' }}
+                                                    sx={{ fontSize: '0.68rem', height: 20 }}
                                                 />
                                             </Box>
                                         }
@@ -247,13 +251,13 @@ export default function Page() {
                     {/* Workbench */}
                     {selected && (
                         <Paper sx={{ borderRadius: 2, display: 'flex', flexDirection: 'column' }} elevation={0} variant="outlined">
-                            <Box sx={{ p: 3, flex: 1 }}>
-                                <Typography variant="h6" fontWeight={700} gutterBottom>
+                            <Box sx={{ p: { xs: 2, sm: 3 }, flex: 1 }}>
+                                <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '1.05rem', sm: '1.25rem' } }}>
                                     Detalle de la Solicitud
                                 </Typography>
                                 <Divider sx={{ my: 2 }} />
 
-                                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
+                                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
                                     <FieldRow label="ID Solicitud" value={selected.requestId} mono />
                                     <FieldRow label="ID Comerciante" value={selected.comercianteId} mono />
                                     <FieldRow label="Especialidad / Categoría" value={selected.category} />
@@ -276,12 +280,13 @@ export default function Page() {
 
                             {/* Action Bar */}
                             <Divider />
-                            <Box sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', gap: 1.5, bgcolor: '#fafafa' }}>
+                            <Box sx={{ p: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end', gap: 1.5, bgcolor: '#fafafa' }}>
                                 {/* Schedule Action (Only if status is pending - paid) */}
                                 {selected.status === 'pending' && (
                                     <Button
                                         variant="outlined"
                                         color="primary"
+                                        size="small"
                                         startIcon={<CalendarMonthIcon />}
                                         onClick={() => {
                                             const formattedDate = selected.dateTime ? selected.dateTime.split('T')[0] : ''
@@ -289,6 +294,7 @@ export default function Page() {
                                             setScheduleDialogOpen(true)
                                         }}
                                         disabled={processing}
+                                        sx={{ flex: { xs: 1, sm: 'none' } }}
                                     >
                                         Programar Visita
                                     </Button>
@@ -299,9 +305,11 @@ export default function Page() {
                                     <Button
                                         variant="outlined"
                                         color="secondary"
+                                        size="small"
                                         startIcon={<HourglassEmptyIcon />}
                                         onClick={handleMarkEvaluated}
                                         disabled={processing}
+                                        sx={{ flex: { xs: 1, sm: 'none' } }}
                                     >
                                         Completar Evaluación
                                     </Button>
@@ -313,18 +321,22 @@ export default function Page() {
                                         <Button
                                             variant="outlined"
                                             color="error"
+                                            size="small"
                                             startIcon={<CancelIcon />}
                                             onClick={() => setRejectDialogOpen(true)}
                                             disabled={processing}
+                                            sx={{ flex: { xs: 1, sm: 'none' } }}
                                         >
                                             Rechazar
                                         </Button>
                                         <Button
                                             variant="contained"
                                             color="success"
+                                            size="small"
                                             startIcon={<CheckCircleIcon />}
                                             onClick={handleApprove}
                                             disabled={processing}
+                                            sx={{ flex: { xs: 1, sm: 'none' } }}
                                         >
                                             Aprobar y Certificar
                                         </Button>

@@ -20,6 +20,8 @@ export {
     getUserClassificationBreakdown,
     getMultiStreamMonetization,
     getSocialInterceptorStats,
+    subscribeToSocialInterceptions,
+    EMPTY_SOCIAL_STATS,
 } from './adminService'
 
 export type {

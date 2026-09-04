@@ -49,14 +49,29 @@ describe('Social Dispatch Queue with Jitter and 6:4 Ratio Balancing', () => {
     queue.enqueue(createDummyTask('1'))
     queue.enqueue(createDummyTask('2'))
 
-    const mockPoster = vi.fn().mockResolvedValue({ success: true })
+    const mockPoster = vi.fn().mockResolvedValue({ success: true, commentId: 'comment_test_id' })
     const results = await queue.processQueue(mockPoster)
 
     expect(mockPoster).toHaveBeenCalledTimes(2)
     expect(results[0]?.status).toBe('DISPATCHED')
+    expect(results[0]?.commentId).toBe('comment_test_id')
     expect(results[1]?.status).toBe('DISPATCHED')
+    expect(results[1]?.commentId).toBe('comment_test_id')
     expect(queue.getStats().pending).toBe(0)
     expect(queue.getStats().dispatchedInCurrentHour).toBe(2)
+  })
+
+  it('should mark task as FAILED if poster returns success without a valid commentId', async () => {
+    queue.enqueue(createDummyTask('fail_task_1'))
+
+    // Simulating deceptive / empty response with missing commentId
+    const mockPosterNoId = vi.fn().mockResolvedValue({ success: true, commentId: '' })
+    const results = await queue.processQueue(mockPosterNoId)
+
+    expect(results[0]?.status).toBe('FAILED')
+    expect(results[0]?.errorCode).toBe(422)
+    expect(results[0]?.errorDetails).toContain('missing valid comment_id')
+    expect(queue.getStats().dispatchedInCurrentHour).toBe(0)
   })
 
   it('should enforce 6:4 (60% Supply / 40% Demand) ratio priority during processing', async () => {
@@ -72,7 +87,7 @@ describe('Social Dispatch Queue with Jitter and 6:4 Ratio Balancing', () => {
     queue.enqueue(createDummyTask('S4', 'SUPPLY'))
     queue.enqueue(createDummyTask('S5', 'SUPPLY'))
 
-    const mockPoster = vi.fn().mockResolvedValue({ success: true })
+    const mockPoster = vi.fn().mockResolvedValue({ success: true, commentId: 'fb_comment_ratio' })
     const results = await queue.processQueue(mockPoster)
 
     expect(mockPoster).toHaveBeenCalledTimes(10)
@@ -102,7 +117,7 @@ describe('Social Dispatch Queue with Jitter and 6:4 Ratio Balancing', () => {
     limitedQueue.enqueue(createDummyTask('3'))
     limitedQueue.enqueue(createDummyTask('4')) // 4th exceeds maxCommentsPerHour = 3
 
-    const mockPoster = vi.fn().mockResolvedValue({ success: true })
+    const mockPoster = vi.fn().mockResolvedValue({ success: true, commentId: 'fb_comment_limit' })
     const results = await limitedQueue.processQueue(mockPoster)
 
     expect(mockPoster).toHaveBeenCalledTimes(3)
@@ -117,7 +132,7 @@ describe('Social Dispatch Queue with Jitter and 6:4 Ratio Balancing', () => {
     queue.enqueue(createDummyTask('1'))
     queue.enqueue(createDummyTask('2'))
 
-    const mockPoster = vi.fn().mockResolvedValue({ success: true })
+    const mockPoster = vi.fn().mockResolvedValue({ success: true, commentId: 'fb_comment_breaker' })
     const results = await queue.processQueue(mockPoster, breaker)
 
     expect(mockPoster).not.toHaveBeenCalled()
@@ -125,11 +140,13 @@ describe('Social Dispatch Queue with Jitter and 6:4 Ratio Balancing', () => {
     expect(results[0]?.errorCode).toBe(429)
   })
 
-  it('should preserve groupName across enqueued tasks and results', () => {
-    const task = createDummyTask('grp_1', 'SUPPLY', 'Construcción y Reformas Suba')
+  it('should preserve groupName across enqueued tasks and results', async () => {
+    const task = createDummyTask('gn_1', 'SUPPLY', 'Maestros y Ayudantes de Construcción Bogotá')
     queue.enqueue(task)
-    const next = queue.getNextPendingTask()
-    expect(next?.groupName).toBe('Construcción y Reformas Suba')
+
+    const mockPoster = vi.fn().mockResolvedValue({ success: true, commentId: 'fb_comment_gn' })
+    const results = await queue.processQueue(mockPoster)
+
+    expect(results[0]?.groupName).toBe('Maestros y Ayudantes de Construcción Bogotá')
   })
 })
-

@@ -177,3 +177,24 @@ META_COMMERCIAL_PORTFOLIO_ID=350306805830712
 META_ADVERTISING_ACCOUNT_ID=836577536843754
 META_WEBHOOK_VERIFY_TOKEN=********************************
 ```
+
+---
+
+## 9. Arquitectura de Producción en Vivo y Cero Tolerancia a Mocks (2026-09)
+
+### Repositorio Oficial (`src/services/social/interceptionsRepository.ts`)
+* **Conexión Directa a Firestore**: Todas las métricas y registros provienen de la colección `socialInterceptionLogs`.
+* **Zero Mock Policy**: Si la colección está vacía (`snap.empty`), devuelve estrictamente contadores en 0 y lista vacía. Queda estrictamente prohibido el uso de objetos `fallback` con datos simulados o nombres de usuario ficticios.
+* **Suscripción Reactiva en Tiempo Real**: `subscribeToSocialInterceptions` implementa `onSnapshot` de Firestore con verificación SSR (`typeof window !== 'undefined'`) y retorno de función de limpieza `unsubscribe()`, eliminando cualquier fuga de memoria (*memory leak*).
+* **Validación Obligatoria de `comment_id`**: El estado interno `DISPATCHED` y el registro de base de datos sólo ocurren tras recibir un `comment_id` no vacío emitido por Meta Graph API en una respuesta HTTP 200/201.
+* **Auditoría de Fallos Transparente**: Si Meta rechaza la petición (ej. error 400, 403 o `#3 Missing Permission`), la tarea se persiste como `status: 'failed'` con su `errorCode` y `errorDetails`, mostrándose en el Dashboard con un chip de error en lugar de engañar al usuario con un falso despacho.
+* **Adaptador de Persistencia para el Worker**: `createFirestorePersistenceAdapter(firestore)` almacena deltas por grupo (`socialGroupDeltas`) y telemetría de ticks (`socialMetaTelemetry`).
+
+### Configuración de Token de Meta y Scopes Activos
+* **Tipo de Token**: System User Token (`Comunidad_Dezzpo`).
+* **Scopes Críticos Otorgados**:
+  - `pages_manage_posts`: Publicación y respuesta automatizada de comentarios.
+  - `pages_read_user_content`: Lectura de comentarios y contenido de usuarios en la página.
+  - `pages_read_engagement`: Lectura de interacciones y métricas de publicaciones.
+  - `pages_manage_metadata`: Configuración y subscripción a webhooks de Meta.
+* **Política de Grupos de Meta v19.0+**: Con la deprecación de la API de Grupos de terceros (abril 2024), la interacción en grupos exige que la app `DEZZPO` esté agregada por el administrador en la configuración del grupo, o que la interacción ocurra vía Webhooks en la página oficial.

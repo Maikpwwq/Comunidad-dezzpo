@@ -414,3 +414,12 @@ const respuestaContextual = CONTEXT_TRIGGER_RESPONSES.find(
   (r) => r.targetTrade === 'plomero'
 )?.recommendedCopy;
 ```
+
+### 8.2 Ejecución Autónoma & Trazabilidad de Auditoría en Tiempo Real
+
+Esta biblioteca de demanda alimenta directamente el **Pipeline de Interceptación de Demanda**:
+
+1. **Cuota Determinística del 40%**: En el worker autónomo (`@services/social/autonomousWorker.ts`), 4 de cada 10 comentarios automáticos seleccionan dinámicamente un copy de esta biblioteca según el dolor (`CONFIANZA` o `RAPIDEZ`) y formato (`SIN_URL` para primer nivel, `CON_URL` para respuestas de segundo nivel).
+2. **Validación Estricta de Publicación**: Para que un evento de interceptación se compute como exitoso (`dispatched`), la llamada a Meta Graph API v19+ debe retornar un `comment_id` no vacío. Si Meta rechaza la operación por falta de permisos en grupos de terceros (debido a la deprecación de abril 2024), el worker persiste el fallo real en Firestore con `status: 'failed'` y su código de error (ej. `403/3`).
+3. **Métricas en Vivo (Sin Mocks)**: El Dashboard de Administración (`/admin/dashboard`) se conecta en vivo a `socialInterceptionLogs` mediante `subscribeToSocialInterceptions()` en `@services/social/interceptionsRepository.ts`. Las métricas de visualizaciones (`visited 👁️`) y conversiones (`converted ⭐`) se actualizan reactivamente sin datos simulados.
+

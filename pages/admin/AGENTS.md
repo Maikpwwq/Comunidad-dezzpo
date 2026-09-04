@@ -47,6 +47,12 @@
 |----------|---------|---------|
 | `getAllReferralsForAdmin()` | `ReferralRecord[]` | All referral records ordered by `createdAt` desc |
 
+### Social Interceptions Service (`interceptionsRepository.ts` / `adminService.ts`)
+| Function | Returns | Purpose |
+|----------|---------|---------|
+| `getSocialInterceptionStats()` | `Promise<SocialInterceptorStats>` | Real Firestore query without mock fallbacks |
+| `subscribeToSocialInterceptions(onUpdate, onError)` | `() => void` | Reactive `onSnapshot` listener with unmount cleanup |
+
 ## 4. Dependencies (Admin-Only)
 
 | Package | Usage |
@@ -76,6 +82,12 @@
 - Use **path aliases** (`@services/admin`, `@hooks/useAdminGuard`) — no relative imports
 - All new code must be `.tsx` / `.ts` — no `.jsx`
 - Zero `any` policy — use explicit types for all Firestore data
+
+### Zero-Tolerance Policy on Mocks & Prototypes (Admin & Social Automation)
+- **Strictly Forbidden**: Hardcoding fallback metrics, simulated counters, or fake user names (e.g. "Carlos Ramirez", "Mariana Duarte") in any admin service or UI component.
+- **Empty State Integrity**: When Firestore collections have 0 documents, return real zeroes and empty arrays (`recentEvents: []`), rendering polished empty states rather than mock fallbacks.
+- **Comment ID Requirement**: Status `dispatched` requires a verified, non-empty `comment_id` from Meta Graph API. Any failure must be flagged as `failed` with its `errorCode` and `errorDetails`.
+- **SSR Safety & Memory Leaks**: Real-time Firestore listeners (`onSnapshot`) must check `typeof window !== 'undefined'` and return cleanup functions (`unsubscribe()`) to prevent memory leaks during SPA navigation or Vike SSR rendering.
 
 ## 7. RAG Chatbot Admin Context
 

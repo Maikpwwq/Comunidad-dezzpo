@@ -157,6 +157,7 @@ export interface DispatchTask {
   status: DispatchTaskStatus
   readonly enqueuedAt: number
   dispatchedAt: number | null
+  commentId?: string | null | undefined
   errorCode: number | null
   errorDetails?: string | undefined
 }
@@ -212,6 +213,7 @@ export interface InterceptorConfig {
 export interface InterceptionRecord {
   readonly id: string
   readonly postId: string
+  readonly commentId?: string | null | undefined
   readonly authorName: string
   readonly groupName: string
   readonly intent: 'DEMAND' | 'SUPPLY' | 'NEUTRAL' | string
@@ -219,7 +221,9 @@ export interface InterceptionRecord {
   readonly copyId: string
   readonly renderedComment: string
   readonly timestamp: string
-  readonly status: 'dispatched' | 'visited' | 'converted' | 'pending' | 'failed' | 'skipped' | string
+  readonly status: 'dispatched' | 'visited' | 'converted' | 'pending' | 'failed' | 'simulated' | 'skipped' | string
+  readonly errorCode?: number | null | undefined
+  readonly errorDetails?: string | null | undefined
   readonly visitedAt?: string | null | undefined
   readonly convertedAt?: string | null | undefined
 }
@@ -280,4 +284,25 @@ export interface SimulateScanResult {
     readonly preparedComment?: PreparedComment | undefined
   }[]
   readonly executionLogs: readonly string[]
+}
+
+// =============================================================================
+// 8. REAL-TIME DASHBOARD TELEMETRY & AUDIT STATS
+// =============================================================================
+
+export interface SocialInterceptorStats {
+  readonly totalInterceptions: number
+  readonly demandInterceptions: number
+  readonly supplyInterceptions: number
+  readonly dispatchedComments: number
+  readonly simulatedComments: number
+  readonly failedComments: number
+  readonly breakerState: CircuitBreakerState
+  readonly appUsage: {
+    readonly callCountPercent: number
+    readonly cpuTimePercent: number
+    readonly totalTimePercent: number
+    readonly thresholdExceeded: boolean
+  }
+  readonly recentEvents: readonly InterceptionRecord[]
 }

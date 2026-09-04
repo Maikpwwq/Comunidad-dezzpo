@@ -817,169 +817,18 @@ export async function getMultiStreamMonetization(): Promise<MultiStreamMonetizat
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Social Media Interceptor & Meta API Stats
+// ─────────────────────────────────────────────────────────────────────────────
+// Social Media Interceptor & Meta API Stats (Production Firestore Data Layer)
 // ─────────────────────────────────────────────────────────────────────────────
 
-export interface InterceptionRecord {
-    id: string
-    postId: string
-    authorName: string
-    groupName: string
-    intent: 'DEMAND' | 'SUPPLY' | 'NEUTRAL' | string
-    detectedTrade: string
-    copyId: string
-    renderedComment: string
-    timestamp: string
-    status: 'dispatched' | 'visited' | 'converted' | 'pending' | 'failed' | 'skipped' | string
-    visitedAt?: string | null | undefined
-    convertedAt?: string | null | undefined
-}
+export {
+    getSocialInterceptionStats,
+    getSocialInterceptorStats,
+    subscribeToSocialInterceptions,
+    EMPTY_SOCIAL_STATS,
+    type InterceptionRecord,
+    type SocialInterceptorStats,
+} from '@services/social'
 
-export interface SocialInterceptorStats {
-    totalInterceptions: number
-    demandInterceptions: number
-    supplyInterceptions: number
-    dispatchedComments: number
-    simulatedComments: number
-    breakerState: 'CLOSED' | 'OPEN' | 'HALF_OPEN' | 'HALTED'
-    appUsage: {
-        callCountPercent: number
-        cpuTimePercent: number
-        totalTimePercent: number
-        thresholdExceeded: boolean
-    }
-    recentEvents: InterceptionRecord[]
-}
-
-export async function getSocialInterceptorStats(): Promise<SocialInterceptorStats> {
-    const fallback: SocialInterceptorStats = {
-        totalInterceptions: 24,
-        demandInterceptions: 10,
-        supplyInterceptions: 14, // Aligned with 60/40 ratio
-        dispatchedComments: 18,
-        simulatedComments: 6,
-        breakerState: 'CLOSED',
-        appUsage: {
-            callCountPercent: 28,
-            cpuTimePercent: 19,
-            totalTimePercent: 22,
-            thresholdExceeded: false,
-        },
-        recentEvents: [
-            {
-                id: 'evt_1',
-                postId: 'fb_post_9012',
-                authorName: 'Carlos Ramirez',
-                groupName: 'Plomería y Destapes Bogotá',
-                intent: 'DEMAND',
-                detectedTrade: 'plomero',
-                copyId: 'CLI-CONF-CON-CON-15',
-                renderedComment: '👋 Carlos Ramirez, antes de contratar revisa su perfil en dezzpo.com 👉 https://dezzpo.com/...',
-                timestamp: new Date(Date.now() - 1000 * 60 * 12).toISOString(),
-                status: 'visited',
-                visitedAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
-            },
-            {
-                id: 'evt_2',
-                postId: 'fb_post_9013',
-                authorName: 'Construcciones El Sol',
-                groupName: 'Maestros y Ayudantes de Construcción Bogotá',
-                intent: 'SUPPLY',
-                detectedTrade: 'maestro',
-                copyId: 'MAES-EXP-INT-URL-01',
-                renderedComment: 'Buenas maestro, muestra tus obras y recibe cotizaciones directas en dezzpo.com 👉 https://dezzpo.com/...',
-                timestamp: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
-                status: 'converted',
-                convertedAt: new Date(Date.now() - 1000 * 60 * 10).toISOString(),
-            },
-            {
-                id: 'evt_3',
-                postId: 'fb_post_9014',
-                authorName: 'Mariana Duarte',
-                groupName: 'Remodelaciones & Acabados Bogotá',
-                intent: 'DEMAND',
-                detectedTrade: 'electricista',
-                copyId: 'CLI-RAP-BEN-CON-03',
-                renderedComment: 'Hola Mariana Duarte, compara electricistas certificados sin intermediarios en dezzpo.com 👉 https://dezzpo.com/...',
-                timestamp: new Date(Date.now() - 1000 * 60 * 58).toISOString(),
-                status: 'dispatched',
-            },
-            {
-                id: 'evt_4',
-                postId: 'fb_post_9015',
-                authorName: 'Albañilería y Reformas SAS',
-                groupName: 'Construcción y Obras Cundinamarca',
-                intent: 'SUPPLY',
-                detectedTrade: 'albañil',
-                copyId: 'MAES-EXP-CON-URL-02',
-                renderedComment: 'Hola maestro, publica tu vitrina profesional y recibe clientes directos en dezzpo.com 👉 https://dezzpo.com/...',
-                timestamp: new Date(Date.now() - 1000 * 60 * 115).toISOString(),
-                status: 'visited',
-                visitedAt: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
-            },
-        ],
-    }
-
-    if (!isFirebaseAvailable() || !firestore) {
-        return fallback
-    }
-
-    try {
-        const logsCol = collection(firestore, 'socialInterceptionLogs')
-        const q = query(logsCol)
-        const snap = await getDocs(q)
-
-        if (snap.empty) {
-            return fallback
-        }
-
-        let demand = 0
-        let supply = 0
-        let dispatched = 0
-        let simulated = 0
-
-        const events: InterceptionRecord[] = snap.docs.map((docSnap) => {
-            const data = docSnap.data()
-            if (data.intent === 'DEMAND') demand++
-            if (data.intent === 'SUPPLY') supply++
-            if (data.status === 'dispatched' || data.status === 'visited' || data.status === 'converted') dispatched++
-            if (data.status === 'simulated') simulated++
-
-            return {
-                id: docSnap.id,
-                postId: String(data.postId || docSnap.id),
-                authorName: String(data.authorName || 'Usuario Facebook'),
-                groupName: String(data.groupName || data.utmTerm || 'Grupo Facebook'),
-                intent: String(data.intent || 'NEUTRAL'),
-                detectedTrade: String(data.detectedTrade || 'general'),
-                copyId: String(data.copyId || 'DEFAULT'),
-                renderedComment: String(data.renderedComment || data.comment || ''),
-                timestamp: data.timestamp ? new Date(data.timestamp).toISOString() : new Date().toISOString(),
-                status: String(data.status || 'dispatched'),
-                visitedAt: data.visitedAt ? new Date(data.visitedAt).toISOString() : null,
-                convertedAt: data.convertedAt ? new Date(data.convertedAt).toISOString() : null,
-            }
-        })
-
-        return {
-            totalInterceptions: snap.size,
-            demandInterceptions: demand,
-            supplyInterceptions: supply,
-            dispatchedComments: dispatched,
-            simulatedComments: simulated,
-            breakerState: 'CLOSED',
-            appUsage: {
-                callCountPercent: Math.min(Math.round((snap.size / 100) * 10), 80),
-                cpuTimePercent: 15,
-                totalTimePercent: 18,
-                thresholdExceeded: false,
-            },
-            recentEvents: events.slice(0, 15),
-        }
-    } catch (err) {
-        console.error('Error querying social interception logs:', err)
-        return fallback
-    }
-}
 
 

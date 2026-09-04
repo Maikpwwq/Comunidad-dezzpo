@@ -647,14 +647,18 @@ src/styles/
 - **System User**: `Comunidad_Dezzpo` (System User ID: `61593606435383`) with Full Admin access to connected assets (`Comunidad Dezzpo` Page ID: `375828669832688`, Instagram `@comunidad_dezzpo`, App `DEZZPO`).
 - **Token Lifecycle & Cadence**: System User Page Access Token rotates on a **60-day cadence**.
 - **Assigned Scopes / Permissions**:
-  - `pages_read_engagement`, `pages_manage_ads`, `pages_show_list`, `business_management`, `ads_read`, `ads_management`, `catalog_management`, `manage_app_solution`, `threads_business_basic`, `whatsapp_business_manage_events`.
+  - `pages_manage_posts`, `pages_read_user_content`, `pages_read_engagement`, `pages_manage_metadata`, `pages_manage_ads`, `pages_show_list`, `business_management`, `ads_read`, `ads_management`, `catalog_management`, `manage_app_solution`, `threads_business_basic`, `whatsapp_business_manage_events`.
+- **Zero-Mock Policy & Real-Time Telemetry**:
+  - All admin dashboard counters (`/admin/dashboard`) stream live from Firestore collection `socialInterceptionLogs` via `interceptionsRepository.ts`.
+  - Prototipos o fallbacks simulados quedan estrictamente prohibidos. Colecciones vacías muestran estados ceros limpios.
+  - El estado `DISPATCHED` exige la confirmación de un `comment_id` no vacío devuelto por Meta Graph API; en caso de rechazo, el evento se audita como `status: 'failed'`.
 - **Domain Verifications (HTML Meta Tags)**:
   - `dezzpo.com`: `<meta name="facebook-domain-verification" content="jjqyumqkxcli69h47cd1bo8lli07od" />`
   - `comunidad-dezzpo.vercel.app`: `<meta name="facebook-domain-verification" content="ofh35wmj89aldsondp23zx9pjk9044" />`
 - **Environment Variables (Server-Only)**:
   - `META_APP_ID`: `965094149947204`
   - `META_APP_SECRET`: Meta App Secret (Vercel & server `.env`)
-  - `META_PAGE_ACCESS_TOKEN`: System User Token with 60-day TTL
+  - `META_PAGE_ACCESS_TOKEN`: System User Token (`pages_manage_posts`, `pages_read_user_content`, `pages_read_engagement`)
   - `META_PAGE_ID`: `375828669832688`
   - `META_BUSINESS_ID` / `META_COMMERCIAL_PORTFOLIO_ID`: `350306805830712`
   - `META_ADVERTISING_ACCOUNT_ID`: `836577536843754`

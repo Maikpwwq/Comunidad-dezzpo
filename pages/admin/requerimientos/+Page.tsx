@@ -124,13 +124,163 @@ export default function RequerimientosPage() {
         }
     ]
 
-    return (
-        <Box>
-            <Typography variant="h4" fontWeight={700} gutterBottom>
-                Supervisión de Requerimientos
-            </Typography>
+    const [mobilePage, setMobilePage] = useState(0)
+    const MOBILE_PAGE_SIZE = 10
 
-            <Paper sx={{ height: 600, borderRadius: 2, mt: 3 }} elevation={0} variant="outlined">
+    const paginatedDrafts = drafts.slice(
+        mobilePage * MOBILE_PAGE_SIZE,
+        (mobilePage + 1) * MOBILE_PAGE_SIZE
+    )
+
+    return (
+        <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+            <Box sx={{ mb: 3 }}>
+                <Typography
+                    variant="h4"
+                    fontWeight={700}
+                    sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' } }}
+                    gutterBottom
+                >
+                    Supervisión de Requerimientos
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Monitoreo de solicitudes publicadas por propietarios y cotizaciones enviadas por contratistas.
+                </Typography>
+            </Box>
+
+            {/* MOBILE CARD LIST (< md) */}
+            <Box sx={{ display: { xs: 'flex', md: 'none' }, flexDirection: 'column', gap: 1.5 }}>
+                {loading ? (
+                    <Box sx={{ py: 6, textAlign: 'center' }}>
+                        <CircularProgress size={36} sx={{ color: BRAND.teal }} />
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1.5 }}>
+                            Cargando requerimientos...
+                        </Typography>
+                    </Box>
+                ) : drafts.length === 0 ? (
+                    <Paper sx={{ p: 4, textAlign: 'center', borderRadius: 2.5, border: '1px solid', borderColor: 'divider' }}>
+                        <Typography variant="body2" color="text.secondary">
+                            No hay requerimientos registrados.
+                        </Typography>
+                    </Paper>
+                ) : (
+                    <>
+                        {paginatedDrafts.map((d) => (
+                            <Paper
+                                key={d.id}
+                                onClick={() => handleRowClick({ row: d })}
+                                sx={{
+                                    p: 2,
+                                    borderRadius: 2.5,
+                                    border: '1px solid',
+                                    borderColor: 'divider',
+                                    boxShadow: 'none',
+                                    cursor: 'pointer',
+                                    '&:hover': { borderColor: BRAND.teal },
+                                }}
+                            >
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+                                    <Typography variant="subtitle1" fontWeight={700} sx={{ fontSize: '0.95rem', minWidth: 0, mr: 1 }}>
+                                        {d.name}
+                                    </Typography>
+                                    <Chip
+                                        label={d.status === 'open' ? 'Abierto' : 'Cerrado'}
+                                        size="small"
+                                        sx={{
+                                            bgcolor: d.status === 'open' ? 'var(--status-active-bg)' : 'var(--status-pending-bg)',
+                                            color: d.status === 'open' ? 'var(--status-active-color)' : 'var(--status-pending-color)',
+                                            fontWeight: 700,
+                                            height: 22,
+                                            fontSize: '0.7rem',
+                                            flexShrink: 0,
+                                        }}
+                                    />
+                                </Box>
+
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1.5 }}>
+                                    <Chip label={d.category} size="small" variant="outlined" sx={{ height: 20, fontSize: '0.68rem' }} />
+                                    <Typography variant="caption" sx={{ fontFamily: 'monospace', color: 'text.secondary', alignSelf: 'center', ml: 0.5 }}>
+                                        ID: {d.id?.slice(0, 8)}…
+                                    </Typography>
+                                </Box>
+
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pt: 1, borderTop: '1px solid', borderColor: 'divider' }}>
+                                    <Box>
+                                        <Typography variant="caption" color="text.secondary" display="block">
+                                            Presupuesto
+                                        </Typography>
+                                        <Typography variant="subtitle2" fontWeight={800} color={BRAND.tealDark}>
+                                            ${Number(d.budget || 0).toLocaleString()}
+                                        </Typography>
+                                    </Box>
+
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                        {d.channelUrl ? (
+                                            <IconButton
+                                                size="small"
+                                                onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    handleAuditChat(d.channelUrl)
+                                                }}
+                                                sx={{ color: BRAND.teal }}
+                                            >
+                                                <VisibilityIcon fontSize="small" />
+                                            </IconButton>
+                                        ) : null}
+                                        <Typography variant="caption" color="primary" fontWeight={700}>
+                                            Ver detalle ›
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </Paper>
+                        ))}
+
+                        {/* Mobile Pagination */}
+                        {drafts.length > MOBILE_PAGE_SIZE && (
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pt: 1 }}>
+                                <Typography variant="caption" color="text.secondary">
+                                    {mobilePage * MOBILE_PAGE_SIZE + 1}–
+                                    {Math.min((mobilePage + 1) * MOBILE_PAGE_SIZE, drafts.length)} de {drafts.length}
+                                </Typography>
+                                <Box sx={{ display: 'flex', gap: 1 }}>
+                                    <Chip
+                                        label="Anterior"
+                                        size="small"
+                                        onClick={() => setMobilePage((p) => Math.max(0, p - 1))}
+                                        disabled={mobilePage === 0}
+                                        clickable={mobilePage > 0}
+                                        variant="outlined"
+                                    />
+                                    <Chip
+                                        label="Siguiente"
+                                        size="small"
+                                        onClick={() =>
+                                            setMobilePage((p) =>
+                                                (p + 1) * MOBILE_PAGE_SIZE < drafts.length ? p + 1 : p
+                                            )
+                                        }
+                                        disabled={(mobilePage + 1) * MOBILE_PAGE_SIZE >= drafts.length}
+                                        clickable={(mobilePage + 1) * MOBILE_PAGE_SIZE < drafts.length}
+                                        variant="outlined"
+                                    />
+                                </Box>
+                            </Box>
+                        )}
+                    </>
+                )}
+            </Box>
+
+            {/* DESKTOP DATAGRID (>= md) */}
+            <Paper
+                sx={{
+                    display: { xs: 'none', md: 'block' },
+                    height: 600,
+                    borderRadius: 2,
+                    mt: 2,
+                }}
+                elevation={0}
+                variant="outlined"
+            >
                 <DataGrid
                     rows={drafts}
                     columns={columns}
@@ -158,7 +308,7 @@ export default function RequerimientosPage() {
                 open={!!selectedDraft} 
                 onClose={() => setSelectedDraft(null)}
                 PaperProps={{
-                    sx: { width: { xs: '100%', sm: 400 }, p: 3, bgcolor: BRAND.surface }
+                    sx: { width: { xs: '100vw', sm: 420 }, maxWidth: '100vw', p: { xs: 2, sm: 3 }, bgcolor: BRAND.surface }
                 }}
             >
                 {selectedDraft && (

@@ -423,3 +423,17 @@ const copyPersonalizado = interpolateSegmentedCopy(
   }
 );
 ```
+
+### 9.2 Motor de Automatización Autónoma & Auditoría en Producción
+
+Los copys de esta biblioteca son consumidos directamente por el **Autonomous Worker Engine** (`@services/social/autonomousWorker.ts`) y la **Cola de Despacho con Jitter** (`@services/social/dispatchQueue.ts`):
+
+1. **Balance Determinístico 6:4**: El motor de despacho autónomo intercala los mensajes de esta biblioteca (oferta / captación de maestros) con los de interceptación de demanda de clientes en una proporción fija de **60% oferta : 40% demanda**.
+2. **Validación Estricta de Despacho (`comment_id`)**: Ningún comentario se marca como `dispatched` en Firestore si Meta Graph API no retorna un `comment_id` no vacío y HTTP 200. Errores de permisos (ej. `(#3) Missing Permission` en grupos no administrados) se guardan transparentemente como `failed ⚠️`.
+3. **Persistencia Cero-Mocks**: Todo evento se registra en tiempo real en la colección `socialInterceptionLogs` mediante `interceptionsRepository.ts` y se refleja reactivamente en `/admin/dashboard`.
+4. **Cadencia de Rotación de Token (60 Días)**: El `META_PAGE_ACCESS_TOKEN` del System User (`Comunidad_Dezzpo`) tiene una cadencia de renovación de **60 días**. Debe incluir permanentemente los scopes:
+   - `pages_manage_posts`
+   - `pages_read_user_content`
+   - `pages_read_engagement`
+   - `pages_manage_metadata`
+

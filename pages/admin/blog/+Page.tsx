@@ -34,6 +34,8 @@ import {
     Tabs,
     Tab,
     Tooltip,
+    Card,
+    CardContent,
 } from '@mui/material'
 
 import ArticleIcon from '@mui/icons-material/Article'
@@ -204,13 +206,17 @@ export default function Page() {
     }
 
     return (
-        <Box sx={{ p: 4 }}>
+        <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
             {/* Header */}
-            <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <ArticleIcon sx={{ fontSize: 40, color: 'primary.main' }} />
+            <Box sx={{ mb: 3, display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, justifyContent: 'space-between', flexDirection: { xs: 'column', sm: 'row' }, gap: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
+                    <ArticleIcon sx={{ fontSize: { xs: 32, sm: 40 }, color: 'primary.main', mt: 0.5, flexShrink: 0 }} />
                     <Box>
-                        <Typography variant="h4" fontWeight={800}>
+                        <Typography
+                            variant="h4"
+                            fontWeight={800}
+                            sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' } }}
+                        >
                             Gestión de Blog e Inbound Marketing
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -223,19 +229,96 @@ export default function Page() {
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={handleOpenCreate}
-                    sx={{ fontWeight: 700, borderRadius: 2.5, px: 3, py: 1 }}
+                    sx={{ fontWeight: 700, borderRadius: 2.5, px: 3, py: 1, width: { xs: '100%', sm: 'auto' } }}
                 >
                     Nuevo Artículo
                 </Button>
             </Box>
 
-            {/* Articles Table */}
-            <Paper sx={{ p: 3, borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
+            {/* Articles List / Table */}
+            <Paper sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, boxShadow: 'none', border: '1px solid', borderColor: 'divider' }}>
                 <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>
                     Artículos Registrados ({posts.length})
                 </Typography>
 
-                <TableContainer>
+                {/* MOBILE CARDS (< md) */}
+                <Box sx={{ display: { xs: 'flex', md: 'none' }, flexDirection: 'column', gap: 1.5 }}>
+                    {posts.length === 0 ? (
+                        <Box sx={{ py: 4, textAlign: 'center' }}>
+                            <Typography variant="body2" color="text.secondary">
+                                {loading ? 'Cargando artículos...' : 'No hay artículos registrados.'}
+                            </Typography>
+                        </Box>
+                    ) : (
+                        posts.map((post) => (
+                            <Card
+                                key={post.id || post.slug}
+                                sx={{
+                                    borderRadius: 2.5,
+                                    border: '1px solid',
+                                    borderColor: 'divider',
+                                    boxShadow: 'none',
+                                }}
+                            >
+                                <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1, gap: 1 }}>
+                                        <Typography variant="subtitle1" fontWeight={800} color="#0A2540" sx={{ fontSize: '0.95rem' }}>
+                                            {post.title}
+                                        </Typography>
+                                        <Chip
+                                            label={post.status === 'published' ? 'Publicado' : 'Borrador'}
+                                            size="small"
+                                            color={post.status === 'published' ? 'success' : 'warning'}
+                                            sx={{ height: 20, fontSize: '0.68rem', flexShrink: 0 }}
+                                        />
+                                    </Box>
+
+                                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.5 }}>
+                                        {post.excerpt}
+                                    </Typography>
+
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1.5 }}>
+                                        <Chip label={post.category} size="small" variant="outlined" color="primary" sx={{ height: 20, fontSize: '0.68rem' }} />
+                                        <Chip
+                                            label={
+                                                post.targetAudience === 'propietario'
+                                                    ? 'Propietarios'
+                                                    : post.targetAudience === 'comerciante'
+                                                    ? 'Comerciantes'
+                                                    : 'General'
+                                            }
+                                            size="small"
+                                            color={post.targetAudience === 'propietario' ? 'secondary' : 'info'}
+                                            variant="outlined"
+                                            sx={{ height: 20, fontSize: '0.68rem' }}
+                                        />
+                                    </Box>
+
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pt: 1, borderTop: '1px solid', borderColor: 'divider' }}>
+                                        <Typography variant="caption" color="text.secondary">
+                                            👁️ {post.viewsCount || 0} lecturas
+                                        </Typography>
+
+                                        <Box sx={{ display: 'flex', gap: 0.5 }}>
+                                            <IconButton size="small" onClick={() => navigate(`/blog/${post.slug}`)}>
+                                                <VisibilityIcon fontSize="small" color="action" />
+                                            </IconButton>
+                                            <IconButton size="small" color="primary" onClick={() => handleOpenEdit(post)}>
+                                                <EditIcon fontSize="small" />
+                                            </IconButton>
+                                            <IconButton size="small" color="error" onClick={() => setDeleteTargetId(post.id || null)}>
+                                                <DeleteIcon fontSize="small" />
+                                            </IconButton>
+                                        </Box>
+                                    </Box>
+                                </CardContent>
+                            </Card>
+                        ))
+                    )}
+                </Box>
+
+                {/* DESKTOP TABLE (>= md) */}
+                <TableContainer sx={{ display: { xs: 'none', md: 'block' } }}>
                     <Table size="small">
                         <TableHead>
                             <TableRow>
@@ -319,8 +402,10 @@ export default function Page() {
 
             {/* Create/Edit Modal Workbench */}
             <Dialog open={editorOpen} onClose={() => setEditorOpen(false)} maxWidth="lg" fullWidth PaperProps={{ sx: { borderRadius: 3 } }}>
-                <DialogTitle sx={{ fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    {activePostId ? 'Editar Artículo' : 'Nuevo Artículo del Blog'}
+                <DialogTitle sx={{ fontWeight: 800, display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', sm: 'center' }, justifyContent: 'space-between', gap: 1.5 }}>
+                    <Typography variant="h6" fontWeight={800}>
+                        {activePostId ? 'Editar Artículo' : 'Nuevo Artículo del Blog'}
+                    </Typography>
                     <Tabs value={formTab} onChange={(_, v) => setFormTab(v)}>
                         <Tab label="Editor" value="edit" sx={{ fontWeight: 700 }} />
                         <Tab label="Vista Previa" value="preview" sx={{ fontWeight: 700 }} />

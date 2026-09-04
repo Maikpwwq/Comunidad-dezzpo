@@ -426,7 +426,7 @@ All geographic zones are centralized in [`src/assets/data/ListadoZonas.ts`](./sr
 | `VITE_APP_SENDBIRD_APP_ID` | Client | Sendbird application ID |
 | `META_APP_ID` | Server ONLY | Meta App ID (`DEZZPO` - `965094149947204`) |
 | `META_APP_SECRET` | Server ONLY | Meta App Secret for server verification |
-| `META_PAGE_ACCESS_TOKEN` | Server ONLY | System User Token (`Comunidad_Dezzpo` - 60-day rotation) |
+| `META_PAGE_ACCESS_TOKEN` | Server ONLY | System User Token (60-day rotation cadence; `Comunidad_Dezzpo` — `pages_manage_posts`, `pages_read_user_content`, `pages_read_engagement`, `pages_manage_metadata`) |
 | `META_PAGE_ID` | Server ONLY | Facebook Page ID (`Comunidad Dezzpo` - `375828669832688`) |
 | `META_BUSINESS_ID` | Server ONLY | Business Portfolio ID (`comunidad.dezzpo` - `350306805830712`) |
 | `META_COMMERCIAL_PORTFOLIO_ID` | Server ONLY | Business Portfolio ID alias (`350306805830712`) |
@@ -449,7 +449,7 @@ All geographic zones are centralized in [`src/assets/data/ListadoZonas.ts`](./sr
 | **RAG Chatbot** | ✅ Implemented | Gemini 2.5 Flash + Supabase pgvector, knowledge seeding |
 | **Referral Program** | ✅ Implemented | Code generation, sign-up attribution, points/rewards, admin audit |
 | **Ecosystem Testing** | ✅ Implemented | 100% Local Emulator isolation, Vitest/Fast-Check property tests, Firestore/Storage rules tests, Playwright E2E POMs, StrykerJS mutation, axe-core a11y, GitHub Actions CI/CD |
-| **Social Interceptor & Meta API** | ✅ Implemented | Graph API v19.0+, Circuit Breaker (80% threshold), Jitter Queue (45-120s), Intent Parser, Autonomous Worker, MCP Dev Tools |
+| **Social Interceptor & Meta API** | ✅ Implemented | Graph API v19.0+, Real-time Firestore Repository (`interceptionsRepository.ts`), Zero-Mock Policy, Circuit Breaker (80%), 6:4 Jitter Queue, comment_id Verification, MCP Dev Tools |
 
 ## Service Standards
 

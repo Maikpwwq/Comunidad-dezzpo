@@ -210,14 +210,30 @@ export class MetaGraphClient {
         }
       }
 
-      const body = (await response.json()) as { id: string }
+      const body = (await response.json().catch(() => null)) as { id?: string; error?: { message?: string; code?: number } } | null
+      const commentId = body?.id
+
+      if (!commentId || typeof commentId !== 'string' || commentId.trim().length === 0) {
+        const errorCode = body?.error?.code ?? 422
+        const errorMessage = body?.error?.message ?? 'Meta API response did not contain a valid comment ID'
+        if (this.circuitBreaker) {
+          this.circuitBreaker.reportError(errorCode, errorMessage)
+        }
+        return {
+          success: false,
+          errorCode,
+          errorMessage,
+          usage,
+        }
+      }
+
       if (this.circuitBreaker) {
         this.circuitBreaker.reportSuccess()
       }
 
       return {
         success: true,
-        commentId: body.id,
+        commentId,
         usage,
       }
     } catch (err) {

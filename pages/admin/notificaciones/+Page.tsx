@@ -28,6 +28,7 @@ import {
     TableHead,
     TableRow,
     Chip,
+    Card,
     Dialog,
     DialogTitle,
     DialogContent,
@@ -35,7 +36,6 @@ import {
 } from '@mui/material'
 import CampaignIcon from '@mui/icons-material/Campaign'
 import SendIcon from '@mui/icons-material/Send'
-import DoneAllIcon from '@mui/icons-material/DoneAll'
 
 import {
     broadcastNotification,
@@ -121,12 +121,16 @@ export default function Page() {
     }
 
     return (
-        <Box sx={{ p: 4 }}>
+        <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
             {/* Header */}
-            <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
-                <CampaignIcon sx={{ fontSize: 40, color: 'primary.main' }} />
+            <Box sx={{ mb: 3, display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
+                <CampaignIcon sx={{ fontSize: { xs: 32, sm: 40 }, color: 'primary.main', mt: 0.5, flexShrink: 0 }} />
                 <Box>
-                    <Typography variant="h4" fontWeight={800}>
+                    <Typography
+                        variant="h4"
+                        fontWeight={800}
+                        sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' } }}
+                    >
                         Emisión de Notificaciones Masivas
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -135,15 +139,15 @@ export default function Page() {
                 </Box>
             </Box>
 
-            <Grid container spacing={4}>
+            <Grid container spacing={{ xs: 2.5, md: 3 }}>
                 {/* Form Column */}
                 <Grid item xs={12} md={5}>
-                    <Paper sx={{ p: 3, borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
-                        <Typography variant="h6" fontWeight={700} sx={{ mb: 2.5 }}>
+                    <Paper sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, boxShadow: 'none', border: '1px solid', borderColor: 'divider' }}>
+                        <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>
                             Nuevo Comunicado
                         </Typography>
 
-                        <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                        <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                             <TextField
                                 label="Título del Comunicado"
                                 fullWidth
@@ -171,7 +175,7 @@ export default function Page() {
                                         <Select
                                             value={recipientRole}
                                             label="Audiencia Destino"
-                                            onChange={(e) => setRecipientRole(e.target.value as any)}
+                                            onChange={(e) => setRecipientRole(e.target.value as 'all' | '1' | '2')}
                                         >
                                             <MenuItem value="all">Todos los Usuarios</MenuItem>
                                             <MenuItem value="1">Solo Propietarios (Rol 1)</MenuItem>
@@ -186,7 +190,7 @@ export default function Page() {
                                         <Select
                                             value={type}
                                             label="Tipo de Notificación"
-                                            onChange={(e) => setType(e.target.value as any)}
+                                            onChange={(e) => setType(e.target.value as NotificationType)}
                                         >
                                             <MenuItem value="system_announcement">Anuncio de Sistema</MenuItem>
                                             <MenuItem value="pending_action">Acción Requerida</MenuItem>
@@ -213,7 +217,7 @@ export default function Page() {
                                 onClick={() => setConfirmOpen(true)}
                                 sx={{ mt: 1, py: 1.2, fontWeight: 700, borderRadius: 2.5 }}
                             >
-                                Emitir Notificación Masiva
+                                {sending ? 'Emitiendo...' : 'Emitir Notificación Masiva'}
                             </Button>
                         </Box>
                     </Paper>
@@ -221,12 +225,74 @@ export default function Page() {
 
                 {/* History Column */}
                 <Grid item xs={12} md={7}>
-                    <Paper sx={{ p: 3, borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
+                    <Paper sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, boxShadow: 'none', border: '1px solid', borderColor: 'divider' }}>
                         <Typography variant="h6" fontWeight={700} sx={{ mb: 2 }}>
                             Historial de Notificaciones Emitidas
                         </Typography>
 
-                        <TableContainer>
+                        {/* MOBILE HISTORY CARD LIST (< md) */}
+                        <Box sx={{ display: { xs: 'flex', md: 'none' }, flexDirection: 'column', gap: 1.5 }}>
+                            {broadcasts.length === 0 ? (
+                                <Box sx={{ py: 4, textAlign: 'center' }}>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {loadingHistory ? 'Cargando historial...' : 'No se han enviado notificaciones masivas aún.'}
+                                    </Typography>
+                                </Box>
+                            ) : (
+                                broadcasts.map((item, idx) => (
+                                    <Card
+                                        key={item.notificationId || idx}
+                                        sx={{
+                                            p: 1.75,
+                                            borderRadius: 2.5,
+                                            border: '1px solid',
+                                            borderColor: 'divider',
+                                            boxShadow: 'none',
+                                        }}
+                                    >
+                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1, gap: 1 }}>
+                                            <Typography variant="subtitle2" fontWeight={700}>
+                                                {item.title}
+                                            </Typography>
+                                            <Chip
+                                                label={
+                                                    item.recipientRole === 1
+                                                        ? 'Propietarios'
+                                                        : item.recipientRole === 2
+                                                        ? 'Comerciantes'
+                                                        : 'Todos'
+                                                }
+                                                size="small"
+                                                color={item.recipientRole ? 'secondary' : 'primary'}
+                                                variant="outlined"
+                                                sx={{ height: 22, fontSize: '0.72rem', flexShrink: 0 }}
+                                            />
+                                        </Box>
+                                        <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5, fontSize: '0.82rem' }}>
+                                            {item.body}
+                                        </Typography>
+                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <Typography variant="caption" color="text.disabled">
+                                                {item.type || 'system_announcement'}
+                                            </Typography>
+                                            <Typography variant="caption" color="text.secondary">
+                                                {item.createdAt
+                                                    ? new Date(item.createdAt).toLocaleDateString('es-CO', {
+                                                          day: '2-digit',
+                                                          month: 'short',
+                                                          hour: '2-digit',
+                                                          minute: '2-digit',
+                                                      })
+                                                    : ''}
+                                            </Typography>
+                                        </Box>
+                                    </Card>
+                                ))
+                            )}
+                        </Box>
+
+                        {/* DESKTOP HISTORY TABLE (>= md) */}
+                        <TableContainer sx={{ display: { xs: 'none', md: 'block' } }}>
                             <Table size="small">
                                 <TableHead>
                                     <TableRow>
@@ -290,7 +356,7 @@ export default function Page() {
             </Grid>
 
             {/* Confirmation Dialog */}
-            <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)}>
+            <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)} fullWidth maxWidth="xs">
                 <DialogTitle fontWeight={700}>Confirmar Emisión Masiva</DialogTitle>
                 <DialogContent>
                     <Typography variant="body2" sx={{ mb: 2 }}>

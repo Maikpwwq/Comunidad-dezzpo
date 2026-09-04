@@ -83,25 +83,28 @@ export default function Page() {
 
     if (loading) {
         return (
-            <Box>
-                <Typography variant="h4" fontWeight={700} gutterBottom>Verificación de Identidad</Typography>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: 2, height: '70vh' }}>
+            <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+                <Typography variant="h4" fontWeight={700} sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' }, mb: 2 }}>
+                    Verificación de Identidad
+                </Typography>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '300px 1fr' }, gap: 2, height: '70vh' }}>
                     <Skeleton variant="rectangular" height="100%" sx={{ borderRadius: 2 }} />
-                    <Skeleton variant="rectangular" height="100%" sx={{ borderRadius: 2 }} />
+                    <Skeleton variant="rectangular" height="100%" sx={{ borderRadius: 2, display: { xs: 'none', md: 'block' } }} />
                 </Box>
             </Box>
         )
     }
 
     return (
-        <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Typography variant="h4" fontWeight={700}>
+        <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, gap: 1.5, mb: 3 }}>
+                <Typography variant="h4" fontWeight={700} sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' } }}>
                     Verificación de Identidad
                 </Typography>
                 <Chip
                     label={`${queue.length} pendiente${queue.length !== 1 ? 's' : ''}`}
                     color={queue.length > 0 ? 'warning' : 'success'}
+                    size="small"
                 />
             </Box>
 
@@ -121,14 +124,14 @@ export default function Page() {
                         display: 'grid',
                         gridTemplateColumns: { xs: '1fr', md: '300px 1fr' },
                         gap: 2,
-                        minHeight: '70vh',
+                        minHeight: { md: '70vh' },
                     }}
                 >
                     {/* Queue List */}
-                    <Paper sx={{ borderRadius: 2, overflow: 'auto' }} elevation={0} variant="outlined">
-                        <Box sx={{ p: 2 }}>
-                            <Typography variant="subtitle2" color="text.secondary">
-                                Cola de verificación
+                    <Paper sx={{ borderRadius: 2, maxHeight: { xs: 260, md: '75vh' }, overflow: 'auto' }} elevation={0} variant="outlined">
+                        <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
+                            <Typography variant="subtitle2" color="text.secondary" fontWeight={700}>
+                                Cola de verificación ({queue.length})
                             </Typography>
                         </Box>
                         <List disablePadding>
@@ -142,17 +145,20 @@ export default function Page() {
                                     }}
                                 >
                                     <ListItemAvatar>
-                                        <Avatar sx={{ bgcolor: item.role === 'Comerciante' ? '#3f51b5' : '#f50057' }}>
-                                            <PersonIcon />
+                                        <Avatar sx={{ bgcolor: item.role === 'Comerciante' ? '#3f51b5' : '#f50057', width: 36, height: 36 }}>
+                                            <PersonIcon sx={{ fontSize: 20 }} />
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
                                         primary={item.name}
+                                        primaryTypographyProps={{ fontSize: '0.88rem', fontWeight: 600 }}
                                         secondary={
-                                            <>
-                                                <Chip label={item.role} size="small" variant="outlined" sx={{ mr: 0.5 }} />
-                                                {DOC_TYPE_LABELS[item.docType] || item.docType}
-                                            </>
+                                            <Box sx={{ mt: 0.5, display: 'flex', alignItems: 'center', gap: 0.5, flexWrap: 'wrap' }}>
+                                                <Chip label={item.role} size="small" variant="outlined" sx={{ height: 20, fontSize: '0.68rem' }} />
+                                                <Typography variant="caption" color="text.secondary">
+                                                    {DOC_TYPE_LABELS[item.docType] || item.docType}
+                                                </Typography>
+                                            </Box>
                                         }
                                     />
                                 </ListItemButton>
@@ -173,8 +179,8 @@ export default function Page() {
                                 }}
                             >
                                 {/* Left: User Data */}
-                                <Box sx={{ p: 3, borderRight: { lg: '1px solid #e0e0e0' } }}>
-                                    <Typography variant="h6" fontWeight={600} gutterBottom>
+                                <Box sx={{ p: { xs: 2, sm: 3 }, borderRight: { lg: '1px solid #e0e0e0' } }}>
+                                    <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '1.05rem', sm: '1.25rem' } }}>
                                         Datos del Solicitante
                                     </Typography>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -189,8 +195,8 @@ export default function Page() {
                                 </Box>
 
                                 {/* Right: Document Preview */}
-                                <Box sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Typography variant="h6" fontWeight={600} gutterBottom>
+                                <Box sx={{ p: { xs: 2, sm: 3 }, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', minWidth: 0 }}>
+                                    <Typography variant="h6" fontWeight={700} gutterBottom sx={{ fontSize: { xs: '1.05rem', sm: '1.25rem' }, alignSelf: 'flex-start' }}>
                                         Documento
                                     </Typography>
                                     {selected.docUrl ? (
@@ -200,7 +206,7 @@ export default function Page() {
                                                 title="Document Preview"
                                                 style={{
                                                     width: '100%',
-                                                    height: '400px',
+                                                    height: '350px',
                                                     border: '1px solid #e0e0e0',
                                                     borderRadius: '8px',
                                                 }}
@@ -211,7 +217,7 @@ export default function Page() {
                                                 alt="Identity Document"
                                                 style={{
                                                     maxWidth: '100%',
-                                                    maxHeight: '400px',
+                                                    maxHeight: '350px',
                                                     objectFit: 'contain',
                                                     borderRadius: '8px',
                                                     border: '1px solid #e0e0e0',
@@ -228,22 +234,26 @@ export default function Page() {
 
                             {/* Action Bar */}
                             <Divider />
-                            <Box sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', gap: 1.5, bgcolor: '#fafafa' }}>
+                            <Box sx={{ p: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end', gap: 1.5, bgcolor: '#fafafa' }}>
                                 <Button
                                     variant="outlined"
                                     color="error"
+                                    size="small"
                                     startIcon={<CancelIcon />}
                                     onClick={() => setRejectDialogOpen(true)}
                                     disabled={processing}
+                                    sx={{ flex: { xs: 1, sm: 'none' } }}
                                 >
                                     Rechazar
                                 </Button>
                                 <Button
                                     variant="contained"
                                     color="success"
+                                    size="small"
                                     startIcon={<CheckCircleIcon />}
                                     onClick={handleApprove}
                                     disabled={processing}
+                                    sx={{ flex: { xs: 1, sm: 'none' } }}
                                 >
                                     Aprobar
                                 </Button>

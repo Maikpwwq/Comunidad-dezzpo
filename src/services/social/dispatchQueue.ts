@@ -166,7 +166,7 @@ export class DispatchQueue {
     posterFn: (
       postId: string,
       message: string
-    ) => Promise<{ success: boolean; errorCode?: number | undefined; errorMessage?: string | undefined }>,
+    ) => Promise<{ success: boolean; commentId?: string | undefined; errorCode?: number | undefined; errorMessage?: string | undefined }>,
     circuitBreaker?: CircuitBreaker
   ): Promise<readonly DispatchTask[]> {
     if (this.isProcessing) {
@@ -215,8 +215,11 @@ export class DispatchQueue {
         const result = await posterFn(task.postId, task.commentBody)
         task.dispatchedAt = Date.now()
 
-        if (result.success) {
+        const hasValidCommentId = typeof result.commentId === 'string' && result.commentId.trim().length > 0
+
+        if (result.success && hasValidCommentId) {
           task.status = 'DISPATCHED'
+          task.commentId = result.commentId
           task.errorCode = null
           this.dispatchedTimestamps.push(task.dispatchedAt)
           if (task.intent === 'SUPPLY') {
@@ -226,10 +229,9 @@ export class DispatchQueue {
           }
         } else {
           task.status = 'FAILED'
-          task.errorCode = result.errorCode ?? 500
-          if (result.errorMessage) {
-            task.errorDetails = result.errorMessage
-          }
+          task.commentId = null
+          task.errorCode = result.errorCode ?? (result.success ? 422 : 500)
+          task.errorDetails = result.errorMessage || (result.success && !hasValidCommentId ? 'Meta Graph API response missing valid comment_id' : 'Dispatch failed')
         }
 
         processedTasks.push(task)

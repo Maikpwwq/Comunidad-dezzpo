@@ -291,22 +291,34 @@ export default function Page() {
         }
     }, [confirmDialog])
 
+    const [mobilePage, setMobilePage] = useState(0)
+    const MOBILE_PAGE_SIZE = 12
+
+    const pagedMobileUsers = filteredUsers.slice(mobilePage * MOBILE_PAGE_SIZE, (mobilePage + 1) * MOBILE_PAGE_SIZE)
+    const totalMobilePages = Math.ceil(filteredUsers.length / MOBILE_PAGE_SIZE)
+
     return (
-        <Box>
-            <Typography variant="h4" fontWeight={700} gutterBottom>
+        <Box sx={{ pb: 4 }}>
+            <Typography
+                variant="h4"
+                fontWeight={800}
+                gutterBottom
+                sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' }, letterSpacing: '-0.02em', color: '#0f172a' }}
+            >
                 Gestión de Usuarios
             </Typography>
 
             {/* Search Bar & Actions */}
-            <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+            <Box sx={{ display: 'flex', gap: 1.5, mb: 3, flexDirection: { xs: 'column', sm: 'row' } }}>
                 <Paper
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: 1,
-                        p: 1,
+                        p: { xs: 0.8, sm: 1 },
                         flex: 1,
                         borderRadius: 2,
+                        minWidth: 0,
                     }}
                     elevation={0}
                     variant="outlined"
@@ -317,7 +329,10 @@ export default function Page() {
                         variant="standard"
                         fullWidth
                         value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onChange={(e) => {
+                            setSearchQuery(e.target.value)
+                            setMobilePage(0)
+                        }}
                         InputProps={{ disableUnderline: true }}
                     />
                 </Paper>
@@ -331,6 +346,8 @@ export default function Page() {
                         textTransform: 'none',
                         fontWeight: 600,
                         px: 3,
+                        py: { xs: 1, sm: 'auto' },
+                        width: { xs: '100%', sm: 'auto' },
                         '&:hover': { bgcolor: BRAND.tealDark }
                     }}
                 >
@@ -338,8 +355,130 @@ export default function Page() {
                 </Button>
             </Box>
 
-            {/* DataGrid */}
-            <Paper sx={{ height: 560, borderRadius: 2 }} elevation={0} variant="outlined">
+            {/* Mobile Card View (< md) */}
+            <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                {loading ? (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        {[...Array(4)].map((_, i) => (
+                            <Paper key={i} sx={{ p: 2, borderRadius: 2 }} variant="outlined">
+                                <CircularProgress size={24} sx={{ color: BRAND.teal }} />
+                            </Paper>
+                        ))}
+                    </Box>
+                ) : pagedMobileUsers.length === 0 ? (
+                    <Paper sx={{ p: 4, textAlign: 'center', borderRadius: 2 }} variant="outlined">
+                        <Typography color="text.secondary">No se encontraron usuarios coincidentes.</Typography>
+                    </Paper>
+                ) : (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                        {pagedMobileUsers.map((u) => {
+                            const catBadge = u.userCategorie ? getBadgeDetails(u.userCategorie) : null
+                            const clasBadge = u.userClasification ? getBadgeDetails(u.userClasification) : null
+                            return (
+                                <Paper
+                                    key={u.uid}
+                                    onClick={() => handleRowClick({ row: u })}
+                                    sx={{
+                                        p: 2,
+                                        borderRadius: 2.5,
+                                        border: '1px solid #e2e8f0',
+                                        bgcolor: '#fff',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.15s ease',
+                                        '&:active': { bgcolor: 'rgba(0,137,123,0.04)' },
+                                    }}
+                                    elevation={0}
+                                >
+                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.2 }}>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, minWidth: 0 }}>
+                                            <Avatar sx={{ bgcolor: u.role === 'Comerciante' ? BRAND.tealDark : '#3f51b5', width: 36, height: 36, fontSize: '0.9rem' }}>
+                                                {u.name.charAt(0).toUpperCase()}
+                                            </Avatar>
+                                            <Box sx={{ minWidth: 0 }}>
+                                                <Typography fontWeight={700} fontSize="0.95rem" noWrap color="#0f172a">
+                                                    {u.name}
+                                                </Typography>
+                                                <Typography variant="caption" color="text.secondary" fontFamily="monospace" fontSize="0.7rem">
+                                                    UID: {u.uid.slice(0, 10)}…
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                        <Chip
+                                            label={u.role}
+                                            size="small"
+                                            sx={{
+                                                fontWeight: 700,
+                                                fontSize: '0.72rem',
+                                                bgcolor: u.role === 'Comerciante' ? 'rgba(0,137,123,0.1)' : 'rgba(63,81,181,0.1)',
+                                                color: u.role === 'Comerciante' ? BRAND.tealDark : '#3f51b5',
+                                            }}
+                                        />
+                                    </Box>
+
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.4, mb: 1.5, fontSize: '0.8rem', color: '#475569' }}>
+                                        <Typography variant="body2" sx={{ fontSize: '0.8rem', wordBreak: 'break-all' }}>
+                                            ✉️ {u.email}
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ fontSize: '0.8rem' }}>
+                                            📅 Registro: {u.joined}
+                                        </Typography>
+                                    </Box>
+
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.6, alignItems: 'center', pt: 1, borderTop: '1px solid #f1f5f9' }}>
+                                        {catBadge && (
+                                            <Chip
+                                                label={catBadge.name}
+                                                size="small"
+                                                sx={{ bgcolor: catBadge.bgLight, color: catBadge.color, fontWeight: 700, fontSize: '0.68rem', height: 22 }}
+                                            />
+                                        )}
+                                        {clasBadge && (
+                                            <Chip
+                                                label={clasBadge.name}
+                                                size="small"
+                                                sx={{ bgcolor: clasBadge.bgLight, color: clasBadge.color, fontWeight: 700, fontSize: '0.68rem', height: 22 }}
+                                            />
+                                        )}
+                                        <Box sx={{ ml: 'auto' }}>
+                                            <Typography variant="caption" fontWeight={700} color={BRAND.teal}>
+                                                Editar →
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                </Paper>
+                            )
+                        })}
+
+                        {/* Mobile Pagination */}
+                        {totalMobilePages > 1 && (
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2, px: 1 }}>
+                                <Button
+                                    size="small"
+                                    disabled={mobilePage === 0}
+                                    onClick={() => setMobilePage((p) => Math.max(0, p - 1))}
+                                    sx={{ textTransform: 'none', fontWeight: 600 }}
+                                >
+                                    ← Anterior
+                                </Button>
+                                <Typography variant="caption" fontWeight={600} color="text.secondary">
+                                    Pág. {mobilePage + 1} de {totalMobilePages}
+                                </Typography>
+                                <Button
+                                    size="small"
+                                    disabled={mobilePage >= totalMobilePages - 1}
+                                    onClick={() => setMobilePage((p) => Math.min(totalMobilePages - 1, p + 1))}
+                                    sx={{ textTransform: 'none', fontWeight: 600 }}
+                                >
+                                    Siguiente →
+                                </Button>
+                            </Box>
+                        )}
+                    </Box>
+                )}
+            </Box>
+
+            {/* Desktop DataGrid (>= md) */}
+            <Paper sx={{ height: 560, borderRadius: 2, display: { xs: 'none', md: 'block' }, minWidth: 0, overflow: 'hidden' }} elevation={0} variant="outlined">
                 <DataGrid
                     rows={filteredUsers}
                     columns={columns}
