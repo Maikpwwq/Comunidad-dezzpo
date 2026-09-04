@@ -688,5 +688,26 @@ src/styles/
   - **User Data Deletion Callback URL**: `https://dezzpo.com/api/v1/meta/data-deletion`
   - **Deauthorization Callback URL**: `https://dezzpo.com/api/v1/meta/data-deletion`
 
+### Terminology Standard: "Tiendas y Ferreterías" (Mandatory)
+- **Mandatory Naming Rule**: Always use **"Tiendas y Ferreterías"** instead of "Tiendas y Proveedores" across all user-facing interfaces, admin control towers (`/admin/tiendas`), navigation items, modal titles (`Editar Tienda / Ferretería`), and future documentation.
+- **Rationale**: Reinforces Dezzpo's clear positioning in construction supplies, habitat repair, materials, and hardware store sourcing while maintaining intuitive terminology for residential clients and contractors.
 
+### Link Navigation & Direct Routing Standard (`<Link>` vs `<Button>`)
+- **Direct Route Strings in `href`**: When replacing buttons with links or providing inline CTA text (such as in `/app/portal-servicios`, `/app/directorio-requerimientos`, and `/registro`), the `<Link>` component MUST receive a valid URL path string in `href` (e.g., `href="/nuevo-proyecto"` or dynamic conditional `href={userId ? '/app/ajustes' : '/ingreso'}`).
+- **Forbidden**: Passing callback functions directly into `href` (e.g., `href={handleAction}`) or wrapping clean links with redundant `onClick={(e) => { e.preventDefault(); ... }}`. Standard Vike client-side routing automatically intercepts link clicks on the rendered anchor tags.
+- **Reference Standard**: See `pages/(auth)/registro/+Page.tsx` (lines 514–520):
+  ```tsx
+  <Link
+      href="/ingreso/"
+      className={clsx(styles.Link, styles.Green)}
+      style={{ fontWeight: 700, textDecoration: 'underline' }}
+  >
+      Inicia sesión aquí
+  </Link>
+  ```
 
+### Mobile Modal & Dialog Viewport Optimization
+- **Pinned Dialog Chrome**: All modal dialogs (such as `TiendaFormModal.tsx` and `SedeDetailModal.tsx`) MUST have their `DialogTitle` and `DialogActions` pinned with `flexShrink: 0`.
+- **Contained Scroll**: The `DialogContent` must hold `overflowY: 'auto'` with a responsive maxHeight (`{ xs: 'calc(100dvh - 32px)', sm: 'calc(100vh - 64px)' }`).
+- **Responsive Field Sizing**: Form control `minWidth`s must use responsive breakpoints (`{ xs: '100%', sm: 200 }`) rather than fixed pixel widths to prevent horizontal scrolling or cut-off fields on small screens.
+- **Admin Layout Containment**: Admin main layout container (`pages/admin/+Layout.tsx`) must enforce `minWidth: 0`, `maxWidth: '100%'`, and `overflowX: 'hidden'` to prevent expansive DataGrids from blowing out the mobile document body.

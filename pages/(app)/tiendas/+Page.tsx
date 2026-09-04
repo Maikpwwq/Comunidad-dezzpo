@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
     Container,
     Box,
@@ -12,7 +12,6 @@ import {
     Paper,
     ToggleButtonGroup,
     ToggleButton,
-    Alert,
     CircularProgress,
     Snackbar,
 } from '@mui/material'
@@ -126,11 +125,11 @@ export default function Page() {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
                         <StorefrontIcon sx={{ fontSize: 32, color: 'primary.main' }} />
                         <Typography variant="h4" fontWeight={800} sx={{ color: '#0A2540' }}>
-                            Tiendas y Ferreterias
+                            Tiendas y Ferreterías
                         </Typography>
                     </Box>
                     <Typography variant="body1" color="text.secondary">
-                        Ferreterías, materiales de construcción, alquiler de equipos y servicios técnicos para tus proyectos.
+                        Encuentra Ferreterías, materiales de construcción, alquiler de equipos y servicios técnicos para tus proyectos.
                     </Typography>
                 </Box>
 
@@ -149,7 +148,7 @@ export default function Page() {
             <Paper elevation={0} variant="outlined" sx={{ p: 2, mb: 3, borderRadius: 3, backgroundColor: '#ffffff' }}>
                 <Grid container spacing={2} alignItems="center">
                     {/* Text Search */}
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={3.5}>
                         <TextField
                             fullWidth
                             size="small"
@@ -169,8 +168,29 @@ export default function Page() {
                         />
                     </Grid>
 
+                    {/* Category Dropdown Filter (First before Zone) */}
+                    <Grid item xs={12} sm={6} md={3}>
+                        <TextField
+                            select
+                            fullWidth
+                            size="small"
+                            label="Filtrar por Categoría"
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                        >
+                            <MenuItem value="">
+                                <em>Todas las categorías</em>
+                            </MenuItem>
+                            {ListadoCategoriasTiendas.map((cat) => (
+                                <MenuItem key={cat.key} value={cat.key}>
+                                    {cat.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
+
                     {/* Zone Dropdown Filter */}
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={2.5}>
                         <TextField
                             select
                             fullWidth
@@ -191,26 +211,27 @@ export default function Page() {
                     </Grid>
 
                     {/* View Mode Toggle */}
-                    <Grid item xs={12} md={4} sx={{ display: 'flex', justifyContent: { xs: 'flex-start', md: 'flex-end' } }}>
+                    <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex', justifyContent: { xs: 'flex-start', md: 'flex-end' } }}>
                         <ToggleButtonGroup
                             value={viewMode}
                             exclusive
                             onChange={(_, newMode) => newMode && setViewMode(newMode)}
                             size="small"
                             color="primary"
+                            sx={{ width: { xs: '100%', sm: 'auto' } }}
                         >
-                            <ToggleButton value="grid" sx={{ textTransform: 'none', px: 2, fontWeight: 600 }}>
+                            <ToggleButton value="grid" sx={{ flex: { xs: 1, sm: 'none' }, textTransform: 'none', px: 2, fontWeight: 600 }}>
                                 <ViewModuleIcon sx={{ mr: 1 }} /> Lista
                             </ToggleButton>
-                            <ToggleButton value="map" sx={{ textTransform: 'none', px: 2, fontWeight: 600 }}>
+                            <ToggleButton value="map" sx={{ flex: { xs: 1, sm: 'none' }, textTransform: 'none', px: 2, fontWeight: 600 }}>
                                 <MapIcon sx={{ mr: 1 }} /> Mapa Interactivo
                             </ToggleButton>
                         </ToggleButtonGroup>
                     </Grid>
                 </Grid>
 
-                {/* Category Horizontal Filter Chips */}
-                <Box sx={{ mt: 2, display: 'flex', gap: 1, overflowX: 'auto', pb: 1, pt: 0.5 }}>
+                {/* Category Horizontal Filter Chips (Desktop Quick Match) */}
+                <Box sx={{ mt: 2, display: { xs: 'none', md: 'flex' }, gap: 1, overflowX: 'auto', pb: 1, pt: 0.5 }}>
                     <Chip
                         label="Todas las Categorías"
                         clickable
@@ -235,6 +256,7 @@ export default function Page() {
                     })}
                 </Box>
             </Paper>
+
 
             {/* Content Display */}
             {loading ? (

@@ -82,7 +82,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                             variant="button"
                             buttonText={userCoverUrl
                                 ? (isMobile ? 'Editar portada' : 'Editar imagen de portada')
-                                : (isMobile ? 'Agregar + portada' : '+ Agregar imagen de portada')}
+                                : (isMobile ? '+ Agregar portada' : '+ Agregar imagen de portada')}
                             tooltipTitle="Recomendado: 1584 x 396 px (Aspect Ratio 4:1)"
                             aspectRatioHint="1584 x 396 px"
                             sx={{

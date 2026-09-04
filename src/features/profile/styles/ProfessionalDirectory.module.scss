@@ -20,3 +20,13 @@
     padding: $spacing-4;
   }
 }
+
+.Link {
+  text-decoration: none;
+  cursor: pointer;
+
+  &.Green {
+    color: var(--primary-green-text-color, #00897b);
+  }
+}
+

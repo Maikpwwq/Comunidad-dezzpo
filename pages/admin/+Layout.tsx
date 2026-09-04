@@ -71,7 +71,7 @@ function AdminContent({ children }: LayoutProps): React.ReactElement {
   }
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: BRAND.surface }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: BRAND.surface, maxWidth: '100vw', overflowX: 'hidden' }}>
       {/* Top Bar */}
       <AppBar
         position="fixed"
@@ -84,26 +84,38 @@ function AdminContent({ children }: LayoutProps): React.ReactElement {
           borderColor: 'divider',
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ minHeight: { xs: 56, sm: 64 }, px: { xs: 1.5, sm: 2.5 } }}>
           <IconButton
             color="inherit"
             edge="start"
             onClick={() => setMobileOpen(!mobileOpen)}
-            sx={{ mr: 2, display: { md: 'none' }, color: 'text.primary' }}
+            sx={{ mr: 1.5, display: { md: 'none' }, color: 'text.primary' }}
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: 0 }}>
             <Box
               sx={{
                 width: 8,
                 height: 8,
                 borderRadius: '50%',
                 bgcolor: BRAND.teal,
+                flexShrink: 0,
               }}
             />
-            <Typography variant="h6" color="text.primary" fontWeight={600} noWrap>
-              Centro de Control — Comunidad Dezzpo
+            <Typography
+              variant="h6"
+              color="text.primary"
+              fontWeight={700}
+              noWrap
+              sx={{ fontSize: { xs: '0.95rem', sm: '1.15rem' } }}
+            >
+              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                Centro de Control — Comunidad Dezzpo
+              </Box>
+              <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>
+                Centro de Control
+              </Box>
             </Typography>
           </Box>
         </Toolbar>
@@ -149,9 +161,12 @@ function AdminContent({ children }: LayoutProps): React.ReactElement {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          minWidth: 0,
+          maxWidth: '100%',
+          overflowX: 'hidden',
+          p: { xs: 1.5, sm: 2.5, md: 3 },
           width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
-          mt: '64px',
+          mt: { xs: '56px', sm: '64px' },
         }}
       >
         {children}

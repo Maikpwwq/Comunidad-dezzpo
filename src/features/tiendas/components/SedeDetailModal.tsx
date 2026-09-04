@@ -45,12 +45,36 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
             : []
 
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-            <DialogTitle sx={{ m: 0, p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Dialog
+            open={open}
+            onClose={onClose}
+            maxWidth="sm"
+            fullWidth
+            PaperProps={{
+                sx: {
+                    borderRadius: { xs: 2, sm: 3 },
+                    m: { xs: 1.5, sm: 2 },
+                    maxHeight: { xs: 'calc(100dvh - 32px)', sm: 'calc(100vh - 64px)' },
+                    display: 'flex',
+                    flexDirection: 'column',
+                    overflow: 'hidden',
+                },
+            }}
+        >
+            <DialogTitle
+                sx={{
+                    m: 0,
+                    p: { xs: 1.5, sm: 2 },
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexShrink: 0,
+                }}
+            >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                     <StorefrontIcon color="primary" />
                     <Box>
-                        <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2 }}>
+                        <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2, fontSize: { xs: '1.05rem', sm: '1.25rem' } }}>
                             {tienda.nombre}
                         </Typography>
                         {(tienda.razonSocial || tienda.nit) && (
@@ -63,12 +87,12 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
                         </Typography>
                     </Box>
                 </Box>
-                <IconButton onClick={onClose} size="small">
+                <IconButton onClick={onClose} size="small" aria-label="Cerrar">
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
-            <Divider />
-            <DialogContent sx={{ p: 2.5 }}>
+            <Divider sx={{ flexShrink: 0 }} />
+            <DialogContent sx={{ p: { xs: 2, sm: 2.5 }, overflowY: 'auto', flexGrow: 1 }}>
                 {tienda.descripcion && (
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2, fontStyle: 'italic' }}>
                         "{tienda.descripcion}"
@@ -209,8 +233,8 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
                     })}
                 </Box>
             </DialogContent>
-            <Divider />
-            <DialogActions sx={{ px: 2.5, py: 1.5 }}>
+            <Divider sx={{ flexShrink: 0 }} />
+            <DialogActions sx={{ px: { xs: 2, sm: 2.5 }, py: 1.5, flexShrink: 0 }}>
                 <Button onClick={onClose} variant="contained" className="btn-primary" size="medium">
                     Cerrar
                 </Button>

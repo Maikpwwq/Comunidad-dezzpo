@@ -257,78 +257,103 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
     }
 
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-            <form onSubmit={handleSubmit}>
-                <DialogTitle sx={{ m: 0, p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <StorefrontIcon color="primary" />
-                        <Typography variant="h6" fontWeight={700}>
-                            {initialData ? 'Editar Tienda / Proveedor' : 'Sugerir / Registrar nueva Tienda'}
-                        </Typography>
+        <Dialog
+            open={open}
+            onClose={onClose}
+            maxWidth="md"
+            fullWidth
+            PaperProps={{
+                component: 'form',
+                onSubmit: handleSubmit,
+                sx: {
+                    borderRadius: { xs: 2, sm: 3 },
+                    m: { xs: 1.5, sm: 2, md: 3 },
+                    maxHeight: { xs: 'calc(100dvh - 32px)', sm: 'calc(100vh - 64px)' },
+                    display: 'flex',
+                    flexDirection: 'column',
+                    overflow: 'hidden',
+                },
+            }}
+        >
+            <DialogTitle
+                sx={{
+                    m: 0,
+                    p: { xs: 1.5, sm: 2 },
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexShrink: 0,
+                }}
+            >
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <StorefrontIcon color="primary" />
+                    <Typography variant="h6" fontWeight={700} sx={{ fontSize: { xs: '1.05rem', sm: '1.25rem' } }}>
+                        {initialData ? 'Editar Tienda / Ferretería' : 'Sugerir / Registrar nueva Tienda'}
+                    </Typography>
+                </Box>
+                <IconButton onClick={onClose} size="small" aria-label="Cerrar">
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>
+
+            <Divider sx={{ flexShrink: 0 }} />
+
+            <DialogContent sx={{ p: { xs: 2, sm: 3 }, overflowY: 'auto', flexGrow: 1 }}>
+                {errorMsg && (
+                    <Alert severity="error" sx={{ mb: 2 }}>
+                        {errorMsg}
+                    </Alert>
+                )}
+
+                {!isAdminMode && (
+                    <Alert severity="info" sx={{ mb: 2.5 }}>
+                        Tu sugerencia de tienda será revisada por nuestro equipo antes de ser publicada oficialmente en el directorio.
+                    </Alert>
+                )}
+
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                    {/* Name and Duplicate Alert */}
+                    <Box>
+                        <TextField
+                            label="Nombre del Comercio / Tienda"
+                            size="small"
+                            required
+                            fullWidth
+                            placeholder="Ej: Distribuidora Eléctrica Andina"
+                            value={nombre}
+                            onChange={(e) => {
+                                setNombre(e.target.value)
+                                nameCheck.reset()
+                            }}
+                            onBlur={() => nameCheck.handleBlur(nombre)}
+                        />
+                        <DuplicateNameAlert
+                            status={nameCheck.status}
+                            matches={nameCheck.matches}
+                            checkedValue={nameCheck.checkedValue}
+                            type="tienda"
+                        />
                     </Box>
-                    <IconButton onClick={onClose} size="small">
-                        <CloseIcon />
-                    </IconButton>
-                </DialogTitle>
 
-                <Divider />
-
-                <DialogContent sx={{ p: 3 }}>
-                    {errorMsg && (
-                        <Alert severity="error" sx={{ mb: 2 }}>
-                            {errorMsg}
-                        </Alert>
-                    )}
-
-                    {!isAdminMode && (
-                        <Alert severity="info" sx={{ mb: 2.5 }}>
-                            Tu sugerencia de tienda será revisada por nuestro equipo antes de ser publicada oficialmente en el directorio.
-                        </Alert>
-                    )}
-
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                        {/* Name and Duplicate Alert */}
-                        <Box>
-                            <TextField
-                                label="Nombre del Comercio / Tienda *"
-                                size="small"
-                                required
-                                fullWidth
-                                placeholder="Ej: Distribuidora Eléctrica Andina"
-                                value={nombre}
-                                onChange={(e) => {
-                                    setNombre(e.target.value)
-                                    nameCheck.reset()
-                                }}
-                                onBlur={() => nameCheck.handleBlur(nombre)}
-                            />
-                            <DuplicateNameAlert
-                                status={nameCheck.status}
-                                matches={nameCheck.matches}
-                                checkedValue={nameCheck.checkedValue}
-                                type="tienda"
-                            />
-                        </Box>
-
-                        {/* Legal Details */}
-                        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                            <TextField
-                                label="Razón Social (Opcional)"
-                                size="small"
-                                placeholder="Ej: Distribuidora Eléctrica Andina S.A.S."
-                                value={razonSocial}
-                                onChange={(e) => setRazonSocial(e.target.value)}
-                                sx={{ flex: 1.5, minWidth: 240 }}
-                            />
-                            <TextField
-                                label="NIT (Opcional)"
-                                size="small"
-                                placeholder="Ej: 900.123.456-7"
-                                value={nit}
-                                onChange={(e) => setNit(e.target.value)}
-                                sx={{ flex: 1, minWidth: 160 }}
-                            />
-                        </Box>
+                    {/* Legal Details */}
+                    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                        <TextField
+                            label="Razón Social (Opcional)"
+                            size="small"
+                            placeholder="Ej: Distribuidora Eléctrica Andina S.A.S."
+                            value={razonSocial}
+                            onChange={(e) => setRazonSocial(e.target.value)}
+                            sx={{ flex: 1.5, minWidth: { xs: '100%', sm: 240 } }}
+                        />
+                        <TextField
+                            label="NIT (Opcional)"
+                            size="small"
+                            placeholder="Ej: 900.123.456-7"
+                            value={nit}
+                            onChange={(e) => setNit(e.target.value)}
+                            sx={{ flex: 1, minWidth: { xs: '100%', sm: 160 } }}
+                        />
+                    </Box>
 
                         {/* Categories Autocomplete */}
                         <Autocomplete
@@ -427,7 +452,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                                         value={contacto.telefono}
                                         onChange={(e) => handleContactoChange(idx, 'telefono', e.target.value)}
                                         helperText={idx === 0 ? 'Se reutiliza en todas las sedes automáticamente' : undefined}
-                                        sx={{ flex: 1, minWidth: 200 }}
+                                        sx={{ flex: 1, minWidth: { xs: '100%', sm: 200 } }}
                                     />
                                     <TextField
                                         label={idx === 0 ? 'WhatsApp Principal (Opcional)' : `WhatsApp #${idx + 1} (Opcional)`}
@@ -436,7 +461,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                                         value={contacto.whatsapp}
                                         onChange={(e) => handleContactoChange(idx, 'whatsapp', e.target.value)}
                                         helperText={idx === 0 ? 'Número para cotizaciones y pedidos directos' : undefined}
-                                        sx={{ flex: 1, minWidth: 200 }}
+                                        sx={{ flex: 1, minWidth: { xs: '100%', sm: 200 } }}
                                     />
                                     <IconButton
                                         size="small"
@@ -518,9 +543,9 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                     </Box>
                 </DialogContent>
 
-                <Divider />
+                <Divider sx={{ flexShrink: 0 }} />
 
-                <DialogActions sx={{ px: 3, py: 2 }}>
+                <DialogActions sx={{ px: { xs: 2, sm: 3 }, py: 1.5, flexShrink: 0 }}>
                     <Button onClick={onClose} disabled={isSubmitting}>
                         Cancelar
                     </Button>
@@ -533,7 +558,6 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                         {isSubmitting ? 'Guardando...' : (initialData ? 'Actualizar Tienda' : 'Enviar Tienda')}
                     </Button>
                 </DialogActions>
-            </form>
         </Dialog>
     )
 }

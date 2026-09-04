@@ -191,7 +191,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                         placeholder="Ej: Sede Chapinero / Sucursal Principal"
                                         value={sede.nombreSede}
                                         onChange={(e) => handleUpdateSede(idx, 'nombreSede', e.target.value)}
-                                        sx={{ flex: 1.5, minWidth: 180 }}
+                                        sx={{ flex: 1.5, minWidth: { xs: '100%', sm: 180 } }}
                                     />
                                     <Autocomplete
                                         freeSolo
@@ -208,7 +208,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                                 size="small"
                                             />
                                         )}
-                                        sx={{ flex: 1.2, minWidth: 170 }}
+                                        sx={{ flex: 1.2, minWidth: { xs: '100%', sm: 170 } }}
                                     />
                                     <TextField
                                         label="Ciudad / Municipio"
@@ -216,7 +216,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                         placeholder="Ej: Bogotá, Villavicencio, Neiva..."
                                         value={sede.ciudad}
                                         onChange={(e) => handleCityChange(idx, e.target.value)}
-                                        sx={{ flex: 1.2, minWidth: 160 }}
+                                        sx={{ flex: 1.2, minWidth: { xs: '100%', sm: 160 } }}
                                     />
                                     <TextField
                                         select
@@ -224,7 +224,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                         size="small"
                                         value={sede.zona && Object.keys(currentCityZones).includes(sede.zona) ? sede.zona : Object.keys(currentCityZones)[0]}
                                         onChange={(e) => handleUpdateSede(idx, 'zona', e.target.value)}
-                                        sx={{ flex: 1.2, minWidth: 160 }}
+                                        sx={{ flex: 1.2, minWidth: { xs: '100%', sm: 160 } }}
                                     >
                                         {Object.entries(currentCityZones).map(([slug, name]) => (
                                             <MenuItem key={slug} value={slug}>
@@ -241,7 +241,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                         placeholder="Ej: Calle 15 # 85-30"
                                         value={sede.direccion}
                                         onChange={(e) => handleUpdateSede(idx, 'direccion', e.target.value)}
-                                        sx={{ flex: 2, minWidth: 240 }}
+                                        sx={{ flex: 2, minWidth: { xs: '100%', sm: 240 } }}
                                         helperText="Escribe la dirección en texto libre (no requiere marcar en el mapa)"
                                     />
                                     <Button
@@ -253,7 +253,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                             setActiveSedeForMap(idx)
                                             setOpenMapModal(true)
                                         }}
-                                        sx={{ textTransform: 'none', height: 40, whiteSpace: 'nowrap', mt: 0.2 }}
+                                        sx={{ textTransform: 'none', height: 40, whiteSpace: 'nowrap', mt: { xs: 0.5, sm: 0.2 }, width: { xs: '100%', sm: 'auto' } }}
                                     >
                                         Marcar en mapa (Opcional)
                                     </Button>
@@ -276,7 +276,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                         placeholder="Ej: Pedro Gómez"
                                         value={sede.nombreContacto || ''}
                                         onChange={(e) => handleUpdateSede(idx, 'nombreContacto', e.target.value)}
-                                        sx={{ flex: 1, minWidth: 200 }}
+                                        sx={{ flex: 1, minWidth: { xs: '100%', sm: 200 } }}
                                     />
                                     <TextField
                                         label="Cargo del contacto (Opcional)"
@@ -284,7 +284,7 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                         placeholder="Ej: Administrador / Encargado de ventas"
                                         value={sede.cargoContacto || ''}
                                         onChange={(e) => handleUpdateSede(idx, 'cargoContacto', e.target.value)}
-                                        sx={{ flex: 1, minWidth: 200 }}
+                                        sx={{ flex: 1, minWidth: { xs: '100%', sm: 200 } }}
                                     />
                                 </Box>
 
@@ -333,13 +333,13 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                                 </Typography>
                                                 <Stack spacing={1}>
                                                     {branchPhones.map((tel, tIdx) => (
-                                                        <Box key={tIdx} sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                                                        <Box key={tIdx} sx={{ display: 'flex', gap: 1, alignItems: 'center', flexWrap: 'wrap' }}>
                                                             <TextField
                                                                 size="small"
                                                                 placeholder="Ej: 6013456789 o 3102345678"
                                                                 value={tel}
                                                                 onChange={(e) => handleUpdatePhone(idx, tIdx, e.target.value)}
-                                                                sx={{ width: 240 }}
+                                                                sx={{ flex: 1, minWidth: { xs: '100%', sm: 200 } }}
                                                             />
                                                             {tIdx === branchPhones.length - 1 && (
                                                                 <Button size="small" onClick={() => handleAddPhone(idx)}>

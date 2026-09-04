@@ -24,3 +24,13 @@
     gap: $spacing-5; // Increased spacing for desktop
   }
 }
+
+.Link {
+  text-decoration: none;
+  cursor: pointer;
+
+  &.Green {
+    color: var(--primary-green-text-color, #00897b);
+  }
+}
+

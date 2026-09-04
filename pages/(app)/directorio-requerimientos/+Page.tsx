@@ -7,6 +7,8 @@
  * SSR-safe: Uses draftService which has Firestore guards.
  */
 import { useState, useEffect } from 'react'
+import clsx from 'clsx'
+import { Link } from '@hooks'
 import { navigate } from 'vike/client/router'
 import { useUserStore } from '@stores/userStore'
 import { useAuth } from '@hooks/useAuth'
@@ -19,7 +21,7 @@ import { DraftCard } from '@features/quotes'
 // Styles
 import styles from '@features/quotes/styles/Requerimientos.module.scss'
 // Bootstrap & MUI
-import { Container, Button } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import { Typography, Chip, Box, Divider, FormControl, Select, MenuItem } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 
@@ -55,13 +57,6 @@ export default function Page() {
     const { currentUser } = useAuth()
     const isComerciante = currentUser?.role === 2
 
-    const handleApplyClick = () => {
-        if (!userId) {
-            navigate('/ingreso')
-        } else {
-            console.log('User is logged in')
-        }
-    }
 
     const getDraftTotalValue = (draft: any) => {
         let total = Number(draft.draftTotal) || 0
@@ -162,15 +157,16 @@ export default function Page() {
                             Directorio de Requerimientos
                         </h1>
                         <p className="type-body text-muted mb-0">
-                            ¿Ofreces algún servicio? publícalo en el portal de servicios
+                            ¿Ofreces algún servicio? publícalo en el portal de servicios{' '}
+                            <Link
+                                href={userId ? '/app/ajustes' : '/ingreso'}
+                                className={clsx(styles.Link, styles.Green)}
+                                style={{ fontWeight: 700, textDecoration: 'underline' }}
+                            >
+                                Publica tus servicios
+                            </Link>
                         </p>
                     </div>
-                    <Button
-                        className="btn-primary-gradient mt-2 mt-md-0"
-                        onClick={handleApplyClick}
-                    >
-                        Publica tus servicios
-                    </Button>
                 </header>
 
                 <Box sx={{ my: 2 }}>

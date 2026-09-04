@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
     Box,
     Typography,
@@ -16,7 +16,6 @@ import {
     IconButton,
     Tooltip,
     Snackbar,
-    Alert,
     CircularProgress,
 } from '@mui/material'
 import StorefrontIcon from '@mui/icons-material/Storefront'
@@ -120,14 +119,23 @@ export default function Page() {
     }
 
     return (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: { xs: 1, sm: 2, md: 3 }, width: '100%', maxWidth: '100%', minWidth: 0, boxSizing: 'border-box' }}>
             {/* Header */}
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    justifyContent: 'space-between',
+                    alignItems: { xs: 'flex-start', sm: 'center' },
+                    gap: 2,
+                    mb: 3,
+                }}
+            >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                    <StorefrontIcon sx={{ fontSize: 36, color: 'primary.main' }} />
+                    <StorefrontIcon sx={{ fontSize: { xs: 30, sm: 36 }, color: 'primary.main', flexShrink: 0 }} />
                     <Box>
-                        <Typography variant="h5" fontWeight={800} color="#0A2540">
-                            Gestión de Tiendas y Ferreterias
+                        <Typography variant="h5" fontWeight={800} color="#0A2540" sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
+                            Gestión de Tiendas y Ferreterías
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             Panel de administración, moderación y control de sedes de insumos y servicios técnicos.
@@ -143,28 +151,30 @@ export default function Page() {
                         setSelectedTienda(null)
                         setFormOpen(true)
                     }}
-                    sx={{ textTransform: 'none', borderRadius: 2, fontWeight: 700 }}
+                    sx={{ textTransform: 'none', borderRadius: 2, fontWeight: 700, width: { xs: '100%', sm: 'auto' } }}
                 >
                     Nueva Tienda
                 </Button>
             </Box>
 
             {/* Navigation Tabs */}
-            <Paper elevation={0} variant="outlined" sx={{ borderRadius: 3, mb: 3 }}>
+            <Paper elevation={0} variant="outlined" sx={{ borderRadius: 3, mb: 3, overflow: 'hidden' }}>
                 <Tabs
                     value={currentTab}
                     onChange={(_, val) => setCurrentTab(val)}
                     textColor="primary"
                     indicatorColor="primary"
-                    sx={{ px: 2, borderBottom: 1, borderColor: 'divider' }}
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    allowScrollButtonsMobile
+                    sx={{ px: { xs: 1, sm: 2 }, borderBottom: 1, borderColor: 'divider' }}
                 >
                     <Tab
                         label={`Tiendas Aprobadas (${approvedTiendas.length})`}
                         sx={{ textTransform: 'none', fontWeight: 700 }}
                     />
                     <Tab
-                        icon={pendingTiendas.length > 0 ? <PendingActionsIcon color="warning" /> : undefined}
-                        iconPosition="start"
+                        {...(pendingTiendas.length > 0 ? { icon: <PendingActionsIcon color="warning" />, iconPosition: 'start' as const } : {})}
                         label={`Cola de Moderación (${pendingTiendas.length})`}
                         sx={{ textTransform: 'none', fontWeight: 700 }}
                     />
@@ -172,13 +182,13 @@ export default function Page() {
 
                 {/* Tab 0: Approved Tiendas */}
                 {currentTab === 0 && (
-                    <Box sx={{ p: 2 }}>
+                    <Box sx={{ p: { xs: 1, sm: 2 } }}>
                         {loading ? (
                             <Box sx={{ display: 'flex', justifyContent: 'center', py: 5 }}>
                                 <CircularProgress />
                             </Box>
                         ) : approvedTiendas.length > 0 ? (
-                            <TableContainer>
+                            <TableContainer sx={{ maxWidth: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
                                 <Table size="medium">
                                     <TableHead>
                                         <TableRow sx={{ backgroundColor: '#f8fafc' }}>
@@ -234,7 +244,7 @@ export default function Page() {
                                                 <TableCell>
                                                     {(() => {
                                                         const primarySede = tienda.sedes[0]
-                                                        const phone = tienda.telefonoPrincipal || primarySede?.telefonos[0]
+                                                        const phone = tienda.telefonoPrincipal || primarySede?.telefonos?.[0]
                                                         const wa = tienda.whatsappPrincipal || primarySede?.whatsapp
                                                         return (
                                                             <Box>
@@ -306,13 +316,13 @@ export default function Page() {
 
                 {/* Tab 1: Moderation Queue */}
                 {currentTab === 1 && (
-                    <Box sx={{ p: 2 }}>
+                    <Box sx={{ p: { xs: 1, sm: 2 } }}>
                         {loading ? (
                             <Box sx={{ display: 'flex', justifyContent: 'center', py: 5 }}>
                                 <CircularProgress />
                             </Box>
                         ) : pendingTiendas.length > 0 ? (
-                            <TableContainer>
+                            <TableContainer sx={{ maxWidth: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
                                 <Table size="medium">
                                     <TableHead>
                                         <TableRow sx={{ backgroundColor: '#fff7ed' }}>

@@ -1,12 +1,13 @@
 import { useState, useEffect, Suspense } from 'react'
-import { navigate } from 'vike/client/router'
+import clsx from 'clsx'
+import { Link } from '@hooks'
 import { usePageContext } from '@hooks/usePageContext'
 import { SearchBar } from '@components/layout'
 import { getUsers } from '@services/users' // Assuming this is correct
 import { searchByCategories } from '@services/search' // Changed import
 import { UserCard } from '@features/profile'
 // UI Libs
-import { Row, Col, Container, Button } from 'react-bootstrap'
+import { Row, Col, Container } from 'react-bootstrap'
 import { Box, Chip, Skeleton, Stack, Typography, FormControl, Select, MenuItem } from '@mui/material'
 import FilterListIcon from '@mui/icons-material/FilterList'
 // Types
@@ -101,9 +102,6 @@ export default function Page() {
         fetchInitialUsers();
     }, [])
 
-    const handleNewProject = () => {
-        navigate('/nuevo-proyecto')
-    }
 
     interface PublicClassificationFilterOption {
         id: string
@@ -200,15 +198,16 @@ export default function Page() {
                                 Directorio de Profesionales
                             </h1>
                             <p className="type-body text-muted mb-0">
-                                ¿Buscas una cotización? publícala en el directorio de requerimientos
+                                ¿Buscas una cotización? publícala en el directorio de requerimientos{' '}
+                                <Link
+                                    href="/nuevo-proyecto"
+                                    className={clsx(styles.Link, styles.Green)}
+                                    style={{ fontWeight: 700, textDecoration: 'underline' }}
+                                >
+                                    Publica un proyecto
+                                </Link>
                             </p>
                         </div>
-                        <Button
-                            className="type-body btn-round btn-high mt-2 mt-md-0"
-                            onClick={handleNewProject}
-                        >
-                            Publica un proyecto
-                        </Button>
                     </div>
 
                     <SearchBar initialValue={spacedText} />
