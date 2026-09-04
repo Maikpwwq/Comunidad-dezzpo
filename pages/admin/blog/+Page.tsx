@@ -206,7 +206,7 @@ export default function Page() {
     }
 
     return (
-        <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+        <Box sx={{ pb: 4, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
             {/* Header */}
             <Box sx={{ mb: 3, display: 'flex', alignItems: { xs: 'flex-start', sm: 'center' }, justifyContent: 'space-between', flexDirection: { xs: 'column', sm: 'row' }, gap: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>

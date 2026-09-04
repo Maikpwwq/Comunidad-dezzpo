@@ -121,7 +121,7 @@ export default function Page() {
     }
 
     return (
-        <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+        <Box sx={{ pb: 4, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
             {/* Header */}
             <Box sx={{ mb: 3, display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
                 <CampaignIcon sx={{ fontSize: { xs: 32, sm: 40 }, color: 'primary.main', mt: 0.5, flexShrink: 0 }} />

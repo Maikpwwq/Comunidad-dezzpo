@@ -104,14 +104,10 @@
 // Legacy buttons removed
 
 
-/* **************************************************** */
-/* Declaracion de Contenedores */
-/* **************************************************** */
 main {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-around;
+    display: block;
+    width: 100%;
+    text-align: left;
 }
 body {
     font-family: 'lato Regular', Helvetica, sans-serif; // Keep legacy font here if specific override needed, but check vars

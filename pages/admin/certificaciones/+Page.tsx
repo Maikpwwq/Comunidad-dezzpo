@@ -159,11 +159,11 @@ export default function Page() {
 
     if (loading) {
         return (
-            <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+            <Box sx={{ pb: 4, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
                 <Typography variant="h4" fontWeight={700} sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' }, mb: 2 }}>
-                    Verificación de Certificaciones
+                    Validación de Competencias Laborales
                 </Typography>
-                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '320px 1fr' }, gap: 2, height: '70vh' }}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '320px 1fr' }, gap: 2, height: { xs: 320, md: '70vh' } }}>
                     <Skeleton variant="rectangular" height="100%" sx={{ borderRadius: 2 }} />
                     <Skeleton variant="rectangular" height="100%" sx={{ borderRadius: 2, display: { xs: 'none', md: 'block' } }} />
                 </Box>
@@ -172,7 +172,7 @@ export default function Page() {
     }
 
     return (
-        <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+        <Box sx={{ pb: 4, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, gap: 1.5, mb: 3 }}>
                 <Typography variant="h4" fontWeight={700} sx={{ fontSize: { xs: '1.35rem', sm: '1.75rem', md: '2.125rem' } }}>
                     Validación de Competencias Laborales

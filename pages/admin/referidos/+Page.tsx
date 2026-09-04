@@ -62,7 +62,7 @@ export default function Page() {
 
     if (isLoading || (loading && referrals.length === 0)) {
         return (
-            <Box sx={{ p: 5, textAlign: 'center' }}>
+            <Box sx={{ p: { xs: 3, sm: 5 }, textAlign: 'center' }}>
                 <CircularProgress size={40} sx={{ color: '#0f766e' }} />
                 <Typography variant="body2" sx={{ mt: 2, color: 'text.secondary' }}>
                     Cargando auditoría de referidos...
@@ -82,7 +82,7 @@ export default function Page() {
     const conversionRate = totalInvited > 0 ? Math.round((totalCompleted / totalInvited) * 100) : 0
 
     return (
-        <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+        <Box sx={{ pb: 4, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
             {/* Header */}
             <Box
                 sx={{

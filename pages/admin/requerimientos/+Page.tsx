@@ -133,7 +133,7 @@ export default function RequerimientosPage() {
     )
 
     return (
-        <Box sx={{ p: { xs: 1.5, sm: 2.5, md: 3 }, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
+        <Box sx={{ pb: 4, maxWidth: '100%', minWidth: 0, overflowX: 'hidden' }}>
             <Box sx={{ mb: 3 }}>
                 <Typography
                     variant="h4"

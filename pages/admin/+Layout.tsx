@@ -71,7 +71,7 @@ function AdminContent({ children }: LayoutProps): React.ReactElement {
   }
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: BRAND.surface, maxWidth: '100vw', overflowX: 'hidden' }}>
+    <Box sx={{ display: { xs: 'block', md: 'flex' }, minHeight: '100vh', bgcolor: BRAND.surface, maxWidth: '100vw', overflowX: 'hidden' }}>
       {/* Top Bar */}
       <AppBar
         position="fixed"
@@ -160,12 +160,14 @@ function AdminContent({ children }: LayoutProps): React.ReactElement {
       <Box
         component="main"
         sx={{
-          flexGrow: 1,
+          flexGrow: { md: 1 },
+          display: 'block',
+          textAlign: 'left',
           minWidth: 0,
           maxWidth: '100%',
           overflowX: 'hidden',
           p: { xs: 1.5, sm: 2.5, md: 3 },
-          width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
+          width: { xs: '100%', md: `calc(100% - ${DRAWER_WIDTH}px)` },
           mt: { xs: '56px', sm: '64px' },
         }}
       >
