@@ -12,7 +12,6 @@ import {
     where,
     doc,
     updateDoc,
-    Timestamp,
     getCountFromServer,
 } from 'firebase/firestore'
 import { sendPasswordResetEmail } from 'firebase/auth'
@@ -71,21 +70,27 @@ export function parseUserRegistrationDate(val: unknown): Date | null {
         // Match dd-MM-yyyy or dd/MM/yyyy
         const ddmmyyyy = /^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/.exec(trimmed)
         if (ddmmyyyy) {
-            const day = parseInt(ddmmyyyy[1], 10)
-            const month = parseInt(ddmmyyyy[2], 10) - 1
-            const year = parseInt(ddmmyyyy[3], 10)
-            const d = new Date(year, month, day)
-            return isNaN(d.getTime()) ? null : d
+            const [, dayStr, monthStr, yearStr] = ddmmyyyy
+            if (dayStr && monthStr && yearStr) {
+                const day = parseInt(dayStr, 10)
+                const month = parseInt(monthStr, 10) - 1
+                const year = parseInt(yearStr, 10)
+                const d = new Date(year, month, day)
+                return isNaN(d.getTime()) ? null : d
+            }
         }
 
         // Match yyyy-MM-dd or yyyy/MM/dd
         const yyyymmdd = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/.exec(trimmed)
         if (yyyymmdd) {
-            const year = parseInt(yyyymmdd[1], 10)
-            const month = parseInt(yyyymmdd[2], 10) - 1
-            const day = parseInt(yyyymmdd[3], 10)
-            const d = new Date(year, month, day)
-            return isNaN(d.getTime()) ? null : d
+            const [, yearStr, monthStr, dayStr] = yyyymmdd
+            if (yearStr && monthStr && dayStr) {
+                const year = parseInt(yearStr, 10)
+                const month = parseInt(monthStr, 10) - 1
+                const day = parseInt(dayStr, 10)
+                const d = new Date(year, month, day)
+                return isNaN(d.getTime()) ? null : d
+            }
         }
 
         const parsed = new Date(trimmed)
