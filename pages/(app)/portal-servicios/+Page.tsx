@@ -2,7 +2,8 @@ import { useState, useEffect, Suspense } from 'react'
 import clsx from 'clsx'
 import { Link } from '@hooks'
 import { usePageContext } from '@hooks/usePageContext'
-import { SearchBar } from '@components/layout'
+import { SearchBar, PaginationBar } from '@components/layout'
+import { usePagination } from '@hooks/usePagination'
 import { getUsers } from '@services/users' // Assuming this is correct
 import { searchByCategories } from '@services/search' // Changed import
 import { UserCard } from '@features/profile'
@@ -188,6 +189,12 @@ export default function Page() {
 
     const filteredUsersData = filterUserListByKeywordAndClassification(combinedUsers)
 
+    const usersPagination = usePagination({
+        items: filteredUsersData,
+        pageSize: 12,
+        resetKey: `${spacedText || ''}-${selectedMerchantClassification}`,
+    })
+
     return (
         <Container fluid className="p-0 h-100" style={{ overflowX: 'hidden' }}>
             <Row className="m-0 d-flex">
@@ -296,7 +303,7 @@ export default function Page() {
                     <Suspense fallback={<PortalSkeleton />}>
                         <section className={styles['directory-wrapper']}>
                             {filteredUsersData && filteredUsersData.length > 0 ? (
-                                filteredUsersData.map((user) => (
+                                usersPagination.pageItems.map((user) => (
                                     <UserCard
                                         key={user.userId || user.uid}
                                         {...user}
@@ -312,6 +319,15 @@ export default function Page() {
                                 </div>
                             )}
                         </section>
+                        <Box sx={{ px: 3 }}>
+                            <PaginationBar
+                                page={usersPagination.page}
+                                totalPages={usersPagination.totalPages}
+                                totalItems={usersPagination.totalItems}
+                                onPageChange={usersPagination.goToPage}
+                                itemLabel="profesionales"
+                            />
+                        </Box>
                     </Suspense>
                 </Col>
             </Row>

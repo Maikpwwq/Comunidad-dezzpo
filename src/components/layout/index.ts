@@ -12,6 +12,8 @@ export { NotificationBar } from './NotificationBar'
 export { ContentWrapper } from './ContentWrapper'
 export { SearchBar } from './SearchBar'
 export { PageContainer } from './PageContainer'
+export { PaginationBar } from './PaginationBar'
+export { SearchInput } from './SearchInput'
 
 // Navigation Config
 export {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
     Box,
     Typography,
@@ -40,12 +40,15 @@ import {
 } from '@services/tiendas'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import { TiendaFormModal, SedeDetailModal } from '@features/tiendas'
+import { SearchInput, PaginationBar } from '@components/layout'
+import { usePagination } from '@hooks/usePagination'
 
 export default function Page() {
     const [currentTab, setCurrentTab] = useState<number>(0)
     const [approvedTiendas, setApprovedTiendas] = useState<TiendaDocument[]>([])
     const [pendingTiendas, setPendingTiendas] = useState<TiendaDocument[]>([])
     const [loading, setLoading] = useState(true)
+    const [searchQuery, setSearchQuery] = useState('')
 
     // Form Modal
     const [formOpen, setFormOpen] = useState(false)
@@ -120,6 +123,54 @@ export default function Page() {
         }
     }
 
+    // ── Search filter ───────────────────────────────────────────────────
+    const filterTiendas = (list: TiendaDocument[]) => {
+        if (!searchQuery.trim()) return list
+        const term = searchQuery.trim().toLowerCase()
+        return list.filter((t) => {
+            const matchesName =
+                t.nombre.toLowerCase().includes(term) ||
+                t.razonSocial?.toLowerCase().includes(term) ||
+                t.nit?.toLowerCase().includes(term)
+            const matchesDesc = t.descripcion?.toLowerCase().includes(term)
+            const matchesSede = t.sedes.some(
+                (s) =>
+                    s.direccion.toLowerCase().includes(term) ||
+                    s.nombreSede.toLowerCase().includes(term) ||
+                    s.detallesUbicacion?.toLowerCase().includes(term) ||
+                    s.nombreContacto?.toLowerCase().includes(term)
+            )
+            const matchesCat = t.categorias.some((catKey) => {
+                const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                return (
+                    catKey.toLowerCase().includes(term) ||
+                    catObj?.label.toLowerCase().includes(term)
+                )
+            })
+            return matchesName || matchesDesc || matchesSede || matchesCat
+        })
+    }
+
+    const filteredApproved = useMemo(
+        () => filterTiendas(approvedTiendas),
+        [approvedTiendas, searchQuery],
+    )
+    const filteredPending = useMemo(
+        () => filterTiendas(pendingTiendas),
+        [pendingTiendas, searchQuery],
+    )
+
+    const approvedPagination = usePagination({
+        items: filteredApproved,
+        pageSize: 15,
+        resetKey: searchQuery + String(currentTab),
+    })
+    const pendingPagination = usePagination({
+        items: filteredPending,
+        pageSize: 15,
+        resetKey: searchQuery + String(currentTab),
+    })
+
     return (
         <Box sx={{ pb: 4, width: '100%', maxWidth: '100%', minWidth: 0, boxSizing: 'border-box' }}>
             {/* Header */}
@@ -159,6 +210,15 @@ export default function Page() {
                 </Button>
             </Box>
 
+            {/* Search Bar */}
+            <Box sx={{ mb: 2, maxWidth: { xs: '100%', sm: 480 } }}>
+                <SearchInput
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                    placeholder="Buscar por nombre, categoría, dirección..."
+                />
+            </Box>
+
             {/* Navigation Tabs */}
             <Paper elevation={0} variant="outlined" sx={{ borderRadius: 3, mb: 3, overflow: 'hidden' }}>
                 <Tabs
@@ -172,12 +232,12 @@ export default function Page() {
                     sx={{ px: { xs: 1, sm: 2 }, borderBottom: 1, borderColor: 'divider' }}
                 >
                     <Tab
-                        label={`Tiendas Aprobadas (${approvedTiendas.length})`}
+                        label={`Tiendas Aprobadas (${filteredApproved.length})`}
                         sx={{ textTransform: 'none', fontWeight: 700 }}
                     />
                     <Tab
                         {...(pendingTiendas.length > 0 ? { icon: <PendingActionsIcon color="warning" />, iconPosition: 'start' as const } : {})}
-                        label={`Cola de Moderación (${pendingTiendas.length})`}
+                        label={`Cola de Moderación (${filteredPending.length})`}
                         sx={{ textTransform: 'none', fontWeight: 700 }}
                     />
                 </Tabs>
@@ -189,11 +249,11 @@ export default function Page() {
                             <Box sx={{ display: 'flex', justifyContent: 'center', py: 5 }}>
                                 <CircularProgress />
                             </Box>
-                        ) : approvedTiendas.length > 0 ? (
+                        ) : filteredApproved.length > 0 ? (
                             <>
                                 {/* Mobile Cards (< md) */}
                                 <Box sx={{ display: { xs: 'flex', md: 'none' }, flexDirection: 'column', gap: 1.5 }}>
-                                    {approvedTiendas.map((tienda) => {
+                                    {approvedPagination.pageItems.map((tienda) => {
                                         const primarySede = tienda.sedes[0]
                                         const phone = tienda.telefonoPrincipal || primarySede?.telefonos?.[0]
                                         const wa = tienda.whatsappPrincipal || primarySede?.whatsapp
@@ -302,6 +362,16 @@ export default function Page() {
                                         )
                                     })}
                                 </Box>
+                                <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                                    <PaginationBar
+                                        page={approvedPagination.page}
+                                        totalPages={approvedPagination.totalPages}
+                                        totalItems={approvedPagination.totalItems}
+                                        onPageChange={approvedPagination.goToPage}
+                                        itemLabel="tiendas"
+                                        variant="compact"
+                                    />
+                                </Box>
 
                                 {/* Desktop Table (>= md) */}
                                 <TableContainer sx={{ display: { xs: 'none', md: 'block' }, maxWidth: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
@@ -317,7 +387,7 @@ export default function Page() {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {approvedTiendas.map((tienda) => (
+                                            {approvedPagination.pageItems.map((tienda) => (
                                                 <TableRow key={tienda.id} hover>
                                                     <TableCell>
                                                         <Typography variant="subtitle2" fontWeight={700} color="#0A2540">
@@ -422,6 +492,15 @@ export default function Page() {
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
+                                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                                    <PaginationBar
+                                        page={approvedPagination.page}
+                                        totalPages={approvedPagination.totalPages}
+                                        totalItems={approvedPagination.totalItems}
+                                        onPageChange={approvedPagination.goToPage}
+                                        itemLabel="tiendas"
+                                    />
+                                </Box>
                             </>
                         ) : (
                             <Box sx={{ p: 4, textAlign: 'center' }}>
@@ -438,11 +517,11 @@ export default function Page() {
                             <Box sx={{ display: 'flex', justifyContent: 'center', py: 5 }}>
                                 <CircularProgress />
                             </Box>
-                        ) : pendingTiendas.length > 0 ? (
+                        ) : filteredPending.length > 0 ? (
                             <>
                                 {/* Mobile Moderation Cards (< md) */}
                                 <Box sx={{ display: { xs: 'flex', md: 'none' }, flexDirection: 'column', gap: 1.5 }}>
-                                    {pendingTiendas.map((tienda) => (
+                                    {pendingPagination.pageItems.map((tienda) => (
                                         <Card
                                             key={tienda.id}
                                             sx={{
@@ -520,6 +599,16 @@ export default function Page() {
                                         </Card>
                                     ))}
                                 </Box>
+                                <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                                    <PaginationBar
+                                        page={pendingPagination.page}
+                                        totalPages={pendingPagination.totalPages}
+                                        totalItems={pendingPagination.totalItems}
+                                        onPageChange={pendingPagination.goToPage}
+                                        itemLabel="pendientes"
+                                        variant="compact"
+                                    />
+                                </Box>
 
                                 {/* Desktop Table (>= md) */}
                                 <TableContainer sx={{ display: { xs: 'none', md: 'block' }, maxWidth: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
@@ -534,7 +623,7 @@ export default function Page() {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {pendingTiendas.map((tienda) => (
+                                            {pendingPagination.pageItems.map((tienda) => (
                                                 <TableRow key={tienda.id} hover>
                                                     <TableCell>
                                                         <Typography variant="subtitle2" fontWeight={700}>
@@ -596,6 +685,15 @@ export default function Page() {
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
+                                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                                    <PaginationBar
+                                        page={pendingPagination.page}
+                                        totalPages={pendingPagination.totalPages}
+                                        totalItems={pendingPagination.totalItems}
+                                        onPageChange={pendingPagination.goToPage}
+                                        itemLabel="pendientes"
+                                    />
+                                </Box>
                             </>
                         ) : (
                             <Box sx={{ p: 4, textAlign: 'center' }}>

@@ -13,7 +13,6 @@ import {
     DialogContent,
     DialogActions,
     Divider,
-    TextField,
     Button,
     Chip,
     IconButton,
@@ -28,7 +27,6 @@ import {
     MenuItem,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import SearchIcon from '@mui/icons-material/Search'
 import PersonIcon from '@mui/icons-material/Person'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import SaveIcon from '@mui/icons-material/Save'
@@ -43,6 +41,8 @@ import {
     type AdminUserRow,
 } from '@services/admin'
 import { COMERCIANTE_OPTIONS, PROPIETARIO_OPTIONS, getBadgeDetails } from '@config/userClassification.config'
+import { SearchInput, PaginationBar } from '@components/layout'
+import { usePagination } from '@hooks/usePagination'
 
 /* ── Brand palette ─────────────────────────────────────────────── */
 const BRAND = {
@@ -291,11 +291,11 @@ export default function Page() {
         }
     }, [confirmDialog])
 
-    const [mobilePage, setMobilePage] = useState(0)
-    const MOBILE_PAGE_SIZE = 12
-
-    const pagedMobileUsers = filteredUsers.slice(mobilePage * MOBILE_PAGE_SIZE, (mobilePage + 1) * MOBILE_PAGE_SIZE)
-    const totalMobilePages = Math.ceil(filteredUsers.length / MOBILE_PAGE_SIZE)
+    const mobilePagination = usePagination({
+        items: filteredUsers,
+        pageSize: 12,
+        resetKey: searchQuery,
+    })
 
     return (
         <Box sx={{ pb: 4 }}>
@@ -310,32 +310,11 @@ export default function Page() {
 
             {/* Search Bar & Actions */}
             <Box sx={{ display: 'flex', gap: 1.5, mb: 3, flexDirection: { xs: 'column', sm: 'row' } }}>
-                <Paper
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1,
-                        p: { xs: 0.8, sm: 1 },
-                        flex: 1,
-                        borderRadius: 2,
-                        minWidth: 0,
-                    }}
-                    elevation={0}
-                    variant="outlined"
-                >
-                    <SearchIcon color="action" />
-                    <TextField
-                        placeholder="Buscar por nombre, email o UID…"
-                        variant="standard"
-                        fullWidth
-                        value={searchQuery}
-                        onChange={(e) => {
-                            setSearchQuery(e.target.value)
-                            setMobilePage(0)
-                        }}
-                        InputProps={{ disableUnderline: true }}
-                    />
-                </Paper>
+                <SearchInput
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                    placeholder="Buscar por nombre, email o UID…"
+                />
                 <Button
                     variant="contained"
                     onClick={() => setConfirmDialog({ type: 'backfill' })}
@@ -365,13 +344,13 @@ export default function Page() {
                             </Paper>
                         ))}
                     </Box>
-                ) : pagedMobileUsers.length === 0 ? (
+                ) : mobilePagination.pageItems.length === 0 ? (
                     <Paper sx={{ p: 4, textAlign: 'center', borderRadius: 2 }} variant="outlined">
                         <Typography color="text.secondary">No se encontraron usuarios coincidentes.</Typography>
                     </Paper>
                 ) : (
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                        {pagedMobileUsers.map((u) => {
+                        {mobilePagination.pageItems.map((u) => {
                             const catBadge = u.userCategorie ? getBadgeDetails(u.userCategorie) : null
                             const clasBadge = u.userClasification ? getBadgeDetails(u.userClasification) : null
                             return (
@@ -450,29 +429,14 @@ export default function Page() {
                         })}
 
                         {/* Mobile Pagination */}
-                        {totalMobilePages > 1 && (
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2, px: 1 }}>
-                                <Button
-                                    size="small"
-                                    disabled={mobilePage === 0}
-                                    onClick={() => setMobilePage((p) => Math.max(0, p - 1))}
-                                    sx={{ textTransform: 'none', fontWeight: 600 }}
-                                >
-                                    ← Anterior
-                                </Button>
-                                <Typography variant="caption" fontWeight={600} color="text.secondary">
-                                    Pág. {mobilePage + 1} de {totalMobilePages}
-                                </Typography>
-                                <Button
-                                    size="small"
-                                    disabled={mobilePage >= totalMobilePages - 1}
-                                    onClick={() => setMobilePage((p) => Math.min(totalMobilePages - 1, p + 1))}
-                                    sx={{ textTransform: 'none', fontWeight: 600 }}
-                                >
-                                    Siguiente →
-                                </Button>
-                            </Box>
-                        )}
+                        <PaginationBar
+                            page={mobilePagination.page}
+                            totalPages={mobilePagination.totalPages}
+                            totalItems={mobilePagination.totalItems}
+                            onPageChange={mobilePagination.goToPage}
+                            itemLabel="usuarios"
+                            variant="compact"
+                        />
                     </Box>
                 )}
             </Box>

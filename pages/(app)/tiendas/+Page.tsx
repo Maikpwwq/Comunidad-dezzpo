@@ -26,6 +26,8 @@ import { zoneNames } from '@assets/data/ListadoZonas'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import { getTiendas, createTienda, type TiendaDocument, type CreateTiendaInput } from '@services/tiendas'
 import { TiendaCard, TiendasMap, TiendaFormModal } from '@features/tiendas'
+import { PaginationBar } from '@components/layout'
+import { usePagination } from '@hooks/usePagination'
 
 export default function Page() {
     const [tiendas, setTiendas] = useState<TiendaDocument[]>([])
@@ -96,6 +98,13 @@ export default function Page() {
             return true
         })
     }, [tiendas, selectedCategory, selectedZone, searchQuery])
+
+    // Pagination for grid view only (map shows all pins)
+    const gridPagination = usePagination({
+        items: filteredTiendas,
+        pageSize: 12,
+        resetKey: `${searchQuery}-${selectedCategory}-${selectedZone}`,
+    })
 
     const handleCreateTienda = async (input: CreateTiendaInput): Promise<boolean> => {
         const res = await createTienda(input)
@@ -266,13 +275,22 @@ export default function Page() {
             ) : viewMode === 'grid' ? (
                 /* Card Grid View */
                 filteredTiendas.length > 0 ? (
-                    <Grid container spacing={3}>
-                        {filteredTiendas.map((tienda) => (
-                            <Grid item xs={12} sm={6} md={4} key={tienda.id}>
-                                <TiendaCard tienda={tienda} />
-                            </Grid>
-                        ))}
-                    </Grid>
+                    <>
+                        <Grid container spacing={3}>
+                            {gridPagination.pageItems.map((tienda) => (
+                                <Grid item xs={12} sm={6} md={4} key={tienda.id}>
+                                    <TiendaCard tienda={tienda} />
+                                </Grid>
+                            ))}
+                        </Grid>
+                        <PaginationBar
+                            page={gridPagination.page}
+                            totalPages={gridPagination.totalPages}
+                            totalItems={gridPagination.totalItems}
+                            onPageChange={gridPagination.goToPage}
+                            itemLabel="tiendas"
+                        />
+                    </>
                 ) : (
                     /* Zero Result Empty State for Card Grid */
                     <Paper
