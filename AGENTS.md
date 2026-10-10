@@ -144,17 +144,28 @@ comunidad-dezzpo/
 │   │   ├── certificaciones/+Page.tsx         # Certification requests queue
 │   │   ├── referidos/+Page.tsx               # Referral audit & metrics
 │   │   ├── notificaciones/+Page.tsx          # Mass broadcast workbench
-│   │   └── blog/+Page.tsx                    # Blog & content management workbench
+│   │   ├── blog/+Page.tsx                    # Blog & content management workbench
+│   │   ├── tiendas/+Page.tsx                 # Tiendas workbench & submission queue
+│   │   └── pre-registros/+Page.tsx           # Pre-registration & Talent Radar moderation queue
 │   │
+├── server/
+│   └── api/
+│       ├── chat.ts                           # RAG chatbot (Gemini + Supabase)
+│       ├── payment/                          # ePayco signature & confirmation
+│       └── preRegistration/                  # Handlers, HMAC locks, rate limit, duplicate checks
+│
 ├── src/
 │   ├── emotion/
 │   │   └── createEmotionCache.ts             # Emotion cache key + client singleton
 │   ├── components/                           # Atomic Design components
 │   ├── features/                             # Feature modules
+│   │   ├── admin/                            # Admin components & PreRegistrationDetailDialog
+│   │   └── preRegistration/                  # PreRegistrationModal, form, skills, canonical consent
 │   ├── config/                               # Centralized configuration
 │   │   ├── userClassification.config.ts      # User ranking tiers, badges, criteria
 │   │   ├── pricing.config.ts                 # Platform pricing constants
-│   │   └── referrals.config.ts               # Referral reward catalog & point rules
+│   │   ├── referrals.config.ts               # Referral reward catalog & point rules
+│   │   └── preRegistration.config.ts         # Pre-registration limits, rejection reasons, canonical V1.1
 │   ├── services/                             # Data layer
 │   │   ├── admin/                            # Admin-only service
 │   │   │   ├── adminService.ts               # Stats, users, classification, verification
@@ -162,6 +173,8 @@ comunidad-dezzpo/
 │   │   ├── blog/                             # Blog CRUD, seeding, slug generation
 │   │   │   └── blogService.ts
 │   │   ├── firebase/
+│   │   ├── preRegistration/                  # Pre-registration client service
+│   │   ├── tiendas/                          # Hardened tiendas service (rate limit, audit log, idempotency)
 │   │   └── users/
 │   ├── hooks/                                # Shared hooks
 │   │   ├── useAuth.ts
@@ -288,6 +301,18 @@ pending_payment → active → completed → disputed
 #### UI Routes
 - **User Dashboard**: `/app/invitar-amigos` — gamified dashboard with code sharing (WhatsApp/Facebook/Email), KPIs, reward catalog, referral history table.
 - **Admin Audit**: `/admin/referidos` — global metrics (total invitations, conversion rate, points distributed) and filterable audit table.
+
+### Pre-Registration & Talent Radar ("Recomendar a un Profesional") Constraints
+
+#### Server-Mediated Architecture (Zero Direct Client Writes)
+- **Strict Firestore Rules**: Direct client writes to `preRegistrations` and `preRegistrationReservations` are completely forbidden (`allow write: if false;`). All mutations flow through Hono API routes (`/api/v1/pre-registrations/*`) via Firebase Admin SDK.
+- **Routing Precedence**: API routes must be mounted **before** `vike(app)` in `pages/+server.ts`.
+- **Atomic Concurrency & HMAC Locks**: Phone and email reservation locks are created inside atomic transactions using SHA-256 HMAC hashes (`preRegistrationReservations/{hash}`) without storing raw PII in reservation keys.
+- **Strict Anti-Enumeration**: Public API endpoints (`check-early`) never disclose the existence of registered accounts, private emails, or phone numbers.
+- **Canonical Legal Consent**: Mandatory `CANONICAL_PRIVACY_NOTICE_VERSION = 'V1.1' as const` matching platform registration. Any request without matching version is rejected (`HTTP 400`).
+- **Automatic TTL Purge**: Terminal states (`rechazada`, `duplicada`, `retirada`, `suprimida`) have a 30-day retention `purgeAt` field backed by native Firestore TTL rules.
+- **Tiendas Hardening Rule**: In `tiendaService.ts`, creation payloads coerce `estado: 'pendiente'`, enforce a rolling 24-hour rate limit (5 per user), check idempotency keys, and append immutable audit log entries.
+- **Coexistence (R9)**: Non-blocking background check in `userService.setUser()` flags matching pre-registrations with `hasPossibleMatch: true` without delaying or blocking real merchant signups.
 
 ## 9. Learned Lessons
 
@@ -720,3 +745,13 @@ src/styles/
 - **Contained Scroll**: The `DialogContent` must hold `overflowY: 'auto'` with a responsive maxHeight (`{ xs: 'calc(100dvh - 32px)', sm: 'calc(100vh - 64px)' }`).
 - **Responsive Field Sizing**: Form control `minWidth`s must use responsive breakpoints (`{ xs: '100%', sm: 200 }`) rather than fixed pixel widths to prevent horizontal scrolling or cut-off fields on small screens.
 - **Admin Layout Containment**: Admin main layout container (`pages/admin/+Layout.tsx`) must enforce `minWidth: 0`, `maxWidth: '100%'`, and `overflowX: 'hidden'` to prevent expansive DataGrids from blowing out the mobile document body.
+
+### Pre-Registration, Anti-Enumeration & Talent Radar Moderation Workbench (2026-10-10)
+- **Server-Mediated Pre-Registration vs. Client Direct Writes**: Completely closed the vulnerability seen in legacy flows where clients could craft payloads setting `estado: 'aprobada'`. Client writes to `preRegistrations` are strictly disabled in `firestore.rules` (`allow write: if false;`).
+- **HMAC Anti-Race Reservation Locks**: Prevented duplicate recommendations and race conditions during simultaneous submissions by creating deterministic SHA-256 HMAC reservation keys (`preRegistrationReservations/{hash}`) inside atomic Firestore transactions without disclosing plain phone/email data.
+- **Non-Enumerating Early Name Check**: Designed `/api/v1/pre-registrations/check-early` to query only already-public profiles from the directory and fuzzy active pre-registrations. It never validates or discloses whether a private email or phone exists in the user database.
+- **Canonical Legal Notice & Retention TTL**: Standardized on canonical privacy notice version `V1.1` matching platform registration (`CANONICAL_PRIVACY_NOTICE_VERSION = 'V1.1'`). Persisted structured consent evidence `{ privacyNoticeVersion: 'V1.1', acceptedAt: Timestamp }`. Terminal records are automatically purged via native Firestore TTL index on `purgeAt` after 30 days.
+- **Admin Moderation & Source Contrasting Checklist**: Built `/admin/pre-registros` with KPI counters (`getCountFromServer`), side-by-side duplicate comparator, contact shortcuts with `rel="noopener noreferrer"`, Habeas Data copyable outreach template, closed rejection codes, and mandatory external source contrasting checklist.
+- **Non-Blocking R9 Coexistence**: Integrated `checkAndFlagPreRegistrationMatch` in `userService.setUser()` to flag matching active pre-registrations in the background when a recommended professional registers on their own, with zero impact on user signup latency.
+- **Tiendas Security Hardening**: Extended these principles back into `tiendaService.ts`: enforced `estado: 'pendiente'` coercion, 5/24h rate limit, idempotency verification, and immutable audit logs.
+- **`exactOptionalPropertyTypes` Compatibility**: In components consuming optional props with `exactOptionalPropertyTypes: true` (e.g. `PreRegistrationModal`), always pass explicit `null` (`effectiveKeyword || null`) rather than `undefined` to satisfy strict compiler checks.

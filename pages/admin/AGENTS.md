@@ -31,6 +31,7 @@
 | `/admin/referidos` | Referral Audit | Global referral metrics (KPIs, conversion rate), filterable audit table |
 | `/admin/notificaciones` | Broadcast Workbench | Platform-wide mass notification broadcast to all or by role |
 | `/admin/tiendas` | Tiendas Workbench | Directory management, multi-branch sedes editor, and submission queue |
+| `/admin/pre-registros` | Pre-Registration & Radar | Moderation workbench (KPIs, tabbed statuses, source verification checklist, R9 match alert) |
 
 ## 3. Data Service (`adminService.ts`)
 
@@ -52,6 +53,14 @@
 |----------|---------|---------|
 | `getSocialInterceptionStats()` | `Promise<SocialInterceptorStats>` | Real Firestore query without mock fallbacks |
 | `subscribeToSocialInterceptions(onUpdate, onError)` | `() => void` | Reactive `onSnapshot` listener with unmount cleanup |
+
+### Pre-Registration Moderation Service (`preRegistrationService.ts`)
+| Function | Returns | Purpose |
+|----------|---------|---------|
+| `getPreRegistrationCounts()` | `{ pendientes, aprobadas, rechazadas, duplicadas }` | Cheap aggregations via `getCountFromServer` |
+| `getAdminPreRegistrations(params)` | `PreRegistration[]` | Fetches filtered queue by status and R9 match |
+| `getPreRegistrationAdminMeta(id)` | `DocumentData \| null` | Internal admin audit log, notes, and signals |
+| `moderatePreRegistration(params)` | `{ success, outcome, error }` | Server mutation with expected `version` and action |
 
 ## 4. Dependencies (Admin-Only)
 
@@ -139,8 +148,7 @@ pending_payment → active (after ePayco payment) → completed → disputed
 See [docs/testing-architecture.md](../../docs/testing-architecture.md) for full details.
 
 ### Current Coverage
-Admin pages are not yet covered by dedicated unit or integration tests. The following existing tests provide partial coverage:
-
+- `tests/unit/features/preRegistration/adminModeration.test.tsx` — **8 unit tests** covering `PreRegistrosAdminPage` (KPI cards, search filtering, tab changes) and `PreRegistrationDetailDialog` (fields render, source verification checklist, 409 concurrency error handling, copyable Habeas Data outreach template).
 - `tests/e2e/happy-paths/happyPaths.spec.ts` — general authenticated route smoke tests (does not currently include `/admin/*` routes since they require custom claims).
 - `tests/unit/stores/userStore.test.ts` — covers the shared `userStore` that admin pages consume.
 
@@ -153,3 +161,16 @@ Admin pages are not yet covered by dedicated unit or integration tests. The foll
 | Verification Queue approve/reject | Integration | High — verify status transitions |
 | Referral Audit `/admin/referidos` rendering | Integration | Medium — verify KPI cards and table with mocked `getAllReferralsForAdmin` |
 | `/admin/dashboard` E2E | E2E | Low — requires seeded admin user with claims |
+
+---
+
+## 10. Pre-Registration & Talent Radar Workbench (`/admin/pre-registros`)
+
+### Core Operational Invariants
+- **Mandatory Source Contrasting**: The "Aprobar y pasar a Radar" action is strictly disabled until the moderator actively checks `contrastedWithSources` ("He contrastado los datos con fuentes públicas o contacto directo").
+- **Closed Rejection Reason Codes**: Rejection requires selecting an explicit code from `REJECTION_REASONS` (`datos_invalidos`, `no_contactable`, `oficio_no_aplica`, `perfil_existente`, `solicitud_titular`, `otro`) plus an explanatory note.
+- **Optimistic Concurrency Control**: All moderation submissions pass `expectedVersion: preRegistration.version`. If another moderator acted on the record in parallel, the server returns `HTTP 409 VERSION_CONFLICT`, preventing silent overwrites.
+- **Habeas Data Compliance**: The workbench provides a copyable first-contact legal copy informing the professional about their rights (Ley 1581 de 2012) and Dezzpo's registered address.
+- **R9 Coexistence Alert**: Records with `hasPossibleMatch: true` display an amber badge indicating the professional completed independent registration, preventing duplicate outreach.
+- **Secure External Links**: Contact shortcuts (`tel:`, `mailto:`, `https://wa.me/`) must always set `rel="noopener noreferrer"` and `target="_blank"`.
+

@@ -222,3 +222,26 @@ The property management center allows **Propietario** accounts (`rol === 1`) to 
 ### Integration Points
 - **`/nuevo-proyecto`**: Uses `<PropertySelector />` to select target property for requirement posting.
 - **`/app/suscripciones`**: VIP inspection modal uses `<PropertySelector />` to auto-fill inspection address details.
+
+---
+
+## Recomendar a un Profesional ("Pre-Registro" - `/app/portal-servicios`)
+
+The recommendation center embedded in `/app/portal-servicios` empowers registered users to recommend trusted third-party professionals and contractors who do not yet have an account on Dezzpo.
+
+### Features
+- **Header Action & Zero-Search CTA**: Accessible via a prominent primary button in the portal header and from the zero-results search state when a user searches for an unrepresented specialty.
+- **On-Demand Dynamic Loading**: `PreRegistrationModal` is loaded lazily via `React.lazy()` with `Suspense` to avoid adding initial bundle weight to the hybrid marketplace page (< 5 KB budget).
+- **Responsive Sheet**: Desktop centered modal, mobile full-screen sheet (`fullScreen={isMobile}`) with virtual keyboard safe-area padding and high z-index avoiding floating chat overlap.
+- **Debounced Non-Enumerating Early Check**: 300ms debounce typing check against `/api/v1/pre-registrations/check-early`. Highlights already-existing public directory profiles with a direct link, without leaking private account existence or phone numbers.
+- **Skills Autocomplete**: Multi-select chip input drawing directly from the centralized `ListadoCategorias` (94 official categories).
+- **Canonical Consent (`V1.1`)**: Uses `CANONICAL_PRIVACY_NOTICE_VERSION = 'V1.1'` matching platform registration. Submits `{ privacyNoticeVersion: 'V1.1', accepted: true }`.
+- **Innovation ("Avísale tú" WhatsApp Handoff)**: Upon successful recommendation, generates a pre-formatted `https://wa.me/` link with URI-encoded copy so the recommender can immediately notify the candidate.
+- **"Mis Recomendaciones" & Withdrawal (R12)**: Tab 2 inside the modal displays the user's submitted recommendations (`getMyPreRegistrations()`) with real-time status chips and an action to withdraw (`withdrawPreRegistration()`) any pending recommendation.
+
+### Architecture & Rules
+- **Component**: `src/features/preRegistration/components/PreRegistrationModal.tsx`.
+- **Client Service**: `src/services/preRegistration/preRegistrationService.ts` (`submitPreRegistration`, `checkEarlyCandidateName`, `getMyPreRegistrations`, `withdrawPreRegistration`).
+- **Server Routes**: Server-mediated exclusively via `pages/+server.ts` -> `/api/v1/pre-registrations/*`.
+- **exactOptionalPropertyTypes Rule**: When passing optional props like `initialCategoryKey`, always pass explicit `null` (`effectiveKeyword || null`) rather than `undefined` to satisfy strict compiler checking.
+

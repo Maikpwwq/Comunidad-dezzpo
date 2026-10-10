@@ -2,7 +2,7 @@
 
 Professional network for real estate maintenance, remodeling, and finishes. We connect qualified professionals with users through a trusted marketplace.
 
-**Coding agents:** start from the repo root [`AGENTS.md`](./AGENTS.md); nested [`pages/(marketing)/AGENTS.md`](./pages/(marketing)/AGENTS.md), [`pages/(app)/AGENTS.md`](./pages/(app)/AGENTS.md), and [`pages/admin/AGENTS.md`](./pages/admin/AGENTS.md) add route-group rules. MUI + Emotion + Vike SSR: [`docs/mui-emotion-ssr-vike.md`](./docs/mui-emotion-ssr-vike.md). Server (+server, Vercel, Vite): [`docs/server-stack-vike.md`](./docs/server-stack-vike.md). Testing Architecture: [`docs/testing-architecture.md`](./docs/testing-architecture.md).
+**Coding agents:** start from the repo root [`AGENTS.md`](./AGENTS.md); nested [`pages/(marketing)/AGENTS.md`](./pages/(marketing)/AGENTS.md), [`pages/(app)/AGENTS.md`](./pages/(app)/AGENTS.md), and [`pages/admin/AGENTS.md`](./pages/admin/AGENTS.md) add route-group rules. MUI + Emotion + Vike SSR: [`docs/mui-emotion-ssr-vike.md`](./docs/mui-emotion-ssr-vike.md). Server (+server, Vercel, Vite): [`docs/server-stack-vike.md`](./docs/server-stack-vike.md). Testing Architecture: [`docs/testing-architecture.md`](./docs/testing-architecture.md). Pre-Registration & Talent Radar: [`docs/preregistro-profesionales.md`](./docs/preregistro-profesionales.md).
 
 ## Tech Stack
 
@@ -60,6 +60,7 @@ The project uses a **Tiered Access Model**:
    - `/admin/referidos` — Referral Program Auditing & Metrics
    - `/admin/notificaciones` — Platform-Wide Broadcast Workbench
    - `/admin/tiendas` — Directory Workbench & Submission Moderation Queue
+   - `/admin/pre-registros` — Pre-Registration & Talent Radar Moderation Workbench (KPIs, source verification, duplicate comparator)
 
 ## Project Structure
 
@@ -138,6 +139,8 @@ comunidad-dezzpo/
 │   │   ├── referidos/+Page.tsx               # Referral program audit & metrics
 │   │   ├── notificaciones/+Page.tsx           # Mass broadcast workbench
 │   │   ├── blog/+Page.tsx                    # Blog & Content management workbench
+│   │   ├── tiendas/+Page.tsx                 # Tiendas workbench & submission queue
+│   │   ├── pre-registros/+Page.tsx           # Pre-registration & Talent Radar moderation queue
 │   │   ├── contratos/                        # Contract management
 │   │   └── requerimientos/                   # Requirements overview
 │   │
@@ -149,6 +152,11 @@ comunidad-dezzpo/
 │       ├── payment/
 │       │   ├── signature.ts                  # ePayco signature generation
 │       │   └── confirmation.ts               # ePayco payment confirmation
+│       ├── preRegistration/                  # Pre-registration server handlers, HMAC locks, rate limit
+│       │   ├── handlers.ts                   # Creation, early check, moderate, withdraw
+│       │   ├── duplicateService.ts           # Anti-enumeration & duplicate detection
+│       │   ├── hmac.ts                       # Deterministic HMAC-SHA256 reservation keys
+│       │   └── rateLimit.ts                  # Rolling 24h & pending limit checks
 │       └── notifications/
 │           └── email.ts                      # Email notifications
 │
@@ -166,24 +174,28 @@ comunidad-dezzpo/
 │   │   └── dev/                              # Dev-only components
 │   │
 │   ├── features/                             # Feature Modules
-│   │   ├── admin/                            # Admin dashboard components
+│   │   ├── admin/                            # Admin dashboard components & moderation dialogs
 │   │   ├── auth/                             # Auth flows
 │   │   ├── chat/                             # AI ChatWidget
 │   │   ├── marketing/                        # Marketing components (QuickMatch, etc.)
 │   │   ├── messaging/                        # Sendbird messaging
+│   │   ├── preRegistration/                  # Pre-registration dialog, form, skills & WhatsApp handoff
 │   │   ├── profile/                          # User profiles
 │   │   ├── projects/                         # Project management
-│   │   └── quotes/                           # Quotation system
+│   │   ├── quotes/                           # Quotation system
+│   │   └── tiendas/                          # Tiendas & Ferreterías cards & modals
 │   │
 │   ├── services/                             # Data Layer
 │   │   ├── admin/                            # Admin-only service (stats, users, verification)
 │   │   ├── contracts/                        # Contract CRUD
 │   │   ├── drafts/                           # Draft requirements
 │   │   ├── firebase/                         # Firebase client SDK init
+│   │   ├── preRegistration/                  # Pre-registration client service & early check
 │   │   ├── quotations/                       # Quotation management
 │   │   ├── search/                           # Search service
 │   │   ├── sendbird/                         # Channel orchestration
 │   │   ├── social/                           # Meta Graph API Interceptor & Anti-Spam Worker
+│   │   ├── tiendas/                          # Hardened Tiendas service (rate limit, audit log, idempotency)
 │   │   ├── users/                            # User profiles
 │   │   ├── referralService.ts                # Referral code gen, attribution, points, rewards
 │   │   └── utils/                            # Service utilities
