@@ -328,11 +328,12 @@ pending_payment → active → completed → disputed
 - **`parseUserRegistrationDate` Engine**: Robust parser supporting `"dd-MM-yyyy"`, `"dd/MM/yyyy"`, `"yyyy-MM-dd"`, ISO 8601 strings, and Firestore Timestamp objects, parsing real document dates to calculate 30-day velocity reliably.
 - **Accurate Metric Aggregation**: `/admin/dashboard` now reflects real user growth (e.g. `14` new users in 30d with `0 Prop. | 14 Com.` breakdown) directly from live Firestore documents with zero mocks or fallbacks.
 
-### Specialized Tiendas & Supplier Directory Taxonomy (2026-08-18)
-- **Expanded Hardware & Retail Taxonomy**: Added 5 dedicated supplier categories to `ListadoCategoriasTiendas.ts`: `inoxidables` (stainless steel sheets/tubes/fittings), `mallas_metalicas` (chainlink/welded meshes/concertinas), `puertas` (wooden/metal/fire/security doors), `transmision_potencia` (bearings/pulleys/belts/chains/sprockets), and `depositos_materiales` (cement/aggregates/sand/bricks).
+### Specialized Tiendas & Supplier Directory Taxonomy (2026-08-18 & 2026-10-10)
+- **Expanded Hardware & Retail Taxonomy**: Added dedicated supplier categories to `ListadoCategoriasTiendas.ts`: `inoxidables` (stainless steel sheets/tubes/fittings), `mallas_metalicas` (chainlink/welded meshes/concertinas), `puertas` (wooden/metal/fire/security doors), `transmision_potencia` (bearings/pulleys/belts/chains/sprockets), `depositos_materiales` (cement/aggregates/sand/bricks), `gasodomesticos` (natural/propane gas appliances, stoves, water heaters, ovens, regulators), and `geotextiles_geomembranas` (woven/non-woven geotextiles, HDPE/PVC geomembranes, geonets, geodrains, erosion control).
 - **Taxonomy Segregation**:
   - Split `ornamentacion_hierro` into `ornamentacion` (artistic ironwork, railings, gates) and `perfiles_hierro` (structural iron, tubes, beams, sheets).
   - Split `muebles_modulares_tapiceria` into `muebles_closets` (cabinetry, modular furniture, closets) and `tapiceria` (upholstery fabrics, foams, leatherette, re-upholstery).
+  - Split `gases_industriales_soldadura` into `gases_industriales` (oxygen, argon, nitrogen, acetylene, CO2, helium cylinders) and `soldadura` (welding inverters, electrodes, MIG/TIG wires, autodarkening helmets, torches, welding machines).
 - **Shared Slug Utility**: Centralized URL slug generation in `@services/utils/slugify.ts` to eliminate duplicate definitions across blog and tienda services.
 
 ### Phone Authentication (SMS OTP) Architecture (`/registro` & `/ingreso` - 2026-08-21)

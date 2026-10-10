@@ -95,7 +95,7 @@ URLs de Acceso:
 
 ## Categorías Especializadas de Tiendas y Suministros
 
-El directorio de proveedores clasifica a las tiendas en 17 categorías especializadas (`ListadoCategoriasTiendas.ts`):
+El directorio de proveedores clasifica a las tiendas en categorías especializadas (`ListadoCategoriasTiendas.ts`):
 
 1. **Ferreterías General:** Herramientas manuales, tornillería, chazos, fijaciones y suministros generales.
 2. **Venta de Pinturas e Insumos:** Vinilos, esmaltes, estuco plástico, brochas, rodillos y diluyentes.
@@ -107,13 +107,16 @@ El directorio de proveedores clasifica a las tiendas en 17 categorías especiali
 8. **Tubería y Accesorios PVC:** Tubería sanitaria, de presión, conduit y pegantes PVC.
 9. **Materiales y Equipos Eléctricos:** Cableado THHN, breakers, tableros de distribución y tomacorrientes.
 10. **Iluminación y Lámparas:** Paneles LED, reflectores para intemperie, lámparas colgantes y tiras LED.
-11. **Gases Industriales y Soldadura:** Oxígeno, argón, electrodos, caretas fotosensibles e inversores.
-12. **Cerámicas, Porcelanatos y Pisos:** Baldosas, pisos laminados, SPC, pegantes (Pegacor) y boquillas.
-13. **Inoxidables:** Láminas, tubos y accesorios en acero inoxidable 304 y 316.
-14. **Mallas Metálicas:** Malla eslabonada, ondulada, electrosoldada y concertinas de seguridad.
-15. **Puertas y Portones:** Puertas en madera maciza, metálicas, cortafuego y de seguridad.
-16. **Transmisión de Potencia:** Rodamientos, poleas, correas industriales, cadenas y piñones.
-17. **Depósitos de Materiales:** Cemento, arena, gravilla, ladrillo tolete, bloque estructural y drywall.
+11. **Gases Industriales:** Oxígeno industrial y medicinal, argón, nitrógeno, acetileno, CO2 y helio.
+12. **Soldadura y Equipos:** Inversores de soldadura, electrodos, alambres MIG/TIG, caretas fotosensibles y antorchas.
+13. **Cerámicas, Porcelanatos y Pisos:** Baldosas, pisos laminados, SPC, pegantes (Pegacor) y boquillas.
+14. **Inoxidables:** Láminas, tubos y accesorios en acero inoxidable 304 y 316.
+15. **Mallas Metálicas:** Malla eslabonada, ondulada, electrosoldada y concertinas de seguridad.
+16. **Puertas y Portones:** Puertas en madera maciza, metálicas, cortafuego y de seguridad.
+17. **Transmisión de Potencia:** Rodamientos, poleas, correas industriales, cadenas y piñones.
+18. **Depósitos de Materiales:** Cemento, arena, gravilla, ladrillo tolete, bloque estructural y agregados.
+19. **Gasodomésticos:** Equipos a gas natural y propano, estufas, calentadores, hornos, repuestos y reguladores.
+20. **Geotextiles y Geomembranas:** Geotextiles tejidos/no tejidos, geomembranas HDPE/PVC, geodrenes y mantos para control de erosión.
 
 ---
 

@@ -102,12 +102,20 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         synonyms: ['lámparas', 'lamparas', 'led', 'bombillos', 'iluminación', 'luminarias', 'reflectores', 'tiras led'],
     },
     {
-        key: 'gases_industriales_soldadura',
-        label: 'Gases Industriales y Soldadura',
-        parentTradeKey: 67, // Red de gases / Soldadura
+        key: 'gases_industriales',
+        label: 'Gases Industriales',
+        parentTradeKey: 67, // Red de gases
         iconName: 'LocalGasStation',
-        description: 'Oxígeno, argón, nitrógeno, electrodos, inversores y caretas de soldar.',
-        synonyms: ['soldadura', 'electrodos', 'oxígeno', 'argón', 'caretas', 'inversor', 'gases', 'propano'],
+        description: 'Distribución y recarga de cilindros de oxígeno industrial y medicinal, argón, nitrógeno, acetileno, CO2 y helio.',
+        synonyms: ['gases industriales', 'oxígeno', 'oxigeno', 'argón', 'argon', 'nitrógeno', 'nitrogeno', 'acetileno', 'co2', 'dióxido de carbono', 'helio', 'cilindros de gas', 'gases'],
+    },
+    {
+        key: 'soldadura',
+        label: 'Soldadura y Equipos',
+        parentTradeKey: 77, // Soldadura
+        iconName: 'SquareFoot',
+        description: 'Equipos inversores de soldar, electrodos, alambres MIG/TIG, caretas fotosensibles, antorchas y consumibles.',
+        synonyms: ['soldadura', 'soldar', 'electrodos', 'inversor de soldadura', 'caretas de soldar', 'alambre mig', 'tig', 'antorchas', 'careta fotosensible', 'máquina de soldar', 'maquina de soldar', 'consumibles de soldadura'],
     },
     {
         key: 'pisos_ceramicas_porcelanatos',
@@ -340,5 +348,21 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         iconName: 'Warehouse',
         description: 'Cemento, arena, gravilla, ladrillo, bloque, recebo y materiales de construcción a granel.',
         synonyms: ['depósito', 'deposito', 'materiales de construcción', 'cemento', 'arena', 'gravilla', 'ladrillo', 'bloque', 'recebo', 'bulto de cemento', 'agregados'],
+    },
+    {
+        key: 'gasodomesticos',
+        label: 'Gasodomésticos',
+        parentTradeKey: 35, // Gasodomésticos
+        iconName: 'GasMeter',
+        description: 'Venta, repuestos e instalación de equipos a gas natural y propano: estufas, calentadores, hornos y reguladores.',
+        synonyms: ['gasodomésticos', 'gasodomesticos', 'gas natural', 'gas propano', 'estufas', 'estufa', 'calentadores', 'calentador', 'hornos', 'horno', 'gas', 'reguladores de gas', 'válvulas de gas', 'parrillas a gas', 'repuestos estufa'],
+    },
+    {
+        key: 'geotextiles_geomembranas',
+        label: 'Geotextiles y Geomembranas',
+        parentTradeKey: 38, // Impermeabilización / Obras
+        iconName: 'Layers',
+        description: 'Geotextiles tejidos y no tejidos, geomembranas de polietileno (HDPE/PVC), geodrenes y mantos para control de erosión.',
+        synonyms: ['geotextiles', 'geomembranas', 'geotextil', 'geomembrana', 'geodren', 'georredes', 'hdpe', 'pvc', 'geosintéticos', 'geosinteticos', 'impermeabilización de taludes', 'reservorios', 'control de erosión', 'drenaje vial', 'geomalla'],
     },
 ]
