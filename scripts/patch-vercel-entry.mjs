@@ -22,7 +22,7 @@ console.log(`[patch-vercel-entry] Found server chunk: ${chunkPath}`)
 // The name ('t') can vary across build environments (local vs Vercel)
 const chunkFullPath = resolve('dist/server', chunkPath)
 const chunkContent = readFileSync(chunkFullPath, 'utf-8')
-const exportMatch = chunkContent.match(/export\s*\{\s*_server_default\s+as\s+(\w+)\s*\}/)
+const exportMatch = chunkContent.match(/export\s*\{[^}]*\b_server_default\s+as\s+(\w+)/)
 
 if (!exportMatch) {
   console.error('[patch-vercel-entry] ❌ Could not find _server_default export in chunk!')

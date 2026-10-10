@@ -2,11 +2,13 @@
  * Directorio Requerimientos Page
  *
  * Shows list of project requirements/drafts.
- * For comerciantes: adds a "Requerimientos para ti" section
- * that filters drafts matching the user's registered categories.
- * SSR-safe: Uses draftService which has Firestore guards.
+ * For comerciantes:
+ * 1. Automatically filters drafts based on merchant structure (userClasification)
+ *    assigned by Admin, showing only compatible property types.
+ * 2. Highlights "Requerimientos para ti" matching the user's categories.
+ * SSR-safe: Uses draftService and userService which have Firestore guards.
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import clsx from 'clsx'
 import { Link } from '@hooks'
 import { navigate } from 'vike/client/router'
@@ -16,17 +18,25 @@ import { getAllDrafts } from '@services/drafts/draftService'
 import { getUser } from '@services/users'
 import { usePageContext } from '@hooks/usePageContext'
 import { SearchBar } from '@components/layout'
+// Matching Domain
+import {
+    normalizeMerchantStructure,
+    normalizePropertyType,
+    MERCHANT_STRUCTURE_METADATA,
+} from '@config/matching.config'
+import { getCompatiblePropertiesForStructure } from '@services/matching'
 // Components
 import { DraftCard } from '@features/quotes'
 // Styles
 import styles from '@features/quotes/styles/Requerimientos.module.scss'
 // Bootstrap & MUI
 import { Container } from 'react-bootstrap'
-import { Typography, Chip, Box, Divider, FormControl, Select, MenuItem } from '@mui/material'
+import { Typography, Chip, Box, Divider, FormControl, Select, MenuItem, Alert } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import FilterListIcon from '@mui/icons-material/FilterList'
 
 import { PROPIETARIO_RANKINGS } from '@config/userClassification.config'
-import FilterListIcon from '@mui/icons-material/FilterList'
 
 interface Draft {
     id?: string
@@ -34,6 +44,10 @@ interface Draft {
     draftName?: string
     draftDescription?: string
     draftCategory?: string
+    draftProject?: string
+    tipoProyecto?: string
+    draftProperty?: string
+    tipoInmueble?: string
     draftTotal?: number
     draftPropietarioResidente?: string
     draftCreated?: string
@@ -51,12 +65,12 @@ export default function Page() {
     const [draftsData, setDraftsData] = useState<Draft[]>([])
     const [isLoaded, setIsLoaded] = useState(false)
     const [userCategories, setUserCategories] = useState<string[]>([])
+    const [merchantClassification, setMerchantClassification] = useState<string | null>(null)
     const [selectedClassification, setSelectedClassification] = useState<string>('all')
 
     const userId = useUserStore((state) => state.userId)
     const { currentUser } = useAuth()
     const isComerciante = currentUser?.role === 2
-
 
     const getDraftTotalValue = (draft: any) => {
         let total = Number(draft.draftTotal) || 0
@@ -83,53 +97,96 @@ export default function Page() {
         }
     }, [isLoaded])
 
-    // Fetch comerciante's categories
+    // Fetch comerciante's categories and classification
     useEffect(() => {
-        const fetchUserCategories = async () => {
+        const fetchUserData = async () => {
             if (!userId || !isComerciante) return
             try {
                 const userData = await getUser({ userId, role: 2 })
-                if (userData?.userCategories && userData.userCategories.length > 0) {
-                    setUserCategories(userData.userCategories)
+                if (userData) {
+                    if (userData.userCategories && userData.userCategories.length > 0) {
+                        setUserCategories(userData.userCategories)
+                    }
+                    if (userData.userClasification) {
+                        setMerchantClassification(userData.userClasification)
+                    }
                 }
             } catch (err) {
-                console.error('Error fetching user categories:', err)
+                console.error('Error fetching user data:', err)
             }
         }
-        fetchUserCategories()
+        fetchUserData()
     }, [userId, isComerciante])
 
-    // Filter drafts by category search term (from SearchBar)
-    const filteredByCategory = draftsData.filter((draft) => {
-        if (!spacedText) return true
-        const term = spacedText.toLowerCase()
-        const cat = (draft.draftCategory || '').toLowerCase()
-        const name = (draft.draftName || '').toLowerCase()
-        const desc = (draft.draftDescription || '').toLowerCase()
-        return cat.includes(term) || name.includes(term) || desc.includes(term)
-    })
+    // Resolved merchant structure and allowed property types
+    const resolvedMerchantStructure = useMemo(() => {
+        if (!isComerciante || !merchantClassification) return null
+        return normalizeMerchantStructure(merchantClassification)
+    }, [isComerciante, merchantClassification])
 
-    // Filter drafts by Propietario Classification tier
-    const filteredByClassification = filteredByCategory.filter((draft) => {
-        if (selectedClassification === 'all') return true
-        const clas = (
-            draft.userClasification ||
-            draft.draftPropietarioClassification ||
-            ''
-        ).toLowerCase()
-        const tiers = PROPIETARIO_RANKINGS.clasificacion?.tiers || []
-        const targetTier = tiers.find(
-            (t) => t.id === selectedClassification
-        )
-        if (!targetTier) return true
-        return (
-            clas.includes(targetTier.name.toLowerCase()) ||
-            clas.includes(targetTier.id.toLowerCase())
-        )
-    })
+    const compatibleProperties = useMemo(() => {
+        if (!resolvedMerchantStructure) return null
+        return getCompatiblePropertiesForStructure(resolvedMerchantStructure, 'mostrar')
+    }, [resolvedMerchantStructure])
+
+    // 1. Filter drafts by category search term (from SearchBar)
+    const filteredByCategory = useMemo(() => {
+        return draftsData.filter((draft) => {
+            if (!spacedText) return true
+            const term = spacedText.toLowerCase()
+            const cat = (draft.draftCategory || '').toLowerCase()
+            const name = (draft.draftName || '').toLowerCase()
+            const desc = (draft.draftDescription || '').toLowerCase()
+            return cat.includes(term) || name.includes(term) || desc.includes(term)
+        })
+    }, [draftsData, spacedText])
+
+    // 2. Filter drafts by Merchant Operational Structure (Invariants I1-I7 & AC-6)
+    const filteredByStructure = useMemo(() => {
+        if (!isComerciante || !compatibleProperties) {
+            return filteredByCategory
+        }
+
+        return filteredByCategory.filter((draft) => {
+            const rawProp = draft.draftProject || draft.tipoProyecto || draft.draftProperty || draft.tipoInmueble
+            const normProp = normalizePropertyType(rawProp)
+
+            // Invariant I5: Unknown property type is always shown, never hidden
+            if (!normProp) return true
+
+            // Show if it belongs to compatible properties for this structure
+            return compatibleProperties.includes(normProp)
+        })
+    }, [filteredByCategory, isComerciante, compatibleProperties])
+
+    // 3. Filter drafts by Propietario Classification tier / Property type
+    const filteredByClassification = useMemo(() => {
+        return filteredByStructure.filter((draft) => {
+            if (selectedClassification === 'all') return true
+
+            const rawProp = draft.draftProject || draft.tipoProyecto || draft.draftProperty || draft.tipoInmueble
+            const normProp = normalizePropertyType(rawProp)
+            if (normProp && normProp === selectedClassification) return true
+
+            const clas = (
+                draft.userClasification ||
+                draft.draftPropietarioClassification ||
+                ''
+            ).toLowerCase()
+            const tiers = PROPIETARIO_RANKINGS.clasificacion?.tiers || []
+            const targetTier = tiers.find(
+                (t) => t.id === selectedClassification
+            )
+            if (!targetTier) return true
+            return (
+                clas.includes(targetTier.name.toLowerCase()) ||
+                clas.includes(targetTier.id.toLowerCase())
+            )
+        })
+    }, [filteredByStructure, selectedClassification])
 
     // Filter drafts matching the comerciante's categories
-    const getMatchingDrafts = () => {
+    const matchingDrafts = useMemo(() => {
         if (!isComerciante || userCategories.length === 0) return []
         return filteredByClassification.filter((draft) => {
             const cat = (draft.draftCategory || '').toLowerCase()
@@ -137,16 +194,14 @@ export default function Page() {
                 (uc) => cat.includes(uc.toLowerCase()) || uc.toLowerCase().includes(cat)
             )
         })
-    }
-    const matchingDrafts = getMatchingDrafts()
+    }, [isComerciante, userCategories, filteredByClassification])
 
     // Remaining drafts (not in matching)
-    const getOtherDrafts = () => {
+    const otherDrafts = useMemo(() => {
         if (matchingDrafts.length === 0) return filteredByClassification
         const matchingIds = new Set(matchingDrafts.map((d) => d.draftId || d.id))
         return filteredByClassification.filter((d) => !matchingIds.has(d.draftId || d.id))
-    }
-    const otherDrafts = getOtherDrafts()
+    }, [matchingDrafts, filteredByClassification])
 
     return (
         <Container fluid className="p-0 h-100">
@@ -168,6 +223,44 @@ export default function Page() {
                         </p>
                     </div>
                 </header>
+
+                {/* Comerciante Structure Adaptation Banner */}
+                {isComerciante && (
+                    <Box sx={{ my: 2 }}>
+                        {resolvedMerchantStructure ? (
+                            <Alert
+                                severity="info"
+                                icon={<InfoOutlinedIcon />}
+                                sx={{
+                                    borderRadius: 3,
+                                    border: '1px solid #bae6fd',
+                                    bgcolor: '#f0f9ff',
+                                    color: '#0369a1',
+                                    fontSize: '0.85rem',
+                                }}
+                            >
+                                <strong>Filtro por estructura operativa:</strong> Estás viendo los proyectos compatibles
+                                con tu estructura de{' '}
+                                <strong>{MERCHANT_STRUCTURE_METADATA[resolvedMerchantStructure].label}</strong> (asignada
+                                y verificada por el Administrador).
+                            </Alert>
+                        ) : (
+                            <Alert
+                                severity="warning"
+                                sx={{
+                                    borderRadius: 3,
+                                    border: '1px solid #fed7aa',
+                                    bgcolor: '#fffbeb',
+                                    color: '#9a3412',
+                                    fontSize: '0.85rem',
+                                }}
+                            >
+                                Si eres un comerciante nuevo, el Administrador asignará tu clasificación operativa
+                                para optimizar los requerimientos visibles para tu perfil.
+                            </Alert>
+                        )}
+                    </Box>
+                )}
 
                 <Box sx={{ my: 2 }}>
                     <SearchBar
@@ -314,19 +407,27 @@ export default function Page() {
                 </p>
 
                 <section className={styles['grid-container']}>
-                    {otherDrafts.map((draft) => (
-                        <DraftCard
-                            key={draft.draftId || draft.id}
-                            draftId={draft.draftId || draft.id || ''}
-                            draftPropietarioResidente={String(draft.draftPropietarioResidente || '')}
-                            draftName={draft.draftName || ''}
-                            draftDescription={draft.draftDescription || ''}
-                            draftTotal={getDraftTotalValue(draft)}
-                            draftCategory={draft.draftCategory || ''}
-                            draftCreated={String(draft.draftCreated || '')}
-                            draftApply={draft.draftApply || []}
-                        />
-                    ))}
+                    {otherDrafts.length > 0 ? (
+                        otherDrafts.map((draft) => (
+                            <DraftCard
+                                key={draft.draftId || draft.id}
+                                draftId={draft.draftId || draft.id || ''}
+                                draftPropietarioResidente={String(draft.draftPropietarioResidente || '')}
+                                draftName={draft.draftName || ''}
+                                draftDescription={draft.draftDescription || ''}
+                                draftTotal={getDraftTotalValue(draft)}
+                                draftCategory={draft.draftCategory || ''}
+                                draftCreated={String(draft.draftCreated || '')}
+                                draftApply={draft.draftApply || []}
+                            />
+                        ))
+                    ) : (
+                        <div style={{ gridColumn: '1 / -1', padding: '2rem 1rem', textAlign: 'center' }}>
+                            <Typography className="type-body" color="text.secondary">
+                                No hay requerimientos activos disponibles con los filtros actuales.
+                            </Typography>
+                        </div>
+                    )}
                 </section>
             </div>
         </Container>

@@ -1,0 +1,157 @@
+.ComboboxWrapper {
+    position: relative;
+    width: 100%;
+    min-width: 240px;
+    font-family: inherit;
+}
+
+.InputContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 20px;
+    padding: 4px 12px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    min-height: 44px; // WCAG 44px touch target
+
+    &:hover {
+        border-color: var(--background-main-green-color, #00b0ab);
+    }
+
+    &:focus-within {
+        border-color: var(--background-main-green-color, #00b0ab);
+        box-shadow: 0 0 0 3px rgba(0, 176, 171, 0.18);
+    }
+}
+
+.InputContainerActive {
+    border-color: var(--background-main-green-color, #00b0ab);
+}
+
+.IconLeading {
+    color: var(--background-main-green-color, #00b0ab);
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.InputField {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.92rem;
+    color: #1e293b;
+    padding: 6px 0;
+
+    &::placeholder {
+        color: #94a3b8;
+    }
+}
+
+.ClearButton {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease, background-color 0.15s ease;
+
+    &:hover {
+        color: #475569;
+        background-color: #f1f5f9;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--background-main-green-color, #00b0ab);
+    }
+}
+
+.SelectedBadge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f0fdfa;
+    border: 1.5px solid #99f6e4;
+    border-radius: 20px;
+    padding: 6px 14px;
+    min-height: 44px;
+    font-size: 0.92rem;
+    color: #0f766e;
+    font-weight: 600;
+}
+
+.DropdownList {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    max-height: 280px;
+    overflow-y: auto;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    z-index: 1300;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+}
+
+.DropdownItem {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    min-height: 44px;
+    justify-content: center;
+    transition: background-color 0.12s ease;
+
+    &:hover,
+    &.Highlighted {
+        background-color: #f0fdfa;
+    }
+
+    &.Selected {
+        background-color: #ccfbf1;
+    }
+}
+
+.MunicipioName {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.DepartamentoName {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin-top: 1px;
+}
+
+.StatusMessage {
+    padding: 12px;
+    font-size: 0.88rem;
+    color: #64748b;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.VisuallyHidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

@@ -34,7 +34,12 @@ export const bogotaZoneNames: Record<string, string> = {
     'madrid': 'Madrid',
     'facatativa': 'Facatativá',
     'la-calera': 'La Calera',
-    'sopo': 'Sopó'
+    'sopo': 'Sopó',
+    'tabio': 'Tabio',
+    'tenjo': 'Tenjo',
+    'tocancipa': 'Tocancipá',
+    'gachancipa': 'Gachancipá',
+    'sibate': 'Sibaté'
 }
 
 export const standardCityZoneNames: Record<string, string> = {
@@ -59,6 +64,18 @@ export const zoneNames: Record<string, string> = {
 export const zones = Object.keys(zoneNames)
 
 /**
+ * Ordered list of zones for the home and shared search selector.
+ * R6 constraint: 'otra-zona' is positioned immediately after 'bogota'.
+ */
+export const HOME_ZONE_OPTIONS: ReadonlyArray<{ readonly slug: string; readonly label: string }> = [
+    { slug: 'bogota', label: 'Bogotá' },
+    { slug: 'otra-zona', label: 'Otra zona' },
+    ...Object.entries(bogotaZoneNames)
+        .filter(([slug]) => slug !== 'bogota')
+        .map(([slug, label]) => ({ slug, label })),
+]
+
+/**
  * Checks if a city string is Bogotá or one of its Cundinamarca metropolitan municipalities.
  */
 export function isBogotaRegion(ciudad: string = ''): boolean {
@@ -66,7 +83,11 @@ export function isBogotaRegion(ciudad: string = ''): boolean {
     const norm = ciudad.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim()
     if (norm.includes('bogota')) return true
     
-    const metroKeys = ['soacha', 'chia', 'cajica', 'zipaquira', 'cota', 'funza', 'mosquera', 'madrid', 'facatativa', 'la calera', 'sopo']
+    const metroKeys = [
+        'soacha', 'chia', 'cajica', 'zipaquira', 'cota',
+        'funza', 'mosquera', 'madrid', 'facatativa', 'la calera', 'sopo',
+        'tabio', 'tenjo', 'tocancipa', 'gachancipa', 'sibate',
+    ]
     return metroKeys.some(m => norm.includes(m))
 }
 

@@ -1,0 +1,39 @@
+.Container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: auto;
+}
+
+.Compact {
+    width: 100%;
+}
+
+.Select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #334155;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.15s ease;
+    min-height: 44px;
+
+    &:hover {
+        background-color: #f1f5f9;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--background-main-green-color, #00b0ab);
+    }
+}
+
+.OtraZonaWrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 220px;
+}

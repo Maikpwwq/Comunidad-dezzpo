@@ -38,9 +38,11 @@ import {
     Snackbar,
     Chip,
     Box,
+    Tooltip,
 } from '@mui/material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
+import StarIcon from '@mui/icons-material/Star'
 
 // Types
 export interface UserCardProps {
@@ -59,6 +61,8 @@ export interface UserCardProps {
     userGrade?: string | undefined
     favoritesCount?: number | undefined
     likesCount?: number | undefined
+    compatibilityBadge?: string | null | undefined
+    compatibilityExplanation?: string | null | undefined
     [key: string]: unknown
 }
 
@@ -83,6 +87,8 @@ export function UserCard({
     userGrade: _userGrade,
     favoritesCount,
     likesCount,
+    compatibilityBadge,
+    compatibilityExplanation,
 }: UserCardProps): React.ReactElement {
     // Primary display name: priority to userName (commercial name), fallback to legal userRazonSocial
     const displayName = userName || userRazonSocial || 'Comerciante'
@@ -232,19 +238,43 @@ export function UserCard({
                     <Typography variant="caption" display="block" color="text.secondary">
                         {userProfession || 'Profesional / Comercio'} • Se unió el {userJoined || '—'}
                     </Typography>
-                    {userClasification && (
-                        <Box sx={{ mt: 0.5 }}>
-                            <Chip
-                                label={getBadgeDetails(userClasification).name}
-                                size="small"
-                                sx={{
-                                    bgcolor: getBadgeDetails(userClasification).bgLight,
-                                    color: getBadgeDetails(userClasification).color,
-                                    fontWeight: 700,
-                                    fontSize: '0.7rem',
-                                    height: 20,
-                                }}
-                            />
+                    {(userClasification || compatibilityBadge) && (
+                        <Box sx={{ mt: 0.5, display: 'flex', flexWrap: 'wrap', gap: 0.75, alignItems: 'center' }}>
+                            {userClasification && (
+                                <Chip
+                                    label={getBadgeDetails(userClasification).name}
+                                    size="small"
+                                    sx={{
+                                        bgcolor: getBadgeDetails(userClasification).bgLight,
+                                        color: getBadgeDetails(userClasification).color,
+                                        fontWeight: 700,
+                                        fontSize: '0.7rem',
+                                        height: 20,
+                                    }}
+                                />
+                            )}
+                            {compatibilityBadge && (
+                                <Tooltip
+                                    title={compatibilityExplanation || 'Perfil con afinidad técnica para tu tipo de inmueble'}
+                                    arrow
+                                    placement="top"
+                                >
+                                    <Chip
+                                        icon={<StarIcon sx={{ fontSize: '0.85rem !important', color: '#b45309 !important' }} />}
+                                        label={compatibilityBadge}
+                                        size="small"
+                                        sx={{
+                                            bgcolor: '#fef3c7',
+                                            color: '#92400e',
+                                            fontWeight: 700,
+                                            fontSize: '0.7rem',
+                                            height: 20,
+                                            border: '1px solid #fde68a',
+                                            cursor: 'help',
+                                        }}
+                                    />
+                                </Tooltip>
+                            )}
                         </Box>
                     )}
                 </div>

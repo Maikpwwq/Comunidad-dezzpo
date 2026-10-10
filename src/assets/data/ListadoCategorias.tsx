@@ -646,6 +646,20 @@ const ListadoCategorias = [
         variant: 'outlined',
         iconName: 'ViewInAr',
     },
+    {
+        key: 92,
+        label: 'Videovigilancia CCTV',
+        rol: 'Instaladores y Técnicos de Videovigilancia CCTV',
+        variant: 'outlined',
+        iconName: 'Videocam',
+    },
+    {
+        key: 93,
+        label: 'Izaje de cargas',
+        rol: 'Operadores y Técnicos de Izaje de Cargas',
+        variant: 'outlined',
+        iconName: 'Anchor',
+    },
 ]
 
 export { ListadoCategorias }

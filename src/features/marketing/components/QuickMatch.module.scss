@@ -2,7 +2,7 @@
 
 .Container {
     width: 100%;
-    max-width: 720px;
+    max-width: 780px;
     margin: 0 auto;
     padding: 2rem 1rem;
     position: relative;
@@ -10,11 +10,15 @@
 
 .Title {
     font-family: var(--font-helvetica-semibold);
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 600;
     color: var(--primary-titles-text-color);
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
+
+    @media screen and (max-width: 600px) {
+        font-size: 1.3rem;
+    }
 }
 
 .SearchBar {
@@ -22,25 +26,28 @@
     align-items: center;
     border-radius: 50px;
     padding: 4px 8px 4px 20px;
-    background: white;
-    border: 2px solid var(--background-light-gray-color);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    background: #ffffff;
+    border: 2px solid var(--background-light-gray-color, #e2e8f0);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    gap: 8px;
 
     &:focus-within {
-        border-color: var(--primary-green-text-color, #2e7d32);
-        box-shadow: 0 4px 24px rgba(46, 125, 50, 0.2);
+        border-color: var(--background-main-green-color, #00b0ab);
+        box-shadow: 0 4px 24px rgba(0, 176, 171, 0.2);
     }
 
     @media screen and (max-width: 768px) {
-        padding: 4px 6px 4px 16px;
+        flex-wrap: wrap;
+        border-radius: 24px;
+        padding: 8px 12px;
     }
 }
 
 .Input {
     flex: 1;
     font-size: 1rem;
-    min-width: 0;
+    min-width: 180px;
 
     input {
         padding: 10px 0;
@@ -53,48 +60,108 @@
         }
 
         @media screen and (max-width: 768px) {
-            font-size: 0.9rem;
-            padding: 8px 0;
+            font-size: 0.95rem;
+            padding: 6px 0;
         }
     }
 }
 
-.ZoneSelect {
-    appearance: none;
-    border: none;
-    background: #f5f5f5;
-    border-radius: 25px;
-    padding: 8px 16px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--content-text-color);
-    cursor: pointer;
-    margin-right: 4px;
-    min-width: 120px;
-
-    &:focus {
-        outline: 2px solid var(--primary-green-text-color);
-        outline-offset: 1px;
-    }
+.ZoneContainer {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
 
     @media screen and (max-width: 768px) {
-        display: none;
+        width: 100%;
+        border-top: 1px solid #f1f5f9;
+        padding-top: 6px;
+        margin-top: 2px;
     }
 }
 
 .SearchButton {
-    background: linear-gradient(135deg, #2e7d32 0%, #00b0ab 100%) !important;
+    background: linear-gradient(135deg, #00b0ab 0%, #209da1 100%) !important;
     color: white !important;
     width: 44px;
     height: 44px;
     border-radius: 50% !important;
+    flex-shrink: 0;
     transition: transform 0.15s ease;
 
     &:hover {
         transform: scale(1.05);
+        background: linear-gradient(135deg, #009999 0%, #178387 100%) !important;
+    }
+
+    @media screen and (max-width: 768px) {
+        position: absolute;
+        right: 18px;
+        top: 14px;
     }
 }
 
+/* Property Type Selection Bar */
+.PropertySection {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.PropertyHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #475569;
+    font-weight: 500;
+}
+
+.PropertyChipsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.PropertyChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid #cbd5e1;
+    background: #ffffff;
+    color: #475569;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 40px;
+    transition: all 0.15s ease;
+
+    &:hover {
+        border-color: var(--background-main-green-color, #00b0ab);
+        color: #0f766e;
+        background: #f0fdfa;
+    }
+
+    &.PropertyChipActive {
+        background: var(--background-main-green-color, #00b0ab);
+        border-color: var(--background-main-green-color, #00b0ab);
+        color: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 176, 171, 0.3);
+    }
+}
+
+.PropertyHelper {
+    font-size: 0.78rem;
+    color: #64748b;
+    text-align: center;
+    margin-top: 2px;
+}
+
+/* Dropdown suggestions */
 .Dropdown {
     position: absolute;
     top: calc(100% - 1rem);
@@ -120,7 +187,7 @@
     transition: background 0.15s ease;
 
     &:hover {
-        background: #f0f7f0;
+        background: #f0fdfa;
     }
 
     &:not(:last-child) {
@@ -149,18 +216,19 @@
 }
 
 .Chip {
-    border: 1.5px solid var(--background-main-green-color);
+    border: 1.5px solid var(--background-main-green-color, #00b0ab);
     background: rgba(0, 176, 171, 0.08);
-    color: var(--primary-green-text-color);
+    color: var(--primary-green-text-color, #00b0ab);
     border-radius: 50px;
     padding: 6px 16px;
     font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
+    min-height: 36px;
     transition: background 0.2s ease, transform 0.15s ease, color 0.2s ease;
 
     &:hover {
-        background: var(--background-main-green-color);
+        background: var(--background-main-green-color, #00b0ab);
         color: white;
         transform: translateY(-1px);
     }

@@ -55,3 +55,5 @@ export * from './blogService'
 export * from './tiendas'
 // Social & Facebook Interceptor services
 export * from './social'
+// Matching & Compatibility services
+export * from './matching'

@@ -14,11 +14,16 @@ import {
     setDoc,
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
-// Components
 import {
     CategorySelector,
     PROJECT_TYPES
 } from '@features/projects'
+import {
+    decodeSearchContext,
+    retrievePendingSearchContext,
+    clearPendingSearchContext,
+} from '@services/matching'
+import { zoneNames } from '@assets/data/ListadoZonas'
 // Features
 import { PasoAPaso, Ubicacion } from '@features/marketing'
 import { PropertySelector } from '@features/inmuebles'
@@ -111,20 +116,56 @@ export default function Page() {
         await setDoc(doc(draftRef, projectID), updateInfo, { merge: true })
     }
     useEffect(() => {
+        if (typeof window === 'undefined') return
+
+        const urlContext = decodeSearchContext(window.location.search)
+        const pendingContext = retrievePendingSearchContext()
+
         const searchParams = new URLSearchParams(window.location.search)
-        const type = searchParams.get('type')
-        const category = searchParams.get('category')
+        const legacyType = searchParams.get('type')
+        const legacyCategory = searchParams.get('category')
         const queryQ = searchParams.get('q')
 
-        setDraftInfo(prev => {
+        const effectivePropertyType = urlContext.propertyType || pendingContext?.propertyType || null
+        const effectiveCategory = urlContext.category || pendingContext?.category || legacyCategory || null
+        const effectiveZone = urlContext.zone || pendingContext?.zone || null
+        const effectiveMpioName = urlContext.municipioName || pendingContext?.municipioName || null
+
+        const PROPERTY_TO_PROJECT_TYPE: Record<string, string> = {
+            hogar: 'Hogar',
+            negocio: 'Negocio',
+            propiedad_horizontal: 'PH',
+            inmobiliaria: 'Inmobiliaria',
+            aliado_estrategico: 'Alianzas',
+        }
+
+        setDraftInfo((prev) => {
             const nextDraft = { ...prev }
-            if (type) nextDraft.draftProject = type
-            if (category) nextDraft.draftCategory = category
+            if (effectivePropertyType && PROPERTY_TO_PROJECT_TYPE[effectivePropertyType]) {
+                nextDraft.draftProject = PROPERTY_TO_PROJECT_TYPE[effectivePropertyType]
+            } else if (legacyType) {
+                nextDraft.draftProject = legacyType
+            }
+
+            if (effectiveCategory) {
+                nextDraft.draftCategory = effectiveCategory
+            }
+
+            if (effectiveMpioName) {
+                nextDraft.draftCity = effectiveMpioName
+            } else if (effectiveZone && zoneNames[effectiveZone]) {
+                nextDraft.draftCity = zoneNames[effectiveZone]
+            }
+
             if (queryQ && !nextDraft.draftDescription) {
                 nextDraft.draftDescription = queryQ
             }
             return nextDraft
         })
+
+        if (pendingContext) {
+            clearPendingSearchContext()
+        }
     }, [])
 
     // Fetch logged in user's address
@@ -488,7 +529,7 @@ export default function Page() {
                                         <Row className="w-100 m-0 flex justify-content-start align-items-center" style={{ flexWrap: 'wrap', gap: '8px', marginTop: '6px' }}>
                                             <Form.Control
                                                 type="text"
-                                                placeholder="Ej. Cl. 19a #12-2 Apto 301, Bogotá"
+                                                placeholder={userAddress ? `Ej. ${userAddress}` : "Ej. Cl. 19a #12-2 Apto 301, Bogotá"}
                                                 name="draftDirection"
                                                 value={draftInfo.draftDirection}
                                                 onChange={handleChange}

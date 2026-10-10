@@ -41,3 +41,5 @@ export type { DuplicateNameAlertProps } from './DuplicateNameAlert'
 
 export { SocialShareMenu } from './SocialShareMenu'
 export type { SocialShareMenuProps } from './SocialShareMenu'
+
+export * from './ZoneSelector'

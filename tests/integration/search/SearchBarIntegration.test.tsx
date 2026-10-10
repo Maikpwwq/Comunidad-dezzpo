@@ -36,7 +36,7 @@ describe('Search Bar (Integration)', () => {
     await user.keyboard('{Enter}');
     
     const { navigate } = await import('vike/client/router');
-    expect(navigate).toHaveBeenCalledWith('/nuevo-proyecto?q=NonExistentService');
+    expect(navigate).toHaveBeenCalledWith('/nuevo-proyecto?cat=NonExistentService&zona=bogota');
   });
 
 });

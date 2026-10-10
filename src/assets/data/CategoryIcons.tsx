@@ -71,6 +71,8 @@ import {
     PestControl,
     FactCheck,
     ViewInAr,
+    Videocam,
+    Anchor,
 } from '@mui/icons-material'
 
 export const CategoryIcons: Record<string, React.ElementType> = {
@@ -140,4 +142,6 @@ export const CategoryIcons: Record<string, React.ElementType> = {
     PestControl,
     FactCheck,
     ViewInAr,
+    Videocam,
+    Anchor,
 }

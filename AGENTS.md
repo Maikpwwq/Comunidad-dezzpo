@@ -323,8 +323,8 @@ pending_payment → active → completed → disputed
 - **Development & Test Mode**: Native support for Firebase Console pre-configured test numbers (e.g. `+57 320 4842897` / code `250051`).
 
 ### Specialized Engineering & Building Services Taxonomy (2026-08-18)
-- **Niche-Specific Expansion**: Expanded `ListadoCategorias.tsx` (92 categories) and `CategoryIcons.tsx` with high-value technical services:
-  - `Cálculos y Diseños de Ingeniería` (structural NSR-10, MEP, calculations), `Topografía y Agrimensura` (surveys, plot boundaries, subdivision), `Estudios de Suelos y Geotecnia` (soil test pits, geotechnical engineering), `Energía Solar y Fotovoltaica` (PV solar design & installation), `Puertas Automáticas y Motores` (vehicular gates, barriers, boom gates), `Fumigación y Control de Plagas` (sanitary pest control certification), `Peritajes y Avalúos` (certified appraisals & structural forensics), `Diseño 3D y Renders` (BIM/3D architectural renders).
+- **Niche-Specific Expansion**: Expanded `ListadoCategorias.tsx` (94 categories) and `CategoryIcons.tsx` with high-value technical services:
+  - `Cálculos y Diseños de Ingeniería` (structural NSR-10, MEP, calculations), `Topografía y Agrimensura` (surveys, plot boundaries, subdivision), `Estudios de Suelos y Geotecnia` (soil test pits, geotechnical engineering), `Energía Solar y Fotovoltaica` (PV solar design & installation), `Puertas Automáticas y Motores` (vehicular gates, barriers, boom gates), `Fumigación y Control de Plagas` (sanitary pest control certification), `Peritajes y Avalúos` (certified appraisals & structural forensics), `Diseño 3D y Renders` (BIM/3D architectural renders), `Videovigilancia CCTV` (CCTV cameras, network recording, surveillance systems), `Izaje de cargas` (heavy rigging, crane hoisting, machinery lifting).
 - **Strategic Boundary Enforcement**: Deliberately rejected consumer electronics repair (cellphones/PCs/TVs) to protect Dezzpo's clear positioning as a specialized construction, habitat, property horizontal, and architectural maintenance platform.
 
 ### Multi-Provider Account Linking & Phone Identity Resolution (`findUserByPhone` - 2026-08-25)
