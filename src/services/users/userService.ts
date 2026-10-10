@@ -23,6 +23,7 @@ import { firestore, isFirebaseAvailable } from '@services/firebase'
 import type { ReadUserParams, UpdateUserParams, UserFirestoreDocument, UserRole } from '../types'
 import { migrateContactFields } from '@utilities/contactUtils'
 import { migrateLegacySocialFields } from '@utilities/socialUtils'
+import { checkAndFlagPreRegistrationMatch } from '@services/preRegistration'
 
 // Collection names
 const PROPIETARIOS_COLLECTION = 'usersPropietariosResidentes'
@@ -129,6 +130,13 @@ export async function setUser({ userId, role, data }: UpdateUserParams): Promise
             recordInterceptionConversion(userId).then(() => {
                 clearStoredUtmAttribution()
             }).catch(console.error)
+        }
+
+        // Check for matching active pre-registrations (R9: coexistence, non-blocking)
+        if (role === 2) {
+            checkAndFlagPreRegistrationMatch(userId, data).catch((err) => {
+                console.warn('[Pre-Registration Match] Non-blocking check skipped:', err)
+            })
         }
     } catch (error) {
         console.error('Error setting user:', error)

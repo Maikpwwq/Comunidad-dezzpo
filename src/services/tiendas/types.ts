@@ -48,6 +48,13 @@ export interface TiendaDocument {
     tierVisibilidad?: 'estandar' | 'destacado' | 'patrocinado' | undefined // Default: 'estandar'
     estadoOutreach?: 'sin_contactar' | 'en_negociacion' | 'cliente_pago' | 'no_interesado' | undefined
     notasInternas?: string | undefined // Admin-only notes
+    idempotencyKey?: string | undefined
+    auditLog?: Array<{
+        action: 'creada' | 'aprobada' | 'rechazada' | 'actualizada'
+        performedBy: string
+        timestamp: string
+        reason?: string | undefined
+    }> | undefined
 }
 
 export type CreateTiendaInput = Omit<
@@ -57,6 +64,7 @@ export type CreateTiendaInput = Omit<
     estado?: 'pendiente' | 'aprobado' | 'rechazado' | undefined
     origen?: 'equipo_dezzpo' | 'usuario' | undefined
     createdBy?: string | undefined
+    idempotencyKey?: string | undefined
 }
 
 export type UpdateTiendaInput = Partial<CreateTiendaInput> & {

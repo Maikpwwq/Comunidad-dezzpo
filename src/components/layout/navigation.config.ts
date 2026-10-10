@@ -320,6 +320,12 @@ export const ADMIN_SIDEBAR: NavSectionConfig = {
             route: '/admin/tiendas',
             icon: 'StorefrontIcon',
         },
+        {
+            id: 'admin-pre-registros',
+            label: 'Pre-Registros',
+            route: '/admin/pre-registros',
+            icon: 'PersonSearchIcon',
+        },
     ],
 }
 

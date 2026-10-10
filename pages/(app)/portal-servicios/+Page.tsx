@@ -1,12 +1,20 @@
-import { useState, useEffect, useMemo, Suspense } from 'react'
+import { useState, useEffect, useMemo, Suspense, lazy } from 'react'
 import clsx from 'clsx'
 import { Link } from '@hooks'
 import { usePageContext } from '@hooks/usePageContext'
+import { useUserStore } from '@stores/userStore'
 import { SearchBar, PaginationBar } from '@components/layout'
 import { usePagination } from '@hooks/usePagination'
 import { getUsers } from '@services/users'
 import { searchByCategories } from '@services/search'
 import { UserCard } from '@features/profile'
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
+
+const PreRegistrationModal = lazy(() =>
+    import('@features/preRegistration').then((m) => ({
+        default: m.PreRegistrationModal,
+    })),
+)
 // Matching Domain & Context
 import {
     decodeSearchContext,
@@ -195,6 +203,16 @@ export default function Page() {
     const [activeMpioName, setActiveMpioName] = useState<string | null>(initialQueryContext.municipioName || null)
     const [selectedMerchantClassification, setSelectedMerchantClassification] = useState<string>('all')
     const [showComplementary, setShowComplementary] = useState(false)
+    const [recommendModalOpen, setRecommendModalOpen] = useState(false)
+    const isAuth = useUserStore((state) => state.isAuth)
+
+    const handleOpenRecommendModal = () => {
+        if (!isAuth) {
+            window.location.href = '/ingreso?returnTo=/app/portal-servicios'
+            return
+        }
+        setRecommendModalOpen(true)
+    }
 
     const effectiveKeyword = useMemo(() => {
         return (initialQueryContext.category || routeSpacedText).trim()
@@ -407,6 +425,26 @@ export default function Page() {
                                 </Link>
                             </p>
                         </div>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            startIcon={<PersonAddAlt1Icon />}
+                            onClick={handleOpenRecommendModal}
+                            sx={{
+                                borderRadius: '50px',
+                                textTransform: 'none',
+                                fontWeight: 700,
+                                px: 2.5,
+                                py: 1.2,
+                                boxShadow: '0 4px 14px rgba(0, 137, 123, 0.25)',
+                                bgcolor: 'var(--brand-teal, #00897b)',
+                                '&:hover': {
+                                    bgcolor: '#00796b',
+                                },
+                            }}
+                        >
+                            Recomendar un profesional
+                        </Button>
                     </div>
 
                     <SearchBar initialValue={effectiveKeyword} />
@@ -683,6 +721,21 @@ export default function Page() {
                                             Ver {complementaryUsers.length} perfiles de otras estructuras operativas
                                         </Button>
                                     )}
+                                    <Box sx={{ mt: 2.5 }}>
+                                        <Button
+                                            variant="outlined"
+                                            color="primary"
+                                            startIcon={<PersonAddAlt1Icon />}
+                                            onClick={handleOpenRecommendModal}
+                                            sx={{
+                                                borderRadius: '50px',
+                                                textTransform: 'none',
+                                                fontWeight: 700,
+                                            }}
+                                        >
+                                            ¿No encuentras a tu maestro o profesional de confianza? Recomiéndalo
+                                        </Button>
+                                    </Box>
                                 </div>
                             )}
                         </section>
@@ -775,6 +828,16 @@ export default function Page() {
                     </Suspense>
                 </Col>
             </Row>
+
+            {recommendModalOpen && (
+                <Suspense fallback={null}>
+                    <PreRegistrationModal
+                        open={recommendModalOpen}
+                        onClose={() => setRecommendModalOpen(false)}
+                        initialCategoryKey={effectiveKeyword || null}
+                    />
+                </Suspense>
+            )}
         </Container>
     )
 }

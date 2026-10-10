@@ -1,4 +1,58 @@
 {
-    "indexes": [],
-    "fieldOverrides": []
+    "indexes": [
+        {
+            "collectionGroup": "preRegistrations",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "status",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "preRegistrations",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "submittedBy",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "preRegistrations",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "status",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "hasPossibleMatch",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        }
+    ],
+    "fieldOverrides": [
+        {
+            "collectionGroup": "preRegistrations",
+            "fieldPath": "purgeAt",
+            "ttl": true,
+            "indexes": []
+        }
+    ]
 }

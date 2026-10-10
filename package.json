@@ -92,6 +92,7 @@
     "sirv": "^3.0.2",
     "uuid": "^14.0.3",
     "vike": "^0.4.267",
+    "zod": "^4.6.5",
     "zustand": "^5.0.15"
   },
   "devDependencies": {

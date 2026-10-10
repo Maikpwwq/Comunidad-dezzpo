@@ -235,6 +235,30 @@ service cloud.firestore {
     }
 
     // =========================================================================
+    // Pre-Registrations (Community recommendations of professionals)
+    // Admin can read all.
+    // Author can read their own submission.
+    // Direct client writes strictly forbidden: All mutations mediated by server.
+    // =========================================================================
+    match /preRegistrations/{preRegId} {
+      allow read: if isAdmin()
+        || (isAuthenticated() && resource.data.submittedBy == request.auth.uid);
+      allow write: if false;
+
+      match /admin_meta/{metaDoc} {
+        allow read, write: if isAdmin();
+      }
+    }
+
+    // =========================================================================
+    // Pre-Registration Reservations (HMAC uniqueness locks for email/phone/name)
+    // Direct client access strictly forbidden. Server managed only.
+    // =========================================================================
+    match /preRegistrationReservations/{reservationId} {
+      allow read, write: if false;
+    }
+
+    // =========================================================================
     // Catch-all: deny everything else
     // =========================================================================
     match /{document=**} {

@@ -19,6 +19,13 @@ import { trustScoreHandler } from '../server/api/trust-score.ts'
 import { reviewRequestsHandler } from '../server/api/review-requests.ts'
 import { metaWebhookGetHandler, metaWebhookPostHandler } from '../server/api/meta/webhook.ts'
 import { metaDataDeletionHandler } from '../server/api/meta/data-deletion.ts'
+import {
+  createPreRegistrationHandler,
+  checkEarlyHandler,
+  moderatePreRegistrationHandler,
+  withdrawPreRegistrationHandler,
+  getMySubmissionsHandler,
+} from '../server/api/preRegistration/handlers.ts'
 
 const app = new Hono()
 
@@ -140,6 +147,27 @@ app.post('/api/v1/meta/webhook', async (c) => {
 
 app.post('/api/v1/meta/data-deletion', async (c) => {
   return await metaDataDeletionHandler(c)
+})
+
+// Pre-Registration routes (Community recommendations & radar moderation)
+app.post('/api/v1/pre-registrations', async (c) => {
+  return await createPreRegistrationHandler(c)
+})
+
+app.get('/api/v1/pre-registrations/check-early', async (c) => {
+  return await checkEarlyHandler(c)
+})
+
+app.post('/api/v1/pre-registrations/:id/moderate', async (c) => {
+  return await moderatePreRegistrationHandler(c)
+})
+
+app.post('/api/v1/pre-registrations/:id/withdraw', async (c) => {
+  return await withdrawPreRegistrationHandler(c)
+})
+
+app.get('/api/v1/pre-registrations/my-submissions', async (c) => {
+  return await getMySubmissionsHandler(c)
 })
 
 vike(app)

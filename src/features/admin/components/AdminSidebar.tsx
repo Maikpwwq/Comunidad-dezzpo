@@ -21,10 +21,14 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import CardMembershipIcon from '@mui/icons-material/CardMembership'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import ArticleIcon from '@mui/icons-material/Article'
+import StorefrontIcon from '@mui/icons-material/Storefront'
+import PersonSearchIcon from '@mui/icons-material/PersonSearch'
+import { Chip } from '@mui/material'
 
 import { ADMIN_SIDEBAR } from '@components/layout/navigation.config'
 import { navigate } from 'vike/client/router'
 import { useUserStore } from '@stores/userStore'
+import { getPreRegistrationCounts } from '@services/preRegistration/preRegistrationService'
 
 /* ── Brand palette ─────────────────────────────────────────────── */
 export const BRAND = {
@@ -52,8 +56,9 @@ const ICON_MAP: Record<string, React.ReactElement> = {
     CardMembershipIcon: <CardMembershipIcon />,
     NotificationsIcon: <NotificationsIcon />,
     ArticleIcon: <ArticleIcon />,
+    StorefrontIcon: <StorefrontIcon />,
+    PersonSearchIcon: <PersonSearchIcon />,
 }
-
 
 interface AdminSidebarProps {
     onCloseMobile?: () => void;
@@ -62,6 +67,21 @@ interface AdminSidebarProps {
 export function AdminSidebar({ onCloseMobile }: AdminSidebarProps) {
     const userId = useUserStore((state) => state.userId)
     const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
+    const [pendingPreRegCount, setPendingPreRegCount] = React.useState<number>(0)
+
+    React.useEffect(() => {
+        let mounted = true
+        getPreRegistrationCounts()
+            .then((counts) => {
+                if (mounted && counts.pendientes > 0) {
+                    setPendingPreRegCount(counts.pendientes)
+                }
+            })
+            .catch(() => {})
+        return () => {
+            mounted = false
+        }
+    }, [])
 
     return (
         <Box
@@ -141,6 +161,19 @@ export function AdminSidebar({ onCloseMobile }: AdminSidebarProps) {
                                 primary={item.label}
                                 primaryTypographyProps={{ fontWeight: isSelected ? 600 : 400, fontSize: '0.9rem' }}
                             />
+                            {item.id === 'admin-pre-registros' && pendingPreRegCount > 0 && (
+                                <Chip
+                                    label={pendingPreRegCount}
+                                    size="small"
+                                    sx={{
+                                        height: 20,
+                                        fontSize: '0.72rem',
+                                        fontWeight: 700,
+                                        bgcolor: 'var(--brand-accent-amber, #f59e0b)',
+                                        color: '#000',
+                                    }}
+                                />
+                            )}
                         </ListItemButton>
                     )
                 })}

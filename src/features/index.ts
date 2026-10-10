@@ -30,3 +30,6 @@ export * from './projects'
 
 // Messaging feature
 export * from './messaging'
+
+// Pre-Registration feature
+export * from './preRegistration'

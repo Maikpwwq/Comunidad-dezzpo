@@ -28,6 +28,8 @@ export type ServiceErrorCode =
   | 'FIRESTORE_PERMISSION_DENIED'
   | 'FIRESTORE_NOT_FOUND'
   | 'SENDBIRD_CHANNEL_ERROR'
+  | 'RATE_LIMIT_EXCEEDED'
+  | 'VALIDATION_ERROR'
   | 'INTERNAL_ERROR';
 
 export interface ServiceErrorInfo {

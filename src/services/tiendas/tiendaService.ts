@@ -405,11 +405,67 @@ export async function createTienda(
     }
 
     try {
+        const effectiveUserId = input.createdBy || userId
+        const isAdminCreator = effectiveUserId === 'admin' || input.origen === 'equipo_dezzpo'
+
+        // 1. Idempotency Check: prevent duplicate submissions with identical idempotencyKey
+        if (input.idempotencyKey) {
+            try {
+                const qIdem = query(
+                    collection(firestore, COLLECTION_NAME),
+                    where('createdBy', '==', effectiveUserId),
+                    where('idempotencyKey', '==', input.idempotencyKey)
+                )
+                const snapIdem = await getDocs(qIdem)
+                if (!snapIdem.empty) {
+                    const existingDoc = snapIdem.docs[0]!
+                    return {
+                        success: true,
+                        data: { id: existingDoc.id, ...existingDoc.data() } as TiendaDocument,
+                        error: null,
+                    }
+                }
+            } catch {
+                // Continue if index/query is not yet built
+            }
+        }
+
+        // 2. Rate Limiting Check: max 5 submissions in rolling 24 hours for regular users
+        if (!isAdminCreator && effectiveUserId !== 'guest') {
+            try {
+                const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+                const qRate = query(
+                    collection(firestore, COLLECTION_NAME),
+                    where('createdBy', '==', effectiveUserId),
+                    where('createdAt', '>=', oneDayAgo)
+                )
+                const snapRate = await getDocs(qRate)
+                if (snapRate.size >= 5) {
+                    return {
+                        success: false,
+                        data: null,
+                        error: {
+                            code: 'RATE_LIMIT_EXCEEDED',
+                            message: 'Has alcanzado el límite diario de registro de tiendas (máx. 5 por día).',
+                        },
+                    }
+                }
+            } catch {
+                // Continue if index/query is not yet built
+            }
+        }
+
         const tiendaId = `tienda_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`
         const docRef = doc(firestore, COLLECTION_NAME, tiendaId)
         const generatedSlug = slugify(input.nombre)
 
         const now = new Date().toISOString()
+
+        // 3. Status Hardening: 'aprobado' is strictly NOT accepted in creation payload from non-admin
+        const effectiveEstado = isAdminCreator
+            ? (input.estado || 'aprobado')
+            : 'pendiente'
+
         const documentData: TiendaDocument = {
             id: tiendaId,
             nombre: input.nombre.trim(),
@@ -437,14 +493,22 @@ export async function createTienda(
                 nombreContacto: s.nombreContacto?.trim() || '',
                 cargoContacto: s.cargoContacto?.trim() || '',
             })),
-            estado: input.estado || 'pendiente',
-            origen: input.origen || (userId === 'admin' ? 'equipo_dezzpo' : 'usuario'),
-            createdBy: input.createdBy || userId,
+            estado: effectiveEstado,
+            origen: input.origen || (isAdminCreator ? 'equipo_dezzpo' : 'usuario'),
+            createdBy: effectiveUserId,
             createdAt: now,
             updatedAt: now,
             tierVisibilidad: input.tierVisibilidad || 'estandar',
             estadoOutreach: 'sin_contactar',
             notasInternas: input.notasInternas || '',
+            idempotencyKey: input.idempotencyKey || undefined,
+            auditLog: [
+                {
+                    action: 'creada',
+                    performedBy: effectiveUserId,
+                    timestamp: now,
+                },
+            ],
         }
 
         const cleanedDocumentData = sanitizeForFirestore(documentData)
@@ -593,15 +657,41 @@ export async function deleteTienda(id: string): Promise<ServiceResponse<boolean>
 /**
  * Admin shortcut to approve a tienda
  */
-export async function approveTienda(id: string): Promise<ServiceResponse<TiendaDocument>> {
-    return updateTienda(id, { estado: 'aprobado' })
+export async function approveTienda(
+    id: string,
+    adminId: string = 'admin'
+): Promise<ServiceResponse<TiendaDocument>> {
+    const now = new Date().toISOString()
+    const currentRes = await getTiendaById(id)
+    const currentAudit = currentRes.success && currentRes.data?.auditLog ? currentRes.data.auditLog : []
+    return updateTienda(id, {
+        estado: 'aprobado',
+        auditLog: [
+            ...currentAudit,
+            { action: 'aprobada', performedBy: adminId, timestamp: now },
+        ],
+    })
 }
 
 /**
  * Admin shortcut to reject a tienda
  */
-export async function rejectTienda(id: string): Promise<ServiceResponse<TiendaDocument>> {
-    return updateTienda(id, { estado: 'rechazado' })
+export async function rejectTienda(
+    id: string,
+    motivo?: string,
+    adminId: string = 'admin'
+): Promise<ServiceResponse<TiendaDocument>> {
+    const now = new Date().toISOString()
+    const currentRes = await getTiendaById(id)
+    const currentAudit = currentRes.success && currentRes.data?.auditLog ? currentRes.data.auditLog : []
+    return updateTienda(id, {
+        estado: 'rechazado',
+        notasInternas: motivo ? `Motivo de rechazo: ${motivo}` : undefined,
+        auditLog: [
+            ...currentAudit,
+            { action: 'rechazada', performedBy: adminId, timestamp: now, reason: motivo },
+        ],
+    })
 }
 
 /**
