@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, Suspense, lazy } from 'react'
 import clsx from 'clsx'
+import { navigate } from 'vike/client/router'
 import { Link } from '@hooks'
 import { usePageContext } from '@hooks/usePageContext'
 import { useUserStore } from '@stores/userStore'
@@ -41,16 +42,15 @@ import {
     Skeleton,
     Stack,
     Typography,
-    FormControl,
-    Select,
+    TextField,
     MenuItem,
     Alert,
     Button,
     Collapse,
     Divider,
+    Paper,
 } from '@mui/material'
-import FilterListIcon from '@mui/icons-material/FilterList'
-import HomeWorkIcon from '@mui/icons-material/HomeWork'
+import ClearIcon from '@mui/icons-material/Clear'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import CloseIcon from '@mui/icons-material/Close'
@@ -202,6 +202,7 @@ export default function Page() {
     const [activeMpioCode, setActiveMpioCode] = useState<string | null>(initialQueryContext.municipioCode)
     const [activeMpioName, setActiveMpioName] = useState<string | null>(initialQueryContext.municipioName || null)
     const [selectedMerchantClassification, setSelectedMerchantClassification] = useState<string>('all')
+    const [selectedCategory, setSelectedCategory] = useState<string>('')
     const [showComplementary, setShowComplementary] = useState(false)
     const [recommendModalOpen, setRecommendModalOpen] = useState(false)
     const isAuth = useUserStore((state) => state.isAuth)
@@ -316,8 +317,21 @@ export default function Page() {
             }
         }
 
+        // 3. Category chip filter
+        if (selectedCategory) {
+            const catLabel = ListadoCategorias.find(
+                (c: { key: number; label: string }) => String(c.key) === selectedCategory
+            )?.label?.toLowerCase()
+            if (catLabel) {
+                result = result.filter((u) => {
+                    const cats = (u.userCategories || []).map((c) => String(c).toLowerCase())
+                    return cats.some((c) => c.includes(catLabel) || catLabel.includes(c))
+                })
+            }
+        }
+
         return result
-    }, [combinedUsers, effectiveKeyword, selectedMerchantClassification])
+    }, [combinedUsers, effectiveKeyword, selectedMerchantClassification, selectedCategory])
 
     // Fuzzy compatibility evaluation & partitioning
     const { primaryRankedUsers, complementaryUsers } = useMemo(() => {
@@ -385,21 +399,27 @@ export default function Page() {
     const usersPagination = usePagination({
         items: primaryUsersToRender,
         pageSize: 12,
-        resetKey: `${effectiveKeyword}-${selectedMerchantClassification}-${selectedPropertyType}-${activeZone || ''}`,
+        resetKey: `${effectiveKeyword}-${selectedMerchantClassification}-${selectedPropertyType}-${selectedCategory}-${activeZone || ''}`,
     })
 
     const hasActiveFilters =
         selectedPropertyType !== 'all' ||
         selectedMerchantClassification !== 'all' ||
+        selectedCategory !== '' ||
         activeZone !== null ||
         effectiveKeyword !== ''
 
     const handleClearAllFilters = () => {
         setSelectedPropertyType('all')
         setSelectedMerchantClassification('all')
+        setSelectedCategory('')
         setActiveZone(null)
         setActiveMpioCode(null)
         setActiveMpioName(null)
+        // Limpiar búsqueda URL-driven navegando a la ruta base
+        if (effectiveKeyword) {
+            navigate('/app/portal-servicios')
+        }
     }
 
     const isHighFormalityProperty =
@@ -411,8 +431,19 @@ export default function Page() {
         <Container fluid className="p-0 h-100" style={{ overflowX: 'hidden' }}>
             <Row className="m-0 d-flex">
                 <Col className="pt-4 pb-2 p-0">
-                    <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 px-3">
-                        <div>
+                    {/* Header: Title left, CTA button right — matching tiendas pattern */}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: { xs: 'column', md: 'row' },
+                            justifyContent: 'space-between',
+                            alignItems: { xs: 'flex-start', md: 'center' },
+                            gap: 2,
+                            mb: 3,
+                            px: 3,
+                        }}
+                    >
+                        <Box>
                             <h1 className="type-hero-title mb-1">Directorio de Profesionales</h1>
                             <p className="type-body text-muted mb-0">
                                 ¿Buscas una cotización? publícala en el directorio de requerimientos{' '}
@@ -424,7 +455,7 @@ export default function Page() {
                                     Publica un proyecto
                                 </Link>
                             </p>
-                        </div>
+                        </Box>
                         <Button
                             variant="contained"
                             color="primary"
@@ -436,6 +467,7 @@ export default function Page() {
                                 fontWeight: 700,
                                 px: 2.5,
                                 py: 1.2,
+                                flexShrink: 0,
                                 boxShadow: '0 4px 14px rgba(0, 137, 123, 0.25)',
                                 bgcolor: 'var(--brand-teal, #00897b)',
                                 '&:hover': {
@@ -445,7 +477,7 @@ export default function Page() {
                         >
                             Recomendar un profesional
                         </Button>
-                    </div>
+                    </Box>
 
                     <SearchBar initialValue={effectiveKeyword} />
 
@@ -478,20 +510,6 @@ export default function Page() {
                                     sx={{ fontWeight: 600 }}
                                 />
                             )}
-                            {activeZone && (
-                                <Chip
-                                    size="small"
-                                    label={`Zona: ${activeMpioName || (zoneNames[activeZone] ?? activeZone)}`}
-                                    onDelete={() => {
-                                        setActiveZone(null)
-                                        setActiveMpioCode(null)
-                                        setActiveMpioName(null)
-                                    }}
-                                    color="info"
-                                    variant="outlined"
-                                    sx={{ fontWeight: 600 }}
-                                />
-                            )}
                             {selectedMerchantClassification !== 'all' && (
                                 <Chip
                                     size="small"
@@ -501,6 +519,34 @@ export default function Page() {
                                     }`}
                                     onDelete={() => setSelectedMerchantClassification('all')}
                                     color="secondary"
+                                    variant="outlined"
+                                    sx={{ fontWeight: 600 }}
+                                />
+                            )}
+                            {selectedCategory && (
+                                <Chip
+                                    size="small"
+                                    label={`Categoría: ${
+                                        ListadoCategorias.find(
+                                            (c: { key: number; label: string }) => String(c.key) === selectedCategory
+                                        )?.label || selectedCategory
+                                    }`}
+                                    onDelete={() => setSelectedCategory('')}
+                                    color="info"
+                                    variant="outlined"
+                                    sx={{ fontWeight: 600 }}
+                                />
+                            )}
+                            {activeZone && (
+                                <Chip
+                                    size="small"
+                                    label={`Zona: ${activeMpioName || (zoneNames[activeZone] ?? activeZone)}`}
+                                    onDelete={() => {
+                                        setActiveZone(null)
+                                        setActiveMpioCode(null)
+                                        setActiveMpioName(null)
+                                    }}
+                                    color="default"
                                     variant="outlined"
                                     sx={{ fontWeight: 600 }}
                                 />
@@ -522,129 +568,117 @@ export default function Page() {
                         </Box>
                     )}
 
-                    {/* Property Type Selector Bar */}
-                    <Box
-                        sx={{
-                            mt: 2,
-                            mx: 2,
-                            p: 2,
-                            borderRadius: 3,
-                            bgcolor: '#f1f5f9',
-                            border: '1px solid #cbd5e1',
-                        }}
+                    {/* ═══════════════════════════════════════════════════════ */}
+                    {/* Barra de Filtros Unificada (patrón tiendas)            */}
+                    {/* ═══════════════════════════════════════════════════════ */}
+                    <Paper
+                        elevation={0}
+                        variant="outlined"
+                        sx={{ p: 2, mt: 2, mx: 2, borderRadius: 3, backgroundColor: '#ffffff' }}
                     >
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-                            <HomeWorkIcon sx={{ color: 'var(--brand-teal, #00897b)' }} />
-                            <Typography variant="subtitle2" fontWeight={700} color="text.primary">
-                                Filtrar por Tipo de Inmueble (Afinidad Operativa):
-                            </Typography>
-                        </Box>
-                        {/* Mobile Property Type Selector */}
-                        <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-                            <FormControl fullWidth size="small">
-                                <Select
-                                    value={selectedPropertyType}
-                                    onChange={(e) => setSelectedPropertyType(e.target.value as PropertyTypeId | 'all')}
+                        <Stack
+                            direction={{ xs: 'column', md: 'row' }}
+                            spacing={2}
+                            alignItems={{ md: 'center' }}
+                        >
+                            {/* Dropdown: Tipo de Inmueble */}
+                            <TextField
+                                select
+                                fullWidth
+                                size="small"
+                                label="Tipo de Inmueble"
+                                value={selectedPropertyType}
+                                onChange={(e) => setSelectedPropertyType(e.target.value as PropertyTypeId | 'all')}
+                                sx={{ minWidth: { md: 200 }, maxWidth: { md: 240 } }}
+                            >
+                                {PROPERTY_FILTER_OPTIONS.map((opt) => (
+                                    <MenuItem key={opt.id} value={opt.id}>
+                                        {opt.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+
+                            {/* Dropdown: Tamaño de Operación */}
+                            <TextField
+                                select
+                                fullWidth
+                                size="small"
+                                label="Tamaño de Operación"
+                                value={selectedMerchantClassification}
+                                onChange={(e) => setSelectedMerchantClassification(e.target.value)}
+                                sx={{ minWidth: { md: 200 }, maxWidth: { md: 240 } }}
+                            >
+                                <MenuItem value="all">
+                                    <em>Todos los Perfiles</em>
+                                </MenuItem>
+                                {PUBLIC_MERCHANT_FILTERS.map((filter) => (
+                                    <MenuItem key={filter.id} value={filter.id}>
+                                        {filter.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+
+                            {/* Reset filters button (inline) */}
+                            {hasActiveFilters && (
+                                <Button
+                                    size="small"
+                                    onClick={handleClearAllFilters}
+                                    startIcon={<ClearIcon fontSize="small" />}
                                     sx={{
-                                        borderRadius: '20px',
-                                        bgcolor: '#ffffff',
-                                        fontSize: '0.9rem',
+                                        textTransform: 'none',
                                         fontWeight: 600,
+                                        whiteSpace: 'nowrap',
+                                        color: '#dc2626',
+                                        ml: { md: 'auto' },
                                     }}
                                 >
-                                    {PROPERTY_FILTER_OPTIONS.map((opt) => (
-                                        <MenuItem key={opt.id} value={opt.id}>
-                                            {opt.label}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Box>
-                        {/* Desktop Property Type Chips */}
-                        <Box sx={{ display: { xs: 'none', md: 'flex' }, flexWrap: 'wrap', gap: 1 }}>
-                            {PROPERTY_FILTER_OPTIONS.map((opt) => {
-                                const isSelected = selectedPropertyType === opt.id
+                                    Limpiar filtros
+                                </Button>
+                            )}
+                        </Stack>
+
+                        {/* Category Quick-Match Chips (horizontal scroll) */}
+                        <Box
+                            sx={{
+                                mt: 2,
+                                display: 'flex',
+                                gap: 1,
+                                overflowX: 'auto',
+                                pb: 1,
+                                pt: 0.5,
+                                '&::-webkit-scrollbar': { height: 6 },
+                                '&::-webkit-scrollbar-thumb': {
+                                    backgroundColor: '#cbd5e1',
+                                    borderRadius: 3,
+                                },
+                            }}
+                        >
+                            <Chip
+                                label="Todas las Categorías"
+                                clickable
+                                color={selectedCategory === '' ? 'primary' : 'default'}
+                                variant={selectedCategory === '' ? 'filled' : 'outlined'}
+                                onClick={() => setSelectedCategory('')}
+                                sx={{ fontWeight: 600, flexShrink: 0 }}
+                            />
+                            {ListadoCategorias.map((cat: { key: number; label: string }) => {
+                                const isSelected = selectedCategory === String(cat.key)
                                 return (
                                     <Chip
-                                        key={opt.id}
-                                        label={opt.label}
-                                        onClick={() => setSelectedPropertyType(opt.id)}
+                                        key={cat.key}
+                                        label={cat.label}
+                                        clickable
                                         color={isSelected ? 'primary' : 'default'}
                                         variant={isSelected ? 'filled' : 'outlined'}
-                                        sx={{
-                                            fontWeight: 600,
-                                            bgcolor: isSelected ? 'var(--brand-teal, #00897b)' : '#ffffff',
-                                            color: isSelected ? '#ffffff' : 'text.primary',
-                                        }}
+                                        onClick={() =>
+                                            setSelectedCategory(isSelected ? '' : String(cat.key))
+                                        }
+                                        sx={{ fontWeight: 500, whiteSpace: 'nowrap', flexShrink: 0 }}
                                     />
                                 )
                             })}
                         </Box>
-                    </Box>
-
-                    {/* Merchant Classification Filter Bar */}
-                    <Box
-                        sx={{
-                            mt: 2,
-                            mx: 2,
-                            p: 2,
-                            borderRadius: 3,
-                            bgcolor: 'var(--background-light-gray-color, #f8fafc)',
-                            border: '1px solid #e2e8f0',
-                        }}
-                    >
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-                            <FilterListIcon sx={{ color: 'var(--brand-teal, #00897b)' }} />
-                            <Typography variant="subtitle2" fontWeight={700} color="text.primary">
-                                Filtrar por Tamaño de Operación / Estructura del Comerciante:
-                            </Typography>
-                        </Box>
-                        {/* Mobile Selector Dropdown */}
-                        <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-                            <FormControl fullWidth size="small">
-                                <Select
-                                    value={selectedMerchantClassification}
-                                    onChange={(e) => setSelectedMerchantClassification(e.target.value)}
-                                    displayEmpty
-                                    sx={{
-                                        borderRadius: '20px',
-                                        bgcolor: '#ffffff',
-                                        fontSize: '0.9rem',
-                                        fontWeight: 600,
-                                    }}
-                                >
-                                    <MenuItem value="all">
-                                        <em>Todos los Perfiles</em>
-                                    </MenuItem>
-                                    {PUBLIC_MERCHANT_FILTERS.map((filter) => (
-                                        <MenuItem key={filter.id} value={filter.id}>
-                                            {filter.label}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Box>
-                        {/* Desktop Chips */}
-                        <Box sx={{ display: { xs: 'none', md: 'flex' }, flexWrap: 'wrap', gap: 1 }}>
-                            <Chip
-                                label="Todos los Perfiles"
-                                onClick={() => setSelectedMerchantClassification('all')}
-                                color={selectedMerchantClassification === 'all' ? 'primary' : 'default'}
-                                variant={selectedMerchantClassification === 'all' ? 'filled' : 'outlined'}
-                                sx={{ fontWeight: 600 }}
-                            />
-                            {PUBLIC_MERCHANT_FILTERS.map((filter) => (
-                                <Chip
-                                    key={filter.id}
-                                    label={filter.label}
-                                    onClick={() => setSelectedMerchantClassification(filter.id)}
-                                    color={selectedMerchantClassification === filter.id ? 'primary' : 'default'}
-                                    variant={selectedMerchantClassification === filter.id ? 'filled' : 'outlined'}
-                                    sx={{ fontWeight: 600 }}
-                                />
-                            ))}
-                        </Box>
-                    </Box>
+                    </Paper>
 
                     {/* High Formality Property Legal / Accounting Advisory */}
                     {isHighFormalityProperty && (

@@ -31,10 +31,23 @@ import { DraftCard } from '@features/quotes'
 import styles from '@features/quotes/styles/Requerimientos.module.scss'
 // Bootstrap & MUI
 import { Container } from 'react-bootstrap'
-import { Typography, Chip, Box, Divider, FormControl, Select, MenuItem, Alert } from '@mui/material'
+import {
+    Typography,
+    Chip,
+    Box,
+    Divider,
+    TextField,
+    MenuItem,
+    Alert,
+    Button,
+    Paper,
+    Stack,
+} from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import FilterListIcon from '@mui/icons-material/FilterList'
+import ClearIcon from '@mui/icons-material/Clear'
+import CloseIcon from '@mui/icons-material/Close'
+import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 import { PROPIETARIO_RANKINGS } from '@config/userClassification.config'
 
@@ -67,6 +80,7 @@ export default function Page() {
     const [userCategories, setUserCategories] = useState<string[]>([])
     const [merchantClassification, setMerchantClassification] = useState<string | null>(null)
     const [selectedClassification, setSelectedClassification] = useState<string>('all')
+    const [selectedDraftCategory, setSelectedDraftCategory] = useState<string>('')
 
     const userId = useUserStore((state) => state.userId)
     const { currentUser } = useAuth()
@@ -185,23 +199,50 @@ export default function Page() {
         })
     }, [filteredByStructure, selectedClassification])
 
+    // 4. Category chip filter
+    const filteredByDraftCategory = useMemo(() => {
+        if (!selectedDraftCategory) return filteredByClassification
+        const catLabel = ListadoCategorias.find(
+            (c: { key: number; label: string }) => String(c.key) === selectedDraftCategory
+        )?.label?.toLowerCase()
+        if (!catLabel) return filteredByClassification
+        return filteredByClassification.filter((draft) => {
+            const cat = (draft.draftCategory || '').toLowerCase()
+            return cat.includes(catLabel) || catLabel.includes(cat)
+        })
+    }, [filteredByClassification, selectedDraftCategory])
+
     // Filter drafts matching the comerciante's categories
     const matchingDrafts = useMemo(() => {
         if (!isComerciante || userCategories.length === 0) return []
-        return filteredByClassification.filter((draft) => {
+        return filteredByDraftCategory.filter((draft) => {
             const cat = (draft.draftCategory || '').toLowerCase()
             return userCategories.some(
                 (uc) => cat.includes(uc.toLowerCase()) || uc.toLowerCase().includes(cat)
             )
         })
-    }, [isComerciante, userCategories, filteredByClassification])
+    }, [isComerciante, userCategories, filteredByDraftCategory])
 
     // Remaining drafts (not in matching)
     const otherDrafts = useMemo(() => {
-        if (matchingDrafts.length === 0) return filteredByClassification
+        if (matchingDrafts.length === 0) return filteredByDraftCategory
         const matchingIds = new Set(matchingDrafts.map((d) => d.draftId || d.id))
-        return filteredByClassification.filter((d) => !matchingIds.has(d.draftId || d.id))
-    }, [matchingDrafts, filteredByClassification])
+        return filteredByDraftCategory.filter((d) => !matchingIds.has(d.draftId || d.id))
+    }, [matchingDrafts, filteredByDraftCategory])
+
+    const hasActiveFilters =
+        selectedClassification !== 'all' ||
+        selectedDraftCategory !== '' ||
+        !!spacedText
+
+    const handleClearAllFilters = () => {
+        setSelectedClassification('all')
+        setSelectedDraftCategory('')
+        // Limpiar búsqueda URL-driven navegando a la ruta base
+        if (spacedText) {
+            navigate('/app/directorio-requerimientos')
+        }
+    }
 
     return (
         <Container fluid className="p-0 h-100">
@@ -270,85 +311,174 @@ export default function Page() {
                     />
                 </Box>
 
-                {spacedText && (
-                    <Box sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Typography variant="body2" fontWeight={600} color="text.secondary">
-                            Filtro de búsqueda:
+                {/* Active Filters Summary Bar */}
+                {hasActiveFilters && (
+                    <Box
+                        sx={{
+                            mb: 2,
+                            p: 1.5,
+                            borderRadius: 2.5,
+                            bgcolor: '#ffffff',
+                            border: '1px solid #e2e8f0',
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            alignItems: 'center',
+                            gap: 1,
+                        }}
+                    >
+                        <Typography variant="caption" fontWeight={700} color="text.secondary">
+                            Filtros activos:
                         </Typography>
-                        <Chip
-                            label={spacedText}
-                            color="primary"
-                            onDelete={() => navigate('/app/directorio-requerimientos')}
-                        />
+                        {spacedText && (
+                            <Chip
+                                size="small"
+                                label={`Búsqueda: ${spacedText}`}
+                                onDelete={() => navigate('/app/directorio-requerimientos')}
+                                color="primary"
+                                variant="outlined"
+                                sx={{ fontWeight: 600 }}
+                            />
+                        )}
+                        {selectedClassification !== 'all' && (
+                            <Chip
+                                size="small"
+                                label={`Inmueble: ${
+                                    (PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).find(
+                                        (t) => t.id === selectedClassification
+                                    )?.name || selectedClassification
+                                }`}
+                                onDelete={() => setSelectedClassification('all')}
+                                color="secondary"
+                                variant="outlined"
+                                sx={{ fontWeight: 600 }}
+                            />
+                        )}
+                        {selectedDraftCategory && (
+                            <Chip
+                                size="small"
+                                label={`Categoría: ${
+                                    ListadoCategorias.find(
+                                        (c: { key: number; label: string }) =>
+                                            String(c.key) === selectedDraftCategory
+                                    )?.label || selectedDraftCategory
+                                }`}
+                                onDelete={() => setSelectedDraftCategory('')}
+                                color="info"
+                                variant="outlined"
+                                sx={{ fontWeight: 600 }}
+                            />
+                        )}
+                        <Button
+                            size="small"
+                            onClick={handleClearAllFilters}
+                            startIcon={<CloseIcon fontSize="small" />}
+                            sx={{
+                                textTransform: 'none',
+                                fontSize: '0.78rem',
+                                ml: 'auto',
+                                color: '#dc2626',
+                                fontWeight: 600,
+                            }}
+                        >
+                            Restablecer filtros
+                        </Button>
                     </Box>
                 )}
 
-                {/* Classification Tier Filter Bar */}
-                <Box
-                    sx={{
-                        my: 2.5,
-                        p: 2,
-                        borderRadius: 3,
-                        bgcolor: 'var(--background-light-gray-color, #f8fafc)',
-                        border: '1px solid #e2e8f0',
-                    }}
+                {/* ═══════════════════════════════════════════════════════ */}
+                {/* Barra de Filtros Unificada (patrón tiendas)            */}
+                {/* ═══════════════════════════════════════════════════════ */}
+                <Paper
+                    elevation={0}
+                    variant="outlined"
+                    sx={{ p: 2, mb: 2.5, borderRadius: 3, backgroundColor: '#ffffff' }}
                 >
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-                        <FilterListIcon sx={{ color: 'var(--brand-teal, #00897b)' }} />
-                        <Typography variant="subtitle2" fontWeight={700} color="text.primary">
-                            Filtrar por Clasificación del Propietario / Tipo de Inmueble:
-                        </Typography>
-                    </Box>
-                    {/* Mobile Selector Dropdown */}
-                    <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-                        <FormControl fullWidth size="small">
-                            <Select
-                                value={selectedClassification}
-                                onChange={(e) => setSelectedClassification(e.target.value)}
-                                displayEmpty
+                    <Stack
+                        direction={{ xs: 'column', md: 'row' }}
+                        spacing={2}
+                        alignItems={{ md: 'center' }}
+                    >
+                        {/* Dropdown: Tipo de Inmueble */}
+                        <TextField
+                            select
+                            fullWidth
+                            size="small"
+                            label="Tipo de Inmueble"
+                            value={selectedClassification}
+                            onChange={(e) => setSelectedClassification(e.target.value)}
+                            sx={{ minWidth: { md: 200 }, maxWidth: { md: 240 } }}
+                        >
+                            <MenuItem value="all">
+                                <em>Todos los Inmuebles</em>
+                            </MenuItem>
+                            {(PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).map((tier) => (
+                                <MenuItem key={tier.id} value={tier.id}>
+                                    {tier.name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+
+                        {/* Reset filters button (inline) */}
+                        {hasActiveFilters && (
+                            <Button
+                                size="small"
+                                onClick={handleClearAllFilters}
+                                startIcon={<ClearIcon fontSize="small" />}
                                 sx={{
-                                    borderRadius: '20px',
-                                    bgcolor: '#ffffff',
-                                    fontSize: '0.9rem',
+                                    textTransform: 'none',
                                     fontWeight: 600,
+                                    whiteSpace: 'nowrap',
+                                    color: '#dc2626',
+                                    ml: { md: 'auto' },
                                 }}
                             >
-                                <MenuItem value="all">
-                                    <em>Todos los Inmuebles</em>
-                                </MenuItem>
-                                {(PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).map((tier) => (
-                                    <MenuItem key={tier.id} value={tier.id}>
-                                        {tier.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Box>
-                    {/* Desktop Chips */}
-                    <Box sx={{ display: { xs: 'none', md: 'flex' }, flexWrap: 'wrap', gap: 1 }}>
+                                Limpiar filtros
+                            </Button>
+                        )}
+                    </Stack>
+
+                    {/* Category Quick-Match Chips (horizontal scroll) */}
+                    <Box
+                        sx={{
+                            mt: 2,
+                            display: 'flex',
+                            gap: 1,
+                            overflowX: 'auto',
+                            pb: 1,
+                            pt: 0.5,
+                            '&::-webkit-scrollbar': { height: 6 },
+                            '&::-webkit-scrollbar-thumb': {
+                                backgroundColor: '#cbd5e1',
+                                borderRadius: 3,
+                            },
+                        }}
+                    >
                         <Chip
-                            label="Todos los Inmuebles"
-                            onClick={() => setSelectedClassification('all')}
-                            color={selectedClassification === 'all' ? 'primary' : 'default'}
-                            variant={selectedClassification === 'all' ? 'filled' : 'outlined'}
-                            sx={{ fontWeight: 600 }}
+                            label="Todas las Categorías"
+                            clickable
+                            color={selectedDraftCategory === '' ? 'primary' : 'default'}
+                            variant={selectedDraftCategory === '' ? 'filled' : 'outlined'}
+                            onClick={() => setSelectedDraftCategory('')}
+                            sx={{ fontWeight: 600, flexShrink: 0 }}
                         />
-                        {(PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).map((tier) => (
-                            <Chip
-                                key={tier.id}
-                                label={tier.name}
-                                onClick={() => setSelectedClassification(tier.id)}
-                                color={selectedClassification === tier.id ? 'primary' : 'default'}
-                                variant={selectedClassification === tier.id ? 'filled' : 'outlined'}
-                                sx={{
-                                    fontWeight: 600,
-                                    bgcolor: selectedClassification === tier.id ? tier.color : undefined,
-                                    color: selectedClassification === tier.id ? '#ffffff' : undefined,
-                                }}
-                            />
-                        ))}
+                        {ListadoCategorias.map((cat: { key: number; label: string }) => {
+                            const isSelected = selectedDraftCategory === String(cat.key)
+                            return (
+                                <Chip
+                                    key={cat.key}
+                                    label={cat.label}
+                                    clickable
+                                    color={isSelected ? 'primary' : 'default'}
+                                    variant={isSelected ? 'filled' : 'outlined'}
+                                    onClick={() =>
+                                        setSelectedDraftCategory(isSelected ? '' : String(cat.key))
+                                    }
+                                    sx={{ fontWeight: 500, whiteSpace: 'nowrap', flexShrink: 0 }}
+                                />
+                            )
+                        })}
                     </Box>
-                </Box>
+                </Paper>
 
                 {/* Category-Filtered Section for Comerciantes */}
                 {isComerciante && matchingDrafts.length > 0 && (
