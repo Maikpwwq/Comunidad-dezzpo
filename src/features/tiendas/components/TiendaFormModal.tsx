@@ -20,11 +20,14 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import type { TiendaDocument, CreateTiendaInput, SedeLocation } from '@services/tiendas'
+import type { SocialLink } from '@services/types'
 import { useTiendaFormDraftStore, EMPTY_SEDE, EMPTY_CONTACTO } from '@stores/useTiendaFormDraftStore'
 import type { ContactoPrincipal } from '@stores/useTiendaFormDraftStore'
 import { useDuplicateNameCheck } from '@hooks/useDuplicateNameCheck'
 import { DuplicateNameAlert } from '@components/common'
 import { SedeManager } from './SedeManager'
+import { TiendaLogoUpload } from './TiendaLogoUpload'
+import { TiendaSocialLinksManager } from './TiendaSocialLinksManager'
 
 interface TiendaFormModalProps {
     open: boolean
@@ -65,6 +68,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
     const [telefonosPrincipales, setTelefonosPrincipales] = useState<ContactoPrincipal[]>([EMPTY_CONTACTO])
     const [selectedCategoryKeys, setSelectedCategoryKeys] = useState<string[]>([])
     const [sedes, setSedes] = useState<SedeLocation[]>([EMPTY_SEDE])
+    const [logoUrl, setLogoUrl] = useState<string>('')
+    const [redesSociales, setRedesSociales] = useState<SocialLink[]>([])
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [errorMsg, setErrorMsg] = useState<string | null>(null)
@@ -138,6 +143,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             }
             setSelectedCategoryKeys(initialData.categorias || [])
             setSedes(initialData.sedes && initialData.sedes.length > 0 ? initialData.sedes : [EMPTY_SEDE])
+            setLogoUrl(initialData.logoUrl || '')
+            setRedesSociales(initialData.redesSociales || [])
         } else {
             // Create mode: restore from sessionStorage draft
             setNombre(draft.nombre)
@@ -156,6 +163,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             }
             setSelectedCategoryKeys(draft.selectedCategoryKeys)
             setSedes(draft.sedes.length > 0 ? draft.sedes : [EMPTY_SEDE])
+            setLogoUrl(draft.logoUrl || '')
+            setRedesSociales(draft.redesSociales || [])
         }
         setErrorMsg(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -173,8 +182,9 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             sitioWeb, telefonoPrincipal, whatsappPrincipal,
             telefonosPrincipales,
             selectedCategoryKeys, sedes,
+            logoUrl, redesSociales,
         })
-    }, [isEditMode, updateDraft, nombre, razonSocial, nit, descripcion, emails, sitioWeb, telefonoPrincipal, whatsappPrincipal, telefonosPrincipales, selectedCategoryKeys, sedes])
+    }, [isEditMode, updateDraft, nombre, razonSocial, nit, descripcion, emails, sitioWeb, telefonoPrincipal, whatsappPrincipal, telefonosPrincipales, selectedCategoryKeys, sedes, logoUrl, redesSociales])
 
     useEffect(() => {
         if (!open || isEditMode) return
@@ -240,6 +250,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                 whatsappPrincipal: primaryWhatsapp || (cleanedSedes[0]?.whatsapp || ''),
                 categorias: selectedCategoryKeys,
                 sedes: cleanedSedes,
+                logoUrl: logoUrl || undefined,
+                redesSociales: redesSociales.filter((l) => l.url.trim() !== ''),
                 estado: isAdminMode ? (initialData?.estado || 'aprobado') : 'pendiente',
                 origen: isAdminMode ? 'equipo_dezzpo' : 'usuario',
             }
@@ -285,11 +297,21 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                     flexShrink: 0,
                 }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <StorefrontIcon color="primary" />
-                    <Typography variant="h6" fontWeight={700} sx={{ fontSize: { xs: '1.05rem', sm: '1.25rem' } }}>
-                        {initialData ? 'Editar Tienda / Ferretería' : 'Sugerir / Registrar nueva Tienda'}
-                    </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    {/* Logo upload in the dialog header */}
+                    <TiendaLogoUpload
+                        value={logoUrl || undefined}
+                        onChange={(url) => setLogoUrl(url ?? '')}
+                        disabled={isSubmitting}
+                    />
+                    <Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <StorefrontIcon color="primary" />
+                            <Typography variant="h6" fontWeight={700} sx={{ fontSize: { xs: '1.05rem', sm: '1.25rem' } }}>
+                                {initialData ? 'Editar Tienda / Ferretería' : 'Sugerir / Registrar nueva Tienda'}
+                            </Typography>
+                        </Box>
+                    </Box>
                 </Box>
                 <IconButton onClick={onClose} size="small" aria-label="Cerrar">
                     <CloseIcon />
@@ -528,6 +550,17 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                             >
                                 Agregar otro correo
                             </Button>
+                        </Box>
+
+                        <Divider />
+
+                        {/* Social Media & Digital Channels Section */}
+                        <Box sx={{ p: 2, borderRadius: 2, bgcolor: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                            <TiendaSocialLinksManager
+                                links={redesSociales}
+                                onChange={setRedesSociales}
+                                disabled={isSubmitting}
+                            />
                         </Box>
 
                         <Divider />

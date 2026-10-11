@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type { SedeLocation } from '@services/tiendas'
+import type { SocialLink } from '@services/types'
 
 /** Shape of the draft data persisted to sessionStorage */
 /** A single primary contact entry (phone + optional WhatsApp) */
@@ -24,6 +25,10 @@ export interface TiendaFormDraft {
     telefonosPrincipales: ContactoPrincipal[]
     selectedCategoryKeys: string[]
     sedes: SedeLocation[]
+    /** Firebase Storage URL for the store logo */
+    logoUrl: string
+    /** Social media channels */
+    redesSociales: SocialLink[]
 }
 
 const EMPTY_SEDE: SedeLocation = {
@@ -54,6 +59,8 @@ const INITIAL_DRAFT: TiendaFormDraft = {
     telefonosPrincipales: [EMPTY_CONTACTO],
     selectedCategoryKeys: [],
     sedes: [EMPTY_SEDE],
+    logoUrl: '',
+    redesSociales: [],
 }
 
 interface TiendaFormDraftState {

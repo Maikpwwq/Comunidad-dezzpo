@@ -8,6 +8,9 @@ import {
     Button,
     Stack,
     Divider,
+    Avatar,
+    IconButton,
+    Tooltip,
 } from '@mui/material'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import PhoneIcon from '@mui/icons-material/Phone'
@@ -15,9 +18,15 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 import LanguageIcon from '@mui/icons-material/Language'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 import LayersIcon from '@mui/icons-material/Layers'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import XIcon from '@mui/icons-material/X'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import LinkIcon from '@mui/icons-material/Link'
 import { zoneNames } from '@assets/data/ListadoZonas'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import type { TiendaDocument, SedeLocation } from '@services/tiendas'
+import type { SocialPlatform } from '@services/types'
 import { SedeDetailModal } from './SedeDetailModal'
 
 interface TiendaCardProps {
@@ -38,8 +47,24 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
     }
 
     const primaryZoneLabel = zoneNames[primarySede.zona] || primarySede.zona
-    const primaryPhone = tienda.telefonoPrincipal || primarySede.telefonos[0]
+    const primaryPhone = tienda.telefonoPrincipal || primarySede.telefonos?.[0]
     const primaryWhatsapp = tienda.whatsappPrincipal || primarySede.whatsapp
+
+    // Visible social links (excluding WhatsApp since it has its own CTA)
+    const visibleSocialLinks = (tienda.redesSociales ?? []).filter(
+        (l) => l.isVisible && l.url.trim() !== '' && l.platform !== 'WhatsApp'
+    )
+
+    /** Map platform names to MUI icons */
+    const platformIconMap: Record<SocialPlatform, React.ReactElement> = {
+        WhatsApp: <WhatsAppIcon fontSize="small" />,
+        Instagram: <InstagramIcon fontSize="small" />,
+        Facebook: <FacebookIcon fontSize="small" />,
+        TikTok: <LinkIcon fontSize="small" />,
+        LinkedIn: <LinkedInIcon fontSize="small" />,
+        X: <XIcon fontSize="small" />,
+        Web: <LanguageIcon fontSize="small" />,
+    }
 
     return (
         <>
@@ -62,8 +87,23 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
                 <CardContent sx={{ p: 2.5, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                     {/* Header: Title & Badges */}
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
-                            <StorefrontIcon color="primary" fontSize="medium" sx={{ mt: 0.3 }} />
+                        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.25 }}>
+                            {/* Logo or fallback icon */}
+                            <Avatar
+                                {...(tienda.logoUrl ? { src: tienda.logoUrl } : {})}
+                                alt={tienda.nombre}
+                                sx={{
+                                    width: 44,
+                                    height: 44,
+                                    bgcolor: tienda.logoUrl ? 'transparent' : 'primary.50',
+                                    border: '2px solid',
+                                    borderColor: 'divider',
+                                    flexShrink: 0,
+                                    mt: 0.2,
+                                }}
+                            >
+                                <StorefrontIcon sx={{ fontSize: 22, color: 'primary.light' }} />
+                            </Avatar>
                             <Box>
                                 <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2, color: '#0A2540' }}>
                                     {tienda.nombre}
@@ -144,7 +184,7 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
                                         label={`+${tienda.sedes.length - 1} sedes`}
                                         size="small"
                                         color="info"
-                                        variant="soft"
+                                        variant="outlined"
                                         onClick={() => setDetailOpen(true)}
                                         sx={{ fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}
                                     />
@@ -165,7 +205,7 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
                         </Box>
 
                         {/* Actions Toolbar */}
-                        <Stack direction="row" spacing={1} flexWrap="wrap">
+                        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
                             {primaryPhone && (
                                 <Button
                                     variant="outlined"
@@ -207,6 +247,22 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
                                     Web
                                 </Button>
                             )}
+
+                            {/* Social media icon buttons */}
+                            {visibleSocialLinks.map((link) => (
+                                <Tooltip key={link.id} title={link.label || link.platform}>
+                                    <IconButton
+                                        size="small"
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={link.label || link.platform}
+                                        sx={{ color: 'text.secondary' }}
+                                    >
+                                        {platformIconMap[link.platform]}
+                                    </IconButton>
+                                </Tooltip>
+                            ))}
 
                             <Button
                                 variant="outlined"

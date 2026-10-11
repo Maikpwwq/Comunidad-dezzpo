@@ -17,7 +17,8 @@ import {
     where,
     orderBy,
 } from 'firebase/firestore'
-import { firestore, isFirebaseAvailable } from '@services/firebase'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { firestore, storage, isFirebaseAvailable } from '@services/firebase'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import { slugify } from '@services/utils/slugify'
 import type { ServiceResponse } from '@/types/services.d'
@@ -378,7 +379,7 @@ function sanitizeForFirestore<T>(val: T): T {
         return val.map((item) => sanitizeForFirestore(item)) as unknown as T
     }
     if (typeof val === 'object' && val.constructor === Object) {
-        const cleaned: Record<string, any> = {}
+        const cleaned: Record<string, unknown> = {}
         for (const [key, value] of Object.entries(val)) {
             if (value !== undefined) {
                 cleaned[key] = sanitizeForFirestore(value)
@@ -387,6 +388,52 @@ function sanitizeForFirestore<T>(val: T): T {
         return cleaned as T
     }
     return val
+}
+
+/**
+ * Upload a store logo image to Firebase Storage under tiendas/logos/.
+ * Returns the public download URL.
+ *
+ * Constraints:
+ * - File must be an image (validated by storage.rules)
+ * - Max 5 MB (validated by storage.rules)
+ * - Caller must be authenticated
+ */
+export async function uploadTiendaLogo(
+    file: File
+): Promise<ServiceResponse<string>> {
+    if (!isFirebaseAvailable() || !storage) {
+        return {
+            success: false,
+            data: null,
+            error: { code: 'INTERNAL_ERROR', message: 'Firebase Storage no está inicializado' },
+        }
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+        return {
+            success: false,
+            data: null,
+            error: { code: 'VALIDATION_ERROR', message: 'El logo no debe superar los 5 MB' },
+        }
+    }
+
+    const ext = file.name.split('.').pop()?.toLowerCase() ?? 'jpg'
+    const uniqueName = `logo_${Date.now()}_${Math.random().toString(36).slice(2, 7)}.${ext}`
+    const storageRef = ref(storage, `tiendas/logos/${uniqueName}`)
+
+    try {
+        const snapshot = await uploadBytes(storageRef, file)
+        const downloadUrl = await getDownloadURL(ref(storage, `gs://${snapshot.metadata.bucket}/${snapshot.metadata.fullPath}`))
+        return { success: true, data: downloadUrl, error: null }
+    } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : 'Error al subir el logo de la tienda'
+        return {
+            success: false,
+            data: null,
+            error: { code: 'INTERNAL_ERROR', message },
+        }
+    }
 }
 
 /**
@@ -478,7 +525,8 @@ export async function createTienda(
             sitioWeb: input.sitioWeb?.trim() || '',
             telefonoPrincipal: input.telefonoPrincipal?.trim() || input.sedes?.[0]?.telefonos?.[0] || '',
             whatsappPrincipal: input.whatsappPrincipal?.trim() || input.sedes?.[0]?.whatsapp || '',
-            logoUrl: input.logoUrl || '',
+            logoUrl: input.logoUrl?.trim() || '',
+            redesSociales: input.redesSociales ?? [],
             sedes: (input.sedes || []).map((s, idx) => ({
                 ...s,
                 id: s.id || `sede_${idx + 1}_${Date.now()}`,
@@ -585,6 +633,12 @@ export async function updateTienda(
         }
         if (input.whatsappPrincipal !== undefined) {
             updatedData.whatsappPrincipal = input.whatsappPrincipal.trim()
+        }
+        if (input.logoUrl !== undefined) {
+            updatedData.logoUrl = input.logoUrl.trim()
+        }
+        if (input.redesSociales !== undefined) {
+            updatedData.redesSociales = input.redesSociales
         }
         if (input.sedes) {
             updatedData.sedes = input.sedes.map((s, idx) => ({

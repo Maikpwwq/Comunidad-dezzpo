@@ -1,6 +1,7 @@
 /**
  * Tiendas & Suppliers Types
  */
+import type { SocialLink } from '@services/types'
 
 export interface SedeLocation {
     id: string
@@ -34,7 +35,8 @@ export interface TiendaDocument {
     sitioWeb?: string | undefined
     telefonoPrincipal?: string | undefined // Top-level summary contact phone
     whatsappPrincipal?: string | undefined // Top-level summary WhatsApp
-    logoUrl?: string | undefined     // Cloud Storage URL
+    logoUrl?: string | undefined           // Cloud Storage URL for store logo
+    redesSociales?: SocialLink[] | undefined // Social media channels (Instagram, WhatsApp, TikTok, etc.)
     sedes: SedeLocation[]         // Array of branches (Min 1 required)
     
     // Status & Provenance

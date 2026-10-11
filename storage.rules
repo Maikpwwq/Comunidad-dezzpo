@@ -79,6 +79,17 @@ service firebase.storage {
     }
 
     // =========================================================================
+    // Tiendas & Suppliers — Store Logos
+    // Read: Publicly readable (logo displayed on store cards and detail views)
+    // Write: Any authenticated user can upload (user suggestions + admin)
+    // Validation: Must be a valid image and under 5MB
+    // =========================================================================
+    match /tiendas/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated() && isImage() && isUnderMaxSize(5);
+    }
+
+    // =========================================================================
     // Catch-all: Deny all other unhandled storage requests
     // =========================================================================
     match /{allPaths=**} {
