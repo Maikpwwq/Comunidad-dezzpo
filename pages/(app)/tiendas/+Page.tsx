@@ -7,7 +7,6 @@ import {
     Button,
     TextField,
     MenuItem,
-    Chip,
     Stack,
     Paper,
     ToggleButtonGroup,
@@ -26,7 +25,7 @@ import { zoneNames } from '@assets/data/ListadoZonas'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import { getTiendas, createTienda, type TiendaDocument, type CreateTiendaInput } from '@services/tiendas'
 import { TiendaCard, TiendasMap, TiendaFormModal } from '@features/tiendas'
-import { PaginationBar } from '@components/layout'
+import { PaginationBar, CategoryChipScroller } from '@components/layout'
 import { usePagination } from '@hooks/usePagination'
 
 export default function Page() {
@@ -240,30 +239,12 @@ export default function Page() {
                 </Grid>
 
                 {/* Category Horizontal Filter Chips (Desktop Quick Match) */}
-                <Box sx={{ mt: 2, display: { xs: 'none', md: 'flex' }, gap: 1, overflowX: 'auto', pb: 1, pt: 0.5 }}>
-                    <Chip
-                        label="Todas las Categorías"
-                        clickable
-                        color={selectedCategory === '' ? 'primary' : 'default'}
-                        variant={selectedCategory === '' ? 'filled' : 'outlined'}
-                        onClick={() => setSelectedCategory('')}
-                        sx={{ fontWeight: 600 }}
-                    />
-                    {ListadoCategoriasTiendas.map((cat) => {
-                        const isSelected = selectedCategory === cat.key
-                        return (
-                            <Chip
-                                key={cat.key}
-                                label={cat.label}
-                                clickable
-                                color={isSelected ? 'primary' : 'default'}
-                                variant={isSelected ? 'filled' : 'outlined'}
-                                onClick={() => setSelectedCategory(isSelected ? '' : cat.key)}
-                                sx={{ fontWeight: 500, whiteSpace: 'nowrap' }}
-                            />
-                        )
-                    })}
-                </Box>
+                <CategoryChipScroller
+                    categories={ListadoCategoriasTiendas}
+                    selectedKey={selectedCategory}
+                    onSelect={setSelectedCategory}
+                    desktopOnly
+                />
             </Paper>
 
 

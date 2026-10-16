@@ -17,7 +17,8 @@ import { useAuth } from '@hooks/useAuth'
 import { getAllDrafts } from '@services/drafts/draftService'
 import { getUser } from '@services/users'
 import { usePageContext } from '@hooks/usePageContext'
-import { SearchBar } from '@components/layout'
+import { SearchBar, DirectoryFilterBar, ActiveFiltersBar } from '@components/layout'
+import type { ActiveFilterChip } from '@components/layout'
 // Matching Domain
 import {
     normalizeMerchantStructure,
@@ -36,17 +37,10 @@ import {
     Chip,
     Box,
     Divider,
-    TextField,
-    MenuItem,
     Alert,
-    Button,
-    Paper,
-    Stack,
 } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import ClearIcon from '@mui/icons-material/Clear'
-import CloseIcon from '@mui/icons-material/Close'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 import { PROPIETARIO_RANKINGS } from '@config/userClassification.config'
@@ -312,173 +306,67 @@ export default function Page() {
                 </Box>
 
                 {/* Active Filters Summary Bar */}
-                {hasActiveFilters && (
-                    <Box
-                        sx={{
-                            mb: 2,
-                            p: 1.5,
-                            borderRadius: 2.5,
-                            bgcolor: '#ffffff',
-                            border: '1px solid #e2e8f0',
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            alignItems: 'center',
-                            gap: 1,
-                        }}
-                    >
-                        <Typography variant="caption" fontWeight={700} color="text.secondary">
-                            Filtros activos:
-                        </Typography>
-                        {spacedText && (
-                            <Chip
-                                size="small"
-                                label={`Búsqueda: ${spacedText}`}
-                                onDelete={() => navigate('/app/directorio-requerimientos')}
-                                color="primary"
-                                variant="outlined"
-                                sx={{ fontWeight: 600 }}
-                            />
-                        )}
-                        {selectedClassification !== 'all' && (
-                            <Chip
-                                size="small"
-                                label={`Inmueble: ${
+                <ActiveFiltersBar
+                    visible={hasActiveFilters}
+                    chips={[
+                        ...(spacedText
+                            ? [{
+                                label: `Búsqueda: ${spacedText}`,
+                                color: 'primary' as const,
+                                onDelete: () => navigate('/app/directorio-requerimientos'),
+                            }]
+                            : []),
+                        ...(selectedClassification !== 'all'
+                            ? [{
+                                label: `Inmueble: ${
                                     (PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).find(
                                         (t) => t.id === selectedClassification
                                     )?.name || selectedClassification
-                                }`}
-                                onDelete={() => setSelectedClassification('all')}
-                                color="secondary"
-                                variant="outlined"
-                                sx={{ fontWeight: 600 }}
-                            />
-                        )}
-                        {selectedDraftCategory && (
-                            <Chip
-                                size="small"
-                                label={`Categoría: ${
+                                }`,
+                                color: 'secondary' as const,
+                                onDelete: () => setSelectedClassification('all'),
+                            }]
+                            : []),
+                        ...(selectedDraftCategory
+                            ? [{
+                                label: `Categoría: ${
                                     ListadoCategorias.find(
                                         (c: { key: number; label: string }) =>
                                             String(c.key) === selectedDraftCategory
                                     )?.label || selectedDraftCategory
-                                }`}
-                                onDelete={() => setSelectedDraftCategory('')}
-                                color="info"
-                                variant="outlined"
-                                sx={{ fontWeight: 600 }}
-                            />
-                        )}
-                        <Button
-                            size="small"
-                            onClick={handleClearAllFilters}
-                            startIcon={<CloseIcon fontSize="small" />}
-                            sx={{
-                                textTransform: 'none',
-                                fontSize: '0.78rem',
-                                ml: 'auto',
-                                color: '#dc2626',
-                                fontWeight: 600,
-                            }}
-                        >
-                            Restablecer filtros
-                        </Button>
-                    </Box>
-                )}
+                                }`,
+                                color: 'info' as const,
+                                onDelete: () => setSelectedDraftCategory(''),
+                            }]
+                            : []),
+                    ] satisfies ActiveFilterChip[]}
+                    onResetAll={handleClearAllFilters}
+                    sx={{ mb: 2 }}
+                />
 
-                {/* ═══════════════════════════════════════════════════════ */}
-                {/* Barra de Filtros Unificada (patrón tiendas)            */}
-                {/* ═══════════════════════════════════════════════════════ */}
-                <Paper
-                    elevation={0}
-                    variant="outlined"
-                    sx={{ p: 2, mb: 2.5, borderRadius: 3, backgroundColor: '#ffffff' }}
-                >
-                    <Stack
-                        direction={{ xs: 'column', md: 'row' }}
-                        spacing={2}
-                        alignItems={{ md: 'center' }}
-                    >
-                        {/* Dropdown: Tipo de Inmueble */}
-                        <TextField
-                            select
-                            fullWidth
-                            size="small"
-                            label="Tipo de Inmueble"
-                            value={selectedClassification}
-                            onChange={(e) => setSelectedClassification(e.target.value)}
-                            sx={{ minWidth: { md: 200 }, maxWidth: { md: 240 } }}
-                        >
-                            <MenuItem value="all">
-                                <em>Todos los Inmuebles</em>
-                            </MenuItem>
-                            {(PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).map((tier) => (
-                                <MenuItem key={tier.id} value={tier.id}>
-                                    {tier.name}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-
-                        {/* Reset filters button (inline) */}
-                        {hasActiveFilters && (
-                            <Button
-                                size="small"
-                                onClick={handleClearAllFilters}
-                                startIcon={<ClearIcon fontSize="small" />}
-                                sx={{
-                                    textTransform: 'none',
-                                    fontWeight: 600,
-                                    whiteSpace: 'nowrap',
-                                    color: '#dc2626',
-                                    ml: { md: 'auto' },
-                                }}
-                            >
-                                Limpiar filtros
-                            </Button>
-                        )}
-                    </Stack>
-
-                    {/* Category Quick-Match Chips (horizontal scroll) */}
-                    <Box
-                        sx={{
-                            mt: 2,
-                            display: 'flex',
-                            gap: 1,
-                            overflowX: 'auto',
-                            pb: 1,
-                            pt: 0.5,
-                            '&::-webkit-scrollbar': { height: 6 },
-                            '&::-webkit-scrollbar-thumb': {
-                                backgroundColor: '#cbd5e1',
-                                borderRadius: 3,
-                            },
-                        }}
-                    >
-                        <Chip
-                            label="Todas las Categorías"
-                            clickable
-                            color={selectedDraftCategory === '' ? 'primary' : 'default'}
-                            variant={selectedDraftCategory === '' ? 'filled' : 'outlined'}
-                            onClick={() => setSelectedDraftCategory('')}
-                            sx={{ fontWeight: 600, flexShrink: 0 }}
-                        />
-                        {ListadoCategorias.map((cat: { key: number; label: string }) => {
-                            const isSelected = selectedDraftCategory === String(cat.key)
-                            return (
-                                <Chip
-                                    key={cat.key}
-                                    label={cat.label}
-                                    clickable
-                                    color={isSelected ? 'primary' : 'default'}
-                                    variant={isSelected ? 'filled' : 'outlined'}
-                                    onClick={() =>
-                                        setSelectedDraftCategory(isSelected ? '' : String(cat.key))
-                                    }
-                                    sx={{ fontWeight: 500, whiteSpace: 'nowrap', flexShrink: 0 }}
-                                />
-                            )
-                        })}
-                    </Box>
-                </Paper>
+                {/* Unified Filter Bar */}
+                <DirectoryFilterBar
+                    dropdowns={[
+                        {
+                            label: 'Tipo de Inmueble',
+                            value: selectedClassification,
+                            onChange: setSelectedClassification,
+                            options: (PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).map((t) => ({
+                                id: t.id,
+                                label: t.name,
+                            })),
+                            allLabel: 'Todos los Inmuebles',
+                        },
+                    ]}
+                    categoryChips={{
+                        categories: ListadoCategorias,
+                        selectedKey: selectedDraftCategory,
+                        onSelect: setSelectedDraftCategory,
+                    }}
+                    hasActiveFilters={hasActiveFilters}
+                    onClearAll={handleClearAllFilters}
+                    sx={{ mb: 2.5 }}
+                />
 
                 {/* Category-Filtered Section for Comerciantes */}
                 {isComerciante && matchingDrafts.length > 0 && (

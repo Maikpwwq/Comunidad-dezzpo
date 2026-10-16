@@ -40,7 +40,7 @@ export default function Page() {
                                 <strong>Bienvenido</strong>
                             </h1>
                             <Typography variant="body2" className="mb-3 mt-2" sx={{ color: 'var(--content-text-color)', fontSize: '1rem', lineHeight: 1.6 }}>
-                                ¡Encuentra al instante el personal profesional ideal para cada proyecto en el hogar!
+                                ¡Encuentre al instante el personal profesional ideal para cada proyecto en su inmueble!
                             </Typography>
                             <Typography
                                 variant="subtitle1"

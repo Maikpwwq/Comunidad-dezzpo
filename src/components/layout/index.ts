@@ -15,6 +15,14 @@ export { PageContainer } from './PageContainer'
 export { PaginationBar } from './PaginationBar'
 export { SearchInput } from './SearchInput'
 
+// Shared Filter Components
+export { CategoryChipScroller } from './CategoryChipScroller'
+export type { CategoryChipScrollerProps } from './CategoryChipScroller'
+export { ActiveFiltersBar } from './ActiveFiltersBar'
+export type { ActiveFilterChip, ActiveFiltersBarProps } from './ActiveFiltersBar'
+export { DirectoryFilterBar } from './DirectoryFilterBar'
+export type { FilterDropdownConfig, DirectoryFilterBarProps } from './DirectoryFilterBar'
+
 // Navigation Config
 export {
     getSidebarConfig,
