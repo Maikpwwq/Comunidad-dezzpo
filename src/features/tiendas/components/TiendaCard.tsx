@@ -24,7 +24,7 @@ import XIcon from '@mui/icons-material/X'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import LinkIcon from '@mui/icons-material/Link'
 import { zoneNames } from '@assets/data/ListadoZonas'
-import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
+import { getTiendaCategory } from '@assets/data/ListadoCategoriasTiendas'
 import type { TiendaDocument, SedeLocation } from '@services/tiendas'
 import type { SocialPlatform } from '@services/types'
 import { SedeDetailModal } from './SedeDetailModal'
@@ -145,7 +145,7 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
                     {/* Category Chips */}
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 2 }}>
                         {tienda.categorias.map((catKey) => {
-                            const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                            const catObj = getTiendaCategory(catKey)
                             const label = catObj ? catObj.label : catKey
 
                             return (

@@ -110,13 +110,17 @@ El directorio de proveedores clasifica a las tiendas en categorías especializad
 11. **Gases Industriales:** Oxígeno industrial y medicinal, argón, nitrógeno, acetileno, CO2 y helio.
 12. **Soldadura y Equipos:** Inversores de soldadura, electrodos, alambres MIG/TIG, caretas fotosensibles y antorchas.
 13. **Cerámicas, Porcelanatos y Pisos:** Baldosas, pisos laminados, SPC, pegantes (Pegacor) y boquillas.
-14. **Inoxidables:** Láminas, tubos y accesorios en acero inoxidable 304 y 316.
-15. **Mallas Metálicas:** Malla eslabonada, ondulada, electrosoldada y concertinas de seguridad.
-16. **Puertas y Portones:** Puertas en madera maciza, metálicas, cortafuego y de seguridad.
-17. **Transmisión de Potencia:** Rodamientos, poleas, correas industriales, cadenas y piñones.
-18. **Depósitos de Materiales:** Cemento, arena, gravilla, ladrillo tolete, bloque estructural y agregados.
-19. **Gasodomésticos:** Equipos a gas natural y propano, estufas, calentadores, hornos, repuestos y reguladores.
-20. **Geotextiles y Geomembranas:** Geotextiles tejidos/no tejidos, geomembranas HDPE/PVC, geodrenes y mantos para control de erosión.
+14. **Corte y Dobleces de Lámina:** Corte en cizalla mecánica, doblez y plegado en prensa dobladora, punzonado y figurado de chapa.
+15. **Corte por Láser, Plasma y Oxicorte:** Corte CNC para láminas y placas de alto espesor (láser de fibra, plasma de alta definición, oxicorte, chorro de agua y electroerosión).
+16. **Taller de Torno y Mecanizado:** Tornería y fresado convencional, rectificado plano y cilíndrico, roscado, mandrinado, bujes y ejes.
+17. **Metalmecánica y Mecanizado CNC:** Centros de mecanizado CNC de alta precisión, control numérico CAD/CAM, troqueles, matrices y moldes.
+18. **Inoxidables:** Láminas, tubos y accesorios en acero inoxidable 304 y 316.
+19. **Mallas Metálicas:** Malla eslabonada, ondulada, electrosoldada y concertinas de seguridad.
+20. **Puertas:** Puertas en madera maciza, metálicas, cortafuego y de seguridad.
+21. **Transmisión de Potencia:** Rodamientos, poleas, correas industriales, cadenas y piñones.
+22. **Depósitos de Materiales:** Cemento, arena, gravilla, ladrillo tolete, bloque estructural y agregados.
+23. **Gasodomésticos:** Equipos a gas natural y propano, estufas, calentadores, hornos, repuestos y reguladores.
+24. **Geotextiles y Geomembranas:** Geotextiles tejidos/no tejidos, geomembranas HDPE/PVC, geodrenes y mantos para control de erosión.
 
 ---
 

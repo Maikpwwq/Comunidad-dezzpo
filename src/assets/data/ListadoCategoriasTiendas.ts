@@ -126,20 +126,56 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         synonyms: ['pisos', 'cerámica', 'ceramica', 'porcelanato', 'laminados', 'pegacor', 'boquilla', 'baldosa'],
     },
     {
-        key: 'corte_dobleces_metalmecanica',
-        label: 'Corte, Dobleces y Metalmecánica',
+        key: 'corte_dobleces_lamina',
+        label: 'Corte y Dobleces de Lámina',
         parentTradeKey: 53,
         iconName: 'SquareFoot',
-        description: 'Servicio de corte en cizalla, doblez de láminas, punzonado y tubos.',
-        synonyms: ['corte', 'doblez', 'lámina', 'cizalla', 'metalmecánica', 'punzonado', 'planchas'],
+        description: 'Corte mecánico en cizalla/guillotina, doblez y plegado de láminas en prensa dobladora, punzonado y formado de chapa metálica.',
+        synonyms: [
+            'corte de lámina', 'corte de lamina', 'doblez de lámina', 'doblez de lamina', 'corte y doblez',
+            'corte y dobleces', 'cizalla', 'guillotina', 'plegado de lámina', 'prensa dobladora', 'punzonado',
+            'figurado de lámina', 'planchas', 'lámina cold rolled', 'lámina hot rolled', 'chapa metálica',
+            'doblado de láminas', 'corte cizalla', 'corte, dobleces y metalmecanica',
+        ],
+    },
+    {
+        key: 'corte_laser_plasma_oxicorte',
+        label: 'Corte por Láser, Plasma y Oxicorte',
+        parentTradeKey: 53,
+        iconName: 'PrecisionManufacturing',
+        description: 'Corte CNC para láminas y placas de alto espesor mediante láser de fibra, plasma de alta definición, oxicorte, chorro de agua (waterjet) y electroerosión por hilo.',
+        synonyms: [
+            'corte láser', 'corte laser', 'corte plasma', 'plasma cnc', 'oxicorte', 'chorro de agua',
+            'waterjet', 'corte por agua', 'láser de fibra', 'laser de fibra', 'electroerosión por hilo',
+            'electroerosion por hilo', 'corte de placas', 'placas de alto espesor', 'pantógrafo cnc',
+            'pantografo cnc', 'corte térmico', 'corte termico', 'oxicorte cnc', 'corte de placas gruesas',
+            'corte no cizalla',
+        ],
     },
     {
         key: 'torno_mecanizado',
         label: 'Taller de Torno y Mecanizado',
         parentTradeKey: 53,
+        iconName: 'Build',
+        description: 'Tornería y fresado convencional, rectificado plano y cilíndrico, roscado, mandrinado, fabricación de bujes, ejes, piñonería y ajuste o reparación de componentes mecánicos.',
+        synonyms: [
+            'torno', 'tornería', 'torneria', 'mecanizado convencional', 'torno paralelo', 'fresadora universal',
+            'bujes', 'roscas', 'rectificado', 'mandrinado', 'ejes', 'piñonería', 'pinoneria', 'reparación mecánica',
+            'cepillo mecánico', 'taladro de árbol', 'tornero',
+        ],
+    },
+    {
+        key: 'metalmecanica_cnc',
+        label: 'Metalmecánica y Mecanizado CNC',
+        parentTradeKey: 53,
         iconName: 'PrecisionManufacturing',
-        description: 'Mecanizado de piezas, bujes, roscas y rectificado industrial.',
-        synonyms: ['torno', 'mecanizado', 'bujes', 'roscas', 'rectificado', 'piezas metálicas'],
+        description: 'Centros de mecanizado CNC, fresado y torneado por control numérico, manufactura CAD/CAM, troqueles, matrices, moldes industriales y ensamble metalmecánico de alta precisión.',
+        synonyms: [
+            'metalmecánica', 'metalmecanica', 'mecanizado cnc', 'cnc', 'centro de mecanizado', 'fresado cnc',
+            'torno cnc', 'control numérico', 'control numerico', 'cad cam', 'piezas de precisión',
+            'troqueles', 'matrices', 'moldes industriales', 'manufactura avanzada', 'ensamble metalmecánico',
+            'piezas bajo plano',
+        ],
     },
     {
         key: 'ornamentacion',
@@ -366,3 +402,22 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         synonyms: ['geotextiles', 'geomembranas', 'geotextil', 'geomembrana', 'geodren', 'georredes', 'hdpe', 'pvc', 'geosintéticos', 'geosinteticos', 'impermeabilización de taludes', 'reservorios', 'control de erosión', 'drenaje vial', 'geomalla'],
     },
 ]
+
+/**
+ * Category aliases / legacy mapping for backwards compatibility with existing records
+ */
+export const CATEGORIA_TIENDA_ALIASES: Record<string, string> = {
+    corte_dobleces_metalmecanica: 'corte_dobleces_lamina',
+    ornamentacion_hierro: 'ornamentacion',
+    muebles_modulares_tapiceria: 'muebles_closets',
+    gases_industriales_soldadura: 'soldadura',
+}
+
+/**
+ * Helper to resolve a category option taking into account legacy aliases
+ */
+export function getTiendaCategory(keyOrAlias: string): TiendaCategoryOption | undefined {
+    const resolvedKey = CATEGORIA_TIENDA_ALIASES[keyOrAlias] || keyOrAlias
+    return ListadoCategoriasTiendas.find((c) => c.key === resolvedKey || c.key === keyOrAlias)
+}
+

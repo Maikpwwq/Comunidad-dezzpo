@@ -19,7 +19,11 @@ import {
 } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { firestore, storage, isFirebaseAvailable } from '@services/firebase'
-import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
+import {
+    ListadoCategoriasTiendas,
+    getTiendaCategory,
+    CATEGORIA_TIENDA_ALIASES,
+} from '@assets/data/ListadoCategoriasTiendas'
 import { slugify } from '@services/utils/slugify'
 import type { ServiceResponse } from '@/types/services.d'
 import type {
@@ -278,7 +282,13 @@ export async function getTiendas(
 
         // Apply client-side filters (category, zone, text search)
         if (filters?.categoria) {
-            docs = docs.filter((item) => item.categorias.includes(filters.categoria!))
+            const targetCat = filters.categoria
+            docs = docs.filter((item) =>
+                item.categorias.some((k) => {
+                    const resolved = CATEGORIA_TIENDA_ALIASES[k] || k
+                    return resolved === targetCat || k === targetCat
+                })
+            )
         }
 
         if (filters?.zona) {
@@ -305,7 +315,7 @@ export async function getTiendas(
                             s.cargoContacto?.toLowerCase().includes(term)
                     ) ||
                     item.categorias.some((catKey) => {
-                        const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                        const catObj = getTiendaCategory(catKey)
                         if (!catObj) return false
                         if (catObj.label.toLowerCase().includes(term) || catObj.key.toLowerCase().includes(term)) return true
                         return catObj.synonyms?.some((syn) => syn.toLowerCase().includes(term))

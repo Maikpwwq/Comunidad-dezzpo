@@ -39,7 +39,7 @@ import {
     type TiendaDocument,
     type CreateTiendaInput,
 } from '@services/tiendas'
-import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
+import { getTiendaCategory } from '@assets/data/ListadoCategoriasTiendas'
 import { TiendaFormModal, SedeDetailModal } from '@features/tiendas'
 import { SearchInput, PaginationBar } from '@components/layout'
 import { usePagination } from '@hooks/usePagination'
@@ -142,7 +142,7 @@ export default function Page() {
                     s.nombreContacto?.toLowerCase().includes(term)
             )
             const matchesCat = t.categorias.some((catKey) => {
-                const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                const catObj = getTiendaCategory(catKey)
                 return (
                     catKey.toLowerCase().includes(term) ||
                     catObj?.label.toLowerCase().includes(term)
@@ -290,7 +290,7 @@ export default function Page() {
 
                                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1.5 }}>
                                                         {tienda.categorias.map((catKey) => {
-                                                            const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                                                            const catObj = getTiendaCategory(catKey)
                                                             return (
                                                                 <Chip
                                                                     key={catKey}
@@ -456,7 +456,7 @@ export default function Page() {
                                                     <TableCell>
                                                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                                             {tienda.categorias.map((catKey) => {
-                                                                const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                                                                const catObj = getTiendaCategory(catKey)
                                                                 return (
                                                                     <Chip
                                                                         key={catKey}
@@ -614,7 +614,7 @@ export default function Page() {
 
                                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1.5 }}>
                                                     {tienda.categorias.map((catKey) => {
-                                                        const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                                                        const catObj = getTiendaCategory(catKey)
                                                         return (
                                                             <Chip
                                                                 key={catKey}
@@ -752,7 +752,7 @@ export default function Page() {
                                                     <TableCell>
                                                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                                             {tienda.categorias.map((catKey) => {
-                                                                const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                                                                const catObj = getTiendaCategory(catKey)
                                                                 return (
                                                                     <Chip key={catKey} label={catObj ? catObj.label : catKey} size="small" />
                                                                 )

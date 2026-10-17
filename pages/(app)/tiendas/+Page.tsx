@@ -22,7 +22,11 @@ import SearchIcon from '@mui/icons-material/Search'
 import AddBusinessIcon from '@mui/icons-material/AddBusiness'
 import ClearIcon from '@mui/icons-material/Clear'
 import InfoIcon from '@mui/icons-material/Info'
-import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
+import {
+    ListadoCategoriasTiendas,
+    getTiendaCategory,
+    CATEGORIA_TIENDA_ALIASES,
+} from '@assets/data/ListadoCategoriasTiendas'
 import { getTiendas, createTienda, type TiendaDocument, type CreateTiendaInput } from '@services/tiendas'
 import { TiendaCard, TiendasMap, TiendaFormModal } from '@features/tiendas'
 import { PaginationBar, CategoryChipScroller, DirectoryZoneFilter } from '@components/layout'
@@ -62,8 +66,12 @@ export default function Page() {
     const filteredTiendas = useMemo(() => {
         return tiendas.filter((item) => {
             // Category filter
-            if (selectedCategory && !item.categorias.includes(selectedCategory)) {
-                return false
+            if (selectedCategory) {
+                const matchesCat = item.categorias.some((k) => {
+                    const resolved = CATEGORIA_TIENDA_ALIASES[k] || k
+                    return resolved === selectedCategory || k === selectedCategory
+                })
+                if (!matchesCat) return false
             }
             // Zone filter
             if (selectedZone) {
@@ -98,7 +106,7 @@ export default function Page() {
                         s.cargoContacto?.toLowerCase().includes(term)
                 )
                 const matchesCategorySynonym = item.categorias.some((catKey) => {
-                    const catObj = ListadoCategoriasTiendas.find((c) => c.key === catKey)
+                    const catObj = getTiendaCategory(catKey)
                     if (!catObj) return false
                     if (catObj.label.toLowerCase().includes(term) || catObj.key.toLowerCase().includes(term)) return true
                     return catObj.synonyms?.some((syn) => syn.toLowerCase().includes(term))

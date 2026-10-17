@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { Box, Paper, Typography, Alert, AlertTitle, CircularProgress } from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 import { googleLoader } from '@services/utils/googleMapsLoader'
-import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
+import { getTiendaCategory } from '@assets/data/ListadoCategoriasTiendas'
 import type { TiendaDocument } from '@services/tiendas'
 
 interface TiendasMapProps {
@@ -137,7 +137,7 @@ export const TiendasMap: React.FC<TiendasMapProps> = ({
             setLoadingFallback(true)
             clearMarkers()
 
-            const categoryObj = ListadoCategoriasTiendas.find((c) => c.key === selectedCategory)
+            const categoryObj = getTiendaCategory(selectedCategory)
             const queryTerm = categoryObj ? `${categoryObj.label} Bogotá` : 'Ferretería Bogotá'
 
             const dummyDiv = document.createElement('div')

@@ -333,7 +333,10 @@ pending_payment → active → completed → disputed
 - **Taxonomy Segregation**:
   - Split `ornamentacion_hierro` into `ornamentacion` (artistic ironwork, railings, gates) and `perfiles_hierro` (structural iron, tubes, beams, sheets).
   - Split `muebles_modulares_tapiceria` into `muebles_closets` (cabinetry, modular furniture, closets) and `tapiceria` (upholstery fabrics, foams, leatherette, re-upholstery).
-  - Split `gases_industriales_soldadura` into `gases_industriales` (oxygen, argon, nitrogen, acetylene, CO2, helium cylinders) and `soldadura` (welding inverters, electrodes, MIG/TIG wires, autodarkening helmets, torches, welding machines).
+  - Split `corte_dobleces_metalmecanica` into `corte_dobleces_lamina` (mechanical shear, press brake bending, punching) and `metalmecanica_cnc` (precision CNC machining centers, CAD/CAM, dies & molds).
+  - Added dedicated high-thickness & non-shear process category `corte_laser_plasma_oxicorte` (fiber laser, HD plasma, oxy-fuel, waterjet, wire EDM).
+  - Differentiated `torno_mecanizado` for conventional machining (lathe, universal milling, boring, shaft & bushing manufacturing, repair) vs. `metalmecanica_cnc`.
+  - Maintained `CATEGORIA_TIENDA_ALIASES` and `getTiendaCategory` helper for 100% backward compatibility with legacy store records.
 - **Shared Slug Utility**: Centralized URL slug generation in `@services/utils/slugify.ts` to eliminate duplicate definitions across blog and tienda services.
 
 ### Phone Authentication (SMS OTP) Architecture (`/registro` & `/ingreso` - 2026-08-21)
