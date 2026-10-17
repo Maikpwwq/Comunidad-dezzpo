@@ -11,6 +11,8 @@ import {
     Divider,
     IconButton,
     Paper,
+    Avatar,
+    Tooltip,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
@@ -21,13 +23,31 @@ import StorefrontIcon from '@mui/icons-material/Storefront'
 import PersonIcon from '@mui/icons-material/Person'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import EmailIcon from '@mui/icons-material/Email'
+import LanguageIcon from '@mui/icons-material/Language'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import XIcon from '@mui/icons-material/X'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import LinkIcon from '@mui/icons-material/Link'
 import { zoneNames } from '@assets/data/ListadoZonas'
 import type { TiendaDocument } from '@services/tiendas'
+import type { SocialPlatform } from '@services/types'
 
 interface SedeDetailModalProps {
     open: boolean
     onClose: () => void
     tienda: TiendaDocument | null
+}
+
+const platformIconMap: Record<SocialPlatform, React.ReactElement> = {
+    WhatsApp: <WhatsAppIcon fontSize="small" />,
+    Instagram: <InstagramIcon fontSize="small" />,
+    Facebook: <FacebookIcon fontSize="small" />,
+    TikTok: <LinkIcon fontSize="small" />,
+    LinkedIn: <LinkedInIcon fontSize="small" />,
+    X: <XIcon fontSize="small" />,
+    Web: <LanguageIcon fontSize="small" />,
 }
 
 export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
@@ -43,6 +63,11 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
         : tienda.email
             ? tienda.email.split(',').map((e) => e.trim()).filter(Boolean)
             : []
+
+    // Visible social links (excluding WhatsApp since it has its own button per sede/contact)
+    const visibleSocialLinks = (tienda.redesSociales ?? []).filter(
+        (l) => l.isVisible && l.url.trim() !== '' && l.platform !== 'WhatsApp'
+    )
 
     return (
         <Dialog
@@ -72,7 +97,20 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                    <StorefrontIcon color="primary" />
+                    <Avatar
+                        {...(tienda.logoUrl ? { src: tienda.logoUrl } : {})}
+                        alt={tienda.nombre}
+                        sx={{
+                            width: 44,
+                            height: 44,
+                            bgcolor: tienda.logoUrl ? 'transparent' : 'primary.50',
+                            border: '1.5px solid',
+                            borderColor: 'divider',
+                            flexShrink: 0,
+                        }}
+                    >
+                        <StorefrontIcon color="primary" />
+                    </Avatar>
                     <Box>
                         <Typography variant="h6" fontWeight={700} sx={{ lineHeight: 1.2, fontSize: { xs: '1.05rem', sm: '1.25rem' } }}>
                             {tienda.nombre}
@@ -99,23 +137,102 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
                     </Typography>
                 )}
 
-                {/* Emails Section */}
-                {resolvedEmails.length > 0 && (
-                    <Box sx={{ mb: 2, display: 'flex', flexWrap: 'wrap', gap: 1, alignItems: 'center' }}>
-                        <EmailIcon fontSize="small" color="action" />
-                        {resolvedEmails.map((em, idx) => (
-                            <Chip
-                                key={idx}
-                                label={em}
-                                size="small"
-                                component="a"
-                                href={`mailto:${em}`}
-                                clickable
-                                variant="outlined"
-                                color="primary"
-                                sx={{ fontWeight: 500 }}
-                            />
-                        ))}
+                {/* Digital Channels (Website & Social) + Emails */}
+                {(tienda.sitioWeb || visibleSocialLinks.length > 0 || resolvedEmails.length > 0) && (
+                    <Box
+                        sx={{
+                            mb: 2.5,
+                            p: 1.5,
+                            borderRadius: 2,
+                            bgcolor: '#f8fafc',
+                            border: '1px solid',
+                            borderColor: 'divider',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 1.25,
+                        }}
+                    >
+                        {/* Website & Social Channels */}
+                        {(tienda.sitioWeb || visibleSocialLinks.length > 0) && (
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1 }}>
+                                {tienda.sitioWeb && (
+                                    <Button
+                                        variant="outlined"
+                                        size="small"
+                                        color="primary"
+                                        startIcon={<LanguageIcon fontSize="small" />}
+                                        endIcon={<OpenInNewIcon sx={{ fontSize: '0.85rem !important' }} />}
+                                        href={tienda.sitioWeb.startsWith('http') ? tienda.sitioWeb : `https://${tienda.sitioWeb}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        sx={{
+                                            textTransform: 'none',
+                                            fontWeight: 700,
+                                            borderRadius: 2,
+                                            py: 0.4,
+                                            px: 1.25,
+                                            fontSize: '0.82rem',
+                                            bgcolor: '#ffffff',
+                                            borderColor: 'primary.main',
+                                            '&:hover': {
+                                                bgcolor: 'primary.50',
+                                            },
+                                        }}
+                                    >
+                                        Sitio Web: {tienda.sitioWeb.replace(/^https?:\/\//i, '').replace(/\/$/, '')}
+                                    </Button>
+                                )}
+
+                                {visibleSocialLinks.length > 0 && (
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, ml: { sm: 'auto' } }}>
+                                        {visibleSocialLinks.map((link) => (
+                                            <Tooltip key={link.id} title={link.label || link.platform}>
+                                                <IconButton
+                                                    size="small"
+                                                    href={link.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    aria-label={link.label || link.platform}
+                                                    sx={{
+                                                        color: 'text.secondary',
+                                                        bgcolor: '#ffffff',
+                                                        border: '1px solid',
+                                                        borderColor: 'divider',
+                                                        p: 0.5,
+                                                        '&:hover': {
+                                                            bgcolor: 'primary.50',
+                                                            color: 'primary.main',
+                                                        },
+                                                    }}
+                                                >
+                                                    {platformIconMap[link.platform]}
+                                                </IconButton>
+                                            </Tooltip>
+                                        ))}
+                                    </Box>
+                                )}
+                            </Box>
+                        )}
+
+                        {/* Emails */}
+                        {resolvedEmails.length > 0 && (
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, alignItems: 'center' }}>
+                                <EmailIcon fontSize="small" color="action" />
+                                {resolvedEmails.map((em, idx) => (
+                                    <Chip
+                                        key={idx}
+                                        label={em}
+                                        size="small"
+                                        component="a"
+                                        href={`mailto:${em}`}
+                                        clickable
+                                        variant="outlined"
+                                        color="primary"
+                                        sx={{ fontWeight: 500, bgcolor: '#ffffff' }}
+                                    />
+                                ))}
+                            </Box>
+                        )}
                     </Box>
                 )}
 

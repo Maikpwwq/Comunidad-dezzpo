@@ -28,6 +28,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CancelIcon from '@mui/icons-material/Cancel'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import PendingActionsIcon from '@mui/icons-material/PendingActions'
+import LanguageIcon from '@mui/icons-material/Language'
 import {
     getTiendas,
     createTienda,
@@ -316,17 +317,40 @@ export default function Page() {
                                                     </Box>
 
                                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                        <Chip
-                                                            label={`${tienda.sedes.length} sede${tienda.sedes.length !== 1 ? 's' : ''}`}
-                                                            size="small"
-                                                            color="info"
-                                                            variant="outlined"
-                                                            onClick={() => {
-                                                                setDetailTienda(tienda)
-                                                                setDetailOpen(true)
-                                                            }}
-                                                            sx={{ cursor: 'pointer', fontWeight: 700, height: 24, fontSize: '0.72rem' }}
-                                                        />
+                                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                            <Chip
+                                                                label={`${tienda.sedes.length} sede${tienda.sedes.length !== 1 ? 's' : ''}`}
+                                                                size="small"
+                                                                color="info"
+                                                                variant="outlined"
+                                                                onClick={() => {
+                                                                    setDetailTienda(tienda)
+                                                                    setDetailOpen(true)
+                                                                }}
+                                                                sx={{ cursor: 'pointer', fontWeight: 700, height: 24, fontSize: '0.72rem' }}
+                                                            />
+                                                            {tienda.sitioWeb && (
+                                                                <Button
+                                                                    variant="outlined"
+                                                                    size="small"
+                                                                    color="primary"
+                                                                    startIcon={<LanguageIcon sx={{ fontSize: '0.85rem !important' }} />}
+                                                                    href={tienda.sitioWeb.startsWith('http') ? tienda.sitioWeb : `https://${tienda.sitioWeb}`}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    sx={{
+                                                                        height: 24,
+                                                                        fontSize: '0.72rem',
+                                                                        textTransform: 'none',
+                                                                        borderRadius: 3,
+                                                                        py: 0,
+                                                                        px: 1,
+                                                                    }}
+                                                                >
+                                                                    Web
+                                                                </Button>
+                                                            )}
+                                                        </Box>
 
                                                         <Box sx={{ display: 'flex', gap: 0.5 }}>
                                                             <IconButton
@@ -398,6 +422,36 @@ export default function Page() {
                                                                 {tienda.descripcion}
                                                             </Typography>
                                                         )}
+                                                        {tienda.sitioWeb && (
+                                                            <Button
+                                                                size="small"
+                                                                variant="text"
+                                                                startIcon={<LanguageIcon sx={{ fontSize: '0.9rem !important' }} />}
+                                                                href={tienda.sitioWeb.startsWith('http') ? tienda.sitioWeb : `https://${tienda.sitioWeb}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                sx={{
+                                                                    p: 0,
+                                                                    mt: 0.25,
+                                                                    minWidth: 'auto',
+                                                                    fontSize: '0.72rem',
+                                                                    textTransform: 'none',
+                                                                    fontWeight: 600,
+                                                                    color: 'primary.main',
+                                                                    display: 'inline-flex',
+                                                                    maxWidth: 220,
+                                                                    overflow: 'hidden',
+                                                                    textOverflow: 'ellipsis',
+                                                                    whiteSpace: 'nowrap',
+                                                                    '&:hover': {
+                                                                        textDecoration: 'underline',
+                                                                        bgcolor: 'transparent',
+                                                                    },
+                                                                }}
+                                                            >
+                                                                {tienda.sitioWeb.replace(/^https?:\/\//i, '').replace(/\/$/, '')}
+                                                            </Button>
+                                                        )}
                                                     </TableCell>
                                                     <TableCell>
                                                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -454,6 +508,19 @@ export default function Page() {
                                                         />
                                                     </TableCell>
                                                     <TableCell align="right">
+                                                        {tienda.sitioWeb && (
+                                                            <Tooltip title={`Visitar sitio web (${tienda.sitioWeb})`}>
+                                                                <IconButton
+                                                                    size="small"
+                                                                    color="primary"
+                                                                    href={tienda.sitioWeb.startsWith('http') ? tienda.sitioWeb : `https://${tienda.sitioWeb}`}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    <LanguageIcon fontSize="small" />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                        )}
                                                         <Tooltip title="Ver sedes">
                                                             <IconButton
                                                                 size="small"
@@ -561,16 +628,39 @@ export default function Page() {
                                                 </Box>
 
                                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pt: 1, borderTop: '1px solid', borderColor: 'divider' }}>
-                                                    <Chip
-                                                        label={`${tienda.sedes.length} sedes`}
-                                                        size="small"
-                                                        color="warning"
-                                                        onClick={() => {
-                                                            setDetailTienda(tienda)
-                                                            setDetailOpen(true)
-                                                        }}
-                                                        sx={{ cursor: 'pointer', height: 24, fontSize: '0.72rem', fontWeight: 600 }}
-                                                    />
+                                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                        <Chip
+                                                            label={`${tienda.sedes.length} sedes`}
+                                                            size="small"
+                                                            color="warning"
+                                                            onClick={() => {
+                                                                setDetailTienda(tienda)
+                                                                setDetailOpen(true)
+                                                            }}
+                                                            sx={{ cursor: 'pointer', height: 24, fontSize: '0.72rem', fontWeight: 600 }}
+                                                        />
+                                                        {tienda.sitioWeb && (
+                                                            <Button
+                                                                variant="outlined"
+                                                                size="small"
+                                                                color="info"
+                                                                startIcon={<LanguageIcon sx={{ fontSize: '0.85rem !important' }} />}
+                                                                href={tienda.sitioWeb.startsWith('http') ? tienda.sitioWeb : `https://${tienda.sitioWeb}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                sx={{
+                                                                    height: 24,
+                                                                    fontSize: '0.72rem',
+                                                                    textTransform: 'none',
+                                                                    borderRadius: 3,
+                                                                    py: 0,
+                                                                    px: 1,
+                                                                }}
+                                                            >
+                                                                Web
+                                                            </Button>
+                                                        )}
+                                                    </Box>
 
                                                     <Box sx={{ display: 'flex', gap: 1 }}>
                                                         <Button
@@ -632,6 +722,32 @@ export default function Page() {
                                                         <Typography variant="caption" color="text.secondary">
                                                             {tienda.descripcion || 'Sin descripción'}
                                                         </Typography>
+                                                        {tienda.sitioWeb && (
+                                                            <Box sx={{ mt: 0.25 }}>
+                                                                <Button
+                                                                    size="small"
+                                                                    variant="text"
+                                                                    startIcon={<LanguageIcon sx={{ fontSize: '0.9rem !important' }} />}
+                                                                    href={tienda.sitioWeb.startsWith('http') ? tienda.sitioWeb : `https://${tienda.sitioWeb}`}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    sx={{
+                                                                        p: 0,
+                                                                        minWidth: 'auto',
+                                                                        fontSize: '0.72rem',
+                                                                        textTransform: 'none',
+                                                                        fontWeight: 600,
+                                                                        color: 'info.main',
+                                                                        '&:hover': {
+                                                                            textDecoration: 'underline',
+                                                                            bgcolor: 'transparent',
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    {tienda.sitioWeb.replace(/^https?:\/\//i, '').replace(/\/$/, '')}
+                                                                </Button>
+                                                            </Box>
+                                                        )}
                                                     </TableCell>
                                                     <TableCell>
                                                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -659,6 +775,32 @@ export default function Page() {
                                                         <Typography variant="caption">{new Date(tienda.createdAt).toLocaleDateString()}</Typography>
                                                     </TableCell>
                                                     <TableCell align="right">
+                                                        {tienda.sitioWeb && (
+                                                            <Tooltip title={`Visitar sitio web (${tienda.sitioWeb})`}>
+                                                                <IconButton
+                                                                    size="small"
+                                                                    color="info"
+                                                                    href={tienda.sitioWeb.startsWith('http') ? tienda.sitioWeb : `https://${tienda.sitioWeb}`}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    sx={{ mr: 0.5 }}
+                                                                >
+                                                                    <LanguageIcon fontSize="small" />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                        )}
+                                                        <Tooltip title="Ver sedes">
+                                                            <IconButton
+                                                                size="small"
+                                                                onClick={() => {
+                                                                    setDetailTienda(tienda)
+                                                                    setDetailOpen(true)
+                                                                }}
+                                                                sx={{ mr: 0.5 }}
+                                                            >
+                                                                <VisibilityIcon fontSize="small" />
+                                                            </IconButton>
+                                                        </Tooltip>
                                                         <Button
                                                             variant="contained"
                                                             color="success"
