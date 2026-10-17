@@ -5,8 +5,7 @@
  * Converted to TypeScript with V1 design patterns.
  */
 import { navigate } from 'vike/client/router'
-// Components
-import { NuestraComunidad, QuickMatch } from '@features/marketing'
+import { NuestraComunidad, QuickMatch, HomeCategoryChips } from '@features/marketing'
 // Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
@@ -71,6 +70,10 @@ export default function Page() {
                     </Col>
                 </Row>
             </Container>
+
+            {/* Service Category Chips */}
+            <HomeCategoryChips />
+
             {/* Description Banner */}
             <Container fluid className="p-0">
                 <Row className="m-0 pt-4 w-100 mensaje-banner">

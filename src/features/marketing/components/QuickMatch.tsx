@@ -11,7 +11,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { navigate } from 'vike/client/router'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
-import { Box, Typography, Paper, InputBase, IconButton, Tooltip } from '@mui/material'
+import { Typography, Paper, InputBase, IconButton, Tooltip } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import {
@@ -276,24 +276,7 @@ export function QuickMatch(): React.ReactElement {
                     })}
                 </div>
 
-                <span className={styles.PropertyHelper}>
-                    Así te mostramos primero a quienes mejor encajan con tu proyecto.
-                </span>
             </div>
-
-            {/* Quick category chips */}
-            <Box className={styles.QuickChips}>
-                {SEARCH_INDEX.slice(0, 8).map((cat) => (
-                    <button
-                        key={cat.key}
-                        className={styles.Chip}
-                        onClick={() => handleSelectMatch(cat)}
-                        type="button"
-                    >
-                        {cat.label}
-                    </button>
-                ))}
-            </Box>
         </div>
     )
 }
