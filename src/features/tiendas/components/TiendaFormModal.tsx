@@ -291,7 +291,8 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             <DialogTitle
                 sx={{
                     m: 0,
-                    p: { xs: 1.5, sm: 2 },
+                    px: { xs: 2.5, sm: 3.5, md: 4 },
+                    py: { xs: 2, sm: 2.5, md: 3 },
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
@@ -299,29 +300,23 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                    {/* Logo upload in the dialog header */}
-                    <TiendaLogoUpload
-                        value={logoUrl || undefined}
-                        onChange={(url) => setLogoUrl(url ?? '')}
-                        disabled={isSubmitting}
-                    />
-                    <Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <StorefrontIcon color="primary" />
-                            <Typography variant="h6" fontWeight={700} sx={{ fontSize: { xs: '1.05rem', sm: '1.25rem' } }}>
-                                {initialData ? 'Editar Tienda / Ferretería' : 'Sugerir / Registrar nueva Tienda'}
-                            </Typography>
-                        </Box>
-                    </Box>
+                    <StorefrontIcon color="primary" sx={{ fontSize: { xs: 26, sm: 30 } }} />
+                    <Typography
+                        variant="h6"
+                        fontWeight={700}
+                        sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem', md: '1.35rem' }, color: 'text.primary' }}
+                    >
+                        {initialData ? 'Editar Tienda / Ferretería' : 'Sugerir / Registrar nueva Tienda'}
+                    </Typography>
                 </Box>
-                <IconButton onClick={onClose} size="small" aria-label="Cerrar">
+                <IconButton onClick={onClose} size="small" aria-label="Cerrar" sx={{ color: 'text.secondary' }}>
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
 
             <Divider sx={{ flexShrink: 0 }} />
 
-            <DialogContent sx={{ p: { xs: 2, sm: 3 }, overflowY: 'auto', flexGrow: 1 }}>
+            <DialogContent sx={{ p: { xs: 2, sm: 3, md: 4 }, overflowY: 'auto', flexGrow: 1 }}>
                 {errorMsg && (
                     <Alert severity="error" sx={{ mb: 2 }}>
                         {errorMsg}
@@ -335,6 +330,13 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                 )}
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                    {/* Logo upload in the top section of the form */}
+                    <TiendaLogoUpload
+                        value={logoUrl || undefined}
+                        onChange={(url) => setLogoUrl(url ?? '')}
+                        disabled={isSubmitting}
+                    />
+
                     {/* Name and Duplicate Alert */}
                     <Box>
                         <TextField
