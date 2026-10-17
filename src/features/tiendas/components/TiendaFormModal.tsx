@@ -228,6 +228,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             // Clean up sedes telefonos & whatsapp
             const cleanedSedes = sedes.map((s) => ({
                 ...s,
+                codigoPostal: s.codigoPostal?.trim() || undefined,
                 telefonos: s.hasCustomPhones && s.telefonos
                     ? s.telefonos.map(t => t.trim()).filter(Boolean)
                     : (s.telefonos?.map(t => t.trim()).filter(Boolean).length

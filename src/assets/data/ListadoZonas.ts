@@ -76,6 +76,22 @@ export const HOME_ZONE_OPTIONS: ReadonlyArray<{ readonly slug: string; readonly 
 ]
 
 /**
+ * Ordered list of zones for directory filter dropdowns.
+ * R6 constraint: 'otra-zona' is positioned as the 2nd option immediately after 'Todas las zonas',
+ * matching the home page (QuickMatch) convention.
+ */
+export const DIRECTORY_ZONE_OPTIONS: ReadonlyArray<{ readonly slug: string; readonly label: string }> = [
+    { slug: 'otra-zona', label: 'Otra zona' },
+    { slug: 'bogota', label: 'Bogotá' },
+    ...Object.entries(bogotaZoneNames)
+        .filter(([slug]) => slug !== 'bogota')
+        .map(([slug, label]) => ({ slug, label })),
+    ...Object.entries(standardCityZoneNames)
+        .filter(([slug]) => slug !== 'otra-zona')
+        .map(([slug, label]) => ({ slug, label })),
+]
+
+/**
  * Checks if a city string is Bogotá or one of its Cundinamarca metropolitan municipalities.
  */
 export function isBogotaRegion(ciudad: string = ''): boolean {

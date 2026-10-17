@@ -33,6 +33,10 @@ export interface ZoneComboboxProps {
     placeholder?: string
     /** Whether to autoFocus the input field */
     autoFocus?: boolean
+    /** Variant: 'default' (pill shape) or 'mui' (8px radius, 40px height matching MUI inputs) */
+    variant?: 'default' | 'mui'
+    /** Optional extra className */
+    className?: string
 }
 
 export function ZoneCombobox({
@@ -42,6 +46,8 @@ export function ZoneCombobox({
     onCancel,
     placeholder = '¿En qué ciudad o municipio?',
     autoFocus = false,
+    variant = 'default',
+    className = '',
 }: ZoneComboboxProps): React.ReactElement {
     const [query, setQuery] = useState('')
     const [results, setResults] = useState<DivipolaMunicipality[]>([])
@@ -173,16 +179,18 @@ export function ZoneCombobox({
 
     return (
         <div
-            className={styles.ComboboxWrapper}
+            className={`${styles.ComboboxWrapper} ${className}`}
             ref={wrapperRef}
             onMouseEnter={handlePrefetch}
         >
             {/* If municipality is selected, display concise removable chip */}
             {currentSelection ? (
-                <div className={styles.SelectedBadge}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <LocationOnIcon fontSize="small" />
-                        <span>{currentSelection.label}</span>
+                <div className={`${styles.SelectedBadge} ${variant === 'mui' ? styles.MuiBadge : ''}`}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, overflow: 'hidden' }}>
+                        <LocationOnIcon fontSize="small" sx={{ flexShrink: 0 }} />
+                        <span style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                            {currentSelection.label}
+                        </span>
                     </div>
                     <button
                         type="button"
@@ -195,7 +203,9 @@ export function ZoneCombobox({
                 </div>
             ) : (
                 <div
-                    className={`${styles.InputContainer} ${isOpen ? styles.InputContainerActive : ''}`}
+                    className={`${styles.InputContainer} ${variant === 'mui' ? styles.MuiContainer : ''} ${
+                        isOpen ? styles.InputContainerActive : ''
+                    }`}
                 >
                     <span className={styles.IconLeading}>
                         {isLoading ? <LocationOnIcon fontSize="small" /> : <SearchIcon fontSize="small" />}
@@ -227,7 +237,7 @@ export function ZoneCombobox({
                         aria-label="Buscar municipio de Colombia"
                     />
 
-                    {query && (
+                    {query ? (
                         <button
                             type="button"
                             className={styles.ClearButton}
@@ -241,7 +251,17 @@ export function ZoneCombobox({
                         >
                             <CloseIcon fontSize="small" />
                         </button>
-                    )}
+                    ) : onCancel ? (
+                        <button
+                            type="button"
+                            className={styles.ClearButton}
+                            onClick={onCancel}
+                            aria-label="Cancelar y volver al listado de zonas"
+                            title="Volver a zonas"
+                        >
+                            <CloseIcon fontSize="small" />
+                        </button>
+                    ) : null}
                 </div>
             )}
 

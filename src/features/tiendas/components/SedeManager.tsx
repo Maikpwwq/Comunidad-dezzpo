@@ -244,6 +244,14 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                         sx={{ flex: 2, minWidth: { xs: '100%', sm: 240 } }}
                                         helperText="Escribe la dirección en texto libre (no requiere marcar en el mapa)"
                                     />
+                                    <TextField
+                                        label="Código Postal"
+                                        size="small"
+                                        placeholder="Ej: 110111"
+                                        value={sede.codigoPostal || ''}
+                                        onChange={(e) => handleUpdateSede(idx, 'codigoPostal', e.target.value)}
+                                        sx={{ width: { xs: '100%', sm: 140 } }}
+                                    />
                                     <Button
                                         variant="outlined"
                                         size="small"

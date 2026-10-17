@@ -59,4 +59,9 @@ async function onRenderClient(pageContext: PageContextClient) {
   } else {
     root = hydrateRoot(container, page)
   }
+
+  // Dismiss SSR preloader after hydration / initial mount
+  if (typeof window !== 'undefined' && (window as unknown as { __dismissDezzpoPreloader?: () => void }).__dismissDezzpoPreloader) {
+    (window as unknown as { __dismissDezzpoPreloader?: () => void }).__dismissDezzpoPreloader?.()
+  }
 }

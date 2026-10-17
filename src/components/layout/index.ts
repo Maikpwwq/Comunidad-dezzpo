@@ -22,6 +22,8 @@ export { ActiveFiltersBar } from './ActiveFiltersBar'
 export type { ActiveFilterChip, ActiveFiltersBarProps } from './ActiveFiltersBar'
 export { DirectoryFilterBar } from './DirectoryFilterBar'
 export type { FilterDropdownConfig, DirectoryFilterBarProps } from './DirectoryFilterBar'
+export { DirectoryZoneFilter } from './DirectoryZoneFilter'
+export type { DirectoryZoneFilterProps } from './DirectoryZoneFilter'
 
 // Navigation Config
 export {

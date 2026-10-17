@@ -117,6 +117,16 @@ async function onRenderHtml(pageContext: PageContextServer) {
     <meta property="og:description" content="${description}" />
     <meta property="og:site_name" content="Comunidad Dezzpo" />
     <meta property="og:image" content="/assets/img/logo/Logo-Comunidad-Dezzpo.png" />
+    <!-- Preload brand logo for instantaneous display -->
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/img/logo/Logo-Comunidad-Dezzpo.png"
+      type="image/png"
+    />
+    <!-- Preconnect to Bootstrap CDN to reduce handshake latency -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -128,9 +138,97 @@ async function onRenderHtml(pageContext: PageContextServer) {
       crossorigin="anonymous"
     />
     ${dangerouslySkipEscape(emotionStyleTags)}
+    <style id="dezzpo-preloader-styles">
+      #app-preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999999;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+        pointer-events: auto;
+      }
+      #app-preloader.loaded {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      #app-preloader-logo {
+        width: 84px;
+        height: 84px;
+        max-width: 25vw;
+        max-height: 25vw;
+        object-fit: contain;
+        opacity: 0;
+        animation: dezzpoLogoFadeIn 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes dezzpoLogoFadeIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.92);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
   </head>
   <body>
+    <div id="app-preloader" aria-hidden="true">
+      <img
+        id="app-preloader-logo"
+        src="/assets/img/logo/Logo-Comunidad-Dezzpo.png"
+        alt="Comunidad Dezzpo"
+        width="84"
+        height="84"
+      />
+    </div>
     <div id="root">${dangerouslySkipEscape(pageHtml)}</div>
+    <script>
+      (function() {
+        var startTime = performance.now();
+        var minDuration = 400; // Menos de medio segundo (< 500ms)
+        var dismissed = false;
+
+        function dismiss() {
+          if (dismissed) return;
+          dismissed = true;
+          var elapsed = performance.now() - startTime;
+          var wait = Math.max(0, minDuration - elapsed);
+          setTimeout(function() {
+            var loader = document.getElementById('app-preloader');
+            if (loader) {
+              loader.classList.add('loaded');
+              setTimeout(function() {
+                if (loader && loader.parentNode) {
+                  loader.parentNode.removeChild(loader);
+                }
+              }, 220);
+            }
+          }, wait);
+        }
+
+        if (document.readyState === 'complete') {
+          dismiss();
+        } else {
+          window.addEventListener('load', dismiss);
+          document.addEventListener('DOMContentLoaded', function() {
+            dismiss();
+          });
+          setTimeout(dismiss, 480);
+        }
+
+        window.__dismissDezzpoPreloader = dismiss;
+      })();
+    </script>
   </body>
 </html>`
 

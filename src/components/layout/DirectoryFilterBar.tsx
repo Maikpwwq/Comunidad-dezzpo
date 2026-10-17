@@ -30,6 +30,8 @@ export interface FilterDropdownConfig {
     allValue?: string
     /** Grid column span for md screens (default: 2.5) */
     gridMd?: number
+    /** Optional custom component render for advanced filters (e.g. Zone selector with assisted search) */
+    customRender?: () => ReactNode
 }
 
 export interface DirectoryFilterBarProps {
@@ -103,25 +105,29 @@ export function DirectoryFilterBar({
                 {/* Dropdowns */}
                 {dropdowns.map((dd, idx) => (
                     <Grid key={idx} item xs={12} sm={6} md={dd.gridMd ?? 2.5}>
-                        <TextField
-                            select
-                            fullWidth
-                            size="small"
-                            label={dd.label}
-                            value={dd.value}
-                            onChange={(e) => dd.onChange(e.target.value)}
-                        >
-                            {dd.allLabel && (
-                                <MenuItem value={dd.allValue !== undefined ? dd.allValue : 'all'}>
-                                    <em>{dd.allLabel}</em>
-                                </MenuItem>
-                            )}
-                            {dd.options.map((opt) => (
-                                <MenuItem key={opt.id} value={opt.id}>
-                                    {opt.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                        {dd.customRender ? (
+                            dd.customRender()
+                        ) : (
+                            <TextField
+                                select
+                                fullWidth
+                                size="small"
+                                label={dd.label}
+                                value={dd.value}
+                                onChange={(e) => dd.onChange(e.target.value)}
+                            >
+                                {dd.allLabel && (
+                                    <MenuItem value={dd.allValue !== undefined ? dd.allValue : 'all'}>
+                                        <em>{dd.allLabel}</em>
+                                    </MenuItem>
+                                )}
+                                {dd.options.map((opt) => (
+                                    <MenuItem key={opt.id} value={opt.id}>
+                                        {opt.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        )}
                     </Grid>
                 ))}
 

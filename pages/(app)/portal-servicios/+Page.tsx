@@ -4,7 +4,7 @@ import { navigate } from 'vike/client/router'
 import { Link } from '@hooks'
 import { usePageContext } from '@hooks/usePageContext'
 import { useUserStore } from '@stores/userStore'
-import { PaginationBar, DirectoryFilterBar, ActiveFiltersBar, type ActiveFilterChip } from '@components/layout'
+import { PaginationBar, DirectoryFilterBar, DirectoryZoneFilter, ActiveFiltersBar, type ActiveFilterChip } from '@components/layout'
 import { usePagination } from '@hooks/usePagination'
 import { getUsers } from '@services/users'
 import { searchByCategories } from '@services/search'
@@ -143,14 +143,19 @@ function resolveCategoryFormalityLevel(categoryQuery?: string | null): Formality
 function resolveZoneProximitySignal(
     userLocation?: string | null,
     targetZone?: string | null,
-    targetMunicipioCode?: string | null
+    targetMunicipioCode?: string | null,
+    targetMunicipioName?: string | null
 ): ZoneSignalType {
-    if (!targetZone && !targetMunicipioCode) return 'no_zone_specified'
+    if (!targetZone && !targetMunicipioCode && !targetMunicipioName) return 'no_zone_specified'
     if (!userLocation) return 'no_zone_specified'
 
     const cleanUser = userLocation.toLowerCase()
-    if (targetZone === 'otra-zona' || targetMunicipioCode) {
+    if (targetZone === 'otra-zona' || targetMunicipioCode || targetMunicipioName) {
         if (targetMunicipioCode && cleanUser.includes(targetMunicipioCode)) return 'same_zone'
+        if (targetMunicipioName) {
+            const cleanMpio = targetMunicipioName.toLowerCase().split('(')[0]?.trim() || ''
+            if (cleanMpio && cleanUser.includes(cleanMpio)) return 'same_zone'
+        }
         return 'other_zone'
     }
 
@@ -342,7 +347,7 @@ export default function Page() {
 
         const evaluated: RankedMerchant[] = prefilteredUsers.map((user) => {
             const userLoc = user.userCiudad || user.userDirection || ''
-            const zoneSignal = resolveZoneProximitySignal(userLoc, activeZone, activeMpioCode)
+            const zoneSignal = resolveZoneProximitySignal(userLoc, activeZone, activeMpioCode, activeMpioName)
 
             const match = evaluateFuzzyMatch({
                 propertyType: resolvedProp,
@@ -570,18 +575,21 @@ export default function Page() {
                     {
                         label: 'Filtrar por Zona',
                         value: activeZone || '',
-                        onChange: (val) => {
-                            setActiveZone(val || null)
-                            setActiveMpioCode(null)
-                            setActiveMpioName(null)
-                        },
-                        options: Object.entries(zoneNames).map(([slug, name]) => ({
-                            id: slug,
-                            label: name,
-                        })),
-                        allLabel: 'Todas las zonas',
-                        allValue: '',
+                        onChange: () => {},
+                        options: [],
                         gridMd: 2.5,
+                        customRender: () => (
+                            <DirectoryZoneFilter
+                                activeZone={activeZone}
+                                activeMpioCode={activeMpioCode}
+                                activeMpioName={activeMpioName}
+                                onChange={(zone, code, name) => {
+                                    setActiveZone(zone)
+                                    setActiveMpioCode(code || null)
+                                    setActiveMpioName(name || null)
+                                }}
+                            />
+                        ),
                     },
                 ]}
                 categoryChips={{

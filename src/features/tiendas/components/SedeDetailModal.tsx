@@ -155,7 +155,7 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                                     <LocationOnIcon fontSize="small" color="action" />
                                     <Typography variant="body2" fontWeight={500}>
-                                        {sede.direccion}, {sede.ciudad}{sede.departamento && !sede.ciudad.toLowerCase().includes(sede.departamento.toLowerCase()) ? ` (${sede.departamento})` : ''}
+                                        {sede.direccion}, {sede.ciudad}{sede.departamento && !sede.ciudad.toLowerCase().includes(sede.departamento.toLowerCase()) ? ` (${sede.departamento})` : ''}{sede.codigoPostal ? ` • C.P. ${sede.codigoPostal}` : ''}
                                     </Typography>
                                 </Box>
 

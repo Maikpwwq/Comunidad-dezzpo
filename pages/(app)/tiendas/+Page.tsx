@@ -21,11 +21,10 @@ import SearchIcon from '@mui/icons-material/Search'
 import AddBusinessIcon from '@mui/icons-material/AddBusiness'
 import ClearIcon from '@mui/icons-material/Clear'
 import InfoIcon from '@mui/icons-material/Info'
-import { zoneNames } from '@assets/data/ListadoZonas'
 import { ListadoCategoriasTiendas } from '@assets/data/ListadoCategoriasTiendas'
 import { getTiendas, createTienda, type TiendaDocument, type CreateTiendaInput } from '@services/tiendas'
 import { TiendaCard, TiendasMap, TiendaFormModal } from '@features/tiendas'
-import { PaginationBar, CategoryChipScroller } from '@components/layout'
+import { PaginationBar, CategoryChipScroller, DirectoryZoneFilter } from '@components/layout'
 import { usePagination } from '@hooks/usePagination'
 
 export default function Page() {
@@ -37,6 +36,8 @@ export default function Page() {
     const [searchQuery, setSearchQuery] = useState('')
     const [selectedCategory, setSelectedCategory] = useState<string>('')
     const [selectedZone, setSelectedZone] = useState<string>('')
+    const [selectedMpioCode, setSelectedMpioCode] = useState<string | null>(null)
+    const [selectedMpioName, setSelectedMpioName] = useState<string | null>(null)
 
     // Form Modal
     const [modalOpen, setModalOpen] = useState(false)
@@ -66,8 +67,18 @@ export default function Page() {
             // Zone filter
             if (selectedZone) {
                 const targetZone = selectedZone.toLowerCase()
-                const matchesZone = item.sedes.some((s) => s.zona.toLowerCase() === targetZone)
-                if (!matchesZone) return false
+                if (targetZone === 'otra-zona') {
+                    const cleanMpio = (selectedMpioName || '').toLowerCase().split('(')[0]?.trim()
+                    const matchesZone = item.sedes.some((s) => {
+                        if (s.zona.toLowerCase() === 'otra-zona') return true
+                        if (cleanMpio && (s.ciudad.toLowerCase().includes(cleanMpio) || s.departamento?.toLowerCase().includes(cleanMpio))) return true
+                        return false
+                    })
+                    if (!matchesZone) return false
+                } else {
+                    const matchesZone = item.sedes.some((s) => s.zona.toLowerCase() === targetZone)
+                    if (!matchesZone) return false
+                }
             }
             // Search text query
             if (searchQuery.trim()) {
@@ -199,23 +210,16 @@ export default function Page() {
 
                     {/* Zone Dropdown Filter */}
                     <Grid item xs={12} sm={6} md={2.5}>
-                        <TextField
-                            select
-                            fullWidth
-                            size="small"
-                            label="Filtrar por Zona"
-                            value={selectedZone}
-                            onChange={(e) => setSelectedZone(e.target.value)}
-                        >
-                            <MenuItem value="">
-                                <em>Todas las zonas</em>
-                            </MenuItem>
-                            {Object.entries(zoneNames).map(([slug, name]) => (
-                                <MenuItem key={slug} value={slug}>
-                                    {name}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                        <DirectoryZoneFilter
+                            activeZone={selectedZone || null}
+                            activeMpioCode={selectedMpioCode}
+                            activeMpioName={selectedMpioName}
+                            onChange={(zone, code, name) => {
+                                setSelectedZone(zone || '')
+                                setSelectedMpioCode(code || null)
+                                setSelectedMpioName(name || null)
+                            }}
+                        />
                     </Grid>
 
                     {/* View Mode Toggle */}
