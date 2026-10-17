@@ -75,6 +75,8 @@
     color: var(--content-text-color);
     font-weight: bold;
     max-width: 480px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .Profession {

@@ -221,21 +221,41 @@ export function UserCard({
             <header className={styles['card-header']}>
                 <Avatar
                     src={userPhotoUrl || ''}
-                    sx={bgAvatar}
+                    sx={{ ...bgAvatar, flexShrink: 0 }}
                     aria-label="user avatar"
                 >
                     <Typography className={styles['avatar-text'] || ''}>
                         Comunidad Dezzpo
                     </Typography>
                 </Avatar>
-                <div>
-                    <h3 className={styles['text-name']}>{displayName}</h3>
+                <div className={styles['card-header-info']}>
+                    <h3 className={styles['text-name']} title={displayName}>
+                        {displayName}
+                    </h3>
                     {userRazonSocial && userName && userRazonSocial !== userName && (
-                        <Typography variant="caption" display="block" color="text.secondary" sx={{ fontStyle: 'italic', lineHeight: 1.2 }}>
+                        <Typography
+                            variant="caption"
+                            display="block"
+                            color="text.secondary"
+                            sx={{
+                                fontStyle: 'italic',
+                                lineHeight: 1.2,
+                                overflowWrap: 'anywhere',
+                                wordBreak: 'break-word',
+                            }}
+                        >
                             {userRazonSocial}
                         </Typography>
                     )}
-                    <Typography variant="caption" display="block" color="text.secondary">
+                    <Typography
+                        variant="caption"
+                        display="block"
+                        color="text.secondary"
+                        sx={{
+                            overflowWrap: 'anywhere',
+                            wordBreak: 'break-word',
+                        }}
+                    >
                         {userProfession || 'Profesional / Comercio'} • Se unió el {userJoined || '—'}
                     </Typography>
                     {(userClasification || compatibilityBadge) && (
