@@ -13,6 +13,7 @@ import {
     ToggleButton,
     CircularProgress,
     Snackbar,
+    Tooltip,
 } from '@mui/material'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 import ViewModuleIcon from '@mui/icons-material/ViewModule'
@@ -165,9 +166,9 @@ export default function Page() {
 
             {/* Filter & View Controls */}
             <Paper elevation={0} variant="outlined" sx={{ p: 2, mb: 3, borderRadius: 3, backgroundColor: '#ffffff' }}>
-                <Grid container spacing={2} alignItems="center">
+                <Grid container spacing={{ xs: 1.5, sm: 2 }} alignItems="center">
                     {/* Text Search */}
-                    <Grid item xs={12} sm={6} md={3.5}>
+                    <Grid item xs={12} sm={6} md={3.8} lg={4} xl={3.5} sx={{ minWidth: 0 }}>
                         <TextField
                             fullWidth
                             size="small"
@@ -188,7 +189,7 @@ export default function Page() {
                     </Grid>
 
                     {/* Category Dropdown Filter (First before Zone) */}
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={3.2} lg={3} xl={3} sx={{ minWidth: 0 }}>
                         <TextField
                             select
                             fullWidth
@@ -209,7 +210,7 @@ export default function Page() {
                     </Grid>
 
                     {/* Zone Dropdown Filter */}
-                    <Grid item xs={12} sm={6} md={2.5}>
+                    <Grid item xs={12} sm={6} md={3} lg={3} xl={3} sx={{ minWidth: 0 }}>
                         <DirectoryZoneFilter
                             activeZone={selectedZone || null}
                             activeMpioCode={selectedMpioCode}
@@ -223,21 +224,89 @@ export default function Page() {
                     </Grid>
 
                     {/* View Mode Toggle */}
-                    <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex', justifyContent: { xs: 'flex-start', md: 'flex-end' } }}>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        md={2}
+                        lg={2}
+                        xl={2.5}
+                        sx={{
+                            minWidth: 0,
+                            display: 'flex',
+                            justifyContent: { xs: 'flex-start', sm: 'flex-end' },
+                        }}
+                    >
                         <ToggleButtonGroup
                             value={viewMode}
                             exclusive
                             onChange={(_, newMode) => newMode && setViewMode(newMode)}
                             size="small"
                             color="primary"
-                            sx={{ width: { xs: '100%', sm: 'auto' } }}
+                            aria-label="Modo de visualización"
+                            sx={{
+                                width: { xs: '100%', sm: 'auto' },
+                                flexShrink: 0,
+                                whiteSpace: 'nowrap',
+                            }}
                         >
-                            <ToggleButton value="grid" sx={{ flex: { xs: 1, sm: 'none' }, textTransform: 'none', px: 2, fontWeight: 600 }}>
-                                <ViewModuleIcon sx={{ mr: 1 }} /> Lista
-                            </ToggleButton>
-                            <ToggleButton value="map" sx={{ flex: { xs: 1, sm: 'none' }, textTransform: 'none', px: 2, fontWeight: 600 }}>
-                                <MapIcon sx={{ mr: 1 }} /> Mapa Interactivo
-                            </ToggleButton>
+                            <Tooltip title="Vista en Lista" arrow enterDelay={200}>
+                                <ToggleButton
+                                    value="grid"
+                                    aria-label="Vista en Lista"
+                                    sx={{
+                                        flex: { xs: 1, sm: 'none' },
+                                        textTransform: 'none',
+                                        fontWeight: 600,
+                                        height: 40,
+                                        px: { xs: 2, md: 1.25, xl: 2 },
+                                        minWidth: { xs: 'auto', md: 40 },
+                                    }}
+                                >
+                                    <ViewModuleIcon />
+                                    <Box
+                                        component="span"
+                                        sx={{
+                                            display: 'inline',
+                                            ml: 1,
+                                            '@media (min-width: 900px) and (max-width: 1300px)': {
+                                                display: 'none',
+                                            },
+                                        }}
+                                    >
+                                        Lista
+                                    </Box>
+                                </ToggleButton>
+                            </Tooltip>
+
+                            <Tooltip title="Mapa Interactivo" arrow enterDelay={200}>
+                                <ToggleButton
+                                    value="map"
+                                    aria-label="Mapa Interactivo"
+                                    sx={{
+                                        flex: { xs: 1, sm: 'none' },
+                                        textTransform: 'none',
+                                        fontWeight: 600,
+                                        height: 40,
+                                        px: { xs: 2, md: 1.25, xl: 2 },
+                                        minWidth: { xs: 'auto', md: 40 },
+                                    }}
+                                >
+                                    <MapIcon />
+                                    <Box
+                                        component="span"
+                                        sx={{
+                                            display: 'inline',
+                                            ml: 1,
+                                            '@media (min-width: 900px) and (max-width: 1300px)': {
+                                                display: 'none',
+                                            },
+                                        }}
+                                    >
+                                        Mapa Interactivo
+                                    </Box>
+                                </ToggleButton>
+                            </Tooltip>
                         </ToggleButtonGroup>
                     </Grid>
                 </Grid>
