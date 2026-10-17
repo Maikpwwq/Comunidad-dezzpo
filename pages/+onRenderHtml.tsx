@@ -8,6 +8,7 @@ import { escapeInject, dangerouslySkipEscape } from 'vike/server'
 import type { PageContextServer } from 'vike/types'
 import PageShell from './PageShell'
 import { createEmotionCache } from '@/emotion/createEmotionCache'
+import { DEZZPO_LOGO_PRELOADER_BASE64 } from '@/assets/logo-preloader-base64'
 
 /**
  * Server-side HTML Rendering Hook (Vike v0.4.x API)
@@ -165,9 +166,16 @@ async function onRenderHtml(pageContext: PageContextServer) {
         height: 84px;
         max-width: 25vw;
         max-height: 25vw;
+        aspect-ratio: 1 / 1;
         object-fit: contain;
+        display: block;
+        color: transparent;
+        font-size: 0;
+        line-height: 0;
+        user-select: none;
+        -webkit-user-select: none;
         opacity: 0;
-        animation: dezzpoLogoFadeIn 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation: dezzpoLogoFadeIn 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
       @keyframes dezzpoLogoFadeIn {
         0% {
@@ -185,10 +193,12 @@ async function onRenderHtml(pageContext: PageContextServer) {
     <div id="app-preloader" aria-hidden="true">
       <img
         id="app-preloader-logo"
-        src="/assets/img/logo/Logo-Comunidad-Dezzpo.png"
-        alt="Comunidad Dezzpo"
+        src="${DEZZPO_LOGO_PRELOADER_BASE64}"
+        alt=""
         width="84"
         height="84"
+        loading="eager"
+        decoding="sync"
       />
     </div>
     <div id="root">${dangerouslySkipEscape(pageHtml)}</div>
