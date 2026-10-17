@@ -120,6 +120,19 @@ service cloud.firestore {
     }
 
     // =========================================================================
+    // Search Analytics Aggregates & Watermark (Admin only, server-write only)
+    // =========================================================================
+    match /daily_search_aggregates/{date} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /analytics_metadata/{docId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // =========================================================================
     // Drafts (service requirements posted by propietarios)
     // Readable by all authenticated users (marketplace listing).
     // Only the creator (draftPropietarioResidente) can write.

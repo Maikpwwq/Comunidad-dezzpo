@@ -26,6 +26,7 @@ import {
   withdrawPreRegistrationHandler,
   getMySubmissionsHandler,
 } from '../server/api/preRegistration/handlers.ts'
+import { adminSearchAnalyticsHandler } from '../server/api/admin/searches.ts'
 
 const app = new Hono()
 
@@ -168,6 +169,11 @@ app.post('/api/v1/pre-registrations/:id/withdraw', async (c) => {
 
 app.get('/api/v1/pre-registrations/my-submissions', async (c) => {
   return await getMySubmissionsHandler(c)
+})
+
+// Admin Search Analytics (R1, R2, R3, R5, R6, R7)
+app.get('/api/v1/admin/analytics/searches', async (c) => {
+  return await adminSearchAnalyticsHandler(c)
 })
 
 vike(app)

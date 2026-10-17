@@ -5,3 +5,5 @@
 export * from './types'
 export * from './colombiaDate'
 export * from './searchMetricsDomain'
+export * from './searchAggregator'
+export * from './analyticsService'

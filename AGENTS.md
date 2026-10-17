@@ -531,6 +531,21 @@ pending_payment → active → completed → disputed
 - **TypeScript Strict Compliance**:
   - Strict compiler modes (`exactOptionalPropertyTypes: true` and `noUncheckedIndexedAccess: true`) require explicit `| undefined` unions on optional prop contracts and conditional spread `...(opt ? { opt } : {})` rather than passing `{ opt: opt || undefined }`.
 
+### Admin Search Analytics & Accessible Donut Pies Engine (2026-10)
+- **Domain Engine (`@services/admin/analytics`)**:
+  - Pure calculation engine implementing Hamilton's Largest Remainder Method (`distributePermillesLargestRemainder`), guaranteeing exact 100.0% permille sum without floating point rounding artifacts.
+  - Strict invariants verified by `fast-check` property tests (I1 total conservation, I2 exact 1000‰, I3 valid fractions in [0, 1], I4 deterministic sorting, I5 "Otros" never groups a single item).
+  - America/Bogota (UTC-5 legal time) calendar window calculators (`colombiaDate.ts`) ensuring consistent day buckets across client and server without DST drift.
+- **Bounded Daily Aggregation (`daily_search_aggregates`)**:
+  - Cost bounded to $\le 90$ Firestore document reads per load regardless of event volume (300 to 500,000+ events).
+  - Idempotent watermark tracking (`analytics_metadata/search_services_watermark`) allowing incremental ingestion and safe dry-runs.
+  - Backfill executed over real dataset: 336 events (309 `search_services` + 27 `view_profile`) partitioned into 48 daily documents.
+- **Accessible Custom SVG Pie Chart (`PieChartWithSummary`)**:
+  - Custom SVG donut implementation with roving tabindex, arrow key navigation (Right/Left/Down/Up, Home/End, Enter/Space to pin, Escape to reset).
+  - Live region (`aria-live="polite"`) announcing selection changes to screen readers.
+  - Reserved minimum height (`min-height: 88px`) for the summary section guaranteeing Cumulative Layout Shift (CLS) = 0.
+  - Bidirectional sync between interactive legend and SVG slices.
+
 ## 10. Testing Architecture (Vitest & Playwright)
 - **Pyramid Structure**: The project implements a strict 3-layer testing pyramid (`tests/unit`, `tests/integration`, `tests/e2e`). Do not collapse layers or bypass mock boundaries in unit/integration layers.
 - **Reference Document**: See `docs/testing-architecture.md` for full implementation details, including Zustand singleton mocking (`tests/setup.ts`), Playwright POM patterns, and Vike SSR routing tests.

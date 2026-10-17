@@ -647,6 +647,50 @@ describe('Firestore Security Rules Isolation & Privacy (Rules Unit Testing)', ()
     })
 
     // =========================================================================
+    // Search Analytics Aggregates & Watermark (/daily_search_aggregates, /analytics_metadata)
+    // =========================================================================
+    describe('Search Analytics Aggregates (/daily_search_aggregates & /analytics_metadata)', () => {
+        it('restricts reading daily_search_aggregates to admins only and blocks client writes', async () => {
+            await testEnv.withSecurityRulesDisabled(async (context) => {
+                const db = context.firestore()
+                await setDoc(doc(db, 'daily_search_aggregates', '2026-10-16'), {
+                    date: '2026-10-16',
+                    totalSearches: 10,
+                })
+            })
+
+            const unauth = testEnv.unauthenticatedContext().firestore()
+            await assertFails(getDoc(doc(unauth, 'daily_search_aggregates', '2026-10-16')))
+            await assertFails(setDoc(doc(unauth, 'daily_search_aggregates', '2026-10-16'), { hack: true }))
+
+            const regularUser = testEnv.authenticatedContext('regular-user').firestore()
+            await assertFails(getDoc(doc(regularUser, 'daily_search_aggregates', '2026-10-16')))
+            await assertFails(setDoc(doc(regularUser, 'daily_search_aggregates', '2026-10-16'), { hack: true }))
+
+            const admin = testEnv.authenticatedContext('admin-user', { admin: true }).firestore()
+            await assertSucceeds(getDoc(doc(admin, 'daily_search_aggregates', '2026-10-16')))
+            // Even admin client cannot write directly — must be written via server admin SDK
+            await assertFails(setDoc(doc(admin, 'daily_search_aggregates', '2026-10-16'), { clientWrite: true }))
+        })
+
+        it('restricts analytics_metadata watermark to admin read only and blocks client writes', async () => {
+            await testEnv.withSecurityRulesDisabled(async (context) => {
+                const db = context.firestore()
+                await setDoc(doc(db, 'analytics_metadata', 'search_services_watermark'), {
+                    lastProcessedId: '123',
+                })
+            })
+
+            const regularUser = testEnv.authenticatedContext('regular-user').firestore()
+            await assertFails(getDoc(doc(regularUser, 'analytics_metadata', 'search_services_watermark')))
+
+            const admin = testEnv.authenticatedContext('admin-user', { admin: true }).firestore()
+            await assertSucceeds(getDoc(doc(admin, 'analytics_metadata', 'search_services_watermark')))
+            await assertFails(setDoc(doc(admin, 'analytics_metadata', 'search_services_watermark'), { tampered: true }))
+        })
+    })
+
+    // =========================================================================
     // 13. Categorias de Servicios — public read, admin write
     // =========================================================================
     describe('Categorias de Servicios (/categoriasServicios)', () => {

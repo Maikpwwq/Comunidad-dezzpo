@@ -15,6 +15,7 @@ import {
     type PieSlice,
     type SearchDimension,
     type SliceKind,
+    type GroupedDetail,
 } from './types'
 
 export const SIN_DATO_KEY = '__sin_dato__' as const
@@ -113,7 +114,7 @@ export function buildPieDataset(
     const keys = Object.keys(countsMap)
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i]
-        if (!key) continue
+        if (!key || key === '__proto__' || key === 'constructor' || key === 'prototype') continue
         const count = countsMap[key] ?? 0
         if (count <= 0) continue
 
@@ -194,10 +195,7 @@ export function buildPieDataset(
         count: number
         kind: SliceKind
         rank: number | null
-        grouped?: {
-            count: number
-            top: readonly { label: string; count: number }[]
-        } | undefined
+        grouped?: GroupedDetail | undefined
     }
 
     const intermediate: IntermediateSlice[] = []

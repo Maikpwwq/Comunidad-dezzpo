@@ -14,6 +14,10 @@ import {
     Chip,
     Tabs,
     Tab,
+    ToggleButtonGroup,
+    ToggleButton,
+    Button,
+    Alert,
 } from '@mui/material'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 import PeopleIcon from '@mui/icons-material/People'
@@ -27,6 +31,8 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import HandshakeIcon from '@mui/icons-material/Handshake'
 import ShareIcon from '@mui/icons-material/Share'
 import ShieldIcon from '@mui/icons-material/Shield'
+import PieChartIcon from '@mui/icons-material/PieChart'
+import RefreshIcon from '@mui/icons-material/Refresh'
 
 import {
     Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -44,6 +50,7 @@ import {
     getMultiStreamMonetization,
     getSocialInterceptorStats,
     subscribeToSocialInterceptions,
+    getAdminSearchBreakdown,
     type AdminStats,
     type ContractStats,
     type FunnelMetric,
@@ -53,8 +60,11 @@ import {
     type UserClassificationBreakdown,
     type MultiStreamMonetizationStats,
     type SocialInterceptorStats,
+    type SearchBreakdown,
+    type PeriodId,
 } from '@services/admin'
 
+import { PieChartWithSummary } from '@features/admin/components'
 import { PRICING } from '@config/pricing.config'
 
 function formatCurrency(n: number): string {
@@ -75,6 +85,53 @@ export default function Page() {
 
     // Filter tab for User Classification breakdown (categories, classifications, grades)
     const [classificationTab, setClassificationTab] = useState<'clasificacion' | 'categoria' | 'grado'>('clasificacion')
+
+    // Search Analytics Breakdown (7d / 30d / 90d with URL sync)
+    const [searchPeriod, setSearchPeriod] = useState<PeriodId>('30d')
+    const [searchData, setSearchData] = useState<SearchBreakdown | null>(null)
+    const [searchLoading, setSearchLoading] = useState(true)
+    const [searchError, setSearchError] = useState<string | null>(null)
+
+    const loadSearchBreakdown = async (period: PeriodId) => {
+        setSearchLoading(true)
+        setSearchError(null)
+        try {
+            const res = await getAdminSearchBreakdown(period)
+            if (res.success && res.data) {
+                setSearchData(res.data)
+            } else {
+                setSearchError(res.error?.message || 'Error al cargar analítica de búsquedas')
+            }
+        } catch (err: unknown) {
+            setSearchError(err instanceof Error ? err.message : 'Error inesperado')
+        } finally {
+            setSearchLoading(false)
+        }
+    }
+
+    // Initialize search analytics with URL param sync (?periodo=30d)
+    useEffect(() => {
+        if (typeof window === 'undefined') return
+        const params = new URLSearchParams(window.location.search)
+        const p = params.get('periodo')
+        const initialPeriod: PeriodId = p === '7d' || p === '30d' || p === '90d' ? p : '30d'
+        setSearchPeriod(initialPeriod)
+        void loadSearchBreakdown(initialPeriod)
+    }, [])
+
+    const handlePeriodChange = (
+        _event: React.MouseEvent<HTMLElement>,
+        newPeriod: PeriodId | null,
+    ) => {
+        if (!newPeriod || newPeriod === searchPeriod) return
+        setSearchPeriod(newPeriod)
+        if (typeof window !== 'undefined') {
+            const url = new URL(window.location.href)
+            url.searchParams.set('periodo', newPeriod)
+            window.history.replaceState({}, '', url.toString())
+        }
+        void loadSearchBreakdown(newPeriod)
+    }
 
     useEffect(() => {
         async function loadData() {
@@ -383,7 +440,133 @@ export default function Page() {
                 )}
             </Paper>
 
-            {/* ── 4. EMBUDO DE CONVERSIÓN Y DENSIDAD GEOGRÁFICA ─────────────────── */}
+            {/* ── 4. DEMANDA Y BÚSQUEDAS EN EL MARKETPLACE (GRÁFICOS DE TORTA) ── */}
+            <Box sx={{ mt: { xs: 3, sm: 5 }, mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, flexWrap: 'wrap', gap: 2 }}>
+                <Box>
+                    <Typography
+                        variant="h6"
+                        fontWeight={700}
+                        sx={{ display: 'flex', alignItems: 'center', gap: 1, fontSize: { xs: '1.05rem', sm: '1.25rem' } }}
+                    >
+                        <PieChartIcon sx={{ color: 'var(--brand-teal, #00897b)' }} /> Demanda y Búsquedas en el Marketplace
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}>
+                        Distribución de consultas por especialidad, procedencia geográfica y profesionales consultados.
+                    </Typography>
+                </Box>
+
+                {/* Period Selector & Refresh */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+                    <ToggleButtonGroup
+                        value={searchPeriod}
+                        exclusive
+                        onChange={handlePeriodChange}
+                        size="small"
+                        aria-label="Periodo de análisis de búsquedas"
+                        sx={{
+                            bgcolor: '#f8fafc',
+                            '& .MuiToggleButton-root': {
+                                px: 1.5,
+                                py: 0.5,
+                                fontSize: '0.8125rem',
+                                fontWeight: 600,
+                                textTransform: 'none',
+                                borderColor: '#e2e8f0',
+                                color: '#64748b',
+                                '&.Mui-selected': {
+                                    bgcolor: '#0f172a',
+                                    color: '#ffffff',
+                                    '&:hover': {
+                                        bgcolor: '#1e293b',
+                                    },
+                                },
+                            },
+                        }}
+                    >
+                        <ToggleButton value="7d" aria-label="Últimos 7 días">7 días</ToggleButton>
+                        <ToggleButton value="30d" aria-label="Últimos 30 días">30 días</ToggleButton>
+                        <ToggleButton value="90d" aria-label="Últimos 90 días">90 días</ToggleButton>
+                    </ToggleButtonGroup>
+
+                    <Button
+                        variant="outlined"
+                        size="small"
+                        startIcon={<RefreshIcon sx={{ animation: searchLoading ? 'spin 1s linear infinite' : 'none' }} />}
+                        onClick={() => void loadSearchBreakdown(searchPeriod)}
+                        disabled={searchLoading}
+                        sx={{
+                            textTransform: 'none',
+                            fontWeight: 600,
+                            borderColor: '#e2e8f0',
+                            color: '#334155',
+                            '@keyframes spin': {
+                                '0%': { transform: 'rotate(0deg)' },
+                                '100%': { transform: 'rotate(360deg)' },
+                            },
+                            '&:hover': { borderColor: '#cbd5e1', bgcolor: '#f8fafc' },
+                        }}
+                    >
+                        Actualizar
+                    </Button>
+                </Box>
+            </Box>
+
+            {/* Error Banner */}
+            {searchError && (
+                <Alert
+                    severity="error"
+                    action={
+                        <Button color="inherit" size="small" onClick={() => void loadSearchBreakdown(searchPeriod)}>
+                            Reintentar
+                        </Button>
+                    }
+                    sx={{ mb: 3, borderRadius: 2 }}
+                >
+                    {searchError}
+                </Alert>
+            )}
+
+            {/* 3 Pie Cards Grid */}
+            <Box
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', lg: 'repeat(3, 1fr)' },
+                    gap: { xs: 2, sm: 2.5, md: 3 },
+                    mb: { xs: 3, sm: 4 },
+                    alignItems: 'stretch',
+                }}
+            >
+                {searchLoading ? (
+                    <>
+                        <Skeleton variant="rounded" height={420} sx={{ borderRadius: 3 }} />
+                        <Skeleton variant="rounded" height={420} sx={{ borderRadius: 3 }} />
+                        <Skeleton variant="rounded" height={420} sx={{ borderRadius: 3 }} />
+                    </>
+                ) : (
+                    <>
+                        <PieChartWithSummary
+                            title="Servicios consultados"
+                            subtitle="Especialidades y oficios con mayor intención"
+                            dimension="servicio"
+                            dataset={searchData?.datasets.servicio.status === 'ok' ? searchData.datasets.servicio.data : null}
+                        />
+                        <PieChartWithSummary
+                            title="Zonas desde las que se consulta"
+                            subtitle="Localidades y municipios metropolitanos"
+                            dimension="zona"
+                            dataset={searchData?.datasets.zona.status === 'ok' ? searchData.datasets.zona.data : null}
+                        />
+                        <PieChartWithSummary
+                            title="Comerciantes/empresas consultadas"
+                            subtitle="Profesionales con mayor tráfico en el marketplace"
+                            dimension="comerciante"
+                            dataset={searchData?.datasets.comerciante.status === 'ok' ? searchData.datasets.comerciante.data : null}
+                        />
+                    </>
+                )}
+            </Box>
+
+            {/* ── 5. EMBUDO DE CONVERSIÓN Y DENSIDAD GEOGRÁFICA ─────────────────── */}
             <Typography variant="h6" fontWeight={700} sx={{ mt: { xs: 3, sm: 5 }, mb: 2, display: 'flex', alignItems: 'center', gap: 1, fontSize: { xs: '1.05rem', sm: '1.25rem' }, flexWrap: 'wrap' }}>
                 <TrendingUpIcon sx={{ color: '#00897b' }} /> Embudo de Conversión & Densidad Zonal
             </Typography>
