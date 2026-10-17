@@ -4,12 +4,13 @@ import { navigate } from 'vike/client/router'
 import { Link } from '@hooks'
 import { usePageContext } from '@hooks/usePageContext'
 import { useUserStore } from '@stores/userStore'
-import { SearchBar, PaginationBar } from '@components/layout'
+import { PaginationBar, DirectoryFilterBar, ActiveFiltersBar, type ActiveFilterChip } from '@components/layout'
 import { usePagination } from '@hooks/usePagination'
 import { getUsers } from '@services/users'
 import { searchByCategories } from '@services/search'
 import { UserCard } from '@features/profile'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
+import HandymanIcon from '@mui/icons-material/Handyman'
 
 const PreRegistrationModal = lazy(() =>
     import('@features/preRegistration').then((m) => ({
@@ -35,25 +36,19 @@ import { zoneNames } from '@assets/data/ListadoZonas'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 // UI Libs
-import { Row, Col, Container } from 'react-bootstrap'
 import {
+    Container,
     Box,
-    Chip,
     Skeleton,
     Stack,
     Typography,
-    TextField,
-    MenuItem,
     Alert,
     Button,
     Collapse,
     Divider,
-    Paper,
 } from '@mui/material'
-import ClearIcon from '@mui/icons-material/Clear'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import CloseIcon from '@mui/icons-material/Close'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined'
 
@@ -219,6 +214,12 @@ export default function Page() {
         return (initialQueryContext.category || routeSpacedText).trim()
     }, [initialQueryContext.category, routeSpacedText])
 
+    const [searchQuery, setSearchQuery] = useState(effectiveKeyword)
+
+    useEffect(() => {
+        setSearchQuery(effectiveKeyword)
+    }, [effectiveKeyword])
+
     const fetchInitialUsers = async () => {
         try {
             // Role 2: Comerciantes Calificados based on legacy 'userSelectedRol = 2'
@@ -287,8 +288,9 @@ export default function Page() {
         let result = combinedUsers
 
         // 1. Keyword search (Name, Razón Social, Profession, Description, Categories)
-        if (effectiveKeyword) {
-            const term = effectiveKeyword.toLowerCase()
+        const activeSearch = (searchQuery || effectiveKeyword).trim()
+        if (activeSearch) {
+            const term = activeSearch.toLowerCase()
             result = result.filter((u) => {
                 const name = (u.userName || '').toLowerCase()
                 const razon = (u.userRazonSocial || '').toLowerCase()
@@ -331,7 +333,7 @@ export default function Page() {
         }
 
         return result
-    }, [combinedUsers, effectiveKeyword, selectedMerchantClassification, selectedCategory])
+    }, [combinedUsers, searchQuery, effectiveKeyword, selectedMerchantClassification, selectedCategory])
 
     // Fuzzy compatibility evaluation & partitioning
     const { primaryRankedUsers, complementaryUsers } = useMemo(() => {
@@ -399,7 +401,7 @@ export default function Page() {
     const usersPagination = usePagination({
         items: primaryUsersToRender,
         pageSize: 12,
-        resetKey: `${effectiveKeyword}-${selectedMerchantClassification}-${selectedPropertyType}-${selectedCategory}-${activeZone || ''}`,
+        resetKey: `${searchQuery}-${selectedMerchantClassification}-${selectedPropertyType}-${selectedCategory}-${activeZone || ''}`,
     })
 
     const hasActiveFilters =
@@ -407,7 +409,7 @@ export default function Page() {
         selectedMerchantClassification !== 'all' ||
         selectedCategory !== '' ||
         activeZone !== null ||
-        effectiveKeyword !== ''
+        !!searchQuery.trim()
 
     const handleClearAllFilters = () => {
         setSelectedPropertyType('all')
@@ -416,11 +418,67 @@ export default function Page() {
         setActiveZone(null)
         setActiveMpioCode(null)
         setActiveMpioName(null)
+        setSearchQuery('')
         // Limpiar búsqueda URL-driven navegando a la ruta base
         if (effectiveKeyword) {
             navigate('/app/portal-servicios')
         }
     }
+
+    const activeFilterChips = useMemo(() => {
+        const chips: ActiveFilterChip[] = []
+        if (searchQuery.trim()) {
+            chips.push({
+                label: `Búsqueda: ${searchQuery.trim()}`,
+                color: 'primary',
+                onDelete: () => {
+                    setSearchQuery('')
+                    if (effectiveKeyword) {
+                        navigate('/app/portal-servicios')
+                    }
+                },
+            })
+        }
+        if (selectedPropertyType !== 'all') {
+            chips.push({
+                label: `Inmueble: ${PROPERTY_TYPE_METADATA[selectedPropertyType]?.label || selectedPropertyType}`,
+                color: 'primary',
+                onDelete: () => setSelectedPropertyType('all'),
+            })
+        }
+        if (selectedMerchantClassification !== 'all') {
+            chips.push({
+                label: `Estructura: ${
+                    PUBLIC_MERCHANT_FILTERS.find((f) => f.id === selectedMerchantClassification)?.label ||
+                    selectedMerchantClassification
+                }`,
+                color: 'secondary',
+                onDelete: () => setSelectedMerchantClassification('all'),
+            })
+        }
+        if (selectedCategory) {
+            chips.push({
+                label: `Categoría: ${
+                    ListadoCategorias.find((c: { key: number; label: string }) => String(c.key) === selectedCategory)
+                        ?.label || selectedCategory
+                }`,
+                color: 'info',
+                onDelete: () => setSelectedCategory(''),
+            })
+        }
+        if (activeZone) {
+            chips.push({
+                label: `Zona: ${activeMpioName || (zoneNames[activeZone] ?? activeZone)}`,
+                color: 'default',
+                onDelete: () => {
+                    setActiveZone(null)
+                    setActiveMpioCode(null)
+                    setActiveMpioName(null)
+                },
+            })
+        }
+        return chips
+    }, [searchQuery, effectiveKeyword, selectedPropertyType, selectedMerchantClassification, selectedCategory, activeZone, activeMpioName])
 
     const isHighFormalityProperty =
         selectedPropertyType === 'propiedad_horizontal' ||
@@ -428,299 +486,161 @@ export default function Page() {
         selectedPropertyType === 'aliado_estrategico'
 
     return (
-        <Container fluid className="p-0 h-100" style={{ overflowX: 'hidden' }}>
-            <Row className="m-0 d-flex">
-                <Col className="pt-4 pb-2 p-0">
-                    {/* Header: Title left, CTA button right — matching tiendas pattern */}
-                    <Box
+        <Container maxWidth="xl" sx={{ py: 3, px: { xs: 2, md: 4 } }}>
+            {/* Top Bar / Header — matching tiendas pattern */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    justifyContent: 'space-between',
+                    alignItems: { xs: 'flex-start', md: 'center' },
+                    gap: 2,
+                    mb: 3,
+                }}
+            >
+                <Box sx={{ textAlign: 'left' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
+                        <HandymanIcon sx={{ fontSize: 32, color: 'primary.main' }} />
+                        <Typography variant="h4" fontWeight={800} sx={{ color: '#0A2540' }}>
+                            Directorio de Profesionales
+                        </Typography>
+                    </Box>
+                    <Typography variant="body1" color="text.secondary">
+                        ¿Buscas una cotización? publícala en el directorio de requerimientos{' '}
+                        <Link
+                            href="/nuevo-proyecto"
+                            className={clsx(styles.Link, styles.Green)}
+                            style={{ fontWeight: 700, textDecoration: 'underline' }}
+                        >
+                            Publica un proyecto
+                        </Link>
+                    </Typography>
+                </Box>
+
+                <Button
+                    variant="contained"
+                    className="btn-primary"
+                    startIcon={<PersonAddAlt1Icon />}
+                    onClick={handleOpenRecommendModal}
+                    sx={{
+                        textTransform: 'none',
+                        borderRadius: 2,
+                        px: 2.5,
+                        py: 1.2,
+                        fontWeight: 700,
+                        whiteSpace: 'nowrap',
+                        flexShrink: 0,
+                    }}
+                >
+                    Recomendar un profesional
+                </Button>
+            </Box>
+
+            {/* Filter & View Controls (unified Paper matching tiendas pattern) */}
+            <DirectoryFilterBar
+                searchQuery={searchQuery}
+                onSearchChange={(val) => setSearchQuery(val)}
+                searchPlaceholder="Buscar categoría, comerciante o palabra clave..."
+                searchGridMd={3.5}
+                dropdowns={[
+                    {
+                        label: 'Tipo de Inmueble',
+                        value: selectedPropertyType,
+                        onChange: (val) => setSelectedPropertyType(val as PropertyTypeId | 'all'),
+                        options: PROPERTY_FILTER_OPTIONS.map((opt) => ({
+                            id: opt.id,
+                            label: opt.label,
+                        })),
+                        allLabel: 'Todos los Inmuebles',
+                        allValue: 'all',
+                        gridMd: 2.5,
+                    },
+                    {
+                        label: 'Tamaño de Operación',
+                        value: selectedMerchantClassification,
+                        onChange: setSelectedMerchantClassification,
+                        options: PUBLIC_MERCHANT_FILTERS.map((filter) => ({
+                            id: filter.id,
+                            label: filter.label,
+                        })),
+                        allLabel: 'Todos los Perfiles',
+                        allValue: 'all',
+                        gridMd: 2.5,
+                    },
+                    {
+                        label: 'Filtrar por Zona',
+                        value: activeZone || '',
+                        onChange: (val) => {
+                            setActiveZone(val || null)
+                            setActiveMpioCode(null)
+                            setActiveMpioName(null)
+                        },
+                        options: Object.entries(zoneNames).map(([slug, name]) => ({
+                            id: slug,
+                            label: name,
+                        })),
+                        allLabel: 'Todas las zonas',
+                        allValue: '',
+                        gridMd: 2.5,
+                    },
+                ]}
+                categoryChips={{
+                    categories: ListadoCategorias,
+                    selectedKey: selectedCategory,
+                    onSelect: setSelectedCategory,
+                }}
+                hasActiveFilters={hasActiveFilters}
+                onClearAll={handleClearAllFilters}
+                sx={{ mb: 3 }}
+            />
+
+            {/* Active Search Context Summary Bar */}
+            <ActiveFiltersBar
+                visible={hasActiveFilters}
+                chips={activeFilterChips}
+                onResetAll={handleClearAllFilters}
+                sx={{ mb: 3 }}
+            />
+
+            {/* High Formality Property Legal / Accounting Advisory */}
+            {isHighFormalityProperty && (
+                <Box sx={{ mb: 3 }}>
+                    <Alert
+                        severity="info"
+                        icon={<InfoOutlinedIcon />}
                         sx={{
-                            display: 'flex',
-                            flexDirection: { xs: 'column', md: 'row' },
-                            justifyContent: 'space-between',
-                            alignItems: { xs: 'flex-start', md: 'center' },
-                            gap: 2,
-                            mb: 3,
-                            px: 3,
+                            borderRadius: 3,
+                            fontSize: '0.85rem',
+                            border: '1px solid #bae6fd',
+                            bgcolor: '#f0f9ff',
+                            color: '#0369a1',
                         }}
                     >
-                        <Box>
-                            <h1 className="type-hero-title mb-1">Directorio de Profesionales</h1>
-                            <p className="type-body text-muted mb-0">
-                                ¿Buscas una cotización? publícala en el directorio de requerimientos{' '}
-                                <Link
-                                    href="/nuevo-proyecto"
-                                    className={clsx(styles.Link, styles.Green)}
-                                    style={{ fontWeight: 700, textDecoration: 'underline' }}
-                                >
-                                    Publica un proyecto
-                                </Link>
-                            </p>
-                        </Box>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            startIcon={<PersonAddAlt1Icon />}
-                            onClick={handleOpenRecommendModal}
-                            sx={{
-                                borderRadius: '50px',
-                                textTransform: 'none',
-                                fontWeight: 700,
-                                px: 2.5,
-                                py: 1.2,
-                                flexShrink: 0,
-                                boxShadow: '0 4px 14px rgba(0, 137, 123, 0.25)',
-                                bgcolor: 'var(--brand-teal, #00897b)',
-                                '&:hover': {
-                                    bgcolor: '#00796b',
-                                },
-                            }}
-                        >
-                            Recomendar un profesional
-                        </Button>
-                    </Box>
+                        <strong>Aviso informativo:</strong> Los profesionales independientes suelen trabajar
+                        bajo cuenta de cobro, mientras que muchas propiedades horizontales y empresas requieren
+                        factura electrónica y pólizas. Puedes contactarlos y acordar las condiciones directamente.
+                    </Alert>
+                </Box>
+            )}
 
-                    <SearchBar initialValue={effectiveKeyword} />
+            <Box sx={{ mb: 2 }}>
+                <Typography variant="h5" fontWeight={800} sx={{ color: '#0A2540', mb: 0.5 }}>
+                    {searchQuery.trim()
+                        ? `Resultados de búsqueda para: "${searchQuery.trim()}"`
+                        : effectiveKeyword
+                          ? `Resultados de búsqueda para: "${effectiveKeyword}"`
+                          : selectedPropertyType !== 'all'
+                            ? `Profesionales afines a ${PROPERTY_TYPE_METADATA[selectedPropertyType]?.label || selectedPropertyType}`
+                            : 'Todos los profesionales'}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Directorio de comerciantes calificados, contratistas independientes y empresas del sector.
+                    <br />
+                    Encuentra todo lo mejor en asistencia técnica con afinidad a tu tipo de proyecto.
+                </Typography>
+            </Box>
 
-                    {/* Active Search Context Summary Bar */}
-                    {hasActiveFilters && (
-                        <Box
-                            sx={{
-                                mt: 2,
-                                mx: 2,
-                                p: 1.5,
-                                borderRadius: 2.5,
-                                bgcolor: '#ffffff',
-                                border: '1px solid #e2e8f0',
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                alignItems: 'center',
-                                gap: 1,
-                            }}
-                        >
-                            <Typography variant="caption" fontWeight={700} color="text.secondary">
-                                Filtros activos:
-                            </Typography>
-                            {selectedPropertyType !== 'all' && (
-                                <Chip
-                                    size="small"
-                                    label={`Inmueble: ${PROPERTY_TYPE_METADATA[selectedPropertyType]?.label || selectedPropertyType}`}
-                                    onDelete={() => setSelectedPropertyType('all')}
-                                    color="primary"
-                                    variant="outlined"
-                                    sx={{ fontWeight: 600 }}
-                                />
-                            )}
-                            {selectedMerchantClassification !== 'all' && (
-                                <Chip
-                                    size="small"
-                                    label={`Estructura: ${
-                                        PUBLIC_MERCHANT_FILTERS.find((f) => f.id === selectedMerchantClassification)
-                                            ?.label || selectedMerchantClassification
-                                    }`}
-                                    onDelete={() => setSelectedMerchantClassification('all')}
-                                    color="secondary"
-                                    variant="outlined"
-                                    sx={{ fontWeight: 600 }}
-                                />
-                            )}
-                            {selectedCategory && (
-                                <Chip
-                                    size="small"
-                                    label={`Categoría: ${
-                                        ListadoCategorias.find(
-                                            (c: { key: number; label: string }) => String(c.key) === selectedCategory
-                                        )?.label || selectedCategory
-                                    }`}
-                                    onDelete={() => setSelectedCategory('')}
-                                    color="info"
-                                    variant="outlined"
-                                    sx={{ fontWeight: 600 }}
-                                />
-                            )}
-                            {activeZone && (
-                                <Chip
-                                    size="small"
-                                    label={`Zona: ${activeMpioName || (zoneNames[activeZone] ?? activeZone)}`}
-                                    onDelete={() => {
-                                        setActiveZone(null)
-                                        setActiveMpioCode(null)
-                                        setActiveMpioName(null)
-                                    }}
-                                    color="default"
-                                    variant="outlined"
-                                    sx={{ fontWeight: 600 }}
-                                />
-                            )}
-                            <Button
-                                size="small"
-                                onClick={handleClearAllFilters}
-                                startIcon={<CloseIcon fontSize="small" />}
-                                sx={{
-                                    textTransform: 'none',
-                                    fontSize: '0.78rem',
-                                    ml: 'auto',
-                                    color: '#dc2626',
-                                    fontWeight: 600,
-                                }}
-                            >
-                                Restablecer filtros
-                            </Button>
-                        </Box>
-                    )}
-
-                    {/* ═══════════════════════════════════════════════════════ */}
-                    {/* Barra de Filtros Unificada (patrón tiendas)            */}
-                    {/* ═══════════════════════════════════════════════════════ */}
-                    <Paper
-                        elevation={0}
-                        variant="outlined"
-                        sx={{ p: 2, mt: 2, mx: 2, borderRadius: 3, backgroundColor: '#ffffff' }}
-                    >
-                        <Stack
-                            direction={{ xs: 'column', md: 'row' }}
-                            spacing={2}
-                            alignItems={{ md: 'center' }}
-                        >
-                            {/* Dropdown: Tipo de Inmueble */}
-                            <TextField
-                                select
-                                fullWidth
-                                size="small"
-                                label="Tipo de Inmueble"
-                                value={selectedPropertyType}
-                                onChange={(e) => setSelectedPropertyType(e.target.value as PropertyTypeId | 'all')}
-                                sx={{ minWidth: { md: 200 }, maxWidth: { md: 240 } }}
-                            >
-                                {PROPERTY_FILTER_OPTIONS.map((opt) => (
-                                    <MenuItem key={opt.id} value={opt.id}>
-                                        {opt.label}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-
-                            {/* Dropdown: Tamaño de Operación */}
-                            <TextField
-                                select
-                                fullWidth
-                                size="small"
-                                label="Tamaño de Operación"
-                                value={selectedMerchantClassification}
-                                onChange={(e) => setSelectedMerchantClassification(e.target.value)}
-                                sx={{ minWidth: { md: 200 }, maxWidth: { md: 240 } }}
-                            >
-                                <MenuItem value="all">
-                                    <em>Todos los Perfiles</em>
-                                </MenuItem>
-                                {PUBLIC_MERCHANT_FILTERS.map((filter) => (
-                                    <MenuItem key={filter.id} value={filter.id}>
-                                        {filter.label}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-
-                            {/* Reset filters button (inline) */}
-                            {hasActiveFilters && (
-                                <Button
-                                    size="small"
-                                    onClick={handleClearAllFilters}
-                                    startIcon={<ClearIcon fontSize="small" />}
-                                    sx={{
-                                        textTransform: 'none',
-                                        fontWeight: 600,
-                                        whiteSpace: 'nowrap',
-                                        color: '#dc2626',
-                                        ml: { md: 'auto' },
-                                    }}
-                                >
-                                    Limpiar filtros
-                                </Button>
-                            )}
-                        </Stack>
-
-                        {/* Category Quick-Match Chips (horizontal scroll) */}
-                        <Box
-                            sx={{
-                                mt: 2,
-                                display: 'flex',
-                                gap: 1,
-                                overflowX: 'auto',
-                                pb: 1,
-                                pt: 0.5,
-                                '&::-webkit-scrollbar': { height: 6 },
-                                '&::-webkit-scrollbar-thumb': {
-                                    backgroundColor: '#cbd5e1',
-                                    borderRadius: 3,
-                                },
-                            }}
-                        >
-                            <Chip
-                                label="Todas las Categorías"
-                                clickable
-                                color={selectedCategory === '' ? 'primary' : 'default'}
-                                variant={selectedCategory === '' ? 'filled' : 'outlined'}
-                                onClick={() => setSelectedCategory('')}
-                                sx={{ fontWeight: 600, flexShrink: 0 }}
-                            />
-                            {ListadoCategorias.map((cat: { key: number; label: string }) => {
-                                const isSelected = selectedCategory === String(cat.key)
-                                return (
-                                    <Chip
-                                        key={cat.key}
-                                        label={cat.label}
-                                        clickable
-                                        color={isSelected ? 'primary' : 'default'}
-                                        variant={isSelected ? 'filled' : 'outlined'}
-                                        onClick={() =>
-                                            setSelectedCategory(isSelected ? '' : String(cat.key))
-                                        }
-                                        sx={{ fontWeight: 500, whiteSpace: 'nowrap', flexShrink: 0 }}
-                                    />
-                                )
-                            })}
-                        </Box>
-                    </Paper>
-
-                    {/* High Formality Property Legal / Accounting Advisory */}
-                    {isHighFormalityProperty && (
-                        <Box sx={{ mt: 2, mx: 2 }}>
-                            <Alert
-                                severity="info"
-                                icon={<InfoOutlinedIcon />}
-                                sx={{
-                                    borderRadius: 3,
-                                    fontSize: '0.85rem',
-                                    border: '1px solid #bae6fd',
-                                    bgcolor: '#f0f9ff',
-                                    color: '#0369a1',
-                                }}
-                            >
-                                <strong>Aviso informativo:</strong> Los profesionales independientes suelen trabajar
-                                bajo cuenta de cobro, mientras que muchas propiedades horizontales y empresas requieren
-                                factura electrónica y pólizas. Puedes contactarlos y acordar las condiciones directamente.
-                            </Alert>
-                        </Box>
-                    )}
-                </Col>
-            </Row>
-
-            <Row className="m-0 w-100 pt-4 pb-4" style={{ overflow: 'hidden' }}>
-                <Col xs={12} className="p-0">
-                    <div className="pb-2 p-0 px-3">
-                        <h3 className="type-section-title">
-                            {effectiveKeyword
-                                ? `Resultados de búsqueda para: "${effectiveKeyword}"`
-                                : selectedPropertyType !== 'all'
-                                  ? `Profesionales afines a ${PROPERTY_TYPE_METADATA[selectedPropertyType]?.label || selectedPropertyType}`
-                                  : 'Todos los profesionales'}
-                        </h3>
-                    </div>
-                    <p className="type-caption px-3">
-                        Directorio de comerciantes calificados, contratistas independientes y empresas del sector.{' '}
-                        <br />
-                        Encuentra todo lo mejor en asistencia técnica con afinidad a tu tipo de proyecto.
-                    </p>
-
-                    <Suspense fallback={<PortalSkeleton />}>
+            <Suspense fallback={<PortalSkeleton />}>
                         <section className={styles['directory-wrapper']}>
                             {primaryUsersToRender && primaryUsersToRender.length > 0 ? (
                                 usersPagination.pageItems.map((user) => {
@@ -860,8 +780,6 @@ export default function Page() {
                             </Box>
                         )}
                     </Suspense>
-                </Col>
-            </Row>
 
             {recommendModalOpen && (
                 <Suspense fallback={null}>

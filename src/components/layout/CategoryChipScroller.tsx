@@ -33,14 +33,22 @@ export function CategoryChipScroller({
             sx={{
                 mt: 2,
                 display: desktopOnly ? { xs: 'none', md: 'flex' } : 'flex',
+                alignItems: 'center',
                 gap: 1,
                 overflowX: 'auto',
-                pb: 1,
-                pt: 0.5,
+                overflowY: 'hidden',
+                py: 1,
+                px: 0.5,
+                minHeight: 48,
+                boxSizing: 'border-box',
+                scrollbarWidth: 'thin',
                 '&::-webkit-scrollbar': { height: 6 },
                 '&::-webkit-scrollbar-thumb': {
                     backgroundColor: '#cbd5e1',
                     borderRadius: 3,
+                },
+                '&::-webkit-scrollbar-track': {
+                    backgroundColor: 'transparent',
                 },
             }}
         >
@@ -50,7 +58,17 @@ export function CategoryChipScroller({
                 color={selectedKey === '' ? 'primary' : 'default'}
                 variant={selectedKey === '' ? 'filled' : 'outlined'}
                 onClick={() => onSelect('')}
-                sx={{ fontWeight: 600, flexShrink: 0 }}
+                sx={{
+                    fontWeight: 600,
+                    flexShrink: 0,
+                    ...(selectedKey === ''
+                        ? {
+                              bgcolor: 'var(--brand-teal, #00897b) !important',
+                              color: '#ffffff !important',
+                              '&:hover': { bgcolor: '#00796b !important' },
+                          }
+                        : {}),
+                }}
             />
             {categories.map((cat) => {
                 const catKey = String(cat.key)
@@ -63,7 +81,18 @@ export function CategoryChipScroller({
                         color={isSelected ? 'primary' : 'default'}
                         variant={isSelected ? 'filled' : 'outlined'}
                         onClick={() => onSelect(isSelected ? '' : catKey)}
-                        sx={{ fontWeight: 500, whiteSpace: 'nowrap', flexShrink: 0 }}
+                        sx={{
+                            fontWeight: isSelected ? 600 : 500,
+                            whiteSpace: 'nowrap',
+                            flexShrink: 0,
+                            ...(isSelected
+                                ? {
+                                      bgcolor: 'var(--brand-teal, #00897b) !important',
+                                      color: '#ffffff !important',
+                                      '&:hover': { bgcolor: '#00796b !important' },
+                                  }
+                                : {}),
+                        }}
                     />
                 )
             })}

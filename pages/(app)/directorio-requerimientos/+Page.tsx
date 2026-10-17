@@ -17,7 +17,7 @@ import { useAuth } from '@hooks/useAuth'
 import { getAllDrafts } from '@services/drafts/draftService'
 import { getUser } from '@services/users'
 import { usePageContext } from '@hooks/usePageContext'
-import { SearchBar, DirectoryFilterBar, ActiveFiltersBar } from '@components/layout'
+import { DirectoryFilterBar, ActiveFiltersBar } from '@components/layout'
 import type { ActiveFilterChip } from '@components/layout'
 // Matching Domain
 import {
@@ -30,9 +30,9 @@ import { getCompatiblePropertiesForStructure } from '@services/matching'
 import { DraftCard } from '@features/quotes'
 // Styles
 import styles from '@features/quotes/styles/Requerimientos.module.scss'
-// Bootstrap & MUI
-import { Container } from 'react-bootstrap'
+// MUI
 import {
+    Container,
     Typography,
     Chip,
     Box,
@@ -41,6 +41,7 @@ import {
 } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import AssignmentIcon from '@mui/icons-material/Assignment'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 
 import { PROPIETARIO_RANKINGS } from '@config/userClassification.config'
@@ -137,17 +138,23 @@ export default function Page() {
         return getCompatiblePropertiesForStructure(resolvedMerchantStructure, 'mostrar')
     }, [resolvedMerchantStructure])
 
-    // 1. Filter drafts by category search term (from SearchBar)
+    const [searchQuery, setSearchQuery] = useState(spacedText)
+    useEffect(() => {
+        setSearchQuery(spacedText)
+    }, [spacedText])
+
+    // 1. Filter drafts by category search term (unified search TextField)
     const filteredByCategory = useMemo(() => {
         return draftsData.filter((draft) => {
-            if (!spacedText) return true
-            const term = spacedText.toLowerCase()
+            const activeSearch = (searchQuery || spacedText).trim()
+            if (!activeSearch) return true
+            const term = activeSearch.toLowerCase()
             const cat = (draft.draftCategory || '').toLowerCase()
             const name = (draft.draftName || '').toLowerCase()
             const desc = (draft.draftDescription || '').toLowerCase()
             return cat.includes(term) || name.includes(term) || desc.includes(term)
         })
-    }, [draftsData, spacedText])
+    }, [draftsData, searchQuery, spacedText])
 
     // 2. Filter drafts by Merchant Operational Structure (Invariants I1-I7 & AC-6)
     const filteredByStructure = useMemo(() => {
@@ -227,11 +234,13 @@ export default function Page() {
     const hasActiveFilters =
         selectedClassification !== 'all' ||
         selectedDraftCategory !== '' ||
+        !!searchQuery.trim() ||
         !!spacedText
 
     const handleClearAllFilters = () => {
         setSelectedClassification('all')
         setSelectedDraftCategory('')
+        setSearchQuery('')
         // Limpiar búsqueda URL-driven navegando a la ruta base
         if (spacedText) {
             navigate('/app/directorio-requerimientos')
@@ -239,134 +248,148 @@ export default function Page() {
     }
 
     return (
-        <Container fluid className="p-0 h-100">
-            <div className="p-3 p-md-4">
-                <header className={styles['page-header']}>
-                    <div>
-                        <h1 className="type-hero-title mb-1">
+        <Container maxWidth="xl" sx={{ py: 3, px: { xs: 2, md: 4 } }}>
+            {/* Top Bar / Header — matching tiendas pattern */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    justifyContent: 'space-between',
+                    alignItems: { xs: 'flex-start', md: 'center' },
+                    gap: 2,
+                    mb: 3,
+                }}
+            >
+                <Box sx={{ textAlign: 'left' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
+                        <AssignmentIcon sx={{ fontSize: 32, color: 'primary.main' }} />
+                        <Typography variant="h4" fontWeight={800} sx={{ color: '#0A2540' }}>
                             Directorio de Requerimientos
-                        </h1>
-                        <p className="type-body text-muted mb-0">
-                            ¿Ofreces algún servicio? publícalo en el portal de servicios{' '}
-                            <Link
-                                href={userId ? '/app/ajustes' : '/ingreso'}
-                                className={clsx(styles.Link, styles.Green)}
-                                style={{ fontWeight: 700, textDecoration: 'underline' }}
-                            >
-                                Publica tus servicios
-                            </Link>
-                        </p>
-                    </div>
-                </header>
-
-                {/* Comerciante Structure Adaptation Banner */}
-                {isComerciante && (
-                    <Box sx={{ my: 2 }}>
-                        {resolvedMerchantStructure ? (
-                            <Alert
-                                severity="info"
-                                icon={<InfoOutlinedIcon />}
-                                sx={{
-                                    borderRadius: 3,
-                                    border: '1px solid #bae6fd',
-                                    bgcolor: '#f0f9ff',
-                                    color: '#0369a1',
-                                    fontSize: '0.85rem',
-                                }}
-                            >
-                                <strong>Filtro por estructura operativa:</strong> Estás viendo los proyectos compatibles
-                                con tu estructura de{' '}
-                                <strong>{MERCHANT_STRUCTURE_METADATA[resolvedMerchantStructure].label}</strong> (asignada
-                                y verificada por el Administrador).
-                            </Alert>
-                        ) : (
-                            <Alert
-                                severity="warning"
-                                sx={{
-                                    borderRadius: 3,
-                                    border: '1px solid #fed7aa',
-                                    bgcolor: '#fffbeb',
-                                    color: '#9a3412',
-                                    fontSize: '0.85rem',
-                                }}
-                            >
-                                Si eres un comerciante nuevo, el Administrador asignará tu clasificación operativa
-                                para optimizar los requerimientos visibles para tu perfil.
-                            </Alert>
-                        )}
+                        </Typography>
                     </Box>
-                )}
-
-                <Box sx={{ my: 2 }}>
-                    <SearchBar
-                        targetRoutePrefix="/app/directorio-requerimientos"
-                        placeholder="Buscar requerimientos por categoría, título o palabra clave..."
-                        initialValue={spacedText}
-                    />
+                    <Typography variant="body1" color="text.secondary">
+                        ¿Ofreces algún servicio? publícalo en el portal de servicios{' '}
+                        <Link
+                            href={userId ? '/app/ajustes' : '/ingreso'}
+                            className={clsx(styles.Link, styles.Green)}
+                            style={{ fontWeight: 700, textDecoration: 'underline' }}
+                        >
+                            Publica tus servicios
+                        </Link>
+                    </Typography>
                 </Box>
+            </Box>
 
-                {/* Active Filters Summary Bar */}
-                <ActiveFiltersBar
-                    visible={hasActiveFilters}
-                    chips={[
-                        ...(spacedText
-                            ? [{
-                                label: `Búsqueda: ${spacedText}`,
-                                color: 'primary' as const,
-                                onDelete: () => navigate('/app/directorio-requerimientos'),
-                            }]
-                            : []),
-                        ...(selectedClassification !== 'all'
-                            ? [{
-                                label: `Inmueble: ${
-                                    (PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).find(
-                                        (t) => t.id === selectedClassification
-                                    )?.name || selectedClassification
-                                }`,
-                                color: 'secondary' as const,
-                                onDelete: () => setSelectedClassification('all'),
-                            }]
-                            : []),
-                        ...(selectedDraftCategory
-                            ? [{
-                                label: `Categoría: ${
-                                    ListadoCategorias.find(
-                                        (c: { key: number; label: string }) =>
-                                            String(c.key) === selectedDraftCategory
-                                    )?.label || selectedDraftCategory
-                                }`,
-                                color: 'info' as const,
-                                onDelete: () => setSelectedDraftCategory(''),
-                            }]
-                            : []),
-                    ] satisfies ActiveFilterChip[]}
-                    onResetAll={handleClearAllFilters}
-                    sx={{ mb: 2 }}
-                />
+            {/* Comerciante Structure Adaptation Banner */}
+            {isComerciante && (
+                <Box sx={{ mb: 3 }}>
+                    {resolvedMerchantStructure ? (
+                        <Alert
+                            severity="info"
+                            icon={<InfoOutlinedIcon />}
+                            sx={{
+                                borderRadius: 3,
+                                border: '1px solid #bae6fd',
+                                bgcolor: '#f0f9ff',
+                                color: '#0369a1',
+                                fontSize: '0.85rem',
+                            }}
+                        >
+                            <strong>Filtro por estructura operativa:</strong> Estás viendo los proyectos compatibles
+                            con tu estructura de{' '}
+                            <strong>{MERCHANT_STRUCTURE_METADATA[resolvedMerchantStructure].label}</strong> (asignada
+                            y verificada por el Administrador).
+                        </Alert>
+                    ) : (
+                        <Alert
+                            severity="warning"
+                            sx={{
+                                borderRadius: 3,
+                                border: '1px solid #fed7aa',
+                                bgcolor: '#fffbeb',
+                                color: '#9a3412',
+                                fontSize: '0.85rem',
+                            }}
+                        >
+                            Si eres un comerciante nuevo, el Administrador asignará tu clasificación operativa
+                            para optimizar los requerimientos visibles para tu perfil.
+                        </Alert>
+                    )}
+                </Box>
+            )}
 
-                {/* Unified Filter Bar */}
-                <DirectoryFilterBar
-                    dropdowns={[
-                        {
-                            label: 'Tipo de Inmueble',
-                            value: selectedClassification,
-                            onChange: setSelectedClassification,
-                            options: (PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).map((t) => ({
-                                id: t.id,
-                                label: t.name,
-                            })),
-                            allLabel: 'Todos los Inmuebles',
-                        },
-                    ]}
-                    categoryChips={{
-                        categories: ListadoCategorias,
-                        selectedKey: selectedDraftCategory,
-                        onSelect: setSelectedDraftCategory,
-                    }}
-                    hasActiveFilters={hasActiveFilters}
-                    onClearAll={handleClearAllFilters}
-                    sx={{ mb: 2.5 }}
-                />
+            {/* Unified Filter Bar (matching tiendas pattern) */}
+            <DirectoryFilterBar
+                searchQuery={searchQuery}
+                onSearchChange={(val) => setSearchQuery(val)}
+                searchPlaceholder="Buscar requerimientos por categoría, título o palabra clave..."
+                searchGridMd={4}
+                dropdowns={[
+                    {
+                        label: 'Tipo de Inmueble',
+                        value: selectedClassification,
+                        onChange: setSelectedClassification,
+                        options: (PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).map((t) => ({
+                            id: t.id,
+                            label: t.name,
+                        })),
+                        allLabel: 'Todos los Inmuebles',
+                        gridMd: 3,
+                    },
+                ]}
+                categoryChips={{
+                    categories: ListadoCategorias,
+                    selectedKey: selectedDraftCategory,
+                    onSelect: setSelectedDraftCategory,
+                }}
+                hasActiveFilters={hasActiveFilters}
+                onClearAll={handleClearAllFilters}
+                sx={{ mb: 3 }}
+            />
+
+            {/* Active Filters Summary Bar */}
+            <ActiveFiltersBar
+                visible={hasActiveFilters}
+                chips={[
+                    ...(searchQuery.trim()
+                        ? [{
+                            label: `Búsqueda: ${searchQuery.trim()}`,
+                            color: 'primary' as const,
+                            onDelete: () => {
+                                setSearchQuery('')
+                                if (spacedText) {
+                                    navigate('/app/directorio-requerimientos')
+                                }
+                            },
+                        }]
+                        : []),
+                    ...(selectedClassification !== 'all'
+                        ? [{
+                            label: `Inmueble: ${
+                                (PROPIETARIO_RANKINGS.clasificacion?.tiers ?? []).find(
+                                    (t) => t.id === selectedClassification
+                                )?.name || selectedClassification
+                            }`,
+                            color: 'secondary' as const,
+                            onDelete: () => setSelectedClassification('all'),
+                        }]
+                        : []),
+                    ...(selectedDraftCategory
+                        ? [{
+                            label: `Categoría: ${
+                                ListadoCategorias.find(
+                                    (c: { key: number; label: string }) =>
+                                        String(c.key) === selectedDraftCategory
+                                )?.label || selectedDraftCategory
+                            }`,
+                            color: 'info' as const,
+                            onDelete: () => setSelectedDraftCategory(''),
+                        }]
+                        : []),
+                ] satisfies ActiveFilterChip[]}
+                onResetAll={handleClearAllFilters}
+                sx={{ mb: 3 }}
+            />
 
                 {/* Category-Filtered Section for Comerciantes */}
                 {isComerciante && matchingDrafts.length > 0 && (
@@ -447,7 +470,6 @@ export default function Page() {
                         </div>
                     )}
                 </section>
-            </div>
         </Container>
     )
 }
