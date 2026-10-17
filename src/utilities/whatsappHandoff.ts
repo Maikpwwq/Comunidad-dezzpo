@@ -11,6 +11,7 @@
  */
 
 import { zoneNames } from '@assets/data/ListadoZonas'
+import { toWhatsAppHref } from '@services/phone'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -166,9 +167,10 @@ export function buildHandoffUrl(ctx: WhatsAppHandoffContext): HandoffResult {
             break
     }
 
+    const safeHref = toWhatsAppHref(ctx.phone, message)
     const normalizedPhone = normalizePhone(ctx.phone)
     const encodedMessage = encodeURIComponent(message)
-    const url = `https://wa.me/${normalizedPhone}?text=${encodedMessage}`
+    const url = safeHref || `https://wa.me/${normalizedPhone}?text=${encodedMessage}`
 
     return { url, message }
 }

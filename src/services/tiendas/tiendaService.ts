@@ -20,7 +20,6 @@ import {
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { firestore, storage, isFirebaseAvailable } from '@services/firebase'
 import {
-    ListadoCategoriasTiendas,
     getTiendaCategory,
     CATEGORIA_TIENDA_ALIASES,
 } from '@assets/data/ListadoCategoriasTiendas'

@@ -24,7 +24,7 @@ import type { SocialLink } from '@services/types'
 import { useTiendaFormDraftStore, EMPTY_SEDE, EMPTY_CONTACTO } from '@stores/useTiendaFormDraftStore'
 import type { ContactoPrincipal } from '@stores/useTiendaFormDraftStore'
 import { useDuplicateNameCheck } from '@hooks/useDuplicateNameCheck'
-import { DuplicateNameAlert } from '@components/common'
+import { DuplicateNameAlert, PhoneField } from '@components/common'
 import { SedeManager } from './SedeManager'
 import { TiendaLogoUpload } from './TiendaLogoUpload'
 import { TiendaSocialLinksManager } from './TiendaSocialLinksManager'
@@ -470,22 +470,22 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                             </Typography>
                             {telefonosPrincipales.map((contacto, idx) => (
                                 <Box key={idx} sx={{ display: 'flex', gap: 1.5, alignItems: 'center', mb: 1.5, flexWrap: 'wrap' }}>
-                                    <TextField
+                                    <PhoneField
                                         label={idx === 0 ? 'Teléfono Principal de Contacto' : `Teléfono de Contacto #${idx + 1}`}
                                         size="small"
-                                        placeholder="Ej: 6013004050 o 3102345678"
                                         value={contacto.telefono}
-                                        onChange={(e) => handleContactoChange(idx, 'telefono', e.target.value)}
+                                        onChange={(change) => handleContactoChange(idx, 'telefono', change.value)}
                                         helperText={idx === 0 ? 'Se reutiliza en todas las sedes automáticamente' : undefined}
+                                        variant="telefono"
                                         sx={{ flex: 1, minWidth: { xs: '100%', sm: 200 } }}
                                     />
-                                    <TextField
+                                    <PhoneField
                                         label={idx === 0 ? 'WhatsApp Principal (Opcional)' : `WhatsApp #${idx + 1} (Opcional)`}
                                         size="small"
-                                        placeholder="Ej: 573102345678"
                                         value={contacto.whatsapp}
-                                        onChange={(e) => handleContactoChange(idx, 'whatsapp', e.target.value)}
+                                        onChange={(change) => handleContactoChange(idx, 'whatsapp', change.value)}
                                         helperText={idx === 0 ? 'Número para cotizaciones y pedidos directos' : undefined}
+                                        variant="whatsapp"
                                         sx={{ flex: 1, minWidth: { xs: '100%', sm: 200 } }}
                                     />
                                     <IconButton

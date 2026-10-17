@@ -9,7 +9,7 @@ import { Box, Typography } from '@mui/material'
 import MailIcon from '@mui/icons-material/Mail'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import type { ContactEmail, ContactPhone } from '@services/types'
-import { formatPhoneDisplay } from '@services/utils/phoneUtils'
+import { formatPhone, toTelHref } from '@services/phone'
 import styles from './ContactInfoCard.module.scss'
 
 export interface ContactInfoCardProps {
@@ -81,15 +81,15 @@ export const ContactInfoCard: React.FC<ContactInfoCardProps> = ({
                     </span>
                     <div className={styles.ContactList}>
                         {displayPhones.map((phone, idx) => {
-                            const cleanPhone = phone.number.replace(/\s+/g, '')
-                            const formattedPhone = formatPhoneDisplay(phone.number) || phone.number
+                            const telHref = toTelHref(phone.number) || `tel:${phone.number.replace(/\s+/g, '')}`
+                            const formattedPhone = formatPhone(phone.number) || phone.number
                             return (
                                 <a
                                     key={`phone-${idx}`}
-                                    href={`tel:${cleanPhone}`}
+                                    href={telHref}
                                     className={styles.ContactItemLink}
-                                    aria-label={`Llamar al teléfono ${phone.number}`}
-                                    title={phone.number}
+                                    aria-label={`Llamar al teléfono ${formattedPhone}`}
+                                    title={formattedPhone}
                                 >
                                     <PhoneIphoneIcon className={styles.ContactItemIcon || ''} />
                                     <span className={styles.ContactItemText}>{formattedPhone}</span>

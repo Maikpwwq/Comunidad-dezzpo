@@ -27,6 +27,7 @@ import { zoneNames } from '@assets/data/ListadoZonas'
 import { getTiendaCategory } from '@assets/data/ListadoCategoriasTiendas'
 import type { TiendaDocument, SedeLocation } from '@services/tiendas'
 import type { SocialPlatform } from '@services/types'
+import { toTelHref, toWhatsAppHref } from '@services/phone'
 import { SedeDetailModal } from './SedeDetailModal'
 
 interface TiendaCardProps {
@@ -206,26 +207,26 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
 
                         {/* Actions Toolbar */}
                         <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                            {primaryPhone && (
+                            {toTelHref(primaryPhone) && (
                                 <Button
                                     variant="outlined"
                                     size="small"
                                     color="primary"
                                     startIcon={<PhoneIcon />}
-                                    href={`tel:${primaryPhone}`}
+                                    href={toTelHref(primaryPhone)!}
                                     sx={{ textTransform: 'none', borderRadius: 2 }}
                                 >
                                     Llamar
                                 </Button>
                             )}
 
-                            {primaryWhatsapp && (
+                            {toWhatsAppHref(primaryWhatsapp) && (
                                 <Button
                                     variant="contained"
                                     size="small"
                                     color="success"
                                     startIcon={<WhatsAppIcon />}
-                                    href={`https://wa.me/${primaryWhatsapp.replace(/[^0-9]/g, '')}`}
+                                    href={toWhatsAppHref(primaryWhatsapp)!}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     sx={{ textTransform: 'none', borderRadius: 2 }}

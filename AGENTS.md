@@ -515,6 +515,22 @@ pending_payment → active → completed → disputed
 - **Diagnostic Serverless Wrapper**: `api/index.mjs` intercepts top-level import failures and execution exceptions, returning structured JSON errors with stack traces to eliminate opaque 500 error pages.
 - **`firebase-admin` Dependency Pinning**: `firebase-admin@14.x` introduced `jwks-rsa@4.x` which depends on `jose@6.x` (pure ESM). On Node 20.x serverless runtimes, this causes `ERR_REQUIRE_ESM: require() of ES Module ... not supported`. To ensure seamless CJS/ESM interop on Vercel, `firebase-admin` MUST remain pinned to `^13.0.0` (which uses `jwks-rsa@3.x` / `jose@4.x` supporting CommonJS `require()`).
 
+### CRC Res. 5886 de 2020 Phone Normalization & Guided Mask Engine (2026-10)
+- **Domain Engine (`@services/phone`)**: Pure zero-dependency phone parser and normalizer implementing Colombia's CRC Resolución 5886 de 2020 (10 unified digits: mobile `3XX XXX XXXX`, fixed lines `601`–`608 XXXXXXX`) and ITU-T E.164 international standard (`+57...`).
+- **Parser Invariants & Safety**:
+  - Total function guarantee: parser never throws on unexpected, nullish, or adversarial inputs (e.g. objects with non-functional `toString`).
+  - Idempotent normalization: `toE164(toE164(x)) === toE164(x)`.
+  - Prefix stability: parsing any prefix of a valid number yields consistent `PhoneKind` identification (`mobile`, `landline`, `unknown`).
+- **Guided Accessible Mask (`PhoneField`)**:
+  - Built on MUI v6 `TextField` with standard visual mask scaffolding: `+57 (___) ___ ____` (mobile) or `+57 (60X) ___ ____` (fixed).
+  - Accessibility first: the visual scaffold is rendered with `aria-hidden="true"` using `font-variant-numeric: tabular-nums` to prevent screen reader stuttering. Input uses `inputMode="tel"` via `slotProps.htmlInput` for proper mobile numeric keyboards.
+  - Advisory warnings: fixed numbers entered in WhatsApp fields surface a non-blocking advisory note (*"No parece un celular. ¿Tiene WhatsApp?"*) without impeding submission.
+- **Safe Deep-Link Generation**:
+  - Always use `toTelHref(raw)` and `toWhatsAppHref(raw, message)` instead of manual string concatenation or regex substitution.
+  - Prevents Colombia double-prefix bugs (e.g., `+57573...`) and sanitizes punctuation before building `tel:` or `https://wa.me/` URLs.
+- **TypeScript Strict Compliance**:
+  - Strict compiler modes (`exactOptionalPropertyTypes: true` and `noUncheckedIndexedAccess: true`) require explicit `| undefined` unions on optional prop contracts and conditional spread `...(opt ? { opt } : {})` rather than passing `{ opt: opt || undefined }`.
+
 ## 10. Testing Architecture (Vitest & Playwright)
 - **Pyramid Structure**: The project implements a strict 3-layer testing pyramid (`tests/unit`, `tests/integration`, `tests/e2e`). Do not collapse layers or bypass mock boundaries in unit/integration layers.
 - **Reference Document**: See `docs/testing-architecture.md` for full implementation details, including Zustand singleton mocking (`tests/setup.ts`), Playwright POM patterns, and Vike SSR routing tests.

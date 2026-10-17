@@ -17,6 +17,7 @@ import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import MapIcon from '@mui/icons-material/Map'
 import { getZonesForCity, isBogotaRegion, departamentosColombia } from '@assets/data/ListadoZonas'
+import { PhoneField } from '@components/common'
 import { Ubicacion } from '@features/marketing'
 import type { SedeLocation } from '@services/tiendas'
 import type { ContactoPrincipal } from '@stores/useTiendaFormDraftStore'
@@ -342,11 +343,12 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                                 <Stack spacing={1}>
                                                     {branchPhones.map((tel, tIdx) => (
                                                         <Box key={tIdx} sx={{ display: 'flex', gap: 1, alignItems: 'center', flexWrap: 'wrap' }}>
-                                                            <TextField
+                                                            <PhoneField
+                                                                label={`Teléfono ${tIdx + 1} de la sede`}
                                                                 size="small"
-                                                                placeholder="Ej: 6013456789 o 3102345678"
                                                                 value={tel}
-                                                                onChange={(e) => handleUpdatePhone(idx, tIdx, e.target.value)}
+                                                                onChange={(change) => handleUpdatePhone(idx, tIdx, change.value)}
+                                                                variant="telefono"
                                                                 sx={{ flex: 1, minWidth: { xs: '100%', sm: 200 } }}
                                                             />
                                                             {tIdx === branchPhones.length - 1 && (
@@ -359,12 +361,12 @@ export const SedeManager: React.FC<SedeManagerProps> = ({
                                                 </Stack>
                                             </Box>
 
-                                            <TextField
+                                            <PhoneField
                                                 label="WhatsApp específico de esta Sede (Opcional)"
                                                 size="small"
-                                                placeholder="Ej: 573102345678"
                                                 value={sede.whatsapp || ''}
-                                                onChange={(e) => handleUpdateSede(idx, 'whatsapp', e.target.value)}
+                                                onChange={(change) => handleUpdateSede(idx, 'whatsapp', change.value)}
+                                                variant="whatsapp"
                                                 sx={{ maxWidth: 320 }}
                                             />
                                         </Box>

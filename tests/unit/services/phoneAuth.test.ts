@@ -55,8 +55,8 @@ describe('Phone Utilities (phoneUtils)', () => {
 
     describe('formatPhoneDisplay', () => {
         it('formats +57 phone numbers with readable spacing', () => {
-            expect(formatPhoneDisplay('+573204842897')).toBe('+57 320 484 2897')
-            expect(formatPhoneDisplay('3204842897')).toBe('+57 320 484 2897')
+            expect(formatPhoneDisplay('+573204842897')).toBe('+57 (320) 484 2897')
+            expect(formatPhoneDisplay('3204842897')).toBe('+57 (320) 484 2897')
         })
 
         it('returns empty string for empty input', () => {

@@ -57,6 +57,7 @@ import {
     type RejectionReasonCode,
 } from '@config/preRegistration.config'
 import type { PreRegistrationStatus } from '@/features/preRegistration/types'
+import { toWhatsAppHref } from '@services/phone'
 
 export interface PreRegistrationModalProps {
     readonly open: boolean
@@ -370,9 +371,10 @@ export const PreRegistrationModal: React.FC<PreRegistrationModalProps> = ({
                                         color="success"
                                         startIcon={<WhatsAppIcon />}
                                         component="a"
-                                        href={`https://wa.me/57${successData.phone.replace(/\D/g, '')}?text=${encodeURIComponent(
-                                            `Hola ${successData.displayName}, te recomendé en Comunidad Dezzpo para que más personas puedan contratar tus servicios. Pronto el equipo de Dezzpo te contactará para invitarte a la red.`,
-                                        )}`}
+                                        href={toWhatsAppHref(
+                                            successData.phone,
+                                            `Hola ${successData.displayName}, te recomendé en Comunidad Dezzpo para que más personas puedan contratar tus servicios. Pronto el equipo de Dezzpo te contactará para invitarte a la red.`
+                                        ) || '#'}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         sx={{ textTransform: 'none', fontWeight: 700, borderRadius: 2 }}

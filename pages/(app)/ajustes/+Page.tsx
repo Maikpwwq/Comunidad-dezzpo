@@ -29,7 +29,7 @@ import {
 import { Ubicacion } from '@features/marketing'
 import PropertiesManager from '@features/profile/components/PropertiesManager'
 import { AuthProvidersManager } from '@features/profile'
-import { SnackBarAlert, ChipsCategories } from '@components/common'
+import { SnackBarAlert, ChipsCategories, PhoneField } from '@components/common'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 import { zones, zoneNames, departamentosColombia } from '@assets/data/ListadoZonas'
 
@@ -744,13 +744,13 @@ export default function Page() {
                                     key={idx}
                                     className={`${styles['contact-row']} ${phone.isPrimary ? styles['contact-row--primary'] : ''}`}
                                 >
-                                    <TextField
+                                    <PhoneField
+                                        label={phone.isPrimary ? 'Teléfono principal' : `Teléfono #${idx + 1}`}
                                         className={styles['contact-row__input'] || ''}
                                         value={phone.number}
-                                        onChange={(e) => handlePhoneChange(idx, 'number', e.target.value)}
-                                        placeholder="+57 300 000 0000"
+                                        onChange={(change) => handlePhoneChange(idx, 'number', change.value)}
                                         size="small"
-                                        type="tel"
+                                        variant="telefono"
                                     />
                                     <FormControl size="small" className={styles['contact-row__type'] || ''}>
                                         <Select

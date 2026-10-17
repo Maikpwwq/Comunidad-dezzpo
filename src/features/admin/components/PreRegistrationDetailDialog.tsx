@@ -62,7 +62,7 @@ import {
 } from '@/config/preRegistration.config'
 import { moderatePreRegistration } from '@services/preRegistration/preRegistrationService'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
-import { formatPhoneDisplay } from '@services/utils/phoneUtils'
+import { toTelHref, toWhatsAppHref, formatPhone } from '@services/phone'
 
 export interface PreRegistrationDetailDialogProps {
     open: boolean
@@ -129,7 +129,6 @@ export function PreRegistrationDetailDialog({
         }
     }, [item])
 
-    const cleanPhoneDigits = (phone || '').replace(/\D/g, '')
     const outreachMessage = OUTREACH_MESSAGE_TEMPLATE(displayName || 'Profesional')
 
     const handleCopyTemplate = async () => {
@@ -322,7 +321,7 @@ export function PreRegistrationDetailDialog({
                                     fullWidth
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
-                                    helperText={formatPhoneDisplay(phone)}
+                                    helperText={formatPhone(phone)}
                                     disabled={submitting || item.status !== 'pendiente'}
                                 />
                                 <TextField
@@ -433,7 +432,7 @@ export function PreRegistrationDetailDialog({
                                 variant="outlined"
                                 size="small"
                                 startIcon={<WhatsAppIcon sx={{ color: '#25D366' }} />}
-                                href={`https://wa.me/${cleanPhoneDigits}?text=${encodeURIComponent(outreachMessage)}`}
+                                href={toWhatsAppHref(phone, outreachMessage) || '#'}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 sx={{ textTransform: 'none' }}
@@ -444,7 +443,7 @@ export function PreRegistrationDetailDialog({
                                 variant="outlined"
                                 size="small"
                                 startIcon={<PhoneIcon />}
-                                href={`tel:${phone}`}
+                                href={toTelHref(phone) || '#'}
                                 sx={{ textTransform: 'none' }}
                             >
                                 Llamar

@@ -33,6 +33,7 @@ import LinkIcon from '@mui/icons-material/Link'
 import { zoneNames } from '@assets/data/ListadoZonas'
 import type { TiendaDocument } from '@services/tiendas'
 import type { SocialPlatform } from '@services/types'
+import { formatPhone, toTelHref, toWhatsAppHref } from '@services/phone'
 
 interface SedeDetailModalProps {
     open: boolean
@@ -314,27 +315,31 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
 
                                     return (
                                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
-                                            {resolvedTelefonos.map((tel, tIdx) => (
-                                                <Button
-                                                    key={tIdx}
-                                                    variant="outlined"
-                                                    size="small"
-                                                    color="primary"
-                                                    startIcon={<PhoneIcon fontSize="small" />}
-                                                    href={`tel:${tel}`}
-                                                    sx={{ borderRadius: 4, textTransform: 'none' }}
-                                                >
-                                                    Llamar: {tel}
-                                                </Button>
-                                            ))}
+                                            {resolvedTelefonos.map((tel, tIdx) => {
+                                                const telHref = toTelHref(tel)
+                                                if (!telHref) return null
+                                                return (
+                                                    <Button
+                                                        key={tIdx}
+                                                        variant="outlined"
+                                                        size="small"
+                                                        color="primary"
+                                                        startIcon={<PhoneIcon fontSize="small" />}
+                                                        href={telHref}
+                                                        sx={{ borderRadius: 4, textTransform: 'none' }}
+                                                    >
+                                                        Llamar: {formatPhone(tel)}
+                                                    </Button>
+                                                )
+                                            })}
 
-                                            {resolvedWhatsApp && (
+                                            {toWhatsAppHref(resolvedWhatsApp) && (
                                                 <Button
                                                     variant="contained"
                                                     size="small"
                                                     color="success"
                                                     startIcon={<WhatsAppIcon fontSize="small" />}
-                                                    href={`https://wa.me/${resolvedWhatsApp.replace(/[^0-9]/g, '')}`}
+                                                    href={toWhatsAppHref(resolvedWhatsApp)!}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     sx={{ borderRadius: 4, textTransform: 'none' }}
