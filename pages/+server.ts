@@ -59,15 +59,20 @@ app.use('/api/*', async (c, next) => {
   await next()
 })
 
-// API routes MUST be registered before vike(app) (SSR catch-all).
-app.get('/api/v1/status', (c) =>
+// ── API sub-app ──────────────────────────────────────────────────────────────
+// @vikejs/hono@0.4.1+ requires vike(app) before direct route registrations.
+// Using app.route() to mount a sub-app bypasses this assertion while keeping
+// API routes matched before Vike's SSR catch-all.
+const api = new Hono()
+
+api.get('/status', (c) =>
   c.json({
     status: 'online',
     framework: 'vike+hono',
   }),
 )
 
-app.post('/api/v1/chat', async (c) => {
+api.post('/chat', async (c) => {
   try {
     return await chatHandler(c)
   } catch (err: unknown) {
@@ -77,7 +82,7 @@ app.post('/api/v1/chat', async (c) => {
   }
 })
 
-app.post('/api/v1/payment/signature', async (c) => {
+api.post('/payment/signature', async (c) => {
   try {
     return await paymentSignatureHandler(c)
   } catch (err: unknown) {
@@ -87,7 +92,7 @@ app.post('/api/v1/payment/signature', async (c) => {
   }
 })
 
-app.post('/api/v1/payment/confirmation', async (c) => {
+api.post('/payment/confirmation', async (c) => {
   try {
     return await paymentConfirmationHandler(c)
   } catch (err: unknown) {
@@ -97,7 +102,7 @@ app.post('/api/v1/payment/confirmation', async (c) => {
   }
 })
 
-app.post('/api/v1/notifications/email', async (c) => {
+api.post('/notifications/email', async (c) => {
   try {
     return await emailNotificationHandler(c)
   } catch (err: unknown) {
@@ -107,7 +112,7 @@ app.post('/api/v1/notifications/email', async (c) => {
   }
 })
 
-app.post('/api/v1/notifications/fanout', async (c) => {
+api.post('/notifications/fanout', async (c) => {
   try {
     return await fanoutNotificationHandler(c)
   } catch (err: unknown) {
@@ -117,7 +122,7 @@ app.post('/api/v1/notifications/fanout', async (c) => {
   }
 })
 
-app.post('/api/v1/cron/trust-score', async (c) => {
+api.post('/cron/trust-score', async (c) => {
   try {
     return await trustScoreHandler(c)
   } catch (err: unknown) {
@@ -127,7 +132,7 @@ app.post('/api/v1/cron/trust-score', async (c) => {
   }
 })
 
-app.post('/api/v1/cron/review-requests', async (c) => {
+api.post('/cron/review-requests', async (c) => {
   try {
     return await reviewRequestsHandler(c)
   } catch (err: unknown) {
@@ -138,44 +143,48 @@ app.post('/api/v1/cron/review-requests', async (c) => {
 })
 
 // Meta Graph API Webhooks & Data Deletion
-app.get('/api/v1/meta/webhook', async (c) => {
+api.get('/meta/webhook', async (c) => {
   return await metaWebhookGetHandler(c)
 })
 
-app.post('/api/v1/meta/webhook', async (c) => {
+api.post('/meta/webhook', async (c) => {
   return await metaWebhookPostHandler(c)
 })
 
-app.post('/api/v1/meta/data-deletion', async (c) => {
+api.post('/meta/data-deletion', async (c) => {
   return await metaDataDeletionHandler(c)
 })
 
 // Pre-Registration routes (Community recommendations & radar moderation)
-app.post('/api/v1/pre-registrations', async (c) => {
+api.post('/pre-registrations', async (c) => {
   return await createPreRegistrationHandler(c)
 })
 
-app.get('/api/v1/pre-registrations/check-early', async (c) => {
+api.get('/pre-registrations/check-early', async (c) => {
   return await checkEarlyHandler(c)
 })
 
-app.post('/api/v1/pre-registrations/:id/moderate', async (c) => {
+api.post('/pre-registrations/:id/moderate', async (c) => {
   return await moderatePreRegistrationHandler(c)
 })
 
-app.post('/api/v1/pre-registrations/:id/withdraw', async (c) => {
+api.post('/pre-registrations/:id/withdraw', async (c) => {
   return await withdrawPreRegistrationHandler(c)
 })
 
-app.get('/api/v1/pre-registrations/my-submissions', async (c) => {
+api.get('/pre-registrations/my-submissions', async (c) => {
   return await getMySubmissionsHandler(c)
 })
 
 // Admin Search Analytics (R1, R2, R3, R5, R6, R7)
-app.get('/api/v1/admin/analytics/searches', async (c) => {
+api.get('/admin/analytics/searches', async (c) => {
   return await adminSearchAnalyticsHandler(c)
 })
 
+// Mount API sub-app at /api/v1 BEFORE vike(app)
+app.route('/api/v1', api)
+
+// Vike SSR catch-all (must come after API sub-app mount)
 vike(app)
 
 const port = Number(process.env.PORT) || 3000
@@ -191,3 +200,4 @@ export default {
 } as Server & { fetch: typeof app.fetch }
 
 export { app }
+
