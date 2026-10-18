@@ -124,7 +124,6 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                 <Typography
                     variant="h3"
                     id="userRazonSocial"
-                    sx={{ maxWidth: { xs: '100%', md: '720px' } }}
                     className={clsx(styles.BusinessName)}
                 >
                     {displayName}{' '}
