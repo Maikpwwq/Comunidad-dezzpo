@@ -99,7 +99,7 @@ const entryChunkMatch = entryContent.match(/import\s+["'](\.\/chunks\/chunk-[^"'
 const entryChunkImport = entryChunkMatch ? `import "${entryChunkMatch[1]}";\n` : ''
 
 // Write the patched entry.mjs with a Vercel-compatible Node.js adapter
-const patchedContent = `${entryChunkImport}import { ${exportName} as server } from "${serverChunkPath}";
+const patchedContent = `${entryChunkImport}import server from "${serverChunkPath}";
 
 // Custom translation adapter from Node.js (req, res) to Web Standard Request/Response
 export default async function handler(req, res) {
