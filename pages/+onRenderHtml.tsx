@@ -95,6 +95,7 @@ async function onRenderHtml(pageContext: PageContextServer) {
     <meta name="facebook-domain-verification" content="ofh35wmj89aldsondp23zx9pjk9044" />
     <!-- https://dezzpo.com/ -->
     <meta name="google-site-verification" content="QW8c9O6KDsA0u250MQ-Pu2MKvSIeCFOo4PegEowLvfA" />
+    <meta name="google-adsense-account" content="ca-pub-9623256221558651">
     <meta name="facebook-domain-verification" content="jjqyumqkxcli69h47cd1bo8lli07od" />
     <link
       rel="icon"

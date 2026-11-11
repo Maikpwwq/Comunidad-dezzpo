@@ -40,17 +40,18 @@ Propendemos por mitigar el impacto ambiental y garantizar la seguridad laboral. 
 
 ---
 
-## Catálogo Oficial de 92 Especialidades y Servicios
+## Catálogo Oficial de 94 Especialidades y Servicios
 
-Comunidad Dezzpo cuenta con una taxonomía oficial de 92 especialidades técnicas de construcción, mantenimiento, ingeniería y hábitat:
+Comunidad Dezzpo cuenta con una taxonomía oficial de 94 especialidades técnicas de construcción, mantenimiento, ingeniería y hábitat, organizadas en 8 categorías principales:
 
 1. **Ingeniería y Estudios Técnicos Especializados:** Cálculos y Diseños de Ingeniería (estructural NSR-10, hidrosanitario, eléctrico RETIE), Topografía y Agrimensura, Estudios de Suelos y Geotecnia, Energía Solar y Fotovoltaica, Peritajes Técnicos y Avalúos Estructurales, Diseño 3D y Renders Arquitectónicos.
-2. **Obra Civil y Acabados:** Construcción Civil, Albañilería, Oficial de Obra, Mampostería, Drywall y Superboard, Cielos Rasos, Estuco y Pintura Arquitectónica, Enchapes, Porcelanatos, Cerámicas, Pisos Laminados, Pulido y Cristalizado de Pisos.
-3. **Instalaciones Técnicas y Redes:** Plomería y Redes Hidrosanitarias, Detección de Fugas con Geófono, Electricidad Residencial e Industrial, Tableros y Acometidas Eléctricas, Redes de Gas y Calentadores (instalación y mantenimiento), Aire Acondicionado y Climatización (HVAC), Cableado Estructurado y Redes de Voz y Datos.
-4. **Carpintería, Cerrajería y Metalmecánica:** Carpintería Fina y Muebles Modulares, Closets y Cocinas Integrales, Cerrajería Tradicional y Digital, Puertas Automáticas y Motores Vehiculares, Ornamentación y Forja Artística, Perfiles de Hierro y Estructuras Metálicas, Vidrios y Aluminio Arquitectónico, Vidrio Templado y Fachadas Flotantes.
-5. **Techos, Impermeabilización y Aislamiento:** Impermeabilización de Terrazas, Cubiertas y Techos Termoacústicos, Mantenimiento de Tejas y Canales, Aislamiento Acústico y Térmico.
-6. **Mantenimiento y Administración de Propiedad Horizontal:** Administración de PH, Mantenimiento de Bombas Eyectoras y de Presión, Mantenimiento de Plantas Eléctricas, Piscinas y Zonas Húmedas, Jardinería y Paisajismo, Fumigación y Control de Plagas Certificado, Aseo y Desinfección Profesional, Mantenimiento de Ascensores.
-7. **Seguridad y Automatización:** Cámaras de Seguridad y CCTV, Alarmas y Sensores, Control de Acceso Biométrico y Vehicular, Domótica y Smart Home, Redes Contra Incendio y Extintores.
+2. **Obra Civil y Acabados:** Construcción Civil, Albañilería, Oficial de Obra, Mampostería, Drywall y Superboard, Cielos Rasos, Estuco y Pintura Arquitectónica, Enchapes, Porcelanatos, Cerámicas, Pisos Laminados, Pulido y Cristalizado de Pisos, Trabajos en Piedra, Obra Liviana.
+3. **Instalaciones Técnicas y Redes:** Plomería y Redes Hidrosanitarias, Detección de Fugas con Geófono, Electricidad Residencial e Industrial, Tableros y Acometidas Eléctricas, Redes de Gas y Calentadores (instalación y mantenimiento), Aire Acondicionado y Climatización (HVAC), Cableado Estructurado y Redes de Voz y Datos, Redes de Telecomunicaciones, Gasodomésticos, Refrigeración.
+4. **Carpintería, Cerrajería y Metalmecánica:** Carpintería Fina y Muebles Modulares, Closets y Cocinas Integrales, Cerrajería Tradicional y Digital, Puertas Automáticas y Motores Vehiculares, Ornamentación y Forja Artística, Perfiles de Hierro y Estructuras Metálicas, Vidrios y Aluminio Arquitectónico, Vidrio Templado y Fachadas Flotantes, Soldadura, Metalmecánica.
+5. **Techos, Impermeabilización y Aislamiento:** Impermeabilización de Terrazas, Cubiertas y Techos Termoacústicos, Techos PVC, Canales y Bajantes, Mantenimiento de Tejas y Canales, Aislamiento Acústico y Térmico.
+6. **Mantenimiento y Administración de Propiedad Horizontal:** Administración de PH, Mantenimiento de Bombas Eyectoras y de Presión, Mantenimiento de Plantas Eléctricas, Piscinas y Zonas Húmedas, Jardinería y Paisajismo, Fumigación y Control de Plagas Certificado, Aseo y Desinfección Profesional, Mantenimiento de Ascensores, Mantenimiento Locativo, Mantenimiento Mecánico, Tanques de Agua.
+7. **Seguridad y Automatización:** Cámaras de Seguridad y CCTV, Videovigilancia CCTV, Alarmas y Sensores, Sistemas de Seguridad y Alarmas, Control de Acceso Biométrico y Vehicular, Domótica y Smart Home, Redes Contra Incendio y Extintores, Protección Contra Incendio.
+8. **Logística y Operaciones Especiales:** Mudanzas, Movilización de Pesos, Trasiego de Escombros, Trabajos en Altura y Acceso Vertical, Izaje de Cargas.
 
 ---
 
