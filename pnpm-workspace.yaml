@@ -35,3 +35,11 @@ overrides:
   '@mui/system': '6.5.0'
   'jwks-rsa>jose': '^5.10.0'
 minimumReleaseAge: '0'
+permissions:
+  vike:
+    skills: true
+skills:
+  dirs:
+    - .agents/skills
+    - .claude/skills
+    - .gemini/skills
