@@ -309,3 +309,4 @@ describe('Fase 3: SimilarProfilesSection Logic & Contract Tests', () => {
         })
     })
 })
+
