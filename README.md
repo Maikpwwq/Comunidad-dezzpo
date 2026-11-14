@@ -99,6 +99,7 @@ comunidad-dezzpo/
 │   │   ├── prensa/                           # Press
 │   │   ├── inspiracion/                      # Inspiration UGC gallery & thematic collections (SEO)
 │   │   ├── cotizador/                        # Smart budget estimator for renovations
+│   │   ├── estilos/                          # 12 Architectural design templates & AI room redesign (Plan B determinista)
 │   │   ├── obra/@token/                      # Public verified daily log & milestone feed
 │   │   └── dev/typography/                   # Design system reference
 │   │
@@ -193,7 +194,8 @@ comunidad-dezzpo/
 │   │
 │   ├── services/                             # Data Layer
 │   │   ├── admin/                            # Admin-only service (stats, users, verification)
-│   │   ├── contracts/                        # Contract CRUD, milestones (Logical Escrow) & daily log feed
+│   │   ├── ai/                               # AI room redesign studio, quotas & architectural styles (Plan B determinista)
+│   │   ├── contracts/                        # Contract CRUD, milestones (Logical Escrow), daily log feed & B2B PH Marco (Ley 675/2001)
 │   │   ├── drafts/                           # Draft requirements
 │   │   ├── estimator/                        # Parametric budget estimator & legal disclaimers
 │   │   ├── firebase/                         # Firebase client SDK init

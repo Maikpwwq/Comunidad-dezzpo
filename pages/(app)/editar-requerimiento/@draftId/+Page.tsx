@@ -6,12 +6,12 @@ import { useAuth } from '@hooks/useAuth'
 import { getDraft, updateDraft } from '@services/drafts/draftService'
 // Components
 // @ts-ignore
-import { AdjuntarArchivos } from '@components/common'
+import { AdjuntarArchivos, MoodboardSelector } from '@components/common'
 import TablaSubCategoriaPresupuesto from '../../requerimiento/components/TablaSubCategoriaPresupuesto'
 // Bootstrap
 import { Row, Col, Container } from 'react-bootstrap'
 // MUI
-import { Button, TextField, Typography } from '@mui/material'
+import { Button, TextField, Typography, Box } from '@mui/material'
 // CSS
 export default function Page() {
     const { currentUser } = useAuth()
@@ -318,6 +318,15 @@ export default function Page() {
                             )}
                         </Col>
                     </Row>
+                    {userAuthID && (
+                        <Box sx={{ my: 3 }}>
+                            <MoodboardSelector
+                                userId={userAuthID}
+                                selectedBoardId={formData.moodboardId}
+                                onSelectBoard={(boardId) => setFormData((prev: any) => ({ ...prev, moodboardId: boardId }))}
+                            />
+                        </Box>
+                    )}
                     <TablaSubCategoriaPresupuesto
                         draftSubCategory={formData.draftSubCategory}
                         draftTotal={formData.draftTotal}

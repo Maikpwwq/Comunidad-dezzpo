@@ -827,3 +827,19 @@ src/styles/
 - **Parametric Cost Engine**: Mathematical budget model based on official Colombian construction unit costs across 6 architectural spaces (Cocina, Baño, Sala-Comedor, Habitación, Terraza, Remodelación Integral) and 3 finish tiers (Económico, Estándar, Premium).
 - **Zero Hallucination & Zero Cost**: 100% deterministic calculation requiring no LLM API calls, eliminating runtime latency, operational token costs, and AI hallucinations.
 - **Legal Protection (Ley 1480 de 2011)**: Every generated estimate includes a mandatory non-binding legal disclaimer explicitly stating that values are referential and subject to on-site technical inspection. Prefills directly into the requirement creation flow with 1 click.
+
+### B2B Propiedad Horizontal (PH) & DIAN NIT Algorithm (`b2bPhContractService.ts` / `colombiaNit.ts`)
+- **Colombian NIT Module 11 Validator**: Implements the official DIAN prime-weighted check digit (DV) algorithm (`validateColombianNit`, `calculateNitDv`). Validates copropiedad tax IDs upon entry in requirement and contract flows.
+- **Ley 675 de 2001 Regulatory Framework**: Multi-family residential and commercial building contracts require explicit administrator capacity clauses (Arts. 50 & 51), common area multipart breakdowns (fachadas, cubiertas, bombas, impermeabilización), and Council of Administration approval triggers.
+- **Mandatory Legal Shield**: Every B2B PH document displays the prominent «BORRADOR PARA REVISIÓN LEGAL» header badge and an express disclaimer excluding Comunidad Dezzpo from technical, structural, or employer liability for civil works in common areas.
+- **Print & PDF Export**: Provides a print-ready modal view (`PhContractModal.tsx`) for formal physical presentation to Co-owners' Assemblies and Administrative Councils.
+
+### Architectural Styles Catalog & AI Redesign Quotas (`architecturalStyles.ts` / `aiRedesignService.ts` / `/estilos`)
+- **12 Curated Architectural Styles (Plan B Determinista $0)**: Pre-engineered aesthetic catalog calibrated for Colombia (Nórdico, Industrial Bogotá, Japandi, Contemporáneo, Rústico Campestre, Biofílico, Minimalismo Cálido, Mediterráneo, Clásico Renovado, Boho Chic, Art Decó, Open Space).
+- **Supplier Linkage**: Each style directly maps visual finish elements to tangible retailer categories in `ListadoCategoriasTiendas.ts` (`/app/tiendas?categoria=...`) and qualified trade categories in `ListadoCategorias.ts`.
+- **AI Quota Guard & EXIF Stripping**: The AI Room Redesign studio enforces a strict 3-per-day rate limit per registered user, rejects unauthenticated visitors, strips geolocation metadata via `mediaPipeline.ts`, and displays a mandatory Ley 1480/2011 & CONPES 4144 non-binding estimation disclaimer.
+
+### Phase 5 Formal Freeze (Escrow Financiero & Split Payments)
+- **Criminal Intermediation Prevention (Art. 316 C.P.)**: Direct holding or escrowing of user funds in platform accounts is permanently banned without SFC banking authorization.
+- **Corporate Entity Decoupling**: Phase 5 split payment gateway integration is officially FROZEN in `docs/planing.md` pending foreign/local corporate incorporation (.inc / SAS), business tax ID (RUT), and reaching the economic viability threshold (> $30.000.000 COP/month in Modelo D volume).
+

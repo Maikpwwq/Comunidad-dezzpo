@@ -382,3 +382,10 @@ En `/app/biblioteca` puedes crear tableros personalizados de inspiración o guar
 ### ¿Cómo comparto el avance de mi obra en vivo con mi familia o inversionistas?
 Desde la sección de contratación en `/app/contratacion`, pulsa el botón *"Compartir avance"* para generar un enlace seguro con token criptográfico (`/obra/[token]`). Cualquier persona con el enlace podrá ver las fotos y el porcentaje de avance verificado sin necesidad de crear cuenta ni iniciar sesión.
 
+### ¿Cómo funciona la contratación de obras para edificios y conjuntos residenciales (PH)?
+A través del módulo B2B bajo la Ley 675 de 2001, los administradores de copropiedades pueden estructurar requerimientos para áreas comunes (fachadas, cubiertas, bombas, impermeabilizaciones) validando el NIT de la copropiedad con el algoritmo DIAN, desglosando partidas e imprimiendo el borrador contractual para someterlo a aprobación del Consejo de Administración o Asamblea.
+
+### ¿Cómo explorar estilos arquitectónicos y materiales para mi remodelación?
+En https://dezzpo.com/estilos puedes navegar por 12 estilos arquitectónicos reales calibrados para Colombia (Nórdico, Industrial, Japandi, Contemporáneo, Rústico, etc.). Cada estilo incluye su paleta de colores, costos estimados por m² y enlaces directos a las categorías de ferreterías y tiendas de materiales aliadas en el directorio de Dezzpo.
+
+

@@ -242,6 +242,18 @@ export interface DraftFirestoreDocument extends DocumentData {
     status?: 'open' | 'closed'
     channel_url?: string
     moodboardId?: string
+    // B2B Propiedad Horizontal (Ley 675/2001)
+    propertyType?: string
+    copropiedadNit?: string
+    adminActaUrl?: string
+    requiresCouncilApproval?: boolean
+    multiparts?: Array<{
+        areaName: string
+        description: string
+        estimatedBudgetCop?: number
+    }>
+    refProjectId?: string
+    proponentId?: string
 }
 
 export interface ReadDraftParams {
@@ -380,6 +392,12 @@ export interface ContractFirestoreDocument extends DocumentData {
     paymentMethod?: 'epayco' | 'external'
     paymentStage?: 'full_payment' | 'deposit' | 'balance'
     depositAmount?: number
+    // B2B Propiedad Horizontal (Ley 675/2001)
+    contractType?: 'standard' | 'propiedad_horizontal'
+    copropiedadNit?: string
+    adminActaUrl?: string
+    requiresCouncilApproval?: boolean
+    councilApprovalStatus?: 'pending' | 'approved' | 'rejected'
 }
 
 export interface CreateContractParams {

@@ -1,36 +1,102 @@
-💡 Idea para Dezzpo: No lances una revista estática de redacción propia; automatiza que los mejores proyectos de tus contratistas (portafolios de las membresías premium) se conviertan en "libros de inspiración" dinámicos dentro de la web, usa un sistema automatizado de contenido generado por el usuario (UGC) combinado con SEO editorial.
+# PLANING ESTRATÉGICO: ESTADO DE PRODUCTO Y DOCUMENTACIÓN DE FASE 5 (CONGELADA)
+**Comunidad Dezzpo · Red Profesional de Contratistas y Acabados (Colombia)**  
+**Documento de Gobernanza de Producto, Arquitectura y Compliance Legal**  
+**Última Actualización:** 13 de Noviembre de 2026 · **Rama:** `master`
 
-Un profesional premium sube fotos de una reforma en Bogotá. La plataforma indexa esas fotos bajo etiquetas específicas (ej. "Cocinas pequeñas modernos Bogotá") y crea un artículo de blog titulado: "5 cocinas pequeñas en Bogotá que te inspirarán a remodelar".
+---
 
-El gancho de interacción: El propietario navega por las fotos, da clic en "Guardar en mi libro de ideas" y, cuando decide ejecutar, la plataforma le dice: "¿Quieres que el creador de este proyecto u otros 3 profesionales similares te coticen gratis?". El contenido alimenta directamente el embudo del marketplace.
+## 1. HISTORIAL DE RESOLUCIÓN: DE IDEAS A CÓDIGO EN PRODUCCIÓN
 
-1. El "Fideicomiso de Producto" (Escrow / Pagos por Hitos)
+Las ideas originales de producto consignadas en las versiones preliminares de este documento fueron formalmente evaluadas, diseñadas e implementadas en el código base del repositorio a través de las Fases 1 a 4:
 
-Para el propietario, saber que su dinero está seguro es el mayor incentivo para dejar de usar WhatsApp y empezar a usar las herramientas de mensajería interna y presupuestos de tu plataforma.
+| Idea Original de Producto | Fase | Estado Técnico en Repositorio | Decisión de Arquitectura / Archivos Clave |
+| :--- | :---: | :---: | :--- |
+| **1. Fideicomiso / Pagos por Hitos** | **Fase 2** | **RESUELTO (Modelo D)** | **Escrow Lógico sin captación de fondos.** Contratos divididos en hitos porcentuales auditables con actas bilaterales de recibo (Ley 527/1999) e instrucción de pago directo entre las partes. Archivos: `src/services/contracts/milestoneService.ts`, `src/components/common/ContractMilestonesSection.tsx`. |
+| **2. Bitácora de Obra Visual Compartible** | **Fase 2** | **RESUELTO** | **Feed fotográfico diario con compresión WebP y enlace público.** Hash HMAC URL-safe para compartir en WhatsApp (`/obra/@token`) con comparador Antes/Después y stripping EXIF/GPS. Archivos: `src/services/contracts/dailyLogService.ts`, `pages/(marketing)/obra/@token/+Page.tsx`. |
+| **3. Moodboards de Clientes** | **Fase 2** | **RESUELTO** | **Entidad `InspirationBoard` unificada.** Permite a los clientes guardar paletas e imágenes en `/app/biblioteca`, vincularlas al publicar un requerimiento (`MoodboardSelector.tsx`) y visualizarlas en `/app/ver-requerimiento/@draftId`. |
+| **4. Libros de Inspiración UGC + SEO** | **Fase 3** | **RESUELTO** | **Catálogo dinámico de inspiración.** Curación de proyectos por categoría y zona de Bogotá (`/inspiracion`) con tarjetas interactivas Antes/Después y handoff directo a contratación. Archivos: `src/services/inspiration/inspirationEditorialService.ts`. |
+| **5. Gamificación y Reputación Líquida** | **Fase 1** | **RESUELTO** | **Motor de insignias 100% algorítmico y tarjeta digital QR.** Evaluación determinista de puntualidad, cero disputas y verificaciones; exportación de tarjeta de visita digital con código QR vectorial SVG. Archivos: `src/services/reputation/badgeEngine.ts`, `ComercianteBusinessCardModal.tsx`. |
+| **6. Cotizador Inteligente Asistido** | **Fase 3** | **RESUELTO** | **Motor determinista paramétrico.** Wizard conversacional en `/cotizador` para 6 tipologías de espacio y 3 niveles de acabado con precios unitarios reales de Bogotá y aviso legal de no vinculación (Ley 1480/2011). Archivos: `src/services/estimator/estimatorEngine.ts`. |
+| **7. Contrato VIP para Propiedad Horizontal** | **Fase 4** | **RESUELTO** | **Marco contractual B2B bajo Ley 675 de 2001.** Validación de NIT DIAN (módulo 11), desglose de partidas en áreas comunes, deslinde expreso de responsabilidad técnica de Dezzpo y modalidad de exportación impresa para Consejos de Administración. Archivos: `src/services/contracts/b2bPhContractService.ts`, `PhContractModal.tsx`. |
+| **8. Catálogo de Estilos y AI Redesign** | **Fase 4** | **RESUELTO** | **12 Plantillas de Estilo arquitectónico (Plan B Determinista $0) y Estudio Asistido.** Mapeo de estilos en `/estilos` vinculados directamente al catálogo de ferreterías aliadas (`ListadoCategoriasTiendas.ts`), cuotas diarias (máx 3/día) y stripping EXIF. Archivos: `src/services/inspiration/architecturalStyles.ts`, `src/services/ai/aiRedesignService.ts`. |
 
-• El dolor: Al cliente le da pánico dar el 50% de anticipo y que el maestro desaparezca. Al maestro le da pánico trabajar y que el cliente no le pague el saldo final.
-• La solución desde producto: Implementa una pasarela de pago nativa donde el dinero del proyecto se congela en Dezzpo. El dinero se libera automáticamente en porcentajes (hitos de obra) validados por ambas partes (Ej: Hito 1: Demolición completada -> Se libera 20%).
-• Efecto Voz a Voz: Esto elimina el 90% del estrés de una remodelación. Un cliente que no tuvo que pelear por dinero con su contratista le recomendará la app a cualquiera.
+---
 
-2. Bitácora de Obra Visual Compartible (La palanca de viralidad)
+## 2. DOCUMENTACIÓN DE FASE 5: CONGELADA (ESCROW FINANCIERO Y SPLIT PAYMENTS)
 
-• El dolor: Los clientes viven estresados pidiendo fotos por WhatsApp de "cómo va la obra".
-• La solución desde producto: Crea un "Feed de Proyecto" dentro de la plataforma. El contratista debe subir diariamente 2-3 fotos del avance para que el hito se marque como activo. Agrega un botón nativo: "Compartir avance de mi remodelación".
-• Efecto Voz a Voz: Los usuarios aman mostrar cómo está quedando su casa nueva. Si facilitas que compartan un enlace estético de Dezzpo en sus historias de Instagram o grupos familiares de WhatsApp mostrando el "antes y después", estás generando marketing orgánico gratuito.
+### 2.1 Declaración Formal de Estado
+La **Fase 5 (Escrow Financiero Directo, Custodia de Fondos y Dispersión Automatizada mediante Split Payments de Pasarela)** se encuentra formalmente **CONGELADA POR DISEÑO REGULATORIO Y ESTRATÉGICO**.
 
-💡 Idea para Dezzpo: En tu plataforma web, incluye bloques visuales "guardables" por los usuarios y que ellos puedan compartir en redes, "Moodboards" de Clientes, esto permitirá que cuando estos creen un requerimiento, los comerciantes podrán ver el Moodboard exacto del cliente, haciendo que las postulaciones y cotizaciones sean sumamente precisas y técnicas, reduciendo el desinterés inicial.
+Dezzpo **NO retiene, no custodia, no congela ni intermedia recursos dinerarios** pertenecientes a los clientes ni a los contratistas en cuentas propias de la plataforma o de sus fundadores.
 
-💡 Idea para Dezzpo: Tu "Contrato de Servicio VIP para propietarios" puede orientarse hacia administradores de PH o inversionistas inmobiliarios (Multi-family). Si les resuelves el dolor de cabeza legal y contable de contratar reparaciones del edificio, activarás transacciones de alto valor de forma masiva.
+---
 
-3. Gamificación y Reputación Líquida para el Contratista
+### 2.2 Fundamentos Jurídicos y Penales de la Congelación
 
-• El dolor: A los maestros de obra excelentes les cuesta diferenciarse de los piratas o informales en internet.
-• La solución desde producto: Diseña perfiles que parezcan un "perfil de LinkedIn + estadísticas de videojuego". Los contratistas ganan insignias ("Puntualidad de entrega", "Experto en Drywall", "Cero disputas", ... El agente debe diseñar y estandarizar las insignias). Permíteles exportar su perfil de Dezzpo como una landing page personal con código QR para que la usen como su tarjeta de presentación física.
-• Efecto Voz a Voz: El lado de la oferta (los profesionales) se convertirá en tu principal canal de adquisición de usuarios. Ellos mismos le dirán a sus clientes externos: "Búsqueme en Dezzpo, allá puede ver que soy verificado".
+1. **Tipificación Penal de Captación Masiva y Habitual:**
+   - De conformidad con el **Artículo 316 del Código Penal Colombiano** (modificado por la Ley 1357 de 2009), captar dineros del público de forma masiva y habitual sin previa autorización de la Superintendencia Financiera de Colombia (SFC) acarrea penas de **120 a 240 meses de prisión** y multas de hasta 50.000 SMLMV.
+   - Retener saldos de obras civiles o contratos de remodelación en una cuenta bancaria de Dezzpo para "liberarlos por hitos" encuadra de forma inmediata en intermediación financiera no autorizada.
 
-4. Cotizador Inteligente Asistido (Reducción de Fricción)
+2. **Reserva Constitucional y Financiera:**
+   - El **Artículo 335 de la Constitución Política de Colombia** consagra que las actividades financiera, bursátil y aseguradora son de interés público y solo pueden ser ejercidas previa autorización del Estado.
+   - El Estatuto Orgánico del Sistema Financiero (EOSF, Decreto 663 de 1993) y el Decreto 2555 de 2010 reservan la administración de encargos fiduciarios a Sociedades Fiduciarias vigiladas por la SFC, requiriendo patrimonios técnicos superiores a $5.000 millones de COP y trámites de homologación de 18 a 24 meses.
 
-• El dolor: El usuario común no sabe cuántos metros cuadrados tiene su baño ni qué materiales necesita; le da pereza rellenar formularios largos de cotización.
-• La solución desde producto: Integra un flujo conversacional (guiado o con IA ligera) donde el usuario solo sube una foto de su espacio actual y selecciona un estilo (Ej: "Moderno", "Rústico"). La plataforma genera un rango estimado automático de presupuesto antes de conectar con el profesional. Reducir la fricción del Onboarding del proyecto dispara la tasa de conversión.
+---
 
-💡 Idea para Dezzpo: (AI Room Redesign Studio) ecosistema de IA capaz de identificar objetos y calcular estimaciones. Al final del renderizado, el sistema puede sugerir el tipo de enchape, pintura o mobiliario ideal, enlazándolo con los profesionales del directorio capaces de ejecutar esa obra exacta.
+### 2.3 Diagnóstico Societario y Comercial Actual
+
+1. **Estado de Personería Jurídica:**
+   - La plataforma no cuenta actualmente con Registro Único Tributario (RUT) empresarial ni sociedad formalmente constituida en Cámara de Comercio de Colombia.
+   - El fundador se encuentra en proceso de estructuración de una personería jurídica extranjera (.inc) o corporación sin ánimo de lucro.
+   - Los activos totales de Dezzpo existen y residen en este repositorio bajo la forma de marca, código fuente, matriz legal, arquitectura de datos y base de usuarios.
+
+2. **Estado con Pasarelas de Pago (ePayco):**
+   - Se han sostenido acercamientos exploratorios preliminares con ePayco, pero la cuenta corporativa de agregación / adquirencia multidestino (Split Payments) **no está habilitada ni activa**.
+   - No es viable jurídicamente firmar contratos de split payments o corresponsalía digital antes de contar con la personería jurídica definitiva y el RUT homologado ante la DIAN.
+
+---
+
+### 2.4 Solución en Producción: Modelo D (Escrow Lógico sin Fondos)
+
+Para entregar de inmediato el valor central de confianza sin incurrir en riesgos legales ni demoras burocráticas, Comunidad Dezzpo opera bajo el **Modelo D de Custodia**:
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        MODELO D: ESCROW LÓGICO / PROCEDIMENTAL                         │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ 1. Contrato con Hitos Auditables (suma 100% de valor acordado).                        │
+│ 2. Bitácora fotográfica diaria con stripping de EXIF/GPS en el dispositivo del cliente.│
+│ 3. Acta de Recibo Parcial con firma electrónica bilateral (Ley 527 de 1999).           │
+│ 4. La plataforma CERTIFICA el cumplimiento técnico del entregable.                     │
+│ 5. El CLIENTE transfiere directamente el dinero pactado al CONTRATISTA.                │
+│ 6. CERO fondos tocan las cuentas de Dezzpo · 100% exento de riesgo de captación.      │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+El 90% del conflicto en una obra surge del desacuerdo sobre si el trabajo se terminó correctamente o no. Al resolver la certificación probatoria del hito, se elimina la fricción sin manipular dinero de terceros.
+
+---
+
+### 2.5 Requisitos y Condiciones para Descongelar Fase 5 a Futuro
+
+La Fase 5 únicamente se descongelará y someterá a desarrollo de integración API cuando se cumplan **todos** los siguientes prerrequisitos:
+
+1. **Constitución Corporativa:** Obtención del Certificado de Existencia y Representación Legal de la sociedad operadora (.inc o SAS) y expedición de RUT ante la DIAN con actividad económica habilitada.
+2. **Dictamen Legal Favorable:** Emisión de concepto escrito por parte de un abogado financiero especialista en fintech que certifique el esquema contractual de "Mandato de Recaudo y Dispersión sin Representación".
+3. **Homologación Técnica y Comercial con Proveedor Vigilado:** Firma de contrato comercial con una entidad vigilada por la SFC (ej. ePayco Split Payments, Wompi Marketplace de Bancolombia, o SEDPE autorizada bajo la Ley 1735 de 2014).
+4. **Umbral de Viabilidad Transaccional:** Que el volumen operado en Modelo D supere los **$30.000.000 COP mensuales** o al menos 25 contratos activos al mes, garantizando que el margen de la plataforma absorba los costos fijos de comisiones de dispersión, validación KYB y conciliación contable.
+
+---
+
+### 2.6 Directrices Obligatorias de Copywriting y Cumplimiento
+
+1. **Términos Prohibidos en Interfaz y Comunicaciones:**
+   - ❌ *"Fideicomiso Dezzpo"*
+   - ❌ *"Dinero protegido en nuestras cuentas"*
+   - ❌ *"Depósito bancario en custodia"*
+   - ❌ *"Fiducia mercantil"*
+2. **Términos Aprobados y Obligatorios:**
+   - ✅ *"Validación de hitos de obra"*
+   - ✅ *"Aprobación bilateral de entregas"*
+   - ✅ *"Control procedimental de pagos por avance"*
+   - ✅ *"Bitácora técnica certificada"*

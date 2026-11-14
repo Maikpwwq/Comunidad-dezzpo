@@ -32,3 +32,12 @@ export {
     type ContractDailyLog,
     type CreateDailyLogInput,
 } from './dailyLogService'
+
+export {
+    generatePhB2bContract,
+    type PhCommonAreaPartida,
+    type PhContractParties,
+    type PhContractTerms,
+    type GeneratedPhContract,
+} from './b2bPhContractService'
+

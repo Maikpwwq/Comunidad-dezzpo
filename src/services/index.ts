@@ -65,3 +65,6 @@ export * from './reputation'
 export * from './inspiration'
 // Estimator Engine (I7)
 export * from './estimator'
+// AI Room Redesign & Styles (I8)
+export * from './ai'
+

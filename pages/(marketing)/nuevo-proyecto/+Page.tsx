@@ -1,12 +1,13 @@
 import { useState, useEffect, type ChangeEvent } from 'react' // Fix type import
 // ... other imports
 // @ts-ignore
-import { AdjuntarArchivos } from '@components/common'
+import { AdjuntarArchivos, MoodboardSelector } from '@components/common'
 import { v4 as uuidv4 } from 'uuid'
 import { navigate } from 'vike/client/router'
 import { usePageContext } from '@hooks/usePageContext'
 import { getUser } from '@services/users'
 import { useAuth } from '@hooks/useAuth'
+import { validateColombianNit } from '@utils/colombiaNit'
 // Firebase
 import {
     collection,
@@ -31,15 +32,14 @@ import PageRegistro from '../../(auth)/registro/+Page'
 import PageIngreso from '../../(auth)/ingreso/+Page'
 // Styles
 // Bootstrap
-// Bootstrap
 import { Row, Col, Container, Button, Form } from 'react-bootstrap'
-// MUI
 // MUI
 import { Box, Modal, Typography } from '@mui/material'
 import AddLocationIcon from '@mui/icons-material/AddLocation'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ApartmentIcon from '@mui/icons-material/Apartment'
 import type { ProjectDraftInfo } from '@features/projects'
 
 interface DraftInfo extends ProjectDraftInfo {
@@ -65,6 +65,11 @@ interface DraftInfo extends ProjectDraftInfo {
     draftProperty: string
     draftPostalCode: string
     draftApply: any[]
+    moodboardId?: string | undefined
+    copropiedadNit?: string | undefined
+    requiresCouncilApproval?: boolean | undefined
+    refProjectId?: string | undefined
+    proponentId?: string | undefined
     [key: string]: any
 }
 export default function Page() {
@@ -131,6 +136,16 @@ export default function Page() {
         const effectiveZone = urlContext.zone || pendingContext?.zone || null
         const effectiveMpioName = urlContext.municipioName || pendingContext?.municipioName || null
 
+        // Rich Prefill Parameters (from SmartEstimatorWizard, InspirationProjectCard, Moodboards)
+        const titleParam = searchParams.get('title')
+        const approxArea = searchParams.get('approxArea')
+        const budgetMin = searchParams.get('budgetMin')
+        const budgetMax = searchParams.get('budgetMax')
+        const refProject = searchParams.get('refProject')
+        const proponentId = searchParams.get('proponentId')
+        const moodboardId = searchParams.get('moodboardId')
+        const styleParam = searchParams.get('style')
+
         const PROPERTY_TO_PROJECT_TYPE: Record<string, string> = {
             hogar: 'Hogar',
             negocio: 'Negocio',
@@ -157,8 +172,41 @@ export default function Page() {
                 nextDraft.draftCity = zoneNames[effectiveZone]
             }
 
-            if (queryQ && !nextDraft.draftDescription) {
-                nextDraft.draftDescription = queryQ
+            if (titleParam && !nextDraft.draftName) {
+                nextDraft.draftName = titleParam
+            }
+
+            if (approxArea && !nextDraft.draftSize) {
+                nextDraft.draftSize = `${approxArea} m²`
+            }
+
+            if (budgetMin) {
+                nextDraft.draftTotal = Number(budgetMin)
+            }
+
+            if (refProject) {
+                nextDraft.refProjectId = refProject
+            }
+
+            if (proponentId) {
+                nextDraft.proponentId = proponentId
+            }
+
+            if (moodboardId) {
+                nextDraft.moodboardId = moodboardId
+            }
+
+            if (!nextDraft.draftDescription) {
+                const notes: string[] = []
+                if (queryQ) notes.push(queryQ)
+                if (titleParam) notes.push(`Proyecto: ${titleParam}`)
+                if (styleParam) notes.push(`Estilo de referencia: ${styleParam}`)
+                if (budgetMin && budgetMax) {
+                    notes.push(`Presupuesto preliminar estimado: $${Number(budgetMin).toLocaleString('es-CO')} – $${Number(budgetMax).toLocaleString('es-CO')} COP`)
+                }
+                if (notes.length > 0) {
+                    nextDraft.draftDescription = notes.join('. ')
+                }
             }
             return nextDraft
         })
@@ -201,6 +249,11 @@ export default function Page() {
             ...draftInfo,
             draftCreated: currentDate,
             draftCreatedAt: currentDate,
+            ...(draftInfo.moodboardId ? { moodboardId: draftInfo.moodboardId } : {}),
+            ...(draftInfo.copropiedadNit ? { copropiedadNit: draftInfo.copropiedadNit } : {}),
+            ...(draftInfo.requiresCouncilApproval ? { requiresCouncilApproval: true } : {}),
+            ...(draftInfo.refProjectId ? { refProjectId: draftInfo.refProjectId } : {}),
+            ...(draftInfo.proponentId ? { proponentId: draftInfo.proponentId } : {}),
         }
         const snap = draftToFirestore(finalDraftInfo, draftInfo.draftId)
         snap.then(() => {
@@ -540,6 +593,50 @@ export default function Page() {
                                             </Button>
                                         </Row>
                                     </Form.Label>
+                                </Form.Group>
+
+                                {/* B2B Propiedad Horizontal (Ley 675/2001) */}
+                                {(draftInfo.draftProject === 'PH' || draftInfo.draftProject === 'propiedad_horizontal') && (
+                                    <Box sx={{ mb: 3, p: 2.5, bgcolor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 2 }}>
+                                        <Typography variant="subtitle2" fontWeight="bold" sx={{ color: '#166534', mb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <ApartmentIcon fontSize="small" /> Datos de Copropiedad / Propiedad Horizontal (Ley 675 de 2001)
+                                        </Typography>
+                                        <Form.Group className="mb-2" controlId="formPhNit">
+                                            <Form.Label className="type-body-sm fw-bold">NIT de la Copropiedad (con dígito de verificación) *</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Ej. 900.123.456-7"
+                                                name="copropiedadNit"
+                                                value={draftInfo.copropiedadNit || ''}
+                                                onChange={(e) => {
+                                                    const val = e.target.value
+                                                    setDraftInfo(prev => ({ ...prev, copropiedadNit: val }))
+                                                }}
+                                            />
+                                            {draftInfo.copropiedadNit && !validateColombianNit(draftInfo.copropiedadNit).isValid && (
+                                                <Form.Text className="text-danger d-block mt-1">
+                                                    {validateColombianNit(draftInfo.copropiedadNit).error}
+                                                </Form.Text>
+                                            )}
+                                        </Form.Group>
+                                        <Form.Check
+                                            type="checkbox"
+                                            id="checkCouncilApproval"
+                                            label="La contratación requiere autorización previa del Consejo de Administración o Asamblea de Copropietarios."
+                                            checked={Boolean(draftInfo.requiresCouncilApproval)}
+                                            onChange={(e) => setDraftInfo(prev => ({ ...prev, requiresCouncilApproval: e.target.checked }))}
+                                            className="mt-2 type-body-sm"
+                                        />
+                                    </Box>
+                                )}
+
+                                {/* Moodboard Selector (T-I4.2) */}
+                                <Form.Group className="mb-3" controlId="formNewProjectMoodboard">
+                                    <MoodboardSelector
+                                        userId={userId || undefined}
+                                        selectedBoardId={draftInfo.moodboardId}
+                                        onSelectBoard={(boardId) => setDraftInfo(prev => ({ ...prev, moodboardId: boardId }))}
+                                    />
                                 </Form.Group>
 
                                 {/* Attachments */}
