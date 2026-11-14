@@ -88,7 +88,6 @@ export const ContractMilestonesSection: React.FC<ContractMilestonesSectionProps>
     const [isLogModalOpen, setIsLogModalOpen] = useState(false)
     const [newLogNotes, setNewLogNotes] = useState('')
     const [newLogFile, setNewLogFile] = useState<File | null>(null)
-    const [newLogMilestoneId, setNewLogMilestoneId] = useState<string>('')
     const [feedbackMessage, setFeedbackMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
     const isClient = currentUserId === clientId
@@ -216,7 +215,6 @@ export const ContractMilestonesSection: React.FC<ContractMilestonesSectionProps>
             const res = await addDailyLog({
                 contractId,
                 authorId: currentUserId,
-                milestoneId: newLogMilestoneId || undefined,
                 notes: newLogNotes.trim(),
                 photos: photoUrl ? [photoUrl] : [],
                 isPublicForShare: true,

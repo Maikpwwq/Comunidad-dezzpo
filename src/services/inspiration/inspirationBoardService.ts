@@ -11,7 +11,6 @@ import {
     getDoc,
     getDocs,
     updateDoc,
-    deleteDoc,
     query,
     where,
     orderBy,
@@ -37,7 +36,7 @@ export async function createInspirationBoard(
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible.' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible.' },
         }
     }
 
@@ -45,7 +44,7 @@ export async function createInspirationBoard(
         return {
             success: false,
             data: null,
-            error: { code: 'INVALID_ARGUMENT', message: 'El título del tablero es obligatorio.' },
+            error: { code: 'VALIDATION_ERROR', message: 'El título del tablero es obligatorio.' },
         }
     }
 
@@ -74,7 +73,7 @@ export async function createInspirationBoard(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -107,7 +106,7 @@ export async function getBoardsByOwner(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -134,7 +133,7 @@ export async function getBoardById(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -150,7 +149,7 @@ export async function addItemToBoard(
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible.' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible.' },
         }
     }
 
@@ -161,7 +160,7 @@ export async function addItemToBoard(
             return {
                 success: false,
                 data: null,
-                error: { code: 'NOT_FOUND', message: 'Tablero no encontrado' },
+                error: { code: 'FIRESTORE_NOT_FOUND', message: 'Tablero no encontrado' },
             }
         }
 
@@ -192,7 +191,7 @@ export async function addItemToBoard(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -208,7 +207,7 @@ export async function removeItemFromBoard(
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible.' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible.' },
         }
     }
 
@@ -219,7 +218,7 @@ export async function removeItemFromBoard(
             return {
                 success: false,
                 data: null,
-                error: { code: 'NOT_FOUND', message: 'Tablero no encontrado' },
+                error: { code: 'FIRESTORE_NOT_FOUND', message: 'Tablero no encontrado' },
             }
         }
 
@@ -238,7 +237,7 @@ export async function removeItemFromBoard(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -254,7 +253,7 @@ export async function linkBoardToDraft(
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible.' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible.' },
         }
     }
 
@@ -271,7 +270,7 @@ export async function linkBoardToDraft(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }

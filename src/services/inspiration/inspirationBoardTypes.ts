@@ -34,3 +34,4 @@ export interface CreateInspirationBoardParams {
     readonly description?: string
     readonly isPublic?: boolean
 }
+

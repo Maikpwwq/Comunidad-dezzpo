@@ -2,8 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import {
     createInspirationBoard,
     getBoardsByOwner,
-    addItemToBoard,
-    removeItemFromBoard,
 } from '@/services/inspiration/inspirationBoardService'
 import * as firebaseModule from '@/services/firebase'
 
@@ -39,7 +37,7 @@ describe('inspirationBoardService', () => {
             })
 
             expect(result.success).toBe(false)
-            expect(result.error?.code).toBe('INVALID_ARGUMENT')
+            expect(result.error?.code).toBe('VALIDATION_ERROR')
         })
 
         it('creates board successfully when valid', async () => {
@@ -68,3 +66,4 @@ describe('inspirationBoardService', () => {
         })
     })
 })
+

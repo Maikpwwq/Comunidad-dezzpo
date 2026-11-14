@@ -3,8 +3,6 @@ import {
     generateContractShareToken,
     verifyContractShareToken,
     addDailyLog,
-    getDailyLogsByContract,
-    toggleDailyLogPublicShare,
 } from '@/services/contracts/dailyLogService'
 import * as firebaseModule from '@/services/firebase'
 
@@ -55,7 +53,7 @@ describe('dailyLogService', () => {
             })
 
             expect(result.success).toBe(false)
-            expect(result.error?.code).toBe('INVALID_ARGUMENT')
+            expect(result.error?.code).toBe('VALIDATION_ERROR')
         })
 
         it('creates daily log successfully when photos or notes are present', async () => {
@@ -75,3 +73,4 @@ describe('dailyLogService', () => {
         })
     })
 })
+

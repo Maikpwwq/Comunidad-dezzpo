@@ -131,7 +131,7 @@ describe('milestoneService', () => {
             ])
 
             expect(result.success).toBe(false)
-            expect(result.error?.code).toBe('INVALID_ARGUMENT')
+            expect(result.error?.code).toBe('VALIDATION_ERROR')
         })
 
         it('creates milestones successfully when valid', async () => {
@@ -144,8 +144,8 @@ describe('milestoneService', () => {
 
             expect(result.success).toBe(true)
             expect(result.data?.length).toBe(2)
-            expect(result.data?.[0].amountCop).toBe(400000)
-            expect(result.data?.[1].amountCop).toBe(600000)
+            expect(result.data?.[0]?.amountCop).toBe(400000)
+            expect(result.data?.[1]?.amountCop).toBe(600000)
         })
     })
 })

@@ -790,3 +790,40 @@ src/styles/
 - **Non-Blocking R9 Coexistence**: Integrated `checkAndFlagPreRegistrationMatch` in `userService.setUser()` to flag matching active pre-registrations in the background when a recommended professional registers on their own, with zero impact on user signup latency.
 - **Tiendas Security Hardening**: Extended these principles back into `tiendaService.ts`: enforced `estado: 'pendiente'` coercion, 5/24h rate limit, idempotency verification, and immutable audit logs.
 - **`exactOptionalPropertyTypes` Compatibility**: In components consuming optional props with `exactOptionalPropertyTypes: true` (e.g. `PreRegistrationModal`), always pass explicit `null` (`effectiveKeyword || null`) rather than `undefined` to satisfy strict compiler checks.
+
+### Structured Projects (ADR Option C) & Client Consent Evidence (2026-11-13)
+- **ADR Option C Implementation**: Created dedicated structured `projects` entity in Firestore (`projectService.ts`) rather than overloading the legacy `userGalleryUrl` array. Projects hold structured metadata: category, zone, surface area, completion date, and Before/After pairs.
+- **Monetization & Quality Guard**:
+  - Free tier contractors are capped at 2 projects (`PROJECT_LIMITS.FREE_TIER_MAX_PROJECTS = 2`).
+  - Interactive Before/After comparisons and curation for Google-indexed Inspiration Books (`I1`) are strictly gated behind the Annual Membership ($150.000 COP/year).
+  - Protects domain reputation against low-quality spam while providing a compelling conversion hook.
+- **Client Habeas Data Consent**: Every project requires explicit certification that client authorization was obtained before publishing real estate photos (`clientConsent: { granted: true, clientName?: string, authorizedAt: string }`), conforming to Ley 1581 de 2012 and Decreto 1074 de 2015.
+- **Seamless Legacy Fallback**: Public profile gallery (`ProfileGallery.tsx`) prioritizes structured projects when available and falls back smoothly to legacy `userGalleryUrl` for unmigrated profiles.
+
+### Client-Side Media Stripping & Privacy (`mediaPipeline.ts`)
+- **Forced EXIF/GPS Removal**: Renders images onto an HTML5 Canvas client-side prior to uploading to Firebase Storage. This guarantees that geolocation coordinates (EXIF GPS latitude/longitude) and device metadata are never transmitted to cloud storage.
+- **WebP Optimization**: Standardized to `image/webp` with 80% quality and a max dimension constraint (1600px), achieving ~60-70% payload reduction and protecting against cloud storage exhaustion.
+
+### Escrow Lógico (Modelo D) & Bilateral Digital Sign-off (Ley 527/1999)
+- **Zero Custody of Funds**: In strict compliance with Art. 316 of the Colombian Penal Code (illegal mass and habitual fund collection), Art. 335 C.P., and Ley 1735 de 2014, Comunidad Dezzpo NEVER holds or escrows project funds in platform bank accounts.
+- **Modelo D (Logical Escrow)**:
+  - Contracts are partitioned into milestones that must strictly total 100% (`validateMilestonesPercentages`).
+  - Milestone progression flows: `pending` $\rightarrow$ `in_progress` $\rightarrow$ `submitted` $\rightarrow$ `approved` $\rightarrow$ `paid`.
+  - Contractors upload visual proof of milestone completion (`submitMilestoneProof`).
+  - Homeowners review evidence and execute a digital sign-off (`approveMilestone`), legally functioning as an *Acta de Recibo a Satisfacción* under Ley 527 de 1999.
+  - Funds are released directly between client and contractor (via ePayco or direct transfer) without platform intermediary custody.
+
+### Visual Daily Log Feed & HMAC Share Tokens (`dailyLogService.ts` / `/obra/[token]`)
+- **Daily Construction Feed**: Chronological subcollection (`contracts/{contractId}/dailyLogs/{logId}`) capturing 2–3 photos per day and contractor field notes.
+- **Home Privacy Protection**: Homeowners control the `isPublicForShare` flag per entry, preventing private home areas from appearing on public URLs.
+- **Cryptographic Share Tokens**: Share links (`/obra/[token]`) utilize URL-safe HMAC tokens (`generateContractShareToken`) derived from the contract ID and a server secret, preventing enumeration attacks and protecting client privacy.
+
+### Unified Inspiration Boards & Customer Moodboards (`inspirationBoardService.ts`)
+- **Unified Entity**: Reusable Firestore collection `inspirationBoards/{boardId}` unifying contractor inspiration books (`I1`) and client requirement moodboards (`I4`).
+- **Quote Integration**: Clients can attach their moodboards to requirement drafts (`linkBoardToDraft`), allowing bidding contractors in `/app/ver-requerimiento/@draftId` to understand the client's exact aesthetic style and color palette before quoting.
+- **User Library**: Accessible in `/app/biblioteca` with full board creation, photo uploads, item removal, and privacy controls.
+
+### Deterministic Smart Estimator & Legal Safety (`estimatorEngine.ts` / `/cotizador`)
+- **Parametric Cost Engine**: Mathematical budget model based on official Colombian construction unit costs across 6 architectural spaces (Cocina, Baño, Sala-Comedor, Habitación, Terraza, Remodelación Integral) and 3 finish tiers (Económico, Estándar, Premium).
+- **Zero Hallucination & Zero Cost**: 100% deterministic calculation requiring no LLM API calls, eliminating runtime latency, operational token costs, and AI hallucinations.
+- **Legal Protection (Ley 1480 de 2011)**: Every generated estimate includes a mandatory non-binding legal disclaimer explicitly stating that values are referential and subject to on-site technical inspection. Prefills directly into the requirement creation flow with 1 click.

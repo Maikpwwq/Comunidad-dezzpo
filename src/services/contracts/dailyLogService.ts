@@ -9,12 +9,10 @@ import {
     collection,
     doc,
     addDoc,
-    getDoc,
     getDocs,
     updateDoc,
     query,
     orderBy,
-    type DocumentReference,
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
 import type { ServiceResponse } from '@/types/services.d'
@@ -75,7 +73,7 @@ export async function addDailyLog(
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible.' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible.' },
         }
     }
 
@@ -83,7 +81,7 @@ export async function addDailyLog(
         return {
             success: false,
             data: null,
-            error: { code: 'INVALID_ARGUMENT', message: 'Debes incluir al menos una foto o una nota de avance.' },
+            error: { code: 'VALIDATION_ERROR', message: 'Debes incluir al menos una foto o una nota de avance.' },
         }
     }
 
@@ -91,7 +89,7 @@ export async function addDailyLog(
     const logData: Omit<ContractDailyLog, 'logId'> = {
         contractId: input.contractId,
         authorId: input.authorId,
-        milestoneId: input.milestoneId,
+        ...(input.milestoneId ? { milestoneId: input.milestoneId } : {}),
         notes: input.notes.trim(),
         photos: input.photos,
         isPublicForShare: input.isPublicForShare ?? false,
@@ -117,7 +115,7 @@ export async function addDailyLog(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -149,7 +147,7 @@ export async function getDailyLogsByContract(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -167,7 +165,7 @@ export async function toggleDailyLogPublicShare(
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible.' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible.' },
         }
     }
 
@@ -186,7 +184,8 @@ export async function toggleDailyLogPublicShare(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
+

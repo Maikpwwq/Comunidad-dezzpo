@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
     Container,
     Box,
@@ -35,9 +35,6 @@ export default function ObraPublicPage() {
     const [milestones, setMilestones] = useState<ContractMilestone[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
-    // Token shape is `${contractIdPrefix}-${hex}` or direct contractId
-    const contractIdPrefix = token?.split('-')[0] || ''
-
     useEffect(() => {
         let isMounted = true
         async function fetchPublicProgress() {
@@ -46,7 +43,9 @@ export default function ObraPublicPage() {
             try {
                 // Fetch public logs and milestones
                 // If token contains full or partial ID, attempt to read contract logs
-                const contractId = token.length > 20 ? token : token.split('-')[0]
+                const contractId = (token.length > 20 ? token : token.split('-')[0]) || ''
+                if (!contractId) return
+
                 const [lRes, mRes] = await Promise.all([
                     getDailyLogsByContract(contractId),
                     getMilestonesByContract(contractId),
@@ -192,7 +191,7 @@ export default function ObraPublicPage() {
                                         )}
                                     </Box>
                                     <Chip
-                                        icon={isApproved ? <CheckCircleIcon style={{ fontSize: 14 }} /> : undefined}
+                                        {...(isApproved ? { icon: <CheckCircleIcon style={{ fontSize: 14 }} /> } : {})}
                                         label={isApproved ? 'Aprobado' : `${m.percentage}%`}
                                         size="small"
                                         color={isApproved ? 'success' : 'default'}
@@ -290,3 +289,4 @@ export default function ObraPublicPage() {
         </Container>
     )
 }
+

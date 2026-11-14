@@ -9,12 +9,10 @@ import {
     collection,
     doc,
     addDoc,
-    getDoc,
     getDocs,
     updateDoc,
     query,
     orderBy,
-    type DocumentReference,
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
 import type { ServiceResponse } from '@/types/services.d'
@@ -108,7 +106,7 @@ export async function createContractMilestones(
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible.' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible.' },
         }
     }
 
@@ -117,7 +115,7 @@ export async function createContractMilestones(
             success: false,
             data: null,
             error: {
-                code: 'INVALID_ARGUMENT',
+                code: 'VALIDATION_ERROR',
                 message: 'La suma de porcentajes de los hitos debe ser exactamente 100%.',
             },
         }
@@ -136,13 +134,14 @@ export async function createContractMilestones(
 
         for (let i = 0; i < milestoneInputs.length; i++) {
             const input = milestoneInputs[i]
+            if (!input) continue
             const amountCop = Math.round((totalAmountCop * input.percentage) / 100)
 
             const milestoneData = {
                 contractId,
                 order: i + 1,
                 title: input.title,
-                description: input.description,
+                ...(input.description ? { description: input.description } : {}),
                 percentage: input.percentage,
                 amountCop,
                 status: (i === 0 ? 'in_progress' : 'pending') as MilestoneStatus,
@@ -163,7 +162,7 @@ export async function createContractMilestones(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -198,7 +197,7 @@ export async function getMilestonesByContract(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -216,7 +215,7 @@ export async function submitMilestoneProof(params: {
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible.' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible.' },
         }
     }
 
@@ -244,7 +243,7 @@ export async function submitMilestoneProof(params: {
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -262,7 +261,7 @@ export async function approveMilestone(params: {
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible.' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible.' },
         }
     }
 
@@ -289,8 +288,7 @@ export async function approveMilestone(params: {
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
-

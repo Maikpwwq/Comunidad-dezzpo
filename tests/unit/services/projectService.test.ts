@@ -1,8 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import {
     checkProjectCreationEligibility,
     createProject,
-    PROJECT_LIMITS,
 } from '../../../src/services/projects/projectService'
 import * as firebaseModule from '../../../src/services/firebase'
 
@@ -64,7 +63,7 @@ describe('Project Service — Eligibility & Entitlements', () => {
             })
 
             expect(res.success).toBe(false)
-            expect(res.error?.code).toBe('INVALID_ARGUMENT')
+            expect(res.error?.code).toBe('VALIDATION_ERROR')
             expect(res.error?.message).toContain('autorización del cliente')
         })
     })

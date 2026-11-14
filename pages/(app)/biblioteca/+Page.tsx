@@ -36,7 +36,6 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark'
 import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import CloseIcon from '@mui/icons-material/Close'
-import PaletteIcon from '@mui/icons-material/Palette'
 import { useUserStore } from '@stores/userStore'
 import {
     getBoardsByOwner,
@@ -144,12 +143,14 @@ export default function Page() {
                 photoUrl = await getDownloadURL(storageRef)
             }
 
-            const res = await addItemToBoard(selectedBoardId, {
+            const itemPayload: Parameters<typeof addItemToBoard>[1] = {
                 type: photoUrl ? 'project_image' : 'color_palette',
                 url: photoUrl,
-                title: itemTitle.trim() || undefined,
-                notes: itemNotes.trim() || undefined,
-            })
+                ...(itemTitle.trim() ? { title: itemTitle.trim() } : {}),
+                ...(itemNotes.trim() ? { notes: itemNotes.trim() } : {}),
+            }
+
+            const res = await addItemToBoard(selectedBoardId, itemPayload)
 
             if (res.success && res.data) {
                 setBoards((prev) =>

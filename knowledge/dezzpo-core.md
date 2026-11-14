@@ -294,6 +294,62 @@ Los documentos oficiales de Comunidad Dezzpo se encuentran disponibles para cons
 
 ---
 
+## Insignias de Confianza, Reputación y Tarjeta Digital QR
+
+Comunidad Dezzpo incorpora un sistema gamificado de reputación profesional basado en métricas objetivas de desempeño en obra:
+- **Identidad Verificada:** Confirmación de cédula de ciudadanía o NIT.
+- **Cero Disputas:** Para profesionales con contratos ejecutados sin reclamaciones abiertas.
+- **Puntualidad en Entrega:** Más de 3 contratos finalizados a tiempo en el cronograma pactado.
+- **Especialista Certificado:** Cuenta con certificación presencial o documental de competencias técnicas.
+- **Miembro Destacado:** Contratista con suscripción anual activa.
+
+**Tarjeta de Presentación Digital con QR:**
+Los comerciantes pueden abrir su tarjeta digital interactiva desde `/app/perfil` o en su micrositio público (`/comerciante/[slug]`), exhibiendo sus insignias y un código QR de alta resolución listo para escanear o compartir por WhatsApp con clientes e inversionistas.
+
+---
+
+## Hitos de Obra, Bitácora Visual y Aprobación Bilateral (Modelo D)
+
+Para proteger a propietarios y contratistas sin incurrir en riesgos legales de intermediación financiera ni captación ilegal (Art. 316 del Código Penal y Ley 1735 de 2014), Comunidad Dezzpo opera bajo el **Modelo D (Escrow Lógico sin custodia de fondos)**:
+- **Partición al 100% de la Obra:** El contrato se divide en hitos secuenciales (ej. Demolición 20%, Instalaciones 30%, Acabados 50%).
+- **Evidencias Fotográficas Diarias:** El contratista sube 2 a 3 fotos diarias de avance con notas de campo desde `/app/contratacion`. La plataforma limpia automáticamente los metadatos EXIF y coordenadas GPS de las imágenes para proteger la privacidad del hogar.
+- **Aprobación Bilateral Digital:** Al finalizar cada hito, el propietario inspecciona las evidencias y firma digitalmente la aceptación mediante el botón *"Aprobar Hito"*. Esta aprobación actúa jurídicamente como un *Acta de Recibo a Satisfacción* con plena validez probatoria (Ley 527 de 1999 de Comercio Electrónico).
+- **Pago Directo:** Una vez aprobado el hito, el propietario libera el pago correspondiente directamente al contratista mediante PSE/ePayco o transferencia bancaria directa.
+- **Enlace de Seguimiento en Vivo (`/obra/[token]`):** Los contratistas pueden generar un enlace web seguro con token HMAC para que el propietario o terceros sigan el avance de la obra en tiempo real sin requerir inicio de sesión.
+
+---
+
+## Tableros de Inspiración y Moodboards de Clientes
+
+En `/app/biblioteca` y en la galería pública `/inspiracion`, usuarios y profesionales gestionan tableros visuales de estilo:
+- **Para Propietarios:** Guardar fotos de proyectos reales, muestras de pintura, enchapes y paletas de color. Pueden vincular su moodboard directamente al crear un requerimiento para que los maestros entiendan exactamente la estética deseada antes de cotizar.
+- **Para Contratistas:** Organizar álbumes temáticos de sus especialidades ("Cocinas modernas Bogotá", "Baños en porcelanato").
+- **Libros de Inspiración UGC (`/inspiracion`):** Galería editorial indexada en Google con comparativas reales de antes y después ejecutadas por miembros destacados de la comunidad.
+
+---
+
+## Cotizador Inteligente de Presupuestos para Reformas
+
+Ubicado en https://dezzpo.com/cotizador, es una herramienta interactiva y determinística para estimar costos de obra civil y acabados:
+- **6 Espacios Arquitectónicos:** Cocina, Baño, Sala-Comedor, Habitación, Terraza o Remodelación Integral.
+- **3 Niveles de Acabado:** Económico (funcional), Estándar (comercial de alta durabilidad) y Premium (materiales importados y diseño a medida).
+- **Cálculo Paramétrico Transparente:** Entrega un rango mínimo y máximo en pesos colombianos ($ COP) con desglose de partidas (mano de obra, demoliciones, enchapes, pintura y carpintería).
+- **Conexión Directa:** Con un solo clic, el usuario transfiere su estimación al formulario de nuevo proyecto (`/nuevo-proyecto`) para recibir ofertas de profesionales calificados en su zona.
+- **Disclaimer Legal (Ley 1480 de 2011):** Todos los valores son referenciales y no vinculantes hasta que se realice la visita técnica presencial en el inmueble.
+
+---
+
+## Matriz Legal, Custodia de Fondos y Habeas Data
+
+Comunidad Dezzpo opera bajo un riguroso marco de cumplimiento legal colombiano detallado en `docs/matriz-legal-regulatoria.md`:
+1. **No Custodia de Fondos:** No realiza captación masiva ni retención de dinero en cuentas de la plataforma, evitando incurrir en intermediación financiera no autorizada (Art. 316 C.P. y Circular Básica Jurídica de la Superfinanciera).
+2. **Protección de Datos Personales (Ley 1581 de 2012 y Dec. 1074 de 2015):** Consentimiento canónico estructurado V1.1. Los proyectos fotográficos de inmuebles exigen autorización previa del cliente (`clientConsent.granted: true`). La plataforma suprime coordenadas EXIF/GPS de todas las fotos subidas.
+3. **Comercio Electrónico y Mensajes de Datos (Ley 527 de 1999):** Los contratos digitales, cotizaciones y actas de aprobación de hitos cuentan con trazabilidad cronológica y valor probatorio legal.
+4. **Propiedad Horizontal (Ley 675 de 2001):** Servicios especializados de inspección técnica locativa y contratos marco para administradores de edificios y conjuntos residenciales.
+5. **Estatuto del Consumidor (Ley 1480 de 2011):** Transparencia en precios, disclaimers en estimaciones y derecho de retracto en servicios digitales.
+
+---
+
 ## Preguntas Frecuentes (FAQ)
 
 ### ¿Cuánto cuesta registrarse en Dezzpo?
@@ -313,3 +369,16 @@ Desde tu cuenta en `/app/certificaciones`, selecciona tu especialidad y agenda l
 
 ### ¿Cómo gano puntos con el programa de referidos?
 Comparte tu código de invitación desde `/app/invitar-amigos`. Ganarás +50 puntos por cada usuario nuevo que se registre y +200 puntos adicionales cuando tu referido complete su primer contrato en la plataforma.
+
+### ¿Qué es el Escrow Lógico y cómo protege mi dinero en una obra?
+El Escrow Lógico divide el valor total de tu obra en hitos porcentuales verificables. El contratista sube fotos diarias del progreso a la bitácora y solo cuando tú revisas y apruebas digitalmente el hito completado (Acta de Recibo bajo Ley 527 de 1999), procedes a liberar el desembolso correspondiente. Dezzpo no custodia el dinero en cuentas intermedias, eliminando riesgos legales y bancarios.
+
+### ¿Cómo uso el Cotizador Inteligente para calcular el presupuesto de mi remodelación?
+Ingresa a https://dezzpo.com/cotizador, selecciona el espacio a intervenir (cocina, baño, etc.), el área aproximada en metros cuadrados y el nivel de acabados deseado. El sistema te entregará un rango estimado min/max en pesos colombianos con su desglose técnico y podrás transferir los datos directamente a una solicitud de cotización formal.
+
+### ¿Cómo creo un tablero de inspiración o moodboard para mi cotización?
+En `/app/biblioteca` puedes crear tableros personalizados de inspiración o guardar fotos de proyectos reales desde la galería de `/inspiracion`. Al publicar un requerimiento de obra, puedes adjuntar tu tablero para que los profesionales vean exactamente tus preferencias visuales y coticen con mayor precisión.
+
+### ¿Cómo comparto el avance de mi obra en vivo con mi familia o inversionistas?
+Desde la sección de contratación en `/app/contratacion`, pulsa el botón *"Compartir avance"* para generar un enlace seguro con token criptográfico (`/obra/[token]`). Cualquier persona con el enlace podrá ver las fotos y el porcentaje de avance verificado sin necesidad de crear cuenta ni iniciar sesión.
+

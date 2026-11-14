@@ -9,7 +9,7 @@
  * - Annual Membership distinction badge
  */
 
-import React, { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import {
     Dialog,
     DialogTitle,

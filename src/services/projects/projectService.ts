@@ -15,12 +15,10 @@ import {
     addDoc,
     getDoc,
     getDocs,
-    updateDoc,
     deleteDoc,
     query,
     where,
     orderBy,
-    limit,
     type DocumentReference,
 } from 'firebase/firestore'
 import { firestore, isFirebaseAvailable } from '@services/firebase'
@@ -30,6 +28,8 @@ import {
     type CreateProjectParams,
     PROJECT_LIMITS,
 } from './projectTypes'
+
+export { PROJECT_LIMITS }
 
 const PROJECTS_COLLECTION = 'projects'
 
@@ -68,7 +68,7 @@ export async function createProject(
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible.' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible.' },
         }
     }
 
@@ -83,7 +83,7 @@ export async function createProject(
         return {
             success: false,
             data: null,
-            error: { code: 'PERMISSION_DENIED', message: eligibility.reason || 'Acción no permitida' },
+            error: { code: 'FIRESTORE_PERMISSION_DENIED', message: eligibility.reason || 'Acción no permitida' },
         }
     }
 
@@ -92,7 +92,7 @@ export async function createProject(
             success: false,
             data: null,
             error: {
-                code: 'INVALID_ARGUMENT',
+                code: 'VALIDATION_ERROR',
                 message: 'Debes certificar que cuentas con autorización del cliente para publicar fotos del inmueble.',
             },
         }
@@ -121,7 +121,7 @@ export async function createProject(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -154,7 +154,7 @@ export async function getProjectsByComerciante(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -181,7 +181,7 @@ export async function getProjectById(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
@@ -197,7 +197,7 @@ export async function deleteProject(
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Base de datos no disponible' },
+            error: { code: 'INTERNAL_ERROR', message: 'Base de datos no disponible' },
         }
     }
 
@@ -208,7 +208,7 @@ export async function deleteProject(
             return {
                 success: false,
                 data: null,
-                error: { code: 'NOT_FOUND', message: 'Proyecto no encontrado' },
+                error: { code: 'FIRESTORE_NOT_FOUND', message: 'Proyecto no encontrado' },
             }
         }
 
@@ -217,7 +217,7 @@ export async function deleteProject(
             return {
                 success: false,
                 data: null,
-                error: { code: 'PERMISSION_DENIED', message: 'No estás autorizado para eliminar este proyecto' },
+                error: { code: 'FIRESTORE_PERMISSION_DENIED', message: 'No estás autorizado para eliminar este proyecto' },
             }
         }
 
@@ -228,8 +228,7 @@ export async function deleteProject(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }
-

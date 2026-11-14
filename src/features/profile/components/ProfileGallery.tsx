@@ -128,7 +128,7 @@ export const ProfileGallery: React.FC<ProfileGalleryProps> = ({
                                         <Box sx={{ position: 'relative' }}>
                                             <Box
                                                 component="img"
-                                                src={project.beforeAfterPairs[0].beforeUrl}
+                                                src={project.beforeAfterPairs[0]?.beforeUrl || ''}
                                                 alt="Antes"
                                                 sx={{ width: '100%', height: 180, objectFit: 'cover' }}
                                             />
@@ -149,7 +149,7 @@ export const ProfileGallery: React.FC<ProfileGalleryProps> = ({
                                         <Box sx={{ position: 'relative' }}>
                                             <Box
                                                 component="img"
-                                                src={project.beforeAfterPairs[0].afterUrl}
+                                                src={project.beforeAfterPairs[0]?.afterUrl || ''}
                                                 alt="Después"
                                                 sx={{ width: '100%', height: 180, objectFit: 'cover' }}
                                             />

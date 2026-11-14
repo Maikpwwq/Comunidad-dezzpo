@@ -70,7 +70,7 @@ describe('badgeService', () => {
             const result = await syncComercianteBadges('merchant-123')
 
             expect(result.success).toBe(false)
-            expect(result.error?.code).toBe('UNAVAILABLE')
+            expect(result.error?.code).toBe('INTERNAL_ERROR')
         })
     })
 })

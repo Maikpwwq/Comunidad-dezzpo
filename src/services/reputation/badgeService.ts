@@ -70,7 +70,7 @@ export async function deriveMerchantPerformanceMetrics(
         totalCompletedContracts: completed.length,
         onTimeCompletedContracts: Math.max(0, completed.length - disputed.length),
         disputedContractsCount: disputed.length,
-        averageReviewRating: avgRating,
+        ...(typeof avgRating === 'number' ? { averageReviewRating: avgRating } : {}),
         hasVerifiedIdentity,
         hasTechnicalCertification: hasCert,
         isAnnualMember,
@@ -87,7 +87,7 @@ export async function syncComercianteBadges(
         return {
             success: false,
             data: null,
-            error: { code: 'UNAVAILABLE', message: 'Servicio de base de datos no disponible' },
+            error: { code: 'INTERNAL_ERROR', message: 'Servicio de base de datos no disponible' },
         }
     }
 
@@ -107,7 +107,7 @@ export async function syncComercianteBadges(
         return {
             success: false,
             data: null,
-            error: { code: 'INTERNAL', message },
+            error: { code: 'INTERNAL_ERROR', message },
         }
     }
 }

@@ -42,6 +42,9 @@ Professional network for real estate maintenance, remodeling, and finishes. We c
 The project uses a **Tiered Access Model**:
 
 1. **Public (Marketing):** Unrestricted access — SSR/SSG prerendered.
+   - `/inspiracion` — Libros de Inspiración UGC & Thematic Before/After collections (SEO Editorial)
+   - `/cotizador` — Cotizador Inteligente de Presupuestos (Calculadora paramétrica de reformas)
+   - `/obra/[token]` — Bitácora Pública de Obra (Feed de avance fotográfico y verificación de hitos)
 2. **Hybrid (App Guest):** Accessible by anyone with App Shell. UI adapts to auth state.
    - `/app/portal-servicios`
    - `/app/directorio-requerimientos`
@@ -94,6 +97,9 @@ comunidad-dezzpo/
 │   │   ├── apendice-costos/                  # Cost appendix
 │   │   ├── patrocinadores/                   # Sponsors
 │   │   ├── prensa/                           # Press
+│   │   ├── inspiracion/                      # Inspiration UGC gallery & thematic collections (SEO)
+│   │   ├── cotizador/                        # Smart budget estimator for renovations
+│   │   ├── obra/@token/                      # Public verified daily log & milestone feed
 │   │   └── dev/typography/                   # Design system reference
 │   │
 │   ├── (auth)/                               # Route Group: Authentication
@@ -187,11 +193,15 @@ comunidad-dezzpo/
 │   │
 │   ├── services/                             # Data Layer
 │   │   ├── admin/                            # Admin-only service (stats, users, verification)
-│   │   ├── contracts/                        # Contract CRUD
+│   │   ├── contracts/                        # Contract CRUD, milestones (Logical Escrow) & daily log feed
 │   │   ├── drafts/                           # Draft requirements
+│   │   ├── estimator/                        # Parametric budget estimator & legal disclaimers
 │   │   ├── firebase/                         # Firebase client SDK init
+│   │   ├── inspiration/                      # Unified moodboards & editorial inspiration service
 │   │   ├── preRegistration/                  # Pre-registration client service & early check
+│   │   ├── projects/                         # Structured contractor projects (ADR Option C) & Before/After
 │   │   ├── quotations/                       # Quotation management
+│   │   ├── reputation/                       # Badge engine & operational trust evaluation
 │   │   ├── search/                           # Search service
 │   │   ├── sendbird/                         # Channel orchestration
 │   │   ├── social/                           # Meta Graph API Interceptor & Anti-Spam Worker
@@ -235,6 +245,7 @@ comunidad-dezzpo/
 │   └── dezzpo-core.md                        # Editable business info (## = chunk)
 │
 ├── docs/
+│   ├── matriz-legal-regulatoria.md           # Matriz legal y regulatoria integral de Colombia
 │   ├── mui-emotion-ssr-vike.md               # MUI + Emotion SSR deep-dive
 │   ├── server-stack-vike.md                  # Server architecture reference
 │   └── testing-architecture.md              # Testing pyramid & conventions
@@ -462,6 +473,13 @@ All geographic zones are centralized in [`src/assets/data/ListadoZonas.ts`](./sr
 | **Referral Program** | ✅ Implemented | Code generation, sign-up attribution, points/rewards, admin audit |
 | **Ecosystem Testing** | ✅ Implemented | 100% Local Emulator isolation, Vitest/Fast-Check property tests, Firestore/Storage rules tests, Playwright E2E POMs, StrykerJS mutation, axe-core a11y, GitHub Actions CI/CD |
 | **Social Interceptor & Meta API** | ✅ Implemented | Graph API v19.0+, Real-time Firestore Repository (`interceptionsRepository.ts`), Zero-Mock Policy, Circuit Breaker (80%), 6:4 Jitter Queue, comment_id Verification, MCP Dev Tools |
+| **Proyectos Estructurados (ADR Opción C)** | ✅ Implemented | Entidad `projects`, comparador Antes/Después, cuota de membresía anual, Habeas Data V1.1 y soporte legacy |
+| **Insignias y Reputación Digital** | ✅ Implemented | `badgeEngine.ts`, `badgeService.ts`, tarjetas de presentación digital QR y sincronización automática |
+| **Bitácora de Obra & Hitos (Modelo D)** | ✅ Implemented | Hitos estructurados al 100%, aprobación bilateral (Ley 527/1999), feed diario de avance, tokens seguros HMAC y página pública `/obra/[token]` |
+| **Tableros de Inspiración & Moodboards** | ✅ Implemented | Colección unificada `inspirationBoards`, guardado de ideas desde proyectos, pestaña de biblioteca y vinculación a cotizaciones |
+| **Cotizador Inteligente Paramétrico** | ✅ Implemented | Calculadora determinística por m² y nivel de acabados, desglose de costos y disclaimer legal (Ley 1480/2011) en `/cotizador` |
+| **Pipeline de Medios del Cliente** | ✅ Implemented | `mediaPipeline.ts`: compresión WebP cliente, limpieza forzada de EXIF/GPS en canvas |
+| **Matriz Legal y Regulatoria** | ✅ Documented | `docs/matriz-legal-regulatoria.md`: Arts. 15/333/335 C.P., Art. 316 C.P., Ley 1581/2012, Ley 1480/2011, Ley 527/1999 |
 
 ## Service Standards
 

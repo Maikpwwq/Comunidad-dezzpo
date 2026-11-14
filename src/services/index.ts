@@ -63,3 +63,5 @@ export * from './projects'
 export * from './reputation'
 // Inspiration Boards & Moodboards (R7-T4 & I4)
 export * from './inspiration'
+// Estimator Engine (I7)
+export * from './estimator'

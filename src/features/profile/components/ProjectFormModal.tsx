@@ -138,7 +138,7 @@ export const ProjectFormModal: React.FC<ProjectFormModalProps> = ({
                     id: `pair-${timestamp}`,
                     beforeUrl,
                     afterUrl,
-                    caption: pairCaption.trim() || undefined,
+                    ...(pairCaption.trim() ? { caption: pairCaption.trim() } : {}),
                 })
             }
 

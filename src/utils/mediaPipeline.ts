@@ -222,3 +222,5 @@ function buildResult(
     }
 }
 
+export const processImageFile = processImageInClient
+
