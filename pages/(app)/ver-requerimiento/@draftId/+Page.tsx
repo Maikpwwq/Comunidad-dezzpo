@@ -7,6 +7,7 @@ import { useAuth } from '@hooks/useAuth'
 import { getDraft } from '@services/drafts/draftService'
 import { getQuotation } from '@services/quotations'
 import { getOrCreateDraftChannel } from '@services/sendbird'
+import { getBoardById, type InspirationBoard } from '@services/inspiration'
 import type { DraftFirestoreDocument, QuotationFirestoreDocument } from '@services/types'
 // Components
 import TablaSubCategoriaPresupuesto from '../../requerimiento/components/TablaSubCategoriaPresupuesto'
@@ -76,6 +77,7 @@ export default function Page() {
         draftTotal: 0,
         draftApply: [] as string[],
     })
+    const [linkedMoodboard, setLinkedMoodboard] = useState<InspirationBoard | null>(null)
 
     const fetchDraftData = async () => {
         if (!draftId) return;
@@ -132,6 +134,16 @@ export default function Page() {
                         }
                     } catch (e) {
                         console.error('Error fetching quotation', e)
+                    }
+                }
+                if (draft.moodboardId) {
+                    try {
+                        const boardRes = await getBoardById(draft.moodboardId)
+                        if (boardRes.success && boardRes.data) {
+                            setLinkedMoodboard(boardRes.data)
+                        }
+                    } catch (e) {
+                        console.warn('Error fetching linked moodboard:', e)
                     }
                 }
                 setIsLoaded(true);
@@ -335,6 +347,52 @@ export default function Page() {
                             draftTotal={requerimientoInfo.draftTotal}
                         />
                     </Box>
+
+                    {/* Linked Moodboard / Inspiration Board (I4.2) */}
+                    {linkedMoodboard && (
+                        <Card sx={{ mt: 4, borderRadius: 2, border: '1px solid #cbd5e1', overflow: 'hidden' }}>
+                            <CardHeader
+                                title={`Moodboard de Referencias: ${linkedMoodboard.title}`}
+                                subheader="Referencias estéticas y acabados seleccionados por el cliente para cotizar"
+                                sx={{ bgcolor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}
+                            />
+                            <CardContent sx={{ p: 2.5 }}>
+                                {linkedMoodboard.description && (
+                                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                                        {linkedMoodboard.description}
+                                    </Typography>
+                                )}
+                                <Grid container spacing={2}>
+                                    {linkedMoodboard.items.map((item) => (
+                                        <Grid item xs={12} sm={6} md={4} key={item.id}>
+                                            <Box sx={{ border: '1px solid #e2e8f0', borderRadius: 2, overflow: 'hidden', height: '100%', bgcolor: '#ffffff' }}>
+                                                {item.url && (
+                                                    <Box
+                                                        component="img"
+                                                        src={item.url}
+                                                        alt={item.title || 'Referencia'}
+                                                        sx={{ width: '100%', height: 120, objectFit: 'cover' }}
+                                                    />
+                                                )}
+                                                <Box sx={{ p: 1.5 }}>
+                                                    {item.title && (
+                                                        <Typography variant="caption" fontWeight="bold" display="block">
+                                                            {item.title}
+                                                        </Typography>
+                                                    )}
+                                                    {item.notes && (
+                                                        <Typography variant="caption" color="text.secondary">
+                                                            {item.notes}
+                                                        </Typography>
+                                                    )}
+                                                </Box>
+                                            </Box>
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </CardContent>
+                        </Card>
+                    )}
                 </Grid>
 
                 {/* Right Column: Details & Times */}

@@ -241,6 +241,7 @@ export interface DraftFirestoreDocument extends DocumentData {
     draftApply?: string[]
     status?: 'open' | 'closed'
     channel_url?: string
+    moodboardId?: string
 }
 
 export interface ReadDraftParams {

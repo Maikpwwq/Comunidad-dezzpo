@@ -22,3 +22,13 @@ export {
     type MilestoneStatus,
     type CreateMilestoneInput,
 } from './milestoneService'
+
+export {
+    addDailyLog,
+    getDailyLogsByContract,
+    toggleDailyLogPublicShare,
+    generateContractShareToken,
+    verifyContractShareToken,
+    type ContractDailyLog,
+    type CreateDailyLogInput,
+} from './dailyLogService'

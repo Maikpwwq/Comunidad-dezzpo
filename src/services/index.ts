@@ -61,3 +61,5 @@ export * from './matching'
 export * from './projects'
 // Reputation & Badges services
 export * from './reputation'
+// Inspiration Boards & Moodboards (R7-T4 & I4)
+export * from './inspiration'
