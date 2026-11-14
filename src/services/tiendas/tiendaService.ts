@@ -304,6 +304,7 @@ export async function getTiendas(
                     item.nombre.toLowerCase().includes(term) ||
                     item.razonSocial?.toLowerCase().includes(term) ||
                     item.nit?.toLowerCase().includes(term) ||
+                    item.slogan?.toLowerCase().includes(term) ||
                     item.descripcion?.toLowerCase().includes(term) ||
                     item.sedes.some(
                         (s) =>
@@ -529,6 +530,7 @@ export async function createTienda(
             nit: input.nit?.trim() || '',
             slug: generatedSlug,
             categorias: input.categorias || [],
+            slogan: input.slogan?.trim() || '',
             descripcion: input.descripcion?.trim() || '',
             email: input.email?.trim() || '',
             sitioWeb: input.sitioWeb?.trim() || '',
@@ -627,6 +629,9 @@ export async function updateTienda(
         }
         if (input.nit !== undefined) {
             updatedData.nit = input.nit.trim()
+        }
+        if (input.slogan !== undefined) {
+            updatedData.slogan = input.slogan.trim()
         }
         if (input.descripcion !== undefined) {
             updatedData.descripcion = input.descripcion.trim()

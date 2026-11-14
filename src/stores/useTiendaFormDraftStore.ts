@@ -14,6 +14,7 @@ export interface TiendaFormDraft {
     nombre: string
     razonSocial: string
     nit: string
+    slogan: string
     descripcion: string
     emails: string[]
     sitioWeb: string
@@ -51,6 +52,7 @@ const INITIAL_DRAFT: TiendaFormDraft = {
     nombre: '',
     razonSocial: '',
     nit: '',
+    slogan: '',
     descripcion: '',
     emails: [''],
     sitioWeb: '',

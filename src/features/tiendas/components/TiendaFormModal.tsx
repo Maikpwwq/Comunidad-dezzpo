@@ -62,6 +62,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
     const [nombre, setNombre] = useState('')
     const [razonSocial, setRazonSocial] = useState('')
     const [nit, setNit] = useState('')
+    const [slogan, setSlogan] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [emails, setEmails] = useState<string[]>([''])
     const [sitioWeb, setSitioWeb] = useState('')
@@ -123,6 +124,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             setNombre(initialData.nombre || '')
             setRazonSocial(initialData.razonSocial || '')
             setNit(initialData.nit || '')
+            setSlogan(initialData.slogan || '')
             setDescripcion(initialData.descripcion || '')
             if (initialData.emails && initialData.emails.length > 0) {
                 setEmails(initialData.emails)
@@ -150,6 +152,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
             setNombre(draft.nombre)
             setRazonSocial(draft.razonSocial)
             setNit(draft.nit)
+            setSlogan(draft.slogan || '')
             setDescripcion(draft.descripcion)
             setEmails(draft.emails.length > 0 ? draft.emails : [''])
             setSitioWeb(draft.sitioWeb)
@@ -178,13 +181,13 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
     const syncDraft = useCallback(() => {
         if (isEditMode) return
         updateDraft({
-            nombre, razonSocial, nit, descripcion, emails,
+            nombre, razonSocial, nit, slogan, descripcion, emails,
             sitioWeb, telefonoPrincipal, whatsappPrincipal,
             telefonosPrincipales,
             selectedCategoryKeys, sedes,
             logoUrl, redesSociales,
         })
-    }, [isEditMode, updateDraft, nombre, razonSocial, nit, descripcion, emails, sitioWeb, telefonoPrincipal, whatsappPrincipal, telefonosPrincipales, selectedCategoryKeys, sedes, logoUrl, redesSociales])
+    }, [isEditMode, updateDraft, nombre, razonSocial, nit, slogan, descripcion, emails, sitioWeb, telefonoPrincipal, whatsappPrincipal, telefonosPrincipales, selectedCategoryKeys, sedes, logoUrl, redesSociales])
 
     useEffect(() => {
         if (!open || isEditMode) return
@@ -243,6 +246,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                 nombre: nombre.trim(),
                 razonSocial: razonSocial.trim(),
                 nit: nit.trim(),
+                slogan: slogan.trim(),
                 descripcion: descripcion.trim(),
                 emails: cleanEmails,
                 email: cleanEmails.join(', ') || undefined,
@@ -447,15 +451,28 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                             }
                         />
 
-                        {/* Description / Slogan */}
+                        {/* Slogan */}
                         <TextField
-                            label="Descripción o Slogan (Opcional)"
+                            label="Slogan o Frase Comercial (Opcional)"
+                            size="small"
+                            placeholder="Ej: Especialistas en pinturas arquitectónicas e impermeabilizantes"
+                            value={slogan}
+                            onChange={(e) => setSlogan(e.target.value)}
+                            inputProps={{ maxLength: 120 }}
+                            helperText="Lema o frase distintiva corta del comercio (máx. 120 caracteres)"
+                        />
+
+                        {/* Descripción detallada */}
+                        <TextField
+                            label="Descripción de la Tienda (Opcional)"
                             size="small"
                             multiline
-                            rows={2}
-                            placeholder="Ej: Especialistas en pinturas arquitectónicas e impermeabilizantes. Entregas a domicilio en Bogotá."
+                            rows={3}
+                            placeholder="Describe detalladamente los productos que distribuyes, trayectoria, marcas autorizadas y servicios que ofreces..."
                             value={descripcion}
                             onChange={(e) => setDescripcion(e.target.value)}
+                            inputProps={{ maxLength: 1000 }}
+                            helperText="Información completa para dar a conocer tu oferta comercial a los clientes (máx. 1000 caracteres)"
                         />
 
                         {/* Store General Contact Channels Section */}

@@ -133,7 +133,9 @@ export default function Page() {
                 t.nombre.toLowerCase().includes(term) ||
                 t.razonSocial?.toLowerCase().includes(term) ||
                 t.nit?.toLowerCase().includes(term)
-            const matchesDesc = t.descripcion?.toLowerCase().includes(term)
+            const matchesDesc =
+                t.descripcion?.toLowerCase().includes(term) ||
+                t.slogan?.toLowerCase().includes(term)
             const matchesSede = t.sedes.some(
                 (s) =>
                     s.direccion.toLowerCase().includes(term) ||
@@ -274,6 +276,11 @@ export default function Page() {
                                                             <Typography variant="subtitle1" fontWeight={800} color="#0A2540">
                                                                 {tienda.nombre}
                                                             </Typography>
+                                                            {tienda.slogan && (
+                                                                <Typography variant="caption" color="primary.main" sx={{ display: 'block', fontStyle: 'italic', fontWeight: 600 }}>
+                                                                    "{tienda.slogan}"
+                                                                </Typography>
+                                                            )}
                                                             {tienda.descripcion && (
                                                                 <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
                                                                     {tienda.descripcion}
@@ -417,6 +424,11 @@ export default function Page() {
                                                         <Typography variant="subtitle2" fontWeight={700} color="#0A2540">
                                                             {tienda.nombre}
                                                         </Typography>
+                                                        {tienda.slogan && (
+                                                            <Typography variant="caption" color="primary.main" noWrap sx={{ maxWidth: 220, display: 'block', fontStyle: 'italic', fontWeight: 600 }}>
+                                                                "{tienda.slogan}"
+                                                            </Typography>
+                                                        )}
                                                         {tienda.descripcion && (
                                                             <Typography variant="caption" color="text.secondary" noWrap sx={{ maxWidth: 220, display: 'block' }}>
                                                                 {tienda.descripcion}
@@ -608,6 +620,11 @@ export default function Page() {
                                                         {new Date(tienda.createdAt).toLocaleDateString()}
                                                     </Typography>
                                                 </Box>
+                                                {tienda.slogan && (
+                                                    <Typography variant="body2" color="primary.main" sx={{ mb: 0.5, fontSize: '0.82rem', fontStyle: 'italic', fontWeight: 600 }}>
+                                                        "{tienda.slogan}"
+                                                    </Typography>
+                                                )}
                                                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5, fontSize: '0.82rem' }}>
                                                     {tienda.descripcion || 'Sin descripción'}
                                                 </Typography>
@@ -719,6 +736,11 @@ export default function Page() {
                                                         <Typography variant="subtitle2" fontWeight={700}>
                                                             {tienda.nombre}
                                                         </Typography>
+                                                        {tienda.slogan && (
+                                                            <Typography variant="caption" color="primary.main" sx={{ display: 'block', fontStyle: 'italic', fontWeight: 600 }}>
+                                                                "{tienda.slogan}"
+                                                            </Typography>
+                                                        )}
                                                         <Typography variant="caption" color="text.secondary">
                                                             {tienda.descripcion || 'Sin descripción'}
                                                         </Typography>

@@ -29,7 +29,8 @@ export interface TiendaDocument {
     nit?: string | undefined         // Tax ID (optional)
     slug: string                  // URL-friendly slug
     categorias: string[]          // Array of category keys/labels from ListadoCategoriasTiendas (Min 1)
-    descripcion?: string | undefined // Short slogan or description
+    slogan?: string | undefined   // Short slogan or marketing tagline (optional)
+    descripcion?: string | undefined // Detailed store description, products and services (optional)
     email?: string | undefined       // Primary email or summary
     emails?: string[] | undefined    // Array of registered contact emails (Min 1)
     sitioWeb?: string | undefined

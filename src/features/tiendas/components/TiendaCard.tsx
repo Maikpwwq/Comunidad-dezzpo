@@ -126,7 +126,24 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
                         )}
                     </Box>
 
-                    {/* Slogan / Description */}
+                    {/* Slogan & Description */}
+                    {tienda.slogan && (
+                        <Typography
+                            variant="subtitle2"
+                            sx={{
+                                mb: 0.75,
+                                fontStyle: 'italic',
+                                fontWeight: 600,
+                                color: 'primary.main',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 1,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                            }}
+                        >
+                            "{tienda.slogan}"
+                        </Typography>
+                    )}
                     {tienda.descripcion && (
                         <Typography
                             variant="body2"
@@ -134,7 +151,7 @@ export const TiendaCard: React.FC<TiendaCardProps> = ({ tienda }) => {
                             sx={{
                                 mb: 1.5,
                                 display: '-webkit-box',
-                                WebkitLineClamp: 2,
+                                WebkitLineClamp: tienda.slogan ? 2 : 3,
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',
                             }}

@@ -132,9 +132,14 @@ export const SedeDetailModal: React.FC<SedeDetailModalProps> = ({
             </DialogTitle>
             <Divider sx={{ flexShrink: 0 }} />
             <DialogContent sx={{ p: { xs: 2, sm: 2.5 }, overflowY: 'auto', flexGrow: 1 }}>
+                {tienda.slogan && (
+                    <Typography variant="subtitle2" color="primary.main" sx={{ mb: 1, fontStyle: 'italic', fontWeight: 600 }}>
+                        "{tienda.slogan}"
+                    </Typography>
+                )}
                 {tienda.descripcion && (
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2, fontStyle: 'italic' }}>
-                        "{tienda.descripcion}"
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        {tienda.descripcion}
                     </Typography>
                 )}
 
