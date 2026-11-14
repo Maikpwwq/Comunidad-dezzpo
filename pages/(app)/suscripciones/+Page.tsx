@@ -9,18 +9,19 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
-import { 
-    Button, 
-    Typography, 
-    Dialog, 
-    DialogTitle, 
-    DialogContent, 
-    DialogActions, 
-    TextField, 
-    Box, 
-    Alert, 
-    Snackbar, 
+import {
+    Button,
+    Typography,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    TextField,
+    Box,
+    Alert,
+    Snackbar,
     CircularProgress,
+    Chip,
     Card,
     CardContent,
     List,
@@ -47,21 +48,21 @@ import { navigate } from 'vike/client/router'
 const EPAYCO_PUBLIC_KEY = import.meta.env.VITE_APP_EPAYCO_PUBLIC_KEY || ''
 
 const beneficiosPropietarios = [
-    { title: 'Servicio de inspección premium para tu inmueble.' },
-    { title: 'Servicio 24 horas para urgencias del hogar.' },
-    { title: 'Todos los servicios especializados de nuestra red.' },
-    { title: 'Prioridad máxima al solicitar presupuestos y cotizaciones.' },
-    { title: 'Garantía anti-fraude y acompañamiento Comunidad Dezzpo.' },
+    { title: 'Contrato Marco VIP para Hogares y Propiedad Horizontal (Ley 675/2001).' },
+    { title: 'Servicio de inspección técnica especializada y diagnóstico de inmueble.' },
+    { title: 'Informes de mantenimiento estructurados para Consejos de Administración.' },
+    { title: 'Asignación preferencial de contratistas verificados (PyME y Empresas).' },
+    { title: 'Acompañamiento técnico imparcial de Comunidad Dezzpo sin comisiones sorpresa.' },
 ]
 
 const beneficiosComerciantes = [
-    { title: 'Ficha personalizada del perfil (proyectos, opiniones, portafolio y fotos).' },
+    { title: 'Insignia dorada "Miembro Destacado" visible en el directorio y búsquedas.' },
+    { title: 'Proyectos estructurados ilimitados con comparador interactivo Antes / Después.' },
+    { title: 'Elegibilidad preferencial en Libros de Inspiración para tráfico orgánico de Google.' },
+    { title: 'Tarjeta de presentación digital personalizable con Código QR de alta resolución.' },
     { title: 'Visualización de datos de contacto de clientes e historial de requerimientos.' },
     { title: 'Avisos instantáneos al correo y notificaciones en tiempo real.' },
-    { title: 'Posicionamiento y optimización SEO del perfil público en Google.' },
     { title: 'Crédito mensual exclusivo para publicitar y destacar tu perfil.' },
-    { title: 'Acceso a guías avanzadas de costeo y estructuración de presupuestos.' },
-    { title: 'Insignia destacada de Comunidad Dezzpo en el directorio público.' },
 ]
 
 export default function Page() {
@@ -79,8 +80,10 @@ export default function Page() {
     const [isPaying, setIsPaying] = useState(false)
     const [isSubmittingForm, setIsSubmittingForm] = useState(false)
 
-    // Form state (Propietario VIP)
+    // Form state (Propietario VIP / Propiedad Horizontal)
     const [openInspectionModal, setOpenInspectionModal] = useState(false)
+    const [propertyCategory, setPropertyCategory] = useState<'hogar' | 'propiedad_horizontal' | 'inmobiliaria'>('hogar')
+    const [buildingName, setBuildingName] = useState('')
     const [address, setAddress] = useState('')
     const [city, setCity] = useState('Bogotá')
     const [postalCode, setPostalCode] = useState('')
@@ -195,17 +198,33 @@ export default function Page() {
             return
         }
 
+        if (propertyCategory === 'propiedad_horizontal' && !buildingName.trim()) {
+            setSnackMessage('Por favor ingresa el nombre del Edificio o Conjunto Residencial.')
+            setSnackSeverity('error')
+            setSnackOpen(true)
+            return
+        }
+
         setIsSubmittingForm(true)
         try {
+            const propertyName =
+                propertyCategory === 'propiedad_horizontal' && buildingName.trim()
+                    ? `PH: ${buildingName.trim()}`
+                    : propertyCategory === 'inmobiliaria'
+                        ? `Inmobiliaria: ${address.slice(0, 20)}`
+                        : `Hogar: ${address.slice(0, 20)}`
+
+            const enrichedScope = `[${propertyCategory.toUpperCase()}] ${serviceScope.trim()}`
+
             const requestId = await createInspectionRequest({
                 propietarioId: userId,
                 propertyDetails: {
-                    name: 'Inmueble VIP ' + address.slice(0, 15),
+                    name: propertyName,
                     address,
                     city,
                     postalCode,
                 },
-                serviceScope,
+                serviceScope: enrichedScope,
                 contactPhone,
                 contactEmail,
             })
@@ -215,7 +234,7 @@ export default function Page() {
                 setSnackSeverity('success')
                 setSnackOpen(true)
                 setOpenInspectionModal(false)
-                
+
                 // Clear fields
                 setAddress('')
                 setPostalCode('')
@@ -241,11 +260,11 @@ export default function Page() {
     return (
         <Container className="py-5">
             <Box sx={{ textAlign: 'center', mb: 5 }}>
-                <Typography variant="h3" fontWeight={800} sx={{ 
-                    background: 'linear-gradient(90deg, #0f766e 0%, #0d9488 100%)', 
-                    WebkitBackgroundClip: 'text', 
+                <Typography variant="h3" fontWeight={800} sx={{
+                    background: 'linear-gradient(90deg, #0f766e 0%, #0d9488 100%)',
+                    WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
-                    mb: 2 
+                    mb: 2
                 }}>
                     Membresías y Beneficios Premium
                 </Typography>
@@ -258,11 +277,11 @@ export default function Page() {
                 {/* Owners Column */}
                 {showOwnerCard && (
                     <Col xs={12} md={showMerchantCard ? 6 : 8} lg={showMerchantCard ? 5 : 6}>
-                        <Card sx={{ 
-                            height: '100%', 
-                            display: 'flex', 
+                        <Card sx={{
+                            height: '100%',
+                            display: 'flex',
                             flexDirection: 'column',
-                            borderRadius: 4, 
+                            borderRadius: 4,
                             border: '1px solid',
                             borderColor: 'divider',
                             boxShadow: '0 10px 30px rgba(0,0,0,0.04)',
@@ -278,7 +297,7 @@ export default function Page() {
                                     Inspección técnica y soporte preventivo
                                 </Typography>
                             </Box>
-                            
+
                             <CardContent sx={{ flexGrow: 1, p: 4 }}>
                                 <List>
                                     {beneficiosPropietarios.map((item, index) => (
@@ -293,14 +312,14 @@ export default function Page() {
                             </CardContent>
 
                             <Box sx={{ p: 4, pt: 0 }}>
-                                <Button 
-                                    fullWidth 
-                                    variant="contained" 
-                                    sx={{ 
-                                        borderRadius: 2, 
-                                        py: 1.5, 
-                                        bgcolor: '#0f766e', 
-                                        '&:hover': { bgcolor: '#0d9488' } 
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{
+                                        borderRadius: 2,
+                                        py: 1.5,
+                                        bgcolor: '#0f766e',
+                                        '&:hover': { bgcolor: '#0d9488' }
                                     }}
                                     onClick={() => {
                                         if (!isAuth) {
@@ -320,11 +339,11 @@ export default function Page() {
                 {/* Merchants Column */}
                 {showMerchantCard && (
                     <Col xs={12} md={showOwnerCard ? 6 : 8} lg={showOwnerCard ? 5 : 6}>
-                        <Card sx={{ 
-                            height: '100%', 
-                            display: 'flex', 
+                        <Card sx={{
+                            height: '100%',
+                            display: 'flex',
                             flexDirection: 'column',
-                            borderRadius: 4, 
+                            borderRadius: 4,
                             border: '2px solid',
                             borderColor: '#0d9488',
                             boxShadow: '0 10px 30px rgba(13, 148, 136, 0.08)',
@@ -340,7 +359,7 @@ export default function Page() {
                                     $150.000 <Typography component="span" variant="subtitle2">COP / año</Typography>
                                 </Typography>
                             </Box>
-                            
+
                             <CardContent sx={{ flexGrow: 1, p: 4 }}>
                                 <List>
                                     {beneficiosComerciantes.map((item, index) => (
@@ -355,15 +374,15 @@ export default function Page() {
                             </CardContent>
 
                             <Box sx={{ p: 4, pt: 0 }}>
-                                <Button 
-                                    fullWidth 
-                                    variant="contained" 
+                                <Button
+                                    fullWidth
+                                    variant="contained"
                                     disabled={isPaying}
-                                    sx={{ 
-                                        borderRadius: 2, 
-                                        py: 1.5, 
-                                        bgcolor: '#0d9488', 
-                                        '&:hover': { bgcolor: '#0f766e' } 
+                                    sx={{
+                                        borderRadius: 2,
+                                        py: 1.5,
+                                        bgcolor: '#0d9488',
+                                        '&:hover': { bgcolor: '#0f766e' }
                                     }}
                                     onClick={handleComercianteCheckout}
                                 >
@@ -382,8 +401,8 @@ export default function Page() {
             </Row>
 
             {/* Propietario VIP Modal Form */}
-            <Dialog 
-                open={openInspectionModal} 
+            <Dialog
+                open={openInspectionModal}
                 onClose={() => setOpenInspectionModal(false)}
                 maxWidth="sm"
                 fullWidth
@@ -397,8 +416,49 @@ export default function Page() {
                         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
                             Ingresa los detalles del inmueble a inspeccionar. Nuestro equipo evaluará y agendará una visita técnica preventiva.
                         </Typography>
-                        
+
                         <Row className="g-3">
+                            <Col xs={12}>
+                                <Typography variant="caption" sx={{ fontWeight: 700, color: '#475569', display: 'block', mb: 1 }}>
+                                    DESTINO DEL SERVICIO O TIPO DE INMUEBLE
+                                </Typography>
+                                <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                                    {[
+                                        { id: 'hogar', label: 'Hogar / Residencial' },
+                                        { id: 'propiedad_horizontal', label: 'Propiedad Horizontal (Edificios / Conjuntos)' },
+                                        { id: 'inmobiliaria', label: 'Inmobiliaria / Multi-Family' },
+                                    ].map((tipo) => (
+                                        <Chip
+                                            key={tipo.id}
+                                            label={tipo.label}
+                                            clickable
+                                            onClick={() => setPropertyCategory(tipo.id as any)}
+                                            color={propertyCategory === tipo.id ? 'primary' : 'default'}
+                                            variant={propertyCategory === tipo.id ? 'filled' : 'outlined'}
+                                            sx={{ fontWeight: propertyCategory === tipo.id ? 700 : 400 }}
+                                            size="small"
+                                        />
+                                    ))}
+                                </Box>
+                            </Col>
+
+                            {propertyCategory === 'propiedad_horizontal' && (
+                                <Col xs={12}>
+                                    <TextField
+                                        fullWidth
+                                        label="Nombre del Edificio / Conjunto Residencial *"
+                                        placeholder="Ej. Conjunto Residencial Torres del Parque"
+                                        value={buildingName}
+                                        onChange={(e) => setBuildingName(e.target.value)}
+                                        required
+                                        size="small"
+                                    />
+                                    <Typography variant="caption" sx={{ color: '#0f766e', mt: 0.5, display: 'block' }}>
+                                        ℹ️ Régimen Ley 675 de 2001: Propuestas e informes estructurados para consideración del Administrador, Consejo o Asamblea.
+                                    </Typography>
+                                </Col>
+                            )}
+
                             <Col xs={12}>
                                 {isAuth && userId ? (
                                     <PropertySelector
@@ -492,12 +552,12 @@ export default function Page() {
                             </Col>
                         </Row>
                     </DialogContent>
-                    
+
                     <DialogActions sx={{ p: 3, pt: 0 }}>
                         <Button onClick={() => setOpenInspectionModal(false)}>Cancelar</Button>
-                        <Button 
-                            type="submit" 
-                            variant="contained" 
+                        <Button
+                            type="submit"
+                            variant="contained"
                             disabled={isSubmittingForm}
                             sx={{ bgcolor: '#0f766e', '&:hover': { bgcolor: '#0d9488' } }}
                         >

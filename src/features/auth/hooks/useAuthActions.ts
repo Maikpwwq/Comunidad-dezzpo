@@ -122,6 +122,11 @@ export function useAuthActions(): UseAuthActionsReturn {
                     userChannelUrl: '',
                     userCreatedDrafts: draftInfo ? [draftInfo.draftId] : [],
                     userName: displayName,
+                    consent: {
+                        privacyNoticeVersion: 'V1.1',
+                        acceptedAt: new Date().toISOString(),
+                        termsAccepted: true,
+                    },
                 }
                 await setUser({ userId: effectiveUid, role, data })
             }

@@ -57,3 +57,7 @@ export * from './tiendas'
 export * from './social'
 // Matching & Compatibility services
 export * from './matching'
+// Structured Projects services (ADR Option C)
+export * from './projects'
+// Reputation & Badges services
+export * from './reputation'

@@ -44,3 +44,7 @@ export type { SocialShareMenuProps } from './SocialShareMenu'
 
 export * from './ZoneSelector'
 export * from './PhoneField'
+export { ComercianteBusinessCardModal } from './ComercianteBusinessCardModal'
+export type { ComercianteBusinessCardProps } from './ComercianteBusinessCardModal'
+export { ContractMilestonesSection } from './ContractMilestonesSection'
+export type { ContractMilestonesSectionProps } from './ContractMilestonesSection'

@@ -57,3 +57,6 @@ export type { ProfileHeaderProps } from './ProfileHeader'
 
 export { ProfileGallery } from './ProfileGallery'
 export type { ProfileGalleryProps } from './ProfileGallery'
+
+export { ProjectFormModal } from './ProjectFormModal'
+export type { ProjectFormModalProps } from './ProjectFormModal'

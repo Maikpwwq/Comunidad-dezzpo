@@ -35,6 +35,7 @@ import { navigate } from 'vike/client/router'
 import { getContract } from '@services/contracts'
 import { useUserStore } from '@stores/userStore'
 import type { ContractFirestoreDocument } from '@services/types'
+import { ContractMilestonesSection } from '@components/common'
 
 // ePayco public key for SDK loading
 const EPAYCO_PUBLIC_KEY = import.meta.env.VITE_APP_EPAYCO_PUBLIC_KEY || ''
@@ -315,6 +316,15 @@ export default function Page() {
                         </Box>
                     </Paper>
                 )}
+
+                {/* Hitos de Obra y Aprobación Bilateral (Modelo D - Escrow Lógico) */}
+                <ContractMilestonesSection
+                    contractId={contractId}
+                    clientId={contract.clientId}
+                    providerId={contract.providerId}
+                    agreedAmount={contract.agreedAmount}
+                    currentUserId={currentUserId}
+                />
 
                 <Snackbar
                     open={snackOpen}

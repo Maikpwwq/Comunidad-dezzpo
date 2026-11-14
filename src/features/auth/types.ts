@@ -82,6 +82,12 @@ export interface UserFirestoreData {
     userCreatedDrafts: string[]
     userName: string | null
     userContactName?: string | undefined
+    /** Canonical Habeas Data legal consent record (V1.1) */
+    consent?: {
+        readonly privacyNoticeVersion: 'V1.1'
+        readonly acceptedAt: string
+        readonly termsAccepted: boolean
+    } | undefined
 }
 
 /** Auth form shared props */

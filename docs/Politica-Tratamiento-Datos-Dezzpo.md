@@ -22,7 +22,7 @@ Esta Política aplica a los datos personales de personas naturales registradas e
 
 ## 4. Responsable del Tratamiento
 
-**Michael Arias / NIT 102457835-7 / domicilio — Calle 159 No 8c-45**, operador de la Plataforma Dezzpo.
+**Michael Arias / NIT 1024537835-7 / domicilio — Calle 159 No 8c-45**, operador de la Plataforma Dezzpo.
 
 Canal de contacto para ejercer sus derechos: [EMAIL_ADDRESS].
 

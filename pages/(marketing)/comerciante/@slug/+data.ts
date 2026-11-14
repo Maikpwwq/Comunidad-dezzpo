@@ -43,13 +43,33 @@ async function data(pageContext: PageContextServer) {
             }).filter((item: any) => item !== null)
         }
 
+        // Fetch structured projects for this comerciante (ADR Option C)
+        let structuredProjects: any[] = []
+        try {
+            const projectsSnapshot = await adminFirestore
+                .collection('projects')
+                .where('comercianteId', '==', doc.id)
+                .limit(6)
+                .get()
+
+            if (!projectsSnapshot.empty) {
+                structuredProjects = projectsSnapshot.docs.map((pDoc: any) => ({
+                    ...pDoc.data(),
+                    projectId: pDoc.id,
+                }))
+            }
+        } catch (pErr) {
+            console.warn('[+data.ts] Could not load structured projects:', pErr)
+        }
+
         const title = `${comerciante.userName || comerciante.userRazonSocial || 'Comerciante'} — Comunidad Dezzpo`
         const description = comerciante.userDescription || `Perfil profesional de ${comerciante.userName} en Comunidad Dezzpo.`
 
         return {
             comerciante: {
                 ...comerciante,
-                userCategoriesChips
+                userCategoriesChips,
+                structuredProjects,
             },
             title,
             description

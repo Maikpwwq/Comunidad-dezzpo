@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { usePageContext } from '@hooks/usePageContext'
 import { useUserStore } from '@stores/userStore'
 import { getPrimaryEmail, getPrimaryPhone } from '@utilities/contactUtils'
@@ -11,7 +11,12 @@ import clsx from 'clsx'
 import styles from './ProfilePublic.module.scss'
 
 import { Comentarios } from '@features/profile'
-import { ChipsCategories, MapaPerfil, CincoEstrellas } from '@components/common'
+import {
+    ChipsCategories,
+    MapaPerfil,
+    CincoEstrellas,
+    ComercianteBusinessCardModal,
+} from '@components/common'
 
 // UI Libs
 import { Row, Col, Container } from 'react-bootstrap'
@@ -21,6 +26,8 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import VerifiedIcon from '@mui/icons-material/Verified'
+import QrCode2Icon from '@mui/icons-material/QrCode2'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import { Chip } from '@mui/material'
 
 
@@ -28,6 +35,7 @@ export default function Page() {
     const pageContext = usePageContext()
     const currentUserId = useUserStore((state) => state.userId)
     const currentUserName = useUserStore((state) => state.displayName)
+    const [openCardModal, setOpenCardModal] = useState(false)
 
     const data = pageContext.data as any
     const comerciante = data?.comerciante
@@ -122,8 +130,33 @@ export default function Page() {
         }
     ]
 
-    // ImageGallery JSON-LD for portfolio
-    if (userGalleryUrl.length > 0) {
+    // Structured Projects & ImageGallery JSON-LD (ADR Option C + Google SEO)
+    if (comerciante.structuredProjects && comerciante.structuredProjects.length > 0) {
+        comerciante.structuredProjects.forEach((p: any) => {
+            const images: string[] = []
+            if (p.beforeAfterPairs && Array.isArray(p.beforeAfterPairs)) {
+                p.beforeAfterPairs.forEach((pair: any) => {
+                    if (pair.afterUrl) images.push(pair.afterUrl)
+                    if (pair.beforeUrl) images.push(pair.beforeUrl)
+                })
+            }
+            if (p.galleryUrls && Array.isArray(p.galleryUrls)) {
+                images.push(...p.galleryUrls)
+            }
+
+            schemaGraph.push({
+                '@type': 'CreativeWork',
+                'name': p.title,
+                'description': p.description,
+                'genre': p.category,
+                'image': images,
+                'creator': {
+                    '@type': 'Person',
+                    'name': userRazonSocial || userName,
+                },
+            })
+        })
+    } else if (userGalleryUrl.length > 0) {
         schemaGraph.push({
             '@type': 'ImageGallery',
             'name': `Portafolio de ${userRazonSocial || userName}`,
@@ -194,25 +227,31 @@ export default function Page() {
                     </span>
                     {comerciante.earnedBadges && comerciante.earnedBadges.length > 0 && (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1.5 }}>
-                            {comerciante.earnedBadges.map((badge: any, index: number) => (
-                                <Chip
-                                    key={index}
-                                    icon={<VerifiedIcon sx={{ color: '#0d9488 !important', fontSize: '0.9rem' }} />}
-                                    label={`Certificado: ${badge.category}`}
-                                    sx={{
-                                        bgcolor: '#f0fdfa',
-                                        color: '#0f766e',
-                                        fontWeight: 600,
-                                        border: '1px solid #ccfbf1',
-                                        fontSize: '0.75rem',
-                                        height: 26,
-                                        '& .MuiChip-icon': {
-                                            color: '#0d9488',
-                                        }
-                                    }}
-                                    size="small"
-                                />
-                            ))}
+                            {comerciante.earnedBadges.map((badge: any, index: number) => {
+                                const badgeLabel = badge.title || (badge.category ? `Certificado: ${badge.category}` : 'Insignia Verificada')
+                                const badgeColor = badge.color || '#0f766e'
+                                const badgeBg = badge.bgLight || '#f0fdfa'
+                                const badgeBorder = badge.borderColor || '#ccfbf1'
+                                return (
+                                    <Chip
+                                        key={index}
+                                        icon={<VerifiedIcon sx={{ color: `${badgeColor} !important`, fontSize: '0.9rem' }} />}
+                                        label={badgeLabel}
+                                        sx={{
+                                            bgcolor: badgeBg,
+                                            color: badgeColor,
+                                            fontWeight: 600,
+                                            border: `1px solid ${badgeBorder}`,
+                                            fontSize: '0.75rem',
+                                            height: 26,
+                                            '& .MuiChip-icon': {
+                                                color: badgeColor,
+                                            },
+                                        }}
+                                        size="small"
+                                    />
+                                )
+                            })}
                         </Box>
                     )}
                 </Box>
@@ -268,19 +307,41 @@ export default function Page() {
                     </Col>
                 </Row>
 
-                {/* Call to Action: Solicitar cotización */}
+                {/* Call to Action: Solicitar cotización y Tarjeta Digital QR */}
                 <Row className="p-0 m-0 w-100 d-flex justify-content-center">
                     <Col md={10} className="col-10 text-center py-3">
-                        <Button
-                            variant="contained"
-                            color="success"
-                            size="large"
-                            className="btn-primary-gradient py-3 px-5 text-white"
-                            style={{ borderRadius: '50px', fontSize: '1.1rem', fontWeight: 'bold' }}
-                            href={`/nuevo-proyecto?comercianteId=${comerciante.userId}&category=${comerciante.userCategories?.[0] || ''}`}
-                        >
-                            Solicitar Cotización Gratis
-                        </Button>
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                size="large"
+                                className="btn-primary-gradient py-3 px-5 text-white"
+                                style={{ borderRadius: '50px', fontSize: '1.1rem', fontWeight: 'bold' }}
+                                href={`/nuevo-proyecto?comercianteId=${comerciante.userId}&category=${comerciante.userCategories?.[0] || ''}`}
+                            >
+                                Solicitar Cotización Gratis
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                size="large"
+                                startIcon={<QrCode2Icon />}
+                                onClick={() => setOpenCardModal(true)}
+                                sx={{
+                                    borderRadius: '50px',
+                                    borderColor: '#0f766e',
+                                    color: '#0f766e',
+                                    fontWeight: 700,
+                                    py: 1.5,
+                                    px: 3,
+                                    '&:hover': {
+                                        borderColor: '#0d9488',
+                                        bgcolor: '#f0fdfa',
+                                    },
+                                }}
+                            >
+                                Tarjeta Digital & QR
+                            </Button>
+                        </Box>
                     </Col>
                 </Row>
 
@@ -387,10 +448,115 @@ export default function Page() {
                     </Col>
                 </Row>
 
-                {/* Portfolio / Gallery */}
+                {/* Portfolio / Structured Projects (ADR Option C) */}
                 <Row className="p-0 m-0 w-100 d-flex align-items-start">
                     <Col className="col-10 py-4 mx-auto">
-                        {userGalleryUrl.length > 0 && (
+                        {comerciante.structuredProjects && comerciante.structuredProjects.length > 0 ? (
+                            <>
+                                <Typography
+                                    variant="h5"
+                                    className={clsx(styles.SectionTitle, "pt-4 pb-3 w-100")}
+                                    align="left"
+                                >
+                                    Proyectos destacados y obras realizadas
+                                </Typography>
+                                <Row className="w-100 pb-4">
+                                    {comerciante.structuredProjects.map((project: any, pIndex: number) => (
+                                        <Col key={project.projectId || pIndex} xs={12} className="mb-4">
+                                            <Box
+                                                sx={{
+                                                    p: 3,
+                                                    borderRadius: 3,
+                                                    bgcolor: '#ffffff',
+                                                    border: '1px solid #e2e8f0',
+                                                    boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
+                                                }}
+                                            >
+                                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 1, mb: 1.5 }}>
+                                                    <Box>
+                                                        <Typography variant="h6" fontWeight={700} color="#0f172a">
+                                                            {project.title}
+                                                        </Typography>
+                                                        <Box sx={{ display: 'flex', gap: 1, mt: 0.5 }}>
+                                                            {project.category && (
+                                                                <Chip label={project.category} size="small" sx={{ bgcolor: '#f1f5f9', fontWeight: 600, fontSize: '0.75rem' }} />
+                                                            )}
+                                                            {project.zone && (
+                                                                <Chip label={project.zone.replace('bogota-', '').replace(/-/g, ' ')} size="small" sx={{ bgcolor: '#e0f2fe', color: '#0369a1', fontWeight: 600, fontSize: '0.75rem' }} />
+                                                            )}
+                                                        </Box>
+                                                    </Box>
+                                                    {project.clientConsent?.granted && (
+                                                        <Chip
+                                                            icon={<CheckCircleOutlineIcon sx={{ color: '#059669 !important', fontSize: '0.9rem' }} />}
+                                                            label="Obra autorizada por el propietario"
+                                                            size="small"
+                                                            sx={{ bgcolor: '#ecfdf5', color: '#047857', fontWeight: 600, fontSize: '0.72rem' }}
+                                                        />
+                                                    )}
+                                                </Box>
+                                                {project.description && (
+                                                    <Typography variant="body2" color="#475569" sx={{ mb: 2 }}>
+                                                        {project.description}
+                                                    </Typography>
+                                                )}
+
+                                                {/* Before / After comparison if present */}
+                                                {project.beforeAfterPairs && project.beforeAfterPairs.length > 0 && (
+                                                    <Box sx={{ mb: 2 }}>
+                                                        <Typography variant="subtitle2" fontWeight={700} color="#0f766e" sx={{ mb: 1 }}>
+                                                            Transformación: Antes y Después
+                                                        </Typography>
+                                                        <Row>
+                                                            {project.beforeAfterPairs.map((pair: any, pairIdx: number) => (
+                                                                <Col key={pair.id || pairIdx} md={6} xs={12} className="mb-2">
+                                                                    <Box sx={{ display: 'flex', gap: 1.5 }}>
+                                                                        <Box sx={{ flex: 1, position: 'relative' }}>
+                                                                            <Box
+                                                                                component="img"
+                                                                                src={pair.beforeUrl}
+                                                                                alt="Antes de la obra"
+                                                                                sx={{ width: '100%', height: 180, objectFit: 'cover', borderRadius: 2 }}
+                                                                            />
+                                                                            <Chip label="ANTES" size="small" sx={{ position: 'absolute', bottom: 8, left: 8, bgcolor: 'rgba(0,0,0,0.7)', color: '#fff', fontWeight: 800, fontSize: '0.7rem' }} />
+                                                                        </Box>
+                                                                        <Box sx={{ flex: 1, position: 'relative' }}>
+                                                                            <Box
+                                                                                component="img"
+                                                                                src={pair.afterUrl}
+                                                                                alt="Después de la obra"
+                                                                                sx={{ width: '100%', height: 180, objectFit: 'cover', borderRadius: 2, border: '2px solid #0d9488' }}
+                                                                            />
+                                                                            <Chip label="DESPUÉS" size="small" sx={{ position: 'absolute', bottom: 8, left: 8, bgcolor: '#0d9488', color: '#fff', fontWeight: 800, fontSize: '0.7rem' }} />
+                                                                        </Box>
+                                                                    </Box>
+                                                                </Col>
+                                                            ))}
+                                                        </Row>
+                                                    </Box>
+                                                )}
+
+                                                {/* Additional Project Gallery Photos */}
+                                                {project.galleryUrls && project.galleryUrls.length > 0 && (
+                                                    <Row>
+                                                        {project.galleryUrls.map((img: string, iIdx: number) => (
+                                                            <Col key={iIdx} md={3} sm={6} xs={12} className="p-1">
+                                                                <Box
+                                                                    component="img"
+                                                                    src={img}
+                                                                    alt={`${project.title} - foto ${iIdx + 1}`}
+                                                                    sx={{ width: '100%', height: 120, objectFit: 'cover', borderRadius: 1.5 }}
+                                                                />
+                                                            </Col>
+                                                        ))}
+                                                    </Row>
+                                                )}
+                                            </Box>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            </>
+                        ) : userGalleryUrl.length > 0 ? (
                             <>
                                 <Typography
                                     variant="h5"
@@ -413,7 +579,7 @@ export default function Page() {
                                     ))}
                                 </Row>
                             </>
-                        )}
+                        ) : null}
 
                         {/* Location */}
                         {userDirection && (
@@ -449,6 +615,13 @@ export default function Page() {
                     </Col>
                 </Row>
             </Col>
+
+            {/* Digital Business Card & QR Modal */}
+            <ComercianteBusinessCardModal
+                open={openCardModal}
+                onClose={() => setOpenCardModal(false)}
+                comerciante={comerciante}
+            />
         </Container>
     )
 }

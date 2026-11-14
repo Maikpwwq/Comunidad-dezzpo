@@ -398,6 +398,7 @@ export default function Page() {
                             isOwnProfile={isOwnProfile}
                             currentUserId={currentUserId}
                             viewerRole={viewerRole}
+                            profileTier={userInfo.profileTier || 'free'}
                             onUpdateUserInfo={setUserInfo}
                             userInfoState={userInfo as unknown as Record<string, unknown>}
                         />
