@@ -63,6 +63,11 @@ export interface UserCardProps {
     likesCount?: number | undefined
     compatibilityBadge?: string | null | undefined
     compatibilityExplanation?: string | null | undefined
+    variant?: 'default' | 'compact' | undefined
+    reasonLabels?: readonly string[] | undefined
+    isFeatured?: boolean | undefined
+    onCardClick?: (() => void) | undefined
+    onQuoteClick?: (() => void) | undefined
     [key: string]: unknown
 }
 
@@ -89,6 +94,11 @@ export function UserCard({
     likesCount,
     compatibilityBadge,
     compatibilityExplanation,
+    variant = 'default',
+    reasonLabels,
+    isFeatured = false,
+    onCardClick,
+    onQuoteClick,
 }: UserCardProps): React.ReactElement {
     // Primary display name: priority to userName (commercial name), fallback to legal userRazonSocial
     const displayName = userName || userRazonSocial || 'Comerciante'
@@ -133,13 +143,21 @@ export function UserCard({
         : { bgcolor: 'var(--background-hover-green-color)' }
 
     // Handlers
-    const handleVerSitio = useCallback(() => {
+    const handleVerSitio = useCallback((e?: React.MouseEvent) => {
+        onCardClick?.()
+        if (e && (e.ctrlKey || e.metaKey || e.button === 1)) {
+            return
+        }
+        if (e) {
+            e.preventDefault()
+        }
         navigate(userLink)
-    }, [userLink])
+    }, [userLink, onCardClick])
 
     const [isCreatingChannel, setIsCreatingChannel] = useState(false)
 
     const handleCotizarVisitaTecnica = useCallback(async () => {
+        onQuoteClick?.()
         if (!currentUserId) {
             navigate('/ingreso')
             return
@@ -155,7 +173,7 @@ export function UserCard({
         } finally {
             setIsCreatingChannel(false)
         }
-    }, [currentUserId, userId, displayName])
+    }, [currentUserId, userId, displayName, onQuoteClick])
 
     const handleFavorite = useCallback(async () => {
         if (isSaving.current) return
@@ -217,11 +235,16 @@ export function UserCard({
     }, [userCategories])
 
     return (
-        <article className={styles['professional-card']}>
+        <article className={clsx(styles['professional-card'], variant === 'compact' && styles['compact-card'])}>
             <header className={styles['card-header']}>
                 <Avatar
                     src={userPhotoUrl || ''}
-                    sx={{ ...bgAvatar, flexShrink: 0 }}
+                    sx={{
+                        ...bgAvatar,
+                        flexShrink: 0,
+                        width: variant === 'compact' ? 44 : 56,
+                        height: variant === 'compact' ? 44 : 56,
+                    }}
                     aria-label="user avatar"
                 >
                     <Typography className={styles['avatar-text'] || ''}>
@@ -258,8 +281,15 @@ export function UserCard({
                     >
                         {userProfession || 'Profesional / Comercio'} • Se unió el {userJoined || '—'}
                     </Typography>
-                    {(userClasification || compatibilityBadge) && (
+                    {(userClasification || compatibilityBadge || isFeatured) && (
                         <Box sx={{ mt: 0.5, display: 'flex', flexWrap: 'wrap', gap: 0.75, alignItems: 'center' }}>
+                            {isFeatured && (
+                                <Chip
+                                    label="Destacado"
+                                    size="small"
+                                    className={styles.FeaturedChip || ''}
+                                />
+                            )}
                             {userClasification && (
                                 <Chip
                                     label={getBadgeDetails(userClasification).name}
@@ -297,11 +327,23 @@ export function UserCard({
                             )}
                         </Box>
                     )}
+                    {reasonLabels && reasonLabels.length > 0 && (
+                        <div className={styles.ReasonChipsWrapper}>
+                            {reasonLabels.map((reason, idx) => (
+                                <Chip
+                                    key={`${reason}-${idx}`}
+                                    label={reason}
+                                    size="small"
+                                    className={styles.ReasonChip || ''}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </header>
 
             <div className={styles['description']}>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: variant === 'compact' ? 1 : 2 }}>
                     {userDescription}
                 </Typography>
 
@@ -326,14 +368,26 @@ export function UserCard({
 
             <div className={styles['actions']}>
                 <div className={styles.ActionButtonsLeft}>
-                    <Button
+                    <a
+                        href={userLink}
                         className="btn-round btn-low"
                         onClick={handleVerSitio}
-                        size="small"
-                        sx={{ py: 0.5, px: 1.2, whiteSpace: 'nowrap', textTransform: 'none', fontSize: '0.8rem' }}
+                        aria-label={variant === 'compact' ? `Ver perfil de ${displayName}` : `Ver sitio de ${displayName}`}
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '4px 10px',
+                            minHeight: 44,
+                            whiteSpace: 'nowrap',
+                            textTransform: 'none',
+                            fontSize: '0.8rem',
+                            textDecoration: 'none',
+                            cursor: 'pointer',
+                        }}
                     >
-                        Ver sitio
-                    </Button>
+                        {variant === 'compact' ? 'Ver perfil' : 'Ver sitio'}
+                    </a>
 
                     {isAuthenticated && (
                         <Button
@@ -341,7 +395,14 @@ export function UserCard({
                             onClick={handleCotizarVisitaTecnica}
                             size="small"
                             disabled={isCreatingChannel}
-                            sx={{ py: 0.5, px: 1.5, textTransform: 'none', fontSize: '0.8rem' }}
+                            aria-label={`Cotizar con ${displayName}`}
+                            sx={{
+                                py: 0.5,
+                                px: 1.5,
+                                minHeight: 44,
+                                textTransform: 'none',
+                                fontSize: '0.8rem',
+                            }}
                         >
                             {isCreatingChannel ? 'Abriendo chat...' : 'Cotizar'}
                         </Button>
@@ -357,7 +418,7 @@ export function UserCard({
                             aria-label="add to favorites"
                             onClick={handleFavorite}
                             size="small"
-                            sx={{ color: isLiked ? 'error.main' : 'action.active' }}
+                            sx={{ color: isLiked ? 'error.main' : 'action.active', minWidth: 44, minHeight: 44 }}
                         >
                             <FavoriteIcon fontSize="small" />
                         </IconButton>
@@ -375,6 +436,7 @@ export function UserCard({
                             onClick={() => setIsShareOpen((prev) => !prev)}
                             size="small"
                             className={clsx(isShareOpen && styles.ShareButtonActive)}
+                            sx={{ minWidth: 44, minHeight: 44 }}
                         >
                             <ShareIcon fontSize="small" />
                         </IconButton>

@@ -121,3 +121,4 @@ export async function getSimilarProfilesHandler(c: Context): Promise<Response> {
         return c.json({ status: 'error', code: 'no_disponible' }, 500)
     }
 }
+

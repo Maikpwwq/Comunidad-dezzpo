@@ -97,3 +97,4 @@ export class SimilarProfilesCache<T> {
 
 // Singleton cache instance for similar profiles recommendations
 export const similarProfilesMemoryCache = new SimilarProfilesCache<unknown>(500, 900)
+

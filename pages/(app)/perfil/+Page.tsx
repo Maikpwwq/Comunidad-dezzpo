@@ -5,13 +5,18 @@
  * SSR-safe: Uses Zustand store instead of UserAuthContext, lazy Firebase loading.
  * Orchestrator pattern: delegates display concerns to modular profile components.
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { resolveUserByIdOrSlug } from '@services/users'
 import { useUserStore } from '@stores/userStore'
 import { usePageContext } from '@hooks/usePageContext'
 import type { ContactEmail, ContactPhone, SocialLink } from '@services/types'
 import type { CategoryItem } from '@components/common/ChipsCategories'
 import { slugify } from '@services/utils/slugify'
+
+// Lazy-loaded Similar Profiles Section (Fase 3: R1, R7)
+const SimilarProfilesSection = lazy(
+    () => import('@features/similarProfiles/components/SimilarProfilesSection')
+)
 
 // Styles & Assets
 // @ts-ignore
@@ -77,6 +82,7 @@ export interface UserInfoState {
     emails: ContactEmail[]
     phones: ContactPhone[]
     socialLinks: SocialLink[]
+    profileTier?: string | undefined
 }
 
 /**
@@ -216,6 +222,7 @@ export default function Page() {
                         emails: userData.emails || [],
                         phones: userData.phones || [],
                         socialLinks: userData.socialLinks || [],
+                        profileTier: (userData as unknown as { profileTier?: string }).profileTier || 'free',
                     })
                 } else {
                     setError('User not found')
@@ -398,7 +405,7 @@ export default function Page() {
                             isOwnProfile={isOwnProfile}
                             currentUserId={currentUserId}
                             viewerRole={viewerRole}
-                            profileTier={userInfo.profileTier || 'free'}
+                            profileTier={(userInfo.profileTier === 'destacado' ? 'destacado' : 'free') as 'free' | 'destacado'}
                             onUpdateUserInfo={setUserInfo}
                             userInfoState={userInfo as unknown as Record<string, unknown>}
                         />
@@ -437,6 +444,21 @@ export default function Page() {
                         )}
                     </Col>
                 </Row>
+
+                {/* ── Profesionales Similares Cerca de Ti (Fase 3: R1, R7 - Exclusivo para visitantes) ── */}
+                {!isOwnProfile && (
+                    <Suspense fallback={null}>
+                        <SimilarProfilesSection
+                            targetProfileId={userInfo.userId}
+                            targetCategories={userInfo.userCategories}
+                            targetCiudad={userInfo.userCiudad}
+                            targetDirection={userInfo.userDirection}
+                            isOwnProfile={isOwnProfile}
+                            currentUserId={currentUserId}
+                            viewerRole={viewerRole}
+                        />
+                    </Suspense>
+                )}
             </Col>
         </Container>
     )
