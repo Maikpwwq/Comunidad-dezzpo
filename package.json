@@ -38,7 +38,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vike build && node scripts/patch-vercel-entry.mjs && pnpm exec tsx scripts/generate-sitemap.ts",
+    "build": "vike build && node scripts/patch-vercel-entry.mjs && npx tsx scripts/generate-sitemap.ts",
     "prod": "vike build && vike preview",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
