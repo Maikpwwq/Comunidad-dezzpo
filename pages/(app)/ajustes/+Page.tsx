@@ -28,7 +28,7 @@ import {
 // Components
 import { Ubicacion } from '@features/marketing'
 import PropertiesManager from '@features/profile/components/PropertiesManager'
-import { AuthProvidersManager } from '@features/profile'
+import { AuthProvidersManager, UserLocationManager } from '@features/profile'
 import { SnackBarAlert, ChipsCategories, PhoneField } from '@components/common'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 import { zones, zoneNames, departamentosColombia } from '@assets/data/ListadoZonas'
@@ -50,6 +50,7 @@ import {
     IconButton,
     Tooltip,
     Autocomplete,
+    Box,
 } from '@mui/material'
 import PublicIcon from '@mui/icons-material/Public'
 import FlashOnIcon from '@mui/icons-material/FlashOn'
@@ -109,7 +110,6 @@ export default function Page() {
     const { currentUser } = useAuth()
     const userAuthID = currentUser?.userId || ''
 
-    const [isLoaded, setIsLoaded] = useState(false)
     const [userRol, setUserRol] = useState<{ rol: UserRole | undefined }>({
         rol: currentUser?.rol as UserRole | undefined,
     })
@@ -142,7 +142,6 @@ export default function Page() {
     const [socialUrlErrors, setSocialUrlErrors] = useState<Record<string, boolean>>({})
     const [properties, setProperties] = useState<Property[]>([])
     const [locations, setLocations] = useState<UserLocationItem[]>([])
-    const [activeLocationIdxForMap, setActiveLocationIdxForMap] = useState<number | null>(null)
 
     // Coverage zones state (comerciante only)
     const [coverageZones, setCoverageZones] = useState<string[]>([])
@@ -233,16 +232,28 @@ export default function Page() {
 
                 const rawLocations: UserLocationItem[] = (userData as any).userLocations || []
                 if (rawLocations.length > 0) {
-                    setLocations(rawLocations.map(l => ({ ...l, departamento: l.departamento || (userData as any).userDepartamento || 'Bogotá D.C.' })))
+                    setLocations(
+                        rawLocations.map((l, idx) => ({
+                            ...l,
+                            nombre: l.nombre || l.nombreSede || (idx === 0 ? 'Sucursal Principal' : `Sede #${idx + 1}`),
+                            nombreSede: l.nombreSede || l.nombre || (idx === 0 ? 'Sucursal Principal' : `Sede #${idx + 1}`),
+                            departamento: l.departamento || (userData as any).userDepartamento || 'Bogotá D.C.',
+                            detallesUbicacion: l.detallesUbicacion || (l.isPrimary || idx === 0 ? (userData as any).userDirectionDetails : '') || '',
+                            isPrimary: l.isPrimary ?? (idx === 0),
+                        }))
+                    )
                 } else {
                     setLocations([
                         {
                             id: 'loc_1',
-                            nombre: 'Ubicación Principal',
+                            nombre: 'Sucursal Principal',
+                            nombreSede: 'Sucursal Principal',
                             direccion: userData.userDirection || '',
                             departamento: (userData as any).userDepartamento || 'Bogotá D.C.',
                             ciudad: userData.userCiudad || 'Bogotá, Colombia',
                             codigoPostal: userData.userCodigoPostal || '',
+                            detallesUbicacion: (userData as any).userDirectionDetails || '',
+                            zona: 'bogota',
                             isPrimary: true,
                         },
                     ])
@@ -252,8 +263,6 @@ export default function Page() {
                 setCoverageZones(userData.userZonasCobertura || [])
                 setCoverageCityWide(userData.coberturaTodaLaCiudad || false)
                 setIsAvailableNow(userData.isAvailableNow || false)
-
-                setIsLoaded(true)
 
                 // Load identity verification data if present
                 const idVerification = (userData as any).identityVerification
@@ -381,63 +390,19 @@ export default function Page() {
     }, [userAuthID, userRol.rol, userEditInfo, emails, phones])
 
     // ── Location handlers ────────────────────────────────────────────────
-    const handleAddLocation = () => {
-        const newLoc: UserLocationItem = {
-            id: `loc_${Date.now()}_${locations.length + 1}`,
-            nombre: locations.length === 0 ? 'Ubicación Principal' : `Sede / Ubicación ${locations.length + 1}`,
-            direccion: '',
-            departamento: userEditInfo.userDepartamento || 'Bogotá D.C.',
-            ciudad: userEditInfo.userCiudad || 'Bogotá, Colombia',
-            codigoPostal: '',
-            isPrimary: locations.length === 0,
+    const handleLocationsChange = (newLocations: UserLocationItem[]) => {
+        setLocations(newLocations)
+        const primary = newLocations.find((l) => l.isPrimary) || newLocations[0]
+        if (primary) {
+            setUserEditInfo((prev) => ({
+                ...prev,
+                userDirection: primary.direccion || '',
+                userDirectionDetails: primary.detallesUbicacion || '',
+                userDepartamento: primary.departamento || prev.userDepartamento || 'Bogotá D.C.',
+                userCiudad: primary.ciudad || '',
+                userCodigoPostal: primary.codigoPostal || '',
+            }))
         }
-        setLocations((prev) => [...prev, newLoc])
-    }
-
-    const handleLocationChange = (index: number, field: keyof UserLocationItem, value: any) => {
-        setLocations((prev) =>
-            prev.map((loc, i) => (i === index ? { ...loc, [field]: value } : loc))
-        )
-    }
-
-    const handleSetPrimaryLocation = (index: number) => {
-        setLocations((prev) =>
-            prev.map((loc, i) => ({ ...loc, isPrimary: i === index }))
-        )
-    }
-
-    const handleRemoveLocation = (index: number) => {
-        if (locations[index]?.isPrimary && locations.length > 1) {
-            return
-        }
-        setLocations((prev) => prev.filter((_, i) => i !== index))
-    }
-
-    const handleMapLocationSelected = (locInfo: any) => {
-        if (activeLocationIdxForMap !== null && locations[activeLocationIdxForMap]) {
-            const updatedDir = locInfo.userDirection || locInfo.street || locations[activeLocationIdxForMap].direccion
-            const updatedDep = locInfo.state || locInfo.department || locations[activeLocationIdxForMap].departamento || userEditInfo.userDepartamento || 'Bogotá D.C.'
-            const updatedCity = locInfo.userCiudad || locInfo.city || locations[activeLocationIdxForMap].ciudad
-            const updatedPostal = locInfo.userCodigoPostal || locInfo.postalCode || locations[activeLocationIdxForMap].codigoPostal
-
-            setLocations((prev) =>
-                prev.map((loc, i) =>
-                    i === activeLocationIdxForMap
-                        ? {
-                            ...loc,
-                            direccion: updatedDir,
-                            departamento: updatedDep,
-                            ciudad: updatedCity,
-                            codigoPostal: updatedPostal,
-                            lat: locInfo.lat || loc.lat,
-                            lng: locInfo.lng || loc.lng,
-                        }
-                        : loc
-                )
-            )
-        }
-        setLocationModalOpen(false)
-        setActiveLocationIdxForMap(null)
     }
 
     const handleSaveLocations = useCallback(async () => {
@@ -446,15 +411,33 @@ export default function Page() {
             return
         }
 
-        const primaryLoc = locations.find((l) => l.isPrimary) || locations[0]
+        const isMerchant = userRol.rol === 2
+        let locationsToSave = locations
+        if (!isMerchant) {
+            const singleLoc: UserLocationItem = {
+                id: locations[0]?.id || 'loc_1',
+                nombre: 'Ubicación Principal',
+                nombreSede: 'Ubicación Principal',
+                direccion: userEditInfo.userDirection || '',
+                departamento: userEditInfo.userDepartamento || 'Bogotá D.C.',
+                ciudad: userEditInfo.userCiudad || 'Bogotá, Colombia',
+                codigoPostal: userEditInfo.userCodigoPostal || '',
+                detallesUbicacion: userEditInfo.userDirectionDetails || '',
+                isPrimary: true,
+            }
+            locationsToSave = [singleLoc]
+        }
+
+        const primaryLoc = locationsToSave.find((l) => l.isPrimary) || locationsToSave[0]
 
         try {
             await updateUser({
                 userId: userAuthID,
                 role: userRol.rol,
                 data: {
-                    userLocations: locations,
+                    userLocations: locationsToSave,
                     userDirection: primaryLoc?.direccion || '',
+                    userDirectionDetails: primaryLoc?.detallesUbicacion || userEditInfo.userDirectionDetails || '',
                     userDepartamento: primaryLoc?.departamento || userEditInfo.userDepartamento || 'Bogotá D.C.',
                     userCiudad: primaryLoc?.ciudad || '',
                     userCodigoPostal: primaryLoc?.codigoPostal || '',
@@ -464,7 +447,8 @@ export default function Page() {
             setUserEditInfo((prev) => ({
                 ...prev,
                 userDirection: primaryLoc?.direccion || '',
-                userDepartamento: primaryLoc?.departamento || userEditInfo.userDepartamento || 'Bogotá D.C.',
+                userDirectionDetails: primaryLoc?.detallesUbicacion || prev.userDirectionDetails || '',
+                userDepartamento: primaryLoc?.departamento || prev.userDepartamento || 'Bogotá D.C.',
                 userCiudad: primaryLoc?.ciudad || '',
                 userCodigoPostal: primaryLoc?.codigoPostal || '',
             }))
@@ -474,7 +458,7 @@ export default function Page() {
             console.error('Error updating locations:', error)
             setAlert({ open: true, message: 'Error al actualizar ubicaciones. Intenta de nuevo.', severity: 'error' })
         }
-    }, [userAuthID, userRol.rol, locations])
+    }, [userAuthID, userRol.rol, locations, userEditInfo])
 
     // ── Social links handlers ────────────────────────────────────────────
     const handleSocialChange = (id: string, field: string, value: any) => {
@@ -895,13 +879,13 @@ export default function Page() {
                 {/* ===================== Card 3: Ubicación (full-width) ===================== */}
                 <div className={`${styles['settings-card']} ${styles['settings-card--full']}`}>
                     <div className={styles['card-header']}>
-                        <h2 className={styles['card-title']}>Ubicación</h2>
+                        <h2 className={styles['card-title']}>
+                            {isComerciante ? 'Ubicación y Sedes de Atención' : 'Ubicación'}
+                        </h2>
                         <Button
                             className="btn btn-primary"
                             size="small"
-                            onClick={() => handleSaveSection([
-                                'userDepartamento', 'userDirection', 'userDirectionDetails', 'userCiudad', 'userCodigoPostal',
-                            ])}
+                            onClick={handleSaveLocations}
                         >
                             Guardar
                         </Button>
@@ -940,87 +924,98 @@ export default function Page() {
                         </div>
                     </div>
 
-                    <div className={styles['location-row']} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
-                        <TextField
-                            id="userDirection"
-                            name="userDirection"
-                            label="Dirección exacta"
-                            value={userEditInfo.userDirection}
-                            onChange={handleChange}
-                            size="small"
-                            sx={{ flex: 2, minWidth: 220 }}
+                    {isComerciante ? (
+                        <UserLocationManager
+                            locations={locations}
+                            onChange={handleLocationsChange}
                         />
-                        <Autocomplete
-                            freeSolo
-                            options={departamentosColombia}
-                            size="small"
-                            value={userEditInfo.userDepartamento || 'Bogotá D.C.'}
-                            onChange={(_, newValue) => {
-                                setUserEditInfo((prev) => ({ ...prev, userDepartamento: newValue || '' }))
-                            }}
-                            onInputChange={(_, newInputValue) => {
-                                setUserEditInfo((prev) => ({ ...prev, userDepartamento: newInputValue }))
-                            }}
-                            renderInput={(params) => (
+                    ) : (
+                        <>
+                            <div className={styles['location-row']} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
                                 <TextField
-                                    {...(params as unknown as Record<string, unknown>)}
-                                    label="Departamento"
-                                    placeholder="Ej: Meta, Huila, Cundinamarca"
+                                    id="userDirection"
+                                    name="userDirection"
+                                    label="Dirección exacta"
+                                    value={userEditInfo.userDirection}
+                                    onChange={handleChange}
                                     size="small"
+                                    sx={{ flex: 2, minWidth: 220 }}
                                 />
-                            )}
-                            sx={{ flex: 1.2, minWidth: 170 }}
-                        />
-                        <TextField
-                            id="userCiudad"
-                            name="userCiudad"
-                            label="Ciudad / Municipio"
-                            value={userEditInfo.userCiudad}
-                            onChange={handleChange}
-                            size="small"
-                            sx={{ flex: 1, minWidth: 160 }}
-                        />
-                        <TextField
-                            id="userCodigoPostal"
-                            name="userCodigoPostal"
-                            label="Código Postal"
-                            value={userEditInfo.userCodigoPostal}
-                            onChange={handleChange}
-                            size="small"
-                            sx={{ width: 140 }}
-                        />
-                        <Button
-                            className="btn-round btn-low"
-                            size="small"
-                            onClick={() => setLocationModalOpen(true)}
-                            sx={{ whiteSpace: 'nowrap' }}
-                        >
-                            Registrar en mapa
-                        </Button>
-                    </div>
+                                <Autocomplete
+                                    freeSolo
+                                    options={departamentosColombia}
+                                    size="small"
+                                    value={userEditInfo.userDepartamento || 'Bogotá D.C.'}
+                                    onChange={(_, newValue) => {
+                                        setUserEditInfo((prev) => ({ ...prev, userDepartamento: newValue || '' }))
+                                    }}
+                                    onInputChange={(_, newInputValue) => {
+                                        setUserEditInfo((prev) => ({ ...prev, userDepartamento: newInputValue }))
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...(params as unknown as Record<string, unknown>)}
+                                            label="Departamento"
+                                            placeholder="Ej: Meta, Huila, Cundinamarca"
+                                            size="small"
+                                        />
+                                    )}
+                                    sx={{ flex: 1.2, minWidth: 170 }}
+                                />
+                                <TextField
+                                    id="userCiudad"
+                                    name="userCiudad"
+                                    label="Ciudad / Municipio"
+                                    value={userEditInfo.userCiudad}
+                                    onChange={handleChange}
+                                    size="small"
+                                    sx={{ flex: 1, minWidth: 160 }}
+                                />
+                                <TextField
+                                    id="userCodigoPostal"
+                                    name="userCodigoPostal"
+                                    label="Código Postal"
+                                    value={userEditInfo.userCodigoPostal}
+                                    onChange={handleChange}
+                                    size="small"
+                                    sx={{ width: 140 }}
+                                />
+                                <Button
+                                    className="btn-round btn-low"
+                                    size="small"
+                                    onClick={() => setLocationModalOpen(true)}
+                                    sx={{ whiteSpace: 'nowrap' }}
+                                >
+                                    Registrar en mapa
+                                </Button>
+                            </div>
 
-                    <TextField
-                        id="userDirectionDetails"
-                        name="userDirectionDetails"
-                        label="Detalles de ubicación física (Opcional)"
-                        placeholder="Ej: Oficina 402, Piso 4, Local esquinero, Edificio Prime, Torre 2"
-                        value={userEditInfo.userDirectionDetails || ''}
-                        onChange={handleChange}
-                        size="small"
-                        fullWidth
-                        helperText="Indica referencias adicionales como piso, oficina, local o puntos de referencia para facilitar la llegada"
-                    />
+                            <TextField
+                                id="userDirectionDetails"
+                                name="userDirectionDetails"
+                                label="Detalles de ubicación física (Opcional)"
+                                placeholder="Ej: Oficina 402, Piso 4, Local esquinero, Edificio Prime, Torre 2"
+                                value={userEditInfo.userDirectionDetails || ''}
+                                onChange={handleChange}
+                                size="small"
+                                fullWidth
+                                helperText="Indica referencias adicionales como piso, oficina, local o puntos de referencia para facilitar la llegada"
+                            />
 
-                    <Modal
-                        open={locationModalOpen}
-                        onClose={() => setLocationModalOpen(false)}
-                    >
-                        <Ubicacion
-                            setLocInfo={setUserEditInfo as any}
-                            locInfo={userEditInfo}
-                            setOpen={setLocationModalOpen}
-                        />
-                    </Modal>
+                            <Modal
+                                open={locationModalOpen}
+                                onClose={() => setLocationModalOpen(false)}
+                            >
+                                <Box sx={{ p: 2, maxWidth: 700, margin: '50px auto', outline: 'none' }}>
+                                    <Ubicacion
+                                        setLocInfo={setUserEditInfo as any}
+                                        locInfo={userEditInfo}
+                                        setOpen={setLocationModalOpen}
+                                    />
+                                </Box>
+                            </Modal>
+                        </>
+                    )}
                 </div>
 
                 {/* ===================== Card 4: Zonas de Cobertura (Comerciante only) ===================== */}

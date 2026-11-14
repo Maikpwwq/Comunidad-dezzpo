@@ -165,14 +165,21 @@ export interface SocialLink {
 export interface UserLocationItem {
     id: string
     nombre?: string
+    nombreSede?: string
     direccion: string
     departamento?: string
     ciudad: string
     codigoPostal?: string
     zona?: string
+    detallesUbicacion?: string
     lat?: number
     lng?: number
     isPrimary?: boolean
+    nombreContacto?: string
+    cargoContacto?: string
+    telefono?: string
+    whatsapp?: string
+    horario?: string
 }
 
 export interface UserFirestoreDocument {

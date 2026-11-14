@@ -60,3 +60,6 @@ export type { ProfileGalleryProps } from './ProfileGallery'
 
 export { ProjectFormModal } from './ProjectFormModal'
 export type { ProjectFormModalProps } from './ProjectFormModal'
+
+export { UserLocationManager } from './UserLocationManager'
+export type { UserLocationManagerProps } from './UserLocationManager'

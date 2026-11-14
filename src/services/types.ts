@@ -74,14 +74,21 @@ export interface Property {
 export interface UserLocationItem {
     id: string
     nombre?: string | undefined
+    nombreSede?: string | undefined
     direccion: string
     departamento?: string | undefined
     ciudad: string
     codigoPostal?: string | undefined
     zona?: string | undefined
+    detallesUbicacion?: string | undefined
     lat?: number | undefined
     lng?: number | undefined
     isPrimary?: boolean | undefined
+    nombreContacto?: string | undefined
+    cargoContacto?: string | undefined
+    telefono?: string | undefined
+    whatsapp?: string | undefined
+    horario?: string | undefined
 }
 
 // =============================================================================
