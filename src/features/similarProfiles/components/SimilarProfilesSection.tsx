@@ -22,6 +22,7 @@ import {
     sectionTitle,
     type SimilarProfilesData,
 } from '../domain'
+import { prefetchProfileRoute } from '../utils/profilePrefetch'
 import {
     trackSimilarProfilesImpression,
     trackSimilarProfilesCardClick,
@@ -285,6 +286,8 @@ export function SimilarProfilesSection({
                 <a
                     href={viewAllUrl}
                     className={styles.ViewAllLink}
+                    onMouseEnter={() => prefetchProfileRoute(viewAllUrl)}
+                    onFocus={() => prefetchProfileRoute(viewAllUrl)}
                     onClick={() => {
                         trackSimilarProfilesViewAllClick({
                             visitedProfileId: targetProfileId,

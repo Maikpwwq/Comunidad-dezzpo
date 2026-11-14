@@ -28,6 +28,7 @@ import { getOrCreateDirectChannel } from '@services/sendbird'
 
 import { getBadgeDetails } from '@config/userClassification.config'
 import { SocialShareMenu } from '@components/common/SocialShareMenu'
+import { prefetchProfileAssets } from '@features/similarProfiles/utils/profilePrefetch'
 
 // MUI Components
 import {
@@ -142,6 +143,11 @@ export function UserCard({
         ? { bgcolor: 'var(--background-light-gray-color)' }
         : { bgcolor: 'var(--background-hover-green-color)' }
 
+    // Prefetch handler (Innovación #3: Precarga condicional al hover/focus)
+    const handlePrefetch = useCallback(() => {
+        prefetchProfileAssets(userLink, userPhotoUrl)
+    }, [userLink, userPhotoUrl])
+
     // Handlers
     const handleVerSitio = useCallback((e?: React.MouseEvent) => {
         onCardClick?.()
@@ -235,7 +241,11 @@ export function UserCard({
     }, [userCategories])
 
     return (
-        <article className={clsx(styles['professional-card'], variant === 'compact' && styles['compact-card'])}>
+        <article
+            className={clsx(styles['professional-card'], variant === 'compact' && styles['compact-card'])}
+            onMouseEnter={handlePrefetch}
+            onFocus={handlePrefetch}
+        >
             <header className={styles['card-header']}>
                 <Avatar
                     src={userPhotoUrl || ''}
@@ -372,6 +382,8 @@ export function UserCard({
                         href={userLink}
                         className="btn-round btn-low"
                         onClick={handleVerSitio}
+                        onMouseEnter={handlePrefetch}
+                        onFocus={handlePrefetch}
                         aria-label={variant === 'compact' ? `Ver perfil de ${displayName}` : `Ver sitio de ${displayName}`}
                         style={{
                             display: 'inline-flex',
