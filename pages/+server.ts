@@ -27,6 +27,7 @@ import {
   getMySubmissionsHandler,
 } from '../server/api/preRegistration/handlers.ts'
 import { adminSearchAnalyticsHandler } from '../server/api/admin/searches.ts'
+import { getSimilarProfilesHandler } from '../server/api/similarProfiles/handlers.ts'
 
 const app = new Hono()
 
@@ -182,6 +183,11 @@ app.get('/api/v1/pre-registrations/my-submissions', async (c) => {
 // Admin Search Analytics (R1, R2, R3, R5, R6, R7)
 app.get('/api/v1/admin/analytics/searches', async (c) => {
   return await adminSearchAnalyticsHandler(c)
+})
+
+// Similar Profiles recommendations (R1, R2, R4, R8)
+app.get('/api/v1/similar-profiles', async (c) => {
+  return await getSimilarProfilesHandler(c)
 })
 
 const port = Number(process.env.PORT) || 3000

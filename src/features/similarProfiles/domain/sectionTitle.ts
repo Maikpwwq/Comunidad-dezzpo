@@ -67,3 +67,4 @@ export function sectionTitle(data: SimilarProfilesData): SectionTitleResult {
         subtitle: defaultSubtitle,
     }
 }
+

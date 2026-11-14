@@ -121,3 +121,4 @@ describe('Fase 1: sectionTitle Generator (Invariant I7)', () => {
         expect(res.title).toContain('Plomería')
     })
 })
+

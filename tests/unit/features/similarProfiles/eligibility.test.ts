@@ -111,3 +111,4 @@ describe('Fase 1: Eligibility Domain Logic (Invariant I1)', () => {
         ).toBe(false)
     })
 })
+

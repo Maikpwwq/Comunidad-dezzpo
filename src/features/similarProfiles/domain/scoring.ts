@@ -333,6 +333,45 @@ export function evaluateCandidateProfile(
 
     // Composite weighted score
     const w = SIMILAR_PROFILES_CONFIG.weights
+
+    // R5 Relevance Gate: Must either match the trade OR be a featured/quality merchant from the same zone ("destacados de la misma zona")
+    const isRelevant = tradeRes.hasTradeMatch || (proxRes.isSameZone && qualRes.isFeatured)
+    if (!isRelevant) {
+        const item: SimilarProfileItem = {
+            profileId: candidate.userId,
+            displayName:
+                (candidate.userName && candidate.userName.trim()) ||
+                (candidate.userRazonSocial && candidate.userRazonSocial.trim()) ||
+                'Comerciante',
+            userRazonSocial: candidate.userRazonSocial || undefined,
+            userProfession: candidate.userProfession || undefined,
+            userDescription: candidate.userDescription || undefined,
+            userExperience: candidate.userExperience || undefined,
+            userPhotoUrl: candidate.userPhotoUrl || undefined,
+            userJoined: candidate.userJoined || undefined,
+            userCategories: candidate.userCategories || [],
+            userClasification: candidate.userClasification || undefined,
+            userDirection: candidate.userDirection || undefined,
+            favoritesCount: candidate.favoritesCount ?? undefined,
+            tier: proxRes.tier,
+            score: 0.0,
+            reasons: [],
+            reasonLabels: [],
+            featured: qualRes.isFeatured,
+            compatibilityBadge: null,
+            compatibilityExplanation: null,
+        }
+        return {
+            item,
+            rawScores: {
+                trade: 0,
+                proximity: 0,
+                quality: 0,
+                context: 0,
+            },
+        }
+    }
+
     const compositeScore =
         tradeRes.score * w.trade +
         proxRes.score * w.proximity +
@@ -410,7 +449,8 @@ export function rankAndSelectSimilarProfiles(
     evaluated: readonly CandidateEvaluationResult[],
     dateSeed?: string
 ): readonly SimilarProfileItem[] {
-    const sorted = [...evaluated].sort((a, b) => {
+    const relevant = evaluated.filter((res) => res.item.score > 0)
+    const sorted = [...relevant].sort((a, b) => {
         const diff = b.item.score - a.item.score
         // If difference is greater than 0.015, primary score decides strictly
         if (Math.abs(diff) > 0.015) {
@@ -439,3 +479,4 @@ export function rankAndSelectSimilarProfiles(
 
     return selected
 }
+
