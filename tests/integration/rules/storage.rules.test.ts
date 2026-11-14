@@ -7,9 +7,29 @@ import {
 } from '@firebase/rules-unit-testing'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
+import { createConnection } from 'net'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
-describe('Storage Security Rules Isolation & Privacy (Rules Unit Testing)', () => {
+async function isEmulatorPortOpen(port: number): Promise<boolean> {
+    return new Promise((resolvePromise) => {
+        const socket = createConnection({ host: '127.0.0.1', port, timeout: 200 }, () => {
+            socket.destroy()
+            resolvePromise(true)
+        })
+        socket.on('error', () => {
+            socket.destroy()
+            resolvePromise(false)
+        })
+        socket.on('timeout', () => {
+            socket.destroy()
+            resolvePromise(false)
+        })
+    })
+}
+
+const isStorageEmulatorRunning = await isEmulatorPortOpen(9199)
+
+describe.runIf(isStorageEmulatorRunning)('Storage Security Rules Isolation & Privacy (Rules Unit Testing)', () => {
     let testEnv: RulesTestEnvironment
 
     // Create a small valid PNG file (1x1 pixel) for upload tests

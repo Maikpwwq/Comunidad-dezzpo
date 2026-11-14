@@ -41,7 +41,8 @@ vi.mock('@hooks/usePageContext', () => ({
 
 // Mock child components to isolate tests
 vi.mock('@components/common', () => ({
-  AdjuntarArchivos: () => <div data-testid="mock-adjuntar" />
+  AdjuntarArchivos: () => <div data-testid="mock-adjuntar" />,
+  MoodboardSelector: () => <div data-testid="mock-moodboard" />
 }));
 
 vi.mock('@features/projects', async (importOriginal) => {

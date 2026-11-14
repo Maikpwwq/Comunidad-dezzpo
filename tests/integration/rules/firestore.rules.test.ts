@@ -7,9 +7,29 @@ import {
 } from '@firebase/rules-unit-testing'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
+import { createConnection } from 'net'
 import { doc, getDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 
-describe('Firestore Security Rules Isolation & Privacy (Rules Unit Testing)', () => {
+async function isEmulatorPortOpen(port: number): Promise<boolean> {
+    return new Promise((resolvePromise) => {
+        const socket = createConnection({ host: '127.0.0.1', port, timeout: 200 }, () => {
+            socket.destroy()
+            resolvePromise(true)
+        })
+        socket.on('error', () => {
+            socket.destroy()
+            resolvePromise(false)
+        })
+        socket.on('timeout', () => {
+            socket.destroy()
+            resolvePromise(false)
+        })
+    })
+}
+
+const isFirestoreEmulatorRunning = await isEmulatorPortOpen(8080)
+
+describe.runIf(isFirestoreEmulatorRunning)('Firestore Security Rules Isolation & Privacy (Rules Unit Testing)', () => {
     let testEnv: RulesTestEnvironment
 
     beforeAll(async () => {

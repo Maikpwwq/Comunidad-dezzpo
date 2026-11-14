@@ -41,7 +41,8 @@ vi.mock('@hooks/usePageContext', () => ({
 
 // Let's use real components for PasoAPaso to make it an integration test, but mock heavy ones like AdjuntarArchivos
 vi.mock('@components/common', () => ({
-  AdjuntarArchivos: () => <div data-testid="mock-adjuntar" />
+  AdjuntarArchivos: () => <div data-testid="mock-adjuntar" />,
+  MoodboardSelector: () => <div data-testid="mock-moodboard" />
 }));
 
 vi.mock('@features/marketing', async (importOriginal) => {

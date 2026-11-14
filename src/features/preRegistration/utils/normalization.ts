@@ -6,7 +6,7 @@
  * formatting, secure URL normalization, and transition enforcement.
  */
 
-import { formatToE164, isValidColombianPhone } from '@services/utils/phoneUtils'
+import { formatToE164, isValidColombianPhone, parsePhone } from '@services/utils/phoneUtils'
 import {
     ALLOWED_TRANSITIONS,
     type PreRegistrationStatus,
@@ -79,6 +79,10 @@ export function normalizeCandidatePhone(phone: string): string {
     if (!phone || typeof phone !== 'string') return ''
     const cleaned = sanitizeText(phone)
     if (!isValidColombianPhone(cleaned)) {
+        return ''
+    }
+    const parsed = parsePhone(cleaned, { defaultCountry: '+57' })
+    if (parsed.status !== 'valido' || parsed.kind !== 'celular') {
         return ''
     }
     return formatToE164(cleaned)

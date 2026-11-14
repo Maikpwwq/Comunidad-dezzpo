@@ -46,7 +46,8 @@ describe('tiendaService Unit Tests', () => {
         it('creates a new tienda document with generated slug and timestamps', async () => {
             const input = {
                 nombre: 'Ferretería El Sol',
-                descripcion: 'Venta de materiales',
+                slogan: 'Calidad y servicio garantizado',
+                descripcion: 'Venta de materiales y perfiles pesados',
                 categorias: ['ferreteria_general'],
                 sedes: [
                     {
@@ -65,6 +66,8 @@ describe('tiendaService Unit Tests', () => {
             expect(res.data).not.toBeNull()
             if (res.data) {
                 expect(res.data.nombre).toBe('Ferretería El Sol')
+                expect(res.data.slogan).toBe('Calidad y servicio garantizado')
+                expect(res.data.descripcion).toBe('Venta de materiales y perfiles pesados')
                 expect(res.data.slug).toBe('ferreteria-el-sol')
                 expect(res.data.estado).toBe('pendiente')
                 expect(res.data.origen).toBe('usuario')
@@ -75,7 +78,7 @@ describe('tiendaService Unit Tests', () => {
 
     describe('approveTienda / rejectTienda shortcuts', () => {
         it('approveTienda updates status to aprobado', async () => {
-            vi.spyOn(firestoreModule, 'getDoc').mockResolvedValueOnce({
+            vi.spyOn(firestoreModule, 'getDoc').mockResolvedValue({
                 exists: () => true,
                 id: 'tienda-1',
                 data: () => ({
@@ -94,7 +97,7 @@ describe('tiendaService Unit Tests', () => {
         })
 
         it('rejectTienda updates status to rechazado', async () => {
-            vi.spyOn(firestoreModule, 'getDoc').mockResolvedValueOnce({
+            vi.spyOn(firestoreModule, 'getDoc').mockResolvedValue({
                 exists: () => true,
                 id: 'tienda-1',
                 data: () => ({
@@ -130,6 +133,8 @@ describe('tiendaService Unit Tests', () => {
                 nombre: 'Sillas y Diseños',
                 razonSocial: '',
                 nit: '',
+                slogan: 'El arte de sentarse bien',
+                descripcion: 'Diseño y fabricación de silletería ergonómica',
             })
 
             expect(res.success).toBe(true)
@@ -140,6 +145,8 @@ describe('tiendaService Unit Tests', () => {
                     slug: 'sillas-y-disenos',
                     razonSocial: '',
                     nit: '',
+                    slogan: 'El arte de sentarse bien',
+                    descripcion: 'Diseño y fabricación de silletería ergonómica',
                 })
             )
         })
