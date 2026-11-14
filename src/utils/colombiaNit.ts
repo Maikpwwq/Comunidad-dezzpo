@@ -144,3 +144,4 @@ export function formatNitNumber(nitBase: string): string {
     const cleaned = nitBase.replace(/\D/g, '')
     return cleaned.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 }
+

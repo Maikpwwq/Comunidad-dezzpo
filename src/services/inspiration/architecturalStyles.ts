@@ -577,3 +577,4 @@ export function estimateStyleBudget(
         maxCop: Math.round(style.typicalBudgetRange.maxCopPerM2 * validArea),
     }
 }
+

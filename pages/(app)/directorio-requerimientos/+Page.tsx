@@ -43,6 +43,7 @@ import StarIcon from '@mui/icons-material/Star'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { filterCategoriesBySearch } from '@utils/categoryFilter'
 
 import { PROPIETARIO_RANKINGS } from '@config/userClassification.config'
 
@@ -231,6 +232,23 @@ export default function Page() {
         return filteredByDraftCategory.filter((d) => !matchingIds.has(d.draftId || d.id))
     }, [matchingDrafts, filteredByDraftCategory])
 
+    // Dynamically filter category chips to match active search query
+    const displayedCategories = useMemo(() => {
+        const activeSearch = (searchQuery || spacedText).trim()
+        const contextualCats = new Set<string>()
+        if (activeSearch) {
+            filteredByCategory.forEach((d) => {
+                if (d.draftCategory) contextualCats.add(d.draftCategory)
+            })
+        }
+        return filterCategoriesBySearch({
+            categories: ListadoCategorias,
+            searchQuery: activeSearch,
+            selectedKey: selectedDraftCategory,
+            contextualCategoryNames: contextualCats,
+        })
+    }, [searchQuery, spacedText, selectedDraftCategory, filteredByCategory])
+
     const hasActiveFilters =
         selectedClassification !== 'all' ||
         selectedDraftCategory !== '' ||
@@ -338,7 +356,7 @@ export default function Page() {
                     },
                 ]}
                 categoryChips={{
-                    categories: ListadoCategorias,
+                    categories: displayedCategories,
                     selectedKey: selectedDraftCategory,
                     onSelect: setSelectedDraftCategory,
                 }}

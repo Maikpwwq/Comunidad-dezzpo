@@ -34,6 +34,7 @@ import {
 } from '@config/matching.config'
 import { zoneNames } from '@assets/data/ListadoZonas'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
+import { filterCategoriesBySearch } from '@utils/categoryFilter'
 
 // UI Libs
 import {
@@ -340,6 +341,25 @@ export default function Page() {
         return result
     }, [combinedUsers, searchQuery, effectiveKeyword, selectedMerchantClassification, selectedCategory])
 
+    // Dynamically filter category chips to match active search query (e.g. "plomería" -> [Plomería])
+    const displayedCategories = useMemo(() => {
+        const activeSearch = (searchQuery || effectiveKeyword).trim()
+        const contextualCats = new Set<string>()
+        if (activeSearch) {
+            prefilteredUsers.forEach((u) => {
+                ;(u.userCategories || []).forEach((c) => {
+                    if (c) contextualCats.add(String(c))
+                })
+            })
+        }
+        return filterCategoriesBySearch({
+            categories: ListadoCategorias,
+            searchQuery: activeSearch,
+            selectedKey: selectedCategory,
+            contextualCategoryNames: contextualCats,
+        })
+    }, [searchQuery, effectiveKeyword, selectedCategory, prefilteredUsers])
+
     // Fuzzy compatibility evaluation & partitioning
     const { primaryRankedUsers, complementaryUsers } = useMemo(() => {
         const resolvedProp = selectedPropertyType === 'all' ? null : normalizePropertyType(selectedPropertyType)
@@ -593,7 +613,7 @@ export default function Page() {
                     },
                 ]}
                 categoryChips={{
-                    categories: ListadoCategorias,
+                    categories: displayedCategories,
                     selectedKey: selectedCategory,
                     onSelect: setSelectedCategory,
                 }}

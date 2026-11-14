@@ -39,3 +39,4 @@ describe('Architectural Styles Catalog (T-I8.1)', () => {
         expect(budget.maxCop).toBe(style.typicalBudgetRange.maxCopPerM2 * 25)
     })
 })
+

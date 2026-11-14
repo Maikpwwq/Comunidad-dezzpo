@@ -58,3 +58,4 @@ describe('Colombian NIT Validator (Module 11 DIAN)', () => {
         })
     })
 })
+
