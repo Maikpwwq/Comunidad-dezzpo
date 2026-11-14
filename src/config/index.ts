@@ -13,6 +13,7 @@ export * from './referrals.config'
 export * from './targetGroups'
 export * from './matching.config'
 export * from './preRegistration.config'
+export * from './similarProfiles.config'
 
 
 
