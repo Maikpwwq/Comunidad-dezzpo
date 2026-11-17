@@ -31,6 +31,7 @@ import {
     PLATFORM_LIST,
     createEmptySocialLink,
     validateSocialUrl,
+    normalizeSocialUrl,
 } from '@utilities/socialUtils'
 import type { SocialLink, SocialPlatform } from '@services/types'
 
@@ -64,9 +65,13 @@ export const TiendaSocialLinksManager: React.FC<TiendaSocialLinksManagerProps> =
     }
 
     const handleChange = (id: string, field: keyof SocialLink, value: unknown) => {
+        // Auto-prepend https:// on URL input (like PhoneField's +57)
+        const normalizedValue = field === 'url'
+            ? normalizeSocialUrl(String(value))
+            : value
         onChange(
             links.map((l) =>
-                l.id === id ? { ...l, [field]: value } : l
+                l.id === id ? { ...l, [field]: normalizedValue } : l
             )
         )
     }

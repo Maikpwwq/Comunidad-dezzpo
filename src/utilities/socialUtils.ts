@@ -68,6 +68,34 @@ export const PLATFORM_LIST: SocialPlatform[] = [
 ]
 
 // =============================================================================
+// URL Normalization (analogous to PhoneField's +57 auto-prepend)
+// =============================================================================
+
+/**
+ * Auto-prepend `https://` to a social URL that is missing a protocol prefix.
+ * Mirrors the PhoneField pattern: on every keystroke and paste, the canonical
+ * value stored in state always carries the correct prefix so validation passes
+ * transparently.
+ *
+ * Rules:
+ *   - Empty / whitespace-only → returns ''
+ *   - Already starts with http:// or https:// → returned as-is (trimmed)
+ *   - Starts with `//` (protocol-relative) → prepend `https:`
+ *   - Anything else → prepend `https://`
+ */
+export function normalizeSocialUrl(raw: string): string {
+    const trimmed = raw.trim()
+    if (!trimmed) return ''
+    // Already has a full protocol
+    if (/^https?:\/\//i.test(trimmed)) return trimmed
+    // Protocol-relative "//domain.com/..."
+    if (trimmed.startsWith('//')) return `https:${trimmed}`
+    // Strip any accidental leading slashes
+    const cleaned = trimmed.replace(/^\/+/, '')
+    return `https://${cleaned}`
+}
+
+// =============================================================================
 // Validation
 // =============================================================================
 

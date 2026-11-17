@@ -25,6 +25,7 @@ import { useTiendaFormDraftStore, EMPTY_SEDE, EMPTY_CONTACTO } from '@stores/use
 import type { ContactoPrincipal } from '@stores/useTiendaFormDraftStore'
 import { useDuplicateNameCheck } from '@hooks/useDuplicateNameCheck'
 import { DuplicateNameAlert, PhoneField } from '@components/common'
+import { normalizeSocialUrl } from '@utilities/socialUtils'
 import { SedeManager } from './SedeManager'
 import { TiendaLogoUpload } from './TiendaLogoUpload'
 import { TiendaSocialLinksManager } from './TiendaSocialLinksManager'
@@ -531,7 +532,7 @@ export const TiendaFormModal: React.FC<TiendaFormModalProps> = ({
                                 size="small"
                                 placeholder="Ej: https://mi-tienda.com"
                                 value={sitioWeb}
-                                onChange={(e) => setSitioWeb(e.target.value)}
+                                onChange={(e) => setSitioWeb(normalizeSocialUrl(e.target.value))}
                                 fullWidth
                                 sx={{ mb: 2 }}
                             />

@@ -14,7 +14,7 @@ import { useAuth } from '@hooks/useAuth'
 
 // Services
 import { getUser, updateUser } from '@services/users'
-import type { UserRole, ContactEmail, ContactPhone, SocialLink, Property, UserLocationItem } from '@services/types'
+import type { UserRole, ContactEmail, ContactPhone, SocialLink, SocialPlatform, Property, UserLocationItem } from '@services/types'
 import { storage } from '@services/firebase'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { createEmptyEmail, createEmptyPhone } from '@utilities/contactUtils'
@@ -23,6 +23,7 @@ import {
     validateSocialUrl,
     PLATFORM_CONFIG,
     PLATFORM_LIST,
+    normalizeSocialUrl,
 } from '@utilities/socialUtils'
 
 // Components
@@ -461,18 +462,22 @@ export default function Page() {
     }, [userAuthID, userRol.rol, locations, userEditInfo])
 
     // ── Social links handlers ────────────────────────────────────────────
-    const handleSocialChange = (id: string, field: string, value: any) => {
+    const handleSocialChange = (id: string, field: string, value: unknown) => {
         setSocialLinks((prev) =>
             prev.map((sl) => {
                 if (sl.id !== id) return sl
-                const updated = { ...sl, [field]: value }
+                // Auto-prepend https:// on URL input (like PhoneField's +57)
+                const normalizedValue = field === 'url'
+                    ? normalizeSocialUrl(String(value))
+                    : value
+                const updated = { ...sl, [field]: normalizedValue }
                 // Real-time URL validation when URL or platform changes
                 if (field === 'url' || field === 'platform') {
-                    const platform = field === 'platform' ? value : sl.platform
-                    const url = field === 'url' ? value : sl.url
+                    const platform = field === 'platform' ? (value as string) : sl.platform
+                    const url = field === 'url' ? String(normalizedValue) : sl.url
                     setSocialUrlErrors((prev) => ({
                         ...prev,
-                        [id]: url ? !validateSocialUrl(platform, url) : false,
+                        [id]: url ? !validateSocialUrl(platform as SocialPlatform, url) : false,
                     }))
                 }
                 return updated
