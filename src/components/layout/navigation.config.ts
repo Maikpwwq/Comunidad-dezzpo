@@ -432,6 +432,12 @@ export const PROPIETARIO_HEADER: NavItemConfig[] = [
 /** Header tabs for guest users */
 export const GUEST_HEADER: NavItemConfig[] = [
     {
+        id: 'portal',
+        label: 'Directorio de Comerciantes',
+        route: '/app/portal-servicios',
+        icon: 'StoreIcon',
+    },
+    {
         id: 'tiendas',
         label: 'Tiendas',
         route: '/app/tiendas',
