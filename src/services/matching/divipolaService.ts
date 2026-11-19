@@ -9,11 +9,27 @@
  */
 
 import type { DivipolaMunicipality } from '../../../scripts/fetch-divipola'
+import { buildUnifiedCatalog } from '@features/zones/domain/catalog'
+import type { ZoneOption } from '@features/zones/domain/types'
 
 export type { DivipolaMunicipality }
 
 let cachedDataset: DivipolaMunicipality[] | null = null
 let pendingLoadPromise: Promise<DivipolaMunicipality[]> | null = null
+let cachedUnifiedCatalog: ZoneOption[] | null = null
+
+/**
+ * Loads the full unified catalog (52 curated zones + 1,122 DIVIPOLA municipalities) asynchronously.
+ * Idempotent: returns cached in-memory array on subsequent calls.
+ */
+export async function loadUnifiedZoneCatalog(): Promise<ZoneOption[]> {
+    if (cachedUnifiedCatalog) {
+        return cachedUnifiedCatalog
+    }
+    const divipola = await loadDivipolaDataset()
+    cachedUnifiedCatalog = buildUnifiedCatalog(divipola)
+    return cachedUnifiedCatalog
+}
 
 /**
  * Loads the DIVIPOLA dataset asynchronously.
@@ -107,4 +123,5 @@ export async function getMunicipalityByCode(code: string): Promise<DivipolaMunic
 export function clearDivipolaCache(): void {
     cachedDataset = null
     pendingLoadPromise = null
+    cachedUnifiedCatalog = null
 }

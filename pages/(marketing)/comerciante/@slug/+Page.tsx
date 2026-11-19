@@ -3,6 +3,7 @@ import { usePageContext } from '@hooks/usePageContext'
 import { useUserStore } from '@stores/userStore'
 import { getPrimaryEmail, getPrimaryPhone } from '@utilities/contactUtils'
 import { PLATFORM_CONFIG } from '@utilities/socialUtils'
+import { resolveZoneDisplay } from '@features/zones/domain/parser'
 
 // Styles & Assets
 // @ts-ignore
@@ -117,10 +118,15 @@ export default function Page() {
 
     // Inject areaServed from coverage zones
     if (zonasCobertura.length > 0) {
-        localBusiness['areaServed'] = zonasCobertura.map((z: string) => ({
-            '@type': 'City',
-            'name': z.replace('bogota-', '').replace(/-/g, ' ')
-        }))
+        const validAreas = zonasCobertura
+            .filter((z: string) => z !== 'otra-zona' && z !== 'otra zona')
+            .map((z: string) => ({
+                '@type': 'City',
+                'name': resolveZoneDisplay(z).label,
+            }))
+        if (validAreas.length > 0) {
+            localBusiness['areaServed'] = validAreas
+        }
     }
 
     const schemaGraph: Record<string, unknown>[] = [

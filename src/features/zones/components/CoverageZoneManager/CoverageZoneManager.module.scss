@@ -1,0 +1,350 @@
+@use '@styles/_variables' as *;
+
+.ManagerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+}
+
+/* ──────────────── Toggle Row ──────────────── */
+.ToggleRow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    background: #e8f5e9;
+    transition: background 0.2s ease;
+}
+
+.ToggleLabel {
+    flex: 1;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--text-primary-color, #1a1a1a);
+}
+
+/* ──────────────── Search Combobox Container ──────────────── */
+.SearchContainer {
+    position: relative;
+    width: 100%;
+}
+
+.ComboboxWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    border-radius: 12px;
+    border: 1px solid var(--background-light-gray-color, #dcdcdc);
+    background: var(--background-white-color, #ffffff);
+    padding: 0 0.75rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus-within {
+        border-color: var(--background-main-green-color, #00b0ab);
+        box-shadow: 0 0 0 3px rgba(0, 176, 171, 0.15);
+    }
+}
+
+.SearchIconLeading {
+    display: flex;
+    align-items: center;
+    color: var(--primary-green-text-color, #00b0ab);
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+}
+
+.SearchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--primary-black-text-color, #000000);
+    min-width: 0;
+    padding: 0.5rem 0;
+
+    &::placeholder {
+        color: var(--content-text-light-gray-color, #999999);
+    }
+}
+
+.ClearSearchButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    color: var(--content-text-light-gray-color, #888888);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: color 0.15s ease, background 0.15s ease;
+
+    &:hover {
+        color: var(--primary-black-text-color, #000000);
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--background-main-green-color, #00b0ab);
+    }
+}
+
+/* ──────────────── Dropdown Results Menu ──────────────── */
+.ResultsDropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    max-height: 320px;
+    overflow-y: auto;
+    background: var(--background-white-color, #ffffff);
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    z-index: 1050;
+    padding: 0.5rem 0;
+    margin: 0;
+    list-style: none;
+}
+
+.ResultItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    min-height: 44px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: var(--primary-black-text-color, #222222);
+    transition: background 0.15s ease;
+
+    &:hover,
+    &.ResultItemHighlighted {
+        background: #f0fdf4;
+    }
+
+    &.ResultItemSelected {
+        font-weight: 600;
+        color: var(--primary-green-text-color, #008779);
+    }
+}
+
+.ResultItemDetails {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.ResultItemLabel {
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ResultItemParent {
+    font-size: 0.75rem;
+    color: var(--content-text-light-gray-color, #777777);
+}
+
+.ResultBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: #e2f4f2;
+    color: var(--primary-green-text-color, #008779);
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+}
+
+.HighlightMatch {
+    color: var(--background-main-green-color, #00b0ab);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.DropdownStatus {
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--content-text-light-gray-color, #666666);
+}
+
+.DropdownRetryButton {
+    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--background-main-green-color, #00b0ab);
+    background: transparent;
+    color: var(--background-main-green-color, #00b0ab);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    &:hover {
+        background: rgba(0, 176, 171, 0.08);
+    }
+}
+
+/* ──────────────── Selected Tray ──────────────── */
+.SelectedTray {
+    border-radius: 14px;
+    background: #f4fbf9;
+    border: 1px solid rgba(0, 176, 171, 0.2);
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.TrayHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.TrayTitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--primary-green-text-color, #008779);
+}
+
+.ClearAllButton {
+    background: transparent;
+    border: none;
+    color: #888888;
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+    min-height: 32px;
+
+    &:hover {
+        color: var(--error-alert-color, #d32f2f);
+        background: rgba(211, 47, 47, 0.08);
+    }
+}
+
+.TrayChipList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Legacy Other Zone Chip */
+.LegacyOtherZoneChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 16px;
+    background: #fff8e1;
+    border: 1px dashed var(--warning-alert-color, #ffab00);
+    color: #b78103;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.SpecifyActionBtn {
+    background: #ffab00;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 32px;
+    transition: background 0.15s ease;
+
+    &:hover {
+        background: #f59e0b;
+    }
+}
+
+/* Cap Warning Banner */
+.CapWarningBanner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: 10px;
+    background: #fff3e0;
+    border: 1px solid #ffe0b2;
+    color: #e65100;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* ──────────────── Curated Quick Access ──────────────── */
+.CuratedSection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.CuratedSectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.CuratedSectionTitle {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--content-text-color, #555555);
+}
+
+.CuratedGroups {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.CuratedGroupSubhead {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--content-text-light-gray-color, #888888);
+    margin-bottom: 0.25rem;
+}
+
+.CuratedGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+/* Screen Reader Announcements */
+.SrOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+

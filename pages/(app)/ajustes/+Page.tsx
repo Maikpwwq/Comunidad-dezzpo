@@ -30,9 +30,10 @@ import {
 import { Ubicacion } from '@features/marketing'
 import PropertiesManager from '@features/profile/components/PropertiesManager'
 import { AuthProvidersManager, UserLocationManager } from '@features/profile'
+import { CoverageZoneManager } from '@features/zones'
 import { SnackBarAlert, ChipsCategories, PhoneField } from '@components/common'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
-import { zones, zoneNames, departamentosColombia } from '@assets/data/ListadoZonas'
+import { departamentosColombia } from '@assets/data/ListadoZonas'
 
 // MUI
 import {
@@ -526,14 +527,6 @@ export default function Page() {
     }, [userAuthID, userRol.rol, socialLinks, socialUrlErrors])
 
     // ── Coverage zone handlers (comerciante) ─────────────────────────────
-    const handleToggleZone = (zone: string) => {
-        setCoverageZones((prev) =>
-            prev.includes(zone)
-                ? prev.filter((z) => z !== zone)
-                : [...prev, zone]
-        )
-    }
-
     const handleSaveCoverage = useCallback(async () => {
         if (!userRol.rol) {
             setAlert({ open: true, message: 'Error: Rol no identificado.', severity: 'error' })
@@ -1075,23 +1068,10 @@ export default function Page() {
                         </div>
 
                         {!coverageCityWide && (
-                            <>
-                                <div className={styles['coverage-chip-grid']}>
-                                    {zones.map((zone) => (
-                                        <Chip
-                                            key={zone}
-                                            label={zoneNames[zone]}
-                                            onClick={() => handleToggleZone(zone)}
-                                            color={coverageZones.includes(zone) ? 'success' : 'default'}
-                                            variant={coverageZones.includes(zone) ? 'filled' : 'outlined'}
-                                            size="small"
-                                        />
-                                    ))}
-                                </div>
-                                <span className={styles['coverage-count']}>
-                                    {coverageZones.length} zona{coverageZones.length !== 1 ? 's' : ''} seleccionada{coverageZones.length !== 1 ? 's' : ''}
-                                </span>
-                            </>
+                            <CoverageZoneManager
+                                coverageZones={coverageZones}
+                                onCoverageZonesChange={setCoverageZones}
+                            />
                         )}
                     </div>
                 )}

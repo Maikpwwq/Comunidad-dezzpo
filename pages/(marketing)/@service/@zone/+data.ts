@@ -2,6 +2,7 @@ import type { PageContextServer } from 'vike/types'
 import { adminFirestore } from '@services/firebase/admin'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 import { zoneNames } from '@assets/data/ListadoZonas'
+import { merchantCoversZone } from '@features/zones/domain/catalog'
 
 export { data }
 export type Data = Awaited<ReturnType<typeof data>>
@@ -111,7 +112,7 @@ async function data(pageContext: PageContextServer) {
             const isDirectZone = 
                 zone === 'bogota' || 
                 isCityWide ||
-                zonasCobertura.includes(zone) ||
+                merchantCoversZone(zonasCobertura, zone, isCityWide) ||
                 address.includes(zoneKeyword) || 
                 ubication.includes(zoneKeyword) || 
                 description.includes(zoneKeyword)

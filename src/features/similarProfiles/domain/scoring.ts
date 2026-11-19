@@ -10,6 +10,7 @@
  */
 
 import { SIMILAR_PROFILES_CONFIG } from '@config/similarProfiles.config'
+import { merchantCoversZone } from '@features/zones/domain/catalog'
 import {
     evaluateFuzzyMatch,
     type ZoneSignalType,
@@ -138,10 +139,15 @@ export function calculateProximityScore(
 
     // Check tier 1: Same municipio / locality
     let isMunicipio = false
-    if (normTargetMpio && userPostal && userPostal.includes(normTargetMpio)) {
+    if (normTargetMpio && ((userPostal && userPostal.includes(normTargetMpio)) || userZonas.includes(normTargetMpio) || merchantCoversZone(candidate.userZonasCobertura, normTargetMpio))) {
         isMunicipio = true
     } else if (normTargetZone) {
-        if (userDirection.includes(normTargetZone) || userCiudad.includes(normTargetZone) || userZonas.includes(normTargetZone)) {
+        if (
+            userDirection.includes(normTargetZone) ||
+            userCiudad.includes(normTargetZone) ||
+            userZonas.includes(normTargetZone) ||
+            merchantCoversZone(candidate.userZonasCobertura, normTargetZone)
+        ) {
             isMunicipio = true
         }
     }

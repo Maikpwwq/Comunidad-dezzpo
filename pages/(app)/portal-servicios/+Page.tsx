@@ -33,6 +33,7 @@ import {
     type FormalityLevel,
 } from '@config/matching.config'
 import { zoneNames } from '@assets/data/ListadoZonas'
+import { merchantCoversZone } from '@features/zones/domain/catalog'
 import { ListadoCategorias } from '@assets/data/ListadoCategorias'
 import { filterCategoriesBySearch } from '@utils/categoryFilter'
 
@@ -145,9 +146,24 @@ function resolveZoneProximitySignal(
     userLocation?: string | null,
     targetZone?: string | null,
     targetMunicipioCode?: string | null,
-    targetMunicipioName?: string | null
+    targetMunicipioName?: string | null,
+    merchantZonas?: readonly string[] | null,
+    isCityWide?: boolean
 ): ZoneSignalType {
     if (!targetZone && !targetMunicipioCode && !targetMunicipioName) return 'no_zone_specified'
+    if (isCityWide) return 'citywide_coverage'
+
+    // Check explicit coverage zones declared by merchant
+    if (targetZone && targetZone !== 'otra-zona' && merchantCoversZone(merchantZonas ?? undefined, targetZone)) {
+        return 'same_zone'
+    }
+    if (targetMunicipioCode && merchantCoversZone(merchantZonas ?? undefined, targetMunicipioCode)) {
+        return 'same_zone'
+    }
+    if (targetMunicipioName && merchantCoversZone(merchantZonas ?? undefined, targetMunicipioName)) {
+        return 'same_zone'
+    }
+
     if (!userLocation) return 'no_zone_specified'
 
     const cleanUser = userLocation.toLowerCase()
@@ -367,7 +383,14 @@ export default function Page() {
 
         const evaluated: RankedMerchant[] = prefilteredUsers.map((user) => {
             const userLoc = user.userCiudad || user.userDirection || ''
-            const zoneSignal = resolveZoneProximitySignal(userLoc, activeZone, activeMpioCode, activeMpioName)
+            const zoneSignal = resolveZoneProximitySignal(
+                userLoc,
+                activeZone,
+                activeMpioCode,
+                activeMpioName,
+                user.userZonasCobertura,
+                user.coberturaTodaLaCiudad
+            )
 
             const match = evaluateFuzzyMatch({
                 propertyType: resolvedProp,
