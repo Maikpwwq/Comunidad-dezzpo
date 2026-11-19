@@ -1067,12 +1067,10 @@ export default function Page() {
                             />
                         </div>
 
-                        {!coverageCityWide && (
-                            <CoverageZoneManager
-                                coverageZones={coverageZones}
-                                onCoverageZonesChange={setCoverageZones}
-                            />
-                        )}
+                        <CoverageZoneManager
+                            coverageZones={coverageZones}
+                            onCoverageZonesChange={setCoverageZones}
+                        />
                     </div>
                 )}
 
