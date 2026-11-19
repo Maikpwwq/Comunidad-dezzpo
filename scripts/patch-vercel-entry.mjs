@@ -163,3 +163,18 @@ export default async function handler(req, res) {
 
 writeFileSync(entryPath, patchedContent, 'utf-8')
 console.log(`[patch-vercel-entry] ✅ Patched entry.mjs (export: ${exportName})`)
+
+// --- Build Safeguard: Verify ads.txt in dist/client ---
+const clientAdsTxtPath = resolve('dist/client/ads.txt')
+try {
+  const adsContent = readFileSync(clientAdsTxtPath, 'utf-8')
+  const expectedLine = 'google.com, pub-9623256221558651, DIRECT, f08c47fec0942fa0\n'
+  if (adsContent !== expectedLine) {
+    console.error(`[patch-vercel-entry] ❌ ads.txt content mismatch! Expected:\n${expectedLine}\nReceived:\n${adsContent}`)
+    process.exit(1)
+  }
+  console.log('[patch-vercel-entry] ✅ Verified dist/client/ads.txt (valid AdSense publisher ID & direct relationship)')
+} catch (err) {
+  console.error('[patch-vercel-entry] ❌ dist/client/ads.txt is missing after build!', err)
+  process.exit(1)
+}

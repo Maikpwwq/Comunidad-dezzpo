@@ -1,6 +1,10 @@
 # https://www.robotstxt.org/robotstxt.html
 # Comunidad Dezzpo - Marketplace de servicios profesionales
 
+# Google AdSense Crawler
+User-agent: Mediapartners-Google
+Allow: /
+
 User-agent: *
 Allow: /
 

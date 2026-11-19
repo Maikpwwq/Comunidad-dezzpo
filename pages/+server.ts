@@ -69,6 +69,12 @@ vike(app)
 
 // ── API routes (registered AFTER vike(app) per @vikejs/hono@0.4.1) ──────────
 
+app.get('/ads.txt', (c) => {
+  c.header('Content-Type', 'text/plain; charset=utf-8')
+  c.header('Cache-Control', 'public, max-age=3600, stale-while-revalidate=600')
+  return c.text('google.com, pub-9623256221558651, DIRECT, f08c47fec0942fa0\n')
+})
+
 app.get('/api/v1/status', (c) =>
   c.json({
     status: 'online',
