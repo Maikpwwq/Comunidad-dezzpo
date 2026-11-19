@@ -42,6 +42,7 @@ export interface CategoryItemLike {
     key: number | string
     label: string
     rol?: string
+    keywords?: string[]
     [key: string]: unknown
 }
 
@@ -78,6 +79,17 @@ export function filterCategoriesBySearch<T extends CategoryItemLike>(
 
         // Whole-query substring match
         if (lNorm.includes(queryNorm) || rNorm.includes(queryNorm)) return true
+
+        // Keyword match
+        if (
+            Array.isArray(cat.keywords) &&
+            cat.keywords.some((kw) => {
+                const kwNorm = normalizeSearchText(String(kw))
+                return kwNorm.includes(queryNorm) || queryWords.some((qw) => kwNorm.includes(qw))
+            })
+        ) {
+            return true
+        }
 
         // Word-level match with prefix/stem heuristics
         const catWords = [...lNorm.split(/\s+/), ...(rNorm ? rNorm.split(/\s+/) : [])]

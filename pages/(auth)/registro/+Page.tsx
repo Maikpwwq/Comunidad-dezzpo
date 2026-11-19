@@ -3,7 +3,7 @@
  *
  * Refactored to use @features/auth components and hooks with SMS OTP & Email support.
  */
-import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useState, useRef, useCallback, type ChangeEvent, type FormEvent } from 'react'
 import { Link } from '@hooks'
 import { useDuplicateNameCheck } from '@hooks/useDuplicateNameCheck'
 // Auth feature components & hooks
@@ -75,6 +75,21 @@ export default function Page({
     const [role, setRole] = useState<UserRoleNumeric>(null)
     const [acceptedPrivacy, setAcceptedPrivacy] = useState(false)
 
+    // Ref to privacy checkbox for scroll-to + shake highlight
+    const privacyRef = useRef<HTMLDivElement>(null)
+
+    /** Scroll to the privacy checkbox and shake it to draw attention. */
+    const scrollToPrivacy = useCallback(() => {
+        const el = privacyRef.current
+        if (!el) return
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        const highlightClass = styles.PrivacyHighlight
+        if (highlightClass) {
+            el.classList.add(highlightClass)
+            setTimeout(() => el.classList.remove(highlightClass), 1800)
+        }
+    }, [])
+
     // Phone Auth specific state
     const [phoneNumber, setPhoneNumber] = useState('')
     const [countryCode, setCountryCode] = useState('+57')
@@ -101,6 +116,7 @@ export default function Page({
         e.preventDefault()
         if (!acceptedPrivacy) {
             showAlert('Debes aceptar el Aviso de Privacidad y Tratamiento de Datos.', 'warning')
+            scrollToPrivacy()
             return
         }
         if (password !== confirmPassword) {
@@ -121,6 +137,7 @@ export default function Page({
     const handleGoogleSignup = async () => {
         if (!acceptedPrivacy) {
             showAlert('Debes aceptar el Aviso de Privacidad y Tratamiento de Datos para registrarte.', 'warning')
+            scrollToPrivacy()
             return
         }
         const result = await registerWithGoogle({ role, name: name || undefined }, draftInfo)
@@ -144,6 +161,7 @@ export default function Page({
         }
         if (!acceptedPrivacy) {
             showAlert('Debes aceptar el Aviso de Privacidad y Tratamiento de Datos.', 'warning')
+            scrollToPrivacy()
             return
         }
 
@@ -217,6 +235,33 @@ export default function Page({
                                 <Form.Label className="mb-0 body-1 pt-2">
                                     {role === 1 ? 'Soy propietario/residente' : 'Soy comerciante calificado'}
                                 </Form.Label>
+
+                                {/* Privacy Checkbox — shared across all auth methods, placed prominently */}
+                                <div ref={privacyRef} style={{ width: '100%', maxWidth: 360, margin: '0.75rem auto 0' }}>
+                                    <Form.Group className="mb-0 text-start w-100 px-2">
+                                        <Form.Check
+                                            type="checkbox"
+                                            id="accept-privacy-checkbox"
+                                            checked={acceptedPrivacy}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setAcceptedPrivacy(e.target.checked)}
+                                            label={
+                                                <span className="body-2" style={{ fontSize: '0.85rem', color: '#475569', lineHeight: 1.5 }}>
+                                                    He leído y acepto el{' '}
+                                                    <a
+                                                        href="/legal?doc=aviso-privacidad"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className={clsx(styles.Link, styles.Green)}
+                                                        style={{ textDecoration: 'underline', fontWeight: 700 }}
+                                                    >
+                                                        Aviso de Privacidad y Autorización para el Tratamiento de Datos Personales
+                                                    </a>
+                                                    . <span style={{ color: '#ef4444' }}>*</span>
+                                                </span>
+                                            }
+                                        />
+                                    </Form.Group>
+                                </div>
 
                                 <GoogleAuthButton
                                     onClick={handleGoogleSignup}
@@ -306,30 +351,6 @@ export default function Page({
                                             </Col>
 
                                             <Col className="pt-2 pb-3 d-flex flex-column align-items-center">
-                                                <Form.Group className="mb-3 text-start w-100 px-2" style={{ maxWidth: 360 }}>
-                                                    <Form.Check
-                                                        type="checkbox"
-                                                        id="accept-privacy-checkbox-phone"
-                                                        checked={acceptedPrivacy}
-                                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setAcceptedPrivacy(e.target.checked)}
-                                                        label={
-                                                            <span className="body-2" style={{ fontSize: '0.85rem', color: '#475569', lineHeight: 1.5 }}>
-                                                                He leído y acepto el{' '}
-                                                                <a
-                                                                    href="/legal?doc=aviso-privacidad"
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    className={clsx(styles.Link, styles.Green)}
-                                                                    style={{ textDecoration: 'underline', fontWeight: 700 }}
-                                                                >
-                                                                    Aviso de Privacidad y Autorización para el Tratamiento de Datos Personales
-                                                                </a>
-                                                                . <span style={{ color: '#ef4444' }}>*</span>
-                                                            </span>
-                                                        }
-                                                    />
-                                                </Form.Group>
-
                                                 <Button
                                                     onClick={() => setStep(1)}
                                                     className="mb-3 btn-round btn-middle w-auto"
@@ -465,30 +486,6 @@ export default function Page({
                                             </Form.Group>
                                         </Col>
                                         <Col className="pt-2 pb-3 d-flex flex-column align-items-center">
-                                            <Form.Group className="mb-3 text-start w-100 px-2" style={{ maxWidth: 360 }}>
-                                                <Form.Check
-                                                    type="checkbox"
-                                                    id="accept-privacy-checkbox-email"
-                                                    checked={acceptedPrivacy}
-                                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setAcceptedPrivacy(e.target.checked)}
-                                                    label={
-                                                        <span className="body-2" style={{ fontSize: '0.85rem', color: '#475569', lineHeight: 1.5 }}>
-                                                            He leído y acepto el{' '}
-                                                            <a
-                                                                href="/legal?doc=aviso-privacidad"
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className={clsx(styles.Link, styles.Green)}
-                                                                style={{ textDecoration: 'underline', fontWeight: 700 }}
-                                                            >
-                                                                Aviso de Privacidad y Autorización para el Tratamiento de Datos Personales
-                                                            </a>
-                                                            . <span style={{ color: '#ef4444' }}>*</span>
-                                                        </span>
-                                                    }
-                                                />
-                                            </Form.Group>
-
                                             <Button
                                                 onClick={() => setStep(1)}
                                                 className="mb-3 btn-round btn-middle w-auto"

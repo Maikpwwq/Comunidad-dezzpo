@@ -315,8 +315,8 @@ describe('PreRegistration Phase 0 Characterization Tests', () => {
     // 4. Portal de Servicios & Category Taxonomy Baseline (R1 / R2)
     // =========================================================================
     describe('4. Portal & Taxonomy Baseline (R1 / R2)', () => {
-        it('has 94 active specialties in ListadoCategorias for skill picker matching', () => {
-            expect(ListadoCategorias).toHaveLength(94)
+        it('has 98 active specialties in ListadoCategorias for skill picker matching', () => {
+            expect(ListadoCategorias).toHaveLength(98)
             const cctv = ListadoCategorias.find((c) => c.label.toLowerCase().includes('videovigilancia'))
             const izaje = ListadoCategorias.find((c) => c.label.toLowerCase().includes('izaje'))
             expect(cctv).toBeDefined()

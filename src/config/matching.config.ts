@@ -408,11 +408,15 @@ export const CATEGORY_FORMALITY_TABLE: Record<number, FormalityLevel> = {
     86: 'alta',   // Estudios de Suelos y Geotecnia
     87: 'alta',   // Energía Solar y Fotovoltaica
     88: 'media',  // Puertas Automáticas y Motores
-    89: 'alta',   // Fumigación y Control de Plagas
+    89: 'alta',   // Lavado de Fachadas y Vidrios en Altura
     90: 'alta',   // Peritajes y Avalúos
     91: 'media',  // Diseño 3D y Renders
-    92: 'alta',   // Videovigilancia CCTV
+    92: 'media',  // Divisiones de Baño y Vidrio Templado
     93: 'alta',   // Izaje de cargas
+    94: 'media',  // Puertas Residenciales y de Seguridad
+    95: 'alta',   // Plantas Eléctricas y Generadores
+    96: 'alta',   // Tuberías Industriales, Cobre y Racores
+    97: 'alta',   // Bombas, Compresores y Equipos de Presión
 }
 
 /**

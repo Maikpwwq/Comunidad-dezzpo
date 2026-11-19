@@ -275,14 +275,28 @@ export async function checkCategorySuggestionAvailability(
         const normLabel = normalizeSearchString(rawLabel)
         if (!normLabel) continue
 
-        const isExact = normLabel === cleanInput
+        const isExactLabel = normLabel === cleanInput
         const labelWords = normLabel.split(' ').filter((w) => w.length >= 3)
         const hasWordOverlap =
             inputWords.some((w) => labelWords.includes(w)) ||
             (normLabel.length >= 4 && cleanInput.includes(normLabel)) ||
             (cleanInput.length >= 4 && normLabel.includes(cleanInput))
 
-        const isSimilar = !isExact && hasWordOverlap
+        // Also evaluate official keywords / synonyms
+        const keywords = Array.isArray(cat.keywords) ? (cat.keywords as string[]) : []
+        const exactKeywordMatch = keywords.some(
+            (kw: string) => normalizeSearchString(kw) === cleanInput
+        )
+        const similarKeywordMatch = keywords.some((kw: string) => {
+            const normKw = normalizeSearchString(kw)
+            return (
+                (normKw.length >= 4 && cleanInput.includes(normKw)) ||
+                (cleanInput.length >= 4 && normKw.includes(cleanInput))
+            )
+        })
+
+        const isExact = isExactLabel || exactKeywordMatch
+        const isSimilar = !isExact && (hasWordOverlap || similarKeywordMatch)
 
         if (isExact || isSimilar) {
             if (isExact) hasExactMatch = true

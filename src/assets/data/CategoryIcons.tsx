@@ -73,6 +73,12 @@ import {
     ViewInAr,
     Videocam,
     Anchor,
+    DoorFront,
+    ElectricBolt,
+    Tune,
+    Compress,
+    Shower,
+    Window,
 } from '@mui/icons-material'
 
 export const CategoryIcons: Record<string, React.ElementType> = {
@@ -144,4 +150,10 @@ export const CategoryIcons: Record<string, React.ElementType> = {
     ViewInAr,
     Videocam,
     Anchor,
+    DoorFront,
+    ElectricBolt,
+    Tune,
+    Compress,
+    Shower,
+    Window,
 }

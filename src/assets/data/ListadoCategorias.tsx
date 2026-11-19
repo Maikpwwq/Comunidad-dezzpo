@@ -8,6 +8,7 @@ const ListadoCategorias = [
         rol: 'Afinadores de muros y acabados',
         variant: 'outlined',
         iconName: 'HouseSiding',
+        keywords: ['recubrimientos', 'muros', 'acabados', 'revestimiento', 'enchape'],
     },
     {
         key: 1,
@@ -102,10 +103,11 @@ const ListadoCategorias = [
     },
     {
         key: 14,
-        label: 'Camaras de seguridad',
-        rol: 'Técnicos de camaras de seguridad',
+        label: 'Cámaras de Seguridad y Videovigilancia CCTV',
+        rol: 'Instaladores y Técnicos de Cámaras y CCTV',
         variant: 'outlined',
-        iconName: 'ThermostatAuto',
+        iconName: 'Videocam',
+        keywords: ['camaras de seguridad', 'cámaras', 'camaras', 'cctv', 'videovigilancia cctv', 'dvr', 'nvr', 'videovigilancia', 'video vigilancia', 'circuito cerrado', 'seguridad electrónica', 'monitoreo'],
     },
     {
         key: 15,
@@ -120,6 +122,7 @@ const ListadoCategorias = [
         rol: 'Carpinteros',
         variant: 'outlined',
         iconName: 'Carpenter',
+        keywords: ['madera', 'maderas', 'carpintero', 'muebles de madera', 'ebanistería', 'ebanista'],
     },
     {
         key: 17,
@@ -165,10 +168,11 @@ const ListadoCategorias = [
     },
     {
         key: 23,
-        label: 'Control de plagas',
-        rol: 'Controladores de plagas',
+        label: 'Fumigación y Control de Plagas',
+        rol: 'Especialistas en Fumigación y Control de Plagas',
         variant: 'outlined',
-        iconName: 'PestControlRodent',
+        iconName: 'PestControl',
+        keywords: ['control de plagas', 'fumigación', 'fumigacion', 'plagas', 'desinfección', 'desratización', 'termitas', 'cucarachas'],
     },
     {
         key: 24,
@@ -330,6 +334,7 @@ const ListadoCategorias = [
         rol: 'Instaladores de ventanas',
         variant: 'outlined',
         iconName: 'SensorWindow',
+        keywords: ['vidrio', 'vidrios', 'cristales', 'ventanería', 'ventanas'],
     },
     {
         key: 47,
@@ -351,6 +356,7 @@ const ListadoCategorias = [
         rol: 'Técnicos de Limpiezas técnicas',
         variant: 'outlined',
         iconName: 'CleaningServices',
+        keywords: ['limpieza de vidrios', 'limpieza de fachada', 'limpieza industrial', 'lavado'],
     },
     {
         key: 50,
@@ -379,6 +385,7 @@ const ListadoCategorias = [
         rol: 'Técnicos en metálmecanica',
         variant: 'outlined',
         iconName: 'SquareFoot',
+        keywords: ['inoxidable', 'acero', 'hierro', 'metal', 'estructura metálica'],
     },
     {
         key: 54,
@@ -442,6 +449,7 @@ const ListadoCategorias = [
         rol: 'Pintores',
         variant: 'outlined',
         iconName: 'FormatPaint',
+        keywords: ['pintura', 'pintores', 'fachada', 'fachadas', 'pintura de fachadas', 'pintura exterior', 'impermeabilización de fachadas', 'estuco'],
     },
     {
         key: 63,
@@ -547,6 +555,7 @@ const ListadoCategorias = [
         rol: 'Técnicos en soldadura',
         variant: 'outlined',
         iconName: 'SquareFoot',
+        keywords: ['soldadura', 'soldar', 'soldador', 'inoxidable', 'acero inoxidable', 'soldadura tig', 'soldadura mig', 'estructuras metalicas'],
     },
     {
         key: 78,
@@ -617,6 +626,7 @@ const ListadoCategorias = [
         rol: 'Instaladores de Energía Solar',
         variant: 'outlined',
         iconName: 'SolarPower',
+        keywords: ['energia solar', 'energía solar', 'paneles solares', 'fotovoltaica', 'inversores solares', 'solar', 'energia renovable'],
     },
     {
         key: 88,
@@ -624,13 +634,15 @@ const ListadoCategorias = [
         rol: 'Técnicos de Puertas Automáticas',
         variant: 'outlined',
         iconName: 'Garage',
+        keywords: ['puertas automaticas', 'motores para puertas', 'talanqueras', 'portones automaticos', 'automatizacion de puertas'],
     },
     {
         key: 89,
-        label: 'Fumigación y Control de Plagas',
-        rol: 'Especialistas en Fumigación y Control de Plagas',
+        label: 'Lavado de Fachadas y Vidrios en Altura',
+        rol: 'Técnicos de Lavado de Fachadas y Limpieza de Vidrios',
         variant: 'outlined',
-        iconName: 'PestControl',
+        iconName: 'CleaningServices',
+        keywords: ['fachada', 'fachadas', 'lavado de fachadas', 'limpieza de vidrios', 'vidrios en altura', 'limpieza de fachada', 'cristales', 'hidrolavado', 'lavado exterior'],
     },
     {
         key: 90,
@@ -648,10 +660,11 @@ const ListadoCategorias = [
     },
     {
         key: 92,
-        label: 'Videovigilancia CCTV',
-        rol: 'Instaladores y Técnicos de Videovigilancia CCTV',
+        label: 'Divisiones de Baño y Vidrio Templado',
+        rol: 'Instaladores de Divisiones de Baño y Vidrio',
         variant: 'outlined',
-        iconName: 'Videocam',
+        iconName: 'Shower',
+        keywords: ['divisiones', 'divisiones de baño', 'divisiones baño', 'vidrio templado', 'cancelería', 'puertas de baño', 'baño', 'acrílicos', 'recubrimientos'],
     },
     {
         key: 93,
@@ -659,7 +672,53 @@ const ListadoCategorias = [
         rol: 'Operadores y Técnicos de Izaje de Cargas',
         variant: 'outlined',
         iconName: 'Anchor',
+        keywords: ['izaje de cargas', 'gruas', 'montacargas', 'polipastos', 'eslingas', 'maniobras de carga'],
+    },
+    {
+        key: 94,
+        label: 'Puertas Residenciales y de Seguridad',
+        rol: 'Instaladores de Puertas Residenciales y de Seguridad',
+        variant: 'outlined',
+        iconName: 'DoorFront',
+        keywords: ['puertas', 'puerta', 'puertas residenciales', 'puertas de seguridad', 'puertas de madera', 'puertas metálicas', 'marcos', 'puertas entamboradas', 'portones', 'chapas de seguridad'],
+    },
+    {
+        key: 95,
+        label: 'Plantas Eléctricas y Generadores',
+        rol: 'Técnicos de Plantas Eléctricas y Generadores',
+        variant: 'outlined',
+        iconName: 'ElectricBolt',
+        keywords: ['plantas electricas', 'plantas eléctricas', 'generadores', 'planta diesel', 'generador electrico', 'grupos electrogenos', 'transferencias electricas', 'mantenimiento plantas'],
+    },
+    {
+        key: 96,
+        label: 'Tuberías Industriales, Cobre y Racores',
+        rol: 'Técnicos en Tuberías Industriales, Cobre y Racores',
+        variant: 'outlined',
+        iconName: 'Tune',
+        keywords: ['tuberia de cobre', 'cobre', 'racores', 'racoreria', 'conduccion de fluidos', 'mangueras hidraulicas', 'tuberia de gas', 'refrigeracion', 'vapor', 'valvulas industriales', 'alta presion', 'fluidos', 'racor'],
+    },
+    {
+        key: 97,
+        label: 'Bombas, Compresores y Equipos de Presión',
+        rol: 'Técnicos de Bombas, Compresores y Equipos de Presión',
+        variant: 'outlined',
+        iconName: 'Compress',
+        keywords: ['bombas de agua', 'electrobombas', 'motobombas', 'compresores', 'hidroflo', 'equipos de presion', 'sistemas de bombeo', 'tanques de presion', 'transporte de fluidos', 'compresor de aire', 'bombas'],
     },
 ]
+
+/**
+ * Category label aliases for backward compatibility with user profiles
+ * where older category names were selected.
+ */
+export const CATEGORY_LABEL_ALIASES: Record<string, string> = {
+    'Camaras de seguridad': 'Cámaras de Seguridad y Videovigilancia CCTV',
+    'Videovigilancia CCTV': 'Cámaras de Seguridad y Videovigilancia CCTV',
+    'Videovigilancia y CCTV': 'Cámaras de Seguridad y Videovigilancia CCTV',
+    'Control de plagas': 'Fumigación y Control de Plagas',
+    'Lavado de Fachadas y Vidrios': 'Lavado de Fachadas y Vidrios en Altura',
+    'Divisiones y Recubrimientos': 'Divisiones de Baño y Vidrio Templado',
+}
 
 export { ListadoCategorias }

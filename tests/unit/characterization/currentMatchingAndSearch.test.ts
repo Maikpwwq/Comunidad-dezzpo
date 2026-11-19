@@ -16,8 +16,8 @@ import { COMERCIANTE_OPTIONS, PROPIETARIO_OPTIONS, PROPIETARIO_RANKINGS } from '
 describe('Phase 0 Characterization: Current Search & Taxonomy Baseline', () => {
 
     describe('1. Category Catalog & Search Index Baseline', () => {
-        it('contains exactly 94 official categories in ListadoCategorias', () => {
-            expect(ListadoCategorias).toHaveLength(94)
+        it('contains exactly 98 official categories in ListadoCategorias', () => {
+            expect(ListadoCategorias).toHaveLength(98)
         })
 
         it('each category has a unique key and non-empty label and rol', () => {
@@ -31,9 +31,9 @@ describe('Phase 0 Characterization: Current Search & Taxonomy Baseline', () => {
         })
 
         it('contains newly added Videovigilancia CCTV and Izaje de cargas categories', () => {
-            const cctv = ListadoCategorias.find(c => c.label === 'Videovigilancia CCTV')
+            const cctv = ListadoCategorias.find(c => c.label.toLowerCase().includes('videovigilancia'))
             expect(cctv).toBeDefined()
-            expect(cctv?.key).toBe(92)
+            expect(cctv?.key).toBe(14)
             expect(cctv?.iconName).toBe('Videocam')
 
             const izaje = ListadoCategorias.find(c => c.label === 'Izaje de cargas')

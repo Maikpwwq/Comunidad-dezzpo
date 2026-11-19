@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { CategoryIcons } from '@assets/data/CategoryIcons'
+import { CATEGORY_LABEL_ALIASES } from '@assets/data/ListadoCategorias'
 import {
     Chip,
     Paper,
@@ -40,6 +41,8 @@ export interface CategoryItem {
     label: string
     variant?: 'filled' | 'outlined'
     iconName?: string
+    rol?: string
+    keywords?: string[]
     [key: string]: any
 }
 
@@ -168,33 +171,44 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
         if (!listadoCategorias || listadoCategorias.length === 0) return
 
         if (userEditInfo?.userCategories) {
-            // Editable mode: mark selected categories as 'filled'
-            const initialCategories: CategoryItem[] = listadoCategorias.map((cat) => ({
-                key: cat.key,
-                label: cat.label,
-                iconName: (cat as any).iconName,
-                variant: userEditInfo.userCategories.includes(cat.label) ? 'filled' : 'outlined',
-            })) as CategoryItem[]
+            // Editable mode: mark selected categories as 'filled' (with alias compatibility)
+            const initialCategories: CategoryItem[] = listadoCategorias.map((cat) => {
+                const isSelected = userEditInfo.userCategories.some(
+                    (savedLabel) =>
+                        savedLabel === cat.label ||
+                        CATEGORY_LABEL_ALIASES?.[savedLabel] === cat.label
+                )
+                return {
+                    ...cat,
+                    variant: isSelected ? 'filled' : 'outlined',
+                }
+            })
             setCategoriesState(initialCategories)
         } else {
             // Read-only mode: show all chips as filled (no userEditInfo)
             const readOnlyCategories: CategoryItem[] = listadoCategorias.map((cat) => ({
-                key: cat.key,
-                label: cat.label,
-                iconName: (cat as any).iconName,
+                ...cat,
                 variant: 'filled' as const,
-            })) as CategoryItem[]
+            }))
             setCategoriesState(readOnlyCategories)
         }
     }, [listadoCategorias, userEditInfo?.userCategories, saved])
 
-    // Filter categories by search query
+    // Filter categories by search query across label, rol, and keywords
     const filteredCategories = useMemo(() => {
         if (!searchQuery.trim()) return categoriesState
         const queryNorm = normalizeSearchText(searchQuery)
-        return categoriesState.filter((cat) =>
-            normalizeSearchText(cat.label).includes(queryNorm)
-        )
+        return categoriesState.filter((cat) => {
+            if (normalizeSearchText(cat.label).includes(queryNorm)) return true
+            if (cat.rol && normalizeSearchText(cat.rol).includes(queryNorm)) return true
+            if (
+                Array.isArray(cat.keywords) &&
+                cat.keywords.some((kw: string) => normalizeSearchText(kw).includes(queryNorm))
+            ) {
+                return true
+            }
+            return false
+        })
     }, [categoriesState, searchQuery])
 
     // Selected categories for quick view tray
@@ -392,7 +406,7 @@ export const ChipsCategories: React.FC<ChipsCategoriesProps> = ({
                     name="searchCategory"
                     size="small"
                     fullWidth
-                    placeholder="Buscar categoría de servicio (ej: Pintura, Plomería, Redes, Aseo...)"
+                    placeholder="Buscar categoría o palabra clave (ej: Fachadas, Madera, Vidrio, Plagas, Bombas...)"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     InputProps={{

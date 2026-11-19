@@ -89,15 +89,59 @@ describe('Category Filter Utility (normalizeSearchText & filterCategoriesBySearc
         })
 
         it('uses contextual category names when direct matches are empty', () => {
-            // Suppose user searches a word that is not a category label, e.g. "tuberia"
+            // Suppose user searches a word that is not in any category label/keywords
             const res = filterCategoriesBySearch({
                 categories: ListadoCategorias,
-                searchQuery: 'tuberia',
+                searchQuery: 'termino_inexistente_contextual',
                 contextualCategoryNames: ['Plomería', 'Redes hidrosanitarias'],
             })
             const labels = res.map((c) => c.label)
             expect(labels).toContain('Plomería')
             expect(labels).toContain('Redes hidrosanitarias')
+        })
+
+        it('finds categories via keywords (e.g. "madera", "vidrio", "fachada", "inoxidable", "divisiones")', () => {
+            // Madera -> Carpintería
+            const resMadera = filterCategoriesBySearch({
+                categories: ListadoCategorias,
+                searchQuery: 'madera',
+            })
+            expect(resMadera.map((c) => c.label)).toContain('Carpintería')
+
+            // Vidrio -> Instalación de ventanas o Lavado de Fachadas y Vidrios en Altura o Divisiones
+            const resVidrio = filterCategoriesBySearch({
+                categories: ListadoCategorias,
+                searchQuery: 'vidrio',
+            })
+            expect(resVidrio.map((c) => c.label)).toContain('Instalación de ventanas')
+
+            // Fachada -> Lavado de Fachadas y Vidrios en Altura y Pintura
+            const resFachada = filterCategoriesBySearch({
+                categories: ListadoCategorias,
+                searchQuery: 'fachada',
+            })
+            expect(resFachada.map((c) => c.label)).toContain('Lavado de Fachadas y Vidrios en Altura')
+
+            // Inoxidable -> Metálmecanica y Soldadura
+            const resInox = filterCategoriesBySearch({
+                categories: ListadoCategorias,
+                searchQuery: 'inoxidable',
+            })
+            expect(resInox.map((c) => c.label)).toContain('Metálmecanica')
+
+            // Divisiones -> Divisiones de Baño y Vidrio Templado
+            const resDivisiones = filterCategoriesBySearch({
+                categories: ListadoCategorias,
+                searchQuery: 'divisiones',
+            })
+            expect(resDivisiones.map((c) => c.label)).toContain('Divisiones de Baño y Vidrio Templado')
+
+            // Cobre / Racores -> Tuberías Industriales, Cobre y Racores
+            const resCobre = filterCategoriesBySearch({
+                categories: ListadoCategorias,
+                searchQuery: 'cobre',
+            })
+            expect(resCobre.map((c) => c.label)).toContain('Tuberías Industriales, Cobre y Racores')
         })
 
         it('returns empty array when query has no matching category or context', () => {

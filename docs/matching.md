@@ -47,7 +47,7 @@ Son los pares contractuales donde la estructura del comerciante y el tipo de inm
 
 ---
 
-## 3. Tabla de Formalidad por Categoría (94 Especialidades)
+## 3. Tabla de Formalidad por Categoría (98 Especialidades)
 
 | Clave | Especialidad | Rol Técnico | Exigencia de Formalidad |
 | :---: | :--- | :--- | :---: |
@@ -65,7 +65,7 @@ Son los pares contractuales donde la estructura del comerciante y el tipo de inm
 | **11** | Aseo Hogar y Oficina | Aseadores | 🟡 Media |
 | **12** | Automatización | Técnico en automatización | 🟡 Media |
 | **13** | Calentadores | Técnicos de calentadores | 🟢 Baja |
-| **14** | Camaras de seguridad | Técnicos de camaras de seguridad | 🟡 Media |
+| **14** | Cámaras de Seguridad y Videovigilancia CCTV | Instaladores y Técnicos de Cámaras y CCTV | 🟡 Media |
 | **15** | Canales y bajantes | Técnicos de canales y bajantes | 🟡 Media |
 | **16** | Carpintería | Carpinteros | 🟢 Baja |
 | **17** | Carpintería en aluminio | Carpinteros del aluminio | 🟡 Media |
@@ -74,7 +74,7 @@ Son los pares contractuales donde la estructura del comerciante y el tipo de inm
 | **20** | Cocinas integrales | Técnicos de Cocinas integrales | 🟡 Media |
 | **21** | Construcción civil | Constructora civil | 🔴 Alta |
 | **22** | Control de acceso | Integradores Control de acceso | 🔴 Alta |
-| **23** | Control de plagas | Controladores de plagas | 🔴 Alta |
+| **23** | Fumigación y Control de Plagas | Especialistas en Fumigación y Control de Plagas | 🔴 Alta |
 | **24** | Cortinas | Técnicos de Cortinas | 🟢 Baja |
 | **25** | Cubiertas y Techos | Técnicos de cubiertas y techos | 🔴 Alta |
 | **26** | Diseño e impresión | Centros de diseño grafico | 🟡 Media |
@@ -140,8 +140,12 @@ Son los pares contractuales donde la estructura del comerciante y el tipo de inm
 | **86** | Estudios de Suelos y Geotecnia | Ingenieros Geotécnicos | 🔴 Alta |
 | **87** | Energía Solar y Fotovoltaica | Instaladores de Energía Solar | 🔴 Alta |
 | **88** | Puertas Automáticas y Motores | Técnicos de Puertas Automáticas | 🟡 Media |
-| **89** | Fumigación y Control de Plagas | Especialistas en Fumigación y Control de Plagas | 🔴 Alta |
+| **89** | Lavado de Fachadas y Vidrios en Altura | Técnicos de Lavado de Fachadas y Limpieza de Vidrios | 🔴 Alta |
 | **90** | Peritajes y Avalúos | Peritos y Avaluadores Certificados | 🔴 Alta |
 | **91** | Diseño 3D y Renders | Modeladores y Diseñadores 3D | 🟡 Media |
-| **92** | Videovigilancia CCTV | Instaladores y Técnicos de Videovigilancia CCTV | 🔴 Alta |
+| **92** | Divisiones de Baño y Vidrio Templado | Instaladores de Divisiones de Baño y Vidrio | 🟡 Media |
 | **93** | Izaje de cargas | Operadores y Técnicos de Izaje de Cargas | 🔴 Alta |
+| **94** | Puertas Residenciales y de Seguridad | Instaladores de Puertas Residenciales y de Seguridad | 🟡 Media |
+| **95** | Plantas Eléctricas y Generadores | Técnicos de Plantas Eléctricas y Generadores | 🔴 Alta |
+| **96** | Tuberías Industriales, Cobre y Racores | Técnicos en Tuberías Industriales, Cobre y Racores | 🔴 Alta |
+| **97** | Bombas, Compresores y Equipos de Presión | Técnicos de Bombas, Compresores y Equipos de Presión | 🔴 Alta |

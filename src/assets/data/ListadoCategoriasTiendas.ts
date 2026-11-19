@@ -50,8 +50,8 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         label: 'Vidrios y Cristalería',
         parentTradeKey: 18,
         iconName: 'Window',
-        description: 'Vidrio templado, laminado, espejos y accesorios de fijación.',
-        synonyms: ['vidrio', 'vidrios', 'cristal', 'cristales', 'espejos', 'templado', 'laminado'],
+        description: 'Vidrio templado, laminado, divisiones de baño, espejos y accesorios de fijación.',
+        synonyms: ['vidrio', 'vidrios', 'cristal', 'cristales', 'espejos', 'templado', 'laminado', 'divisiones de baño', 'divisiones baño', 'vidrio templado', 'cancelería', 'puertas de baño'],
     },
     {
         key: 'andamios_equipos',
@@ -400,6 +400,38 @@ export const ListadoCategoriasTiendas: TiendaCategoryOption[] = [
         iconName: 'Layers',
         description: 'Geotextiles tejidos y no tejidos, geomembranas de polietileno (HDPE/PVC), geodrenes y mantos para control de erosión.',
         synonyms: ['geotextiles', 'geomembranas', 'geotextil', 'geomembrana', 'geodren', 'georredes', 'hdpe', 'pvc', 'geosintéticos', 'geosinteticos', 'impermeabilización de taludes', 'reservorios', 'control de erosión', 'drenaje vial', 'geomalla'],
+    },
+    {
+        key: 'energia_solar_renovable',
+        label: 'Energía Solar y Paneles Fotovoltaicos',
+        parentTradeKey: 87, // Energía Solar y Fotovoltaica
+        iconName: 'SolarPower',
+        description: 'Venta de paneles solares, inversores, controladores de carga, baterías de ciclo profundo y accesorios fotovoltaicos.',
+        synonyms: ['energía solar', 'energia solar', 'paneles solares', 'panel solar', 'inversores solares', 'fotovoltaico', 'baterías solares', 'controlador de carga', 'energía renovable', 'solar', 'kits solares'],
+    },
+    {
+        key: 'plantas_electricas_generadores',
+        label: 'Plantas Eléctricas y Generadores',
+        parentTradeKey: 95,
+        iconName: 'ElectricBolt',
+        description: 'Venta, alquiler y repuestos de plantas eléctricas diésel/gasolina, generadores portátiles y tableros de transferencia.',
+        synonyms: ['plantas eléctricas', 'plantas electricas', 'generadores', 'generador eléctrico', 'planta diésel', 'planta de luz', 'grupos electrógenos', 'transferencia automática', 'generador gasolina', 'planta generadora'],
+    },
+    {
+        key: 'tuberias_cobre_racores_especiales',
+        label: 'Tubería de Cobre, Racores y Conducción de Fluidos',
+        parentTradeKey: 96,
+        iconName: 'Tune',
+        description: 'Tubería de cobre rígida y flexible para gas y refrigeración, racores de compresión/abocardados, mangueras de alta presión, válvulas y conexiones de bronce/inox.',
+        synonyms: ['tubería de cobre', 'tuberia cobre', 'cobre para gas', 'cobre refrigeración', 'racores', 'racorería', 'racoreria', 'acoples rápidos', 'mangueras hidráulicas', 'válvulas de paso', 'conexiones de bronce', 'tubo de cobre', 'niples', 'flanges', 'fluidos', 'racor'],
+    },
+    {
+        key: 'bombas_compresores_equipos_presion',
+        label: 'Bombas de Agua, Compresores y Equipos de Presión',
+        parentTradeKey: 97,
+        iconName: 'Compress',
+        description: 'Venta y repuestos de motobombas, electrobombas centrífugas y sumergibles, sistemas hidroneumáticos, tanques de presión y compresores de aire.',
+        synonyms: ['bombas de agua', 'electrobombas', 'motobombas', 'compresores de aire', 'compresor', 'hidroflo', 'equipos de presión', 'sistemas de bombeo', 'bomba sumergible', 'tanque hidroneumático', 'transporte de fluidos', 'presostatos', 'bombas'],
     },
 ]
 
